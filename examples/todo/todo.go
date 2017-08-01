@@ -25,23 +25,19 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/todo New", func() *view.Root {
-		app := NewAppView(nil, "")
+		appview := NewAppView(nil, "")
 
-		stack := &stackview.Stack{}
-		stack.SetViews(app)
-
-		titleTextStyle := &text.Style{}
-		titleTextStyle.SetFont(text.Font{
+		v := stackview.New(nil, "")
+		v.Stack = &stackview.Stack{}
+		v.Stack.SetViews(appview)
+		v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 1}
+		v.TitleTextStyle = &text.Style{}
+		v.TitleTextStyle.SetFont(text.Font{
 			Family: "Helvetica Neue",
 			Face:   "Medium",
 			Size:   20,
 		})
-		titleTextStyle.SetTextColor(colornames.White)
-
-		v := stackview.New(nil, "")
-		v.Stack = stack
-		v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 1}
-		v.TitleTextStyle = titleTextStyle
+		v.TitleTextStyle.SetTextColor(colornames.White)
 		return view.NewRoot(v)
 	})
 }
