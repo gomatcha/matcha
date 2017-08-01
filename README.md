@@ -172,6 +172,10 @@ And run your application! Well done!
 
 More examples can be found in the [examples](https://github.com/gomatcha/matcha/tree/master/examples) directory. The [Todo app](https://github.com/gomatcha/matcha/blob/master/examples/todo/todo.go) is a great place to start. If you have questions, get help on our [Slack channel](https://gophers.slack.com/messages/matcha) or on [Twitter](http://twitter.com/gomatchaio).
 
+### Further Documentation
+
+* [View](godoc.org/pkg/gomatcha.io/matcha/view)
+
 ### FAQ
 
 #### Is there Bitcode support?
