@@ -70,7 +70,7 @@ type View struct {
 	tabs                *Tabs
 }
 
-// New returns a new View, with the given ctx and key.
+// New returns either the previous View in ctx with matching key, or a new View if none exists.
 func New(ctx *view.Context, key string) *View {
 	if v, ok := ctx.Prev(key).(*View); ok {
 		return v

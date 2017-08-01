@@ -101,6 +101,7 @@ type View struct {
 	// ids      []int64
 }
 
+// New returns either the previous View in ctx with matching key, or a new View if none exists.
 func New(ctx *view.Context, key string) *View {
 	if v, ok := ctx.Prev(key).(*View); ok {
 		return v
@@ -110,6 +111,7 @@ func New(ctx *view.Context, key string) *View {
 	}
 }
 
+// Lifecyle implements the view.View interface.
 func (v *View) Lifecycle(from, to view.Stage) {
 	if view.ExitsStage(from, to, view.StageMounted) {
 		if v.stack != nil {
@@ -118,6 +120,7 @@ func (v *View) Lifecycle(from, to view.Stage) {
 	}
 }
 
+// Build implements the view.View interface.
 func (v *View) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 

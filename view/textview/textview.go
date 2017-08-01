@@ -1,3 +1,4 @@
+// Package textview implements a text area.
 package textview
 
 import (
@@ -10,25 +11,7 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
-type layouter struct {
-	styledText *internal.StyledText
-	maxLines   int
-}
-
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
-	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, l.maxLines)
-	g := layout.Guide{Frame: layout.Rt(0, 0, size.X, size.Y)}
-	return g, nil
-}
-
-func (l *layouter) Notify(f func()) comm.Id {
-	return 0 // no-op
-}
-
-func (l *layouter) Unnotify(id comm.Id) {
-	// no-op
-}
-
+// View displays a multiline text region within it bounds.
 type View struct {
 	view.Embed
 	PaintStyle *paint.Style
@@ -38,6 +21,7 @@ type View struct {
 	MaxLines   int
 }
 
+// New returns either the previous View in ctx with matching key, or a new View if none exists.
 func New(ctx *view.Context, key string) *View {
 	if v, ok := ctx.Prev(key).(*View); ok {
 		return v
@@ -48,6 +32,7 @@ func New(ctx *view.Context, key string) *View {
 	}
 }
 
+// Build implements the view.View interface.
 func (v *View) Build(ctx *view.Context) view.Model {
 	t := v.Text
 	if t == nil {
@@ -66,4 +51,23 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		NativeViewName:  "gomatcha.io/matcha/view/textview",
 		NativeViewState: st.MarshalProtobuf(),
 	}
+}
+
+type layouter struct {
+	styledText *internal.StyledText
+	maxLines   int
+}
+
+func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, l.maxLines)
+	g := layout.Guide{Frame: layout.Rt(0, 0, size.X, size.Y)}
+	return g, nil
+}
+
+func (l *layouter) Notify(f func()) comm.Id {
+	return 0 // no-op
+}
+
+func (l *layouter) Unnotify(id comm.Id) {
+	// no-op
 }

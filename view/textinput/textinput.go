@@ -1,3 +1,4 @@
+// Package textinput implements a text input field.
 package textinput
 
 import (
@@ -15,7 +16,8 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
-// View mutates the Text and StyledText fields in place.
+// View represents a text input view. View mutates the Text and
+// StyledText fields in place.
 type View struct {
 	view.Embed
 	PaintStyle         *paint.Style
@@ -37,6 +39,7 @@ type View struct {
 	OnFocus            func(*keyboard.Responder)
 }
 
+// New returns either the previous View in ctx with matching key, or a new View if none exists.
 func New(ctx *view.Context, key string) *View {
 	if v, ok := ctx.Prev(key).(*View); ok {
 		return v
@@ -48,12 +51,14 @@ func New(ctx *view.Context, key string) *View {
 	}
 }
 
+// Lifecyle implements the view.View interface.
 func (v *View) Lifecycle(from, to view.Stage) {
 	if view.ExitsStage(from, to, view.StageMounted) {
 		v.Unsubscribe(v.prevResponder)
 	}
 }
 
+// Build implements the view.View interface.
 func (v *View) Build(ctx *view.Context) view.Model {
 	style := v.Style
 	if style == nil {

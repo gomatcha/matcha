@@ -52,10 +52,6 @@ Documentation:
 * env
 * examples
 * layout
-* view 
-    * tabscrceen
-    * textinput
-    * textview
 
 Pro:
 * Webview
