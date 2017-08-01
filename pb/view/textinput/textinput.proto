@@ -1,0 +1,29 @@
+syntax = "proto3";
+package matcha.view.textinput;
+import "gomatcha.io/matcha/pb/text/text.proto";
+import "gomatcha.io/matcha/pb/keyboard/keyboard.proto";
+
+option go_package = "textinput";
+option objc_class_prefix = "MatchaTextInputPB";
+
+message View {
+    matcha.text.StyledText styledText = 1;
+    matcha.text.StyledText placeholderText = 2;
+    bool focused = 4;
+    matcha.keyboard.Type keyboardType = 5;
+    matcha.keyboard.Appearance keyboardAppearance = 6;
+    matcha.keyboard.ReturnType keyboardReturnType = 7;
+    bool multiline = 8;
+    bool secureTextEntry = 9;
+}
+
+message Event {
+    matcha.text.StyledText styledText = 1;
+}
+
+message FocusEvent {
+    bool focused = 1;
+}
+
+message SubmitEvent {
+}

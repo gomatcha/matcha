@@ -1,0 +1,82 @@
+syntax = "proto3";
+package matcha.text;
+import "gomatcha.io/matcha/pb/layout/layout.proto";
+import "gomatcha.io/matcha/pb/color.proto";
+
+option go_package = "text";
+option objc_class_prefix = "MatchaPB";
+
+message SizeFunc {
+    StyledText text = 1;
+    matcha.layout.Point minSize = 2;
+    matcha.layout.Point maxSize = 3;
+}
+
+message Text {
+    string text = 1;
+}
+
+message StyledText {
+    TextStyle style = 1;
+    Text text = 2;
+}
+
+message Font {
+    string family = 1;
+    string face = 2;
+    double size = 3;
+}
+
+enum TextAlignment {
+    TEXT_ALIGNMENT_LEFT = 0;
+    TEXT_ALIGNMENT_RIGHT = 1;
+    TEXT_ALIGNMENT_CENTER = 2;
+    TEXT_ALIGNMENT_JUSTIFIED = 3;
+}
+
+enum StrikethroughStyle {
+    STRIKETHROUGH_STYLE_NONE = 0;
+    STRIKETHROUGH_STYLE_SINGLE = 1;
+    STRIKETHROUGH_STYLE_DOUBLE = 2;
+    STRIKETHROUGH_STYLE_THICK = 3;
+    STRIKETHROUGH_STYLE_DOTTED = 4;
+    STRIKETHROUGH_STYLE_DASHED = 5;
+}
+    
+enum UnderlineStyle {
+    UNDRELINE_STYLE_NONE = 0;
+    UNDRELINE_STYLE_SINGLE = 1;
+    UNDRELINE_STYLE_DOUBLE = 2;
+    UNDRELINE_STYLE_THICK = 3;
+    UNDRELINE_STYLE_DOTTED = 4;
+    UNDRELINE_STYLE_DASHED = 5;
+}
+
+enum TextWrap {
+    TEXT_WRAP_NONE = 0;
+    TEXT_WRAP_WORD = 1;
+    TEXT_WRAP_CHARACTER = 2;
+}
+
+enum Truncation {
+    TRUNCATION_NONE = 0;
+    TRUNCATION_START = 1;
+    TRUNCATION_MIDDLE = 2;
+    TRUNCATION_END = 3;
+}
+
+message TextStyle {
+    TextAlignment textAlignment = 2;
+    StrikethroughStyle strikethroughStyle = 4;
+    matcha.Color strikethroughColor = 6;
+    UnderlineStyle underlineStyle = 8;
+    matcha.Color underlineColor = 10;
+    Font font = 12;
+    double hyphenation = 14;
+    double lineHeightMultiple = 16;
+    int64 maxLines = 18;
+    matcha.Color textColor = 20;
+    TextWrap wrap = 22;
+    Truncation truncation = 24;
+    string truncationString = 26;
+}

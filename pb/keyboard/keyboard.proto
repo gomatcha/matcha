@@ -1,0 +1,39 @@
+syntax = "proto3";
+package matcha.keyboard;
+
+option go_package = "keyboard";
+option objc_class_prefix = "MatchaKeyboardPB";
+
+enum Type {
+    DEFAULT_TYPE = 0;
+    NUMBER_TYPE = 1;
+    NUMBER_PUNCTUATION_TYPE = 2;
+    DECIMAL_TYPE = 3;
+    PHONE_TYPE = 4;
+    ASCII_TYPE = 5;
+    EMAIL_TYPE = 6;
+    URL_TYPE = 7;
+    WEB_SEARCH_TYPE = 8;
+    NAME_PHONE_TYPE = 9;
+}
+
+enum Appearance {
+    DEFAULT_APPEARANCE = 0;
+    LIGHT_APPEARANCE = 1;
+    DARK_APPEARANCE = 2;
+}
+
+enum ReturnType {
+    DEFAULT_RETURN_TYPE = 0;
+    GO_RETURN_TYPE = 1;
+    GOOGLE_RETURN_TYPE = 2;
+    JOIN_RETURN_TYPE = 3;
+    NEXT_RETURN_TYPE = 4;
+    ROUTE_RETURN_TYPE = 5;
+    SEARCH_RETURN_TYPE = 6;
+    SEND_RETURN_TYPE = 7;
+    YAHOO_RETURN_TYPE = 8;
+    DONE_RETURN_TYPE = 9;
+    EMERGENCY_CALL_RETURN_TYPE = 10;
+    CONTINUE_RETURN_TYPE = 11;
+}

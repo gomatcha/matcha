@@ -1,0 +1,564 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		67D89E471ED50B490063A1E2 /* Protobuf.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E451ED50B490063A1E2 /* Protobuf.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89E6E1ED50BD30063A1E2 /* libProtocolBuffers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67D89E651ED50BBC0063A1E2 /* libProtocolBuffers.a */; };
+		67D89E711ED50BF10063A1E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67D89E701ED50BF10063A1E2 /* Foundation.framework */; };
+		67D89E981ED50CD40063A1E2 /* GPBWireFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E721ED50CD40063A1E2 /* GPBWireFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89E991ED50CD40063A1E2 /* GPBWellKnownTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E731ED50CD40063A1E2 /* GPBWellKnownTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89E9A1ED50CD40063A1E2 /* GPBUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E741ED50CD40063A1E2 /* GPBUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89E9B1ED50CD40063A1E2 /* GPBUtilities_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E751ED50CD40063A1E2 /* GPBUtilities_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89E9C1ED50CD40063A1E2 /* GPBUnknownFieldSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E761ED50CD40063A1E2 /* GPBUnknownFieldSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89E9D1ED50CD40063A1E2 /* GPBUnknownFieldSet_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E771ED50CD40063A1E2 /* GPBUnknownFieldSet_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89E9E1ED50CD40063A1E2 /* GPBUnknownField.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E781ED50CD40063A1E2 /* GPBUnknownField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89E9F1ED50CD40063A1E2 /* GPBUnknownField_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E791ED50CD40063A1E2 /* GPBUnknownField_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EA01ED50CD40063A1E2 /* GPBRuntimeTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E7A1ED50CD40063A1E2 /* GPBRuntimeTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EA11ED50CD40063A1E2 /* GPBRootObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E7B1ED50CD40063A1E2 /* GPBRootObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EA21ED50CD40063A1E2 /* GPBRootObject_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E7C1ED50CD40063A1E2 /* GPBRootObject_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EA31ED50CD40063A1E2 /* GPBProtocolBuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E7D1ED50CD40063A1E2 /* GPBProtocolBuffers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EA41ED50CD40063A1E2 /* GPBProtocolBuffers_RuntimeSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E7E1ED50CD40063A1E2 /* GPBProtocolBuffers_RuntimeSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EA51ED50CD40063A1E2 /* GPBMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E7F1ED50CD40063A1E2 /* GPBMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EA61ED50CD40063A1E2 /* GPBMessage_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E801ED50CD40063A1E2 /* GPBMessage_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EA71ED50CD40063A1E2 /* GPBExtensionRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E811ED50CD40063A1E2 /* GPBExtensionRegistry.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EA81ED50CD40063A1E2 /* GPBExtensionInternals.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E821ED50CD40063A1E2 /* GPBExtensionInternals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EA91ED50CD40063A1E2 /* GPBDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E831ED50CD40063A1E2 /* GPBDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EAA1ED50CD40063A1E2 /* GPBDictionary_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E841ED50CD40063A1E2 /* GPBDictionary_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EAB1ED50CD40063A1E2 /* GPBDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E851ED50CD40063A1E2 /* GPBDescriptor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EAC1ED50CD40063A1E2 /* GPBDescriptor_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E861ED50CD40063A1E2 /* GPBDescriptor_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EAD1ED50CD40063A1E2 /* GPBCodedOutputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E871ED50CD40063A1E2 /* GPBCodedOutputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EAE1ED50CD40063A1E2 /* GPBCodedOutputStream_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E881ED50CD40063A1E2 /* GPBCodedOutputStream_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EAF1ED50CD40063A1E2 /* GPBCodedInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E891ED50CD40063A1E2 /* GPBCodedInputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EB01ED50CD40063A1E2 /* GPBCodedInputStream_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E8A1ED50CD40063A1E2 /* GPBCodedInputStream_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EB11ED50CD40063A1E2 /* GPBBootstrap.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E8B1ED50CD40063A1E2 /* GPBBootstrap.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EB21ED50CD40063A1E2 /* GPBArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E8C1ED50CD40063A1E2 /* GPBArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EB31ED50CD40063A1E2 /* GPBArray_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E8D1ED50CD40063A1E2 /* GPBArray_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EB41ED50CD40063A1E2 /* Wrappers.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E8E1ED50CD40063A1E2 /* Wrappers.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EB51ED50CD40063A1E2 /* Type.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E8F1ED50CD40063A1E2 /* Type.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EB61ED50CD40063A1E2 /* Timestamp.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E901ED50CD40063A1E2 /* Timestamp.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EB71ED50CD40063A1E2 /* Struct.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E911ED50CD40063A1E2 /* Struct.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EB81ED50CD40063A1E2 /* SourceContext.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E921ED50CD40063A1E2 /* SourceContext.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EB91ED50CD40063A1E2 /* FieldMask.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E931ED50CD40063A1E2 /* FieldMask.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EBA1ED50CD40063A1E2 /* Empty.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E941ED50CD40063A1E2 /* Empty.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EBB1ED50CD40063A1E2 /* Duration.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E951ED50CD40063A1E2 /* Duration.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EBC1ED50CD40063A1E2 /* Api.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E961ED50CD40063A1E2 /* Api.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67D89EBD1ED50CD40063A1E2 /* Any.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67D89E971ED50CD40063A1E2 /* Any.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		67D89E641ED50BBC0063A1E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67D89E4D1ED50BB90063A1E2 /* ProtocolBuffers_iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7461B52E0F94FAF800A0C422;
+			remoteInfo = ProtocolBuffers;
+		};
+		67D89E661ED50BBC0063A1E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67D89E4D1ED50BB90063A1E2 /* ProtocolBuffers_iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8BBEA4A6147C727100C4ADB7;
+			remoteInfo = UnitTests;
+		};
+		67D89E681ED50BBC0063A1E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67D89E4D1ED50BB90063A1E2 /* ProtocolBuffers_iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8B9A5EA51831993600A9D33B;
+			remoteInfo = iOSTestHarness;
+		};
+		67D89E6A1ED50BBC0063A1E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67D89E4D1ED50BB90063A1E2 /* ProtocolBuffers_iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F4487C6E1A9F8F8100531423;
+			remoteInfo = TestSingleSourceBuild;
+		};
+		67D89E6C1ED50BCF0063A1E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67D89E4D1ED50BB90063A1E2 /* ProtocolBuffers_iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7461B52D0F94FAF800A0C422;
+			remoteInfo = ProtocolBuffers;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		67D89E421ED50B490063A1E2 /* Protobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Protobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		67D89E451ED50B490063A1E2 /* Protobuf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Protobuf.h; sourceTree = "<group>"; };
+		67D89E461ED50B490063A1E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		67D89E4D1ED50BB90063A1E2 /* ProtocolBuffers_iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ProtocolBuffers_iOS.xcodeproj; path = Protobuf/protobuf/objectivec/ProtocolBuffers_iOS.xcodeproj; sourceTree = "<group>"; };
+		67D89E701ED50BF10063A1E2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		67D89E721ED50CD40063A1E2 /* GPBWireFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBWireFormat.h; path = protobuf/objectivec/GPBWireFormat.h; sourceTree = "<group>"; };
+		67D89E731ED50CD40063A1E2 /* GPBWellKnownTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBWellKnownTypes.h; path = protobuf/objectivec/GPBWellKnownTypes.h; sourceTree = "<group>"; };
+		67D89E741ED50CD40063A1E2 /* GPBUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBUtilities.h; path = protobuf/objectivec/GPBUtilities.h; sourceTree = "<group>"; };
+		67D89E751ED50CD40063A1E2 /* GPBUtilities_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBUtilities_PackagePrivate.h; path = protobuf/objectivec/GPBUtilities_PackagePrivate.h; sourceTree = "<group>"; };
+		67D89E761ED50CD40063A1E2 /* GPBUnknownFieldSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBUnknownFieldSet.h; path = protobuf/objectivec/GPBUnknownFieldSet.h; sourceTree = "<group>"; };
+		67D89E771ED50CD40063A1E2 /* GPBUnknownFieldSet_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBUnknownFieldSet_PackagePrivate.h; path = protobuf/objectivec/GPBUnknownFieldSet_PackagePrivate.h; sourceTree = "<group>"; };
+		67D89E781ED50CD40063A1E2 /* GPBUnknownField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBUnknownField.h; path = protobuf/objectivec/GPBUnknownField.h; sourceTree = "<group>"; };
+		67D89E791ED50CD40063A1E2 /* GPBUnknownField_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBUnknownField_PackagePrivate.h; path = protobuf/objectivec/GPBUnknownField_PackagePrivate.h; sourceTree = "<group>"; };
+		67D89E7A1ED50CD40063A1E2 /* GPBRuntimeTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBRuntimeTypes.h; path = protobuf/objectivec/GPBRuntimeTypes.h; sourceTree = "<group>"; };
+		67D89E7B1ED50CD40063A1E2 /* GPBRootObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBRootObject.h; path = protobuf/objectivec/GPBRootObject.h; sourceTree = "<group>"; };
+		67D89E7C1ED50CD40063A1E2 /* GPBRootObject_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBRootObject_PackagePrivate.h; path = protobuf/objectivec/GPBRootObject_PackagePrivate.h; sourceTree = "<group>"; };
+		67D89E7D1ED50CD40063A1E2 /* GPBProtocolBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBProtocolBuffers.h; path = protobuf/objectivec/GPBProtocolBuffers.h; sourceTree = "<group>"; };
+		67D89E7E1ED50CD40063A1E2 /* GPBProtocolBuffers_RuntimeSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBProtocolBuffers_RuntimeSupport.h; path = protobuf/objectivec/GPBProtocolBuffers_RuntimeSupport.h; sourceTree = "<group>"; };
+		67D89E7F1ED50CD40063A1E2 /* GPBMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBMessage.h; path = protobuf/objectivec/GPBMessage.h; sourceTree = "<group>"; };
+		67D89E801ED50CD40063A1E2 /* GPBMessage_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBMessage_PackagePrivate.h; path = protobuf/objectivec/GPBMessage_PackagePrivate.h; sourceTree = "<group>"; };
+		67D89E811ED50CD40063A1E2 /* GPBExtensionRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBExtensionRegistry.h; path = protobuf/objectivec/GPBExtensionRegistry.h; sourceTree = "<group>"; };
+		67D89E821ED50CD40063A1E2 /* GPBExtensionInternals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBExtensionInternals.h; path = protobuf/objectivec/GPBExtensionInternals.h; sourceTree = "<group>"; };
+		67D89E831ED50CD40063A1E2 /* GPBDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBDictionary.h; path = protobuf/objectivec/GPBDictionary.h; sourceTree = "<group>"; };
+		67D89E841ED50CD40063A1E2 /* GPBDictionary_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBDictionary_PackagePrivate.h; path = protobuf/objectivec/GPBDictionary_PackagePrivate.h; sourceTree = "<group>"; };
+		67D89E851ED50CD40063A1E2 /* GPBDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBDescriptor.h; path = protobuf/objectivec/GPBDescriptor.h; sourceTree = "<group>"; };
+		67D89E861ED50CD40063A1E2 /* GPBDescriptor_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBDescriptor_PackagePrivate.h; path = protobuf/objectivec/GPBDescriptor_PackagePrivate.h; sourceTree = "<group>"; };
+		67D89E871ED50CD40063A1E2 /* GPBCodedOutputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBCodedOutputStream.h; path = protobuf/objectivec/GPBCodedOutputStream.h; sourceTree = "<group>"; };
+		67D89E881ED50CD40063A1E2 /* GPBCodedOutputStream_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBCodedOutputStream_PackagePrivate.h; path = protobuf/objectivec/GPBCodedOutputStream_PackagePrivate.h; sourceTree = "<group>"; };
+		67D89E891ED50CD40063A1E2 /* GPBCodedInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBCodedInputStream.h; path = protobuf/objectivec/GPBCodedInputStream.h; sourceTree = "<group>"; };
+		67D89E8A1ED50CD40063A1E2 /* GPBCodedInputStream_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBCodedInputStream_PackagePrivate.h; path = protobuf/objectivec/GPBCodedInputStream_PackagePrivate.h; sourceTree = "<group>"; };
+		67D89E8B1ED50CD40063A1E2 /* GPBBootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBBootstrap.h; path = protobuf/objectivec/GPBBootstrap.h; sourceTree = "<group>"; };
+		67D89E8C1ED50CD40063A1E2 /* GPBArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBArray.h; path = protobuf/objectivec/GPBArray.h; sourceTree = "<group>"; };
+		67D89E8D1ED50CD40063A1E2 /* GPBArray_PackagePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPBArray_PackagePrivate.h; path = protobuf/objectivec/GPBArray_PackagePrivate.h; sourceTree = "<group>"; };
+		67D89E8E1ED50CD40063A1E2 /* Wrappers.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Wrappers.pbobjc.h; path = protobuf/objectivec/google/protobuf/Wrappers.pbobjc.h; sourceTree = "<group>"; };
+		67D89E8F1ED50CD40063A1E2 /* Type.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Type.pbobjc.h; path = protobuf/objectivec/google/protobuf/Type.pbobjc.h; sourceTree = "<group>"; };
+		67D89E901ED50CD40063A1E2 /* Timestamp.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Timestamp.pbobjc.h; path = protobuf/objectivec/google/protobuf/Timestamp.pbobjc.h; sourceTree = "<group>"; };
+		67D89E911ED50CD40063A1E2 /* Struct.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Struct.pbobjc.h; path = protobuf/objectivec/google/protobuf/Struct.pbobjc.h; sourceTree = "<group>"; };
+		67D89E921ED50CD40063A1E2 /* SourceContext.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceContext.pbobjc.h; path = protobuf/objectivec/google/protobuf/SourceContext.pbobjc.h; sourceTree = "<group>"; };
+		67D89E931ED50CD40063A1E2 /* FieldMask.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FieldMask.pbobjc.h; path = protobuf/objectivec/google/protobuf/FieldMask.pbobjc.h; sourceTree = "<group>"; };
+		67D89E941ED50CD40063A1E2 /* Empty.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Empty.pbobjc.h; path = protobuf/objectivec/google/protobuf/Empty.pbobjc.h; sourceTree = "<group>"; };
+		67D89E951ED50CD40063A1E2 /* Duration.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Duration.pbobjc.h; path = protobuf/objectivec/google/protobuf/Duration.pbobjc.h; sourceTree = "<group>"; };
+		67D89E961ED50CD40063A1E2 /* Api.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Api.pbobjc.h; path = protobuf/objectivec/google/protobuf/Api.pbobjc.h; sourceTree = "<group>"; };
+		67D89E971ED50CD40063A1E2 /* Any.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Any.pbobjc.h; path = protobuf/objectivec/google/protobuf/Any.pbobjc.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		67D89E3E1ED50B490063A1E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				67D89E711ED50BF10063A1E2 /* Foundation.framework in Frameworks */,
+				67D89E6E1ED50BD30063A1E2 /* libProtocolBuffers.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		67D89E381ED50B490063A1E2 = {
+			isa = PBXGroup;
+			children = (
+				67D89E441ED50B490063A1E2 /* Protobuf */,
+				67D89E431ED50B490063A1E2 /* Products */,
+				67D89E6F1ED50BF10063A1E2 /* Frameworks */,
+				67D89E4D1ED50BB90063A1E2 /* ProtocolBuffers_iOS.xcodeproj */,
+			);
+			sourceTree = "<group>";
+		};
+		67D89E431ED50B490063A1E2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				67D89E421ED50B490063A1E2 /* Protobuf.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		67D89E441ED50B490063A1E2 /* Protobuf */ = {
+			isa = PBXGroup;
+			children = (
+				67D89E721ED50CD40063A1E2 /* GPBWireFormat.h */,
+				67D89E731ED50CD40063A1E2 /* GPBWellKnownTypes.h */,
+				67D89E741ED50CD40063A1E2 /* GPBUtilities.h */,
+				67D89E751ED50CD40063A1E2 /* GPBUtilities_PackagePrivate.h */,
+				67D89E761ED50CD40063A1E2 /* GPBUnknownFieldSet.h */,
+				67D89E771ED50CD40063A1E2 /* GPBUnknownFieldSet_PackagePrivate.h */,
+				67D89E781ED50CD40063A1E2 /* GPBUnknownField.h */,
+				67D89E791ED50CD40063A1E2 /* GPBUnknownField_PackagePrivate.h */,
+				67D89E7A1ED50CD40063A1E2 /* GPBRuntimeTypes.h */,
+				67D89E7B1ED50CD40063A1E2 /* GPBRootObject.h */,
+				67D89E7C1ED50CD40063A1E2 /* GPBRootObject_PackagePrivate.h */,
+				67D89E7D1ED50CD40063A1E2 /* GPBProtocolBuffers.h */,
+				67D89E7E1ED50CD40063A1E2 /* GPBProtocolBuffers_RuntimeSupport.h */,
+				67D89E7F1ED50CD40063A1E2 /* GPBMessage.h */,
+				67D89E801ED50CD40063A1E2 /* GPBMessage_PackagePrivate.h */,
+				67D89E811ED50CD40063A1E2 /* GPBExtensionRegistry.h */,
+				67D89E821ED50CD40063A1E2 /* GPBExtensionInternals.h */,
+				67D89E831ED50CD40063A1E2 /* GPBDictionary.h */,
+				67D89E841ED50CD40063A1E2 /* GPBDictionary_PackagePrivate.h */,
+				67D89E851ED50CD40063A1E2 /* GPBDescriptor.h */,
+				67D89E861ED50CD40063A1E2 /* GPBDescriptor_PackagePrivate.h */,
+				67D89E871ED50CD40063A1E2 /* GPBCodedOutputStream.h */,
+				67D89E881ED50CD40063A1E2 /* GPBCodedOutputStream_PackagePrivate.h */,
+				67D89E891ED50CD40063A1E2 /* GPBCodedInputStream.h */,
+				67D89E8A1ED50CD40063A1E2 /* GPBCodedInputStream_PackagePrivate.h */,
+				67D89E8B1ED50CD40063A1E2 /* GPBBootstrap.h */,
+				67D89E8C1ED50CD40063A1E2 /* GPBArray.h */,
+				67D89E8D1ED50CD40063A1E2 /* GPBArray_PackagePrivate.h */,
+				67D89E8E1ED50CD40063A1E2 /* Wrappers.pbobjc.h */,
+				67D89E8F1ED50CD40063A1E2 /* Type.pbobjc.h */,
+				67D89E901ED50CD40063A1E2 /* Timestamp.pbobjc.h */,
+				67D89E911ED50CD40063A1E2 /* Struct.pbobjc.h */,
+				67D89E921ED50CD40063A1E2 /* SourceContext.pbobjc.h */,
+				67D89E931ED50CD40063A1E2 /* FieldMask.pbobjc.h */,
+				67D89E941ED50CD40063A1E2 /* Empty.pbobjc.h */,
+				67D89E951ED50CD40063A1E2 /* Duration.pbobjc.h */,
+				67D89E961ED50CD40063A1E2 /* Api.pbobjc.h */,
+				67D89E971ED50CD40063A1E2 /* Any.pbobjc.h */,
+				67D89E451ED50B490063A1E2 /* Protobuf.h */,
+				67D89E461ED50B490063A1E2 /* Info.plist */,
+			);
+			path = Protobuf;
+			sourceTree = "<group>";
+		};
+		67D89E5D1ED50BBC0063A1E2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				67D89E651ED50BBC0063A1E2 /* libProtocolBuffers.a */,
+				67D89E671ED50BBC0063A1E2 /* UnitTests.xctest */,
+				67D89E691ED50BBC0063A1E2 /* iOSTestHarness.app */,
+				67D89E6B1ED50BBC0063A1E2 /* libTestSingleSourceBuild.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		67D89E6F1ED50BF10063A1E2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				67D89E701ED50BF10063A1E2 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		67D89E3F1ED50B490063A1E2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				67D89EB01ED50CD40063A1E2 /* GPBCodedInputStream_PackagePrivate.h in Headers */,
+				67D89EB31ED50CD40063A1E2 /* GPBArray_PackagePrivate.h in Headers */,
+				67D89E981ED50CD40063A1E2 /* GPBWireFormat.h in Headers */,
+				67D89E9D1ED50CD40063A1E2 /* GPBUnknownFieldSet_PackagePrivate.h in Headers */,
+				67D89EA21ED50CD40063A1E2 /* GPBRootObject_PackagePrivate.h in Headers */,
+				67D89EB21ED50CD40063A1E2 /* GPBArray.h in Headers */,
+				67D89EBB1ED50CD40063A1E2 /* Duration.pbobjc.h in Headers */,
+				67D89EAB1ED50CD40063A1E2 /* GPBDescriptor.h in Headers */,
+				67D89EA51ED50CD40063A1E2 /* GPBMessage.h in Headers */,
+				67D89EAD1ED50CD40063A1E2 /* GPBCodedOutputStream.h in Headers */,
+				67D89EB51ED50CD40063A1E2 /* Type.pbobjc.h in Headers */,
+				67D89EB81ED50CD40063A1E2 /* SourceContext.pbobjc.h in Headers */,
+				67D89EAE1ED50CD40063A1E2 /* GPBCodedOutputStream_PackagePrivate.h in Headers */,
+				67D89EA41ED50CD40063A1E2 /* GPBProtocolBuffers_RuntimeSupport.h in Headers */,
+				67D89EBA1ED50CD40063A1E2 /* Empty.pbobjc.h in Headers */,
+				67D89EA81ED50CD40063A1E2 /* GPBExtensionInternals.h in Headers */,
+				67D89EB91ED50CD40063A1E2 /* FieldMask.pbobjc.h in Headers */,
+				67D89EA61ED50CD40063A1E2 /* GPBMessage_PackagePrivate.h in Headers */,
+				67D89EB71ED50CD40063A1E2 /* Struct.pbobjc.h in Headers */,
+				67D89E9F1ED50CD40063A1E2 /* GPBUnknownField_PackagePrivate.h in Headers */,
+				67D89E9B1ED50CD40063A1E2 /* GPBUtilities_PackagePrivate.h in Headers */,
+				67D89EA71ED50CD40063A1E2 /* GPBExtensionRegistry.h in Headers */,
+				67D89EBC1ED50CD40063A1E2 /* Api.pbobjc.h in Headers */,
+				67D89EA31ED50CD40063A1E2 /* GPBProtocolBuffers.h in Headers */,
+				67D89EB41ED50CD40063A1E2 /* Wrappers.pbobjc.h in Headers */,
+				67D89E9A1ED50CD40063A1E2 /* GPBUtilities.h in Headers */,
+				67D89EA11ED50CD40063A1E2 /* GPBRootObject.h in Headers */,
+				67D89EAC1ED50CD40063A1E2 /* GPBDescriptor_PackagePrivate.h in Headers */,
+				67D89EBD1ED50CD40063A1E2 /* Any.pbobjc.h in Headers */,
+				67D89EA91ED50CD40063A1E2 /* GPBDictionary.h in Headers */,
+				67D89EB11ED50CD40063A1E2 /* GPBBootstrap.h in Headers */,
+				67D89EA01ED50CD40063A1E2 /* GPBRuntimeTypes.h in Headers */,
+				67D89E9E1ED50CD40063A1E2 /* GPBUnknownField.h in Headers */,
+				67D89EB61ED50CD40063A1E2 /* Timestamp.pbobjc.h in Headers */,
+				67D89E9C1ED50CD40063A1E2 /* GPBUnknownFieldSet.h in Headers */,
+				67D89EAA1ED50CD40063A1E2 /* GPBDictionary_PackagePrivate.h in Headers */,
+				67D89E991ED50CD40063A1E2 /* GPBWellKnownTypes.h in Headers */,
+				67D89EAF1ED50CD40063A1E2 /* GPBCodedInputStream.h in Headers */,
+				67D89E471ED50B490063A1E2 /* Protobuf.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		67D89E411ED50B490063A1E2 /* Protobuf */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 67D89E4A1ED50B490063A1E2 /* Build configuration list for PBXNativeTarget "Protobuf" */;
+			buildPhases = (
+				67D89E3D1ED50B490063A1E2 /* Sources */,
+				67D89E3E1ED50B490063A1E2 /* Frameworks */,
+				67D89E3F1ED50B490063A1E2 /* Headers */,
+				67D89E401ED50B490063A1E2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				67D89E6D1ED50BCF0063A1E2 /* PBXTargetDependency */,
+			);
+			name = Protobuf;
+			productName = Protobuf;
+			productReference = 67D89E421ED50B490063A1E2 /* Protobuf.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		67D89E391ED50B490063A1E2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = matcha;
+				TargetAttributes = {
+					67D89E411ED50B490063A1E2 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = SD456Y97K5;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 67D89E3C1ED50B490063A1E2 /* Build configuration list for PBXProject "Protobuf" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 67D89E381ED50B490063A1E2;
+			productRefGroup = 67D89E431ED50B490063A1E2 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 67D89E5D1ED50BBC0063A1E2 /* Products */;
+					ProjectRef = 67D89E4D1ED50BB90063A1E2 /* ProtocolBuffers_iOS.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				67D89E411ED50B490063A1E2 /* Protobuf */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		67D89E651ED50BBC0063A1E2 /* libProtocolBuffers.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libProtocolBuffers.a;
+			remoteRef = 67D89E641ED50BBC0063A1E2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		67D89E671ED50BBC0063A1E2 /* UnitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTests.xctest;
+			remoteRef = 67D89E661ED50BBC0063A1E2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		67D89E691ED50BBC0063A1E2 /* iOSTestHarness.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = iOSTestHarness.app;
+			remoteRef = 67D89E681ED50BBC0063A1E2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		67D89E6B1ED50BBC0063A1E2 /* libTestSingleSourceBuild.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libTestSingleSourceBuild.a;
+			remoteRef = 67D89E6A1ED50BBC0063A1E2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		67D89E401ED50B490063A1E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		67D89E3D1ED50B490063A1E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		67D89E6D1ED50BCF0063A1E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ProtocolBuffers;
+			targetProxy = 67D89E6C1ED50BCF0063A1E2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		67D89E481ED50B490063A1E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		67D89E491ED50B490063A1E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		67D89E4B1ED50B490063A1E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = SD456Y97K5;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Protobuf/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_BUNDLE_IDENTIFIER = com.matcha.Protobuf;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		67D89E4C1ED50B490063A1E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = SD456Y97K5;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Protobuf/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_BUNDLE_IDENTIFIER = com.matcha.Protobuf;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		67D89E3C1ED50B490063A1E2 /* Build configuration list for PBXProject "Protobuf" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67D89E481ED50B490063A1E2 /* Debug */,
+				67D89E491ED50B490063A1E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		67D89E4A1ED50B490063A1E2 /* Build configuration list for PBXNativeTarget "Protobuf" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67D89E4B1ED50B490063A1E2 /* Debug */,
+				67D89E4C1ED50B490063A1E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 67D89E391ED50B490063A1E2 /* Project object */;
+}

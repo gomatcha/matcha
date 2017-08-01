@@ -1,0 +1,331 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#import <Foundation/Foundation.h>
+#include "matchaobjc.h"
+#include "matchago.h"
+
+@implementation MatchaObjcBridge
++ (id)sharedBridge {
+    static MatchaObjcBridge *sBridge = nil;
+    static dispatch_once_t sOnce;
+    dispatch_once (&sOnce, ^{
+        sBridge = [[MatchaObjcBridge alloc] init];
+    });
+    return sBridge;
+}
+@end
+
+@interface MatchaTracker : NSObject {
+    NSMapTable *_mapTable;
+    int64_t _maxKey;
+}
+@end
+
+@implementation MatchaTracker
+
++ (MatchaTracker *)sharedTracker {
+    static MatchaTracker *sTracker = nil;
+    static dispatch_once_t sOnce;
+    dispatch_once (&sOnce, ^{
+        sTracker = [[MatchaTracker alloc] init];
+    });
+    return sTracker;
+}
+
+- (id)init {
+    if ((self = [super init])) {
+        _mapTable = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsObjectPersonality|NSPointerFunctionsStrongMemory 
+            valueOptions:NSPointerFunctionsObjectPersonality|NSPointerFunctionsStrongMemory capacity:0];
+        _maxKey = 0;
+    }
+    return self;
+}
+
+- (ObjcRef)track:(id)object {
+    if (object == nil) {
+        return 0;
+    }
+    @synchronized (self) {
+        _maxKey += 1;
+        [_mapTable setObject:object forKey:@(_maxKey)];
+        return _maxKey;
+    }
+}
+
+- (void)untrack:(ObjcRef)key {
+    if (key == 0) {
+        return;
+    }
+    @synchronized (self) {
+        id keyObj = @(key);
+        id object = [_mapTable objectForKey:keyObj];
+        if (object == nil) {
+            NSLog(@"UntrackError");
+            @throw @"Untrack error. No corresponding object for key.";
+        }
+        [_mapTable removeObjectForKey:keyObj];
+    }
+}
+
+- (id)get:(ObjcRef)key {
+    if (key == 0) {
+        return nil;
+    }
+    @synchronized (self) {
+        id object = [_mapTable objectForKey:(id)@(key)];
+        if (object == nil) {
+            @throw @"Get error. No corresponding object for key";
+        }
+        return object;
+    }
+}
+
+@end
+
+ObjcRef MatchaObjcBridge_() {
+    id root = [MatchaObjcBridge sharedBridge];
+    return MatchaTrackObjc(root);
+}
+
+ObjcRef MatchaObjcBool(bool v) {
+    return MatchaTrackObjc(@(v));
+}
+
+bool MatchaObjcToBool(ObjcRef v) {
+    NSNumber *val = MatchaGetObjc(v);
+    return val.boolValue;
+}
+
+ObjcRef MatchaObjcInt64(int64_t v) {
+    return MatchaTrackObjc(@(v));
+}
+
+int64_t MatchaObjcToInt64(ObjcRef v) {
+    NSNumber *val = MatchaGetObjc(v);
+    return val.longLongValue;
+}
+
+ObjcRef MatchaObjcFloat64(double v) {
+    return MatchaTrackObjc(@(v));
+}
+
+double MatchaObjcToFloat64(ObjcRef v) {
+    NSNumber *val = MatchaGetObjc(v);
+    return val.doubleValue;
+}
+
+ObjcRef MatchaObjcGoRef(GoRef v) {
+    return MatchaTrackObjc([[MatchaGoValue alloc] initWithGoRef:v]);
+}
+
+GoRef MatchaObjcToGoRef(ObjcRef v) {
+    MatchaGoValue *val = MatchaGetObjc(v);
+    return val.ref;
+}
+
+ObjcRef MatchaObjcString(CGoBuffer cstr) {
+    return MatchaTrackObjc(MatchaCGoBufferToNSString(cstr));
+}
+
+CGoBuffer MatchaObjcToString(ObjcRef v) {
+    return MatchaNSStringToCGoBuffer(MatchaGetObjc(v));
+}
+
+ObjcRef MatchaObjcBytes(CGoBuffer buf) {
+    return MatchaTrackObjc(MatchaCGoBufferToNSData(buf));
+}
+
+CGoBuffer MatchaObjcToBytes(ObjcRef v) {
+    NSData *data = MatchaGetObjc(v);
+    return MatchaNSDataToCGoBuffer(data);
+}
+
+// Array
+
+ObjcRef MatchaObjcArray() {
+    NSMutableArray *val = [NSMutableArray array];
+    return MatchaTrackObjc(val);
+}
+
+int64_t MatchaObjcArrayLen(ObjcRef v) {
+    NSMutableArray *val = MatchaGetObjc(v);
+    return val.count;
+}
+
+void MatchaObjcArrayAppend(ObjcRef v, ObjcRef elem) {
+    id obj = MatchaGetObjc(elem);
+    NSMutableArray *val = MatchaGetObjc(v);
+    [val addObject:obj];
+}
+
+ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t index) {
+    NSMutableArray *val = MatchaGetObjc(v);
+    return MatchaTrackObjc(val[index]);
+}
+
+// Call
+
+@interface _MatchaObjcCallSentinel : NSObject
+@end
+@implementation _MatchaObjcCallSentinel
+@end
+
+ObjcRef MatchaObjcCallSentinel() {
+    _MatchaObjcCallSentinel *sentinel = [[_MatchaObjcCallSentinel alloc] init];
+    return MatchaTrackObjc(sentinel);
+}
+
+ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer cstr, ObjcRef arguments) {
+    id obj = MatchaGetObjc(v);
+    NSArray *args = MatchaGetObjc(arguments);
+    SEL sel = NSSelectorFromString(MatchaCGoBufferToNSString(cstr));
+    NSMethodSignature *sig = [[obj class] instanceMethodSignatureForSelector:sel];
+    
+    // Build invocation.
+    NSInvocation *inv = [NSInvocation invocationWithMethodSignature:sig];
+    inv.selector = sel;
+    inv.target = obj;
+    for (int i=0; i < args.count; i++) {
+        id argObj = args[i];
+        NSNumber *num = (NSNumber *)argObj;
+        const char *type = [sig getArgumentTypeAtIndex:i+2];
+        
+        if (strcmp(type, "c") == 0) {
+            char arg = num.charValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "i") == 0) {
+            int arg = num.intValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "s") == 0) {
+            short arg = num.shortValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "l") == 0) {
+            long arg = num.longValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "q") == 0) {
+            long long arg = num.longLongValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "C") == 0) {
+            unsigned char arg = num.unsignedCharValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "I") == 0) {
+            unsigned int arg = num.unsignedIntValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "S") == 0) {
+            unsigned short arg = num.unsignedShortValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "L") == 0) {
+            unsigned long arg = num.unsignedLongValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "Q") == 0) {
+            unsigned long long arg = num.unsignedLongLongValue;
+            [inv setArgument:&arg atIndex:i+2];
+        }  else if (strcmp(type, "f") == 0) {
+            float arg = num.floatValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "d") == 0) {
+            double arg = num.doubleValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "B") == 0) {
+            bool arg = num.boolValue;
+            [inv setArgument:&arg atIndex:i+2];
+        } else if (strcmp(type, "@") == 0) {
+            if ([argObj isKindOfClass:[_MatchaObjcCallSentinel class]]) {
+                id nilObject = nil;
+                [inv setArgument:&nilObject atIndex:i+2];
+            } else {
+                [inv setArgument:&argObj atIndex:i+2];
+            }
+        } else {
+            @throw @"MatchaObjcCall: Unsupported argument type";
+        }
+    }
+    
+    // Invoke.
+    [inv invoke];
+        
+    // Get return value.
+    const char *type = [sig methodReturnType];
+    id ret = nil;
+    if (strcmp(type, "c") == 0 || strcmp(type, "i") == 0 || strcmp(type, "s") == 0 || strcmp(type, "l") == 0 || strcmp(type, "q") == 0
+        || strcmp(type, "C") == 0 || strcmp(type, "I") == 0 || strcmp(type, "S") == 0 || strcmp(type, "L") == 0 || strcmp(type, "Q") == 0
+        || strcmp(type, "f") == 0 || strcmp(type, "d") == 0 || strcmp(type, "B") == 0) {
+        
+        void *buf = malloc(sig.methodReturnLength);
+        [inv getReturnValue:&buf];
+        ret = [[NSNumber alloc] initWithBytes:buf objCType:type];
+        free(buf);
+    } else if (strcmp(type, "v") == 0) {
+        ret = nil;
+    } else if (strcmp(type, "@") == 0) {
+        void *retValue = nil;
+        [inv getReturnValue:&retValue];
+        ret = (__bridge id)retValue;
+    } else {
+        @throw @"MatchaObjcCall: Unsupported return type";
+    }
+    return MatchaTrackObjc(ret);
+}
+
+// Tracker
+
+ObjcRef MatchaTrackObjc(id value) {
+    return [[MatchaTracker sharedTracker] track:value];
+}
+
+id MatchaGetObjc(ObjcRef key) {
+    return [[MatchaTracker sharedTracker] get:key];
+}
+
+void MatchaUntrackObjc(ObjcRef key) {
+    [[MatchaTracker sharedTracker] untrack:key];
+}
+
+// Utilities
+
+NSString *MatchaCGoBufferToNSString(CGoBuffer cstr) {
+    if (cstr.len == 0) {
+        return @"";
+    }
+    return [[NSString alloc] initWithBytesNoCopy:cstr.ptr length:cstr.len encoding:NSUTF8StringEncoding freeWhenDone:YES];
+}
+
+CGoBuffer MatchaNSStringToCGoBuffer(NSString *str) {
+    int len = [str lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    if (len == 0) {
+        return (CGoBuffer){0};
+    }
+
+    char *buf = (char *)malloc(len);
+    assert(buf != NULL);
+    [str getBytes:buf maxLength:len usedLength:NULL encoding:NSUTF8StringEncoding options:0 range:NSMakeRange(0, str.length) remainingRange:NULL];
+  
+    CGoBuffer cstr;
+    cstr.ptr = buf;
+    cstr.len = len;
+    return cstr;
+}
+
+NSData *MatchaCGoBufferToNSData(CGoBuffer buf) {
+    if (buf.len == 0) {
+        return [NSData data];
+    }
+    return [[NSData alloc] initWithBytesNoCopy:buf.ptr length:buf.len freeWhenDone:YES];
+}
+
+CGoBuffer MatchaNSDataToCGoBuffer(NSData *data) {
+    int len = [data length];
+    if (len == 0) {
+        return (CGoBuffer){0};
+    }
+
+    char *buf = (char *)malloc(len);
+    assert(buf != NULL);
+    [data getBytes:buf length:len];
+  
+    CGoBuffer cstr;
+    cstr.ptr = buf;
+    cstr.len = len;
+    return cstr;
+}

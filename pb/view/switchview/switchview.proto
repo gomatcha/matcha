@@ -1,0 +1,13 @@
+syntax = "proto3";
+package switchview;
+
+option go_package = "switchview";
+option objc_class_prefix = "MatchaPBSwitchView";
+
+message View {
+    bool value = 1;
+}
+
+message Event {
+    bool value = 1;
+}

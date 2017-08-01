@@ -1,0 +1,9 @@
+syntax = "proto3";
+package progressview;
+
+option go_package = "progressview";
+option objc_class_prefix = "MatchaProgressViewPB";
+
+message View {
+    double progress = 1;
+}

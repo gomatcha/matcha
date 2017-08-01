@@ -1,0 +1,12 @@
+syntax = "proto3";
+package matcha;
+
+option go_package = "pb";
+option objc_class_prefix = "MatchaPB";
+
+message Color {
+    uint32 red = 1;
+    uint32 blue = 2;
+    uint32 green = 3;
+    uint32 alpha = 4;
+}

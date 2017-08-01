@@ -1,0 +1,34 @@
+syntax = "proto3";
+package matcha.view.stacknav;
+import "gomatcha.io/matcha/pb/color.proto";
+import "gomatcha.io/matcha/pb/text/text.proto";
+
+option go_package = "stacknav";
+option objc_class_prefix = "MatchaStackScreenPB";
+
+message ChildView {
+    int64 viewId = 1;
+    int64 barId = 2;
+    int64 screenId = 3;
+}
+
+message View {
+    repeated ChildView children = 1;
+    matcha.text.TextStyle titleTextStyle = 2;
+    matcha.text.TextStyle backTextStyle = 3;
+    matcha.Color barColor = 4;
+}
+
+message Bar {
+    string title = 1;
+    bool backButtonHidden = 7;
+    bool customBackButtonTitle = 2;
+    string backButtonTitle = 3;
+    int64 titleViewId = 4;
+    repeated int64 rightViewIds = 5;
+    repeated int64 leftViewIds = 6;
+}
+
+message StackEvent {
+    repeated int64 id = 1;
+}

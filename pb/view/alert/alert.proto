@@ -1,0 +1,23 @@
+syntax = "proto3";
+package matcha.view.alert;
+
+option go_package = "alert";
+option objc_class_prefix = "MatchaAlertPB";
+
+message View {
+    int64 id = 1;
+    string title = 2;
+    string message = 3;
+    repeated Button buttons = 4;
+}
+
+message Button {
+    string title = 1;
+    ButtonStyle style = 2;
+}
+
+enum ButtonStyle {
+    DEFAULT = 0;
+    CANCEL = 1;
+    DESTRUCTIVE = 2;
+}

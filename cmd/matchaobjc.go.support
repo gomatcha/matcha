@@ -1,0 +1,191 @@
+package bridge
+
+// Go support functions for Objective-C. Note that this
+// file is copied into and compiled with the generated
+// bindings.
+
+/*
+#cgo CFLAGS: -x objective-c -fobjc-arc -Werror
+#cgo LDFLAGS: -framework Foundation
+
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include "matchaobjc.h"
+*/
+import "C"
+
+import (
+    "runtime"
+    "reflect"
+)
+
+type Value struct {
+    ref int64
+}
+
+func newValue(ref C.ObjcRef) *Value {
+    v := &Value{ ref: int64(ref) }
+    if ref != 0 {
+        runtime.SetFinalizer(v, func(a *Value) {
+            C.MatchaUntrackObjc(a._ref())  
+        })
+    }
+    return v
+}
+
+func (v *Value)_ref() C.ObjcRef {
+    return C.ObjcRef(v.ref)
+}
+
+func Bridge() *Value {
+    return newValue(C.MatchaObjcBridge_())
+}
+
+func Nil() *Value {
+    return newValue(C.ObjcRef(0))
+}
+
+func (v *Value)IsNil() bool {
+    return v.ref == 0
+}
+
+func Bool(v bool) *Value {
+    return newValue(C.MatchaObjcBool(C.bool(v)))
+}
+
+func (v *Value)ToBool() bool {
+    defer runtime.KeepAlive(v)
+    return bool(C.MatchaObjcToBool(v._ref()))
+}
+
+func Int64(v int64) *Value {
+    return newValue(C.MatchaObjcInt64(C.int64_t(v)))
+}
+
+func (v *Value)ToInt64() int64 {
+    defer runtime.KeepAlive(v)
+    return int64(C.MatchaObjcToInt64(v._ref()))
+}
+
+func Float64(v float64) *Value {
+    return newValue(C.MatchaObjcFloat64(C.double(v)))
+}
+
+func (v *Value)ToFloat64() float64 {
+    defer runtime.KeepAlive(v)
+    return float64(C.MatchaObjcToFloat64(v._ref()))
+}
+
+func String(v string) *Value {
+    cstr := cString(v)
+    return newValue(C.MatchaObjcString(cstr));
+}
+
+func (v *Value)ToString() string {
+    defer runtime.KeepAlive(v)
+    buf := C.MatchaObjcToString(v._ref())
+    return goString(buf)
+}
+
+func Bytes(v []byte) *Value {
+    cbytes := cBytes(v)
+    return newValue(C.MatchaObjcBytes(cbytes))
+}
+
+func (v *Value)ToBytes() []byte {
+    defer runtime.KeepAlive(v)
+    buf := C.MatchaObjcToBytes(v._ref())
+    return goBytes(buf)
+}
+
+func Interface(v interface{}) *Value {
+    rv := reflect.ValueOf(v)
+    return newValue(C.MatchaObjcGoRef(matchaGoTrack(rv)))
+}
+
+func (v *Value)ToInterface() interface{} {
+    defer runtime.KeepAlive(v)
+    return matchaGoGet(C.MatchaObjcToGoRef(v._ref())).Interface()
+}
+
+func Array(a ...*Value) *Value {
+    ref := C.MatchaObjcArray()
+    array := newValue(ref);
+    for _, i := range a {
+        C.MatchaObjcArrayAppend(ref, i._ref())
+    }
+    return array
+}
+
+func (v *Value)ToArray() []*Value {
+    defer runtime.KeepAlive(v)
+    ref := v._ref()
+    length := int64(C.MatchaObjcArrayLen(v._ref()))
+    slice := make([]*Value, length)
+    for i := int64(0); i < length; i++ {
+        slice[i] = newValue(C.MatchaObjcArrayAt(ref, C.int64_t(i)))
+    }
+    return slice
+}
+
+func callSentinel() *Value {
+    return newValue(C.MatchaObjcCallSentinel())
+}
+
+// Call accepts `nil` in its variadic arguments
+func (v *Value)Call(s string, args ...*Value) *Value {
+    defer runtime.KeepAlive(v)
+    
+    // Can't pass nil through NSArray so put a sentinel in.
+    for i, elem := range args {
+        if elem == nil || elem.IsNil() {
+            args[i] = callSentinel()
+        }
+    }
+    
+    argsValue := Nil()
+    if len(args) > 0 {
+        argsValue = Array(args...)
+        defer runtime.KeepAlive(argsValue)
+    }
+    
+    return newValue(C.MatchaObjcCall(v._ref(), cString(s), argsValue._ref()))
+}
+
+func cBytes(v []byte) C.CGoBuffer {
+    var cstr C.CGoBuffer
+    if len(v) == 0 {
+        cstr = C.CGoBuffer{}
+    } else {
+        cstr = C.CGoBuffer {
+            ptr: C.CBytes(v),
+            len: C.int64_t(len(v)),
+        }
+    }
+    return cstr
+}
+
+func cString(v string) C.CGoBuffer {
+    var cstr C.CGoBuffer 
+    if len(v) == 0 {
+        cstr = C.CGoBuffer{}
+    } else {
+        cstr = C.CGoBuffer{
+            ptr: C.CBytes([]byte(v)),
+            len: C.int64_t(len(v)),
+        }
+    }
+    return cstr
+}
+
+func goString(buf C.CGoBuffer) string {
+    defer C.free(buf.ptr)
+    str := C.GoBytes(buf.ptr, C.int(buf.len))
+    return string(str)
+}
+
+func goBytes(buf C.CGoBuffer) []byte {
+    defer C.free(buf.ptr)
+    return C.GoBytes(buf.ptr, C.int(buf.len))
+}

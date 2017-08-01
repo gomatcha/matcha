@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:SampleApp/SampleApp.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../../ios/Matcha/Matcha.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../../ios/MatchaBridge/MatchaBridge.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../../ios/Protobuf/Protobuf.xcodeproj">
+   </FileRef>
+</Workspace>

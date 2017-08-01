@@ -1,0 +1,10 @@
+syntax = "proto3";
+package matcha.view.button;
+import "gomatcha.io/matcha/pb/text/text.proto";
+
+option go_package = "button";
+option objc_class_prefix = "MatchaButtonPB";
+
+message View {
+    matcha.text.StyledText styledText = 1;
+}
