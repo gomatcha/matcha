@@ -1,16 +1,17 @@
 High:
+* DOCS!!!!
 * Delay any ui events while viwecontroller is updating.
 * Scroll is forcing a relayout.
 
 Medium:
-* Rotation / orientation
-* Rebuild settings app, Todo App.
+* Rebuild Instagram.
 * Multiple view controllers.
 * Picker
 * TextField
 * Optimize middleware so they aren't called on every view.
 
 Low:
+* Rotation / orientation
 * Skip "ctx view.Context, key string, " paramater on views we know are top level?
 * Improve function call performance.
 * Switching quickly between navigation item causes visual glitch. 2 quick backs.
@@ -26,6 +27,7 @@ Low:
 * Custom painters.
 * Compile a list of things that should be easy to do and implement them. Button activation cancelled by vertical scrolling but not horizontal, Pinch to zoom, Highlighting a view and dragging outside of it and back in., Horizontal swipe on tableview to show delete button, Touch driven animations. AKA swipe back to navigate.
 * Building for iPhone 5 Simulator doesn't work.
+* Guide.Insets, GUide.Transform? Layout.Insets(top, left, bottom, right)?
 
 Very Low:
 * Statusbar color
@@ -46,11 +48,7 @@ Bugs:
 
 Documentation:
 * cmd
-* comm
-* store
-* env
 * examples
-* layout
 
 Pro:
 * Webview

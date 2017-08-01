@@ -96,26 +96,26 @@ func (v *TutorialView) Build(ctx *view.Context) view.Model {
 
     // Get the textview for the given key (hellotext), either initializing it or fetching
     // the previous one.
-    textv := textview.New(ctx, "hellotext")
-    textv.String = "Hello World"
-    textv.Style.SetTextColor(colornames.Red)
-    textv.Style.SetFont(text.Font{
+    child := textview.New(ctx, "hellotext")
+    child.String = "Hello World"
+    child.Style.SetTextColor(colornames.Red)
+    child.Style.SetFont(text.Font{
         Family: "Helvetica Neue",
         Face:   "Bold",
         Size:   50,
     })
-    textv.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
+    child.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
 
-    // Layout is primarily done using a constraints. More info can be
+    // Layout is primarily done using constraints. More info can be
     // found in the matcha/layout/constraints docs.
-    l.Add(textv, func(s *constraint.Solver) {
+    l.Add(child, func(s *constraint.Solver) {
         s.Top(20)
         s.Left(0)
     })
 
     // Returns the view's children, layout, and styling.
     return view.Model{
-        Children: []view.View{textv},
+        Children: []view.View{child},
         Layouter: l,
         Painter:  &paint.Style{BackgroundColor: colornames.Lightgray},
     }
@@ -137,7 +137,7 @@ func init() {
 }
 ```
 
-Build the Go code.
+Build the Go code by running the following in the terminal.
 
 ```
 matcha build github.com/overcyn/tutorial
@@ -153,7 +153,10 @@ And replace `application:didFinishLaunchingWithOptions:` with the following.
 
 ```objectivec
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+    // Call the function we registered with the objc bridge. This creates a view.Root containing our view.
     MatchaGoValue *rootVC = [[[MatchaGoValue alloc] initWithFunc:@"github.com/overcyn/tutorial New"] call:nil args:nil][0];
+    
+    // Create a MatchaViewController and display our view.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [[MatchaViewController alloc] initWithGoValue:rootVC];
     [self.window makeKeyAndVisible];
@@ -165,13 +168,17 @@ And run your application! Well done!
 
 ![tutorial-5](docs/tutorial-5.png)
 
+### Next steps
+
+More examples can be found in the [examples](https://github.com/gomatcha/matcha/tree/master/examples) directory. The [Todo app](https://github.com/gomatcha/matcha/blob/master/examples/todo/todo.go) is a great place to start. If you have questions, get help on our [Slack channel](https://gophers.slack.com/messages/matcha) or on [Twitter](http://twitter.com/gomatchaio).
+
 ### FAQ
 
 #### Is there Bitcode support?
 
 Bitcode is an LLVM feature that is not supported by Go at this time.
 
-#### What are other similar libaries?
+#### What are other similar Go libaries?
 
 * https://github.com/golang/mobile
 * https://github.com/murlokswarm/app

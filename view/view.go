@@ -1,3 +1,4 @@
+// Package view provides the view component library.
 package view
 
 import (

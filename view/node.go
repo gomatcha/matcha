@@ -32,6 +32,7 @@ type middleware interface {
 	Key() string
 }
 
+// Root contains your view hierarchy.
 type Root struct {
 	id     int64
 	root   *root
@@ -189,19 +190,19 @@ func (ctx *Context) prev(key string, prefix string) View {
 	return v
 }
 
-// PrevModel returns the last result of View.Build().
-func (ctx *Context) PrevModel() *Model {
-	if ctx.parent != nil {
-		return ctx.PrevModel()
-	}
-	if !ctx.valid {
-		panic("view.Context.PrevModel() called on invalid context")
-	}
-	if ctx.node == nil {
-		return nil
-	}
-	return ctx.node.model
-}
+// // PrevModel returns the last result of View.Build().
+// func (ctx *Context) PrevModel() *Model {
+// 	if ctx.parent != nil {
+// 		return ctx.PrevModel()
+// 	}
+// 	if !ctx.valid {
+// 		panic("view.Context.PrevModel() called on invalid context")
+// 	}
+// 	if ctx.node == nil {
+// 		return nil
+// 	}
+// 	return ctx.node.model
+// }
 
 // NewEmbed generates a new Embed for a given key. NewEmbed is a convenience around NewEmbed(ctx.NewId(key)).
 func (ctx *Context) NewEmbed(key string) Embed {
@@ -269,6 +270,7 @@ func (ctx *Context) WithPrefix(key string) *Context {
 // 	return ctx.node.id
 // }
 
+// Path returns the path of Ids from the root to the view.
 func (ctx *Context) Path() []matcha.Id {
 	if ctx.parent != nil {
 		return ctx.parent.Path()
