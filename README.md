@@ -129,7 +129,7 @@ import "gomatcha.io/bridge"
 
 func init() {
     // Registers a function with the objc bridge. This function returns
-    // a view.Root, which can be display in MatchaViewController.
+    // a view.Root, which can be displayed in a MatchaViewController.
     bridge.RegisterFunc("github.com/overcyn/tutorial New", func() *view.Root {
         // Call the TutorialView initializer.
         return view.NewRoot(New(nil, ""))
@@ -153,12 +153,12 @@ And replace `application:didFinishLaunchingWithOptions:` with the following.
 
 ```objectivec
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    // Call the function we registered with the objc bridge. This creates a view.Root containing our view.
-    MatchaGoValue *rootVC = [[[MatchaGoValue alloc] initWithFunc:@"github.com/overcyn/tutorial New"] call:nil args:nil][0];
+    // Call the function we registered with the objc bridge. This creates a view.Root containing our TutorialView.
+    MatchaGoValue *rootView = [[[MatchaGoValue alloc] initWithFunc:@"github.com/overcyn/tutorial New"] call:nil args:nil][0];
     
-    // Create a MatchaViewController and display our view.
+    // Create a MatchaViewController and display the view.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[MatchaViewController alloc] initWithGoValue:rootVC];
+    self.window.rootViewController = [[MatchaViewController alloc] initWithGoValue:rootView];
     [self.window makeKeyAndVisible];
     return YES;
 }
