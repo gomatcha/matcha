@@ -3,7 +3,7 @@ package animate
 import (
 	"math"
 
-	"golang.org/x/mobile/exp/sprite/clock"
+	"golang.org/x/mobile/exp/sprite/clock" // TODO(KD): remove dependency
 	"gomatcha.io/matcha/comm"
 )
 

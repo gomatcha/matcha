@@ -42,7 +42,7 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
-// Stack represents a list of Views. It can be manipulated outside of a Build() call.
+// Stack represents a list of views to be shown in the StackView. It can be manipulated outside of a Build() call.
 type Stack struct {
 	relay    comm.Relay
 	children []view.View

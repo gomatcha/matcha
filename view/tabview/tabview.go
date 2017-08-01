@@ -1,3 +1,5 @@
+// Package stackview implements a UITabBar component.
+//
 package tabview
 
 import (
@@ -16,21 +18,25 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
+// Tabs represents a list of views to be shown in the TabView. It can be manipulated outside of a Build() call.
 type Tabs struct {
 	relay         comm.Relay
 	children      []view.View
 	selectedIndex int
 }
 
+// SetViews sets the child views displayed in the tabview.
 func (s *Tabs) SetViews(ss ...view.View) {
 	s.children = ss
 	s.relay.Signal()
 }
 
+// Views returns the child views displayed in the tabview.
 func (s *Tabs) Views() []view.View {
 	return s.children
 }
 
+// SetSelectedIndex selects the tab at idx.
 func (s *Tabs) SetSelectedIndex(idx int) {
 	if idx != s.selectedIndex {
 		s.selectedIndex = idx
@@ -38,14 +44,17 @@ func (s *Tabs) SetSelectedIndex(idx int) {
 	}
 }
 
+// SelectedIndex returns the index of the selected tab.
 func (s *Tabs) SelectedIndex() int {
 	return s.selectedIndex
 }
 
+// Notify implements the comm.Notifier interface.
 func (s *Tabs) Notify(f func()) comm.Id {
 	return s.relay.Notify(f)
 }
 
+// Unnotify implements the comm.Notifier interface.
 func (s *Tabs) Unnotify(id comm.Id) {
 	s.relay.Unnotify(id)
 }
@@ -61,6 +70,7 @@ type View struct {
 	tabs                *Tabs
 }
 
+// New returns a new View, with the given ctx and key.
 func New(ctx *view.Context, key string) *View {
 	if v, ok := ctx.Prev(key).(*View); ok {
 		return v
@@ -70,6 +80,7 @@ func New(ctx *view.Context, key string) *View {
 	}
 }
 
+// Lifecyle implements the view.View interface.
 func (v *View) Lifecycle(from, to view.Stage) {
 	if view.ExitsStage(from, to, view.StageMounted) {
 		if v.tabs != nil {
@@ -78,6 +89,7 @@ func (v *View) Lifecycle(from, to view.Stage) {
 	}
 }
 
+// Build implements the view.View interface.
 func (v *View) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
@@ -216,6 +228,7 @@ type ChildView interface {
 	TabButton(*view.Context) *Button
 }
 
+// Button describes a UITabBarItem.
 type Button struct {
 	Title        string
 	Icon         image.Image
