@@ -5,13 +5,15 @@
 //  	view.Embed
 //  	stack *stackview.Stack
 //  }
-//  func NewAppView() *AppView {
-//  	home := basicview.New(nil, "")
-//  	home.Painter = &paint.Style{BackgroundColor: colornames.Red}
-//
-//  	stack := &stackview.Stack{}
-//  	stack.SetViews(home)
-//  	return &AppView{stack: stack}
+//  func NewAppView(ctx *view.Context, key string) *AppView {
+//  	child := basicview.New(nil, "")
+//  	child.Painter = &paint.Style{BackgroundColor: colornames.Red}
+//  	appview := &AppView{
+//  		Embed: ctx.NewEmbed(key),
+//  		stack: &stackview.Stack{},
+//  	}
+//  	appview.stack.SetViews(child)
+//  	return appview
 //  }
 //  func (v *AppView) Build(ctx *view.Context) view.Model {
 //  	child := stackview.New(ctx, "stack")

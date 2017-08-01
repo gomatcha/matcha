@@ -14,48 +14,42 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/stackscreen New", func() *view.Root {
-		return view.NewRoot(NewAppView())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/stackview New", func() *view.Root {
+		app := &App{
+			stack: &stackview.Stack{},
+		}
+
+		view1 := NewTouchView(nil, "")
+		view1.Color = colornames.Blue
+		bar1 := &stackview.Bar{
+			Title: "Title 1",
+		}
+
+		view2 := NewTouchView(nil, "")
+		view2.Color = colornames.Red
+		bar2 := &stackview.Bar{
+			Title: "Title 2",
+		}
+
+		view3 := NewTouchView(nil, "")
+		view3.Color = colornames.Yellow
+		view4 := NewTouchView(nil, "")
+		view4.Color = colornames.Green
+
+		v := stackview.New(nil, "")
+		v.Stack = app.stack
+		v.Stack.SetViews(
+			stackview.WithBar(view1, bar1),
+			stackview.WithBar(view2, bar2),
+			view3,
+			view4,
+		)
+		return view.NewRoot(v)
 	})
 }
 
 type App struct {
 	stack *stackview.Stack
-}
-
-func NewAppView() view.View {
-	app := &App{}
-
-	screen1 := NewTouchScreen(app, colornames.Blue)
-	bar1 := &stackview.Bar{
-		Title: "Title 1",
-	}
-
-	screen2 := NewTouchScreen(app, colornames.Red)
-	bar2 := &stackview.Bar{
-		Title: "Title 2",
-	}
-
-	screen3 := NewTouchScreen(app, colornames.Yellow)
-	screen4 := NewTouchScreen(app, colornames.Green)
-
-	app.stack = &stackview.Stack{}
-	app.stack.SetViews(
-		stackview.WithBar(screen1, bar1),
-		stackview.WithBar(screen2, bar2),
-		screen3,
-		screen4,
-	)
-
-	v := stackview.New(nil, "")
-	v.Stack = app.stack
-	return v
-}
-
-func NewTouchScreen(app *App, c color.Color) view.View {
-	chl := NewTouchView(nil, "", app)
-	chl.Color = c
-	return chl
 }
 
 type TouchView struct {
