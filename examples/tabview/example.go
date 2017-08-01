@@ -13,56 +13,49 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/tabview New", func() *view.Root {
-		return view.NewRoot(NewAppView())
+		app := &App{tabs: &tabview.Tabs{}}
+
+		view1 := NewTouchView(nil, "", app)
+		view1.Color = colornames.Blue
+		button1 := &tabview.Button{
+			Title: "Title 1",
+			Badge: "badge",
+			// Icon:         env.MustLoadImage("TabCamera"),
+			// SelectedIcon: env.MustLoadImage("TabCameraFilled"),
+		}
+
+		view2 := NewTouchView(nil, "", app)
+		view2.Color = colornames.Red
+		button2 := &tabview.Button{
+			Title: "Title 2",
+			// Icon:         env.MustLoadImage("TabMap"),
+			// SelectedIcon: env.MustLoadImage("TabMapFilled"),
+		}
+
+		view3 := NewTouchView(nil, "", app)
+		view3.Color = colornames.Yellow
+
+		view4 := NewTouchView(nil, "", app)
+		view4.Color = colornames.Green
+
+		v := tabview.New(nil, "")
+		v.BarColor = colornames.White
+		v.SelectedColor = colornames.Red
+		v.UnselectedColor = colornames.Darkgray
+		v.Tabs = app.tabs
+		v.Tabs.SetSelectedIndex(1)
+		v.Tabs.SetViews(
+			tabview.WithButton(view1, button1),
+			tabview.WithButton(view2, button2),
+			view3,
+			view4,
+		)
+		return view.NewRoot(v)
 	})
 }
 
 type App struct {
 	tabs *tabview.Tabs
-}
-
-func NewAppView() view.View {
-	app := &App{}
-
-	screen1 := NewTouchScreen(app, colornames.Blue)
-	options1 := &tabview.Button{
-		Title: "Title 1",
-		Badge: "badge",
-		// Icon:         env.MustLoadImage("TabCamera"),
-		// SelectedIcon: env.MustLoadImage("TabCameraFilled"),
-	}
-
-	screen2 := NewTouchScreen(app, colornames.Red)
-	options2 := &tabview.Button{
-		Title: "Title 2",
-		// Icon:         env.MustLoadImage("TabMap"),
-		// SelectedIcon: env.MustLoadImage("TabMapFilled"),
-	}
-
-	screen3 := NewTouchScreen(app, colornames.Yellow)
-	screen4 := NewTouchScreen(app, colornames.Green)
-
-	app.tabs = &tabview.Tabs{}
-	app.tabs.SetSelectedIndex(1)
-	app.tabs.SetViews(
-		tabview.WithButton(screen1, options1),
-		tabview.WithButton(screen2, options2),
-		screen3,
-		screen4,
-	)
-
-	v := tabview.New(nil, "")
-	v.BarColor = colornames.Red
-	v.SelectedColor = colornames.Blue
-	v.UnselectedColor = colornames.Green
-	v.Tabs = app.tabs
-	return v
-}
-
-func NewTouchScreen(app *App, c color.Color) view.View {
-	chl := NewTouchView(nil, "", app)
-	chl.Color = c
-	return chl
 }
 
 type TouchView struct {
