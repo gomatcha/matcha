@@ -47,8 +47,7 @@ Very Low:
 Bugs:
 
 Documentation:
-* cmd
-* examples
+
 
 Pro:
 * Webview

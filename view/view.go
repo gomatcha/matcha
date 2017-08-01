@@ -1,4 +1,67 @@
-// Package view provides the view component library.
+/*
+Package view provides the component library.
+
+View
+
+Components in Matcha must implement the View interface, which has the following
+five methods. This provides everything that is needed to render your view.
+
+ Build(*Context) Model
+Build is the most important method. It is similar to React's render() function.
+When your view updates and needs to be displayed, Build is called to get the view's children, layout,
+paint style, options, etc. These are returned in the Model struct.
+ Id() matcha.Id
+Id returns the view's unique identifier. This should be created in the view's initializer and not change
+over the lifetime of the view. New identifiers can be created by calling Context.NewId() or Context.NewEmbed().
+ Lifecycle(from, to Stage)
+Lifecycle gets called as a view gets displayed or hidden. A view may cross through multiple
+lifecycle stages at the same time. For example a view can start at StageDead and
+jump directly to StageVisible. If the view needs to perform an action on mount,
+EntersStage(from, to, StageMounted) can be used to track this transition.
+ Notify(f func()) comm.Id
+ Unnotify(id comm.Id)
+Finally we have Notify and Unnotify which provide a way for views to signal to the framework that they
+have changed and need updating. See the comm.Notifier docs for more information.
+
+Embed
+
+Implementing all these methods for every view would be a hassle, so instead we can
+use Go's embedding functionality with the Embed struct to provide a basic
+implementation of these methods. Embed additionally adds the Subscribe(), Unsubscribe(),
+and Signal() methods to simplify signaling for updates. We see an example of this below.
+
+ type ExampleView struct {
+ 	view.Embed
+ 	notifier comm.Notifier
+ }
+ func New(ctx *view.Context, key string, n comm.Notifier) *ExampleView {
+ 	if v, ok := ctx.Prev(key).(*ExampleView); ok {
+ 		return v
+ 	}
+ 	return &ExampleView{Embed: ctx.NewEmbed(key), notifier: n}
+ }
+ func (v *TutorialView) Lifecycle(from, to view.Stage) {
+ 	if view.EntersStage(from, to, view.StageMounted) {
+ 		// Update anytime v.n changes.
+ 		v.Subscribe(v.n)
+ 	} else if view.ExitsStage(from, to, view.StageMounted) {
+ 		// We must unsubscribe when the view is unmounted or risk a leak.
+ 		v.Unsubscribe(v.n)
+ 	}
+ }
+ func (v *TutorialView) Build(ctx *view.Context) view.Model {
+ 	child := button.New(ctx, "hellotext")
+ 	child.String = "Click me"
+ 	child.OnClick = func() {
+ 		// Trigger the view to rebuild when the button is clicked.
+ 		v.Signal()
+ 	}
+ 	return view.Model{
+ 		Children: []view.View{child},
+ 	}
+ }
+
+*/
 package view
 
 import (
