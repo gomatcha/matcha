@@ -1,3 +1,29 @@
+// Package stackview implements a UINavigationController component.
+//
+// Building a simple StackView:
+//  type AppView struct {
+//  	view.Embed
+//  	stack *stackview.Stack
+//  }
+//  func NewAppView() *AppView {
+//  	home := basicview.New(nil, "")
+//  	home.Painter = &paint.Style{BackgroundColor: colornames.Red}
+//
+//  	stack := &stackview.Stack{}
+//  	stack.SetViews(home)
+//  	return &AppView{stack: stack}
+//  }
+//  func (v *AppView) Build(ctx *view.Context) view.Model {
+//  	child := stackview.New(ctx, "stack")
+//  	child.Stack = v.stack
+//  	return view.Model{
+//  		Children: []view.View{child},
+//  	}
+//  }
+// Modifying the stack:
+//  child := basicview.New(nil, "")
+//  child.Painter = &paint.Style{BackgroundColor: colornames.Green}
+//  v.Stack.Push(child)
 package stackview
 
 import (
@@ -16,6 +42,7 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
+// Stack represents a list of Views. It can be manipulated outside of a Build() call.
 type Stack struct {
 	relay    comm.Relay
 	children []view.View

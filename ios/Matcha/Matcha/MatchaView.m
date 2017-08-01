@@ -101,7 +101,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
         if (self.view == nil && self.viewController == nil) {
             NSLog(@"Cannot find corresponding view or view controller for node: %@", buildNode.nativeViewName);
         }
-        self.view.autoresizingMask = UIViewAutoresizingNone;
+        self.materializedView.autoresizingMask = UIViewAutoresizingNone;
         self.view.backgroundColor = [UIColor clearColor];
     }
     

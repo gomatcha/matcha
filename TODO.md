@@ -1,5 +1,4 @@
 High:
-* Take screenshots / videos of a running app.
 * Delay any ui events while viwecontroller is updating.
 * Scroll is forcing a relayout.
 
@@ -54,7 +53,6 @@ Documentation:
 * examples
 * layout
 * view 
-    * stackscreen
     * tabscrceen
     * textinput
     * textview
