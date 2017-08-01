@@ -1,3 +1,4 @@
+// Package complex provides examples of many matcha subpackages working together.
 package complex
 
 import (

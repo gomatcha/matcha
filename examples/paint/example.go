@@ -1,3 +1,4 @@
+// Package paint provides examples of how to use the matcha/paint package.
 package paint
 
 import (

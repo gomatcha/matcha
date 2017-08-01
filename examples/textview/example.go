@@ -1,3 +1,4 @@
+// Package textview provides examples of how to use the matcha/view/textview package.
 package textview
 
 import (

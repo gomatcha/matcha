@@ -1,3 +1,4 @@
+// Package table provides examples of how to use the matcha/layout/table package.
 package table
 
 import (

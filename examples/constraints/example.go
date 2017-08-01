@@ -1,3 +1,4 @@
+// Package constraints provides examples of how to use the matcha/layout/constraint package.
 package constraints
 
 import (

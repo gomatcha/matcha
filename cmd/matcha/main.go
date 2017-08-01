@@ -1,3 +1,4 @@
+// Package matcha provides the implementation for the matcha command line tool.
 package main
 
 import (

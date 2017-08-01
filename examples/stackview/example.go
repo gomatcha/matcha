@@ -1,3 +1,4 @@
+// Package stackview provides examples of how to use the matcha/view/stackview package.
 package stackview
 
 import (
@@ -19,21 +20,21 @@ func init() {
 			stack: &stackview.Stack{},
 		}
 
-		view1 := NewTouchView(nil, "")
+		view1 := NewTouchView(nil, "", app)
 		view1.Color = colornames.Blue
 		bar1 := &stackview.Bar{
 			Title: "Title 1",
 		}
 
-		view2 := NewTouchView(nil, "")
+		view2 := NewTouchView(nil, "", app)
 		view2.Color = colornames.Red
 		bar2 := &stackview.Bar{
 			Title: "Title 2",
 		}
 
-		view3 := NewTouchView(nil, "")
+		view3 := NewTouchView(nil, "", app)
 		view3.Color = colornames.Yellow
-		view4 := NewTouchView(nil, "")
+		view4 := NewTouchView(nil, "", app)
 		view4.Color = colornames.Green
 
 		v := stackview.New(nil, "")
@@ -76,7 +77,9 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 			// v.bar.Title = "Updated"
 			// v.Signal()
 
-			v.app.stack.Push(NewTouchScreen(v.app, colornames.Purple))
+			child := NewTouchView(nil, "", v.app)
+			child.Color = colornames.Purple
+			v.app.stack.Push(child)
 		},
 	}
 

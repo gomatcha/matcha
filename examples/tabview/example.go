@@ -1,3 +1,4 @@
+// Package tabview provides examples of how to use the matcha/view/tabview package.
 package tabview
 
 import (

@@ -1,3 +1,4 @@
+// Package settings provides a skeleton implemention the iOS settings UI.
 package settings
 
 import (
@@ -22,19 +23,26 @@ import (
 	"gomatcha.io/matcha/view/textview"
 )
 
+var (
+	cellColor            = color.Gray{255}
+	cellColorHighlighted = color.Gray{217}
+	chevronColor         = color.RGBA{199, 199, 204, 255}
+	separatorColor       = color.RGBA{203, 202, 207, 255}
+	backgroundColor      = color.RGBA{239, 239, 244, 255}
+	subtitleColor        = color.Gray{142}
+	titleColor           = color.Gray{0}
+	spacerTitleColor     = color.Gray{102}
+)
+
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/settings New", func() *view.Root {
-		return view.NewRoot(NewAppView())
+		app := NewApp()
+
+		v := stackview.New(nil, "")
+		v.Stack = app.Stack
+		v.Stack.SetViews(NewRootView(nil, "", app))
+		return view.NewRoot(v)
 	})
-}
-
-func NewAppView() view.View {
-	app := NewApp()
-	app.Stack.SetViews(NewRootView(nil, "", app))
-
-	v := stackview.New(nil, "")
-	v.Stack = app.Stack
-	return v
 }
 
 type RootView struct {
@@ -206,17 +214,6 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 func (v *RootView) StackBar(ctx *view.Context) *stackview.Bar {
 	return &stackview.Bar{Title: "Settings Example"}
 }
-
-var (
-	cellColor            = color.Gray{255}
-	cellColorHighlighted = color.Gray{217}
-	chevronColor         = color.RGBA{199, 199, 204, 255}
-	separatorColor       = color.RGBA{203, 202, 207, 255}
-	backgroundColor      = color.RGBA{239, 239, 244, 255}
-	subtitleColor        = color.Gray{142}
-	titleColor           = color.Gray{0}
-	spacerTitleColor     = color.Gray{102}
-)
 
 func AddSeparators(ctx *view.Context, vs []view.View) []view.View {
 	ctx.WithPrefix("sep")

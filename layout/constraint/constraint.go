@@ -8,7 +8,7 @@ Package constraint implements a constraint-based layout system.
 	 // Solves for the position of v, given the constraints on s. The result is a 400x100 frame.
 	 l.Solve(func(s *constraint.Solver) {
 	 	s.Width(400)
-	 	s.Width(200) // If two constraints conflict, the earlier one is preferred.
+	 	s.Width(200) // If two constraints conflict, the later one is ignored.
 	 	s.Height(100)
  	 }
 

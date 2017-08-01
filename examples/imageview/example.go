@@ -1,3 +1,4 @@
+// Package imageview provides examples of how to use the matcha/view/imageview package.
 package imageview
 
 import (

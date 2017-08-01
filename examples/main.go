@@ -1,3 +1,4 @@
+// Package examples provides examples for various aspects of the framework.
 package examples
 
 import (

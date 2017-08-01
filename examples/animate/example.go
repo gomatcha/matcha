@@ -1,3 +1,4 @@
+// Package animate provides examples of how to use the matcha/animate package.
 package animate
 
 import (

@@ -1,3 +1,4 @@
+// Package custom provides examples of how to import custom components.
 package custom
 
 import (

@@ -1,3 +1,4 @@
+// Package cmd provides supporting functions for the matcha command line tool.
 package cmd
 
 import (

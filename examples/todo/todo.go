@@ -1,3 +1,4 @@
+// Package todo provides an example of a basic Todo app.
 package todo
 
 import (
