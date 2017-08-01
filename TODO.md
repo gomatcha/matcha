@@ -48,7 +48,6 @@ Documentation:
 * cmd
 * comm
 * store
-* docs
 * env
 * examples
 * layout

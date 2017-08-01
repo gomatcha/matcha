@@ -13,15 +13,16 @@ import (
 	"gomatcha.io/matcha/pb/env"
 )
 
-// Disable "Compress PNG Files" and "Remove Text Metadata from PNG Files" if loading image resources is not working.
 type Resource struct {
 	path string
 }
 
+// Load loads a resource at path.
 func Load(path string) (*Resource, error) {
 	return &Resource{path: path}, nil
 }
 
+// MustLoadImage loads the resource at path, or panics on error.
 func MustLoad(path string) *Resource {
 	res, err := Load(path)
 	if err != nil {
@@ -36,6 +37,7 @@ func (r *Resource) MarshalProtobuf() *env.Resource {
 	}
 }
 
+// Disable "Compress PNG Files" and "Remove Text Metadata from PNG Files" if loading image resources is not working.
 type ImageResource struct {
 	path  string
 	rect  image.Rectangle
@@ -43,6 +45,7 @@ type ImageResource struct {
 	scale float64
 }
 
+// MustLoadImage loads the image at path.
 func LoadImage(path string) (*ImageResource, error) {
 	propData := bridge.Bridge().Call("propertiesForResource:", bridge.String(path)).ToInterface().([]byte)
 	props := &pb.ImageProperties{}
@@ -59,6 +62,7 @@ func LoadImage(path string) (*ImageResource, error) {
 	}, nil
 }
 
+// MustLoadImage loads the image at path, or panics on error.
 func MustLoadImage(path string) *ImageResource {
 	res, err := LoadImage(path)
 	if err != nil {
@@ -67,6 +71,7 @@ func MustLoadImage(path string) *ImageResource {
 	return res
 }
 
+// ColorModel implements the image.Image interface.
 func (res *ImageResource) ColorModel() color.Model {
 	if res.image == nil {
 		return color.RGBAModel
@@ -74,10 +79,12 @@ func (res *ImageResource) ColorModel() color.Model {
 	return res.image.ColorModel()
 }
 
+// Bounds implements the image.Image interface.
 func (res *ImageResource) Bounds() image.Rectangle {
 	return res.rect
 }
 
+// At implements the image.Image interface.
 func (res *ImageResource) At(x, y int) color.Color {
 	if res.image == nil {
 		res.load()
@@ -85,6 +92,7 @@ func (res *ImageResource) At(x, y int) color.Color {
 	return res.image.At(x, y)
 }
 
+// Scale returns the scale factor of the image.
 func (res *ImageResource) Scale() float64 {
 	return res.scale
 }

@@ -1,9 +1,12 @@
+// Package comm provides primitives for communication.
 package comm
 
 import (
 	"sync"
 )
 
+// Relay implements the Notifier interface, and provides methods for triggering notifications
+// and republishing notifications from other notifiers. It can be embeded into other structs.
 type Relay struct {
 	mu    sync.Mutex
 	subs  map[Notifier]Id
@@ -11,6 +14,9 @@ type Relay struct {
 	maxId Id
 }
 
+// Subscribes to notifications from n. When n posts a notification, r will also post a
+// notification. For every Subscribe there should be a corresponding Unsubscribe
+// or memory leaks may occur.
 func (r *Relay) Subscribe(n Notifier) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -34,6 +40,7 @@ func (r *Relay) Subscribe(n Notifier) {
 	r.subs[n] = id
 }
 
+// Unsubscribes from n.
 func (r *Relay) Unsubscribe(n Notifier) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -46,6 +53,7 @@ func (r *Relay) Unsubscribe(n Notifier) {
 	delete(r.subs, n)
 }
 
+// Notify implements the Notifier interface.
 func (r *Relay) Notify(f func()) Id {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -58,6 +66,7 @@ func (r *Relay) Notify(f func()) Id {
 	return r.maxId
 }
 
+// Unnotify implements the Notifier interface.
 func (r *Relay) Unnotify(id Id) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -71,6 +80,7 @@ func (r *Relay) Unnotify(id Id) {
 	delete(r.funcs, id)
 }
 
+// Signal causes all Notifiers on r to be triggered.
 func (r *Relay) Signal() {
 	r.mu.Lock()
 	defer r.mu.Unlock()
