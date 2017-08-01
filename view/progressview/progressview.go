@@ -1,4 +1,4 @@
-// Package button implements a native progress view.
+// Package progressview implements a native progress view.
 package progressview
 
 import (

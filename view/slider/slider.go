@@ -1,4 +1,4 @@
-// Package segmentview implements a native slider.
+// Package slider implements a native slider.
 package slider
 
 import (

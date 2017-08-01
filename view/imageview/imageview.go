@@ -1,4 +1,4 @@
-// Package button implements a view that can display an image.
+// Package imageview implements a view that can display an image.
 package imageview
 
 import (

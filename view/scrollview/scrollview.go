@@ -1,4 +1,4 @@
-// Package button implements a native scroll view.
+// Package scrollview implements a native scroll view.
 package scrollview
 
 import (

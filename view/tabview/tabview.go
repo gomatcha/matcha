@@ -1,5 +1,4 @@
-// Package stackview implements a UITabBar component.
-//
+// Package tabview implements a UITabBar component.
 package tabview
 
 import (
