@@ -16,6 +16,8 @@ Package absolute implements a fixed layout system similar to HTML absolute posit
 package absolute
 
 import (
+	"math"
+
 	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
@@ -45,6 +47,7 @@ func (l *Layouter) Views() []view.View {
 
 // Layout implements the view.Layouter interface.
 func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+	// TODO(KD): Need to call layoutChild.
 	return l.Guide, l.childGuides
 }
 

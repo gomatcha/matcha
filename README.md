@@ -175,6 +175,7 @@ More examples can be found in the [examples](https://github.com/gomatcha/matcha/
 ### Further Documentation
 
 * [View](https://godoc.org/pkg/gomatcha.io/matcha/view)
+* [Layout](https://godoc.org/pkg/gomatcha.io/matcha/layout)
 
 ### FAQ
 
