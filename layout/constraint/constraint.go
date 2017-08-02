@@ -1,53 +1,53 @@
 /*
 Package constraint implements a constraint-based layout system.
 
- func (v *View) Build(ctx *view.Context) view.Model {
- 	 // Create a new constraint system.
-	 l := &constraint.Layouter{}
+	func (v *View) Build(ctx *view.Context) view.Model {
+		// Create a new constraint system.
+		l := &constraint.Layouter{}
 
-	 // Solves for the position of v, given the constraints on s. The result is a 400x100 frame.
-	 l.Solve(func(s *constraint.Solver) {
-	 	s.Width(400)
-	 	s.Width(200) // If two constraints conflict, the later one is ignored.
-	 	s.Height(100)
- 	 }
+		// Solves for the position of v, given the constraints on s. The result is a 400x100 frame.
+		l.Solve(func(s *constraint.Solver) {
+			s.Width(400)
+			s.Width(200) // If two constraints conflict, the later one is ignored.
+			s.Height(100)
+		})
 
-	 // Adds a child view and solves for its position relative to v. The result is a 5x10 frame pinned to the lower right corner of v.
-	 child1 := basicview.New(ctx, "child1")
-	 guide1 := l.Add(child1, func(s *constraint.Solver) {
-		 s.Width(5) // Left(), Top(), CenterX()... methods support constraining to floats.
-		 s.Height(10)
-		 s.TopEqual(l.Bottom()) // LeftEqual(), TopLess(), CenterXGreater()... methods support constraining to anchors.
-		 s.LeftEqual(l.Right())
-	 })
+		// Adds a child view and solves for its position relative to v. The result is a 5x10 frame pinned to the lower right corner of v.
+		child1 := basicview.New(ctx, "child1")
+		guide1 := l.Add(child1, func(s *constraint.Solver) {
+			s.Width(5) // Left(), Top(), CenterX()... methods support constraining to floats.
+			s.Height(10)
+			s.TopEqual(l.Bottom()) // LeftEqual(), TopLess(), CenterXGreater()... methods support constraining to anchors.
+			s.LeftEqual(l.Right())
+		})
 
-	 // Anchors can be manipulated outside of the solver function.
-	 verticalCenter := l.CenterX().Add(10)
+		// Anchors can be manipulated outside of the solver function.
+		verticalCenter := l.CenterX().Add(10)
 
-	 // Adds a child view that is twice as large as child1 and 10 points above the center v.
-	 child2 := basicview.New(ctx, "child2")
-	 _ = l.Add(child1, func(s *constraint.Solver) {
-		 s.WidthEqual(guide1.Width().Mul(2)) // Anchors can be added to and multiplied by constants.
-		 s.HeightEqual(guide1.Height().Mul(2))
-		 s.CenterXEqual(l.CenterX())
-		 s.CenterYEqual(verticalCenter.Add(10))
-	 })
+		// Adds a child view that is twice as large as child1 and 10 points above the center v.
+		child2 := basicview.New(ctx, "child2")
+		_ = l.Add(child1, func(s *constraint.Solver) {
+			s.WidthEqual(guide1.Width().Mul(2)) // Anchors can be added to and multiplied by constants.
+			s.HeightEqual(guide1.Height().Mul(2))
+			s.CenterXEqual(l.CenterX())
+			s.CenterYEqual(verticalCenter.Add(10))
+		})
 
-	 // Recalulates the constraints for child1.
-	 guide1.Solve(func(s *constraint.Solver) {
-	 	s.Width(40)
-	 	s.Height(30)
-	 	s.TopEqual(l.Bottom()) // The top and left position must be respecified, even though only the width and height have been updated.
-	 	s.LeftEqual(l.Right())
- 	 })
+		// Recalulates the constraints for child1.
+		guide1.Solve(func(s *constraint.Solver) {
+			s.Width(40)
+			s.Height(30)
+			s.TopEqual(l.Bottom()) // The top and left position must be respecified, even though only the width and height have been updated.
+			s.LeftEqual(l.Right())
+		})
 
- 	 // Solvers do not run simultaneously! Child2 is still 10x20 since at the time it was added Child1 was 5x10.
+		// Solvers do not run simultaneously! Child2 is still 10x20 since at the time it was added Child1 was 5x10.
 
-	 return view.Model{
-	 	Views: l.Views(),
-	 	Layouter:l,
- 	 }
- }
+		return view.Model{
+			Views:    l.Views(),
+			Layouter: l,
+		}
+	}
 
 If a child view is unconstrained in x or y, it will try to move as close to the center of the parent as possible.
 If the view is unconstrained in width or height, it will try to match the minGuide as close as possible.
@@ -601,7 +601,7 @@ const (
 )
 
 type Layouter struct {
-	// Guide represents the size of the view that the layouter is attached to. By default Guide is the same size as MinGuide.
+	// Guide represents the size of the view that the layouter is attached to. By default, Guide is the same size as MinGuide.
 	Guide
 	min            Guide
 	max            Guide

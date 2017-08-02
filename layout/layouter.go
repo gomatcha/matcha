@@ -73,8 +73,11 @@ type Context struct {
 	LayoutFunc func(matcha.Id, Point, Point) Guide
 }
 
+// The guide returned by LayoutChild will be positioned such that the minPoint is at 0,0.
 func (l *Context) LayoutChild(id matcha.Id, minSize, maxSize Point) Guide {
-	return l.LayoutFunc(id, minSize, maxSize)
+	g := l.LayoutFunc(id, minSize, maxSize)
+	g.Frame = g.Frame.Add(Pt(-g.Frame.Min.X, -g.Frame.Min.Y))
+	return g
 }
 
 // Guide represents the position of a view.

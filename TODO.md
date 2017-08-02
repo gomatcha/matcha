@@ -9,8 +9,6 @@ Medium:
 * Picker
 * TextField
 * Optimize middleware so they aren't called on every view.
-* Force the return of LayoutChild() to be positioned on the origin.
-* Add layout.Context.ChildIds()
 
 Low:
 * Rotation / orientation

@@ -16,8 +16,6 @@ Package absolute implements a fixed layout system similar to HTML absolute posit
 package absolute
 
 import (
-	"math"
-
 	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
