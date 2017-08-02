@@ -40,8 +40,10 @@ func (v *Value) SetValue(val float64) {
 }
 
 func (v *Value) setValue(val float64) {
-	v.value = val
-	v.relay.Signal()
+	if v.value != val {
+		v.value = val
+		v.relay.Signal()
+	}
 }
 
 // Run runs animation a on v. Cancels any previously running animations on v.

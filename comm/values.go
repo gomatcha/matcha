@@ -31,6 +31,8 @@ func (v *Float64Value) Value() float64 {
 
 // SetValue updates v.Value() and notifies any observers.
 func (v *Float64Value) SetValue(val float64) {
-	v.value = val
-	v.relay.Signal()
+	if val != v.value {
+		v.value = val
+		v.relay.Signal()
+	}
 }

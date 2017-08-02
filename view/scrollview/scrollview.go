@@ -32,6 +32,7 @@ type View struct {
 	ScrollEnabled            bool
 	ScrollPosition           *ScrollPosition
 	scrollPosition           *ScrollPosition
+	offset                   *layout.Point
 	OnScroll                 func(position layout.Point)
 
 	ContentChildren []view.View
@@ -50,7 +51,7 @@ func New(ctx *view.Context, key string) *View {
 		Direction:                Vertical,
 		ScrollIndicatorDirection: Vertical | Horizontal,
 		ScrollEnabled:            true,
-		scrollPosition:           &ScrollPosition{},
+		offset:                   &layout.Point{},
 	}
 }
 
@@ -61,11 +62,6 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	child.Layouter = v.ContentLayouter
 	child.Painter = v.ContentPainter
 
-	scrollPosition := v.ScrollPosition
-	if scrollPosition == nil {
-		scrollPosition = v.scrollPosition
-	}
-
 	var painter paint.Painter
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
@@ -75,7 +71,8 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		Painter:  painter,
 		Layouter: &layouter{
 			directions:     v.Direction,
-			scrollPosition: scrollPosition,
+			scrollPosition: v.ScrollPosition,
+			offset:         v.offset,
 		},
 		NativeViewName: "gomatcha.io/matcha/view/scrollview",
 		NativeViewState: &scrollview.View{
@@ -95,7 +92,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 				var offset layout.Point
 				(&offset).UnmarshalProtobuf(event.ContentOffset)
 
-				v.scrollPosition.SetValue(offset)
+				*v.offset = offset
 				if v.ScrollPosition != nil {
 					v.ScrollPosition.SetValue(offset)
 				}
@@ -109,7 +106,8 @@ func (v *View) Build(ctx *view.Context) view.Model {
 
 type layouter struct {
 	directions     Direction
-	scrollPosition *ScrollPosition // TODO(KD): Are we unnotifying this correctly?
+	scrollPosition *ScrollPosition
+	offset         *layout.Point
 }
 
 func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
@@ -123,9 +121,8 @@ func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layo
 		minSize.Y = 0
 	}
 
-	position := l.scrollPosition.Value()
 	g := ctx.LayoutChild(ctx.ChildIds[0], minSize, layout.Pt(math.Inf(1), math.Inf(1)))
-	g.Frame = layout.Rt(-position.X, -position.Y, g.Width()-position.X, g.Height()-position.Y)
+	g.Frame = layout.Rt(-l.offset.X, -l.offset.Y, g.Width()-l.offset.X, g.Height()-l.offset.Y)
 	gs[ctx.ChildIds[0]] = g
 
 	return layout.Guide{
@@ -134,10 +131,21 @@ func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layo
 }
 
 func (l *layouter) Notify(f func()) comm.Id {
-	return l.scrollPosition.Notify(f)
+	if l.scrollPosition == nil {
+		return 0
+	}
+	return l.scrollPosition.Notify(func() {
+		if *l.offset != l.scrollPosition.Value() {
+			*l.offset = l.scrollPosition.Value()
+			f()
+		}
+	})
 }
 
 func (l *layouter) Unnotify(id comm.Id) {
+	if l.scrollPosition == nil {
+		return
+	}
 	l.scrollPosition.Unnotify(id)
 }
 
