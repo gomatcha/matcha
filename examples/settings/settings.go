@@ -434,7 +434,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 		chevronView := imageview.New(ctx, "chevron")
 		chevronView.Image = app.MustLoadImage("TableArrow")
 		chevronView.ResizeMode = imageview.ResizeModeCenter
-		chevronView.Tint = chevronColor
+		chevronView.ImageTemplateColor = chevronColor
 
 		chevronGuide := l.Add(chevronView, func(s *constraint.Solver) {
 			s.RightEqual(rightAnchor.Add(-15))

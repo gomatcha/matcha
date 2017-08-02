@@ -17,13 +17,11 @@
 
 - (void)setNode:(MatchaBuildNode *)value {
     _node = value;
-    GPBAny *state = value.nativeViewState;
-    NSError *error = nil;
-    MatchaImageViewPBView *pbimageview = (id)[state unpackMessageClass:[MatchaImageViewPBView class] error:&error];
+    MatchaImageViewPBView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaImageViewPBView class] error:nil];
     
-    UIImage *image = [[UIImage alloc] initWithImageOrResourceProtobuf:pbimageview.image];
+    UIImage *image = [[UIImage alloc] initWithImageOrResourceProtobuf:view.image];
     
-    switch (pbimageview.resizeMode) {
+    switch (view.resizeMode) {
         case MatchaImageViewPBResizeMode_GPBUnrecognizedEnumeratorValue:
         case MatchaImageViewPBResizeMode_Fit:
             self.contentMode = UIViewContentModeScaleAspectFit;
@@ -38,8 +36,8 @@
             self.contentMode = UIViewContentModeCenter;
             break;
     }
-    if (pbimageview.hasTint) {
-        self.tintColor = [[UIColor alloc] initWithProtobuf:pbimageview.tint];
+    if (view.hasTint) {
+        self.tintColor = [[UIColor alloc] initWithProtobuf:view.tint];
         image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     }
     

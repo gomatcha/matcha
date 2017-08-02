@@ -72,7 +72,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	chl := imageview.New(ctx, "")
 	chl.ResizeMode = v.ResizeMode
 	chl.Image = v.image
-	chl.Tint = v.Tint
+	chl.ImageTemplateColor = v.Tint
 
 	var painter paint.Painter
 	if v.PaintStyle != nil {

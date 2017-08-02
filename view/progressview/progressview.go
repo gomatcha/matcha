@@ -12,6 +12,7 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
+// View implements a progess view.
 type View struct {
 	view.Embed
 	Progress         float64
@@ -31,6 +32,7 @@ func New(ctx *view.Context, key string) *View {
 	}
 }
 
+// Lifecycle implements the view.View interface.
 func (v *View) Lifecycle(from, to view.Stage) {
 	if view.ExitsStage(from, to, view.StageMounted) {
 		if v.progressNotifier != nil {
@@ -39,7 +41,7 @@ func (v *View) Lifecycle(from, to view.Stage) {
 	}
 }
 
-// Build implements view.View.
+// Build implements the view.View interface.
 func (v *View) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {

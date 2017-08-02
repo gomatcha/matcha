@@ -34,49 +34,15 @@ func (m ResizeMode) MarshalProtobuf() imageview.ResizeMode {
 	return imageview.ResizeMode(m)
 }
 
-type layouter struct {
-	bounds     image.Rectangle
-	scale      float64
-	resizeMode ResizeMode
-}
-
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
-	g := layout.Guide{Frame: layout.Rect{Max: ctx.MaxSize}}
-	switch l.resizeMode {
-	case ResizeModeFit:
-		imgRatio := float64(l.bounds.Dx()) / l.scale / float64(l.bounds.Dy()) / l.scale
-		maxRatio := ctx.MaxSize.X / ctx.MaxSize.Y
-		if imgRatio > maxRatio {
-			g.Frame.Max = layout.Pt(ctx.MaxSize.X, ctx.MaxSize.X/imgRatio)
-		} else {
-			g.Frame.Max = layout.Pt(ctx.MaxSize.Y/imgRatio, ctx.MaxSize.Y)
-		}
-	case ResizeModeFill:
-		fallthrough
-	case ResizeModeStretch:
-		g.Frame.Max = ctx.MaxSize
-	case ResizeModeCenter:
-		g.Frame.Max = layout.Pt(float64(l.bounds.Dx())/l.scale, float64(l.bounds.Dy())/l.scale)
-	}
-	return g, nil
-}
-
-func (l *layouter) Notify(f func()) comm.Id {
-	return 0 // no-op
-}
-
-func (l *layouter) Unnotify(id comm.Id) {
-	// no-op
-}
-
+// View implements a view that displays an image.
 type View struct {
 	view.Embed
-	Image      image.Image
-	ResizeMode ResizeMode
-	Tint       color.Color
-	PaintStyle *paint.Style
-	image      image.Image
-	pbImage    *pb.ImageOrResource
+	Image              image.Image
+	ResizeMode         ResizeMode
+	ImageTemplateColor color.Color
+	PaintStyle         *paint.Style
+	image              image.Image
+	pbImage            *pb.ImageOrResource
 }
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
@@ -121,7 +87,42 @@ func (v *View) Build(ctx *view.Context) view.Model {
 			Image:      v.pbImage,
 			Scale:      scale,
 			ResizeMode: v.ResizeMode.MarshalProtobuf(),
-			Tint:       pb.ColorEncode(v.Tint),
+			Tint:       pb.ColorEncode(v.ImageTemplateColor),
 		},
 	}
+}
+
+type layouter struct {
+	bounds     image.Rectangle
+	scale      float64
+	resizeMode ResizeMode
+}
+
+func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+	g := layout.Guide{Frame: layout.Rect{Max: ctx.MaxSize}}
+	switch l.resizeMode {
+	case ResizeModeFit:
+		imgRatio := float64(l.bounds.Dx()) / l.scale / float64(l.bounds.Dy()) / l.scale
+		maxRatio := ctx.MaxSize.X / ctx.MaxSize.Y
+		if imgRatio > maxRatio {
+			g.Frame.Max = layout.Pt(ctx.MaxSize.X, ctx.MaxSize.X/imgRatio)
+		} else {
+			g.Frame.Max = layout.Pt(ctx.MaxSize.Y/imgRatio, ctx.MaxSize.Y)
+		}
+	case ResizeModeFill:
+		fallthrough
+	case ResizeModeStretch:
+		g.Frame.Max = ctx.MaxSize
+	case ResizeModeCenter:
+		g.Frame.Max = layout.Pt(float64(l.bounds.Dx())/l.scale, float64(l.bounds.Dy())/l.scale)
+	}
+	return g, nil
+}
+
+func (l *layouter) Notify(f func()) comm.Id {
+	return 0 // no-op
+}
+
+func (l *layouter) Unnotify(id comm.Id) {
+	// no-op
 }
