@@ -2,11 +2,14 @@
 package button
 
 import (
+	"image/color"
+
 	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pb"
 	pbbutton "gomatcha.io/matcha/pb/view/button"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
@@ -16,6 +19,7 @@ import (
 type View struct {
 	view.Embed
 	Text       string
+	Color      color.Color
 	OnPress    func()
 	Enabled    bool
 	PaintStyle *paint.Style
@@ -29,6 +33,7 @@ func New(ctx *view.Context, key string) *View {
 	return &View{
 		Embed:   ctx.NewEmbed(key),
 		Enabled: true,
+		Color:   color.RGBA{14, 122, 254, 255},
 	}
 }
 
@@ -40,6 +45,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		Family: "Helvetica Neue",
 		Size:   20,
 	})
+	style.SetTextColor(v.Color)
 	t := text.New(v.Text)
 	st := internal.NewStyledText(t)
 	st.Set(style, 0, 0)
@@ -55,6 +61,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		NativeViewState: &pbbutton.View{
 			StyledText: st.MarshalProtobuf(),
 			Enabled:    v.Enabled,
+			Color:      pb.ColorEncode(v.Color),
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnPress": func() {

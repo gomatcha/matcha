@@ -27,6 +27,7 @@
 
 CF_EXTERN_C_BEGIN
 
+@class MatchaPBColor;
 @class MatchaPBStyledText;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -51,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef GPB_ENUM(MatchaButtonPBView_FieldNumber) {
   MatchaButtonPBView_FieldNumber_StyledText = 1,
   MatchaButtonPBView_FieldNumber_Enabled = 2,
+  MatchaButtonPBView_FieldNumber_Color = 3,
 };
 
 @interface MatchaButtonPBView : GPBMessage
@@ -60,6 +62,10 @@ typedef GPB_ENUM(MatchaButtonPBView_FieldNumber) {
 @property(nonatomic, readwrite) BOOL hasStyledText;
 
 @property(nonatomic, readwrite) BOOL enabled;
+
+@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *color;
+/** Test to see if @c color has been set. */
+@property(nonatomic, readwrite) BOOL hasColor;
 
 @end
 

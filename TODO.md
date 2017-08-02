@@ -1,6 +1,7 @@
 High:
 * DOCS!!!!
 * Delay any ui events while viwecontroller is updating.
+* Button should fade when disabled.
 
 Medium:
 * Rebuild Instagram.

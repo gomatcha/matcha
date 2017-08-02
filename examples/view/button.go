@@ -35,14 +35,27 @@ func NewButtonView(ctx *view.Context, key string) *ButtonView {
 func (v *ButtonView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl := button.New(ctx, "0")
-	chl.Text = "Press Me"
-	chl.OnPress = func() {
+	chl1 := button.New(ctx, "0")
+	chl1.Text = "Press Me"
+	chl1.OnPress = func() {
 		alert.Alert("Button Pressed", "")
 	}
-	l.Add(chl, func(s *constraint.Solver) {
+	g1 := l.Add(chl1, func(s *constraint.Solver) {
 		s.Top(100)
 		s.Left(100)
+		s.Width(200)
+	})
+
+	chl2 := button.New(ctx, "1")
+	chl2.Text = "Press Me"
+	chl2.Color = colornames.Red
+	chl2.Enabled = false
+	chl2.OnPress = func() {
+		alert.Alert("Button2 Pressed", "")
+	}
+	l.Add(chl2, func(s *constraint.Solver) {
+		s.TopEqual(g1.Bottom().Add(50))
+		s.LeftEqual(g1.Left())
 		s.Width(200)
 	})
 

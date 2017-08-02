@@ -15,6 +15,7 @@
 
  #import "gomatcha.io/matcha/pb/view/button/Button.pbobjc.h"
  #import "gomatcha.io/matcha/pb/text/Text.pbobjc.h"
+ #import "gomatcha.io/matcha/pb/Color.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -50,10 +51,12 @@ static GPBFileDescriptor *MatchaButtonPBButtonRoot_FileDescriptor(void) {
 
 @dynamic hasStyledText, styledText;
 @dynamic enabled;
+@dynamic hasColor, color;
 
 typedef struct MatchaButtonPBView__storage_ {
   uint32_t _has_storage_[1];
   MatchaPBStyledText *styledText;
+  MatchaPBColor *color;
 } MatchaButtonPBView__storage_;
 
 // This method is threadsafe because it is initially called
@@ -79,6 +82,15 @@ typedef struct MatchaButtonPBView__storage_ {
         .offset = 2,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "color",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
+        .number = MatchaButtonPBView_FieldNumber_Color,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(MatchaButtonPBView__storage_, color),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
