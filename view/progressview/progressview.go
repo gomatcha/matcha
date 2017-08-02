@@ -2,9 +2,12 @@
 package progressview
 
 import (
+	"image/color"
+
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pb"
 	"gomatcha.io/matcha/pb/view/progressview"
 	"gomatcha.io/matcha/view"
 )
@@ -13,6 +16,7 @@ type View struct {
 	view.Embed
 	Progress         float64
 	ProgressNotifier comm.Float64Notifier
+	ProgressColor    color.Color
 	PaintStyle       *paint.Style
 	progressNotifier comm.Float64Notifier
 }
@@ -69,7 +73,8 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/progressview",
 		NativeViewState: &progressview.View{
-			Progress: val,
+			Progress:      val,
+			ProgressColor: pb.ColorEncode(v.ProgressColor),
 		},
 	}
 }

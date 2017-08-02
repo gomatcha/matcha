@@ -1,7 +1,6 @@
 High:
 * DOCS!!!!
 * Delay any ui events while viwecontroller is updating.
-* Scroll is forcing a relayout.
 
 Medium:
 * Rebuild Instagram.

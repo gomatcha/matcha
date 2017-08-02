@@ -27,6 +27,8 @@
 
 CF_EXTERN_C_BEGIN
 
+@class MatchaPBColor;
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - MatchaProgressViewPBProgressviewRoot
@@ -48,11 +50,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef GPB_ENUM(MatchaProgressViewPBView_FieldNumber) {
   MatchaProgressViewPBView_FieldNumber_Progress = 1,
+  MatchaProgressViewPBView_FieldNumber_ProgressColor = 2,
 };
 
 @interface MatchaProgressViewPBView : GPBMessage
 
 @property(nonatomic, readwrite) double progress;
+
+@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *progressColor;
+/** Test to see if @c progressColor has been set. */
+@property(nonatomic, readwrite) BOOL hasProgressColor;
 
 @end
 

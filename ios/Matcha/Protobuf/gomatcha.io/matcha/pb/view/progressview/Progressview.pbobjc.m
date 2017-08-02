@@ -14,6 +14,7 @@
 #endif
 
  #import "gomatcha.io/matcha/pb/view/progressview/Progressview.pbobjc.h"
+ #import "gomatcha.io/matcha/pb/Color.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -23,8 +24,8 @@
 
 @implementation MatchaProgressViewPBProgressviewRoot
 
-// No extensions in the file and no imports, so no need to generate
-// +extensionRegistry.
+// No extensions in the file and none of the imports (direct or indirect)
+// defined extensions, so no need to generate +extensionRegistry.
 
 @end
 
@@ -48,9 +49,11 @@ static GPBFileDescriptor *MatchaProgressViewPBProgressviewRoot_FileDescriptor(vo
 @implementation MatchaProgressViewPBView
 
 @dynamic progress;
+@dynamic hasProgressColor, progressColor;
 
 typedef struct MatchaProgressViewPBView__storage_ {
   uint32_t _has_storage_[1];
+  MatchaPBColor *progressColor;
   double progress;
 } MatchaProgressViewPBView__storage_;
 
@@ -69,6 +72,15 @@ typedef struct MatchaProgressViewPBView__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeDouble,
       },
+      {
+        .name = "progressColor",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
+        .number = MatchaProgressViewPBView_FieldNumber_ProgressColor,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(MatchaProgressViewPBView__storage_, progressColor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[MatchaProgressViewPBView class]
@@ -78,6 +90,11 @@ typedef struct MatchaProgressViewPBView__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MatchaProgressViewPBView__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\002\r\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
