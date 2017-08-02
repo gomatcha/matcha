@@ -12,29 +12,12 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
-type layouter struct {
-	styledText *internal.StyledText
-}
-
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
-	const padding = 10.0
-	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
-	g := layout.Guide{Frame: layout.Rt(0, 0, size.X+padding*2, size.Y+padding*2)}
-	return g, nil
-}
-
-func (l *layouter) Notify(f func()) comm.Id {
-	return 0 // no-op
-}
-
-func (l *layouter) Unnotify(id comm.Id) {
-	// no-op
-}
-
+// View implements a native button view.
 type View struct {
 	view.Embed
 	Text       string
 	OnPress    func()
+	Enabled    bool
 	PaintStyle *paint.Style
 }
 
@@ -44,7 +27,8 @@ func New(ctx *view.Context, key string) *View {
 		return v
 	}
 	return &View{
-		Embed: ctx.NewEmbed(key),
+		Embed:   ctx.NewEmbed(key),
+		Enabled: true,
 	}
 }
 
@@ -70,6 +54,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		NativeViewName: "gomatcha.io/matcha/view/button",
 		NativeViewState: &pbbutton.View{
 			StyledText: st.MarshalProtobuf(),
+			Enabled:    v.Enabled,
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnPress": func() {
@@ -79,4 +64,23 @@ func (v *View) Build(ctx *view.Context) view.Model {
 			},
 		},
 	}
+}
+
+type layouter struct {
+	styledText *internal.StyledText
+}
+
+func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+	const padding = 10.0
+	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
+	g := layout.Guide{Frame: layout.Rt(0, 0, size.X+padding*2, size.Y+padding*2)}
+	return g, nil
+}
+
+func (l *layouter) Notify(f func()) comm.Id {
+	return 0 // no-op
+}
+
+func (l *layouter) Unnotify(id comm.Id) {
+	// no-op
 }

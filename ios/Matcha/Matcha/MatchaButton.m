@@ -26,6 +26,7 @@
     
     NSAttributedString *string = [[NSAttributedString alloc] initWithProtobuf:pbbutton.styledText];
     [self.button setAttributedTitle:string forState:UIControlStateNormal];
+    self.button.enabled = pbbutton.enabled;
 }
 
 - (void)layoutSubviews {

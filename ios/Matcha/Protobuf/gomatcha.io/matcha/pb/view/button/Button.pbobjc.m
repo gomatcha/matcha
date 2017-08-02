@@ -49,6 +49,7 @@ static GPBFileDescriptor *MatchaButtonPBButtonRoot_FileDescriptor(void) {
 @implementation MatchaButtonPBView
 
 @dynamic hasStyledText, styledText;
+@dynamic enabled;
 
 typedef struct MatchaButtonPBView__storage_ {
   uint32_t _has_storage_[1];
@@ -69,6 +70,15 @@ typedef struct MatchaButtonPBView__storage_ {
         .offset = (uint32_t)offsetof(MatchaButtonPBView__storage_, styledText),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "enabled",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaButtonPBView_FieldNumber_Enabled,
+        .hasIndex = 1,
+        .offset = 2,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
