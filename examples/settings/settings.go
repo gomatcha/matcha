@@ -248,7 +248,7 @@ type Separator struct {
 
 func NewSeparator(ctx *view.Context, key string) *Separator {
 	return &Separator{
-		Embed: ctx.NewEmbed(""),
+		Embed: ctx.NewEmbed(key),
 	}
 }
 
@@ -281,7 +281,7 @@ type Spacer struct {
 
 func NewSpacer(ctx *view.Context, key string) *Spacer {
 	return &Spacer{
-		Embed:  ctx.NewEmbed(""),
+		Embed:  ctx.NewEmbed(key),
 		Height: 35,
 	}
 }
@@ -307,7 +307,7 @@ type SpacerHeader struct {
 
 func NewSpacerHeader(ctx *view.Context, key string) *SpacerHeader {
 	return &SpacerHeader{
-		Embed:  ctx.NewEmbed(""),
+		Embed:  ctx.NewEmbed(key),
 		Height: 50,
 	}
 }

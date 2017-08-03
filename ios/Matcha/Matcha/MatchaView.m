@@ -155,8 +155,13 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
             
             NSMutableDictionary<NSNumber *, UIViewController *> *childVCs = [NSMutableDictionary dictionary];
             for (NSNumber *i in children) {
+                NSNumber *viewId = i;
                 MatchaViewNode *child = children[i];
-                childVCs[i] = child.wrappedViewController;
+                int64_t altId = 0;
+                if ([pbBuildNode.altIds getInt64:&altId forKey:i.longLongValue]) {
+                    viewId = @(altId);
+                }
+                childVCs[viewId] = child.wrappedViewController;
             }
             self.viewController.matchaChildViewControllers = childVCs;
         }

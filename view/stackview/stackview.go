@@ -156,19 +156,19 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		// Add the bar.
 		barV := &barView{
 			Embed: ctx.NewEmbed(key),
-			bar:   bar,
+			Bar:   bar,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
-			s.TopEqual(constraint.Const(0))
-			s.LeftEqual(constraint.Const(0))
+			s.Top(0)
+			s.Left(0)
 			s.WidthEqual(l.MaxGuide().Width())
-			s.HeightEqual(constraint.Const(44))
+			s.Height(44)
 		})
 
 		// Add the child.
 		l.Add(chld, func(s *constraint.Solver) {
-			s.TopEqual(constraint.Const(0))
-			s.LeftEqual(constraint.Const(0))
+			s.Top(0)
+			s.Left(0)
 			s.WidthEqual(l.MaxGuide().Width())
 			s.HeightEqual(l.MaxGuide().Height().Add(-64)) // TODO(KD): Respect bar actual height, shorter when rotated, etc...
 		})
@@ -248,16 +248,16 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	// 	bar:   bar,
 	// }
 	// l.Add(barV, func(s *constraint.Solver) {
-	// 	s.TopEqual(constraint.Const(0))
-	// 	s.LeftEqual(constraint.Const(0))
+	// 	s.Top(0)
+	// 	s.Left(0)
 	// 	s.WidthEqual(l.MaxGuide().Width())
-	// 	s.HeightEqual(constraint.Const(44))
+	// 	s.Height(44)
 	// })
 
 	// // Add the child.
 	// l.Add(chld, func(s *constraint.Solver) {
-	// 	s.TopEqual(constraint.Const(0))
-	// 	s.LeftEqual(constraint.Const(0))
+	// 	s.Top(0)
+	// 	s.Left(0)
 	// 	s.WidthEqual(l.MaxGuide().Width())
 	// 	s.HeightEqual(l.MaxGuide().Height().Add(-64)) // TODO(KD): Respect bar actual height, shorter when rotated, etc...
 	// })
@@ -307,7 +307,7 @@ type ChildView interface {
 
 type barView struct {
 	view.Embed
-	bar *Bar
+	Bar *Bar
 }
 
 func (v *barView) Build(ctx *view.Context) view.Model {
@@ -315,32 +315,32 @@ func (v *barView) Build(ctx *view.Context) view.Model {
 
 	// iOS does the layouting for us. We just need the correct sizes.
 	titleViewId := int64(0)
-	if v.bar.TitleView != nil {
-		titleViewId = int64(v.bar.TitleView.Id())
-		l.Add(v.bar.TitleView, func(s *constraint.Solver) {
-			s.TopEqual(constraint.Const(0))
-			s.LeftEqual(constraint.Const(0))
+	if v.Bar.TitleView != nil {
+		titleViewId = int64(v.Bar.TitleView.Id())
+		l.Add(v.Bar.TitleView, func(s *constraint.Solver) {
+			s.Top(0)
+			s.Left(0)
 			s.HeightLess(l.MaxGuide().Height())
 			s.WidthLess(l.MaxGuide().Width())
 		})
 	}
 
 	rightViewIds := []int64{}
-	for _, i := range v.bar.RightViews {
+	for _, i := range v.Bar.RightViews {
 		rightViewIds = append(rightViewIds, int64(i.Id()))
 		l.Add(i, func(s *constraint.Solver) {
-			s.TopEqual(constraint.Const(0))
-			s.LeftEqual(constraint.Const(0))
+			s.Top(0)
+			s.Left(0)
 			s.HeightLess(l.MaxGuide().Height())
 			s.WidthLess(l.MaxGuide().Width())
 		})
 	}
 	leftViewIds := []int64{}
-	for _, i := range v.bar.LeftViews {
+	for _, i := range v.Bar.LeftViews {
 		leftViewIds = append(leftViewIds, int64(i.Id()))
 		l.Add(i, func(s *constraint.Solver) {
-			s.TopEqual(constraint.Const(0))
-			s.LeftEqual(constraint.Const(0))
+			s.Top(0)
+			s.Left(0)
 			s.HeightLess(l.MaxGuide().Height())
 			s.WidthLess(l.MaxGuide().Width())
 		})
@@ -351,10 +351,10 @@ func (v *barView) Build(ctx *view.Context) view.Model {
 		Children:       l.Views(),
 		NativeViewName: "gomatcha.io/matcha/view/stacknav Bar",
 		NativeViewState: &stacknav.Bar{
-			Title: v.bar.Title,
-			CustomBackButtonTitle: len(v.bar.BackButtonTitle) > 0,
-			BackButtonTitle:       v.bar.BackButtonTitle,
-			BackButtonHidden:      v.bar.BackButtonHidden,
+			Title: v.Bar.Title,
+			CustomBackButtonTitle: len(v.Bar.BackButtonTitle) > 0,
+			BackButtonTitle:       v.Bar.BackButtonTitle,
+			BackButtonHidden:      v.Bar.BackButtonHidden,
 			TitleViewId:           titleViewId,
 			RightViewIds:          rightViewIds,
 			LeftViewIds:           leftViewIds,

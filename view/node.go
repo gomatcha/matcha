@@ -77,7 +77,7 @@ func (r *Root) start() {
 		}
 		bridge.Bridge().Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
 
-		fmt.Println(r.root.node.debugString())
+		// fmt.Println(r.root.node.debugString())
 	})
 }
 
@@ -453,9 +453,6 @@ func (root *root) build() {
 			keys[k] = key.key
 		}
 	}
-	fmt.Println("WTF", root.ids)
-	fmt.Println("wtf2", prevIds)
-	fmt.Println("wtf3", ids)
 	root.ids = ids
 	root.keys = keys
 }
@@ -473,11 +470,13 @@ func (root *root) paint() {
 func (root *root) call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
 	node, ok := root.nodes[matcha.Id(viewId)]
 	if !ok || node.model == nil {
+		fmt.Println("root.call(): no node found", ok, node.model)
 		return nil
 	}
 
 	f, ok := node.model.NativeFuncs[funcId]
 	if !ok {
+		fmt.Println("root.call(): no func found", funcId, node.model.NativeFuncs)
 		return nil
 	}
 	v := reflect.ValueOf(f)
@@ -595,6 +594,11 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 		nativeValues[k] = a
 	}
 
+	altIds := map[int64]int64{}
+	for k, v := range n.altIds {
+		altIds[int64(v)] = int64(k)
+	}
+
 	m[int64(n.id)] = &pb.BuildNode{
 		Id:          int64(n.id),
 		BuildId:     n.buildId,
@@ -602,6 +606,7 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 		BridgeName:  n.model.NativeViewName,
 		BridgeValue: nativeViewState,
 		Values:      nativeValues,
+		AltIds:      altIds,
 	}
 }
 
@@ -649,9 +654,22 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 				for jIdx, j := range prevChildren {
 					jType := reflect.TypeOf(j.view).Elem()
 					jName := jType.Name() + jType.PkgPath()
-					// fmt.Println("jname", iName, jName)
+					// fmt.Println("jname", iName, jName, "|", iKey, "|", prevKeys[j.id], "|")
 					if jKey, ok := prevKeys[j.id]; ok && iKey == jKey && iName == jName {
 						// fmt.Println("found")
+						prevNode = j
+
+						// delete from prevchildren
+						copy(prevChildren[jIdx:], prevChildren[jIdx+1:])
+						prevChildren[len(prevChildren)-1] = nil
+						prevChildren = prevChildren[:len(prevChildren)-1]
+						break
+					}
+				}
+			} else {
+				for jIdx, j := range prevChildren {
+					if j.id == i.Id() {
+						// fmt.Println("found id")
 						prevNode = j
 
 						// delete from prevchildren
@@ -669,9 +687,8 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 				newView := i
 
 				if prevView != newView {
-					iType := reflect.TypeOf(i).Elem()
-					iName := iType.Name() + iType.PkgPath()
-					fmt.Println("name", iName, "waht")
+					// iType := reflect.TypeOf(i).Elem()
+					// iName := iType.PkgPath() + "." + iType.Name()
 
 					// Copy all public fields from new to old that aren't Embed
 					va := reflect.ValueOf(prevView).Elem()
@@ -693,7 +710,7 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 				// Mark as needing rebuild
 				n.root.updateFlags[prevView.Id()] |= buildFlag
 			} else {
-				// fmt.Println("added")
+				fmt.Println("added")
 				// If view was added for the first time...
 				newView := i
 				id := newView.Id()
