@@ -247,10 +247,9 @@ type Separator struct {
 }
 
 func NewSeparator(ctx *view.Context, key string) *Separator {
-	if v, ok := ctx.Prev(key).(*Separator); ok {
-		return v
+	return &Separator{
+		Embed: ctx.NewEmbed(""),
 	}
-	return &Separator{Embed: ctx.NewEmbed(key)}
 }
 
 func (v *Separator) Build(ctx *view.Context) view.Model {
@@ -281,11 +280,8 @@ type Spacer struct {
 }
 
 func NewSpacer(ctx *view.Context, key string) *Spacer {
-	// if v, ok := ctx.Prev(key).(*Spacer); ok {
-	// 	return v
-	// }
 	return &Spacer{
-		Embed:  ctx.NewEmbed(key),
+		Embed:  ctx.NewEmbed(""),
 		Height: 35,
 	}
 }
@@ -310,11 +306,8 @@ type SpacerHeader struct {
 }
 
 func NewSpacerHeader(ctx *view.Context, key string) *SpacerHeader {
-	if v, ok := ctx.Prev(key).(*SpacerHeader); ok {
-		return v
-	}
 	return &SpacerHeader{
-		Embed:  ctx.NewEmbed(key),
+		Embed:  ctx.NewEmbed(""),
 		Height: 50,
 	}
 }
@@ -356,10 +349,9 @@ type SpacerDescription struct {
 }
 
 func NewSpacerDescription(ctx *view.Context, key string) *SpacerDescription {
-	if v, ok := ctx.Prev(key).(*SpacerDescription); ok {
-		return v
+	return &SpacerDescription{
+		Embed: ctx.NewEmbed(key),
 	}
-	return &SpacerDescription{Embed: ctx.NewEmbed(key)}
 }
 
 func (v *SpacerDescription) Build(ctx *view.Context) view.Model {
