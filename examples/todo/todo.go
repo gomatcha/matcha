@@ -3,7 +3,6 @@ package todo
 
 import (
 	"image/color"
-	"strconv"
 
 	"golang.org/x/image/colornames"
 
@@ -26,7 +25,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/todo New", func() *view.Root {
-		appview := NewAppView(nil, "")
+		appview := NewAppView(nil)
 
 		v := stackview.New(nil, "")
 		v.Stack = &stackview.Stack{}
@@ -53,11 +52,10 @@ type AppView struct {
 	Todos []*Todo
 }
 
-func NewAppView(ctx *view.Context, key string) *AppView {
-	if v, ok := ctx.Prev(key).(*AppView); ok {
-		return v
+func NewAppView(ctx *view.Context) *AppView {
+	return &AppView{
+		Embed: ctx.NewEmbed(""),
 	}
-	return &AppView{Embed: ctx.NewEmbed(key)}
 }
 
 func (v *AppView) Build(ctx *view.Context) view.Model {
@@ -65,7 +63,7 @@ func (v *AppView) Build(ctx *view.Context) view.Model {
 
 	for i, todo := range v.Todos {
 		idx := i
-		todoView := NewTodoView(ctx, strconv.Itoa(idx))
+		todoView := NewTodoView(ctx.WithInt(idx))
 		todoView.Todo = todo
 		todoView.OnDelete = func() {
 			v.Todos = append(v.Todos[:idx], v.Todos[idx+1:]...)
@@ -78,7 +76,7 @@ func (v *AppView) Build(ctx *view.Context) view.Model {
 		l.Add(todoView, nil)
 	}
 
-	addView := NewAddView(ctx, "add")
+	addView := NewAddView(ctx)
 	addView.OnAdd = func(title string) {
 		v.Todos = append(v.Todos, &Todo{Title: title})
 		v.Signal()
@@ -108,12 +106,9 @@ type AddView struct {
 	OnAdd     func(title string)
 }
 
-func NewAddView(ctx *view.Context, key string) *AddView {
-	if v, ok := ctx.Prev(key).(*AddView); ok {
-		return v
-	}
+func NewAddView(ctx *view.Context) *AddView {
 	return &AddView{
-		Embed: ctx.NewEmbed(key),
+		Embed: ctx.NewEmbed(""),
 		text:  text.New(""),
 	}
 }
@@ -182,11 +177,10 @@ type TodoView struct {
 	OnComplete func(check bool)
 }
 
-func NewTodoView(ctx *view.Context, key string) *TodoView {
-	if v, ok := ctx.Prev(key).(*TodoView); ok {
-		return v
+func NewTodoView(ctx *view.Context) *TodoView {
+	return &TodoView{
+		Embed: ctx.NewEmbed(""),
 	}
-	return &TodoView{Embed: ctx.NewEmbed(key)}
 }
 
 func (v *TodoView) Build(ctx *view.Context) view.Model {
@@ -196,7 +190,7 @@ func (v *TodoView) Build(ctx *view.Context) view.Model {
 		s.WidthEqual(l.MaxGuide().Width())
 	})
 
-	checkbox := NewCheckbox(ctx, "checkbox")
+	checkbox := NewCheckbox(ctx)
 	checkbox.Value = v.Todo.Completed
 	checkbox.OnValueChange = func(value bool) {
 		v.OnComplete(value)
@@ -206,7 +200,7 @@ func (v *TodoView) Build(ctx *view.Context) view.Model {
 		s.LeftEqual(l.Left().Add(15))
 	})
 
-	deleteButton := NewDeleteButton(ctx, "delete")
+	deleteButton := NewDeleteButton(ctx)
 	deleteButton.OnPress = func() {
 		v.OnDelete()
 	}
@@ -245,11 +239,10 @@ type Checkbox struct {
 	OnValueChange func(value bool)
 }
 
-func NewCheckbox(ctx *view.Context, key string) *Checkbox {
-	if v, ok := ctx.Prev(key).(*Checkbox); ok {
-		return v
+func NewCheckbox(ctx *view.Context) *Checkbox {
+	return &Checkbox{
+		Embed: ctx.NewEmbed(""),
 	}
-	return &Checkbox{Embed: ctx.NewEmbed(key)}
 }
 
 func (v *Checkbox) Build(ctx *view.Context) view.Model {
@@ -295,11 +288,10 @@ type DeleteButton struct {
 	OnPress func()
 }
 
-func NewDeleteButton(ctx *view.Context, key string) *DeleteButton {
-	if v, ok := ctx.Prev(key).(*DeleteButton); ok {
-		return v
+func NewDeleteButton(ctx *view.Context) *DeleteButton {
+	return &DeleteButton{
+		Embed: ctx.NewEmbed(""),
 	}
-	return &DeleteButton{Embed: ctx.NewEmbed(key)}
 }
 
 func (v *DeleteButton) Build(ctx *view.Context) view.Model {

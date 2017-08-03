@@ -2,6 +2,7 @@
 package settings
 
 import (
+	"fmt"
 	"image/color"
 	"strconv"
 	"strings"
@@ -73,6 +74,7 @@ func (v *RootView) Lifecycle(from, to view.Stage) {
 }
 
 func (v *RootView) Build(ctx *view.Context) view.Model {
+	fmt.Println("build")
 	l := &table.Layouter{}
 	{
 		ctx := ctx.WithPrefix("1")
@@ -84,6 +86,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		switchView := switchview.New(ctx, "switch")
 		switchView.Value = v.app.AirplaneMode()
 		switchView.OnValueChange = func(value bool) {
+			fmt.Println("blah")
 			v.app.SetAirplaneMode(value)
 		}
 		cell1 := NewBasicCell(ctx, "airplane")
@@ -100,6 +103,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		} else {
 			cell2.Subtitle = ""
 		}
+		fmt.Println("wifi", cell2.Subtitle)
 		cell2.HasIcon = true
 		cell2.Icon = app.MustLoadImage("Wifi")
 		cell2.Chevron = true
@@ -277,9 +281,9 @@ type Spacer struct {
 }
 
 func NewSpacer(ctx *view.Context, key string) *Spacer {
-	if v, ok := ctx.Prev(key).(*Spacer); ok {
-		return v
-	}
+	// if v, ok := ctx.Prev(key).(*Spacer); ok {
+	// 	return v
+	// }
 	return &Spacer{
 		Embed:  ctx.NewEmbed(key),
 		Height: 35,
@@ -456,6 +460,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 	}
 
 	if len(v.Subtitle) > 0 {
+		fmt.Println("subtitle", v.Subtitle)
 		subtitleView := textview.New(ctx, "subtitle")
 		subtitleView.String = v.Subtitle
 		subtitleView.Style.SetFont(text.Font{
