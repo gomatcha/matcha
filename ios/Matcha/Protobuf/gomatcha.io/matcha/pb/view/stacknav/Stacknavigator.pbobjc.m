@@ -204,17 +204,16 @@ typedef struct MatchaStackScreenPBView__storage_ {
 @dynamic backButtonHidden;
 @dynamic customBackButtonTitle;
 @dynamic backButtonTitle;
-@dynamic titleViewId;
-@dynamic rightViewIdsArray, rightViewIdsArray_Count;
-@dynamic leftViewIdsArray, leftViewIdsArray_Count;
+@dynamic hasTitleView;
+@dynamic rightViewCount;
+@dynamic leftViewCount;
 
 typedef struct MatchaStackScreenPBBar__storage_ {
   uint32_t _has_storage_[1];
   NSString *title;
   NSString *backButtonTitle;
-  GPBInt64Array *rightViewIdsArray;
-  GPBInt64Array *leftViewIdsArray;
-  int64_t titleViewId;
+  int64_t rightViewCount;
+  int64_t leftViewCount;
 } MatchaStackScreenPBBar__storage_;
 
 // This method is threadsafe because it is initially called
@@ -251,30 +250,30 @@ typedef struct MatchaStackScreenPBBar__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "titleViewId",
+        .name = "hasTitleView",
         .dataTypeSpecific.className = NULL,
-        .number = MatchaStackScreenPBBar_FieldNumber_TitleViewId,
+        .number = MatchaStackScreenPBBar_FieldNumber_HasTitleView,
         .hasIndex = 6,
-        .offset = (uint32_t)offsetof(MatchaStackScreenPBBar__storage_, titleViewId),
+        .offset = 7,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "rightViewCount",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaStackScreenPBBar_FieldNumber_RightViewCount,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(MatchaStackScreenPBBar__storage_, rightViewCount),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "rightViewIdsArray",
+        .name = "leftViewCount",
         .dataTypeSpecific.className = NULL,
-        .number = MatchaStackScreenPBBar_FieldNumber_RightViewIdsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(MatchaStackScreenPBBar__storage_, rightViewIdsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "leftViewIdsArray",
-        .dataTypeSpecific.className = NULL,
-        .number = MatchaStackScreenPBBar_FieldNumber_LeftViewIdsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(MatchaStackScreenPBBar__storage_, leftViewIdsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldTextFormatNameCustom),
+        .number = MatchaStackScreenPBBar_FieldNumber_LeftViewCount,
+        .hasIndex = 9,
+        .offset = (uint32_t)offsetof(MatchaStackScreenPBBar__storage_, leftViewCount),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeInt64,
       },
       {
@@ -297,8 +296,7 @@ typedef struct MatchaStackScreenPBBar__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\006\002\025\000\003\017\000\004\013\000\005\000rightViewIds\000\006\000leftViewIds\000\007"
-        "\020\000";
+        "\006\002\025\000\003\017\000\004\014\000\005\016\000\006\r\000\007\020\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");

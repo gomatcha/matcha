@@ -24,9 +24,6 @@
 @property (nonatomic, assign) BOOL customBackButtonTitle;
 @property (nonatomic, assign) NSString *backButtonTitle;
 @property (nonatomic, strong) UIView *titleView;
-@property (nonatomic, assign) int64_t titleViewId;
 @property (nonatomic, strong) NSArray *rightViews;
-@property (nonatomic, strong) GPBInt64Array *rightViewIds;
 @property (nonatomic, strong) NSArray *leftViews;
-@property (nonatomic, strong) GPBInt64Array *leftViewIds;
 @end

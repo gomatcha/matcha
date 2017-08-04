@@ -106,11 +106,12 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     }
     
     // Build children
-    NSDictionary<NSNumber *, MatchaViewNode *> *children = nil;
+    NSMutableArray<MatchaViewNode *> *childrenArray = [NSMutableArray array];
+    NSMutableDictionary<NSNumber *, MatchaViewNode *> *children = [NSMutableDictionary dictionary];
     NSMutableArray *addedKeys = [NSMutableArray array];
     NSMutableArray *removedKeys = [NSMutableArray array];
     NSMutableArray *unmodifiedKeys = [NSMutableArray array];
-    if (buildNode != nil && ![buildNode.buildId isEqual:self.buildNode.buildId]) {
+    if (buildNode != nil && ![buildNode.buildId isEqual:self.buildNode.buildId]) {        
         for (NSNumber *i in self.children) {
             MatchaBuildNode *child = [root.buildNodes objectForKey:i.longLongValue];
             if (child == nil) {
@@ -122,20 +123,15 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
             MatchaViewNode *prevChild = self.children[childId];
             if (prevChild == nil) {
                 [addedKeys addObject:childId];
+                MatchaViewNode *n = [[MatchaViewNode alloc] initWithParent:self rootVC:self.rootVC identifier:childId];
+                [childrenArray addObject:n];
+                children[childId] = n;
             } else {
                 [unmodifiedKeys addObject:childId];
+                [childrenArray addObject:prevChild];
+                children[childId] = prevChild;
             }
         }
-        
-        // Add/remove child nodes
-        NSMutableDictionary<NSNumber *, MatchaViewNode *> *mutChildren = [NSMutableDictionary dictionary];
-        for (NSNumber *i in addedKeys) {
-            mutChildren[i] = [[MatchaViewNode alloc] initWithParent:self rootVC:self.rootVC identifier:i];
-        }
-        for (NSNumber *i in unmodifiedKeys) {
-            mutChildren[i] = self.children[i];
-        }
-        children = mutChildren;
     } else {
         children = self.children;
     }
@@ -153,15 +149,9 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
         } else if (self.viewController) {
             self.viewController.node = buildNode;
             
-            NSMutableDictionary<NSNumber *, UIViewController *> *childVCs = [NSMutableDictionary dictionary];
-            for (NSNumber *i in children) {
-                NSNumber *viewId = i;
-                MatchaViewNode *child = children[i];
-                int64_t altId = 0;
-                if ([pbBuildNode.altIds getInt64:&altId forKey:i.longLongValue]) {
-                    viewId = @(altId);
-                }
-                childVCs[viewId] = child.wrappedViewController;
+            NSMutableArray<UIViewController *> *childVCs = [NSMutableArray array];
+            for (MatchaViewNode *i in childrenArray) {
+                [childVCs addObject:i.wrappedViewController];
             }
             self.viewController.matchaChildViewControllers = childVCs;
         }
@@ -263,7 +253,11 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
                 self.frame = f;
             }
         } else if (self.viewController) {
-            self.viewController.matchaChildLayout = root.layoutPaintNodes;
+            NSMutableArray<MatchaViewPBLayoutPaintNode *> *layoutPaintNodes = [NSMutableArray array];
+            for (MatchaViewNode *i in childrenArray) {
+                [layoutPaintNodes addObject:[root.layoutPaintNodes objectForKey:i.identifier.longLongValue]];
+            }
+            self.viewController.matchaChildLayout = layoutPaintNodes;
         }
     }
     

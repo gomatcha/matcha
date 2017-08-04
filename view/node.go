@@ -496,9 +496,7 @@ type node struct {
 	buildNotify   bool
 	buildNotifyId comm.Id
 	model         *Model
-	children      map[matcha.Id]*node
-	children2     []*node
-	altIds        map[matcha.Id]matcha.Id
+	children      []*node
 
 	layoutId       int64
 	layoutNotify   bool
@@ -594,11 +592,6 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 		nativeValues[k] = a
 	}
 
-	altIds := map[int64]int64{}
-	for k, v := range n.altIds {
-		altIds[int64(v)] = int64(k)
-	}
-
 	m[int64(n.id)] = &pb.BuildNode{
 		Id:          int64(n.id),
 		BuildId:     n.buildId,
@@ -606,7 +599,6 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 		BridgeName:  n.model.NativeViewName,
 		BridgeValue: nativeViewState,
 		Values:      nativeValues,
-		AltIds:      altIds,
 	}
 }
 
@@ -632,12 +624,11 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 		ctx.valid = false
 
 		//
-		prevChildren := make([]*node, len(n.children2))
-		copy(prevChildren, n.children2)
+		prevChildren := make([]*node, len(n.children))
+		copy(prevChildren, n.children)
 		// fmt.Println("keys", n.root.keys, n.root.ids)
 
 		children := []*node{}
-		altIds := map[matcha.Id]matcha.Id{}
 		for _, i := range viewModel.Children {
 			// Find the corresponding previous node.
 			var prevNode *node
@@ -700,8 +691,6 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 							// fmt.Println("set", va.Type().Field(i).Name)
 						}
 					}
-					// fmt.Println("prevView", prevView, "huh", newView, "omg")
-					altIds[newView.Id()] = prevView.Id()
 				}
 
 				// Add in the previous node.
@@ -733,12 +722,6 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 		// Send lifecycle event to removed childern.
 		for _, i := range prevChildren {
 			i.done()
-		}
-
-		// Generate map of id to children
-		childrenMap := map[matcha.Id]*node{}
-		for _, i := range children {
-			childrenMap[i.id] = i
 		}
 
 		// viewModelChildren := map[matcha.Id]View{}
@@ -848,9 +831,8 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 			n.paintNotify = true
 		}
 
-		n.children = childrenMap
-		n.children2 = children
-		n.altIds = altIds
+		n.children = children
+
 		n.model = viewModel
 	}
 
@@ -877,13 +859,13 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 	ctx := &layout.Context{
 		MinSize:    minSize,
 		MaxSize:    maxSize,
-		ChildCount: len(n.children2),
+		ChildCount: len(n.children),
 		LayoutFunc: func(idx int, minSize, maxSize layout.Point) layout.Guide {
-			if idx >= len(n.children2) {
+			if idx >= len(n.children) {
 				fmt.Println("Attempting to layout unknown child: ", idx)
 				return layout.Guide{}
 			}
-			child := n.children2[idx]
+			child := n.children[idx]
 			return child.layout(minSize, maxSize)
 		},
 	}
@@ -897,7 +879,7 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 	g = g.Fit(ctx)
 
 	//
-	for idx, i := range n.children2 {
+	for idx, i := range n.children {
 		g2 := gs[idx]
 		i.layoutGuide = &g2
 	}

@@ -214,90 +214,6 @@ func (v *View) Build(ctx *view.Context) view.Model {
 			},
 		},
 	}
-
-	// children := map[int64]view.View{}
-	// childrenPb := []*stacknav.ChildView{}
-	// v.ids = append([]int64(nil), v.stack.ids...)
-	// for _, i := range v.ids {
-	// 	key := strconv.Itoa(int(i))
-
-	// 	// Create the child if necessary and subscribe to it.
-	// 	chld, ok := v.children[i]
-	// 	if !ok {
-	// 		chld = v.stack.children[i].View(ctx.WithPrefix("view" + key))
-	// 		children[i] = chld
-	// 		v.Subscribe(chld)
-	// 	} else {
-	// 		children[i] = chld
-	// 		delete(v.children, i)
-	// 	}
-
-	// // Create the bar.
-	// var bar *Bar
-	// if childView, ok := chld.(ChildView); ok {
-	// 	bar = childView.StackBar(ctx.WithPrefix("bar" + key))
-	// } else {
-	// 	bar = &Bar{
-	// 		Title: "Title",
-	// 	}
-	// }
-
-	// // Add the bar.
-	// barV := &barView{
-	// 	Embed: view.NewEmbed(ctx.NewId(key)),
-	// 	bar:   bar,
-	// }
-	// l.Add(barV, func(s *constraint.Solver) {
-	// 	s.Top(0)
-	// 	s.Left(0)
-	// 	s.WidthEqual(l.MaxGuide().Width())
-	// 	s.Height(44)
-	// })
-
-	// // Add the child.
-	// l.Add(chld, func(s *constraint.Solver) {
-	// 	s.Top(0)
-	// 	s.Left(0)
-	// 	s.WidthEqual(l.MaxGuide().Width())
-	// 	s.HeightEqual(l.MaxGuide().Height().Add(-64)) // TODO(KD): Respect bar actual height, shorter when rotated, etc...
-	// })
-
-	// // Add ids to protobuf.
-	// childrenPb = append(childrenPb, &stacknav.ChildView{
-	// 	ViewId:   int64(chld.Id()),
-	// 	BarId:    int64(barV.Id()),
-	// 	ScreenId: i,
-	// })
-	// }
-
-	// // Unsubscribe from old views
-	// for _, chld := range v.children {
-	// 	v.Unsubscribe(chld)
-	// }
-	// v.children = children
-
-	// return view.Model{
-	// 	Children:       l.Views(),
-	// 	Layouter:       l,
-	// 	NativeViewName: "gomatcha.io/matcha/view/stacknav",
-	// 	NativeViewState: &stacknav.View{
-	// 		Children: childrenPb,
-	// 	},
-	// 	NativeFuncs: map[string]interface{}{
-	// 		"OnChange": func(data []byte) {
-	// 			pbevent := &stacknav.StackEvent{}
-	// 			err := proto.Unmarshal(data, pbevent)
-	// 			if err != nil {
-	// 				fmt.Println("error", err)
-	// 				return
-	// 			}
-
-	// 			v.stack.Lock()
-	// 			v.stack.setChildIds(pbevent.Id)
-	// 			v.stack.Unlock()
-	// 		},
-	// 	},
-	// }
 }
 
 type ChildView interface {
@@ -314,9 +230,9 @@ func (v *barView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	// iOS does the layouting for us. We just need the correct sizes.
-	titleViewId := int64(0)
+	hasTitleView := false
 	if v.Bar.TitleView != nil {
-		titleViewId = int64(v.Bar.TitleView.Id())
+		hasTitleView = true
 		l.Add(v.Bar.TitleView, func(s *constraint.Solver) {
 			s.Top(0)
 			s.Left(0)
@@ -325,9 +241,9 @@ func (v *barView) Build(ctx *view.Context) view.Model {
 		})
 	}
 
-	rightViewIds := []int64{}
+	rightViewCount := int64(0)
 	for _, i := range v.Bar.RightViews {
-		rightViewIds = append(rightViewIds, int64(i.Id()))
+		rightViewCount += 1
 		l.Add(i, func(s *constraint.Solver) {
 			s.Top(0)
 			s.Left(0)
@@ -335,9 +251,9 @@ func (v *barView) Build(ctx *view.Context) view.Model {
 			s.WidthLess(l.MaxGuide().Width())
 		})
 	}
-	leftViewIds := []int64{}
+	leftViewCount := int64(0)
 	for _, i := range v.Bar.LeftViews {
-		leftViewIds = append(leftViewIds, int64(i.Id()))
+		leftViewCount += 1
 		l.Add(i, func(s *constraint.Solver) {
 			s.Top(0)
 			s.Left(0)
@@ -355,9 +271,9 @@ func (v *barView) Build(ctx *view.Context) view.Model {
 			CustomBackButtonTitle: len(v.Bar.BackButtonTitle) > 0,
 			BackButtonTitle:       v.Bar.BackButtonTitle,
 			BackButtonHidden:      v.Bar.BackButtonHidden,
-			TitleViewId:           titleViewId,
-			RightViewIds:          rightViewIds,
-			LeftViewIds:           leftViewIds,
+			HasTitleView:          hasTitleView,
+			RightViewCount:        rightViewCount,
+			LeftViewCount:         leftViewCount,
 		},
 	}
 }

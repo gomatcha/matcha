@@ -112,6 +112,7 @@ type View interface {
 	Build(*Context) Model
 	Lifecycle(from, to Stage)
 	Id() matcha.Id
+	ViewKey() string
 	comm.Notifier
 }
 
@@ -121,6 +122,7 @@ type Option interface {
 
 // Embed is a convenience struct that provides a default implementation of View. It also wraps a comm.Relay.
 type Embed struct {
+	Key   string
 	mu    sync.Mutex
 	id    matcha.Id
 	relay comm.Relay
@@ -139,6 +141,10 @@ func (e *Embed) Build(ctx *Context) Model {
 // Id returns the id passed into NewEmbed
 func (e *Embed) Id() matcha.Id {
 	return e.id
+}
+
+func (e *Embed) ViewKey() string {
+	return e.Key
 }
 
 // Lifecycle is an empty implementation of View's Lifecycle method.
