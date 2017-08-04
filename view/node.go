@@ -901,20 +901,6 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 		g2 := gs[idx]
 		i.layoutGuide = &g2
 	}
-	// // Assign guides to children
-	// for k, v := range gs {
-	// 	guide := v
-
-	// 	if altId, ok := n.altIds[k]; ok {
-	// 		k = altId
-	// 	}
-	// 	child, ok := n.children[k]
-	// 	if !ok {
-	// 		fmt.Println("Attempting to assign layout guide to unknown child: ", k)
-	// 		continue
-	// 	}
-	// 	child.layoutGuide = &guide
-	// }
 	return g
 }
 

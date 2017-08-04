@@ -19,7 +19,7 @@ passing a minSize and a maxSize. The child will return a desired size within the
 min and max, which the parent can then position. Here is an example Layout function
 that centers its children within itself.
 
-	func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+	func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 		// Specify that the view wants to be the minSize given by its parent.
 		g := layout.Guide{
 			Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),
