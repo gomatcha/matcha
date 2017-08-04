@@ -2,7 +2,6 @@
 package textview
 
 import (
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
@@ -58,7 +57,7 @@ type layouter struct {
 	maxLines   int
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, l.maxLines)
 	g := layout.Guide{Frame: layout.Rt(0, 0, size.X, size.Y)}
 	return g, nil

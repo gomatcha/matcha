@@ -239,6 +239,7 @@ type Guide struct {
 	id          matcha.Id
 	system      *Layouter
 	children    map[matcha.Id]*Guide
+	children2   []*Guide
 	matchaGuide *layout.Guide
 }
 
@@ -311,6 +312,7 @@ func (g *Guide) add(v view.View, solveFunc func(*Solver)) *Guide {
 		solveFunc(s)
 	}
 	g.children[id] = chl
+	g.children2 = append(g.children2, chl)
 	g.system.solvers = append(g.system.solvers, s)
 	g.system.views = append(g.system.views, v)
 
@@ -640,7 +642,7 @@ func (l *Layouter) MaxGuide() *Guide {
 }
 
 // Layout evaluates the constraints and returns the calculated guide and child guides.
-func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	l.initialize()
 	l.min.matchaGuide = &layout.Guide{
 		Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),
@@ -658,9 +660,9 @@ func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layo
 	}
 
 	g := *l.Guide.matchaGuide
-	gs := map[matcha.Id]layout.Guide{}
-	for k, v := range l.Guide.children {
-		gs[k] = *v.matchaGuide
+	gs := []layout.Guide{}
+	for _, i := range l.Guide.children2 {
+		gs = append(gs, *i.matchaGuide)
 	}
 	return g, gs
 }

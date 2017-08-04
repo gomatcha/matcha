@@ -4,7 +4,6 @@ package button
 import (
 	"image/color"
 
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
@@ -77,7 +76,7 @@ type layouter struct {
 	styledText *internal.StyledText
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	const padding = 10.0
 	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
 	g := layout.Guide{Frame: layout.Rt(0, 0, size.X+padding*2, size.Y+padding*2)}

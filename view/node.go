@@ -889,6 +889,14 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 			}
 			return child.layout(minSize, maxSize)
 		},
+		LayoutFunc2: func(idx int, minSize, maxSize layout.Point) layout.Guide {
+			if idx >= len(n.children2) {
+				fmt.Println("Attempting to layout unknown child: ", idx)
+				return layout.Guide{}
+			}
+			child := n.children2[idx]
+			return child.layout(minSize, maxSize)
+		},
 	}
 	for i := range n.children {
 		ctx.ChildIds = append(ctx.ChildIds, i)
@@ -902,20 +910,25 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 	g, gs := layouter.Layout(ctx)
 	g = g.Fit(ctx)
 
-	// Assign guides to children
-	for k, v := range gs {
-		guide := v
-
-		if altId, ok := n.altIds[k]; ok {
-			k = altId
-		}
-		child, ok := n.children[k]
-		if !ok {
-			fmt.Println("Attempting to assign layout guide to unknown child: ", k)
-			continue
-		}
-		child.layoutGuide = &guide
+	//
+	for idx, i := range n.children2 {
+		g2 := gs[idx]
+		i.layoutGuide = &g2
 	}
+	// // Assign guides to children
+	// for k, v := range gs {
+	// 	guide := v
+
+	// 	if altId, ok := n.altIds[k]; ok {
+	// 		k = altId
+	// 	}
+	// 	child, ok := n.children[k]
+	// 	if !ok {
+	// 		fmt.Println("Attempting to assign layout guide to unknown child: ", k)
+	// 		continue
+	// 	}
+	// 	child.layoutGuide = &guide
+	// }
 	return g
 }
 

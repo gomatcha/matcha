@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/keyboard"
@@ -168,7 +167,7 @@ type layouter struct {
 	multiline  bool
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	if !l.multiline {
 		size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
 		size.Y += 15

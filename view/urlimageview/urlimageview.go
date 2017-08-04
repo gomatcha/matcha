@@ -20,12 +20,12 @@ import (
 // Layouter that returns the child's layout
 type layouter struct{}
 
-func (l layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{Frame: layout.Rect{Max: ctx.MaxSize}}
-	gs := map[matcha.Id]layout.Guide{}
+	gs := []layout.Guide{}
 	for _, id := range ctx.ChildIds {
 		f := ctx.LayoutChild(id, ctx.MinSize, ctx.MaxSize)
-		gs[id] = f
+		gs = append(gs, f)
 		g.Frame = f.Frame
 	}
 	return g, gs

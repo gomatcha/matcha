@@ -62,20 +62,27 @@ func init() {
 }
 
 type Layouter interface {
-	Layout(ctx *Context) (Guide, map[matcha.Id]Guide)
+	Layout(ctx *Context) (Guide, []Guide)
 	comm.Notifier
 }
 
 type Context struct {
-	MinSize    Point
-	MaxSize    Point
-	ChildIds   []matcha.Id
-	LayoutFunc func(matcha.Id, Point, Point) Guide
+	MinSize     Point
+	MaxSize     Point
+	ChildIds    []matcha.Id
+	LayoutFunc  func(matcha.Id, Point, Point) Guide
+	LayoutFunc2 func(int, Point, Point) Guide
 }
 
 // The guide returned by LayoutChild will be positioned such that the minPoint is at 0,0.
 func (l *Context) LayoutChild(id matcha.Id, minSize, maxSize Point) Guide {
 	g := l.LayoutFunc(id, minSize, maxSize)
+	g.Frame = g.Frame.Add(Pt(-g.Frame.Min.X, -g.Frame.Min.Y))
+	return g
+}
+
+func (l *Context) LayoutChildIdx(idx int, minSize, maxSize Point) Guide {
+	g := l.LayoutFunc2(idx, minSize, maxSize)
 	g.Frame = g.Frame.Add(Pt(-g.Frame.Min.X, -g.Frame.Min.Y))
 	return g
 }

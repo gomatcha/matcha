@@ -7,7 +7,6 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/animate"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
@@ -110,9 +109,7 @@ type layouter struct {
 	offset         *layout.Point
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
-	gs := map[matcha.Id]layout.Guide{}
-
+func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	minSize := ctx.MinSize
 	if l.directions&Horizontal == Horizontal {
 		minSize.X = 0
@@ -123,7 +120,7 @@ func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layo
 
 	g := ctx.LayoutChild(ctx.ChildIds[0], minSize, layout.Pt(math.Inf(1), math.Inf(1)))
 	g.Frame = layout.Rt(-l.offset.X, -l.offset.Y, g.Width()-l.offset.X, g.Height()-l.offset.Y)
-	gs[ctx.ChildIds[0]] = g
+	gs := []layout.Guide{g}
 
 	return layout.Guide{
 		Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),

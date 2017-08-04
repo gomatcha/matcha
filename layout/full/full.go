@@ -14,7 +14,6 @@ Package full implements a layout system where the view and all direct children a
 package full
 
 import (
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 )
@@ -23,11 +22,11 @@ type Layouter struct {
 }
 
 // Layout implements the view.Layouter interface.
-func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{Frame: layout.Rect{Max: ctx.MinSize}}
-	gs := map[matcha.Id]layout.Guide{}
+	gs := []layout.Guide{}
 	for _, id := range ctx.ChildIds {
-		gs[id] = ctx.LayoutChild(id, ctx.MinSize, ctx.MinSize)
+		gs = append(gs, ctx.LayoutChild(id, ctx.MinSize, ctx.MinSize))
 	}
 	return g, gs
 }

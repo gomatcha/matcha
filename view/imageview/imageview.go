@@ -7,7 +7,6 @@ import (
 	_ "image/jpeg"
 	_ "image/png"
 
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/app"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
@@ -98,7 +97,7 @@ type layouter struct {
 	resizeMode ResizeMode
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{Frame: layout.Rect{Max: ctx.MaxSize}}
 	switch l.resizeMode {
 	case ResizeModeFit:
