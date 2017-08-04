@@ -118,7 +118,7 @@ func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 		minSize.Y = 0
 	}
 
-	g := ctx.LayoutChild(ctx.ChildIds[0], minSize, layout.Pt(math.Inf(1), math.Inf(1)))
+	g := ctx.LayoutChildIdx(0, minSize, layout.Pt(math.Inf(1), math.Inf(1)))
 	g.Frame = layout.Rt(-l.offset.X, -l.offset.Y, g.Width()-l.offset.X, g.Height()-l.offset.Y)
 	gs := []layout.Guide{g}
 
