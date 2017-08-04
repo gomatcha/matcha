@@ -1,13 +1,13 @@
-#import "MatchaTabScreen.h"
+#import "MatchaTabView.h"
 #import "MatchaView.h"
 #import "MatchaProtobuf.h"
 #import "MatchaViewController.h"
 
-@implementation MatchaTabScreen
+@implementation MatchaTabView
 
 + (void)load {
     MatchaRegisterViewController(@"gomatcha.io/matcha/view/tabscreen", ^(MatchaViewNode *node){
-        return [[MatchaTabScreen alloc] initWithViewNode:node];
+        return [[MatchaTabView alloc] initWithViewNode:node];
     });
 }
 
@@ -20,7 +20,7 @@
     return self;
 }
 
-- (void)setMatchaChildViewControllers:(NSDictionary<NSNumber *, UIViewController *> *)childVCs {
+- (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
     GPBAny *state = self.node.nativeViewState;
     MatchaTabScreenPBView *pbTabNavigator = (id)[state unpackMessageClass:[MatchaTabScreenPBView class] error:nil];
     
@@ -38,8 +38,9 @@
 
     
     NSMutableArray *viewControllers = [NSMutableArray array];
-    for (MatchaTabScreenPBChildView *i in pbTabNavigator.screensArray) {
-        UIViewController *vc = childVCs[@(i.id_p)];
+    for (NSInteger idx = 0; idx < pbTabNavigator.screensArray.count; idx++) {
+        MatchaTabScreenPBChildView *i = pbTabNavigator.screensArray[idx];
+        UIViewController *vc = childVCs[idx];
         vc.tabBarItem.title = i.title;
         vc.tabBarItem.badgeValue = i.badge.length == 0 ? nil : i.badge;
         vc.tabBarItem.image = [[UIImage alloc] initWithImageOrResourceProtobuf:i.icon];

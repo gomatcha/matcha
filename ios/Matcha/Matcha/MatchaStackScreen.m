@@ -170,17 +170,23 @@
 - (void)setMatchaChildLayout:(NSArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes {
     NSInteger idx = 0;
     if (self.titleView) {
-        self.titleView.frame = ((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame;
+        CGRect f = self.titleView.frame;
+        f.size = ((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame.size;
+        self.titleView.frame = f;
         idx += 1;
     }
     for (NSInteger i = 0; i < self.rightViews.count; i++) {
         UIBarButtonItem *rightView = self.rightViews[i];
-        rightView.customView.frame = ((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame;
+        CGRect f = rightView.customView.frame;
+        f.size =((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame.size;
+        rightView.customView.frame = f;
         idx += 1;
     }
     for (NSInteger i = 0; i < self.leftViews.count; i++) {
         UIBarButtonItem *leftView = self.leftViews[i];
-        leftView.customView.frame = ((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame;
+        CGRect f = leftView.customView.frame;
+        f.size =((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame.size;
+        leftView.customView.frame = f;
         idx += 1;
     }
 }

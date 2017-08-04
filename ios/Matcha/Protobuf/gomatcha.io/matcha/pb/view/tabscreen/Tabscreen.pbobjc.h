@@ -52,7 +52,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - MatchaTabScreenPBChildView
 
 typedef GPB_ENUM(MatchaTabScreenPBChildView_FieldNumber) {
-  MatchaTabScreenPBChildView_FieldNumber_Id_p = 1,
   MatchaTabScreenPBChildView_FieldNumber_Title = 2,
   MatchaTabScreenPBChildView_FieldNumber_Icon = 3,
   MatchaTabScreenPBChildView_FieldNumber_SelectedIcon = 4,
@@ -60,8 +59,6 @@ typedef GPB_ENUM(MatchaTabScreenPBChildView_FieldNumber) {
 };
 
 @interface MatchaTabScreenPBChildView : GPBMessage
-
-@property(nonatomic, readwrite) int64_t id_p;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 

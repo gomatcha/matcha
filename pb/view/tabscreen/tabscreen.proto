@@ -8,7 +8,6 @@ option go_package = "tabscreen";
 option objc_class_prefix = "MatchaTabScreenPB";
 
 message ChildView {
-    int64 id = 1;
     string title = 2;
     matcha.ImageOrResource icon = 3;
     matcha.ImageOrResource selectedIcon = 4;

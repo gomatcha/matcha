@@ -125,7 +125,6 @@ func (v *View) Build(ctx *view.Context) view.Model {
 
 		// Add to protobuf.
 		childrenPb = append(childrenPb, &tabnavpb.ChildView{
-			Id:           int64(chld.Id()),
 			Title:        button.Title,
 			Icon:         app.ImageMarshalProtobuf(button.Icon),
 			SelectedIcon: app.ImageMarshalProtobuf(button.SelectedIcon),
@@ -169,57 +168,6 @@ func (v *View) Build(ctx *view.Context) view.Model {
 			},
 		},
 	}
-
-	// children := map[int64]view.View{}
-	// childrenPb := []*tabnavpb.ChildView{}
-	// v.ids = append([]int64(nil), v.Group.ids...)
-	// for _, i := range v.ids {
-	// 	key := strconv.Itoa(int(i))
-
-	// 	// Create the child if necessary and subscribe to it.
-	// 	chld, ok := v.children[i]
-	// 	if !ok {
-	// 		chld = v.Group.children[i].View(ctx.WithPrefix("view" + key))
-	// 		children[i] = chld
-	// 		v.Subscribe(chld)
-	// 	} else {
-	// 		children[i] = chld
-	// 		delete(v.children, i)
-	// 	}
-
-	// // Create the button
-	// var button *Button
-	// if childView, ok := chld.(ChildView); ok {
-	// 	button = childView.TabButton(ctx)
-	// } else {
-	// 	button = &Button{
-	// 		Title: "Title",
-	// 	}
-	// }
-
-	// // Add the child.
-	// l.Add(chld, func(s *constraint.Solver) {
-	// 	s.TopEqual(constraint.Const(0))
-	// 	s.LeftEqual(constraint.Const(0))
-	// 	s.WidthEqual(l.MaxGuide().Width())
-	// 	s.HeightEqual(l.MaxGuide().Height())
-	// })
-
-	// // Add to protobuf.
-	// childrenPb = append(childrenPb, &tabnavpb.ChildView{
-	// 	Id:           int64(chld.Id()),
-	// 	Title:        button.Title,
-	// 	Icon:         env.ImageMarshalProtobuf(button.Icon),
-	// 	SelectedIcon: env.ImageMarshalProtobuf(button.SelectedIcon),
-	// 	Badge:        button.Badge,
-	// })
-	// }
-
-	// // Unsubscribe from old views
-	// for _, chld := range v.children {
-	// 	v.Unsubscribe(chld)
-	// }
-	// v.children = children
 }
 
 type ChildView interface {
