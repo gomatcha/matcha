@@ -710,7 +710,6 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 				// Mark as needing rebuild
 				n.root.updateFlags[prevView.Id()] |= buildFlag
 			} else {
-				fmt.Println("added")
 				// If view was added for the first time...
 				newView := i
 				id := newView.Id()

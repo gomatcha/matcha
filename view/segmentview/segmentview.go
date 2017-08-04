@@ -26,7 +26,10 @@ func New(ctx *view.Context, key string) *View {
 	if v, ok := ctx.Prev(key).(*View); ok {
 		return v
 	}
-	return &View{Embed: ctx.NewEmbed(key), Enabled: true}
+	return &View{
+		Embed:   ctx.NewEmbed(key),
+		Enabled: true,
+	}
 }
 
 // Build implements view.View.
