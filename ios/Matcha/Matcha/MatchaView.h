@@ -14,7 +14,7 @@
 - (id)initWithViewNode:(MatchaViewNode *)viewNode;
 - (void)setNode:(MatchaBuildNode *)node;
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs;
-- (void)setMatchaChildLayout:(GPBInt64ObjectDictionary *)layoutPaintNodes;
+- (void)setMatchaChildLayout:(NSMutableArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
 @end
 
 typedef UIView<MatchaChildView> *(^MatchaViewRegistrationBlock)(MatchaViewNode *);

@@ -632,7 +632,6 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 		for _, i := range viewModel.Children {
 			// Find the corresponding previous node.
 			var prevNode *node
-			// fmt.Println("id", i.Id())
 
 			iKey, ok := prevKeys[i.Id()]
 			if !ok {

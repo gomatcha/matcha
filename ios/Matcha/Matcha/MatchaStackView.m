@@ -1,4 +1,4 @@
-#import "MatchaStackScreen.h"
+#import "MatchaStackView.h"
 #import "MatchaView.h"
 #import "MatchaProtobuf.h"
 #import "MatchaViewController.h"
@@ -27,11 +27,11 @@
 
 @end
 
-@implementation MatchaStackScreen
+@implementation MatchaStackView
 
 + (void)load {
     MatchaRegisterViewController(@"gomatcha.io/matcha/view/stacknav", ^(MatchaViewNode *node){
-        return [[MatchaStackScreen alloc] initWithViewNode:node];
+        return [[MatchaStackView alloc] initWithViewNode:node];
     });
     MatchaRegisterViewController(@"gomatcha.io/matcha/view/stacknav Bar", ^(MatchaViewNode *node){
         return [[MatchaStackBar alloc] initWithViewNode:node];

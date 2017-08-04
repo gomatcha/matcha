@@ -3,7 +3,7 @@
 @class MatchaViewNode;
 @class GPBInt64Array;
 
-@interface MatchaStackScreen : UINavigationController <MatchaChildViewController, UINavigationControllerDelegate>
+@interface MatchaStackView : UINavigationController <MatchaChildViewController, UINavigationControllerDelegate>
 - (id)initWithViewNode:(MatchaViewNode *)viewNode;
 @property (nonatomic, weak) MatchaViewNode *viewNode;
 @property (nonatomic, strong) MatchaBuildNode *node;

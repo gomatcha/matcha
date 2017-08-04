@@ -2,6 +2,7 @@ High:
 * DOCS!!!!
 * Delay any ui events while viwecontroller is updating.
 * Button should fade when disabled.
+* Remove .Id() field
 
 Medium:
 * Rebuild Instagram.
