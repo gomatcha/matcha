@@ -26,16 +26,16 @@ that centers its children within itself.
 		}
 
 		// Iterate over all child ids.
-		gs := map[matcha.Id]layout.Guide{}
-		for i, id := range ctx.ChildIds {
+		gs := []layout.Guide{}
+		for i := 0; i< ctx.ChildCount; i++ {
 
 			// Get the desired size of the children. In this case we let the children be any size.
-			child := ctx.LayoutChild(id, layout.Pt(0, 0), layout.Pt(math.Inf(1), math.Inf(1)))
+			child := ctx.LayoutChild(idx, layout.Pt(0, 0), layout.Pt(math.Inf(1), math.Inf(1)))
 
 			// Position the children to be centered in the view.
 			child.Frame = child.Frame.Add(layout.Pt(g.CenterX()-child.Width()/2, g.CenterY()-child.Height()/2))
 			child.ZIndex = i
-			gs[id] = child
+			gs = append(gs, child)
 		}
 
 		// Return the view's size, and the frames of its children.
@@ -51,7 +51,6 @@ import (
 	"reflect"
 
 	"gomatcha.io/bridge"
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	pblayout "gomatcha.io/matcha/pb/layout"
 )
@@ -67,15 +66,14 @@ type Layouter interface {
 }
 
 type Context struct {
-	MinSize     Point
-	MaxSize     Point
-	ChildIds    []matcha.Id
-	LayoutFunc  func(matcha.Id, Point, Point) Guide
-	LayoutFunc2 func(int, Point, Point) Guide
+	MinSize    Point
+	MaxSize    Point
+	ChildCount int
+	LayoutFunc func(int, Point, Point) Guide
 }
 
 func (l *Context) LayoutChild(idx int, minSize, maxSize Point) Guide {
-	g := l.LayoutFunc2(idx, minSize, maxSize)
+	g := l.LayoutFunc(idx, minSize, maxSize)
 	g.Frame = g.Frame.Add(Pt(-g.Frame.Min.X, -g.Frame.Min.Y))
 	return g
 }

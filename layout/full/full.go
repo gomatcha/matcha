@@ -25,7 +25,7 @@ type Layouter struct {
 func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{Frame: layout.Rect{Max: ctx.MinSize}}
 	gs := []layout.Guide{}
-	for i := range ctx.ChildIds {
+	for i := 0; i < ctx.ChildCount; i++ {
 		gs = append(gs, ctx.LayoutChild(i, ctx.MinSize, ctx.MinSize))
 	}
 	return g, gs

@@ -875,21 +875,10 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 
 	// Create the LayoutContext
 	ctx := &layout.Context{
-		MinSize:  minSize,
-		MaxSize:  maxSize,
-		ChildIds: []matcha.Id{},
-		LayoutFunc: func(id matcha.Id, minSize, maxSize layout.Point) layout.Guide {
-			if altId, ok := n.altIds[id]; ok {
-				id = altId
-			}
-			child, ok := n.children[id]
-			if !ok {
-				fmt.Println("Attempting to layout unknown child: ", id)
-				return layout.Guide{}
-			}
-			return child.layout(minSize, maxSize)
-		},
-		LayoutFunc2: func(idx int, minSize, maxSize layout.Point) layout.Guide {
+		MinSize:    minSize,
+		MaxSize:    maxSize,
+		ChildCount: len(n.children2),
+		LayoutFunc: func(idx int, minSize, maxSize layout.Point) layout.Guide {
 			if idx >= len(n.children2) {
 				fmt.Println("Attempting to layout unknown child: ", idx)
 				return layout.Guide{}
@@ -897,9 +886,6 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 			child := n.children2[idx]
 			return child.layout(minSize, maxSize)
 		},
-	}
-	for i := range n.children {
-		ctx.ChildIds = append(ctx.ChildIds, i)
 	}
 
 	// Perform layout
