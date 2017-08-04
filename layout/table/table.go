@@ -45,7 +45,7 @@ func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	y := 0.0
 	x := ctx.MinSize.X
 	for i := range l.views {
-		g := ctx.LayoutChildIdx(i, layout.Pt(x, 0), layout.Pt(x, math.Inf(1)))
+		g := ctx.LayoutChild(i, layout.Pt(x, 0), layout.Pt(x, math.Inf(1)))
 		g.Frame = layout.Rt(0, y, g.Width(), y+g.Height())
 		g.ZIndex = i
 		gs = append(gs, g)

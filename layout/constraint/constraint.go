@@ -58,7 +58,6 @@ import (
 	"fmt"
 	"math"
 
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal/device"
 	"gomatcha.io/matcha/layout"
@@ -238,7 +237,6 @@ func Notifier(n comm.Float64Notifier) *Anchor {
 type Guide struct {
 	index       int
 	system      *Layouter
-	children    map[matcha.Id]*Guide
 	children2   []*Guide
 	matchaGuide *layout.Guide
 }
@@ -300,18 +298,15 @@ func (g *Guide) Solve(solveFunc func(*Solver)) {
 }
 
 func (g *Guide) add(v view.View, solveFunc func(*Solver)) *Guide {
-	id := v.Id()
 	chl := &Guide{
 		index:       len(g.children2),
 		system:      g.system,
-		children:    map[matcha.Id]*Guide{},
 		matchaGuide: nil,
 	}
 	s := &Solver{index: chl.index}
 	if solveFunc != nil {
 		solveFunc(s)
 	}
-	g.children[id] = chl
 	g.children2 = append(g.children2, chl)
 	g.system.solvers = append(g.system.solvers, s)
 	g.system.views = append(g.system.views, v)
@@ -412,7 +407,7 @@ func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
 		_, cr = cr.solveWidth(0)
 		_, cr = cr.solveHeight(0)
 
-		g = ctx.LayoutChildIdx(s.index, layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max))
+		g = ctx.LayoutChild(s.index, layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max))
 		width = g.Width()
 		height = g.Height()
 
@@ -617,9 +612,9 @@ type Layouter struct {
 
 func (l *Layouter) initialize() {
 	if l.groupNotifiers == nil {
-		l.Guide = Guide{index: rootId, system: l, children: map[matcha.Id]*Guide{}}
-		l.min = Guide{index: minId, system: l, children: map[matcha.Id]*Guide{}}
-		l.max = Guide{index: maxId, system: l, children: map[matcha.Id]*Guide{}}
+		l.Guide = Guide{index: rootId, system: l}
+		l.min = Guide{index: minId, system: l}
+		l.max = Guide{index: maxId, system: l}
 		l.groupNotifiers = map[comm.Id]notifier{}
 	}
 }

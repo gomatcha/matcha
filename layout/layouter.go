@@ -74,14 +74,7 @@ type Context struct {
 	LayoutFunc2 func(int, Point, Point) Guide
 }
 
-// The guide returned by LayoutChild will be positioned such that the minPoint is at 0,0.
-func (l *Context) LayoutChild(id matcha.Id, minSize, maxSize Point) Guide {
-	g := l.LayoutFunc(id, minSize, maxSize)
-	g.Frame = g.Frame.Add(Pt(-g.Frame.Min.X, -g.Frame.Min.Y))
-	return g
-}
-
-func (l *Context) LayoutChildIdx(idx int, minSize, maxSize Point) Guide {
+func (l *Context) LayoutChild(idx int, minSize, maxSize Point) Guide {
 	g := l.LayoutFunc2(idx, minSize, maxSize)
 	g.Frame = g.Frame.Add(Pt(-g.Frame.Min.X, -g.Frame.Min.Y))
 	return g
