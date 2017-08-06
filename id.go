@@ -6,8 +6,6 @@ import (
 	_ "gomatcha.io/bridge"
 )
 
-type Id int64
-
 var MainLocker sync.Locker
 
 func init() {

@@ -106,7 +106,7 @@ func (r *Root) Id() int64 {
 	return r.id
 }
 
-func (r *Root) ViewId() matcha.Id {
+func (r *Root) ViewId() Id {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -131,7 +131,7 @@ func (r *Root) SetSize(p layout.Point) {
 }
 
 type viewCacheKey struct {
-	id  matcha.Id
+	id  Id
 	key string
 }
 
@@ -142,9 +142,9 @@ type Context struct {
 
 	valid     bool
 	node      *node
-	prevIds   map[viewCacheKey]matcha.Id
-	prevNodes map[matcha.Id]*node
-	skipBuild map[matcha.Id]struct{}
+	prevIds   map[viewCacheKey]Id
+	prevNodes map[Id]*node
+	skipBuild map[Id]struct{}
 }
 
 func (ctx *Context) Prev2(a interface{}) bool {
@@ -238,14 +238,14 @@ func (ctx *Context) NewEmbed(key string) Embed {
 }
 
 // NewId generates a new identifier for a given key.
-func (ctx *Context) NewId(key string) matcha.Id {
+func (ctx *Context) NewId(key string) Id {
 	if ctx == nil {
-		return matcha.Id(atomic.AddInt64(&maxId, 1))
+		return Id(atomic.AddInt64(&maxId, 1))
 	}
 	return ctx.newId(key, "")
 }
 
-func (ctx *Context) newId(key string, prefix string) matcha.Id {
+func (ctx *Context) newId(key string, prefix string) Id {
 	if ctx.parent != nil {
 		return ctx.parent.newId(key, ctx.prefix+"|"+prefix)
 	}
@@ -256,7 +256,7 @@ func (ctx *Context) newId(key string, prefix string) matcha.Id {
 		key = prefix + "|" + key
 	}
 
-	id := matcha.Id(atomic.AddInt64(&maxId, 1))
+	id := Id(atomic.AddInt64(&maxId, 1))
 	if ctx.node != nil {
 		cacheKey := viewCacheKey{key: key, id: ctx.node.id}
 		if _, ok := ctx.node.root.ids[cacheKey]; ok {
@@ -269,14 +269,14 @@ func (ctx *Context) newId(key string, prefix string) matcha.Id {
 }
 
 // // SkipBuild marks the child ids as not needing to be rebuilt.
-// func (ctx *Context) SkipBuild(ids []matcha.Id) {
+// func (ctx *Context) SkipBuild(ids []Id) {
 // 	if ctx.parent != nil {
 // 		ctx.parent.SkipBuild(ids)
 // 		return
 // 	}
 
 // 	if ctx.skipBuild == nil {
-// 		ctx.skipBuild = map[matcha.Id]struct{}{}
+// 		ctx.skipBuild = map[Id]struct{}{}
 // 	}
 // 	for _, i := range ids {
 // 		ctx.skipBuild[i] = struct{}{}
@@ -294,7 +294,7 @@ func (ctx *Context) WithInt(key int) *Context {
 }
 
 // // Id returns the identifier associated with the build context.
-// func (ctx *Context) Id() matcha.Id {
+// func (ctx *Context) Id() Id {
 // 	if ctx.parent != nil {
 // 		return ctx.parent.Id()
 // 	}
@@ -305,12 +305,12 @@ func (ctx *Context) WithInt(key int) *Context {
 // }
 
 // Path returns the path of Ids from the root to the view.
-func (ctx *Context) Path() []matcha.Id {
+func (ctx *Context) Path() []Id {
 	if ctx.parent != nil {
 		return ctx.parent.Path()
 	}
 	if ctx.node == nil {
-		return []matcha.Id{0}
+		return []Id{0}
 	}
 	return ctx.node.path
 }
@@ -337,13 +337,13 @@ func (f updateFlag) needsPaint() bool {
 
 type root struct {
 	node        *node
-	keys        map[matcha.Id]string
-	ids         map[viewCacheKey]matcha.Id
-	nodes       map[matcha.Id]*node
+	keys        map[Id]string
+	ids         map[viewCacheKey]Id
+	nodes       map[Id]*node
 	middlewares []middleware
 
 	flagMu      sync.Mutex
-	updateFlags map[matcha.Id]updateFlag
+	updateFlags map[Id]updateFlag
 }
 
 func newRoot(v View) *root {
@@ -351,18 +351,18 @@ func newRoot(v View) *root {
 	root := &root{}
 	root.node = &node{
 		id:   id,
-		path: []matcha.Id{id},
+		path: []Id{id},
 		view: v,
 		root: root,
 	}
-	root.updateFlags = map[matcha.Id]updateFlag{v.Id(): buildFlag}
+	root.updateFlags = map[Id]updateFlag{v.Id(): buildFlag}
 	for _, i := range internal.Middlewares() {
 		root.middlewares = append(root.middlewares, i().(middleware))
 	}
 	return root
 }
 
-func (root *root) addFlag(id matcha.Id, f updateFlag) {
+func (root *root) addFlag(id Id, f updateFlag) {
 	root.flagMu.Lock()
 	defer root.flagMu.Unlock()
 
@@ -391,7 +391,7 @@ func (root *root) update(size layout.Point) bool {
 		root.paint()
 		updated = true
 	}
-	root.updateFlags = map[matcha.Id]updateFlag{}
+	root.updateFlags = map[Id]updateFlag{}
 	return updated
 }
 
@@ -427,16 +427,16 @@ func (root *root) build() {
 	prevNodes := root.nodes
 	prevKeys := root.keys
 
-	root.ids = map[viewCacheKey]matcha.Id{}
-	root.keys = map[matcha.Id]string{}
-	root.nodes = map[matcha.Id]*node{
+	root.ids = map[viewCacheKey]Id{}
+	root.keys = map[Id]string{}
+	root.nodes = map[Id]*node{
 		root.node.id: root.node,
 	}
 
 	// Rebuild
 	root.node.build(prevIds, prevNodes, prevKeys)
 
-	mergedKeys := map[matcha.Id]viewCacheKey{}
+	mergedKeys := map[Id]viewCacheKey{}
 	for k, v := range root.ids {
 		mergedKeys[v] = k
 	}
@@ -444,8 +444,8 @@ func (root *root) build() {
 		mergedKeys[v] = k
 	}
 
-	keys := map[matcha.Id]string{}
-	ids := map[viewCacheKey]matcha.Id{}
+	keys := map[Id]string{}
+	ids := map[viewCacheKey]Id{}
 	for k := range root.nodes {
 		key, ok := mergedKeys[k]
 		if ok {
@@ -468,7 +468,7 @@ func (root *root) paint() {
 }
 
 func (root *root) call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
-	node, ok := root.nodes[matcha.Id(viewId)]
+	node, ok := root.nodes[Id(viewId)]
 	if !ok || node.model == nil {
 		fmt.Println("root.call(): no node found", ok, node.model)
 		return nil
@@ -485,8 +485,8 @@ func (root *root) call(funcId string, viewId int64, args []reflect.Value) []refl
 }
 
 type node struct {
-	id    matcha.Id
-	path  []matcha.Id
+	id    Id
+	path  []Id
 	root  *root
 	view  View
 	stage Stage
@@ -602,7 +602,7 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 	}
 }
 
-func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id]*node, prevKeys map[matcha.Id]string) {
+func (n *node) build(prevIds map[viewCacheKey]Id, prevNodes map[Id]*node, prevKeys map[Id]string) {
 	if n.root.updateFlags[n.id].needsBuild() {
 		n.buildId += 1
 
@@ -703,7 +703,7 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 				id := newView.Id()
 
 				// Add in a new node.
-				path := make([]matcha.Id, len(n.path)+1)
+				path := make([]Id, len(n.path)+1)
 				copy(path, n.path)
 				path[len(n.path)] = id
 				children = append(children, &node{
@@ -723,15 +723,15 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 			i.done()
 		}
 
-		// viewModelChildren := map[matcha.Id]View{}
+		// viewModelChildren := map[Id]View{}
 		// for _, i := range viewModel.Children {
 		// 	// viewModelChildren[i.Id()] = i
 		// }
 
 		// // Diff the old children (n.children) with new children (viewModelChildren).
-		// addedIds := []matcha.Id{}
-		// removedIds := []matcha.Id{}
-		// unchangedIds := []matcha.Id{}
+		// addedIds := []Id{}
+		// removedIds := []Id{}
+		// unchangedIds := []Id{}
 		// for id := range n.children {
 		// 	if _, ok := viewModelChildren[id]; !ok {
 		// 		removedIds = append(removedIds, id)
@@ -745,7 +745,7 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 		// 	}
 		// }
 
-		// children := map[matcha.Id]*node{}
+		// children := map[Id]*node{}
 		// // Add build contexts for new children.
 		// for _, id := range addedIds {
 		// 	var view View
@@ -756,7 +756,7 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 		// 		}
 		// 	}
 
-		// 	path := make([]matcha.Id, len(n.path)+1)
+		// 	path := make([]Id, len(n.path)+1)
 		// 	copy(path, n.path)
 		// 	path[len(n.path)] = id
 

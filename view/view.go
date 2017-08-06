@@ -34,7 +34,7 @@ key (ctx.Prev(key)...), check that it is of the correct type, and return it if i
 Internal state is thereby carried across rerenders. If there was no previous view,
 a new one is created.
 
-	Id() matcha.Id
+	Id() Id
 
 Id returns the view's unique identifier. This should be created in the view's initializer and not change
 over the lifetime of the view. New identifiers can be created by calling Context.NewId() or Context.NewEmbed().
@@ -102,16 +102,17 @@ import (
 	"sync"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 )
 
+type Id int64
+
 type View interface {
 	Build(*Context) Model
 	Lifecycle(from, to Stage)
-	Id() matcha.Id
+	Id() Id
 	ViewKey() string
 	comm.Notifier
 }
@@ -124,12 +125,12 @@ type Option interface {
 type Embed struct {
 	Key   string
 	mu    sync.Mutex
-	id    matcha.Id
+	id    Id
 	relay comm.Relay
 }
 
 // NewEmbed creates a new Embed with the given Id.
-func NewEmbed(id matcha.Id) Embed {
+func NewEmbed(id Id) Embed {
 	return Embed{id: id}
 }
 
@@ -139,7 +140,7 @@ func (e *Embed) Build(ctx *Context) Model {
 }
 
 // Id returns the id passed into NewEmbed
-func (e *Embed) Id() matcha.Id {
+func (e *Embed) Id() Id {
 	return e.id
 }
 
