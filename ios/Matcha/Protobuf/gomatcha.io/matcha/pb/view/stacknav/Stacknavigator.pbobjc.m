@@ -49,14 +49,10 @@ static GPBFileDescriptor *MatchaStackScreenPBStacknavigatorRoot_FileDescriptor(v
 
 @implementation MatchaStackScreenPBChildView
 
-@dynamic viewId;
-@dynamic barId;
 @dynamic screenId;
 
 typedef struct MatchaStackScreenPBChildView__storage_ {
   uint32_t _has_storage_[1];
-  int64_t viewId;
-  int64_t barId;
   int64_t screenId;
 } MatchaStackScreenPBChildView__storage_;
 
@@ -67,28 +63,10 @@ typedef struct MatchaStackScreenPBChildView__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "viewId",
-        .dataTypeSpecific.className = NULL,
-        .number = MatchaStackScreenPBChildView_FieldNumber_ViewId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MatchaStackScreenPBChildView__storage_, viewId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "barId",
-        .dataTypeSpecific.className = NULL,
-        .number = MatchaStackScreenPBChildView_FieldNumber_BarId,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(MatchaStackScreenPBChildView__storage_, barId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
         .name = "screenId",
         .dataTypeSpecific.className = NULL,
         .number = MatchaStackScreenPBChildView_FieldNumber_ScreenId,
-        .hasIndex = 2,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(MatchaStackScreenPBChildView__storage_, screenId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeInt64,
@@ -104,7 +82,7 @@ typedef struct MatchaStackScreenPBChildView__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\003\001\006\000\002\005\000\003\010\000";
+        "\001\003\010\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");

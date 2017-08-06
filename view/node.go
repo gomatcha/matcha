@@ -75,9 +75,9 @@ func (r *Root) start() {
 			fmt.Println("err", err)
 			return
 		}
-		bridge.Bridge().Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
 
-		// fmt.Println(r.root.node.debugString())
+		fmt.Println(r.root.node.debugString())
+		bridge.Bridge().Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
 	})
 }
 

@@ -7,8 +7,6 @@ option go_package = "stacknav";
 option objc_class_prefix = "MatchaStackScreenPB";
 
 message ChildView {
-    int64 viewId = 1;
-    int64 barId = 2;
     int64 screenId = 3;
 }
 

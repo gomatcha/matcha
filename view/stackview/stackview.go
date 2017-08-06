@@ -34,7 +34,6 @@ import (
 	"strconv"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/pb"
@@ -46,41 +45,50 @@ import (
 
 // Stack represents a list of views to be shown in the StackView. It can be manipulated outside of a Build() call.
 type Stack struct {
-	relay    comm.Relay
-	children []view.View
+	relay       comm.Relay
+	childIds    []int64
+	childrenMap map[int64]view.View
+	maxId       int64
 }
 
 func (s *Stack) SetViews(ss ...view.View) {
-	s.children = ss
-	s.relay.Signal()
-}
+	if s.childrenMap == nil {
+		s.childrenMap = map[int64]view.View{}
+	}
 
-func (s *Stack) setChildIds(ids []int64) {
-	prevChildren := s.children
-	s.children = []view.View{}
-
-	for _, i := range ids {
-		for _, j := range prevChildren {
-			if j.Id() == matcha.Id(i) {
-				s.children = append(s.children, j)
-				continue
-			}
-		}
+	for _, i := range ss {
+		s.maxId += 1
+		s.childIds = append(s.childIds, s.maxId)
+		s.childrenMap[s.maxId] = i
 	}
 	s.relay.Signal()
 }
 
+func (s *Stack) setChildIds(ids []int64) {
+	fmt.Printf("prev:%v new:%v", s.childIds, ids)
+	s.childIds = ids
+	s.relay.Signal()
+}
+
 func (s *Stack) Views() []view.View {
-	return s.children
+	vs := []view.View{}
+	for _, i := range s.childIds {
+		vs = append(vs, s.childrenMap[i])
+	}
+	return vs
 }
 
 func (s *Stack) Push(vs view.View) {
-	s.children = append(s.children, vs)
+	s.maxId += 1
+
+	s.childIds = append(s.childIds, s.maxId)
+	s.childrenMap[s.maxId] = vs
 	s.relay.Signal()
 }
 
 func (s *Stack) Pop() {
-	s.children = s.children[:len(s.children)-1]
+	delete(s.childrenMap, s.childIds[len(s.childIds)-1])
+	s.childIds = s.childIds[:len(s.childIds)-1]
 	s.relay.Signal()
 }
 
@@ -138,15 +146,12 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	}
 
 	childrenPb := []*stacknav.ChildView{}
-	for _, chld := range v.Stack.Views() {
-		key := strconv.Itoa(int(chld.Id()))
-
-		// v.Subscribe(chld)
-
+	for _, id := range v.Stack.childIds {
+		chld := v.Stack.childrenMap[id]
 		// Create the bar.
 		var bar *Bar
 		if childView, ok := chld.(ChildView); ok {
-			bar = childView.StackBar(ctx.WithPrefix("bar" + key))
+			bar = childView.StackBar(ctx)
 		} else {
 			bar = &Bar{
 				Title: "Title",
@@ -155,7 +160,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 
 		// Add the bar.
 		barV := &barView{
-			Embed: ctx.NewEmbed(key),
+			Embed: ctx.NewEmbed(strconv.Itoa(int(id))),
 			Bar:   bar,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
@@ -175,9 +180,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 
 		// Add ids to protobuf.
 		childrenPb = append(childrenPb, &stacknav.ChildView{
-			ViewId:   int64(chld.Id()),
-			BarId:    int64(barV.Id()),
-			ScreenId: int64(chld.Id()),
+			ScreenId: int64(id),
 		})
 	}
 

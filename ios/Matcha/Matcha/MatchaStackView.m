@@ -53,7 +53,7 @@
     
     NSMutableArray *prevIds = [NSMutableArray array];
     for (MatchaStackScreenPBChildView *i in view.childrenArray) {
-        [prevIds addObject:@(i.viewId)];
+        [prevIds addObject:@(i.screenId)];
     }
     if ([self.prevIds isEqual:prevIds]) {
         return;
@@ -146,6 +146,8 @@
     if (bar.hasTitleView) {
         self.titleView = childVCs[idx].view;
         idx += 1;
+    } else {
+        self.titleView = nil;
     }
 
     NSMutableArray *rightViews = [NSMutableArray array];

@@ -26,24 +26,24 @@ func init() {
 			Title: "Title 1",
 		}
 
-		view2 := NewTouchView(nil, "", app)
-		view2.Color = colornames.Red
-		bar2 := &stackview.Bar{
-			Title: "Title 2",
-		}
+		// view2 := NewTouchView(nil, "", app)
+		// view2.Color = colornames.Red
+		// bar2 := &stackview.Bar{
+		// 	Title: "Title 2",
+		// }
 
-		view3 := NewTouchView(nil, "", app)
-		view3.Color = colornames.Yellow
-		view4 := NewTouchView(nil, "", app)
-		view4.Color = colornames.Green
+		// view3 := NewTouchView(nil, "", app)
+		// view3.Color = colornames.Yellow
+		// view4 := NewTouchView(nil, "", app)
+		// view4.Color = colornames.Green
 
 		v := stackview.New(nil, "")
 		v.Stack = app.stack
 		v.Stack.SetViews(
 			stackview.WithBar(view1, bar1),
-			stackview.WithBar(view2, bar2),
-			view3,
-			view4,
+			// stackview.WithBar(view2, bar2),
+			// view3,
+			// view4,
 		)
 		return view.NewRoot(v)
 	})
