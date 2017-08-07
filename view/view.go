@@ -122,9 +122,16 @@ type Option interface {
 
 // Embed is a convenience struct that provides a default implementation of View. It also wraps a comm.Relay.
 type Embed struct {
+	key   []interface{}
 	Key   interface{}
 	mu    sync.Mutex
 	relay comm.Relay
+}
+
+func NewEmbed(key ...interface{}) Embed {
+	return Embed{
+		key: key,
+	}
 }
 
 // Build is an empty implementation of View's Build method.
@@ -133,7 +140,10 @@ func (e *Embed) Build(ctx *Context) Model {
 }
 
 func (e *Embed) ViewKey() interface{} {
-	return e.Key
+	return struct {
+		A []interface{}
+		B interface{}
+	}{A: e.key, B: e.Key}
 }
 
 // Lifecycle is an empty implementation of View's Lifecycle method.

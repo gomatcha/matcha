@@ -13,7 +13,10 @@ type CellularView struct {
 }
 
 func NewCellularView(app *App) *CellularView {
-	return &CellularView{app: app}
+	return &CellularView{
+		Embed: view.NewEmbed(app),
+		app:   app,
+	}
 }
 
 func (v *CellularView) Build(ctx *view.Context) view.Model {

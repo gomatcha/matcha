@@ -15,7 +15,8 @@ type BluetoothView struct {
 
 func NewBluetoothView(app *App) *BluetoothView {
 	v := &BluetoothView{
-		app: app,
+		Embed: view.NewEmbed(app),
+		app:   app,
 	}
 	return v
 }

@@ -52,7 +52,7 @@ type RootView struct {
 
 func NewRootView(app *App) *RootView {
 	return &RootView{
-		Embed: view.Embed{Key: app},
+		Embed: view.NewEmbed(app),
 		app:   app,
 	}
 }
