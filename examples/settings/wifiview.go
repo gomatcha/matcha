@@ -150,9 +150,14 @@ type WifiNetworkView struct {
 	network *WifiNetwork
 }
 
+type a struct {
+	app     *App
+	network *WifiNetwork
+}
+
 func NewWifiNetworkView(app *App, network *WifiNetwork) *WifiNetworkView {
 	return &WifiNetworkView{
-		Embed:   view.NewEmbed(app, network),
+		Embed:   view.NewEmbed(a{app: app, network: network}),
 		app:     app,
 		network: network,
 	}

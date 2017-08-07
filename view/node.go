@@ -75,7 +75,7 @@ func (r *Root) start() {
 			return
 		}
 
-		fmt.Println(r.root.node.debugString())
+		// fmt.Println(r.root.node.debugString())
 		bridge.Bridge().Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
 	})
 }
@@ -129,21 +129,10 @@ func (r *Root) SetSize(p layout.Point) {
 	r.root.addFlag(r.root.node.id, layoutFlag)
 }
 
-type viewCacheKey struct {
-	id  Id
-	key string
-}
-
 // Context specifies the supporting context for building a View.
 type Context struct {
-	prefix string
-	parent *Context
-
-	valid     bool
-	node      *node
-	prevIds   map[viewCacheKey]Id
-	prevNodes map[Id]*node
-	skipBuild map[Id]struct{}
+	valid bool
+	node  *node
 }
 
 func newId() Id {
@@ -167,9 +156,6 @@ func newId() Id {
 
 // Path returns the path of Ids from the root to the view.
 func (ctx *Context) Path() []Id {
-	if ctx.parent != nil {
-		return ctx.parent.Path()
-	}
 	if ctx.node == nil {
 		return []Id{0}
 	}
@@ -198,8 +184,6 @@ func (f updateFlag) needsPaint() bool {
 
 type root struct {
 	node        *node
-	keys        map[Id]string
-	ids         map[viewCacheKey]Id
 	nodes       map[Id]*node
 	middlewares []middleware
 
@@ -284,38 +268,12 @@ func (root *root) MarshalProtobuf() *pb.Root {
 }
 
 func (root *root) build() {
-	prevIds := root.ids
-	prevNodes := root.nodes
-	prevKeys := root.keys
-
-	root.ids = map[viewCacheKey]Id{}
-	root.keys = map[Id]string{}
 	root.nodes = map[Id]*node{
 		root.node.id: root.node,
 	}
 
 	// Rebuild
-	root.node.build(prevIds, prevNodes, prevKeys)
-
-	mergedKeys := map[Id]viewCacheKey{}
-	for k, v := range root.ids {
-		mergedKeys[v] = k
-	}
-	for k, v := range prevIds {
-		mergedKeys[v] = k
-	}
-
-	keys := map[Id]string{}
-	ids := map[viewCacheKey]Id{}
-	for k := range root.nodes {
-		key, ok := mergedKeys[k]
-		if ok {
-			ids[key] = k
-			keys[k] = key.key
-		}
-	}
-	root.ids = ids
-	root.keys = keys
+	root.node.build()
 }
 
 func (root *root) layout(minSize layout.Point, maxSize layout.Point) {
@@ -463,7 +421,7 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 	}
 }
 
-func (n *node) build(prevIds map[viewCacheKey]Id, prevNodes map[Id]*node, prevKeys map[Id]string) {
+func (n *node) build() {
 	if n.root.updateFlags[n.id].needsBuild() {
 		n.buildId += 1
 
@@ -474,7 +432,7 @@ func (n *node) build(prevIds map[viewCacheKey]Id, prevNodes map[Id]*node, prevKe
 		}
 
 		// Generate the new viewModel.
-		ctx := &Context{valid: true, node: n, prevIds: prevIds, prevNodes: prevNodes}
+		ctx := &Context{valid: true, node: n}
 		temp := n.view.Build(ctx)
 		viewModel := &temp
 
@@ -500,8 +458,6 @@ func (n *node) build(prevIds map[viewCacheKey]Id, prevNodes map[Id]*node, prevKe
 			for jIdx, j := range prevChildren {
 				jType := reflect.TypeOf(j.view).Elem()
 				jName := jType.Name() + jType.PkgPath()
-				// fmt.Println("jname", iName, jName, "|", iKey, "|", prevKeys[j.id], "|")
-				// if jKey, ok := prevKeys[j.id]; ok && iKey == jKey && iName == jName {
 				if jKey := j.view.ViewKey(); iKey == jKey && iName == jName {
 					// fmt.Println("found")
 					prevNode = j
@@ -694,7 +650,7 @@ func (n *node) build(prevIds map[viewCacheKey]Id, prevNodes map[Id]*node, prevKe
 
 	// Recursively update children.
 	for _, i := range n.children {
-		i.build(prevIds, prevNodes, prevKeys)
+		i.build()
 
 		// Also add to the root
 		n.root.nodes[i.id] = i
