@@ -43,7 +43,7 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New(ctx, "switch")
+		switchView := switchview.New()
 		switchView.Value = v.app.Wifi.Enabled()
 		switchView.OnValueChange = func(value bool) {
 			v.app.Wifi.SetEnabled(!v.app.Wifi.Enabled())
@@ -109,7 +109,7 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 			spacer := NewSpacer()
 			l.Add(spacer, nil)
 
-			switchView := switchview.New(ctx, "switch")
+			switchView := switchview.New()
 			switchView.Value = v.app.Wifi.AskToJoin()
 			switchView.OnValueChange = func(a bool) {
 				v.app.Wifi.SetAskToJoin(a)
@@ -129,7 +129,7 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 		}
 	}
 
-	scrollView := scrollview.New(ctx, "scroll")
+	scrollView := scrollview.New()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
@@ -282,7 +282,7 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 	spacer := NewSpacer()
 	l.Add(spacer, nil)
 
-	scrollView := scrollview.New(ctx, "scroll")
+	scrollView := scrollview.New()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
@@ -316,7 +316,7 @@ func (v *SegmentCell) Build(ctx *view.Context) view.Model {
 		s.WidthEqual(l.MinGuide().Width())
 	})
 
-	segment := segmentview.New(ctx, "segment")
+	segment := segmentview.New()
 	segment.Titles = v.Titles
 	segment.Value = v.Value
 	segment.OnValueChange = func(a int) {
@@ -354,7 +354,7 @@ func (v *InfoButton) Build(ctx *view.Context) view.Model {
 		s.Height(44)
 	})
 
-	img := imageview.New(ctx, "image")
+	img := imageview.New()
 	img.Image = app.MustLoadImage("Info")
 	l.Add(img, func(s *constraint.Solver) {
 		s.Width(22)

@@ -37,7 +37,7 @@ func NewImageView(ctx *view.Context, key string) *ImageView {
 func (v *ImageView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl := urlimageview.New(ctx, "1")
+	chl := urlimageview.New()
 	chl.URL = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
 	chl.ResizeMode = imageview.ResizeModeStretch
 	g1 := l.Add(chl, func(s *constraint.Solver) {
@@ -47,7 +47,7 @@ func (v *ImageView) Build(ctx *view.Context) view.Model {
 		s.Height(200)
 	})
 
-	chl2 := imageview.New(ctx, "2")
+	chl2 := imageview.New()
 	chl2.Image = app.MustLoadImage("Airplane")
 	chl2.ResizeMode = imageview.ResizeModeFit
 	g2 := l.Add(chl2, func(s *constraint.Solver) {
@@ -57,7 +57,7 @@ func (v *ImageView) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(g1.Height())
 	})
 
-	chl3 := imageview.New(ctx, "3")
+	chl3 := imageview.New()
 	chl3.Image = app.MustLoadImage("TableArrow")
 	chl3.ResizeMode = imageview.ResizeModeCenter
 	chl3.PaintStyle = &paint.Style{BackgroundColor: colornames.Lightgray}

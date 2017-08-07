@@ -45,7 +45,7 @@ func (v *TableView) Build(ctx *view.Context) view.Model {
 		childLayouter.Add(childView, nil)
 	}
 
-	scrollView := scrollview.New(ctx, "b")
+	scrollView := scrollview.New()
 	scrollView.PaintStyle = &paint.Style{BackgroundColor: colornames.Cyan}
 	scrollView.ContentPainter = &paint.Style{BackgroundColor: colornames.White}
 	scrollView.ContentLayouter = childLayouter
@@ -86,7 +86,7 @@ func (v *TableCell) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(constraint.Const(50))
 	})
 
-	textView := textview.New(ctx, "a")
+	textView := textview.New()
 	textView.String = v.String
 	textView.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",

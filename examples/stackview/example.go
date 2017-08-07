@@ -37,7 +37,7 @@ func init() {
 		// view4 := NewTouchView(nil, "", app)
 		// view4.Color = colornames.Green
 
-		v := stackview.New(nil, "")
+		v := stackview.New()
 		v.Stack = app.stack
 		v.Stack.SetViews(
 			stackview.WithBar(view1, bar1),
@@ -100,7 +100,7 @@ func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
 		s.WidthEqual(constraint.Const(100))
 	})
 
-	titleView := basicview.New(ctx, "axbaba")
+	titleView := basicview.New()
 	titleView.Painter = &paint.Style{BackgroundColor: colornames.Red}
 	titleView.Layouter = l
 
@@ -111,7 +111,7 @@ func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
 		s.HeightEqual(constraint.Const(50))
 		s.WidthEqual(constraint.Const(50))
 	})
-	rightView := basicview.New(ctx, "right")
+	rightView := basicview.New()
 	rightView.Painter = &paint.Style{BackgroundColor: colornames.Blue}
 	rightView.Layouter = l2
 
@@ -122,7 +122,7 @@ func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
 		s.HeightEqual(constraint.Const(50))
 		s.WidthEqual(constraint.Const(50))
 	})
-	leftView := basicview.New(ctx, "left")
+	leftView := basicview.New()
 	leftView.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
 	leftView.Layouter = l3
 

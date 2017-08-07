@@ -91,7 +91,7 @@ func (v *TutorialView) Build(ctx *view.Context) view.Model {
 
     // Get the textview for the given key (hellotext), either initializing it or fetching
     // the previous one.
-    child := textview.New(ctx, "hellotext")
+    child := textview.New()
     child.String = "Hello World"
     child.Style.SetTextColor(colornames.Red)
     child.Style.SetFont(text.Font{

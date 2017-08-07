@@ -13,7 +13,7 @@ Package constraint implements a constraint-based layout system.
 		})
 
 		// Adds a child view and solves for its position relative to v. The result is a 5x10 frame pinned to the lower right corner of v.
-		child1 := basicview.New(ctx, "child1")
+		child1 := basicview.New()
 		guide1 := l.Add(child1, func(s *constraint.Solver) {
 			s.Width(5) // Left(), Top(), CenterX()... methods support constraining to floats.
 			s.Height(10)
@@ -25,7 +25,7 @@ Package constraint implements a constraint-based layout system.
 		verticalCenter := l.CenterX().Add(10)
 
 		// Adds a child view that is twice as large as child1 and 10 points above the center v.
-		child2 := basicview.New(ctx, "child2")
+		child2 := basicview.New()
 		_ = l.Add(child1, func(s *constraint.Solver) {
 			s.WidthEqual(guide1.Width().Mul(2)) // Anchors can be added to and multiplied by constants.
 			s.HeightEqual(guide1.Height().Mul(2))

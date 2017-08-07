@@ -39,7 +39,7 @@ func init() {
 		view4 := NewTouchView(nil, "", app)
 		view4.Color = colornames.Green
 
-		v := tabview.New(nil, "")
+		v := tabview.New()
 		v.BarColor = colornames.White
 		v.SelectedColor = colornames.Red
 		v.UnselectedColor = colornames.Darkgray

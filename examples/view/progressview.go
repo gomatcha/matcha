@@ -35,7 +35,7 @@ func NewProgressView(ctx *view.Context, key string) *ProgressView {
 func (v *ProgressView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	progressv := progressview.New(ctx, "0")
+	progressv := progressview.New()
 	progressv.ProgressNotifier = v.value
 	progressv.ProgressColor = colornames.Red
 	l.Add(progressv, func(s *constraint.Solver) {
@@ -44,7 +44,7 @@ func (v *ProgressView) Build(ctx *view.Context) view.Model {
 		s.Width(200)
 	})
 
-	sliderv := slider.New(ctx, "11")
+	sliderv := slider.New()
 	sliderv.MaxValue = 1
 	sliderv.MinValue = 0
 	sliderv.OnValueChange = func(value float64) {

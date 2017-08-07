@@ -38,7 +38,7 @@ func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/settings New", func() *view.Root {
 		app := NewApp()
 
-		v := stackview.New(nil, "")
+		v := stackview.New()
 		v.Stack = app.Stack
 		v.Stack.SetViews(NewRootView(app))
 		return view.NewRoot(v)
@@ -77,7 +77,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New(ctx, "switch")
+		switchView := switchview.New()
 		switchView.Value = v.app.AirplaneMode()
 		switchView.OnValueChange = func(value bool) {
 			fmt.Println("blah")
@@ -198,7 +198,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		}
 	}
 
-	scrollView := scrollview.New(ctx, "scrollView")
+	scrollView := scrollview.New()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
@@ -249,7 +249,7 @@ func (v *Separator) Build(ctx *view.Context) view.Model {
 		s.WidthEqual(l.MaxGuide().Width())
 	})
 
-	chl := basicview.New(ctx, "child")
+	chl := basicview.New()
 	chl.Painter = &paint.Style{BackgroundColor: separatorColor}
 	l.Add(chl, func(s *constraint.Solver) {
 		s.HeightEqual(l.Height())
@@ -307,7 +307,7 @@ func (v *SpacerHeader) Build(ctx *view.Context) view.Model {
 		s.WidthEqual(l.MaxGuide().Width())
 	})
 
-	titleView := textview.New(ctx, "title")
+	titleView := textview.New()
 	titleView.String = strings.ToTitle(v.Title)
 	titleView.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",
@@ -343,7 +343,7 @@ func NewSpacerDescription() *SpacerDescription {
 func (v *SpacerDescription) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	titleView := textview.New(ctx, "title")
+	titleView := textview.New()
 	titleView.String = v.Description
 	titleView.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",
@@ -394,7 +394,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	leftAnchor := l.Left()
 	if v.HasIcon {
-		iconView := imageview.New(ctx, "icon")
+		iconView := imageview.New()
 		iconView.Image = v.Icon
 		iconView.ResizeMode = imageview.ResizeModeFill
 		pIconView := view.WithPainter(iconView, &paint.Style{BackgroundColor: colornames.Lightgray, CornerRadius: 5})
@@ -410,7 +410,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	rightAnchor := l.Right()
 	if v.Chevron {
-		chevronView := imageview.New(ctx, "chevron")
+		chevronView := imageview.New()
 		chevronView.Image = app.MustLoadImage("TableArrow")
 		chevronView.ResizeMode = imageview.ResizeModeCenter
 		chevronView.ImageTemplateColor = chevronColor
@@ -436,7 +436,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	if len(v.Subtitle) > 0 {
 		fmt.Println("subtitle", v.Subtitle)
-		subtitleView := textview.New(ctx, "subtitle")
+		subtitleView := textview.New()
 		subtitleView.String = v.Subtitle
 		subtitleView.Style.SetFont(text.Font{
 			Family: "Helvetica Neue",
@@ -452,7 +452,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 		rightAnchor = subtitleGuide.Left()
 	}
 
-	titleView := textview.New(ctx, "title")
+	titleView := textview.New()
 	titleView.String = v.Title
 	titleView.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",

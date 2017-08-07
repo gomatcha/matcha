@@ -52,7 +52,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(constraint.Const(100))
 	})
 
-	chl2 := textview.New(ctx, "2")
+	chl2 := textview.New()
 	chl2.String = fmt.Sprintf("Counter: %v", v.counter)
 	chl2.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",
@@ -76,7 +76,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(constraint.Const(100))
 	})
 
-	chl4 := textview.New(ctx, "4")
+	chl4 := textview.New()
 	chl4.String = fmt.Sprintf("Press: %v", v.pressCounter)
 	chl4.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",

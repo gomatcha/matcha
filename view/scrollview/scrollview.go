@@ -41,12 +41,8 @@ type View struct {
 }
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New(ctx *view.Context, key string) *View {
-	if v, ok := ctx.Prev(key).(*View); ok {
-		return v
-	}
+func New() *View {
 	return &View{
-		Embed:                    view.Embed{Key: key},
 		Direction:                Vertical,
 		ScrollIndicatorDirection: Vertical | Horizontal,
 		ScrollEnabled:            true,
@@ -56,7 +52,7 @@ func New(ctx *view.Context, key string) *View {
 
 // Build implements view.View.
 func (v *View) Build(ctx *view.Context) view.Model {
-	child := basicview.New(ctx, "child")
+	child := basicview.New()
 	child.Children = v.ContentChildren
 	child.Layouter = v.ContentLayouter
 	child.Painter = v.ContentPainter

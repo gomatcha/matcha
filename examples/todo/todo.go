@@ -27,7 +27,7 @@ func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/todo New", func() *view.Root {
 		appview := NewAppView()
 
-		v := stackview.New(nil, "")
+		v := stackview.New()
 		v.Stack = &stackview.Stack{}
 		v.Stack.SetViews(appview)
 		v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 1}
@@ -81,7 +81,7 @@ func (v *AppView) Build(ctx *view.Context) view.Model {
 	}
 	l.Add(addView, nil)
 
-	scrollView := scrollview.New(ctx, "scrollView")
+	scrollView := scrollview.New()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 	return view.Model{
@@ -130,7 +130,7 @@ func (v *AddView) Build(ctx *view.Context) view.Model {
 	})
 	placeholderStyle.SetTextColor(colornames.Lightgray)
 
-	input := textinput.New(ctx, "input")
+	input := textinput.New()
 	input.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
 	input.Text = v.text
 	input.Style = style
@@ -152,7 +152,7 @@ func (v *AddView) Build(ctx *view.Context) view.Model {
 		s.CenterYEqual(l.CenterY())
 	})
 
-	separator := basicview.New(ctx, "separator")
+	separator := basicview.New()
 	separator.Painter = &paint.Style{BackgroundColor: color.RGBA{203, 202, 207, 255}}
 	l.Add(separator, func(s *constraint.Solver) {
 		s.Height(1)
@@ -204,7 +204,7 @@ func (v *TodoView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(l.Right().Add(-15))
 	})
 
-	titleView := textview.New(ctx, "title")
+	titleView := textview.New()
 	titleView.String = v.Todo.Title
 	titleView.Style = nil //...
 	l.Add(titleView, func(s *constraint.Solver) {
@@ -213,7 +213,7 @@ func (v *TodoView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(deleteGuide.Left().Add(-15))
 	})
 
-	separator := basicview.New(ctx, "separator")
+	separator := basicview.New()
 	separator.Painter = &paint.Style{BackgroundColor: color.RGBA{203, 202, 207, 255}}
 	l.Add(separator, func(s *constraint.Solver) {
 		s.Height(1)
@@ -245,7 +245,7 @@ func (v *Checkbox) Build(ctx *view.Context) view.Model {
 		s.Height(40)
 	})
 
-	imageView := imageview.New(ctx, "image")
+	imageView := imageview.New()
 	if v.Value {
 		imageView.Image = app.MustLoadImage("CheckboxChecked")
 	} else {
@@ -292,7 +292,7 @@ func (v *DeleteButton) Build(ctx *view.Context) view.Model {
 		s.Height(40)
 	})
 
-	imageView := imageview.New(ctx, "image")
+	imageView := imageview.New()
 	imageView.Image = app.MustLoadImage("Delete")
 	l.Add(imageView, func(s *constraint.Solver) {
 		s.CenterXEqual(l.CenterX())

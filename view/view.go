@@ -85,7 +85,7 @@ and Signal() methods to simplify signaling for updates. We see an example of thi
 		}
 	}
 	func (v *ExampleView) Build(ctx *view.Context) view.Model {
-		child := button.New(ctx, "hellotext")
+		child := button.New()
 		child.String = "Click me"
 		child.OnClick = func() {
 			// Trigger the view to rebuild when the button is clicked.

@@ -36,7 +36,7 @@ func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New(ctx, "switch")
+		switchView := switchview.New()
 		switchView.Value = v.app.Bluetooth.Enabled()
 		switchView.OnValueChange = func(value bool) {
 			v.app.Bluetooth.SetEnabled(!v.app.Bluetooth.Enabled())
@@ -79,7 +79,7 @@ func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 		}
 	}
 
-	scrollView := scrollview.New(ctx, "b")
+	scrollView := scrollview.New()
 	scrollView.ContentLayouter = l
 	scrollView.ContentChildren = l.Views()
 

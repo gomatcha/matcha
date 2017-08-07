@@ -42,12 +42,8 @@ type View struct {
 }
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New(ctx *view.Context, key string) *View {
-	if v, ok := ctx.Prev(key).(*View); ok {
-		return v
-	}
+func New() *View {
 	return &View{
-		Embed:    view.Embed{Key: key},
 		MaxValue: 1,
 		MinValue: 0,
 		Enabled:  true,

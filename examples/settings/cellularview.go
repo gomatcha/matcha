@@ -20,7 +20,7 @@ func (v *CellularView) Build(ctx *view.Context) view.Model {
 	l := &table.Layouter{}
 	chlds := []view.View{}
 
-	scrollView := scrollview.New(ctx, "b")
+	scrollView := scrollview.New()
 	scrollView.ContentLayouter = l
 	scrollView.ContentChildren = chlds
 

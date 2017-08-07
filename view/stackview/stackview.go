@@ -6,7 +6,7 @@
 //  	stack *stackview.Stack
 //  }
 //  func NewAppView(ctx *view.Context, key string) *AppView {
-//  	child := basicview.New(nil, "")
+//  	child := basicview.New()
 //  	child.Painter = &paint.Style{BackgroundColor: colornames.Red}
 //  	appview := &AppView{
 //  		Embed: view.Embed{Key:key},
@@ -16,14 +16,14 @@
 //  	return appview
 //  }
 //  func (v *AppView) Build(ctx *view.Context) view.Model {
-//  	child := stackview.New(ctx, "stack")
+//  	child := stackview.New()
 //  	child.Stack = v.stack
 //  	return view.Model{
 //  		Children: []view.View{child},
 //  	}
 //  }
 // Modifying the stack:
-//  child := basicview.New(nil, "")
+//  child := basicview.New()
 //  child.Painter = &paint.Style{BackgroundColor: colornames.Green}
 //  v.Stack.Push(child)
 package stackview
@@ -112,13 +112,8 @@ type View struct {
 }
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New(ctx *view.Context, key string) *View {
-	if v, ok := ctx.Prev(key).(*View); ok {
-		return v
-	}
-	return &View{
-		Embed: view.Embed{Key: key},
-	}
+func New() *View {
+	return &View{}
 }
 
 // Lifecyle implements the view.View interface.
