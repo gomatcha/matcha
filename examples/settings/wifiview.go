@@ -21,10 +21,9 @@ type WifiView struct {
 	app *App
 }
 
-func NewWifiView(ctx *view.Context, app *App) *WifiView {
+func NewWifiView(app *App) *WifiView {
 	return &WifiView{
-		Embed: ctx.NewEmbed(""),
-		app:   app,
+		app: app,
 	}
 }
 
@@ -39,10 +38,9 @@ func (v *WifiView) Lifecycle(from, to view.Stage) {
 func (v *WifiView) Build(ctx *view.Context) view.Model {
 	l := &table.Layouter{}
 	{
-		ctx := ctx.WithPrefix("1")
 		group := []view.View{}
 
-		spacer := NewSpacer(ctx)
+		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
 		switchView := switchview.New(ctx, "switch")
@@ -51,28 +49,27 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 			v.app.Wifi.SetEnabled(!v.app.Wifi.Enabled())
 		}
 
-		cell1 := NewBasicCell(ctx)
+		cell1 := NewBasicCell()
 		cell1.Title = "Wi-Fi"
 		cell1.AccessoryView = switchView
 		group = append(group, cell1)
 
 		if v.app.Wifi.CurrentSSID() != "" && v.app.Wifi.Enabled() {
-			cell2 := NewBasicCell(ctx)
+			cell2 := NewBasicCell()
 			cell2.Title = v.app.Wifi.CurrentSSID()
 			group = append(group, cell2)
 		}
 
-		for _, i := range AddSeparators(ctx, group) {
+		for _, i := range AddSeparators(group) {
 			l.Add(i, nil)
 		}
 	}
 
 	if v.app.Wifi.Enabled() {
 		{
-			ctx := ctx.WithPrefix("2")
 			group := []view.View{}
 
-			spacer := NewSpacerHeader(ctx)
+			spacer := NewSpacerHeader()
 			spacer.Title = "Choose a Network..."
 			l.Add(spacer, nil)
 
@@ -85,12 +82,12 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 					continue
 				}
 
-				info := NewInfoButton(ctx)
+				info := NewInfoButton()
 				info.OnPress = func() {
-					v.app.Stack.Push(NewWifiNetworkView(nil, v.app, network))
+					v.app.Stack.Push(NewWifiNetworkView(v.app, network))
 				}
 
-				cell := NewBasicCell(ctx)
+				cell := NewBasicCell()
 				cell.Title = ssid
 				cell.AccessoryView = info
 				cell.OnTap = func() {
@@ -99,18 +96,17 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 				group = append(group, cell)
 			}
 
-			cell1 := NewBasicCell(ctx)
+			cell1 := NewBasicCell()
 			cell1.Title = "Other..."
 			group = append(group, cell1)
 
-			for _, i := range AddSeparators(ctx, group) {
+			for _, i := range AddSeparators(group) {
 				l.Add(i, nil)
 			}
 		}
 		{
-			ctx := ctx.WithPrefix("3")
 
-			spacer := NewSpacer(ctx)
+			spacer := NewSpacer()
 			l.Add(spacer, nil)
 
 			switchView := switchview.New(ctx, "switch")
@@ -118,16 +114,16 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 			switchView.OnValueChange = func(a bool) {
 				v.app.Wifi.SetAskToJoin(a)
 			}
-			cell1 := NewBasicCell(ctx)
+			cell1 := NewBasicCell()
 			cell1.Title = "Ask to Join Networks"
 			cell1.AccessoryView = switchView
 
-			for _, i := range AddSeparators(ctx, []view.View{cell1}) {
+			for _, i := range AddSeparators([]view.View{cell1}) {
 				l.Add(i, nil)
 			}
 		}
 		{
-			spacer := NewSpacerDescription(ctx, "spacerDescr")
+			spacer := NewSpacerDescription()
 			spacer.Description = "Known networks will be joined automatically. If no known networks are available, you will have to manually join a network."
 			l.Add(spacer, nil)
 		}
@@ -153,9 +149,8 @@ type WifiNetworkView struct {
 	network *WifiNetwork
 }
 
-func NewWifiNetworkView(ctx *view.Context, app *App, network *WifiNetwork) *WifiNetworkView {
+func NewWifiNetworkView(app *App, network *WifiNetwork) *WifiNetworkView {
 	return &WifiNetworkView{
-		Embed:   ctx.NewEmbed(""),
 		app:     app,
 		network: network,
 	}
@@ -174,12 +169,11 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 
 	l := &table.Layouter{}
 	{
-		ctx := ctx.WithPrefix("1")
 
-		spacer := NewSpacer(ctx)
+		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		cell1 := NewBasicCell(ctx)
+		cell1 := NewBasicCell()
 		cell1.Title = "Forget This Network"
 		cell1.OnTap = func() {
 			alert.Alert("Forget Wi-Fi Network?", "Your iPhone will no longer join this Wi-Fi network.",
@@ -196,18 +190,17 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 			)
 		}
 
-		for _, i := range AddSeparators(ctx, []view.View{cell1}) {
+		for _, i := range AddSeparators([]view.View{cell1}) {
 			l.Add(i, nil)
 		}
 	}
 	{
-		ctx := ctx.WithPrefix("2")
 
-		spacer := NewSpacerHeader(ctx)
+		spacer := NewSpacerHeader()
 		spacer.Title = "IP Address"
 		l.Add(spacer, nil)
 
-		cell0 := NewSegmentCell(ctx)
+		cell0 := NewSegmentCell()
 		cell0.Titles = []string{"DHCP", "BootP", "Static"}
 		cell0.Value = props.Kind
 		cell0.OnValueChange = func(a int) {
@@ -216,54 +209,52 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 			v.network.SetProperties(props)
 		}
 
-		cell1 := NewBasicCell(ctx)
+		cell1 := NewBasicCell()
 		cell1.Title = "IP Address"
 		cell1.Subtitle = props.IPAddress
 
-		cell2 := NewBasicCell(ctx)
+		cell2 := NewBasicCell()
 		cell2.Title = "Subnet Mask"
 		cell2.Subtitle = props.SubnetMask
 
-		cell3 := NewBasicCell(ctx)
+		cell3 := NewBasicCell()
 		cell3.Title = "Router"
 		cell3.Subtitle = props.Router
 
-		cell4 := NewBasicCell(ctx)
+		cell4 := NewBasicCell()
 		cell4.Title = "DNS"
 		cell4.Subtitle = props.DNS
 
-		cell5 := NewBasicCell(ctx)
+		cell5 := NewBasicCell()
 		cell5.Title = "Client ID"
 		cell5.Subtitle = props.ClientID
 
-		for _, i := range AddSeparators(ctx, []view.View{cell0, cell1, cell2, cell3, cell4, cell5}) {
+		for _, i := range AddSeparators([]view.View{cell0, cell1, cell2, cell3, cell4, cell5}) {
 			l.Add(i, nil)
 		}
 	}
 	{
-		ctx := ctx.WithPrefix("3")
 
-		spacer := NewSpacer(ctx)
+		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		cell1 := NewBasicCell(ctx)
+		cell1 := NewBasicCell()
 		cell1.Title = "Renew Lease"
 		cell1.OnTap = func() {
 			alert.Alert("Renewing Lease...", "")
 		}
 
-		for _, i := range AddSeparators(ctx, []view.View{cell1}) {
+		for _, i := range AddSeparators([]view.View{cell1}) {
 			l.Add(i, nil)
 		}
 	}
 	{
-		ctx := ctx.WithPrefix("4")
 
-		spacer := NewSpacerHeader(ctx)
+		spacer := NewSpacerHeader()
 		spacer.Title = "HTTP Proxy"
 		l.Add(spacer, nil)
 
-		cell1 := NewSegmentCell(ctx)
+		cell1 := NewSegmentCell()
 		cell1.Titles = []string{"Off", "Manual", "Auto"}
 		cell1.Value = props.Proxy
 		cell1.OnValueChange = func(a int) {
@@ -272,24 +263,23 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 			v.network.SetProperties(props)
 		}
 
-		for _, i := range AddSeparators(ctx, []view.View{cell1}) {
+		for _, i := range AddSeparators([]view.View{cell1}) {
 			l.Add(i, nil)
 		}
 	}
 	{
-		ctx := ctx.WithPrefix("5")
 
-		spacer := NewSpacer(ctx)
+		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		cell1 := NewBasicCell(ctx)
+		cell1 := NewBasicCell()
 		cell1.Title = "Manage This Network"
 
-		for _, i := range AddSeparators(ctx, []view.View{cell1}) {
+		for _, i := range AddSeparators([]view.View{cell1}) {
 			l.Add(i, nil)
 		}
 	}
-	spacer := NewSpacer(ctx)
+	spacer := NewSpacer()
 	l.Add(spacer, nil)
 
 	scrollView := scrollview.New(ctx, "scroll")
@@ -315,10 +305,8 @@ type SegmentCell struct {
 	OnValueChange func(value int)
 }
 
-func NewSegmentCell(ctx *view.Context) *SegmentCell {
-	return &SegmentCell{
-		Embed: ctx.NewEmbed(""),
-	}
+func NewSegmentCell() *SegmentCell {
+	return &SegmentCell{}
 }
 
 func (v *SegmentCell) Build(ctx *view.Context) view.Model {
@@ -355,10 +343,8 @@ type InfoButton struct {
 	PaintStyle *paint.Style
 }
 
-func NewInfoButton(ctx *view.Context) *InfoButton {
-	return &InfoButton{
-		Embed: ctx.NewEmbed(""),
-	}
+func NewInfoButton() *InfoButton {
+	return &InfoButton{}
 }
 
 func (v *InfoButton) Build(ctx *view.Context) view.Model {

@@ -27,7 +27,7 @@ func New(ctx *view.Context, key string) *View {
 		return v
 	}
 	return &View{
-		Embed:   ctx.NewEmbed(key),
+		Embed:   view.Embed{Key: key},
 		Enabled: true,
 	}
 }

@@ -26,7 +26,7 @@ func New(ctx *view.Context, key string) *PaintView {
 		return v
 	}
 	return &PaintView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 	}
 }
 

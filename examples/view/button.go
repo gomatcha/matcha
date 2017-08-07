@@ -27,7 +27,7 @@ func NewButtonView(ctx *view.Context, key string) *ButtonView {
 		return v
 	}
 	return &ButtonView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 		value: &comm.Float64Value{},
 	}
 }

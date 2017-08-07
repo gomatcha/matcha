@@ -71,7 +71,7 @@ func NewTouchView(ctx *view.Context, key string, app *App) *TouchView {
 		return v
 	}
 	return &TouchView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 		app:   app,
 		button: &tabview.Button{
 			Title: "Testing",

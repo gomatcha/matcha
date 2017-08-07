@@ -32,7 +32,7 @@ func New(ctx *view.Context, key string) *TouchView {
 		return v
 	}
 	return &TouchView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 	}
 }
 
@@ -118,7 +118,7 @@ func NewPressChildView(ctx *view.Context, key string) *PressChildView {
 		return v
 	}
 	return &PressChildView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 	}
 }
 
@@ -159,7 +159,7 @@ func NewTouchChildView(ctx *view.Context, key string) *TouchChildView {
 		return v
 	}
 	return &TouchChildView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 	}
 }
 
@@ -189,7 +189,7 @@ func NewButtonChildView(ctx *view.Context, key string) *ButtonChildView {
 		return v
 	}
 	return &ButtonChildView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 	}
 }
 

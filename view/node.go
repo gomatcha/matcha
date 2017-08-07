@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"reflect"
 	"sort"
-	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -147,34 +146,6 @@ type Context struct {
 	skipBuild map[Id]struct{}
 }
 
-func (ctx *Context) Prev2(a interface{}) bool {
-	va := reflect.Indirect(reflect.ValueOf(a))
-	t := va.Type()
-	typename := t.PkgPath() + t.Name()
-
-	prev := ctx.prev(typename, "")
-	if prev == nil {
-		// set Embed field
-		field := va.FieldByName("Embed")
-		if field.IsValid() {
-			field.Set(reflect.ValueOf(ctx.NewEmbed(typename)))
-		}
-		return false
-	}
-	vb := reflect.Indirect(reflect.ValueOf(prev))
-	va.Set(vb)
-
-	// Clear all public fields that aren't "Embed".
-	for i := 0; i < va.NumField(); i++ {
-		f := va.Field(i)
-		if f.CanSet() && va.Type().Field(i).Name != "Embed" {
-			f.Set(reflect.Zero(f.Type()))
-			// fmt.Println("clear", va.Type().Field(i).Name)
-		}
-	}
-	return true
-}
-
 // Prev returns the view returned by the last call to Build with the given key.
 func (ctx *Context) Prev(key string) View {
 	return ctx.prev(key, "")
@@ -218,54 +189,15 @@ func (ctx *Context) prev(key string, prefix string) View {
 	return v
 }
 
-// // PrevModel returns the last result of View.Build().
-// func (ctx *Context) PrevModel() *Model {
-// 	if ctx.parent != nil {
-// 		return ctx.PrevModel()
-// 	}
-// 	if !ctx.valid {
-// 		panic("view.Context.PrevModel() called on invalid context")
-// 	}
-// 	if ctx.node == nil {
-// 		return nil
-// 	}
-// 	return ctx.node.model
-// }
-
 // NewEmbed generates a new Embed for a given key. NewEmbed is a convenience around NewEmbed(ctx.NewId(key)).
 func (ctx *Context) NewEmbed(key string) Embed {
-	return NewEmbed(ctx.NewId(key))
+	return Embed{
+		Key: key,
+	}
 }
 
-// NewId generates a new identifier for a given key.
-func (ctx *Context) NewId(key string) Id {
-	if ctx == nil {
-		return Id(atomic.AddInt64(&maxId, 1))
-	}
-	return ctx.newId(key, "")
-}
-
-func (ctx *Context) newId(key string, prefix string) Id {
-	if ctx.parent != nil {
-		return ctx.parent.newId(key, ctx.prefix+"|"+prefix)
-	}
-	if !ctx.valid {
-		panic("view.Context.Prev() called on invalid context")
-	}
-	if prefix != "" {
-		key = prefix + "|" + key
-	}
-
-	id := Id(atomic.AddInt64(&maxId, 1))
-	if ctx.node != nil {
-		cacheKey := viewCacheKey{key: key, id: ctx.node.id}
-		if _, ok := ctx.node.root.ids[cacheKey]; ok {
-			fmt.Println("Context.NewId(): key has already been used", key)
-		}
-		ctx.node.root.ids[cacheKey] = id
-		ctx.node.root.keys[id] = key
-	}
-	return id
+func newId() Id {
+	return Id(atomic.AddInt64(&maxId, 1))
 }
 
 // // SkipBuild marks the child ids as not needing to be rebuilt.
@@ -281,27 +213,6 @@ func (ctx *Context) newId(key string, prefix string) Id {
 // 	for _, i := range ids {
 // 		ctx.skipBuild[i] = struct{}{}
 // 	}
-// }
-
-// WithPrefix returns a new Context. Calls to this Prev and NewId on this context will be prepended with key.
-func (ctx *Context) WithPrefix(key string) *Context {
-	return &Context{prefix: key, parent: ctx}
-}
-
-// WithPrefix returns a new Context. Calls to this Prev and NewId on this context will be prepended with key.
-func (ctx *Context) WithInt(key int) *Context {
-	return &Context{prefix: strconv.Itoa(key), parent: ctx}
-}
-
-// // Id returns the identifier associated with the build context.
-// func (ctx *Context) Id() Id {
-// 	if ctx.parent != nil {
-// 		return ctx.parent.Id()
-// 	}
-// 	if ctx.node == nil {
-// 		return 0
-// 	}
-// 	return ctx.node.id
 // }
 
 // Path returns the path of Ids from the root to the view.
@@ -347,7 +258,7 @@ type root struct {
 }
 
 func newRoot(v View) *root {
-	id := v.Id()
+	id := newId()
 	root := &root{}
 	root.node = &node{
 		id:   id,
@@ -355,7 +266,7 @@ func newRoot(v View) *root {
 		view: v,
 		root: root,
 	}
-	root.updateFlags = map[Id]updateFlag{v.Id(): buildFlag}
+	root.updateFlags = map[Id]updateFlag{id: buildFlag}
 	for _, i := range internal.Middlewares() {
 		root.middlewares = append(root.middlewares, i().(middleware))
 	}
@@ -633,43 +544,39 @@ func (n *node) build(prevIds map[viewCacheKey]Id, prevNodes map[Id]*node, prevKe
 			// Find the corresponding previous node.
 			var prevNode *node
 
-			iKey, ok := prevKeys[i.Id()]
-			if !ok {
-				iKey, ok = n.root.keys[i.Id()]
-			}
-			if ok {
-				iType := reflect.TypeOf(i).Elem()
-				iName := iType.Name() + iType.PkgPath()
-				// fmt.Println("iname")
-				for jIdx, j := range prevChildren {
-					jType := reflect.TypeOf(j.view).Elem()
-					jName := jType.Name() + jType.PkgPath()
-					// fmt.Println("jname", iName, jName, "|", iKey, "|", prevKeys[j.id], "|")
-					if jKey, ok := prevKeys[j.id]; ok && iKey == jKey && iName == jName {
-						// fmt.Println("found")
-						prevNode = j
+			iKey := i.ViewKey()
+			iType := reflect.TypeOf(i).Elem()
+			iName := iType.Name() + iType.PkgPath()
+			for jIdx, j := range prevChildren {
+				jType := reflect.TypeOf(j.view).Elem()
+				jName := jType.Name() + jType.PkgPath()
+				// fmt.Println("jname", iName, jName, "|", iKey, "|", prevKeys[j.id], "|")
+				// if jKey, ok := prevKeys[j.id]; ok && iKey == jKey && iName == jName {
+				if jKey := j.view.ViewKey(); iKey == jKey && iName == jName {
+					// fmt.Println("found")
+					prevNode = j
 
-						// delete from prevchildren
-						copy(prevChildren[jIdx:], prevChildren[jIdx+1:])
-						prevChildren[len(prevChildren)-1] = nil
-						prevChildren = prevChildren[:len(prevChildren)-1]
-						break
-					}
-				}
-			} else {
-				for jIdx, j := range prevChildren {
-					if j.id == i.Id() {
-						// fmt.Println("found id")
-						prevNode = j
-
-						// delete from prevchildren
-						copy(prevChildren[jIdx:], prevChildren[jIdx+1:])
-						prevChildren[len(prevChildren)-1] = nil
-						prevChildren = prevChildren[:len(prevChildren)-1]
-						break
-					}
+					// delete from prevchildren
+					copy(prevChildren[jIdx:], prevChildren[jIdx+1:])
+					prevChildren[len(prevChildren)-1] = nil
+					prevChildren = prevChildren[:len(prevChildren)-1]
+					break
 				}
 			}
+			// } else {
+			// 	for jIdx, j := range prevChildren {
+			// 		if j.id == i.Id() {
+			// 			// fmt.Println("found id")
+			// 			prevNode = j
+
+			// 			// delete from prevchildren
+			// 			copy(prevChildren[jIdx:], prevChildren[jIdx+1:])
+			// 			prevChildren[len(prevChildren)-1] = nil
+			// 			prevChildren = prevChildren[:len(prevChildren)-1]
+			// 			break
+			// 		}
+			// 	}
+			// }
 
 			if prevNode != nil {
 				// If view was modified...
@@ -696,11 +603,11 @@ func (n *node) build(prevIds map[viewCacheKey]Id, prevNodes map[Id]*node, prevKe
 				children = append(children, prevNode)
 
 				// Mark as needing rebuild
-				n.root.updateFlags[prevView.Id()] |= buildFlag
+				n.root.updateFlags[prevNode.id] |= buildFlag
 			} else {
 				// If view was added for the first time...
 				newView := i
-				id := newView.Id()
+				id := newId()
 
 				// Add in a new node.
 				path := make([]Id, len(n.path)+1)

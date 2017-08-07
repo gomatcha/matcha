@@ -13,10 +13,9 @@ type BluetoothView struct {
 	app *App
 }
 
-func NewBluetoothView(ctx *view.Context, app *App) *BluetoothView {
+func NewBluetoothView(app *App) *BluetoothView {
 	v := &BluetoothView{
-		Embed: ctx.NewEmbed(""),
-		app:   app,
+		app: app,
 	}
 	return v
 }
@@ -32,10 +31,9 @@ func (v *BluetoothView) Lifecycle(from, to view.Stage) {
 func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 	l := &table.Layouter{}
 	{
-		ctx := ctx.WithPrefix("1")
 		group := []view.View{}
 
-		spacer := NewSpacer(ctx)
+		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
 		switchView := switchview.New(ctx, "switch")
@@ -44,26 +42,25 @@ func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 			v.app.Bluetooth.SetEnabled(!v.app.Bluetooth.Enabled())
 		}
 
-		cell1 := NewBasicCell(ctx)
+		cell1 := NewBasicCell()
 		cell1.Title = "Bluetooth"
 		cell1.AccessoryView = switchView
 		group = append(group, cell1)
 
-		for _, i := range AddSeparators(ctx, group) {
+		for _, i := range AddSeparators(group) {
 			l.Add(i, nil)
 		}
 	}
 	if v.app.Bluetooth.Enabled() {
-		ctx := ctx.WithPrefix("2")
 		group := []view.View{}
 
-		spacer := NewSpacerHeader(ctx)
+		spacer := NewSpacerHeader()
 		spacer.Title = "My Devices"
 		l.Add(spacer, nil)
 
 		for _, i := range v.app.Bluetooth.Devices() {
 			device := i
-			cell := NewBasicCell(ctx)
+			cell := NewBasicCell()
 			cell.Title = device.SSID()
 			if device.Connected() {
 				cell.Subtitle = "Connected"
@@ -77,7 +74,7 @@ func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 			group = append(group, cell)
 		}
 
-		for _, i := range AddSeparators(ctx, group) {
+		for _, i := range AddSeparators(group) {
 			l.Add(i, nil)
 		}
 	}

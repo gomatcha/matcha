@@ -30,7 +30,7 @@ func New(ctx *view.Context, key string) *TableView {
 		return v
 	}
 	return &TableView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 	}
 }
 
@@ -76,7 +76,7 @@ func NewTableCell(ctx *view.Context, key string) *TableCell {
 		return v
 	}
 	return &TableCell{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 	}
 }
 

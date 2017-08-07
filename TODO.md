@@ -2,7 +2,7 @@ High:
 * DOCS!!!!
 * Delay any ui events while viwecontroller is updating.
 * Button should fade when disabled.
-* Remove .Id() field
+* How to verify view initializer variables don't get reused?
 
 Medium:
 * Rebuild Instagram.

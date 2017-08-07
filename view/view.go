@@ -73,7 +73,7 @@ and Signal() methods to simplify signaling for updates. We see an example of thi
 		if v, ok := ctx.Prev(key).(*ExampleView); ok {
 			return v
 		}
-		return &ExampleView{Embed: ctx.NewEmbed(key), notifier: n}
+		return &ExampleView{Embed: view.Embed{Key:key}, notifier: n}
 	}
 	func (v *ExampleView) Lifecycle(from, to view.Stage) {
 		if view.EntersStage(from, to, view.StageMounted) {
@@ -112,8 +112,7 @@ type Id int64
 type View interface {
 	Build(*Context) Model
 	Lifecycle(from, to Stage)
-	Id() Id
-	ViewKey() string
+	ViewKey() interface{}
 	comm.Notifier
 }
 
@@ -123,15 +122,9 @@ type Option interface {
 
 // Embed is a convenience struct that provides a default implementation of View. It also wraps a comm.Relay.
 type Embed struct {
-	Key   string
+	Key   interface{}
 	mu    sync.Mutex
-	id    Id
 	relay comm.Relay
-}
-
-// NewEmbed creates a new Embed with the given Id.
-func NewEmbed(id Id) Embed {
-	return Embed{id: id}
 }
 
 // Build is an empty implementation of View's Build method.
@@ -139,12 +132,7 @@ func (e *Embed) Build(ctx *Context) Model {
 	return Model{}
 }
 
-// Id returns the id passed into NewEmbed
-func (e *Embed) Id() Id {
-	return e.id
-}
-
-func (e *Embed) ViewKey() string {
+func (e *Embed) ViewKey() interface{} {
 	return e.Key
 }
 

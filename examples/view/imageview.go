@@ -30,7 +30,7 @@ func NewImageView(ctx *view.Context, key string) *ImageView {
 		return v
 	}
 	return &ImageView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 	}
 }
 

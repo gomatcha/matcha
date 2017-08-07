@@ -27,7 +27,7 @@ func NewProgressView(ctx *view.Context, key string) *ProgressView {
 		return v
 	}
 	return &ProgressView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 		value: &comm.Float64Value{},
 	}
 }

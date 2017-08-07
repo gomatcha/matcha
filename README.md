@@ -78,15 +78,10 @@ type TutorialView struct {
 }
 
 // This is our view's initializer.
-func New(ctx *view.Context, key string) *TutorialView {
-    // To prevent rebuilding the entire tree on every rerender, initializers will return
-    // the previous view if it already exists. Most views will contain this bit
-    // of boilerplate.
-    if v, ok := ctx.Prev(key).(*TutorialView); ok {
-        return v
+func New() *TutorialView {
+    return &TutorialView{
+        Embed: view.Embed{Key:key},
     }
-    // If there was no matching view, we create a new one.
-    return &TutorialView{Embed: ctx.NewEmbed(key)}
 }
 
 // Similar to React's render function. Views specify their properties and

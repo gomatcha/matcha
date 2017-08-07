@@ -33,7 +33,7 @@ func New(ctx *view.Context, key string) *TextView {
 		return v
 	}
 	return &TextView{
-		Embed:     ctx.NewEmbed(key),
+		Embed:     view.Embed{Key: key},
 		text:      text.New("blah"),
 		responder: &keyboard.Responder{},
 	}

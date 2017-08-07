@@ -9,7 +9,7 @@
 //  	child := basicview.New(nil, "")
 //  	child.Painter = &paint.Style{BackgroundColor: colornames.Red}
 //  	appview := &AppView{
-//  		Embed: ctx.NewEmbed(key),
+//  		Embed: view.Embed{Key:key},
 //  		stack: &stackview.Stack{},
 //  	}
 //  	appview.stack.SetViews(child)
@@ -117,7 +117,7 @@ func New(ctx *view.Context, key string) *View {
 		return v
 	}
 	return &View{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{Key: key},
 	}
 }
 
@@ -160,7 +160,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 
 		// Add the bar.
 		barV := &barView{
-			Embed: ctx.NewEmbed(strconv.Itoa(int(id))),
+			Embed: view.Embed{Key: strconv.Itoa(int(id))},
 			Bar:   bar,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
