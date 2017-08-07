@@ -13,7 +13,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewButtonView", func() *view.Root {
-		return view.NewRoot(NewButtonView(nil, ""))
+		return view.NewRoot(NewButtonView())
 	})
 }
 
@@ -22,12 +22,8 @@ type ButtonView struct {
 	value *comm.Float64Value
 }
 
-func NewButtonView(ctx *view.Context, key string) *ButtonView {
-	if v, ok := ctx.Prev(key).(*ButtonView); ok {
-		return v
-	}
+func NewButtonView() *ButtonView {
 	return &ButtonView{
-		Embed: view.Embed{Key: key},
 		value: &comm.Float64Value{},
 	}
 }

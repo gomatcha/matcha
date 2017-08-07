@@ -15,7 +15,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/animate New", func() *view.Root {
-		return view.NewRoot(New(nil, ""))
+		return view.NewRoot(New())
 	})
 }
 
@@ -23,13 +23,8 @@ type View struct {
 	view.Embed
 }
 
-func New(ctx *view.Context, key string) *View {
-	if v, ok := ctx.Prev(key).(*View); ok {
-		return v
-	}
-	return &View{
-		Embed: view.Embed{Key: key},
-	}
+func New() *View {
+	return &View{}
 }
 
 func (v *View) Lifecycle(from, to view.Stage) {

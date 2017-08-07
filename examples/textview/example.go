@@ -18,7 +18,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/textview New", func() *view.Root {
-		return view.NewRoot(New(nil, ""))
+		return view.NewRoot(New())
 	})
 }
 
@@ -28,12 +28,8 @@ type TextView struct {
 	responder *keyboard.Responder
 }
 
-func New(ctx *view.Context, key string) *TextView {
-	if v, ok := ctx.Prev(key).(*TextView); ok {
-		return v
-	}
+func New() *TextView {
 	return &TextView{
-		Embed:     view.Embed{Key: key},
 		text:      text.New("blah"),
 		responder: &keyboard.Responder{},
 	}

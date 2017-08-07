@@ -20,7 +20,7 @@ func init() {
 			stack: &stackview.Stack{},
 		}
 
-		view1 := NewTouchView(nil, "", app)
+		view1 := NewTouchView(app)
 		view1.Color = colornames.Blue
 		bar1 := &stackview.Bar{
 			Title: "Title 1",
@@ -60,13 +60,9 @@ type TouchView struct {
 	bar   *stackview.Bar
 }
 
-func NewTouchView(ctx *view.Context, key string, app *App) *TouchView {
-	if v, ok := ctx.Prev(key).(*TouchView); ok {
-		return v
-	}
+func NewTouchView(app *App) *TouchView {
 	return &TouchView{
-		Embed: view.Embed{Key: key},
-		app:   app,
+		app: app,
 	}
 }
 
@@ -77,7 +73,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 			// v.bar.Title = "Updated"
 			// v.Signal()
 
-			child := NewTouchView(nil, "", v.app)
+			child := NewTouchView(v.app)
 			child.Color = colornames.Purple
 			v.app.stack.Push(child)
 		},

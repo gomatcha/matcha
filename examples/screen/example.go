@@ -83,11 +83,7 @@ type TouchView struct {
 }
 
 func NewTouchView(ctx *view.Context, key string, app *App) *TouchView {
-	if v, ok := ctx.Prev(key).(*TouchView); ok {
-		return v
-	}
 	return &TouchView{
-		Embed: view.Embed{Key: key},
 		Color: colornames.White,
 		app:   app,
 	}

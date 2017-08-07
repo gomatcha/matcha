@@ -13,7 +13,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewProgressView", func() *view.Root {
-		return view.NewRoot(NewProgressView(nil, ""))
+		return view.NewRoot(NewProgressView())
 	})
 }
 
@@ -22,12 +22,8 @@ type ProgressView struct {
 	value *comm.Float64Value
 }
 
-func NewProgressView(ctx *view.Context, key string) *ProgressView {
-	if v, ok := ctx.Prev(key).(*ProgressView); ok {
-		return v
-	}
+func NewProgressView() *ProgressView {
 	return &ProgressView{
-		Embed: view.Embed{Key: key},
 		value: &comm.Float64Value{},
 	}
 }

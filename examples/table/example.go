@@ -2,8 +2,6 @@
 package table
 
 import (
-	"strconv"
-
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/layout/constraint"
@@ -17,7 +15,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/table New", func() *view.Root {
-		return view.NewRoot(New(nil, ""))
+		return view.NewRoot(New())
 	})
 }
 
@@ -25,13 +23,8 @@ type TableView struct {
 	view.Embed
 }
 
-func New(ctx *view.Context, key string) *TableView {
-	if v, ok := ctx.Prev(key).(*TableView); ok {
-		return v
-	}
-	return &TableView{
-		Embed: view.Embed{Key: key},
-	}
+func New() *TableView {
+	return &TableView{}
 }
 
 func (v *TableView) Build(ctx *view.Context) view.Model {
@@ -39,7 +32,7 @@ func (v *TableView) Build(ctx *view.Context) view.Model {
 
 	childLayouter := &table.Layouter{}
 	for i := 0; i < 20; i++ {
-		childView := NewTableCell(ctx, strconv.Itoa(i))
+		childView := NewTableCell()
 		childView.String = "TEST TEST"
 		childView.Painter = &paint.Style{BackgroundColor: colornames.Red}
 		childLayouter.Add(childView, nil)
@@ -71,13 +64,8 @@ type TableCell struct {
 	Painter paint.Painter
 }
 
-func NewTableCell(ctx *view.Context, key string) *TableCell {
-	if v, ok := ctx.Prev(key).(*TableCell); ok {
-		return v
-	}
-	return &TableCell{
-		Embed: view.Embed{Key: key},
-	}
+func NewTableCell() *TableCell {
+	return &TableCell{}
 }
 
 func (v *TableCell) Build(ctx *view.Context) view.Model {

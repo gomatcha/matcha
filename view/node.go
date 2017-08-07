@@ -146,56 +146,6 @@ type Context struct {
 	skipBuild map[Id]struct{}
 }
 
-// Prev returns the view returned by the last call to Build with the given key.
-func (ctx *Context) Prev(key string) View {
-	return ctx.prev(key, "")
-}
-
-func (ctx *Context) prev(key string, prefix string) View {
-	if ctx == nil {
-		return nil
-	}
-	if ctx.parent != nil {
-		return ctx.parent.prev(key, ctx.prefix+"|"+prefix)
-	}
-	if !ctx.valid {
-		panic("view.Context.Prev() called on invalid context")
-	}
-	if ctx.node == nil {
-		return nil
-	}
-	if prefix != "" {
-		key = prefix + "|" + key
-	}
-
-	cacheKey := viewCacheKey{key: key, id: ctx.node.id}
-	prevId := ctx.prevIds[cacheKey]
-	prevNode := ctx.prevNodes[prevId]
-	if prevNode == nil {
-		return nil
-	}
-
-	v := prevNode.view
-	for {
-		if pv, ok := v.(*painterView); ok {
-			v = pv.View
-			continue
-		} else if vv, ok := v.(*optionsView); ok {
-			v = vv.View
-			continue
-		}
-		break
-	}
-	return v
-}
-
-// NewEmbed generates a new Embed for a given key. NewEmbed is a convenience around NewEmbed(ctx.NewId(key)).
-func (ctx *Context) NewEmbed(key string) Embed {
-	return Embed{
-		Key: key,
-	}
-}
-
 func newId() Id {
 	return Id(atomic.AddInt64(&maxId, 1))
 }

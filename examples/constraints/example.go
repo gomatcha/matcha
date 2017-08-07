@@ -12,7 +12,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/constraints New", func() *view.Root {
-		return view.NewRoot(New(nil, ""))
+		return view.NewRoot(New())
 	})
 }
 
@@ -20,13 +20,8 @@ type ConstraintsView struct {
 	view.Embed
 }
 
-func New(ctx *view.Context, key string) *ConstraintsView {
-	if v, ok := ctx.Prev(key).(*ConstraintsView); ok {
-		return v
-	}
-	return &ConstraintsView{
-		Embed: view.Embed{Key: key},
-	}
+func New() *ConstraintsView {
+	return &ConstraintsView{}
 }
 
 func (v *ConstraintsView) Build(ctx *view.Context) view.Model {

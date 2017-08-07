@@ -3,7 +3,6 @@ package complex
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	"golang.org/x/image/colornames"
@@ -33,7 +32,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/complex New", func() *view.Root {
-		return view.NewRoot(New(nil, ""))
+		return view.NewRoot(New())
 	})
 }
 
@@ -45,13 +44,8 @@ type NestedView struct {
 	value        animate.Value
 }
 
-func New(ctx *view.Context, key string) *NestedView {
-	if v, ok := ctx.Prev(key).(*NestedView); ok {
-		return v
-	}
-	return &NestedView{
-		Embed: view.Embed{Key: key},
-	}
+func New() *NestedView {
+	return &NestedView{}
 }
 
 func (v *NestedView) Lifecycle(from, to view.Stage) {
@@ -201,7 +195,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 
 	childLayouter := &table.Layouter{}
 	for i := 0; i < 20; i++ {
-		childView := NewTableCell(ctx, "a"+strconv.Itoa(i))
+		childView := NewTableCell()
 		childView.String = "TEST TEST"
 		childView.Painter = &paint.Style{BackgroundColor: colornames.Red}
 		childLayouter.Add(childView, nil)
@@ -283,13 +277,8 @@ type TableCell struct {
 	Painter paint.Painter
 }
 
-func NewTableCell(ctx *view.Context, key string) *TableCell {
-	if v, ok := ctx.Prev(key).(*TableCell); ok {
-		return v
-	}
-	return &TableCell{
-		Embed: view.Embed{Key: key},
-	}
+func NewTableCell() *TableCell {
+	return &TableCell{}
 }
 
 func (v *TableCell) Build(ctx *view.Context) view.Model {

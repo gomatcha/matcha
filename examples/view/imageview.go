@@ -17,7 +17,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewImageView", func() *view.Root {
-		return view.NewRoot(NewImageView(nil, ""))
+		return view.NewRoot(NewImageView())
 	})
 }
 
@@ -25,13 +25,8 @@ type ImageView struct {
 	view.Embed
 }
 
-func NewImageView(ctx *view.Context, key string) *ImageView {
-	if v, ok := ctx.Prev(key).(*ImageView); ok {
-		return v
-	}
-	return &ImageView{
-		Embed: view.Embed{Key: key},
-	}
+func NewImageView() *ImageView {
+	return &ImageView{}
 }
 
 func (v *ImageView) Build(ctx *view.Context) view.Model {

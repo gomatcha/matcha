@@ -13,7 +13,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/paint New", func() *view.Root {
-		return view.NewRoot(New(nil, ""))
+		return view.NewRoot(New())
 	})
 }
 
@@ -21,13 +21,9 @@ type PaintView struct {
 	view.Embed
 }
 
-func New(ctx *view.Context, key string) *PaintView {
-	if v, ok := ctx.Prev(key).(*PaintView); ok {
-		return v
-	}
-	return &PaintView{
-		Embed: view.Embed{Key: key},
-	}
+func New() *PaintView {
+
+	return &PaintView{}
 }
 
 func (v *PaintView) Build(ctx *view.Context) view.Model {
