@@ -20,12 +20,12 @@ import (
 // Layouter that returns the child's layout
 type layouter struct{}
 
-func (l layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{Frame: layout.Rect{Max: ctx.MaxSize}}
-	gs := map[matcha.Id]layout.Guide{}
-	for _, id := range ctx.ChildIds {
-		f := ctx.LayoutChild(id, ctx.MinSize, ctx.MaxSize)
-		gs[id] = f
+	gs := []layout.Guide{}
+	for i := 0; i < ctx.ChildCount; i++ {
+		f := ctx.LayoutChild(i, ctx.MinSize, ctx.MaxSize)
+		gs = append(gs, f)
 		g.Frame = f.Frame
 	}
 	return g, gs
@@ -56,20 +56,15 @@ type View struct {
 }
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New(ctx *view.Context, key string) *View {
-	if v, ok := ctx.Prev(key).(*View); ok {
-		return v
-	}
-	return &View{
-		Embed: ctx.NewEmbed(key),
-	}
+func New() *View {
+	return &View{}
 }
 
 // Build implements view.View.
 func (v *View) Build(ctx *view.Context) view.Model {
 	v.reload()
 
-	chl := imageview.New(ctx, "")
+	chl := imageview.New()
 	chl.ResizeMode = v.ResizeMode
 	chl.Image = v.image
 	chl.ImageTemplateColor = v.Tint

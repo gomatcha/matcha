@@ -18,7 +18,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/textview New", func() *view.Root {
-		return view.NewRoot(New(nil, ""))
+		return view.NewRoot(New())
 	})
 }
 
@@ -28,12 +28,8 @@ type TextView struct {
 	responder *keyboard.Responder
 }
 
-func New(ctx *view.Context, key string) *TextView {
-	if v, ok := ctx.Prev(key).(*TextView); ok {
-		return v
-	}
+func New() *TextView {
 	return &TextView{
-		Embed:     ctx.NewEmbed(key),
 		text:      text.New("blah"),
 		responder: &keyboard.Responder{},
 	}
@@ -49,7 +45,7 @@ func (v *TextView) Lifecycle(from, to view.Stage) {
 func (v *TextView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl := textview.New(ctx, "a")
+	chl := textview.New()
 	chl.String = "Subtitle"
 	chl.Style.SetAlignment(text.AlignmentCenter)
 	chl.Style.SetStrikethroughStyle(text.StrikethroughStyleDouble)
@@ -68,7 +64,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 		s.LeftEqual(constraint.Const(100))
 	})
 
-	input := textinput.New(ctx, "input")
+	input := textinput.New()
 	input.Text = v.text
 	input.KeyboardType = keyboard.URLType
 	input.KeyboardAppearance = keyboard.DarkAppearance
@@ -85,7 +81,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(constraint.Const(100))
 	})
 
-	reverse := textview.New(ctx, "reverse")
+	reverse := textview.New()
 	reverse.String = Reverse(v.text.String())
 	l.Add(reverse, func(s *constraint.Solver) {
 		s.TopEqual(chlG.Bottom())

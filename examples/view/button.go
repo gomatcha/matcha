@@ -13,7 +13,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewButtonView", func() *view.Root {
-		return view.NewRoot(NewButtonView(nil, ""))
+		return view.NewRoot(NewButtonView())
 	})
 }
 
@@ -22,12 +22,8 @@ type ButtonView struct {
 	value *comm.Float64Value
 }
 
-func NewButtonView(ctx *view.Context, key string) *ButtonView {
-	if v, ok := ctx.Prev(key).(*ButtonView); ok {
-		return v
-	}
+func NewButtonView() *ButtonView {
 	return &ButtonView{
-		Embed: ctx.NewEmbed(key),
 		value: &comm.Float64Value{},
 	}
 }
@@ -35,7 +31,7 @@ func NewButtonView(ctx *view.Context, key string) *ButtonView {
 func (v *ButtonView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := button.New(ctx, "0")
+	chl1 := button.New()
 	chl1.Text = "Press Me"
 	chl1.OnPress = func() {
 		alert.Alert("Button Pressed", "")
@@ -46,7 +42,7 @@ func (v *ButtonView) Build(ctx *view.Context) view.Model {
 		s.Width(200)
 	})
 
-	chl2 := button.New(ctx, "1")
+	chl2 := button.New()
 	chl2.Text = "Press Me"
 	chl2.Color = colornames.Red
 	chl2.Enabled = false

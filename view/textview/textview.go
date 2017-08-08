@@ -2,7 +2,6 @@
 package textview
 
 import (
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
@@ -22,12 +21,8 @@ type View struct {
 }
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New(ctx *view.Context, key string) *View {
-	if v, ok := ctx.Prev(key).(*View); ok {
-		return v
-	}
+func New() *View {
 	return &View{
-		Embed: ctx.NewEmbed(key),
 		Style: &text.Style{},
 	}
 }
@@ -58,7 +53,7 @@ type layouter struct {
 	maxLines   int
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, l.maxLines)
 	g := layout.Guide{Frame: layout.Rt(0, 0, size.X, size.Y)}
 	return g, nil

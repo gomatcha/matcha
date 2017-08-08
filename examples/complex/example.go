@@ -3,7 +3,6 @@ package complex
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	"golang.org/x/image/colornames"
@@ -33,7 +32,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/complex New", func() *view.Root {
-		return view.NewRoot(New(nil, ""))
+		return view.NewRoot(New())
 	})
 }
 
@@ -45,13 +44,8 @@ type NestedView struct {
 	value        animate.Value
 }
 
-func New(ctx *view.Context, key string) *NestedView {
-	if v, ok := ctx.Prev(key).(*NestedView); ok {
-		return v
-	}
-	return &NestedView{
-		Embed: ctx.NewEmbed(key),
-	}
+func New() *NestedView {
+	return &NestedView{}
 }
 
 func (v *NestedView) Lifecycle(from, to view.Stage) {
@@ -71,7 +65,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 	value := animate.FloatLerp{Start: 0, End: 150}.Notifier(&v.value)
 	// value := animate.FloatInterpolate(animate.FloatLerp{Start: 0, End: 150}, &v.value)
 
-	chl1 := basicview.New(ctx, "1")
+	chl1 := basicview.New()
 	chl1.Painter = &paint.AnimatedStyle{
 		BackgroundColor: animate.RGBALerp{Start: colornames.Red, End: colornames.Yellow}.Notifier(&v.value),
 	}
@@ -82,7 +76,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(constraint.Notifier(value))
 	})
 
-	chl2 := basicview.New(ctx, "2")
+	chl2 := basicview.New()
 	chl2.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
 	g2 := l.Add(chl2, func(s *constraint.Solver) {
 		s.TopEqual(g1.Bottom())
@@ -91,7 +85,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(300)
 	})
 
-	chl3 := basicview.New(ctx, "3")
+	chl3 := basicview.New()
 	chl3.Painter = &paint.Style{BackgroundColor: colornames.Blue}
 	g3 := l.Add(chl3, func(s *constraint.Solver) {
 		s.TopEqual(g2.Bottom())
@@ -100,7 +94,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(100)
 	})
 
-	chl4 := basicview.New(ctx, "4")
+	chl4 := basicview.New()
 	chl4.Painter = &paint.Style{BackgroundColor: colornames.Magenta}
 	g4 := l.Add(chl4, func(s *constraint.Solver) {
 		s.TopEqual(g2.Bottom())
@@ -109,7 +103,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(50)
 	})
 
-	chl5 := textview.New(ctx, "a")
+	chl5 := textview.New()
 	chl5.String = "Subtitle"
 	chl5.Style.SetAlignment(text.AlignmentCenter)
 	chl5.Style.SetStrikethroughStyle(text.StrikethroughStyleSingle)
@@ -128,7 +122,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(g2.Right().Add(-15))
 	})
 
-	chl6 := textview.New(ctx, "6")
+	chl6 := textview.New()
 	chl6.String = fmt.Sprintf("Counter: %v", v.counter)
 	chl6.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",
@@ -140,7 +134,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(g2.Right().Add(-15))
 	})
 
-	chl8 := button.New(ctx, "8")
+	chl8 := button.New()
 	chl8.Text = "Button"
 	chl8.OnPress = func() {
 		v.counter += 1
@@ -167,7 +161,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 	})
 
 	if v.counter%2 == 0 {
-		chl9 := urlimageview.New(ctx, "7")
+		chl9 := urlimageview.New()
 		chl9.URL = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
 		chl9.ResizeMode = imageview.ResizeModeFit
 		pChl9 := view.WithPainter(chl9, &paint.Style{BackgroundColor: colornames.Cyan})
@@ -179,7 +173,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 			s.Height(200)
 		})
 	}
-	chl11 := switchview.New(ctx, "12")
+	chl11 := switchview.New()
 	chl11.OnValueChange = func(value bool) {
 		a := 0.0
 		if value {
@@ -201,13 +195,13 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 
 	childLayouter := &table.Layouter{}
 	for i := 0; i < 20; i++ {
-		childView := NewTableCell(ctx, "a"+strconv.Itoa(i))
+		childView := NewTableCell()
 		childView.String = "TEST TEST"
 		childView.Painter = &paint.Style{BackgroundColor: colornames.Red}
 		childLayouter.Add(childView, nil)
 	}
 
-	chl10 := scrollview.New(ctx, "10")
+	chl10 := scrollview.New()
 	chl10.PaintStyle = &paint.Style{BackgroundColor: colornames.Cyan}
 	chl10.ContentPainter = &paint.Style{BackgroundColor: colornames.White}
 	chl10.ContentLayouter = childLayouter
@@ -222,7 +216,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(200)
 	})
 
-	chl12 := slider.New(ctx, "11")
+	chl12 := slider.New()
 	chl12.ValueNotifier = &v.sliderValue
 	chl12.MaxValue = 1
 	chl12.MinValue = 0
@@ -237,7 +231,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Width(150)
 	})
 
-	chl13 := progressview.New(ctx, "13")
+	chl13 := progressview.New()
 	chl13.ProgressNotifier = &v.sliderValue
 	chl13.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
 	_ = l.Add(chl13, func(s *constraint.Solver) {
@@ -246,7 +240,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Width(150)
 	})
 
-	chl14 := segmentview.New(ctx, "14")
+	chl14 := segmentview.New()
 	chl14.Value = v.segmentValue
 	chl14.Titles = []string{"Title1", "Title2", "Title3"}
 	chl14.OnValueChange = func(a int) {
@@ -283,13 +277,8 @@ type TableCell struct {
 	Painter paint.Painter
 }
 
-func NewTableCell(ctx *view.Context, key string) *TableCell {
-	if v, ok := ctx.Prev(key).(*TableCell); ok {
-		return v
-	}
-	return &TableCell{
-		Embed: ctx.NewEmbed(key),
-	}
+func NewTableCell() *TableCell {
+	return &TableCell{}
 }
 
 func (v *TableCell) Build(ctx *view.Context) view.Model {
@@ -299,7 +288,7 @@ func (v *TableCell) Build(ctx *view.Context) view.Model {
 		s.Height(50)
 	})
 
-	textView := textview.New(ctx, "1")
+	textView := textview.New()
 	textView.String = v.String
 	textView.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",

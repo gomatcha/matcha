@@ -16,7 +16,6 @@ Package absolute implements a fixed layout system similar to HTML absolute posit
 package absolute
 
 import (
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/view"
@@ -25,16 +24,13 @@ import (
 type Layouter struct {
 	// Layout guide for the view.
 	Guide       layout.Guide
-	childGuides map[matcha.Id]layout.Guide
+	childGuides []layout.Guide
 	views       []view.View
 }
 
 // Add adds v to the layouter and positions it with g.
 func (l *Layouter) Add(v view.View, g layout.Guide) {
-	if l.childGuides == nil {
-		l.childGuides = map[matcha.Id]layout.Guide{}
-	}
-	l.childGuides[v.Id()] = g
+	l.childGuides = append(l.childGuides, g)
 	l.views = append(l.views, v)
 }
 
@@ -44,8 +40,13 @@ func (l *Layouter) Views() []view.View {
 }
 
 // Layout implements the view.Layouter interface.
-func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	// TODO(KD): Need to call layoutChild.
+	for i := 0; i < len(l.childGuides); i++ {
+		g := l.childGuides[i]
+		p := layout.Pt(g.Width(), g.Height())
+		ctx.LayoutChild(i, p, p)
+	}
 	return l.Guide, l.childGuides
 }
 

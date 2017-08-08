@@ -51,16 +51,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - MatchaStackScreenPBChildView
 
 typedef GPB_ENUM(MatchaStackScreenPBChildView_FieldNumber) {
-  MatchaStackScreenPBChildView_FieldNumber_ViewId = 1,
-  MatchaStackScreenPBChildView_FieldNumber_BarId = 2,
   MatchaStackScreenPBChildView_FieldNumber_ScreenId = 3,
 };
 
 @interface MatchaStackScreenPBChildView : GPBMessage
-
-@property(nonatomic, readwrite) int64_t viewId;
-
-@property(nonatomic, readwrite) int64_t barId;
 
 @property(nonatomic, readwrite) int64_t screenId;
 
@@ -101,9 +95,9 @@ typedef GPB_ENUM(MatchaStackScreenPBBar_FieldNumber) {
   MatchaStackScreenPBBar_FieldNumber_Title = 1,
   MatchaStackScreenPBBar_FieldNumber_CustomBackButtonTitle = 2,
   MatchaStackScreenPBBar_FieldNumber_BackButtonTitle = 3,
-  MatchaStackScreenPBBar_FieldNumber_TitleViewId = 4,
-  MatchaStackScreenPBBar_FieldNumber_RightViewIdsArray = 5,
-  MatchaStackScreenPBBar_FieldNumber_LeftViewIdsArray = 6,
+  MatchaStackScreenPBBar_FieldNumber_HasTitleView = 4,
+  MatchaStackScreenPBBar_FieldNumber_RightViewCount = 5,
+  MatchaStackScreenPBBar_FieldNumber_LeftViewCount = 6,
   MatchaStackScreenPBBar_FieldNumber_BackButtonHidden = 7,
 };
 
@@ -117,15 +111,11 @@ typedef GPB_ENUM(MatchaStackScreenPBBar_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *backButtonTitle;
 
-@property(nonatomic, readwrite) int64_t titleViewId;
+@property(nonatomic, readwrite) BOOL hasTitleView;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Array *rightViewIdsArray;
-/** The number of items in @c rightViewIdsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger rightViewIdsArray_Count;
+@property(nonatomic, readwrite) int64_t rightViewCount;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Array *leftViewIdsArray;
-/** The number of items in @c leftViewIdsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger leftViewIdsArray_Count;
+@property(nonatomic, readwrite) int64_t leftViewCount;
 
 @end
 

@@ -33,7 +33,6 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
 	"gomatcha.io/matcha/layout"
@@ -370,7 +369,7 @@ func (r *ButtonRecognizer) marshalProtobuf(ctx *view.Context) (proto.Message, ma
 		}
 }
 
-func idSliceToIntSlice(ids []matcha.Id) []int64 {
+func idSliceToIntSlice(ids []view.Id) []int64 {
 	ints := make([]int64, len(ids))
 	for idx, i := range ids {
 		ints[idx] = int64(i)

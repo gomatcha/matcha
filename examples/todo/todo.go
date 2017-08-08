@@ -3,7 +3,6 @@ package todo
 
 import (
 	"image/color"
-	"strconv"
 
 	"golang.org/x/image/colornames"
 
@@ -26,9 +25,9 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/todo New", func() *view.Root {
-		appview := NewAppView(nil, "")
+		appview := NewAppView()
 
-		v := stackview.New(nil, "")
+		v := stackview.New()
 		v.Stack = &stackview.Stack{}
 		v.Stack.SetViews(appview)
 		v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 1}
@@ -53,11 +52,8 @@ type AppView struct {
 	Todos []*Todo
 }
 
-func NewAppView(ctx *view.Context, key string) *AppView {
-	if v, ok := ctx.Prev(key).(*AppView); ok {
-		return v
-	}
-	return &AppView{Embed: ctx.NewEmbed(key)}
+func NewAppView() *AppView {
+	return &AppView{}
 }
 
 func (v *AppView) Build(ctx *view.Context) view.Model {
@@ -65,7 +61,7 @@ func (v *AppView) Build(ctx *view.Context) view.Model {
 
 	for i, todo := range v.Todos {
 		idx := i
-		todoView := NewTodoView(ctx, strconv.Itoa(idx))
+		todoView := NewTodoView()
 		todoView.Todo = todo
 		todoView.OnDelete = func() {
 			v.Todos = append(v.Todos[:idx], v.Todos[idx+1:]...)
@@ -78,14 +74,14 @@ func (v *AppView) Build(ctx *view.Context) view.Model {
 		l.Add(todoView, nil)
 	}
 
-	addView := NewAddView(ctx, "add")
+	addView := NewAddView()
 	addView.OnAdd = func(title string) {
 		v.Todos = append(v.Todos, &Todo{Title: title})
 		v.Signal()
 	}
 	l.Add(addView, nil)
 
-	scrollView := scrollview.New(ctx, "scrollView")
+	scrollView := scrollview.New()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 	return view.Model{
@@ -108,13 +104,9 @@ type AddView struct {
 	OnAdd     func(title string)
 }
 
-func NewAddView(ctx *view.Context, key string) *AddView {
-	if v, ok := ctx.Prev(key).(*AddView); ok {
-		return v
-	}
+func NewAddView() *AddView {
 	return &AddView{
-		Embed: ctx.NewEmbed(key),
-		text:  text.New(""),
+		text: text.New(""),
 	}
 }
 
@@ -138,7 +130,7 @@ func (v *AddView) Build(ctx *view.Context) view.Model {
 	})
 	placeholderStyle.SetTextColor(colornames.Lightgray)
 
-	input := textinput.New(ctx, "input")
+	input := textinput.New()
 	input.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
 	input.Text = v.text
 	input.Style = style
@@ -160,7 +152,7 @@ func (v *AddView) Build(ctx *view.Context) view.Model {
 		s.CenterYEqual(l.CenterY())
 	})
 
-	separator := basicview.New(ctx, "separator")
+	separator := basicview.New()
 	separator.Painter = &paint.Style{BackgroundColor: color.RGBA{203, 202, 207, 255}}
 	l.Add(separator, func(s *constraint.Solver) {
 		s.Height(1)
@@ -182,11 +174,8 @@ type TodoView struct {
 	OnComplete func(check bool)
 }
 
-func NewTodoView(ctx *view.Context, key string) *TodoView {
-	if v, ok := ctx.Prev(key).(*TodoView); ok {
-		return v
-	}
-	return &TodoView{Embed: ctx.NewEmbed(key)}
+func NewTodoView() *TodoView {
+	return &TodoView{}
 }
 
 func (v *TodoView) Build(ctx *view.Context) view.Model {
@@ -196,7 +185,7 @@ func (v *TodoView) Build(ctx *view.Context) view.Model {
 		s.WidthEqual(l.MaxGuide().Width())
 	})
 
-	checkbox := NewCheckbox(ctx, "checkbox")
+	checkbox := NewCheckbox()
 	checkbox.Value = v.Todo.Completed
 	checkbox.OnValueChange = func(value bool) {
 		v.OnComplete(value)
@@ -206,7 +195,7 @@ func (v *TodoView) Build(ctx *view.Context) view.Model {
 		s.LeftEqual(l.Left().Add(15))
 	})
 
-	deleteButton := NewDeleteButton(ctx, "delete")
+	deleteButton := NewDeleteButton()
 	deleteButton.OnPress = func() {
 		v.OnDelete()
 	}
@@ -215,7 +204,7 @@ func (v *TodoView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(l.Right().Add(-15))
 	})
 
-	titleView := textview.New(ctx, "title")
+	titleView := textview.New()
 	titleView.String = v.Todo.Title
 	titleView.Style = nil //...
 	l.Add(titleView, func(s *constraint.Solver) {
@@ -224,7 +213,7 @@ func (v *TodoView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(deleteGuide.Left().Add(-15))
 	})
 
-	separator := basicview.New(ctx, "separator")
+	separator := basicview.New()
 	separator.Painter = &paint.Style{BackgroundColor: color.RGBA{203, 202, 207, 255}}
 	l.Add(separator, func(s *constraint.Solver) {
 		s.Height(1)
@@ -245,11 +234,8 @@ type Checkbox struct {
 	OnValueChange func(value bool)
 }
 
-func NewCheckbox(ctx *view.Context, key string) *Checkbox {
-	if v, ok := ctx.Prev(key).(*Checkbox); ok {
-		return v
-	}
-	return &Checkbox{Embed: ctx.NewEmbed(key)}
+func NewCheckbox() *Checkbox {
+	return &Checkbox{}
 }
 
 func (v *Checkbox) Build(ctx *view.Context) view.Model {
@@ -259,7 +245,7 @@ func (v *Checkbox) Build(ctx *view.Context) view.Model {
 		s.Height(40)
 	})
 
-	imageView := imageview.New(ctx, "image")
+	imageView := imageview.New()
 	if v.Value {
 		imageView.Image = app.MustLoadImage("CheckboxChecked")
 	} else {
@@ -295,11 +281,8 @@ type DeleteButton struct {
 	OnPress func()
 }
 
-func NewDeleteButton(ctx *view.Context, key string) *DeleteButton {
-	if v, ok := ctx.Prev(key).(*DeleteButton); ok {
-		return v
-	}
-	return &DeleteButton{Embed: ctx.NewEmbed(key)}
+func NewDeleteButton() *DeleteButton {
+	return &DeleteButton{}
 }
 
 func (v *DeleteButton) Build(ctx *view.Context) view.Model {
@@ -309,7 +292,7 @@ func (v *DeleteButton) Build(ctx *view.Context) view.Model {
 		s.Height(40)
 	})
 
-	imageView := imageview.New(ctx, "image")
+	imageView := imageview.New()
 	imageView.Image = app.MustLoadImage("Delete")
 	l.Add(imageView, func(s *constraint.Solver) {
 		s.CenterXEqual(l.CenterX())

@@ -17,7 +17,7 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/touch New", func() *view.Root {
-		return view.NewRoot(New(nil, ""))
+		return view.NewRoot(New())
 	})
 }
 
@@ -27,19 +27,16 @@ type TouchView struct {
 	pressCounter int
 }
 
-func New(ctx *view.Context, key string) *TouchView {
-	if v, ok := ctx.Prev(key).(*TouchView); ok {
-		return v
-	}
+func New() *TouchView {
 	return &TouchView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.Embed{},
 	}
 }
 
 func (v *TouchView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := NewTouchChildView(ctx, "1")
+	chl1 := NewTouchChildView()
 	chl1.OnTouch = func() {
 		fmt.Println("On touch")
 		v.counter += 1
@@ -52,7 +49,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(constraint.Const(100))
 	})
 
-	chl2 := textview.New(ctx, "2")
+	chl2 := textview.New()
 	chl2.String = fmt.Sprintf("Counter: %v", v.counter)
 	chl2.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",
@@ -63,7 +60,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 		s.LeftEqual(g1.Left())
 	})
 
-	chl3 := NewPressChildView(ctx, "3")
+	chl3 := NewPressChildView()
 	chl3.OnPress = func() {
 		fmt.Println("On Press")
 		v.pressCounter += 1
@@ -76,7 +73,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(constraint.Const(100))
 	})
 
-	chl4 := textview.New(ctx, "4")
+	chl4 := textview.New()
 	chl4.String = fmt.Sprintf("Press: %v", v.pressCounter)
 	chl4.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",
@@ -87,7 +84,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 		s.LeftEqual(g3.Left())
 	})
 
-	chl5 := NewButtonChildView(ctx, "5")
+	chl5 := NewButtonChildView()
 	chl5.OnTouch = func() {
 		fmt.Println("On touch")
 		v.counter += 1
@@ -113,13 +110,8 @@ type PressChildView struct {
 	OnPress func()
 }
 
-func NewPressChildView(ctx *view.Context, key string) *PressChildView {
-	if v, ok := ctx.Prev(key).(*PressChildView); ok {
-		return v
-	}
-	return &PressChildView{
-		Embed: ctx.NewEmbed(key),
-	}
+func NewPressChildView() *PressChildView {
+	return &PressChildView{}
 }
 
 func (v *PressChildView) Build(ctx *view.Context) view.Model {
@@ -154,13 +146,8 @@ type TouchChildView struct {
 	OnTouch func()
 }
 
-func NewTouchChildView(ctx *view.Context, key string) *TouchChildView {
-	if v, ok := ctx.Prev(key).(*TouchChildView); ok {
-		return v
-	}
-	return &TouchChildView{
-		Embed: ctx.NewEmbed(key),
-	}
+func NewTouchChildView() *TouchChildView {
+	return &TouchChildView{}
 }
 
 func (v *TouchChildView) Build(ctx *view.Context) view.Model {
@@ -184,13 +171,8 @@ type ButtonChildView struct {
 	OnTouch func()
 }
 
-func NewButtonChildView(ctx *view.Context, key string) *ButtonChildView {
-	if v, ok := ctx.Prev(key).(*ButtonChildView); ok {
-		return v
-	}
-	return &ButtonChildView{
-		Embed: ctx.NewEmbed(key),
-	}
+func NewButtonChildView() *ButtonChildView {
+	return &ButtonChildView{}
 }
 
 func (v *ButtonChildView) Build(ctx *view.Context) view.Model {

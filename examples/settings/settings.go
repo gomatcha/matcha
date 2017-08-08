@@ -2,8 +2,8 @@
 package settings
 
 import (
+	"fmt"
 	"image/color"
-	"strconv"
 	"strings"
 
 	"golang.org/x/image/colornames"
@@ -38,9 +38,9 @@ func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/settings New", func() *view.Root {
 		app := NewApp()
 
-		v := stackview.New(nil, "")
+		v := stackview.New()
 		v.Stack = app.Stack
-		v.Stack.SetViews(NewRootView(nil, "", app))
+		v.Stack.SetViews(NewRootView(app))
 		return view.NewRoot(v)
 	})
 }
@@ -50,12 +50,9 @@ type RootView struct {
 	app *App
 }
 
-func NewRootView(ctx *view.Context, key string, app *App) *RootView {
-	if v, ok := ctx.Prev(key).(*RootView); ok {
-		return v
-	}
+func NewRootView(app *App) *RootView {
 	return &RootView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.NewEmbed(app),
 		app:   app,
 	}
 }
@@ -75,40 +72,41 @@ func (v *RootView) Lifecycle(from, to view.Stage) {
 func (v *RootView) Build(ctx *view.Context) view.Model {
 	l := &table.Layouter{}
 	{
-		ctx := ctx.WithPrefix("1")
 		group := []view.View{}
 
-		spacer := NewSpacer(ctx, "spacer")
+		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New(ctx, "switch")
+		switchView := switchview.New()
 		switchView.Value = v.app.AirplaneMode()
 		switchView.OnValueChange = func(value bool) {
+			fmt.Println("blah")
 			v.app.SetAirplaneMode(value)
 		}
-		cell1 := NewBasicCell(ctx, "airplane")
+		cell1 := NewBasicCell()
 		cell1.Title = "Airplane Mode"
 		cell1.Icon = app.MustLoadImage("Airplane")
 		cell1.AccessoryView = switchView
 		cell1.HasIcon = true
 		group = append(group, cell1)
 
-		cell2 := NewBasicCell(ctx, "wifi")
+		cell2 := NewBasicCell()
 		cell2.Title = "Wi-Fi"
 		if v.app.Wifi.Enabled() {
 			cell2.Subtitle = v.app.Wifi.CurrentSSID()
 		} else {
 			cell2.Subtitle = ""
 		}
+		fmt.Println("wifi", cell2.Subtitle)
 		cell2.HasIcon = true
 		cell2.Icon = app.MustLoadImage("Wifi")
 		cell2.Chevron = true
 		cell2.OnTap = func() {
-			v.app.Stack.Push(NewWifiView(nil, "", v.app))
+			v.app.Stack.Push(NewWifiView(v.app))
 		}
 		group = append(group, cell2)
 
-		cell3 := NewBasicCell(ctx, "bluetooth")
+		cell3 := NewBasicCell()
 		cell3.HasIcon = true
 		cell3.Icon = app.MustLoadImage("Bluetooth")
 		cell3.Title = "Bluetooth"
@@ -119,89 +117,88 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		}
 		cell3.Chevron = true
 		cell3.OnTap = func() {
-			v.app.Stack.Push(NewBluetoothView(nil, "", v.app))
+			v.app.Stack.Push(NewBluetoothView(v.app))
 		}
 		group = append(group, cell3)
 
-		cell4 := NewBasicCell(ctx, "cellular")
+		cell4 := NewBasicCell()
 		cell4.HasIcon = true
 		cell4.Icon = app.MustLoadImage("Cellular")
 		cell4.Title = "Cellular"
 		cell4.Chevron = true
 		cell4.OnTap = func() {
-			v.app.Stack.Push(NewCellularView(nil, "", v.app))
+			v.app.Stack.Push(NewCellularView(v.app))
 		}
 		group = append(group, cell4)
 
-		cell5 := NewBasicCell(ctx, "hotspot")
+		cell5 := NewBasicCell()
 		cell5.HasIcon = true
 		cell5.Icon = app.MustLoadImage("Hotspot")
 		cell5.Title = "Personal Hotspot"
 		cell5.Subtitle = "Off"
 		cell5.Chevron = true
 		cell5.OnTap = func() {
-			v.app.Stack.Push(NewCellularView(nil, "", v.app))
+			v.app.Stack.Push(NewCellularView(v.app))
 		}
 		group = append(group, cell5)
 
-		cell6 := NewBasicCell(ctx, "carrier")
+		cell6 := NewBasicCell()
 		cell6.HasIcon = true
 		cell6.Icon = app.MustLoadImage("Carrier")
 		cell6.Title = "Carrier"
 		cell6.Subtitle = "T-Mobile"
 		cell6.Chevron = true
 		cell6.OnTap = func() {
-			v.app.Stack.Push(NewCellularView(nil, "", v.app))
+			v.app.Stack.Push(NewCellularView(v.app))
 		}
 		group = append(group, cell6)
 
-		for _, i := range AddSeparators(ctx, group) {
+		for _, i := range AddSeparators(group) {
 			l.Add(i, nil)
 		}
 	}
 	{
-		ctx := ctx.WithPrefix("2")
 		group := []view.View{}
 
-		spacer := NewSpacer(ctx, "spacer")
+		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		cell1 := NewBasicCell(ctx, "notifications")
+		cell1 := NewBasicCell()
 		cell1.HasIcon = true
 		cell1.Icon = app.MustLoadImage("Notifications")
 		cell1.Title = "Notifications"
 		cell1.Chevron = true
 		cell1.OnTap = func() {
-			v.app.Stack.Push(NewCellularView(nil, "", v.app))
+			v.app.Stack.Push(NewCellularView(v.app))
 		}
 		group = append(group, cell1)
 
-		cell2 := NewBasicCell(ctx, "controlcenter")
+		cell2 := NewBasicCell()
 		cell2.HasIcon = true
 		cell2.Icon = app.MustLoadImage("ControlCenter")
 		cell2.Title = "Control Center"
 		cell2.Chevron = true
 		cell2.OnTap = func() {
-			v.app.Stack.Push(NewCellularView(nil, "", v.app))
+			v.app.Stack.Push(NewCellularView(v.app))
 		}
 		group = append(group, cell2)
 
-		cell3 := NewBasicCell(ctx, "donotdisturb")
+		cell3 := NewBasicCell()
 		cell3.HasIcon = true
 		cell3.Icon = app.MustLoadImage("DoNotDisturb")
 		cell3.Title = "Do Not Disturb"
 		cell3.Chevron = true
 		cell3.OnTap = func() {
-			v.app.Stack.Push(NewCellularView(nil, "", v.app))
+			v.app.Stack.Push(NewCellularView(v.app))
 		}
 		group = append(group, cell3)
 
-		for _, i := range AddSeparators(ctx, group) {
+		for _, i := range AddSeparators(group) {
 			l.Add(i, nil)
 		}
 	}
 
-	scrollView := scrollview.New(ctx, "scrollView")
+	scrollView := scrollview.New()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
@@ -215,24 +212,23 @@ func (v *RootView) StackBar(ctx *view.Context) *stackview.Bar {
 	return &stackview.Bar{Title: "Settings Example"}
 }
 
-func AddSeparators(ctx *view.Context, vs []view.View) []view.View {
-	ctx.WithPrefix("sep")
+func AddSeparators(vs []view.View) []view.View {
 	newViews := []view.View{}
 
-	top := NewSeparator(ctx, "top")
+	top := NewSeparator()
 	newViews = append(newViews, top)
 
 	for idx, i := range vs {
 		newViews = append(newViews, i)
 
 		if idx != len(vs)-1 { // Don't add short separator after last view
-			sep := NewSeparator(ctx, strconv.Itoa(idx))
+			sep := NewSeparator()
 			sep.LeftPadding = 60
 			newViews = append(newViews, sep)
 		}
 	}
 
-	bot := NewSeparator(ctx, "bottom")
+	bot := NewSeparator()
 	newViews = append(newViews, bot)
 	return newViews
 }
@@ -242,11 +238,8 @@ type Separator struct {
 	LeftPadding float64
 }
 
-func NewSeparator(ctx *view.Context, key string) *Separator {
-	if v, ok := ctx.Prev(key).(*Separator); ok {
-		return v
-	}
-	return &Separator{Embed: ctx.NewEmbed(key)}
+func NewSeparator() *Separator {
+	return &Separator{}
 }
 
 func (v *Separator) Build(ctx *view.Context) view.Model {
@@ -256,7 +249,7 @@ func (v *Separator) Build(ctx *view.Context) view.Model {
 		s.WidthEqual(l.MaxGuide().Width())
 	})
 
-	chl := basicview.New(ctx, "child")
+	chl := basicview.New()
 	chl.Painter = &paint.Style{BackgroundColor: separatorColor}
 	l.Add(chl, func(s *constraint.Solver) {
 		s.HeightEqual(l.Height())
@@ -276,12 +269,8 @@ type Spacer struct {
 	Height float64
 }
 
-func NewSpacer(ctx *view.Context, key string) *Spacer {
-	if v, ok := ctx.Prev(key).(*Spacer); ok {
-		return v
-	}
+func NewSpacer() *Spacer {
 	return &Spacer{
-		Embed:  ctx.NewEmbed(key),
 		Height: 35,
 	}
 }
@@ -305,12 +294,8 @@ type SpacerHeader struct {
 	Title  string
 }
 
-func NewSpacerHeader(ctx *view.Context, key string) *SpacerHeader {
-	if v, ok := ctx.Prev(key).(*SpacerHeader); ok {
-		return v
-	}
+func NewSpacerHeader() *SpacerHeader {
 	return &SpacerHeader{
-		Embed:  ctx.NewEmbed(key),
 		Height: 50,
 	}
 }
@@ -322,7 +307,7 @@ func (v *SpacerHeader) Build(ctx *view.Context) view.Model {
 		s.WidthEqual(l.MaxGuide().Width())
 	})
 
-	titleView := textview.New(ctx, "title")
+	titleView := textview.New()
 	titleView.String = strings.ToTitle(v.Title)
 	titleView.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",
@@ -351,17 +336,14 @@ type SpacerDescription struct {
 	Description string
 }
 
-func NewSpacerDescription(ctx *view.Context, key string) *SpacerDescription {
-	if v, ok := ctx.Prev(key).(*SpacerDescription); ok {
-		return v
-	}
-	return &SpacerDescription{Embed: ctx.NewEmbed(key)}
+func NewSpacerDescription() *SpacerDescription {
+	return &SpacerDescription{}
 }
 
 func (v *SpacerDescription) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	titleView := textview.New(ctx, "title")
+	titleView := textview.New()
 	titleView.String = v.Description
 	titleView.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",
@@ -399,11 +381,8 @@ type BasicCell struct {
 	highlighted   bool
 }
 
-func NewBasicCell(ctx *view.Context, key string) *BasicCell {
-	if v, ok := ctx.Prev(key).(*BasicCell); ok {
-		return v
-	}
-	return &BasicCell{Embed: ctx.NewEmbed(key)}
+func NewBasicCell() *BasicCell {
+	return &BasicCell{}
 }
 
 func (v *BasicCell) Build(ctx *view.Context) view.Model {
@@ -415,7 +394,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	leftAnchor := l.Left()
 	if v.HasIcon {
-		iconView := imageview.New(ctx, "icon")
+		iconView := imageview.New()
 		iconView.Image = v.Icon
 		iconView.ResizeMode = imageview.ResizeModeFill
 		pIconView := view.WithPainter(iconView, &paint.Style{BackgroundColor: colornames.Lightgray, CornerRadius: 5})
@@ -431,7 +410,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	rightAnchor := l.Right()
 	if v.Chevron {
-		chevronView := imageview.New(ctx, "chevron")
+		chevronView := imageview.New()
 		chevronView.Image = app.MustLoadImage("TableArrow")
 		chevronView.ResizeMode = imageview.ResizeModeCenter
 		chevronView.ImageTemplateColor = chevronColor
@@ -456,7 +435,8 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 	}
 
 	if len(v.Subtitle) > 0 {
-		subtitleView := textview.New(ctx, "subtitle")
+		fmt.Println("subtitle", v.Subtitle)
+		subtitleView := textview.New()
 		subtitleView.String = v.Subtitle
 		subtitleView.Style.SetFont(text.Font{
 			Family: "Helvetica Neue",
@@ -472,7 +452,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 		rightAnchor = subtitleGuide.Left()
 	}
 
-	titleView := textview.New(ctx, "title")
+	titleView := textview.New()
 	titleView.String = v.Title
 	titleView.Style.SetFont(text.Font{
 		Family: "Helvetica Neue",

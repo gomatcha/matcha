@@ -50,7 +50,6 @@ static GPBFileDescriptor *MatchaTabScreenPBTabscreenRoot_FileDescriptor(void) {
 
 @implementation MatchaTabScreenPBChildView
 
-@dynamic id_p;
 @dynamic title;
 @dynamic hasIcon, icon;
 @dynamic hasSelectedIcon, selectedIcon;
@@ -62,7 +61,6 @@ typedef struct MatchaTabScreenPBChildView__storage_ {
   MatchaPBImageOrResource *icon;
   MatchaPBImageOrResource *selectedIcon;
   NSString *badge;
-  int64_t id_p;
 } MatchaTabScreenPBChildView__storage_;
 
 // This method is threadsafe because it is initially called
@@ -72,19 +70,10 @@ typedef struct MatchaTabScreenPBChildView__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.className = NULL,
-        .number = MatchaTabScreenPBChildView_FieldNumber_Id_p,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MatchaTabScreenPBChildView__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeInt64,
-      },
-      {
         .name = "title",
         .dataTypeSpecific.className = NULL,
         .number = MatchaTabScreenPBChildView_FieldNumber_Title,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(MatchaTabScreenPBChildView__storage_, title),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -93,7 +82,7 @@ typedef struct MatchaTabScreenPBChildView__storage_ {
         .name = "icon",
         .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBImageOrResource),
         .number = MatchaTabScreenPBChildView_FieldNumber_Icon,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(MatchaTabScreenPBChildView__storage_, icon),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -102,7 +91,7 @@ typedef struct MatchaTabScreenPBChildView__storage_ {
         .name = "selectedIcon",
         .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBImageOrResource),
         .number = MatchaTabScreenPBChildView_FieldNumber_SelectedIcon,
-        .hasIndex = 3,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(MatchaTabScreenPBChildView__storage_, selectedIcon),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
@@ -111,7 +100,7 @@ typedef struct MatchaTabScreenPBChildView__storage_ {
         .name = "badge",
         .dataTypeSpecific.className = NULL,
         .number = MatchaTabScreenPBChildView_FieldNumber_Badge,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(MatchaTabScreenPBChildView__storage_, badge),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,

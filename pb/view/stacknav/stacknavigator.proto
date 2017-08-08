@@ -7,8 +7,6 @@ option go_package = "stacknav";
 option objc_class_prefix = "MatchaStackScreenPB";
 
 message ChildView {
-    int64 viewId = 1;
-    int64 barId = 2;
     int64 screenId = 3;
 }
 
@@ -24,9 +22,9 @@ message Bar {
     bool backButtonHidden = 7;
     bool customBackButtonTitle = 2;
     string backButtonTitle = 3;
-    int64 titleViewId = 4;
-    repeated int64 rightViewIds = 5;
-    repeated int64 leftViewIds = 6;
+    bool hasTitleView = 4;
+    int64 rightViewCount = 5;
+    int64 leftViewCount = 6;
 }
 
 message StackEvent {

@@ -16,7 +16,7 @@ func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/tabview New", func() *view.Root {
 		app := &App{tabs: &tabview.Tabs{}}
 
-		view1 := NewTouchView(nil, "", app)
+		view1 := NewTouchView(app)
 		view1.Color = colornames.Blue
 		button1 := &tabview.Button{
 			Title: "Title 1",
@@ -25,7 +25,7 @@ func init() {
 			// SelectedIcon: env.MustLoadImage("TabCameraFilled"),
 		}
 
-		view2 := NewTouchView(nil, "", app)
+		view2 := NewTouchView(app)
 		view2.Color = colornames.Red
 		button2 := &tabview.Button{
 			Title: "Title 2",
@@ -33,13 +33,13 @@ func init() {
 			// SelectedIcon: env.MustLoadImage("TabMapFilled"),
 		}
 
-		view3 := NewTouchView(nil, "", app)
+		view3 := NewTouchView(app)
 		view3.Color = colornames.Yellow
 
-		view4 := NewTouchView(nil, "", app)
+		view4 := NewTouchView(app)
 		view4.Color = colornames.Green
 
-		v := tabview.New(nil, "")
+		v := tabview.New()
 		v.BarColor = colornames.White
 		v.SelectedColor = colornames.Red
 		v.UnselectedColor = colornames.Darkgray
@@ -66,13 +66,9 @@ type TouchView struct {
 	button *tabview.Button
 }
 
-func NewTouchView(ctx *view.Context, key string, app *App) *TouchView {
-	if v, ok := ctx.Prev(key).(*TouchView); ok {
-		return v
-	}
+func NewTouchView(app *App) *TouchView {
 	return &TouchView{
-		Embed: ctx.NewEmbed(key),
-		app:   app,
+		app: app,
 		button: &tabview.Button{
 			Title: "Testing",
 			// Icon:         env.MustLoadImage("TabSearch"),

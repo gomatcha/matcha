@@ -58,6 +58,7 @@ typedef GPB_ENUM(MatchaViewPBBuildNode_FieldNumber) {
   MatchaViewPBBuildNode_FieldNumber_BridgeValue = 4,
   MatchaViewPBBuildNode_FieldNumber_Values = 5,
   MatchaViewPBBuildNode_FieldNumber_ChildrenArray = 6,
+  MatchaViewPBBuildNode_FieldNumber_AltIds = 7,
 };
 
 @interface MatchaViewPBBuildNode : GPBMessage
@@ -79,6 +80,10 @@ typedef GPB_ENUM(MatchaViewPBBuildNode_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Array *childrenArray;
 /** The number of items in @c childrenArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger childrenArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Int64Dictionary *altIds;
+/** The number of items in @c altIds without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger altIds_Count;
 
 @end
 

@@ -3,7 +3,7 @@
 @class MatchaViewNode;
 @class GPBInt64Array;
 
-@interface MatchaStackScreen : UINavigationController <MatchaChildViewController, UINavigationControllerDelegate>
+@interface MatchaStackView : UINavigationController <MatchaChildViewController, UINavigationControllerDelegate>
 - (id)initWithViewNode:(MatchaViewNode *)viewNode;
 @property (nonatomic, weak) MatchaViewNode *viewNode;
 @property (nonatomic, strong) MatchaBuildNode *node;
@@ -24,9 +24,6 @@
 @property (nonatomic, assign) BOOL customBackButtonTitle;
 @property (nonatomic, assign) NSString *backButtonTitle;
 @property (nonatomic, strong) UIView *titleView;
-@property (nonatomic, assign) int64_t titleViewId;
 @property (nonatomic, strong) NSArray *rightViews;
-@property (nonatomic, strong) GPBInt64Array *rightViewIds;
 @property (nonatomic, strong) NSArray *leftViews;
-@property (nonatomic, strong) GPBInt64Array *leftViewIds;
 @end

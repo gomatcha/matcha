@@ -12,18 +12,18 @@ type CellularView struct {
 	app *App
 }
 
-func NewCellularView(ctx *view.Context, key string, app *App) *CellularView {
-	if v, ok := ctx.Prev(key).(*CellularView); ok {
-		return v
+func NewCellularView(app *App) *CellularView {
+	return &CellularView{
+		Embed: view.NewEmbed(app),
+		app:   app,
 	}
-	return &CellularView{Embed: ctx.NewEmbed(key), app: app}
 }
 
 func (v *CellularView) Build(ctx *view.Context) view.Model {
 	l := &table.Layouter{}
 	chlds := []view.View{}
 
-	scrollView := scrollview.New(ctx, "b")
+	scrollView := scrollview.New()
 	scrollView.ContentLayouter = l
 	scrollView.ContentChildren = chlds
 

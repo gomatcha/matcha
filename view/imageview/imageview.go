@@ -7,7 +7,6 @@ import (
 	_ "image/jpeg"
 	_ "image/png"
 
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/app"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
@@ -46,13 +45,8 @@ type View struct {
 }
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New(ctx *view.Context, key string) *View {
-	if v, ok := ctx.Prev(key).(*View); ok {
-		return v
-	}
-	return &View{
-		Embed: ctx.NewEmbed(key),
-	}
+func New() *View {
+	return &View{}
 }
 
 // Build implements view.View.
@@ -98,7 +92,7 @@ type layouter struct {
 	resizeMode ResizeMode
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{Frame: layout.Rect{Max: ctx.MaxSize}}
 	switch l.resizeMode {
 	case ResizeModeFit:

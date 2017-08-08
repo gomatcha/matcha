@@ -60,6 +60,7 @@ static GPBFileDescriptor *MatchaViewPBViewRoot_FileDescriptor(void) {
 @dynamic hasBridgeValue, bridgeValue;
 @dynamic values, values_Count;
 @dynamic childrenArray, childrenArray_Count;
+@dynamic altIds, altIds_Count;
 
 typedef struct MatchaViewPBBuildNode__storage_ {
   uint32_t _has_storage_[1];
@@ -67,6 +68,7 @@ typedef struct MatchaViewPBBuildNode__storage_ {
   GPBAny *bridgeValue;
   NSMutableDictionary *values;
   GPBInt64Array *childrenArray;
+  GPBInt64Int64Dictionary *altIds;
   int64_t id_p;
   int64_t buildId;
 } MatchaViewPBBuildNode__storage_;
@@ -131,6 +133,15 @@ typedef struct MatchaViewPBBuildNode__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked),
         .dataType = GPBDataTypeInt64,
       },
+      {
+        .name = "altIds",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBBuildNode_FieldNumber_AltIds,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MatchaViewPBBuildNode__storage_, altIds),
+        .flags = (GPBFieldFlags)(GPBFieldMapKeyInt64 | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeInt64,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[MatchaViewPBBuildNode class]
@@ -142,7 +153,7 @@ typedef struct MatchaViewPBBuildNode__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\003\002\007\000\003\n\000\004\013\000";
+        "\004\002\007\000\003\n\000\004\013\000\007\006\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");

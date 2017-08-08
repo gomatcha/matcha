@@ -19,23 +19,23 @@ passing a minSize and a maxSize. The child will return a desired size within the
 min and max, which the parent can then position. Here is an example Layout function
 that centers its children within itself.
 
-	func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+	func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 		// Specify that the view wants to be the minSize given by its parent.
 		g := layout.Guide{
 			Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),
 		}
 
 		// Iterate over all child ids.
-		gs := map[matcha.Id]layout.Guide{}
-		for i, id := range ctx.ChildIds {
+		gs := []layout.Guide{}
+		for i := 0; i< ctx.ChildCount; i++ {
 
 			// Get the desired size of the children. In this case we let the children be any size.
-			child := ctx.LayoutChild(id, layout.Pt(0, 0), layout.Pt(math.Inf(1), math.Inf(1)))
+			child := ctx.LayoutChild(idx, layout.Pt(0, 0), layout.Pt(math.Inf(1), math.Inf(1)))
 
 			// Position the children to be centered in the view.
 			child.Frame = child.Frame.Add(layout.Pt(g.CenterX()-child.Width()/2, g.CenterY()-child.Height()/2))
 			child.ZIndex = i
-			gs[id] = child
+			gs = append(gs, child)
 		}
 
 		// Return the view's size, and the frames of its children.
@@ -51,7 +51,6 @@ import (
 	"reflect"
 
 	"gomatcha.io/bridge"
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	pblayout "gomatcha.io/matcha/pb/layout"
 )
@@ -62,20 +61,19 @@ func init() {
 }
 
 type Layouter interface {
-	Layout(ctx *Context) (Guide, map[matcha.Id]Guide)
+	Layout(ctx *Context) (Guide, []Guide)
 	comm.Notifier
 }
 
 type Context struct {
 	MinSize    Point
 	MaxSize    Point
-	ChildIds   []matcha.Id
-	LayoutFunc func(matcha.Id, Point, Point) Guide
+	ChildCount int
+	LayoutFunc func(int, Point, Point) Guide
 }
 
-// The guide returned by LayoutChild will be positioned such that the minPoint is at 0,0.
-func (l *Context) LayoutChild(id matcha.Id, minSize, maxSize Point) Guide {
-	g := l.LayoutFunc(id, minSize, maxSize)
+func (l *Context) LayoutChild(idx int, minSize, maxSize Point) Guide {
+	g := l.LayoutFunc(idx, minSize, maxSize)
 	g.Frame = g.Frame.Add(Pt(-g.Frame.Min.X, -g.Frame.Min.Y))
 	return g
 }

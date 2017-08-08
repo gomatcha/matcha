@@ -6,24 +6,24 @@
 //  	stack *stackview.Stack
 //  }
 //  func NewAppView(ctx *view.Context, key string) *AppView {
-//  	child := basicview.New(nil, "")
+//  	child := basicview.New()
 //  	child.Painter = &paint.Style{BackgroundColor: colornames.Red}
 //  	appview := &AppView{
-//  		Embed: ctx.NewEmbed(key),
+//  		Embed: view.Embed{Key:key},
 //  		stack: &stackview.Stack{},
 //  	}
 //  	appview.stack.SetViews(child)
 //  	return appview
 //  }
 //  func (v *AppView) Build(ctx *view.Context) view.Model {
-//  	child := stackview.New(ctx, "stack")
+//  	child := stackview.New()
 //  	child.Stack = v.stack
 //  	return view.Model{
 //  		Children: []view.View{child},
 //  	}
 //  }
 // Modifying the stack:
-//  child := basicview.New(nil, "")
+//  child := basicview.New()
 //  child.Painter = &paint.Style{BackgroundColor: colornames.Green}
 //  v.Stack.Push(child)
 package stackview
@@ -34,7 +34,6 @@ import (
 	"strconv"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/pb"
@@ -46,41 +45,50 @@ import (
 
 // Stack represents a list of views to be shown in the StackView. It can be manipulated outside of a Build() call.
 type Stack struct {
-	relay    comm.Relay
-	children []view.View
+	relay       comm.Relay
+	childIds    []int64
+	childrenMap map[int64]view.View
+	maxId       int64
 }
 
 func (s *Stack) SetViews(ss ...view.View) {
-	s.children = ss
-	s.relay.Signal()
-}
+	if s.childrenMap == nil {
+		s.childrenMap = map[int64]view.View{}
+	}
 
-func (s *Stack) setChildIds(ids []int64) {
-	prevChildren := s.children
-	s.children = []view.View{}
-
-	for _, i := range ids {
-		for _, j := range prevChildren {
-			if j.Id() == matcha.Id(i) {
-				s.children = append(s.children, j)
-				continue
-			}
-		}
+	for _, i := range ss {
+		s.maxId += 1
+		s.childIds = append(s.childIds, s.maxId)
+		s.childrenMap[s.maxId] = i
 	}
 	s.relay.Signal()
 }
 
+func (s *Stack) setChildIds(ids []int64) {
+	fmt.Printf("prev:%v new:%v", s.childIds, ids)
+	s.childIds = ids
+	s.relay.Signal()
+}
+
 func (s *Stack) Views() []view.View {
-	return s.children
+	vs := []view.View{}
+	for _, i := range s.childIds {
+		vs = append(vs, s.childrenMap[i])
+	}
+	return vs
 }
 
 func (s *Stack) Push(vs view.View) {
-	s.children = append(s.children, vs)
+	s.maxId += 1
+
+	s.childIds = append(s.childIds, s.maxId)
+	s.childrenMap[s.maxId] = vs
 	s.relay.Signal()
 }
 
 func (s *Stack) Pop() {
-	s.children = s.children[:len(s.children)-1]
+	delete(s.childrenMap, s.childIds[len(s.childIds)-1])
+	s.childIds = s.childIds[:len(s.childIds)-1]
 	s.relay.Signal()
 }
 
@@ -104,13 +112,8 @@ type View struct {
 }
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New(ctx *view.Context, key string) *View {
-	if v, ok := ctx.Prev(key).(*View); ok {
-		return v
-	}
-	return &View{
-		Embed: ctx.NewEmbed(key),
-	}
+func New() *View {
+	return &View{}
 }
 
 // Lifecyle implements the view.View interface.
@@ -138,15 +141,12 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	}
 
 	childrenPb := []*stacknav.ChildView{}
-	for _, chld := range v.Stack.Views() {
-		key := strconv.Itoa(int(chld.Id()))
-
-		// v.Subscribe(chld)
-
+	for _, id := range v.Stack.childIds {
+		chld := v.Stack.childrenMap[id]
 		// Create the bar.
 		var bar *Bar
 		if childView, ok := chld.(ChildView); ok {
-			bar = childView.StackBar(ctx.WithPrefix("bar" + key))
+			bar = childView.StackBar(ctx)
 		} else {
 			bar = &Bar{
 				Title: "Title",
@@ -155,29 +155,27 @@ func (v *View) Build(ctx *view.Context) view.Model {
 
 		// Add the bar.
 		barV := &barView{
-			Embed: ctx.NewEmbed(key),
-			bar:   bar,
+			Embed: view.Embed{Key: strconv.Itoa(int(id))},
+			Bar:   bar,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
-			s.TopEqual(constraint.Const(0))
-			s.LeftEqual(constraint.Const(0))
+			s.Top(0)
+			s.Left(0)
 			s.WidthEqual(l.MaxGuide().Width())
-			s.HeightEqual(constraint.Const(44))
+			s.Height(44)
 		})
 
 		// Add the child.
 		l.Add(chld, func(s *constraint.Solver) {
-			s.TopEqual(constraint.Const(0))
-			s.LeftEqual(constraint.Const(0))
+			s.Top(0)
+			s.Left(0)
 			s.WidthEqual(l.MaxGuide().Width())
 			s.HeightEqual(l.MaxGuide().Height().Add(-64)) // TODO(KD): Respect bar actual height, shorter when rotated, etc...
 		})
 
 		// Add ids to protobuf.
 		childrenPb = append(childrenPb, &stacknav.ChildView{
-			ViewId:   int64(chld.Id()),
-			BarId:    int64(barV.Id()),
-			ScreenId: int64(chld.Id()),
+			ScreenId: int64(id),
 		})
 	}
 
@@ -214,90 +212,6 @@ func (v *View) Build(ctx *view.Context) view.Model {
 			},
 		},
 	}
-
-	// children := map[int64]view.View{}
-	// childrenPb := []*stacknav.ChildView{}
-	// v.ids = append([]int64(nil), v.stack.ids...)
-	// for _, i := range v.ids {
-	// 	key := strconv.Itoa(int(i))
-
-	// 	// Create the child if necessary and subscribe to it.
-	// 	chld, ok := v.children[i]
-	// 	if !ok {
-	// 		chld = v.stack.children[i].View(ctx.WithPrefix("view" + key))
-	// 		children[i] = chld
-	// 		v.Subscribe(chld)
-	// 	} else {
-	// 		children[i] = chld
-	// 		delete(v.children, i)
-	// 	}
-
-	// // Create the bar.
-	// var bar *Bar
-	// if childView, ok := chld.(ChildView); ok {
-	// 	bar = childView.StackBar(ctx.WithPrefix("bar" + key))
-	// } else {
-	// 	bar = &Bar{
-	// 		Title: "Title",
-	// 	}
-	// }
-
-	// // Add the bar.
-	// barV := &barView{
-	// 	Embed: view.NewEmbed(ctx.NewId(key)),
-	// 	bar:   bar,
-	// }
-	// l.Add(barV, func(s *constraint.Solver) {
-	// 	s.TopEqual(constraint.Const(0))
-	// 	s.LeftEqual(constraint.Const(0))
-	// 	s.WidthEqual(l.MaxGuide().Width())
-	// 	s.HeightEqual(constraint.Const(44))
-	// })
-
-	// // Add the child.
-	// l.Add(chld, func(s *constraint.Solver) {
-	// 	s.TopEqual(constraint.Const(0))
-	// 	s.LeftEqual(constraint.Const(0))
-	// 	s.WidthEqual(l.MaxGuide().Width())
-	// 	s.HeightEqual(l.MaxGuide().Height().Add(-64)) // TODO(KD): Respect bar actual height, shorter when rotated, etc...
-	// })
-
-	// // Add ids to protobuf.
-	// childrenPb = append(childrenPb, &stacknav.ChildView{
-	// 	ViewId:   int64(chld.Id()),
-	// 	BarId:    int64(barV.Id()),
-	// 	ScreenId: i,
-	// })
-	// }
-
-	// // Unsubscribe from old views
-	// for _, chld := range v.children {
-	// 	v.Unsubscribe(chld)
-	// }
-	// v.children = children
-
-	// return view.Model{
-	// 	Children:       l.Views(),
-	// 	Layouter:       l,
-	// 	NativeViewName: "gomatcha.io/matcha/view/stacknav",
-	// 	NativeViewState: &stacknav.View{
-	// 		Children: childrenPb,
-	// 	},
-	// 	NativeFuncs: map[string]interface{}{
-	// 		"OnChange": func(data []byte) {
-	// 			pbevent := &stacknav.StackEvent{}
-	// 			err := proto.Unmarshal(data, pbevent)
-	// 			if err != nil {
-	// 				fmt.Println("error", err)
-	// 				return
-	// 			}
-
-	// 			v.stack.Lock()
-	// 			v.stack.setChildIds(pbevent.Id)
-	// 			v.stack.Unlock()
-	// 		},
-	// 	},
-	// }
 }
 
 type ChildView interface {
@@ -307,40 +221,40 @@ type ChildView interface {
 
 type barView struct {
 	view.Embed
-	bar *Bar
+	Bar *Bar
 }
 
 func (v *barView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	// iOS does the layouting for us. We just need the correct sizes.
-	titleViewId := int64(0)
-	if v.bar.TitleView != nil {
-		titleViewId = int64(v.bar.TitleView.Id())
-		l.Add(v.bar.TitleView, func(s *constraint.Solver) {
-			s.TopEqual(constraint.Const(0))
-			s.LeftEqual(constraint.Const(0))
+	hasTitleView := false
+	if v.Bar.TitleView != nil {
+		hasTitleView = true
+		l.Add(v.Bar.TitleView, func(s *constraint.Solver) {
+			s.Top(0)
+			s.Left(0)
 			s.HeightLess(l.MaxGuide().Height())
 			s.WidthLess(l.MaxGuide().Width())
 		})
 	}
 
-	rightViewIds := []int64{}
-	for _, i := range v.bar.RightViews {
-		rightViewIds = append(rightViewIds, int64(i.Id()))
+	rightViewCount := int64(0)
+	for _, i := range v.Bar.RightViews {
+		rightViewCount += 1
 		l.Add(i, func(s *constraint.Solver) {
-			s.TopEqual(constraint.Const(0))
-			s.LeftEqual(constraint.Const(0))
+			s.Top(0)
+			s.Left(0)
 			s.HeightLess(l.MaxGuide().Height())
 			s.WidthLess(l.MaxGuide().Width())
 		})
 	}
-	leftViewIds := []int64{}
-	for _, i := range v.bar.LeftViews {
-		leftViewIds = append(leftViewIds, int64(i.Id()))
+	leftViewCount := int64(0)
+	for _, i := range v.Bar.LeftViews {
+		leftViewCount += 1
 		l.Add(i, func(s *constraint.Solver) {
-			s.TopEqual(constraint.Const(0))
-			s.LeftEqual(constraint.Const(0))
+			s.Top(0)
+			s.Left(0)
 			s.HeightLess(l.MaxGuide().Height())
 			s.WidthLess(l.MaxGuide().Width())
 		})
@@ -351,13 +265,13 @@ func (v *barView) Build(ctx *view.Context) view.Model {
 		Children:       l.Views(),
 		NativeViewName: "gomatcha.io/matcha/view/stacknav Bar",
 		NativeViewState: &stacknav.Bar{
-			Title: v.bar.Title,
-			CustomBackButtonTitle: len(v.bar.BackButtonTitle) > 0,
-			BackButtonTitle:       v.bar.BackButtonTitle,
-			BackButtonHidden:      v.bar.BackButtonHidden,
-			TitleViewId:           titleViewId,
-			RightViewIds:          rightViewIds,
-			LeftViewIds:           leftViewIds,
+			Title: v.Bar.Title,
+			CustomBackButtonTitle: len(v.Bar.BackButtonTitle) > 0,
+			BackButtonTitle:       v.Bar.BackButtonTitle,
+			BackButtonHidden:      v.Bar.BackButtonHidden,
+			HasTitleView:          hasTitleView,
+			RightViewCount:        rightViewCount,
+			LeftViewCount:         leftViewCount,
 		},
 	}
 }

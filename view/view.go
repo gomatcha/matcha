@@ -16,28 +16,10 @@ properties can be changed independently (label.title = @"Foo"), when a
 Matcha view updates, Build() is called again and all its properties and children are
 completely recreated.
 
-However, there may be some state in the view's children that the parent cannot recreate.
-This could be the position of a cursor in a textfield or the scroll offset of a table.
-Where other frameworks do diffing and reconciliation, this is harder in Go and so we choose to reuse
-views immediately. When a view's initializer is called, a context and a string key are
-passed in as seen below.
+	ViewKey() interface{}
 
-	func New(ctx *view.Context, key string) *ExampleView {
-		if v, ok := ctx.Prev(key).(*ExampleView); ok {
-			return v
-		}
-		return &ExampleView{id: ctx.NewId(key)}
-	}
-
-The initializer will search the view's previous Build() result for a child with the same
-key (ctx.Prev(key)...), check that it is of the correct type, and return it if it exists.
-Internal state is thereby carried across rerenders. If there was no previous view,
-a new one is created.
-
-	Id() matcha.Id
-
-Id returns the view's unique identifier. This should be created in the view's initializer and not change
-over the lifetime of the view. New identifiers can be created by calling Context.NewId() or Context.NewEmbed().
+ViewKey returns a view's stable identifier. This should not change over the lifetime
+of the view. This allows Matcha to to track which items have been added or removed.
 
 	Lifecycle(from, to Stage)
 
@@ -73,7 +55,7 @@ and Signal() methods to simplify signaling for updates. We see an example of thi
 		if v, ok := ctx.Prev(key).(*ExampleView); ok {
 			return v
 		}
-		return &ExampleView{Embed: ctx.NewEmbed(key), notifier: n}
+		return &ExampleView{Embed: view.Embed{Key:key}, notifier: n}
 	}
 	func (v *ExampleView) Lifecycle(from, to view.Stage) {
 		if view.EntersStage(from, to, view.StageMounted) {
@@ -85,7 +67,7 @@ and Signal() methods to simplify signaling for updates. We see an example of thi
 		}
 	}
 	func (v *ExampleView) Build(ctx *view.Context) view.Model {
-		child := button.New(ctx, "hellotext")
+		child := button.New()
 		child.String = "Click me"
 		child.OnClick = func() {
 			// Trigger the view to rebuild when the button is clicked.
@@ -102,16 +84,17 @@ import (
 	"sync"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 )
 
+type Id int64
+
 type View interface {
 	Build(*Context) Model
 	Lifecycle(from, to Stage)
-	Id() matcha.Id
+	ViewKey() interface{}
 	comm.Notifier
 }
 
@@ -121,14 +104,16 @@ type Option interface {
 
 // Embed is a convenience struct that provides a default implementation of View. It also wraps a comm.Relay.
 type Embed struct {
+	key   interface{}
+	Key   interface{}
 	mu    sync.Mutex
-	id    matcha.Id
 	relay comm.Relay
 }
 
-// NewEmbed creates a new Embed with the given Id.
-func NewEmbed(id matcha.Id) Embed {
-	return Embed{id: id}
+func NewEmbed(key interface{}) Embed {
+	return Embed{
+		key: key,
+	}
 }
 
 // Build is an empty implementation of View's Build method.
@@ -136,9 +121,11 @@ func (e *Embed) Build(ctx *Context) Model {
 	return Model{}
 }
 
-// Id returns the id passed into NewEmbed
-func (e *Embed) Id() matcha.Id {
-	return e.id
+func (e *Embed) ViewKey() interface{} {
+	return struct {
+		A interface{}
+		B interface{}
+	}{A: e.key, B: e.Key}
 }
 
 // Lifecycle is an empty implementation of View's Lifecycle method.

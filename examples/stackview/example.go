@@ -20,30 +20,30 @@ func init() {
 			stack: &stackview.Stack{},
 		}
 
-		view1 := NewTouchView(nil, "", app)
+		view1 := NewTouchView(app)
 		view1.Color = colornames.Blue
 		bar1 := &stackview.Bar{
 			Title: "Title 1",
 		}
 
-		view2 := NewTouchView(nil, "", app)
-		view2.Color = colornames.Red
-		bar2 := &stackview.Bar{
-			Title: "Title 2",
-		}
+		// view2 := NewTouchView(nil, "", app)
+		// view2.Color = colornames.Red
+		// bar2 := &stackview.Bar{
+		// 	Title: "Title 2",
+		// }
 
-		view3 := NewTouchView(nil, "", app)
-		view3.Color = colornames.Yellow
-		view4 := NewTouchView(nil, "", app)
-		view4.Color = colornames.Green
+		// view3 := NewTouchView(nil, "", app)
+		// view3.Color = colornames.Yellow
+		// view4 := NewTouchView(nil, "", app)
+		// view4.Color = colornames.Green
 
-		v := stackview.New(nil, "")
+		v := stackview.New()
 		v.Stack = app.stack
 		v.Stack.SetViews(
 			stackview.WithBar(view1, bar1),
-			stackview.WithBar(view2, bar2),
-			view3,
-			view4,
+			// stackview.WithBar(view2, bar2),
+			// view3,
+			// view4,
 		)
 		return view.NewRoot(v)
 	})
@@ -60,13 +60,9 @@ type TouchView struct {
 	bar   *stackview.Bar
 }
 
-func NewTouchView(ctx *view.Context, key string, app *App) *TouchView {
-	if v, ok := ctx.Prev(key).(*TouchView); ok {
-		return v
-	}
+func NewTouchView(app *App) *TouchView {
 	return &TouchView{
-		Embed: ctx.NewEmbed(key),
-		app:   app,
+		app: app,
 	}
 }
 
@@ -77,7 +73,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 			// v.bar.Title = "Updated"
 			// v.Signal()
 
-			child := NewTouchView(nil, "", v.app)
+			child := NewTouchView(v.app)
 			child.Color = colornames.Purple
 			v.app.stack.Push(child)
 		},
@@ -100,7 +96,7 @@ func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
 		s.WidthEqual(constraint.Const(100))
 	})
 
-	titleView := basicview.New(ctx, "axbaba")
+	titleView := basicview.New()
 	titleView.Painter = &paint.Style{BackgroundColor: colornames.Red}
 	titleView.Layouter = l
 
@@ -111,7 +107,7 @@ func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
 		s.HeightEqual(constraint.Const(50))
 		s.WidthEqual(constraint.Const(50))
 	})
-	rightView := basicview.New(ctx, "right")
+	rightView := basicview.New()
 	rightView.Painter = &paint.Style{BackgroundColor: colornames.Blue}
 	rightView.Layouter = l2
 
@@ -122,7 +118,7 @@ func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
 		s.HeightEqual(constraint.Const(50))
 		s.WidthEqual(constraint.Const(50))
 	})
-	leftView := basicview.New(ctx, "left")
+	leftView := basicview.New()
 	leftView.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
 	leftView.Layouter = l3
 

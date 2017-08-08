@@ -32,13 +32,13 @@ func init() {
 		app.stack4.SetViews(NewTouchView(nil, "", app))
 
 		// Configure the tabs
-		stackview1 := stackview.New(nil, "")
+		stackview1 := stackview.New()
 		stackview1.Stack = app.stack1
-		stackview2 := stackview.New(nil, "")
+		stackview2 := stackview.New()
 		stackview2.Stack = app.stack2
-		stackview3 := stackview.New(nil, "")
+		stackview3 := stackview.New()
 		stackview3.Stack = app.stack3
-		stackview4 := stackview.New(nil, "")
+		stackview4 := stackview.New()
 		stackview4.Stack = app.stack4
 		app.tabs.SetViews(
 			stackview1,
@@ -48,7 +48,7 @@ func init() {
 		)
 
 		// Return tabview
-		v := tabview.New(nil, "")
+		v := tabview.New()
 		v.Tabs = app.tabs
 		return view.NewRoot(v)
 	})
@@ -83,11 +83,7 @@ type TouchView struct {
 }
 
 func NewTouchView(ctx *view.Context, key string, app *App) *TouchView {
-	if v, ok := ctx.Prev(key).(*TouchView); ok {
-		return v
-	}
 	return &TouchView{
-		Embed: ctx.NewEmbed(key),
 		Color: colornames.White,
 		app:   app,
 	}

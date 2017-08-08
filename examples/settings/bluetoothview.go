@@ -13,12 +13,9 @@ type BluetoothView struct {
 	app *App
 }
 
-func NewBluetoothView(ctx *view.Context, key string, app *App) *BluetoothView {
-	if v, ok := ctx.Prev(key).(*BluetoothView); ok {
-		return v
-	}
+func NewBluetoothView(app *App) *BluetoothView {
 	v := &BluetoothView{
-		Embed: ctx.NewEmbed(key),
+		Embed: view.NewEmbed(app),
 		app:   app,
 	}
 	return v
@@ -35,38 +32,36 @@ func (v *BluetoothView) Lifecycle(from, to view.Stage) {
 func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 	l := &table.Layouter{}
 	{
-		ctx := ctx.WithPrefix("1")
 		group := []view.View{}
 
-		spacer := NewSpacer(ctx, "spacer")
+		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New(ctx, "switch")
+		switchView := switchview.New()
 		switchView.Value = v.app.Bluetooth.Enabled()
 		switchView.OnValueChange = func(value bool) {
 			v.app.Bluetooth.SetEnabled(!v.app.Bluetooth.Enabled())
 		}
 
-		cell1 := NewBasicCell(ctx, "wifi")
+		cell1 := NewBasicCell()
 		cell1.Title = "Bluetooth"
 		cell1.AccessoryView = switchView
 		group = append(group, cell1)
 
-		for _, i := range AddSeparators(ctx, group) {
+		for _, i := range AddSeparators(group) {
 			l.Add(i, nil)
 		}
 	}
 	if v.app.Bluetooth.Enabled() {
-		ctx := ctx.WithPrefix("2")
 		group := []view.View{}
 
-		spacer := NewSpacerHeader(ctx, "spacer")
+		spacer := NewSpacerHeader()
 		spacer.Title = "My Devices"
 		l.Add(spacer, nil)
 
 		for _, i := range v.app.Bluetooth.Devices() {
 			device := i
-			cell := NewBasicCell(ctx, "network"+device.SSID())
+			cell := NewBasicCell()
 			cell.Title = device.SSID()
 			if device.Connected() {
 				cell.Subtitle = "Connected"
@@ -80,12 +75,12 @@ func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 			group = append(group, cell)
 		}
 
-		for _, i := range AddSeparators(ctx, group) {
+		for _, i := range AddSeparators(group) {
 			l.Add(i, nil)
 		}
 	}
 
-	scrollView := scrollview.New(ctx, "b")
+	scrollView := scrollview.New()
 	scrollView.ContentLayouter = l
 	scrollView.ContentChildren = l.Views()
 

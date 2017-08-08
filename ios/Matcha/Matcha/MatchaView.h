@@ -13,8 +13,8 @@
 @protocol MatchaChildViewController <NSObject>
 - (id)initWithViewNode:(MatchaViewNode *)viewNode;
 - (void)setNode:(MatchaBuildNode *)node;
-- (void)setMatchaChildViewControllers:(NSDictionary<NSNumber *, UIViewController *> *)childVCs;
-- (void)setMatchaChildLayout:(GPBInt64ObjectDictionary *)layoutPaintNodes;
+- (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs;
+- (void)setMatchaChildLayout:(NSMutableArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
 @end
 
 typedef UIView<MatchaChildView> *(^MatchaViewRegistrationBlock)(MatchaViewNode *);
@@ -32,7 +32,7 @@ void MatchaRegisterViewController(NSString *string, MatchaViewControllerRegistra
 @property (nonatomic, strong) NSDictionary<NSNumber *, UIGestureRecognizer *> *touchRecognizers;
 
 @property (nonatomic, strong) UIViewController<MatchaChildViewController> *viewController;
-@property (nonatomic, strong) NSDictionary<NSNumber *, MatchaViewNode *> *children;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, MatchaViewNode *> *children;
 - (void)setRoot:(MatchaNodeRoot *)root;
 @property (nonatomic, strong) MatchaViewPBLayoutPaintNode *layoutPaintNode;
 @property (nonatomic, strong) MatchaBuildNode *buildNode;

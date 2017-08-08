@@ -13,7 +13,7 @@ Package constraint implements a constraint-based layout system.
 		})
 
 		// Adds a child view and solves for its position relative to v. The result is a 5x10 frame pinned to the lower right corner of v.
-		child1 := basicview.New(ctx, "child1")
+		child1 := basicview.New()
 		guide1 := l.Add(child1, func(s *constraint.Solver) {
 			s.Width(5) // Left(), Top(), CenterX()... methods support constraining to floats.
 			s.Height(10)
@@ -25,7 +25,7 @@ Package constraint implements a constraint-based layout system.
 		verticalCenter := l.CenterX().Add(10)
 
 		// Adds a child view that is twice as large as child1 and 10 points above the center v.
-		child2 := basicview.New(ctx, "child2")
+		child2 := basicview.New()
 		_ = l.Add(child1, func(s *constraint.Solver) {
 			s.WidthEqual(guide1.Width().Mul(2)) // Anchors can be added to and multiplied by constants.
 			s.HeightEqual(guide1.Height().Mul(2))
@@ -58,7 +58,6 @@ import (
 	"fmt"
 	"math"
 
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal/device"
 	"gomatcha.io/matcha/layout"
@@ -188,7 +187,7 @@ type guideAnchor struct {
 
 func (a guideAnchor) value(sys *Layouter) float64 {
 	var g layout.Guide
-	switch a.guide.id {
+	switch a.guide.index {
 	case rootId:
 		g = *sys.Guide.matchaGuide
 	case minId:
@@ -196,7 +195,7 @@ func (a guideAnchor) value(sys *Layouter) float64 {
 	case maxId:
 		g = *sys.max.matchaGuide
 	default:
-		g = *sys.children[a.guide.id].matchaGuide
+		g = *sys.children2[a.guide.index].matchaGuide
 	}
 
 	// if g == nil {
@@ -236,9 +235,9 @@ func Notifier(n comm.Float64Notifier) *Anchor {
 
 // Guide represents a layout.Guide that is materialized during the layout phase.
 type Guide struct {
-	id          matcha.Id
+	index       int
 	system      *Layouter
-	children    map[matcha.Id]*Guide
+	children2   []*Guide
 	matchaGuide *layout.Guide
 }
 
@@ -284,7 +283,7 @@ func (g *Guide) CenterY() *Anchor {
 
 // Solve immediately calls solveFunc to update the constraints for g.
 func (g *Guide) Solve(solveFunc func(*Solver)) {
-	s := &Solver{id: g.id}
+	s := &Solver{index: g.index}
 	if solveFunc != nil {
 		solveFunc(s)
 	}
@@ -299,18 +298,16 @@ func (g *Guide) Solve(solveFunc func(*Solver)) {
 }
 
 func (g *Guide) add(v view.View, solveFunc func(*Solver)) *Guide {
-	id := v.Id()
 	chl := &Guide{
-		id:          id,
+		index:       len(g.children2),
 		system:      g.system,
-		children:    map[matcha.Id]*Guide{},
 		matchaGuide: nil,
 	}
-	s := &Solver{id: id}
+	s := &Solver{index: chl.index}
 	if solveFunc != nil {
 		solveFunc(s)
 	}
-	g.children[id] = chl
+	g.children2 = append(g.children2, chl)
 	g.system.solvers = append(g.system.solvers, s)
 	g.system.views = append(g.system.views, v)
 
@@ -336,7 +333,7 @@ func (c constraint) String() string {
 // Solver is a list of constraints to be applied to a view.
 type Solver struct {
 	debug       bool
-	id          matcha.Id
+	index       int
 	constraints []constraint
 }
 
@@ -392,7 +389,7 @@ func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
 
 	// Get parent guide.
 	var parent layout.Guide
-	if s.id == rootId {
+	if s.index == rootId {
 		parent = *sys.min.matchaGuide
 	} else {
 		parent = *sys.Guide.matchaGuide
@@ -401,7 +398,7 @@ func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
 	// Solve for width & height.
 	var width, height float64
 	var g layout.Guide
-	if s.id == rootId {
+	if s.index == rootId {
 		g = layout.Guide{}
 		width, _ = cr.solveWidth(parent.Width())
 		height, _ = cr.solveHeight(parent.Height())
@@ -410,7 +407,7 @@ func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
 		_, cr = cr.solveWidth(0)
 		_, cr = cr.solveHeight(0)
 
-		g = ctx.LayoutChild(s.id, layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max))
+		g = ctx.LayoutChild(s.index, layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max))
 		width = g.Width()
 		height = g.Height()
 
@@ -431,7 +428,7 @@ func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
 		panic("constraint: system inconsistency")
 	}
 	var centerX, centerY float64
-	if s.id == rootId {
+	if s.index == rootId {
 		centerX = width / 2
 		centerY = height / 2
 	} else {
@@ -445,10 +442,10 @@ func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
 
 	// Update the guide and the system.
 	g.Frame = layout.Rt(centerX-width/2, centerY-height/2, centerX+width/2, centerY+height/2)
-	if s.id == rootId {
+	if s.index == rootId {
 		sys.Guide.matchaGuide = &g
 	} else {
-		sys.Guide.children[s.id].matchaGuide = &g
+		sys.Guide.children2[s.index].matchaGuide = &g
 	}
 	if s.debug {
 		fmt.Println("constraint: Debug 2", g)
@@ -589,15 +586,15 @@ func (s *Solver) CenterYGreater(a *Anchor) {
 }
 
 func (s *Solver) String() string {
-	return fmt.Sprintf("Solver{%v, %v}", s.id, s.constraints)
+	return fmt.Sprintf("Solver{%v, %v}", s.index, s.constraints)
 }
 
 type systemId int
 
 const (
-	rootId matcha.Id = -1 * iota
-	minId
-	maxId
+	rootId int = -1
+	minId  int = -2
+	maxId  int = -3
 )
 
 type Layouter struct {
@@ -615,9 +612,9 @@ type Layouter struct {
 
 func (l *Layouter) initialize() {
 	if l.groupNotifiers == nil {
-		l.Guide = Guide{id: rootId, system: l, children: map[matcha.Id]*Guide{}}
-		l.min = Guide{id: minId, system: l, children: map[matcha.Id]*Guide{}}
-		l.max = Guide{id: maxId, system: l, children: map[matcha.Id]*Guide{}}
+		l.Guide = Guide{index: rootId, system: l}
+		l.min = Guide{index: minId, system: l}
+		l.max = Guide{index: maxId, system: l}
 		l.groupNotifiers = map[comm.Id]notifier{}
 	}
 }
@@ -640,7 +637,7 @@ func (l *Layouter) MaxGuide() *Guide {
 }
 
 // Layout evaluates the constraints and returns the calculated guide and child guides.
-func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layout.Guide) {
+func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	l.initialize()
 	l.min.matchaGuide = &layout.Guide{
 		Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),
@@ -658,9 +655,9 @@ func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, map[matcha.Id]layo
 	}
 
 	g := *l.Guide.matchaGuide
-	gs := map[matcha.Id]layout.Guide{}
-	for k, v := range l.Guide.children {
-		gs[k] = *v.matchaGuide
+	gs := []layout.Guide{}
+	for _, i := range l.Guide.children2 {
+		gs = append(gs, *i.matchaGuide)
 	}
 	return g, gs
 }

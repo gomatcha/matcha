@@ -74,9 +74,9 @@ func (r *Root) start() {
 			fmt.Println("err", err)
 			return
 		}
-		bridge.Bridge().Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
 
 		// fmt.Println(r.root.node.debugString())
+		bridge.Bridge().Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
 	})
 }
 
@@ -105,7 +105,7 @@ func (r *Root) Id() int64 {
 	return r.id
 }
 
-func (r *Root) ViewId() matcha.Id {
+func (r *Root) ViewId() Id {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -129,154 +129,31 @@ func (r *Root) SetSize(p layout.Point) {
 	r.root.addFlag(r.root.node.id, layoutFlag)
 }
 
-type viewCacheKey struct {
-	id  matcha.Id
-	key string
-}
-
 // Context specifies the supporting context for building a View.
 type Context struct {
-	prefix string
-	parent *Context
-
 	valid     bool
 	node      *node
-	prevIds   map[viewCacheKey]matcha.Id
-	prevNodes map[matcha.Id]*node
-	skipBuild map[matcha.Id]struct{}
+	skipBuild map[int]struct{}
 }
 
-// Prev returns the view returned by the last call to Build with the given key.
-func (ctx *Context) Prev(key string) View {
-	return ctx.prev(key, "")
+func newId() Id {
+	return Id(atomic.AddInt64(&maxId, 1))
 }
 
-func (ctx *Context) prev(key string, prefix string) View {
-	if ctx == nil {
-		return nil
+// SkipBuild marks the child ids as not needing to be rebuilt.
+func (ctx *Context) SkipBuild(ids ...int) {
+	if ctx.skipBuild == nil {
+		ctx.skipBuild = map[int]struct{}{}
 	}
-	if ctx.parent != nil {
-		return ctx.parent.prev(key, ctx.prefix+"|"+prefix)
+	for _, i := range ids {
+		ctx.skipBuild[i] = struct{}{}
 	}
-	if !ctx.valid {
-		panic("view.Context.Prev() called on invalid context")
-	}
-	if ctx.node == nil {
-		return nil
-	}
-	if prefix != "" {
-		key = prefix + "|" + key
-	}
-
-	cacheKey := viewCacheKey{key: key, id: ctx.node.id}
-	prevId := ctx.prevIds[cacheKey]
-	prevNode := ctx.prevNodes[prevId]
-	if prevNode == nil {
-		return nil
-	}
-
-	v := prevNode.view
-	for {
-		if pv, ok := v.(*painterView); ok {
-			v = pv.View
-			continue
-		} else if vv, ok := v.(*optionsView); ok {
-			v = vv.View
-			continue
-		}
-		break
-	}
-
-	return v
 }
-
-// // PrevModel returns the last result of View.Build().
-// func (ctx *Context) PrevModel() *Model {
-// 	if ctx.parent != nil {
-// 		return ctx.PrevModel()
-// 	}
-// 	if !ctx.valid {
-// 		panic("view.Context.PrevModel() called on invalid context")
-// 	}
-// 	if ctx.node == nil {
-// 		return nil
-// 	}
-// 	return ctx.node.model
-// }
-
-// NewEmbed generates a new Embed for a given key. NewEmbed is a convenience around NewEmbed(ctx.NewId(key)).
-func (ctx *Context) NewEmbed(key string) Embed {
-	return NewEmbed(ctx.NewId(key))
-}
-
-// NewId generates a new identifier for a given key.
-func (ctx *Context) NewId(key string) matcha.Id {
-	if ctx == nil {
-		return matcha.Id(atomic.AddInt64(&maxId, 1))
-	}
-	return ctx.newId(key, "")
-}
-
-func (ctx *Context) newId(key string, prefix string) matcha.Id {
-	if ctx.parent != nil {
-		return ctx.parent.newId(key, ctx.prefix+"|"+prefix)
-	}
-	if !ctx.valid {
-		panic("view.Context.Prev() called on invalid context")
-	}
-	if prefix != "" {
-		key = prefix + "|" + key
-	}
-
-	id := matcha.Id(atomic.AddInt64(&maxId, 1))
-	if ctx.node != nil {
-		cacheKey := viewCacheKey{key: key, id: ctx.node.id}
-		if _, ok := ctx.node.root.ids[cacheKey]; ok {
-			fmt.Println("Context.NewId(): key has already been used", key)
-		}
-		ctx.node.root.ids[cacheKey] = id
-	}
-	return id
-}
-
-// // SkipBuild marks the child ids as not needing to be rebuilt.
-// func (ctx *Context) SkipBuild(ids []matcha.Id) {
-// 	if ctx.parent != nil {
-// 		ctx.parent.SkipBuild(ids)
-// 		return
-// 	}
-
-// 	if ctx.skipBuild == nil {
-// 		ctx.skipBuild = map[matcha.Id]struct{}{}
-// 	}
-// 	for _, i := range ids {
-// 		ctx.skipBuild[i] = struct{}{}
-// 	}
-// }
-
-// WithPrefix returns a new Context. Calls to this Prev and NewId on this context will be prepended with key.
-func (ctx *Context) WithPrefix(key string) *Context {
-	return &Context{prefix: key, parent: ctx}
-}
-
-// // Id returns the identifier associated with the build context.
-// func (ctx *Context) Id() matcha.Id {
-// 	if ctx.parent != nil {
-// 		return ctx.parent.Id()
-// 	}
-// 	if ctx.node == nil {
-// 		return 0
-// 	}
-// 	return ctx.node.id
-// }
 
 // Path returns the path of Ids from the root to the view.
-func (ctx *Context) Path() []matcha.Id {
-	if ctx.parent != nil {
-		return ctx.parent.Path()
-	}
+func (ctx *Context) Path() []Id {
 	if ctx.node == nil {
-		return []matcha.Id{0}
+		return []Id{0}
 	}
 	return ctx.node.path
 }
@@ -303,31 +180,30 @@ func (f updateFlag) needsPaint() bool {
 
 type root struct {
 	node        *node
-	ids         map[viewCacheKey]matcha.Id
-	nodes       map[matcha.Id]*node
+	nodes       map[Id]*node
 	middlewares []middleware
 
 	flagMu      sync.Mutex
-	updateFlags map[matcha.Id]updateFlag
+	updateFlags map[Id]updateFlag
 }
 
 func newRoot(v View) *root {
-	id := v.Id()
+	id := newId()
 	root := &root{}
 	root.node = &node{
 		id:   id,
-		path: []matcha.Id{id},
+		path: []Id{id},
 		view: v,
 		root: root,
 	}
-	root.updateFlags = map[matcha.Id]updateFlag{v.Id(): buildFlag}
+	root.updateFlags = map[Id]updateFlag{id: buildFlag}
 	for _, i := range internal.Middlewares() {
 		root.middlewares = append(root.middlewares, i().(middleware))
 	}
 	return root
 }
 
-func (root *root) addFlag(id matcha.Id, f updateFlag) {
+func (root *root) addFlag(id Id, f updateFlag) {
 	root.flagMu.Lock()
 	defer root.flagMu.Unlock()
 
@@ -356,7 +232,7 @@ func (root *root) update(size layout.Point) bool {
 		root.paint()
 		updated = true
 	}
-	root.updateFlags = map[matcha.Id]updateFlag{}
+	root.updateFlags = map[Id]updateFlag{}
 	return updated
 }
 
@@ -388,33 +264,12 @@ func (root *root) MarshalProtobuf() *pb.Root {
 }
 
 func (root *root) build() {
-	prevIds := root.ids
-	prevNodes := root.nodes
-
-	root.ids = map[viewCacheKey]matcha.Id{}
-	root.nodes = map[matcha.Id]*node{
+	root.nodes = map[Id]*node{
 		root.node.id: root.node,
 	}
 
 	// Rebuild
-	root.node.build(prevIds, prevNodes)
-
-	keys := map[matcha.Id]viewCacheKey{}
-	for k, v := range root.ids {
-		keys[v] = k
-	}
-	for k, v := range prevIds {
-		keys[v] = k
-	}
-
-	ids := map[viewCacheKey]matcha.Id{}
-	for k := range root.nodes {
-		key, ok := keys[k]
-		if ok {
-			ids[key] = k
-		}
-	}
-	root.ids = ids
+	root.node.build()
 }
 
 func (root *root) layout(minSize layout.Point, maxSize layout.Point) {
@@ -428,13 +283,15 @@ func (root *root) paint() {
 }
 
 func (root *root) call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
-	node, ok := root.nodes[matcha.Id(viewId)]
+	node, ok := root.nodes[Id(viewId)]
 	if !ok || node.model == nil {
+		fmt.Println("root.call(): no node found", ok, node.model)
 		return nil
 	}
 
 	f, ok := node.model.NativeFuncs[funcId]
 	if !ok {
+		fmt.Println("root.call(): no func found", funcId, node.model.NativeFuncs)
 		return nil
 	}
 	v := reflect.ValueOf(f)
@@ -443,8 +300,8 @@ func (root *root) call(funcId string, viewId int64, args []reflect.Value) []refl
 }
 
 type node struct {
-	id    matcha.Id
-	path  []matcha.Id
+	id    Id
+	path  []Id
 	root  *root
 	view  View
 	stage Stage
@@ -454,7 +311,7 @@ type node struct {
 	buildNotify   bool
 	buildNotifyId comm.Id
 	model         *Model
-	children      map[matcha.Id]*node
+	children      []*node
 
 	layoutId       int64
 	layoutNotify   bool
@@ -560,7 +417,7 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 	}
 }
 
-func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id]*node) {
+func (n *node) build() {
 	if n.root.updateFlags[n.id].needsBuild() {
 		n.buildId += 1
 
@@ -571,13 +428,9 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 		}
 
 		// Generate the new viewModel.
-		ctx := &Context{valid: true, node: n, prevIds: prevIds, prevNodes: prevNodes}
+		ctx := &Context{valid: true, node: n}
 		temp := n.view.Build(ctx)
 		viewModel := &temp
-		viewModelChildren := map[matcha.Id]View{}
-		for _, i := range viewModel.Children {
-			viewModelChildren[i.Id()] = i
-		}
 
 		// Call middleware
 		for _, i := range n.root.middlewares {
@@ -585,56 +438,86 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 		}
 		ctx.valid = false
 
-		// Diff the old children (n.children) with new children (viewModelChildren).
-		addedIds := []matcha.Id{}
-		removedIds := []matcha.Id{}
-		unchangedIds := []matcha.Id{}
-		for id := range n.children {
-			if _, ok := viewModelChildren[id]; !ok {
-				removedIds = append(removedIds, id)
-			} else {
-				unchangedIds = append(unchangedIds, id)
-			}
-		}
-		for id := range viewModelChildren {
-			if _, ok := n.children[id]; !ok {
-				addedIds = append(addedIds, id)
-			}
-		}
+		//
+		prevChildren := make([]*node, len(n.children))
+		copy(prevChildren, n.children)
+		// fmt.Println("keys", n.root.keys, n.root.ids)
 
-		children := map[matcha.Id]*node{}
-		// Add build contexts for new children.
-		for _, id := range addedIds {
-			var view View
-			for _, i := range viewModelChildren {
-				if i.Id() == id {
-					view = i
+		children := []*node{}
+		for idx, i := range viewModel.Children {
+			// Find the corresponding previous node.
+			var prevNode *node
+
+			iKey := i.ViewKey()
+			iType := reflect.TypeOf(i).Elem()
+			iName := iType.Name() + iType.PkgPath()
+			for jIdx, j := range prevChildren {
+				jType := reflect.TypeOf(j.view).Elem()
+				jName := jType.Name() + jType.PkgPath()
+				if jKey := j.view.ViewKey(); iKey == jKey && iName == jName {
+					// fmt.Println("found")
+					prevNode = j
+
+					// delete from prevchildren
+					copy(prevChildren[jIdx:], prevChildren[jIdx+1:])
+					prevChildren[len(prevChildren)-1] = nil
+					prevChildren = prevChildren[:len(prevChildren)-1]
 					break
 				}
 			}
 
-			path := make([]matcha.Id, len(n.path)+1)
-			copy(path, n.path)
-			path[len(n.path)] = id
+			if prevNode != nil {
+				// If view was modified...
+				prevView := prevNode.view
+				newView := i
 
-			children[id] = &node{
-				id:   id,
-				path: path,
-				view: view,
-				root: n.root,
+				if prevView != newView {
+					// iType := reflect.TypeOf(i).Elem()
+					// iName := iType.PkgPath() + "." + iType.Name()
+
+					// Copy all public fields from new to old that aren't Embed
+					va := reflect.ValueOf(prevView).Elem()
+					vb := reflect.ValueOf(newView).Elem()
+					for i := 0; i < va.NumField(); i++ {
+						fa := va.Field(i)
+						if fa.CanSet() && va.Type().Field(i).Name != "Embed" {
+							fa.Set(vb.Field(i))
+							// fmt.Println("set", va.Type().Field(i).Name)
+						}
+					}
+				}
+
+				// Add in the previous node.
+				children = append(children, prevNode)
+
+				// Mark as needing rebuild
+				if _, ok := ctx.skipBuild[idx]; !ok {
+					n.root.updateFlags[prevNode.id] |= buildFlag
+				}
+			} else {
+				// If view was added for the first time...
+				newView := i
+				id := newId()
+
+				// Add in a new node.
+				path := make([]Id, len(n.path)+1)
+				copy(path, n.path)
+				path[len(n.path)] = id
+				children = append(children, &node{
+					id:   id,
+					path: path,
+					view: newView,
+					root: n.root,
+				})
+
+				// Mark as needing rebuild
+				n.root.updateFlags[id] |= buildFlag
 			}
+		}
 
-			// Mark as needing rebuild
-			n.root.updateFlags[id] |= buildFlag
-		}
-		// Mark unupdated keys as needing rebuild.
-		for _, id := range unchangedIds {
-			children[id] = n.children[id]
-			n.root.updateFlags[id] |= buildFlag
-		}
 		// Send lifecycle event to removed childern.
-		for _, id := range removedIds {
-			n.children[id].done()
+		for _, i := range prevChildren {
+			i.done()
 		}
 
 		// Watch for build changes, if we haven't
@@ -670,12 +553,13 @@ func (n *node) build(prevIds map[viewCacheKey]matcha.Id, prevNodes map[matcha.Id
 		}
 
 		n.children = children
+
 		n.model = viewModel
 	}
 
 	// Recursively update children.
 	for _, i := range n.children {
-		i.build(prevIds, prevNodes)
+		i.build()
 
 		// Also add to the root
 		n.root.nodes[i.id] = i
@@ -694,20 +578,17 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 
 	// Create the LayoutContext
 	ctx := &layout.Context{
-		MinSize:  minSize,
-		MaxSize:  maxSize,
-		ChildIds: []matcha.Id{},
-		LayoutFunc: func(id matcha.Id, minSize, maxSize layout.Point) layout.Guide {
-			child, ok := n.children[id]
-			if !ok {
-				fmt.Println("Attempting to layout unknown child: ", id)
+		MinSize:    minSize,
+		MaxSize:    maxSize,
+		ChildCount: len(n.children),
+		LayoutFunc: func(idx int, minSize, maxSize layout.Point) layout.Guide {
+			if idx >= len(n.children) {
+				fmt.Println("Attempting to layout unknown child: ", idx)
 				return layout.Guide{}
 			}
+			child := n.children[idx]
 			return child.layout(minSize, maxSize)
 		},
-	}
-	for i := range n.children {
-		ctx.ChildIds = append(ctx.ChildIds, i)
 	}
 
 	// Perform layout
@@ -718,15 +599,10 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 	g, gs := layouter.Layout(ctx)
 	g = g.Fit(ctx)
 
-	// Assign guides to children
-	for k, v := range gs {
-		guide := v
-		child, ok := n.children[k]
-		if !ok {
-			fmt.Println("Attempting to assign layout guide to unknown child: ", k)
-			continue
-		}
-		child.layoutGuide = &guide
+	//
+	for idx, i := range n.children {
+		g2 := gs[idx]
+		i.layoutGuide = &g2
 	}
 	return g
 }

@@ -2,7 +2,6 @@ package app
 
 import (
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
 	"gomatcha.io/matcha/pb/app"
@@ -138,7 +137,7 @@ func (m *activityIndicatorMiddleware) Key() string {
 	return "gomatcha.io/matcha/app activity"
 }
 
-func idSliceToIntSlice(ids []matcha.Id) []int64 {
+func idSliceToIntSlice(ids []view.Id) []int64 {
 	ints := make([]int64, len(ids))
 	for idx, i := range ids {
 		ints[idx] = int64(i)

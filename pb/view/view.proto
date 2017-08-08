@@ -13,6 +13,7 @@ message BuildNode {
   google.protobuf.Any bridgeValue = 4;
   map<string, google.protobuf.Any> values = 5;
   repeated int64 children = 6;
+  map<int64, int64> altIds = 7;
 }
 
 message LayoutPaintNode {
