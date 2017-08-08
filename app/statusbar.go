@@ -37,7 +37,7 @@ type StatusBar struct {
 	Style  StatusBarStyle
 }
 
-func (s StatusBar) OptionsKey() string {
+func (s StatusBar) OptionKey() string {
 	return "gomatcha.io/matcha/app statusbar"
 }
 
@@ -99,7 +99,7 @@ type ActivityIndicator struct {
 	// ActivityIndicator has no fields.
 }
 
-func (a ActivityIndicator) OptionsKey() string {
+func (a ActivityIndicator) OptionKey() string {
 	return "gomatcha.io/matcha/app activity"
 }
 

@@ -51,11 +51,11 @@ and Signal() methods to simplify signaling for updates. We see an example of thi
 		view.Embed
 		notifier comm.Notifier
 	}
-	func New(ctx *view.Context, key string, n comm.Notifier) *ExampleView {
-		if v, ok := ctx.Prev(key).(*ExampleView); ok {
-			return v
+	func New(n comm.Notifier) *ExampleView {
+		return &ExampleView{
+			Embed: view.NewEmbed(n),
+			notifier: n,
 		}
-		return &ExampleView{Embed: view.Embed{Key:key}, notifier: n}
 	}
 	func (v *ExampleView) Lifecycle(from, to view.Stage) {
 		if view.EntersStage(from, to, view.StageMounted) {
@@ -77,6 +77,7 @@ and Signal() methods to simplify signaling for updates. We see an example of thi
 			Children: []view.View{child},
 		}
 	}
+
 */
 package view
 
@@ -99,7 +100,7 @@ type View interface {
 }
 
 type Option interface {
-	OptionsKey() string
+	OptionKey() string
 }
 
 // Embed is a convenience struct that provides a default implementation of View. It also wraps a comm.Relay.

@@ -153,7 +153,7 @@ func (r *middleware) Key() string {
 
 type RecognizerList []Recognizer
 
-func (r RecognizerList) OptionsKey() string {
+func (r RecognizerList) OptionKey() string {
 	return "gomatcha.io/matcha/touch"
 }
 

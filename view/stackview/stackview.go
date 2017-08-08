@@ -1,31 +1,35 @@
-// Package stackview implements a UINavigationController component.
-//
-// Building a simple StackView:
-//  type AppView struct {
-//  	view.Embed
-//  	stack *stackview.Stack
-//  }
-//  func NewAppView(ctx *view.Context, key string) *AppView {
-//  	child := basicview.New()
-//  	child.Painter = &paint.Style{BackgroundColor: colornames.Red}
-//  	appview := &AppView{
-//  		Embed: view.Embed{Key:key},
-//  		stack: &stackview.Stack{},
-//  	}
-//  	appview.stack.SetViews(child)
-//  	return appview
-//  }
-//  func (v *AppView) Build(ctx *view.Context) view.Model {
-//  	child := stackview.New()
-//  	child.Stack = v.stack
-//  	return view.Model{
-//  		Children: []view.View{child},
-//  	}
-//  }
-// Modifying the stack:
-//  child := basicview.New()
-//  child.Painter = &paint.Style{BackgroundColor: colornames.Green}
-//  v.Stack.Push(child)
+/* Package stackview implements a UINavigationController component.
+
+Building a simple StackView:
+
+	type AppView struct {
+		view.Embed
+		stack *stackview.Stack
+	}
+	func NewAppView() *AppView {
+		child := basicview.New()
+		child.Painter = &paint.Style{BackgroundColor: colornames.Red}
+		appview := &AppView{
+			stack: &stackview.Stack{},
+		}
+		appview.stack.SetViews(child)
+		return appview
+	}
+	func (v *AppView) Build(ctx *view.Context) view.Model {
+		child := stackview.New()
+		child.Stack = v.stack
+		return view.Model{
+			Children: []view.View{child},
+		}
+	}
+
+Modifying the stack:
+
+	child := basicview.New()
+	child.Painter = &paint.Style{BackgroundColor: colornames.Green}
+	v.Stack.Push(child)
+
+*/
 package stackview
 
 import (
