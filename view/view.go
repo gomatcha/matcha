@@ -16,28 +16,10 @@ properties can be changed independently (label.title = @"Foo"), when a
 Matcha view updates, Build() is called again and all its properties and children are
 completely recreated.
 
-However, there may be some state in the view's children that the parent cannot recreate.
-This could be the position of a cursor in a textfield or the scroll offset of a table.
-Where other frameworks do diffing and reconciliation, this is harder in Go and so we choose to reuse
-views immediately. When a view's initializer is called, a context and a string key are
-passed in as seen below.
+	ViewKey() interface{}
 
-	func New(ctx *view.Context, key string) *ExampleView {
-		if v, ok := ctx.Prev(key).(*ExampleView); ok {
-			return v
-		}
-		return &ExampleView{id: ctx.NewId(key)}
-	}
-
-The initializer will search the view's previous Build() result for a child with the same
-key (ctx.Prev(key)...), check that it is of the correct type, and return it if it exists.
-Internal state is thereby carried across rerenders. If there was no previous view,
-a new one is created.
-
-	Id() Id
-
-Id returns the view's unique identifier. This should be created in the view's initializer and not change
-over the lifetime of the view. New identifiers can be created by calling Context.NewId() or Context.NewEmbed().
+ViewKey returns a view's stable identifier. This should not change over the lifetime
+of the view. This allows Matcha to to track which items have been added or removed.
 
 	Lifecycle(from, to Stage)
 

@@ -131,28 +131,24 @@ func (r *Root) SetSize(p layout.Point) {
 
 // Context specifies the supporting context for building a View.
 type Context struct {
-	valid bool
-	node  *node
+	valid     bool
+	node      *node
+	skipBuild map[int]struct{}
 }
 
 func newId() Id {
 	return Id(atomic.AddInt64(&maxId, 1))
 }
 
-// // SkipBuild marks the child ids as not needing to be rebuilt.
-// func (ctx *Context) SkipBuild(ids []Id) {
-// 	if ctx.parent != nil {
-// 		ctx.parent.SkipBuild(ids)
-// 		return
-// 	}
-
-// 	if ctx.skipBuild == nil {
-// 		ctx.skipBuild = map[Id]struct{}{}
-// 	}
-// 	for _, i := range ids {
-// 		ctx.skipBuild[i] = struct{}{}
-// 	}
-// }
+// SkipBuild marks the child ids as not needing to be rebuilt.
+func (ctx *Context) SkipBuild(ids ...int) {
+	if ctx.skipBuild == nil {
+		ctx.skipBuild = map[int]struct{}{}
+	}
+	for _, i := range ids {
+		ctx.skipBuild[i] = struct{}{}
+	}
+}
 
 // Path returns the path of Ids from the root to the view.
 func (ctx *Context) Path() []Id {
@@ -448,7 +444,7 @@ func (n *node) build() {
 		// fmt.Println("keys", n.root.keys, n.root.ids)
 
 		children := []*node{}
-		for _, i := range viewModel.Children {
+		for idx, i := range viewModel.Children {
 			// Find the corresponding previous node.
 			var prevNode *node
 
@@ -469,20 +465,6 @@ func (n *node) build() {
 					break
 				}
 			}
-			// } else {
-			// 	for jIdx, j := range prevChildren {
-			// 		if j.id == i.Id() {
-			// 			// fmt.Println("found id")
-			// 			prevNode = j
-
-			// 			// delete from prevchildren
-			// 			copy(prevChildren[jIdx:], prevChildren[jIdx+1:])
-			// 			prevChildren[len(prevChildren)-1] = nil
-			// 			prevChildren = prevChildren[:len(prevChildren)-1]
-			// 			break
-			// 		}
-			// 	}
-			// }
 
 			if prevNode != nil {
 				// If view was modified...
@@ -509,7 +491,9 @@ func (n *node) build() {
 				children = append(children, prevNode)
 
 				// Mark as needing rebuild
-				n.root.updateFlags[prevNode.id] |= buildFlag
+				if _, ok := ctx.skipBuild[idx]; !ok {
+					n.root.updateFlags[prevNode.id] |= buildFlag
+				}
 			} else {
 				// If view was added for the first time...
 				newView := i
@@ -535,81 +519,6 @@ func (n *node) build() {
 		for _, i := range prevChildren {
 			i.done()
 		}
-
-		// viewModelChildren := map[Id]View{}
-		// for _, i := range viewModel.Children {
-		// 	// viewModelChildren[i.Id()] = i
-		// }
-
-		// // Diff the old children (n.children) with new children (viewModelChildren).
-		// addedIds := []Id{}
-		// removedIds := []Id{}
-		// unchangedIds := []Id{}
-		// for id := range n.children {
-		// 	if _, ok := viewModelChildren[id]; !ok {
-		// 		removedIds = append(removedIds, id)
-		// 	} else {
-		// 		unchangedIds = append(unchangedIds, id)
-		// 	}
-		// }
-		// for id := range viewModelChildren {
-		// 	if _, ok := n.children[id]; !ok {
-		// 		addedIds = append(addedIds, id)
-		// 	}
-		// }
-
-		// children := map[Id]*node{}
-		// // Add build contexts for new children.
-		// for _, id := range addedIds {
-		// 	var view View
-		// 	for _, i := range viewModelChildren {
-		// 		if i.Id() == id {
-		// 			view = i
-		// 			break
-		// 		}
-		// 	}
-
-		// 	path := make([]Id, len(n.path)+1)
-		// 	copy(path, n.path)
-		// 	path[len(n.path)] = id
-
-		// 	children[id] = &node{
-		// 		id:   id,
-		// 		path: path,
-		// 		view: view,
-		// 		root: n.root,
-		// 	}
-
-		// 	// Mark as needing rebuild
-		// 	n.root.updateFlags[id] |= buildFlag
-		// }
-		// // Mark unupdated keys as needing rebuild.
-		// for _, id := range unchangedIds {
-		// 	childNode := n.children[id]
-		// 	prevView := childNode.view
-		// 	newView := viewModelChildren[id]
-
-		// 	// if prevView != newView {
-		// 	// 	va := reflect.ValueOf(prevView).Elem().Elem()
-		// 	// 	vb := reflect.ValueOf(newView).Elem().Elem()
-
-		// 	// 	// Copy all public fields from new to old that aren't Embed
-		// 	// 	for i := 0; i < va.NumField(); i++ {
-		// 	// 		fa := va.Field(i)
-		// 	// 		if fa.CanSet() && va.Type().Field(i).Name != "Embed" {
-		// 	// 			fa.Set(vb.Field(i))
-		// 	// 			// fmt.Println("clear", va.Type().Field(i).Name)
-		// 	// 		}
-		// 	// 	}
-		// 	// }
-
-		// 	children[id] = childNode
-		// 	n.root.updateFlags[id] |= buildFlag
-		// }
-		// // Send lifecycle event to removed childern.
-		// for _, id := range removedIds {
-		// 	n.children[id].done()
-		// }
 
 		// Watch for build changes, if we haven't
 		if !n.buildNotify {

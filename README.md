@@ -62,7 +62,9 @@ Thats all the setup thats needed, now to start writing code! Create a new go fil
 package tutorial
 
 import (
+    "image/color"
     "golang.org/x/image/colornames"
+    "gomatcha.io/bridge"
     "gomatcha.io/matcha/layout/constraint"
     "gomatcha.io/matcha/paint"
     "gomatcha.io/matcha/text"
@@ -75,13 +77,12 @@ type TutorialView struct {
     // All components must implement the view.View interface. A basic implementation
     // is provided by view.Embed.
     view.Embed
+    TextColor color.Color
 }
 
 // This is our view's initializer.
-func New() *TutorialView {
-    return &TutorialView{
-        Embed: view.Embed{Key:key},
-    }
+func NewTutorialView() *TutorialView {
+    return &TutorialView{}
 }
 
 // Similar to React's render function. Views specify their properties and
@@ -93,7 +94,7 @@ func (v *TutorialView) Build(ctx *view.Context) view.Model {
     // the previous one.
     child := textview.New()
     child.String = "Hello World"
-    child.Style.SetTextColor(colornames.Red)
+    child.Style.SetTextColor(v.TextColor)
     child.Style.SetFont(text.Font{
         Family: "Helvetica Neue",
         Face:   "Bold",
@@ -120,14 +121,14 @@ func (v *TutorialView) Build(ctx *view.Context) view.Model {
 Now that we have our view in Go, we need to be call it from Objective C. We can do this with the `gomatcha.io/bridge` package. 
 
 ```go
-import "gomatcha.io/bridge"
-
 func init() {
     // Registers a function with the objc bridge. This function returns
     // a view.Root, which can be displayed in a MatchaViewController.
     bridge.RegisterFunc("github.com/overcyn/tutorial New", func() *view.Root {
         // Call the TutorialView initializer.
-        return view.NewRoot(New(nil, ""))
+        v := NewTutorialView()
+        v.TextColor = colornames.Red
+        return view.NewRoot(v)
     })
 }
 ```
