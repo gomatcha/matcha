@@ -2,16 +2,14 @@
 package textview
 
 import (
-	"fmt"
-
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/keyboard"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
+	"gomatcha.io/matcha/view/button"
 	"gomatcha.io/matcha/view/textinput"
 	"gomatcha.io/matcha/view/textview"
 )
@@ -38,7 +36,6 @@ func New() *TextView {
 func (v *TextView) Lifecycle(from, to view.Stage) {
 	if view.EntersStage(from, to, view.StageVisible) {
 		v.responder.Show()
-		fmt.Println("show", v.responder.Visible())
 	}
 }
 
@@ -63,6 +60,26 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 		s.TopEqual(constraint.Const(100))
 		s.LeftEqual(constraint.Const(100))
 	})
+	reverse := textview.New()
+	reverse.String = Reverse(v.text.String())
+	l.Add(reverse, func(s *constraint.Solver) {
+		s.TopEqual(chlG.Bottom())
+		s.LeftEqual(chlG.Left())
+	})
+
+	button1 := button.New()
+	button1.Text = "Toggle Keyboard"
+	button1.OnPress = func() {
+		if !v.responder.Visible() {
+			v.responder.Show()
+		} else {
+			v.responder.Dismiss()
+		}
+	}
+	l.Add(button1, func(s *constraint.Solver) {
+		s.Top(300)
+		s.Left(100)
+	})
 
 	input := textinput.New()
 	input.Text = v.text
@@ -73,35 +90,18 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 	input.OnTextChange = func(t *text.Text) {
 		v.Signal()
 	}
-	inputP := view.WithPainter(input, &paint.Style{BackgroundColor: colornames.Yellow})
-	l.Add(inputP, func(s *constraint.Solver) {
-		s.TopEqual(constraint.Const(200))
-		s.LeftEqual(constraint.Const(100))
-		s.WidthEqual(constraint.Const(200))
-		s.HeightEqual(constraint.Const(100))
+	input.PaintStyle = &paint.Style{BackgroundColor: colornames.Lightgray}
+	l.Add(input, func(s *constraint.Solver) {
+		s.Top(200)
+		s.Left(100)
+		s.Width(200)
+		s.Height(100)
 	})
-
-	reverse := textview.New()
-	reverse.String = Reverse(v.text.String())
-	l.Add(reverse, func(s *constraint.Solver) {
-		s.TopEqual(chlG.Bottom())
-		s.LeftEqual(chlG.Left())
-	})
-
-	tap := &touch.TapRecognizer{
-		Count: 2,
-		OnTouch: func(e *touch.TapEvent) {
-			v.responder.Dismiss()
-		},
-	}
 
 	return view.Model{
 		Children: l.Views(),
+		Painter:  &paint.Style{BackgroundColor: colornames.White},
 		Layouter: l,
-		Painter:  &paint.Style{BackgroundColor: colornames.Green},
-		Options: []view.Option{
-			touch.RecognizerList{tap},
-		},
 	}
 }
 

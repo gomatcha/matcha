@@ -170,12 +170,12 @@ const (
 	StageVisible
 )
 
-// EntersStage returns true if from<s and to>=s.
+// EntersStage returns true if from﹤s and to≥s.
 func EntersStage(from, to, s Stage) bool {
 	return from < s && to >= s
 }
 
-// ExitsStage returns true if from>=s and to<s.
+// ExitsStage returns true if from≥s and to﹤s.
 func ExitsStage(from, to, s Stage) bool {
 	return from >= s && to < s
 }
