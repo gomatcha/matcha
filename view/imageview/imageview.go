@@ -93,20 +93,20 @@ type layouter struct {
 }
 
 func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
-	g := layout.Guide{Frame: layout.Rect{Max: ctx.MaxSize}}
+	g := layout.Guide{Frame: layout.Rect{Max: ctx.MinSize}}
 	switch l.resizeMode {
 	case ResizeModeFit:
 		imgRatio := float64(l.bounds.Dx()) / l.scale / float64(l.bounds.Dy()) / l.scale
-		maxRatio := ctx.MaxSize.X / ctx.MaxSize.Y
+		maxRatio := ctx.MinSize.X / ctx.MinSize.Y
 		if imgRatio > maxRatio {
-			g.Frame.Max = layout.Pt(ctx.MaxSize.X, ctx.MaxSize.X/imgRatio)
+			g.Frame.Max = layout.Pt(ctx.MinSize.X, ctx.MinSize.X/imgRatio)
 		} else {
-			g.Frame.Max = layout.Pt(ctx.MaxSize.Y/imgRatio, ctx.MaxSize.Y)
+			g.Frame.Max = layout.Pt(ctx.MinSize.Y/imgRatio, ctx.MinSize.Y)
 		}
 	case ResizeModeFill:
 		fallthrough
 	case ResizeModeStretch:
-		g.Frame.Max = ctx.MaxSize
+		g.Frame.Max = ctx.MinSize
 	case ResizeModeCenter:
 		g.Frame.Max = layout.Pt(float64(l.bounds.Dx())/l.scale, float64(l.bounds.Dy())/l.scale)
 	}

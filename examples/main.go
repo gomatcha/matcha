@@ -6,6 +6,7 @@ import (
 	_ "gomatcha.io/matcha/examples/complex"
 	_ "gomatcha.io/matcha/examples/constraints"
 	_ "gomatcha.io/matcha/examples/custom"
+	_ "gomatcha.io/matcha/examples/insta"
 	_ "gomatcha.io/matcha/examples/paint"
 	_ "gomatcha.io/matcha/examples/screen"
 	_ "gomatcha.io/matcha/examples/settings"
@@ -16,5 +17,4 @@ import (
 	_ "gomatcha.io/matcha/examples/todo"
 	_ "gomatcha.io/matcha/examples/touch"
 	_ "gomatcha.io/matcha/examples/view"
-	_ "gomatcha.io/matcha/view"
 )

@@ -1,50 +1,5 @@
-/*
-Package layout provides geometric primitives and interfaces for view layout.
-
-Layouter
-
-While view.View handles the rendering of a component, the actual positioning of the
-views is delegated to the Layouter interface. Each view can specify it's Layouter
-in the view.Model returned by Build(). If no layouter is given, all of
-its children will be positioned to size of its parent view.
-
-Understanding the details of this is not too important for most day to day development.
-For the most part you will be using predefined Layouters such as the one provided by
-the constraint package.
-
-Layout occurs in a separate pass after the view hierarchy has been built. Like view.Build(),
-each layouter is only responsible for returning its own frame and the frame of its direct descendents.
-To determine the correct sizing for a child, the layouter will call *Context.LayoutChild()
-passing a minSize and a maxSize. The child will return a desired size within the
-min and max, which the parent can then position. Here is an example Layout function
-that centers its children within itself.
-
-	func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
-		// Specify that the view wants to be the minSize given by its parent.
-		g := layout.Guide{
-			Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),
-		}
-
-		// Iterate over all child ids.
-		gs := []layout.Guide{}
-		for i := 0; i< ctx.ChildCount; i++ {
-
-			// Get the desired size of the children. In this case we let the children be any size.
-			child := ctx.LayoutChild(idx, layout.Pt(0, 0), layout.Pt(math.Inf(1), math.Inf(1)))
-
-			// Position the children to be centered in the view.
-			child.Frame = child.Frame.Add(layout.Pt(g.CenterX()-child.Width()/2, g.CenterY()-child.Height()/2))
-			child.ZIndex = i
-			gs = append(gs, child)
-		}
-
-		// Return the view's size, and the frames of its children.
-		return g, gs
-	}
-
-Layouters also implement the comm.Notifier interface. This allows layouts to update
-without rebuilding the view. It is light-weight and useful for animations.
-*/
+// Package layout provides geometric primitives and interfaces for view layout.
+// See https://gomatcha.io/guide/layout for more details.
 package layout
 
 import (

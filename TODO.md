@@ -1,18 +1,20 @@
+Documentation:
+* Bridging to Native
+
 High:
-* DOCS!!!!
-* Delay any ui events while viwecontroller is updating.
-* Button should fade when disabled.
+* Delay any ui events while viewcontroller is updating.
+* Rebuild Instagram.
+* Modal presentation.
 
 Medium:
-* Rebuild Instagram.
 * Multiple view controllers.
 * Picker
 * TextField
 * Optimize middleware so they aren't called on every view.
+* Rotation / orientation
 
 Low:
-* Rotation / orientation
-* Skip "ctx view.Context, key string, " paramater on views we know are top level?
+* Button should fade when disabled.
 * Improve function call performance.
 * Switching quickly between navigation item causes visual glitch. 2 quick backs.
 * How to respond to memory pressure?
@@ -43,11 +45,6 @@ Very Low:
 * Animations: Spring, Delay, Batch, Reverse, Decay, Repeat
 * Rework Slider.FloatNotifier to use comm.Float64Value and give it a better name InOutValue?
 * Flexbox
-
-Bugs:
-
-Documentation:
-
 
 Pro:
 * Webview

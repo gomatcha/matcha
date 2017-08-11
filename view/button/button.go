@@ -2,16 +2,20 @@
 package button
 
 import (
+	"image"
 	"image/color"
 
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
+	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb"
 	pbbutton "gomatcha.io/matcha/pb/view/button"
 	"gomatcha.io/matcha/text"
+	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
+	"gomatcha.io/matcha/view/imageview"
 )
 
 // View implements a native button view.
@@ -85,4 +89,55 @@ func (l *layouter) Notify(f func()) comm.Id {
 
 func (l *layouter) Unnotify(id comm.Id) {
 	// no-op
+}
+
+type ImageButton struct {
+	view.Embed
+	Image      image.Image
+	OnPress    func()
+	PaintStyle *paint.Style
+}
+
+func NewImageButton() *ImageButton {
+	return &ImageButton{}
+}
+
+func (v *ImageButton) Build(ctx *view.Context) view.Model {
+	l := &constraint.Layouter{}
+
+	iv := imageview.New()
+	iv.ResizeMode = imageview.ResizeModeCenter
+	iv.Image = v.Image
+	ivg := l.Add(iv, func(s *constraint.Solver) {
+		s.Left(0)
+		s.Top(0)
+		s.HeightLess(l.MaxGuide().Height())
+		s.WidthLess(l.MaxGuide().Width())
+	})
+
+	l.Solve(func(s *constraint.Solver) {
+		s.WidthEqual(ivg.Width())
+		s.HeightEqual(ivg.Height())
+	})
+
+	painter := paint.Painter(nil)
+	if v.PaintStyle != nil {
+		painter = v.PaintStyle
+	}
+
+	t := &touch.ButtonRecognizer{
+		OnTouch: func(e *touch.ButtonEvent) {
+			if v.OnPress != nil {
+				v.OnPress()
+			}
+		},
+	}
+	return view.Model{
+		Children: l.Views(),
+		Layouter: l,
+		Painter:  painter,
+		Options: []view.Option{
+			touch.RecognizerList{t},
+		},
+	}
 }
