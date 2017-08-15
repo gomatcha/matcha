@@ -33,18 +33,26 @@ type Post struct {
 	ImageURL     string
 	LikeCount    int
 	// CommentIds   []int64
-	Comments []Comment
+	Comments []*Comment
+
+	Liked      bool
+	Bookmarked bool
 }
 
 func GeneratePost() *Post {
+	comments := []*Comment{}
+	for i := 0; i < rand.Intn(20); i++ {
+		comments = append(comments, GenerateComment())
+	}
+
 	return &Post{
 		Id:           0,
-		UserName:     "User name",
-		UserImageURL: "https://unsplash.it/50/50/?random",
+		UserName:     golorem.Word(5, 15),
+		UserImageURL: "http://lorempixel.com/50/50/",
 		Location:     golorem.Word(5, 15),
-		ImageURL:     "https://unsplash.it/200/200/?random",
+		ImageURL:     "http://lorempixel.com/400/400/",
 		LikeCount:    rand.Intn(500),
-		Comments:     nil,
+		Comments:     comments,
 	}
 }
 
@@ -53,6 +61,15 @@ type Comment struct {
 	UserId   int64
 	UserName string
 	Text     string
+}
+
+func GenerateComment() *Comment {
+	return &Comment{
+		Id:       0,
+		UserId:   0,
+		UserName: golorem.Word(5, 15),
+		Text:     golorem.Paragraph(1, 5),
+	}
 }
 
 type User struct {

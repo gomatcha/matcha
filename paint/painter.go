@@ -34,6 +34,7 @@ type Style struct {
 	ShadowRadius    float64
 	ShadowOffset    layout.Point
 	ShadowColor     color.Color
+	// Shadows do not work with corner radius. https://stackoverflow.com/q/11437750
 }
 
 func (s *Style) MarshalProtobuf() *paint.Style {

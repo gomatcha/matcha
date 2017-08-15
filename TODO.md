@@ -2,6 +2,7 @@ Documentation:
 * Bridging to Native
 
 High:
+* Android.
 * Delay any ui events while viewcontroller is updating.
 * Rebuild Instagram.
 * Modal presentation.

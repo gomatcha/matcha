@@ -1,14 +1,21 @@
 package insta
 
 import (
+	"fmt"
+	"image/color"
+	"time"
+
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/app"
+	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/button"
+	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/scrollview"
 	"gomatcha.io/matcha/view/stackview"
 	"gomatcha.io/matcha/view/textview"
@@ -84,8 +91,12 @@ func (v *PostView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(l.Right())
 	})
 
-	image := urlimageview.New()
-	image.URL = v.post.ImageURL
+	image := NewPostImageView()
+	image.ImageURL = v.post.ImageURL
+	image.OnDoubleTouch = func() {
+		v.post.Liked = true
+		v.Signal()
+	}
 	imageGuide := l.Add(image, func(s *constraint.Solver) {
 		s.TopEqual(headerGuide.Bottom())
 		s.LeftEqual(l.Left())
@@ -94,15 +105,42 @@ func (v *PostView) Build(ctx *view.Context) view.Model {
 	})
 
 	buttons := NewPostButtonsView()
+	buttons.Liked = v.post.Liked
+	buttons.Bookmarked = v.post.Bookmarked
+	buttons.LikeCount = v.post.LikeCount
+	buttons.OnTouchLike = func(a bool) {
+		fmt.Println("Like", a)
+		v.post.Liked = a
+		v.Signal()
+	}
+	buttons.OnTouchComment = func() {
+		fmt.Println("Comment")
+	}
+	buttons.OnTouchShare = func() {
+		fmt.Println("Share")
+	}
+	buttons.OnTouchBookmark = func(a bool) {
+		fmt.Println("Bookmark", a)
+		v.post.Bookmarked = a
+		v.Signal()
+	}
 	buttonsGuide := l.Add(buttons, func(s *constraint.Solver) {
 		s.TopEqual(imageGuide.Bottom())
 		s.LeftEqual(l.Left())
 		s.RightEqual(l.Right())
 	})
 
+	comments := NewCommentsView()
+	comments.Comments = v.post.Comments
+	commentsGuide := l.Add(comments, func(s *constraint.Solver) {
+		s.TopEqual(buttonsGuide.Bottom())
+		s.LeftEqual(l.Left())
+		s.RightEqual(l.Right())
+	})
+
 	l.Solve(func(s *constraint.Solver) {
 		s.Top(0)
-		s.BottomEqual(buttonsGuide.Bottom())
+		s.BottomEqual(commentsGuide.Bottom())
 		s.WidthEqual(l.MinGuide().Width())
 	})
 
@@ -126,7 +164,7 @@ func NewPostHeaderView() *PostHeaderView {
 func (v *PostHeaderView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
-		s.Height(55)
+		s.Height(60)
 	})
 
 	imageView := urlimageview.New()
@@ -155,8 +193,70 @@ func (v *PostHeaderView) Build(ctx *view.Context) view.Model {
 	}
 }
 
+type PostImageView struct {
+	view.Embed
+	ImageURL      string
+	OnDoubleTouch func()
+	showHeart     bool
+}
+
+func NewPostImageView() *PostImageView {
+	return &PostImageView{}
+}
+
+func (v *PostImageView) Build(ctx *view.Context) view.Model {
+	l := &constraint.Layouter{}
+
+	image := urlimageview.New()
+	image.URL = v.ImageURL
+	l.Add(image, func(s *constraint.Solver) {
+		s.WidthEqual(l.Width())
+		s.HeightEqual(l.Height())
+	})
+
+	if v.showHeart {
+		heart := imageview.New()
+		heart.Image = app.MustLoadImage("Heart")
+		heart.ResizeMode = imageview.ResizeModeCenter
+		heart.PaintStyle = &paint.Style{
+			ShadowRadius: 10,
+			ShadowOffset: layout.Pt(0, 3),
+			ShadowColor:  color.RGBA{0, 0, 0, 128},
+		}
+		l.Add(heart, func(s *constraint.Solver) {
+			s.CenterXEqual(l.CenterX())
+			s.CenterYEqual(l.CenterY())
+		})
+	}
+
+	tap := &touch.TapRecognizer{
+		Count: 2,
+		OnTouch: func(e *touch.TapEvent) {
+			v.showHeart = true
+			v.Signal()
+			time.AfterFunc(time.Second, func() {
+				v.showHeart = false
+				v.Signal()
+			})
+
+			if v.OnDoubleTouch != nil {
+				v.OnDoubleTouch()
+			}
+		},
+	}
+
+	return view.Model{
+		Children: l.Views(),
+		Layouter: l,
+		Options: []view.Option{
+			touch.RecognizerList{tap},
+		},
+	}
+}
+
 type PostButtonsView struct {
 	view.Embed
+	LikeCount       int
 	Liked           bool
 	Bookmarked      bool
 	OnTouchLike     func(bool)
@@ -172,11 +272,15 @@ func NewPostButtonsView() *PostButtonsView {
 func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
-		s.Height(50)
+		s.Height(65)
 	})
 
 	likeButton := button.NewImageButton()
-	likeButton.Image = app.MustLoadImage("Like")
+	if v.Liked {
+		likeButton.Image = app.MustLoadImage("LikeFilled")
+	} else {
+		likeButton.Image = app.MustLoadImage("Like")
+	}
 	likeButton.OnPress = func() {
 		if v.OnTouchLike != nil {
 			v.Liked = !v.Liked
@@ -185,7 +289,7 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 		}
 	}
 	likeGuide := l.Add(likeButton, func(s *constraint.Solver) {
-		s.CenterYEqual(l.CenterY())
+		s.Top(13)
 		s.Left(13)
 	})
 
@@ -197,7 +301,7 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 		}
 	}
 	commentGuide := l.Add(commentButton, func(s *constraint.Solver) {
-		s.CenterYEqual(l.CenterY())
+		s.Top(13)
 		s.LeftEqual(likeGuide.Right().Add(13))
 	})
 
@@ -209,12 +313,17 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 		}
 	}
 	l.Add(shareButton, func(s *constraint.Solver) {
-		s.CenterYEqual(l.CenterY())
+		s.Top(13)
 		s.LeftEqual(commentGuide.Right().Add(13))
 	})
 
 	bookmarkButton := button.NewImageButton()
-	bookmarkButton.Image = app.MustLoadImage("Bookmark")
+	if v.Bookmarked {
+		bookmarkButton.Image = app.MustLoadImage("BookmarkFilled")
+	} else {
+		bookmarkButton.Image = app.MustLoadImage("Bookmark")
+	}
+
 	bookmarkButton.OnPress = func() {
 		if v.OnTouchBookmark != nil {
 			v.Bookmarked = !v.Bookmarked
@@ -223,7 +332,15 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 		}
 	}
 	l.Add(bookmarkButton, func(s *constraint.Solver) {
-		s.CenterYEqual(l.CenterY())
+		s.Top(13)
+		s.RightEqual(l.Right().Add(-13))
+	})
+
+	likeTextView := textview.New()
+	likeTextView.String = fmt.Sprintf("%v Likes", v.LikeCount)
+	l.Add(likeTextView, func(s *constraint.Solver) {
+		s.Top(50)
+		s.LeftEqual(l.Left().Add(13))
 		s.RightEqual(l.Right().Add(-13))
 	})
 
@@ -231,5 +348,37 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
+	}
+}
+
+type CommentsView struct {
+	view.Embed
+	Comments []*Comment
+}
+
+func NewCommentsView() *CommentsView {
+	return &CommentsView{}
+}
+
+func (v *CommentsView) Build(ctx *view.Context) view.Model {
+	l := &constraint.Layouter{}
+
+	topGuide := l.Top().Add(13)
+
+	for _, i := range v.Comments {
+		textView := textview.New()
+		textView.String = i.UserName + i.Text
+		textGuide := l.Add(textView, func(s *constraint.Solver) {
+			s.TopEqual(topGuide)
+			s.LeftEqual(l.Left().Add(13))
+			s.RightEqual(l.Right().Add(-13))
+		})
+
+		topGuide = textGuide.Top()
+	}
+
+	return view.Model{
+		Children: l.Views(),
+		Layouter: l,
 	}
 }

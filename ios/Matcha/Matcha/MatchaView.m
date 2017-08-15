@@ -276,7 +276,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
         self.view.layer.shadowRadius = pbLayoutPaintNode.paintStyle.shadowRadius;
         self.view.layer.shadowOffset = pbLayoutPaintNode.paintStyle.shadowOffset.toCGSize;
         self.view.layer.shadowColor = MatchaCGColorWithProtobuf(pbLayoutPaintNode.paintStyle.shadowColor);
-        self.view.layer.shadowOpacity = pbLayoutPaintNode.paintStyle.hasShadowColor ? 0 : 1;
+        self.view.layer.shadowOpacity = pbLayoutPaintNode.paintStyle.hasShadowColor ? 1 : 0;
         if (pbLayoutPaintNode.paintStyle.cornerRadius != 0) {
             self.view.clipsToBounds = YES; // TODO(KD): Be better about this...
         }

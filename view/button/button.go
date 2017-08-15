@@ -127,7 +127,7 @@ func (v *ImageButton) Build(ctx *view.Context) view.Model {
 
 	t := &touch.ButtonRecognizer{
 		OnTouch: func(e *touch.ButtonEvent) {
-			if v.OnPress != nil {
+			if e.Kind == touch.EventKindRecognized && v.OnPress != nil {
 				v.OnPress()
 			}
 		},
