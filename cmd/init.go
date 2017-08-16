@@ -13,6 +13,36 @@ import (
 func Init(flags *Flags) error {
 	start := time.Now()
 
+	// BEGIN ANDORID
+	// toolsDir := filepath.Join("prebuilt", "darwin-x86_64", "bin")
+	// // Try the ndk-bundle SDK package package, if installed.
+	// if initNDK == "" {
+	// 	if sdkHome := os.Getenv("ANDROID_HOME"); sdkHome != "" {
+	// 		path := filepath.Join(sdkHome, "ndk-bundle")
+	// 		if st, err := os.Stat(filepath.Join(path, toolsDir)); err == nil && st.IsDir() {
+	// 			initNDK = path
+	// 		}
+	// 	}
+	// }
+	// if initNDK != "" {
+	// 	var err error
+	// 	if initNDK, err = filepath.Abs(initNDK); err != nil {
+	// 		return err
+	// 	}
+	// 	// Check if the platform directory contains a known subdirectory.
+	// 	if _, err := os.Stat(filepath.Join(initNDK, toolsDir)); err != nil {
+	// 		if os.IsNotExist(err) {
+	// 			return fmt.Errorf("%q does not point to an Android NDK.", initNDK)
+	// 		}
+	// 		return err
+	// 	}
+	// 	ndkFile := filepath.Join(gomobilepath, "android_ndk_root")
+	// 	if err := ioutil.WriteFile(ndkFile, []byte(initNDK), 0644); err != nil {
+	// 		return err
+	// 	}
+	// }
+
+	// BEGIN IOS
 	// Get $GOPATH/pkg/gomobile
 	gomobilepath, err := GoMobilePath()
 	if err != nil {
@@ -66,6 +96,31 @@ func Init(flags *Flags) error {
 		return err
 	}
 	if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
+		return err
+	}
+
+	androidEnv, err := GetAndroidEnv(gomobilepath)
+	if err != nil {
+		return err
+	}
+
+	env = androidEnv["arm"]
+	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+		return err
+	}
+
+	env = androidEnv["arm64"]
+	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+		return err
+	}
+
+	env = androidEnv["386"]
+	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+		return err
+	}
+
+	env = androidEnv["amd64"]
+	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
 		return err
 	}
 

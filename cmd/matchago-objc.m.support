@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 #import <Foundation/Foundation.h>
-#include "matchago.h"
+#include "matchago-objc.h"
 
 @interface MatchaGoBridge ()
 @property (nonatomic, strong) MatchaGoValue *rootObject;

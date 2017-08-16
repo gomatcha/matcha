@@ -19,6 +19,8 @@ type Flags struct {
 	BuildGcflags string // -gcflags
 	BuildLdflags string // -ldflags
 	BuildO       string // output path
+	BuildIOS     bool
+	BuildAndroid bool
 	BuildBinary  bool
 }
 

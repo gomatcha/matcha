@@ -3,8 +3,6 @@
 
 #import <Foundation/Foundation.h>
 
-int MatchaTest();
-
 typedef int64_t ObjcRef;
 typedef int64_t GoRef;
 
