@@ -1,0 +1,54 @@
+#include <jni.h>
+#include <stdlib.h>
+#include <string.h>
+#include "matcha_MatchaGoValue.h"
+
+void TestFunc();
+
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoBool(JNIEnv *env, jclass c, jboolean v) {
+    return 0;
+}
+
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoLong(JNIEnv *env, jclass c, jlong v) {
+    return 0;
+}
+
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoDouble(JNIEnv *env, jclass c, jdouble v) {
+    return 0;
+}
+
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoString(JNIEnv *env, jclass c, jstring v) {
+    return 0;
+}
+
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoByteArray(JNIEnv *env, jclass c, jbyteArray v) {
+    return 0;
+}
+
+JNIEXPORT jboolean JNICALL Java_matcha_MatchaGoValue_matchaGoToBool(JNIEnv *env, jclass c, jlong v) {
+    return 0;
+}
+
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoToLong(JNIEnv *env, jclass c, jlong v) {
+    return 0;
+}
+
+JNIEXPORT jdouble JNICALL Java_matcha_MatchaGoValue_matchaGoToDouble(JNIEnv *env, jclass c, jlong v) {
+    return 0;
+}
+
+JNIEXPORT jstring JNICALL Java_matcha_MatchaGoValue_matchaGoToString(JNIEnv *env, jclass c, jlong v) {
+    TestFunc();
+
+    char *buf = (char*)malloc(11);
+    strcpy(buf, "123fuckme"); // with the null terminator the string adds up to 10 bytes
+    jstring jstrBuf = (*env)->NewStringUTF(env, buf);
+    free(buf);
+    return jstrBuf;
+}
+
+JNIEXPORT jbyteArray JNICALL Java_matcha_MatchaGoValue_matchaGoToByteArray(JNIEnv *env, jclass c, jlong v) {
+    jbyteArray array = (*env)->NewByteArray(env, 0);
+    return array;
+}
+

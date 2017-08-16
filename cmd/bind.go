@@ -110,6 +110,12 @@ func Bind(flags *Flags, args []string) error {
 		return err
 	}
 
+	// Get the supporting files
+	cmdPath, err := PackageDir(flags, "gomatcha.io/matcha/cmd")
+	if err != nil {
+		return err
+	}
+
 	// Begin iOS
 	if flags.BuildIOS {
 		// Make $WORK/matcha-ios
@@ -135,11 +141,6 @@ func Bind(flags *Flags, args []string) error {
 			return fmt.Errorf("failed to create the binding package for iOS: %v", err)
 		}
 
-		// Get the supporting files
-		cmdPath, err := PackageDir(flags, "gomatcha.io/matcha/cmd")
-		if err != nil {
-			return err
-		}
 		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaobjc.h"), filepath.Join(cmdPath, "matchaobjc.h.support")); err != nil {
 			return err
 		}
@@ -306,22 +307,18 @@ func Bind(flags *Flags, args []string) error {
 			return fmt.Errorf("failed to create the main package for android: %v", err)
 		}
 
-		javaPkg, err := ctx.Import("golang.org/x/mobile/bind/java", "", build.FindOnly)
-		if err != nil {
+		if err := CopyFile(flags, filepath.Join(srcDir, "matcha_MatchaGoValue.c"), filepath.Join(cmdPath, "matcha_MatchaGoValue.c.support")); err != nil {
 			return err
 		}
-		if err := CopyFile(flags, filepath.Join(srcDir, "matcha_MatchaGoValue.c"), filepath.Join(javaPkg.Dir, "matcha_MatchaGoValue.c.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(srcDir, "matcha_MatchaGoValue.h"), filepath.Join(javaPkg.Dir, "matcha_MatchaGoValue.h.support")); err != nil {
+		if err := CopyFile(flags, filepath.Join(srcDir, "matcha_MatchaGoValue.h"), filepath.Join(cmdPath, "matcha_MatchaGoValue.h.support")); err != nil {
 			return err
 		}
 
-		bindPkg, err := ctx.Import("golang.org/x/mobile/bind", "", build.FindOnly)
-		if err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(srcDir, "seq.go"), filepath.Join(bindPkg.Dir, "seq.go.support")); err != nil {
+		// bindPkg, err := ctx.Import("golang.org/x/mobile/bind", "", build.FindOnly)
+		// if err != nil {
+		// 	return err
+		// }
+		if err := CopyFile(flags, filepath.Join(srcDir, "seq.go"), filepath.Join(cmdPath, "seq.go.support")); err != nil {
 			return err
 		}
 
@@ -329,10 +326,7 @@ func Bind(flags *Flags, args []string) error {
 		if err := Mkdir(flags, javaDir2); err != nil {
 			return err
 		}
-		src := filepath.Join(bindPkg.Dir, "matcha", "MatchaGoValue.java")
-		dst := filepath.Join(javaDir2, "MatchaGoValue.java")
-		RemoveAll(flags, dst)
-		if err := CopyFile(flags, dst, src); err != nil {
+		if err := CopyFile(flags, filepath.Join(javaDir2, "MatchaGoValue.java"), filepath.Join(cmdPath, "MatchaGoValue.java")); err != nil {
 			return err
 		}
 
