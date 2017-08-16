@@ -41,7 +41,7 @@ JNIEXPORT jstring JNICALL Java_matcha_MatchaGoValue_matchaGoToString(JNIEnv *env
     TestFunc();
 
     char *buf = (char*)malloc(11);
-    strcpy(buf, "123fuckme"); // with the null terminator the string adds up to 10 bytes
+    strcpy(buf, "poop"); // with the null terminator the string adds up to 10 bytes
     jstring jstrBuf = (*env)->NewStringUTF(env, buf);
     free(buf);
     return jstrBuf;

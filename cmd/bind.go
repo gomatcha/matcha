@@ -292,12 +292,6 @@ func Bind(flags *Flags, args []string) error {
 
 		androidDir := filepath.Join(tempdir, "android")
 		mainPath := filepath.Join(tempdir, "androidlib/main.go")
-		jpkgSrc := filepath.Join(tempdir, "gen")
-
-		srcDir := filepath.Join(tempdir, "gomobile_bind")
-		if err := Mkdir(flags, srcDir); err != nil {
-			return err
-		}
 
 		err = WriteFile(flags, mainPath, func(w io.Writer) error {
 			_, err := w.Write(androidMainFile)
@@ -307,18 +301,13 @@ func Bind(flags *Flags, args []string) error {
 			return fmt.Errorf("failed to create the main package for android: %v", err)
 		}
 
-		if err := CopyFile(flags, filepath.Join(srcDir, "matcha_MatchaGoValue.c"), filepath.Join(cmdPath, "matcha_MatchaGoValue.c.support")); err != nil {
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matcha_MatchaGoValue.c"), filepath.Join(cmdPath, "matcha_MatchaGoValue.c.support")); err != nil {
 			return err
 		}
-		if err := CopyFile(flags, filepath.Join(srcDir, "matcha_MatchaGoValue.h"), filepath.Join(cmdPath, "matcha_MatchaGoValue.h.support")); err != nil {
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matcha_MatchaGoValue.h"), filepath.Join(cmdPath, "matcha_MatchaGoValue.h.support")); err != nil {
 			return err
 		}
-
-		// bindPkg, err := ctx.Import("golang.org/x/mobile/bind", "", build.FindOnly)
-		// if err != nil {
-		// 	return err
-		// }
-		if err := CopyFile(flags, filepath.Join(srcDir, "seq.go"), filepath.Join(cmdPath, "seq.go.support")); err != nil {
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "seq.go"), filepath.Join(cmdPath, "seq.go.support")); err != nil {
 			return err
 		}
 
@@ -337,9 +326,7 @@ func Bind(flags *Flags, args []string) error {
 				return err
 			}
 			env := androidENV[arch]
-			// Add the generated Java class wrapper packages to GOPATH
-			gopath := fmt.Sprintf("GOPATH=%s%c%s", jpkgSrc, filepath.ListSeparator, os.Getenv("GOPATH"))
-			env = append(env, gopath)
+			env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+os.Getenv("GOPATH"))
 
 			err = GoBuild(flags,
 				mainPath,

@@ -609,7 +609,7 @@ package main
 
 import (
 	_ "golang.org/x/mobile/bind/java"
-	_ "../gomobile_bind"
+	_ "gomatcha.io/bridge"
 )
 
 func main() {}
