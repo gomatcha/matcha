@@ -74,14 +74,6 @@ func (tc *ndkToolchain) Path(ndkRoot string, toolName string) string {
 
 type ndkConfig map[string]ndkToolchain // map: GOOS->androidConfig.
 
-func (nc ndkConfig) Toolchain(arch string) ndkToolchain {
-	tc, ok := nc[arch]
-	if !ok {
-		panic(`unsupported architecture: ` + arch)
-	}
-	return tc
-}
-
 func GetAndroidABI(arch string) string {
 	switch arch {
 	case "arm":
@@ -182,38 +174,6 @@ func archNDK() string {
 		}
 		return runtime.GOOS + "-" + arch
 	}
-}
-
-var ndk = ndkConfig{
-	"arm": {
-		arch:       "arm",
-		abi:        "armeabi-v7a",
-		platform:   "android-15",
-		gcc:        "arm-linux-androideabi-4.9",
-		toolPrefix: "arm-linux-androideabi",
-	},
-	"arm64": {
-		arch:       "arm64",
-		abi:        "arm64-v8a",
-		platform:   "android-21",
-		gcc:        "aarch64-linux-android-4.9",
-		toolPrefix: "aarch64-linux-android",
-	},
-
-	"386": {
-		arch:       "x86",
-		abi:        "x86",
-		platform:   "android-15",
-		gcc:        "x86-4.9",
-		toolPrefix: "i686-linux-android",
-	},
-	"amd64": {
-		arch:       "x86_64",
-		abi:        "x86_64",
-		platform:   "android-21",
-		gcc:        "x86_64-4.9",
-		toolPrefix: "x86_64-linux-android",
-	},
 }
 
 // androidAPIPath returns an android SDK platform directory under ANDROID_HOME.
@@ -376,8 +336,7 @@ func BuildAAR(androidDir string, pkgs []*build.Package, androidArchs []string, t
 	}
 
 	for _, arch := range androidArchs {
-		toolchain := ndk.Toolchain(arch)
-		lib := toolchain.abi + "/libgojni.so"
+		lib := GetAndroidABI(arch) + "/libgojni.so"
 		w, err = aarwcreate("jni/" + lib)
 		if err != nil {
 			return err
@@ -519,98 +478,3 @@ func bootClasspath() (string, error) {
 	}
 	return filepath.Join(apiPath, "android.jar"), nil
 }
-
-// func GoAndroidBind(flags *Flags, tempDir string, pkgs []*build.Package) error {
-// 	androidArchs := []string{"arm", "arm64", "386", "amd64"}
-// 	gomobpath, err := GoMobilePath()
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	ctx := build.Default
-// 	ctx.GOARCH = "arm"
-// 	ctx.GOOS = "android"
-
-// 	androidDir := filepath.Join(tempDir, "android")
-// 	mainPath := filepath.Join(tempDir, "androidlib/main.go")
-// 	jpkgSrc := filepath.Join(tempDir, "gen")
-
-// 	srcDir := filepath.Join(tempDir, "gomobile_bind")
-// 	if err := Mkdir(flags, srcDir); err != nil {
-// 		return err
-// 	}
-
-// 	err = WriteFile(flags, mainPath, func(w io.Writer) error {
-// 		_, err := w.Write(androidMainFile)
-// 		return err
-// 	})
-// 	if err != nil {
-// 		return fmt.Errorf("failed to create the main package for android: %v", err)
-// 	}
-
-// 	javaPkg, err := ctx.Import("golang.org/x/mobile/bind/java", "", build.FindOnly)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	if err := CopyFile(flags, filepath.Join(srcDir, "matcha_MatchaGoValue.c"), filepath.Join(javaPkg.Dir, "matcha_MatchaGoValue.c.support")); err != nil {
-// 		return err
-// 	}
-// 	if err := CopyFile(flags, filepath.Join(srcDir, "matcha_MatchaGoValue.h"), filepath.Join(javaPkg.Dir, "matcha_MatchaGoValue.h.support")); err != nil {
-// 		return err
-// 	}
-
-// 	bindPkg, err := ctx.Import("golang.org/x/mobile/bind", "", build.FindOnly)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	if err := CopyFile(flags, filepath.Join(srcDir, "seq.go"), filepath.Join(bindPkg.Dir, "seq.go.support")); err != nil {
-// 		return err
-// 	}
-
-// 	javaDir2 := filepath.Join(androidDir, "src", "main", "java", "matcha")
-// 	if err := Mkdir(flags, javaDir2); err != nil {
-// 		return err
-// 	}
-// 	src := filepath.Join(bindPkg.Dir, "matcha", "MatchaGoValue.java")
-// 	dst := filepath.Join(javaDir2, "MatchaGoValue.java")
-// 	RemoveAll(flags, dst)
-// 	if err := CopyFile(flags, dst, src); err != nil {
-// 		return err
-// 	}
-
-// 	// Generate binding code and java source code only when processing the first package.
-// 	for _, arch := range androidArchs {
-// 		androidENV, err := GetAndroidEnv(gomobpath)
-// 		if err != nil {
-// 			return err
-// 		}
-// 		env := androidENV[arch]
-// 		// Add the generated Java class wrapper packages to GOPATH
-// 		gopath := fmt.Sprintf("GOPATH=%s%c%s", jpkgSrc, filepath.ListSeparator, os.Getenv("GOPATH"))
-// 		env = append(env, gopath)
-
-// 		err = GoBuild(flags,
-// 			mainPath,
-// 			env,
-// 			ctx,
-// 			tempDir,
-// 			"-buildmode=c-shared",
-// 			"-o="+filepath.Join(androidDir, "src/main/jniLibs/"+GetAndroidABI(arch)+"/libgojni.so"),
-// 		)
-// 		if err != nil {
-// 			return err
-// 		}
-// 	}
-// 	return BuildAAR(androidDir, pkgs, androidArchs, tempDir)
-// }
-
-var androidMainFile = []byte(`
-package main
-
-import (
-	_ "golang.org/x/mobile/bind/java"
-	_ "gomatcha.io/bridge"
-)
-
-func main() {}
-`)

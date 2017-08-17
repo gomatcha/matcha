@@ -294,17 +294,34 @@ func Bind(flags *Flags, args []string) error {
 		mainPath := filepath.Join(tempdir, "androidlib/main.go")
 
 		err = WriteFile(flags, mainPath, func(w io.Writer) error {
-			_, err := w.Write(androidMainFile)
+			format := fmt.Sprintf(BindFile, args[0]) // TODO(KD): Should this be args[0] or should it use the logic to generate pkgs
+			_, err := w.Write([]byte(format))
 			return err
 		})
 		if err != nil {
 			return fmt.Errorf("failed to create the main package for android: %v", err)
 		}
 
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matcha_MatchaGoValue.c"), filepath.Join(cmdPath, "matcha_MatchaGoValue.c.support")); err != nil {
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.h"), filepath.Join(cmdPath, "matchaforeign.h.support")); err != nil {
 			return err
 		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matcha_MatchaGoValue.h"), filepath.Join(cmdPath, "matcha_MatchaGoValue.h.support")); err != nil {
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.go"), filepath.Join(cmdPath, "matchaforeign.go.support")); err != nil {
+			return err
+		}
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign-java.c"), filepath.Join(cmdPath, "matchaforeign-java.c.support")); err != nil {
+			return err
+		}
+
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago.h"), filepath.Join(cmdPath, "matchago.h.support")); err != nil {
+			return err
+		}
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago.go"), filepath.Join(cmdPath, "matchago.go.support")); err != nil {
+			return err
+		}
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago-java.h"), filepath.Join(cmdPath, "matchago-java.h.support")); err != nil {
+			return err
+		}
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago-java.c"), filepath.Join(cmdPath, "matchago-java.c.support")); err != nil {
 			return err
 		}
 		if err := CopyFile(flags, filepath.Join(bridgeDir, "seq.go"), filepath.Join(cmdPath, "seq.go.support")); err != nil {
@@ -351,6 +368,7 @@ var BindFile = `
 package main
 
 import (
+	_ "golang.org/x/mobile/bind/java"
     _ "gomatcha.io/bridge"
     _ "%s"
 )

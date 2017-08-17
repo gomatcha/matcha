@@ -1,0 +1,88 @@
+#include "matchaforeign.h"
+
+ObjcRef MatchaObjcBridge_() {
+    return 0;
+}
+
+ObjcRef MatchaObjcBool(bool v) {
+    return 0;
+}
+
+bool MatchaObjcToBool(ObjcRef v) {
+    return false;
+}
+
+ObjcRef MatchaObjcInt64(int64_t v) {
+    return 0;
+}
+
+int64_t MatchaObjcToInt64(ObjcRef v) {
+    return 0;
+}
+
+ObjcRef MatchaObjcFloat64(double v) {
+    return 0;
+}
+
+double MatchaObjcToFloat64(ObjcRef v) {
+    return 0;
+}
+
+ObjcRef MatchaObjcGoRef(GoRef v) {
+    return 0;
+}
+
+GoRef MatchaObjcToGoRef(ObjcRef v) {
+    return 0;
+}
+
+ObjcRef MatchaObjcString(CGoBuffer str) {
+    return 0;
+}
+
+CGoBuffer MatchaObjcToString(ObjcRef v) {
+    CGoBuffer buf = {};
+    return buf;
+}
+
+ObjcRef MatchaObjcBytes(CGoBuffer bytes) {
+    return 0;
+}
+
+CGoBuffer MatchaObjcToBytes(ObjcRef v) {
+    CGoBuffer buf = {};
+    return buf;
+}
+
+ObjcRef MatchaObjcArray() {
+    return 0;
+}
+
+int64_t MatchaObjcArrayLen(ObjcRef v) {
+    return 0;
+}
+
+void MatchaObjcArrayAppend(ObjcRef v, ObjcRef a) {
+}
+
+ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t index) {
+    return 0;
+}
+
+// Call
+ObjcRef MatchaObjcCallSentinel() {
+    return 0;
+}
+
+ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args) {
+    return 0;
+}
+
+// // Tracker
+// ObjcRef MatchaTrackObjc(id value);
+// id MatchaGetObjc(ObjcRef key);
+void MatchaUntrackObjc(ObjcRef key) {
+}
+
+// ObjcRef MatchaObjcWithGo(GoRef v);
+// GoRef MatchaObjcToGo(ObjcRef v);

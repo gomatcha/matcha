@@ -1,12 +1,14 @@
 #include <jni.h>
 #include <stdlib.h>
 #include <string.h>
-#include "matcha_MatchaGoValue.h"
+#include "matchago-java.h"
+#include "matchago.h"
+#include <stdbool.h>
 
 void TestFunc();
 
 JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoBool(JNIEnv *env, jclass c, jboolean v) {
-    return 0;
+    return matchaGoBool(v);
 }
 
 JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoLong(JNIEnv *env, jclass c, jlong v) {
@@ -51,4 +53,3 @@ JNIEXPORT jbyteArray JNICALL Java_matcha_MatchaGoValue_matchaGoToByteArray(JNIEn
     jbyteArray array = (*env)->NewByteArray(env, 0);
     return array;
 }
-

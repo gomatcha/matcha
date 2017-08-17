@@ -1,8 +1,8 @@
 #ifndef MOCHIGO_H
 #define MOCHIGO_H
 
-#include "matchaobjc.h"
-#include "matchago-objc.h"
+#include "matchaforeign.h"
+#include <stdbool.h>
 
 GoRef matchaGoBool(bool);
 bool matchaGoToBool(GoRef);

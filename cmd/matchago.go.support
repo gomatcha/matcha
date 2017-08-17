@@ -5,8 +5,8 @@ package bridge
 // bindings.
 
 /*
-#cgo CFLAGS: -x objective-c -fobjc-arc -Werror
-#cgo LDFLAGS: -framework Foundation
+// #cgo CFLAGS: -x objective-c -fobjc-arc -Werror
+// #cgo LDFLAGS: -framework Foundation
 
 #include <stdbool.h>
 #include <stdint.h>

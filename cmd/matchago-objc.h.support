@@ -30,8 +30,6 @@
 - (NSString *)toString;
 - (NSData *)toData;
 - (NSArray *)toArray;
-- (NSMapTable *)toMapTable;
-// - (NSDictionary *)toDictionary;
 - (BOOL)isNil;
 - (BOOL)isEqual:(MatchaGoValue *)value;
 - (MatchaGoValue *)elem;
