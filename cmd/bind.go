@@ -308,6 +308,9 @@ func Bind(flags *Flags, args []string) error {
 		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.go"), filepath.Join(cmdPath, "matchaforeign.go.support")); err != nil {
 			return err
 		}
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign-java.h"), filepath.Join(cmdPath, "matchaforeign-java.h.support")); err != nil {
+			return err
+		}
 		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign-java.c"), filepath.Join(cmdPath, "matchaforeign-java.c.support")); err != nil {
 			return err
 		}
@@ -324,15 +327,18 @@ func Bind(flags *Flags, args []string) error {
 		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago-java.c"), filepath.Join(cmdPath, "matchago-java.c.support")); err != nil {
 			return err
 		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "seq.go"), filepath.Join(cmdPath, "seq.go.support")); err != nil {
-			return err
-		}
 
 		javaDir2 := filepath.Join(androidDir, "src", "main", "java", "matcha")
 		if err := Mkdir(flags, javaDir2); err != nil {
 			return err
 		}
 		if err := CopyFile(flags, filepath.Join(javaDir2, "MatchaGoValue.java"), filepath.Join(cmdPath, "MatchaGoValue.java")); err != nil {
+			return err
+		}
+		if err := CopyFile(flags, filepath.Join(javaDir2, "Bridge.java"), filepath.Join(cmdPath, "Bridge.java")); err != nil {
+			return err
+		}
+		if err := CopyFile(flags, filepath.Join(javaDir2, "Tracker.java"), filepath.Join(cmdPath, "Tracker.java")); err != nil {
 			return err
 		}
 

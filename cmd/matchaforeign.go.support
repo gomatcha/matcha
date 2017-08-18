@@ -18,7 +18,14 @@ import "C"
 import (
     "runtime"
     "reflect"
+    "fmt"
 )
+
+
+//export TestFunc
+func TestFunc() {
+    fmt.Println("you suck a fuck")
+}
 
 type Value struct {
     ref int64

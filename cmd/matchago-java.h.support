@@ -9,6 +9,14 @@ extern "C" {
 #endif
 /*
  * Class:     matcha_MatchaGoValue
+ * Method:    matchaInit
+ * Signature: (Ljava/lang/Object;Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaInit
+  (JNIEnv *, jclass, jobject, jobject);
+
+/*
+ * Class:     matcha_MatchaGoValue
  * Method:    matchaGoBool
  * Signature: (Z)J
  */
@@ -49,6 +57,30 @@ JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoByteArray
 
 /*
  * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoArray
+ * Signature: ([J)J
+ */
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoArray
+  (JNIEnv *, jclass, jlongArray);
+
+/*
+ * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoFunc
+ * Signature: (Ljava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoFunc
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoType
+ * Signature: (Ljava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoType
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     matcha_MatchaGoValue
  * Method:    matchaGoToBool
  * Signature: (J)Z
  */
@@ -85,6 +117,70 @@ JNIEXPORT jstring JNICALL Java_matcha_MatchaGoValue_matchaGoToString
  * Signature: (J)[B
  */
 JNIEXPORT jbyteArray JNICALL Java_matcha_MatchaGoValue_matchaGoToByteArray
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoToArray
+ * Signature: (J)[J
+ */
+JNIEXPORT jlongArray JNICALL Java_matcha_MatchaGoValue_matchaGoToArray
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoElem
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoElem
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoIsNil
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_matcha_MatchaGoValue_matchaGoIsNil
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoEqual
+ * Signature: (JJ)Z
+ */
+JNIEXPORT jboolean JNICALL Java_matcha_MatchaGoValue_matchaGoEqual
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoCall
+ * Signature: (JLjava/lang/String;J)J
+ */
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoCall
+  (JNIEnv *, jclass, jlong, jstring, jlong);
+
+/*
+ * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoField
+ * Signature: (JLjava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoField
+  (JNIEnv *, jclass, jlong, jstring);
+
+/*
+ * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoFieldSet
+ * Signature: (JLjava/lang/String;J)V
+ */
+JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaGoFieldSet
+  (JNIEnv *, jclass, jlong, jstring, jlong);
+
+/*
+ * Class:     matcha_MatchaGoValue
+ * Method:    matchaGoUntrack
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaGoUntrack
   (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus

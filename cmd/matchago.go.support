@@ -18,6 +18,7 @@ import "C"
 import (
     "reflect"
     "sync"
+    "fmt"
 )
 
 var goRoot struct {
@@ -28,6 +29,11 @@ var goRoot struct {
 func init() {
     goRoot.types = map[string]reflect.Type{}
     goRoot.funcs = map[string]reflect.Value{}
+    
+    
+    RegisterFunc("TESTFUNC", func() string {
+        return "go kill yourself."
+    })
 }
 
 func RegisterType(str string, t reflect.Type) {
@@ -185,7 +191,13 @@ func matchaGoType(v C.CGoBuffer) C.GoRef {
 //export matchaGoFunc
 func matchaGoFunc(v C.CGoBuffer) C.GoRef {
     str := goString(v)
-    f := goRoot.funcs[str]
+    f, ok := goRoot.funcs[str]
+    if ok {
+        fmt.Println("matchaGoFunc", str, f)
+    } else {
+        fmt.Println("what", len(str))
+        fmt.Println("error", goRoot.funcs, ".", str, ".", len(str), ".")
+    }
     return matchaGoTrack(f)
 }
 

@@ -1,7 +1,9 @@
 #include "matchaforeign.h"
+#include "matchaforeign-java.h"
+#include <jni.h>
 
 ObjcRef MatchaObjcBridge_() {
-    return 0;
+    return MatchaTrackObjc(sBridge);
 }
 
 ObjcRef MatchaObjcBool(bool v) {
@@ -78,11 +80,24 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args) {
     return 0;
 }
 
-// // Tracker
-// ObjcRef MatchaTrackObjc(id value);
-// id MatchaGetObjc(ObjcRef key);
-void MatchaUntrackObjc(ObjcRef key) {
+// Tracker
+ObjcRef MatchaTrackObjc(jobject v) {
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "track", "(Ljava/lang/Object;)J");
+    if (mid == 0) {
+        // TODO(KD): Panic?
+    }
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
-// ObjcRef MatchaObjcWithGo(GoRef v);
-// GoRef MatchaObjcToGo(ObjcRef v);
+// id MatchaGetObjc(ObjcRef key) {
+// }
+
+void MatchaUntrackObjc(ObjcRef key) {
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "untrack", "(J)V");
+    if (mid == 0) {
+        // TODO(KD): Panic?
+    }
+    (*sEnv)->CallVoidMethod(sEnv, sTracker, mid);
+}
