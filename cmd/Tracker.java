@@ -71,4 +71,16 @@ public class Tracker {
     public synchronized long foreignToGoRef(long v) {
         return ((MatchaGoValue)this.get(v)).goRef;
     }
+    public synchronized long foreignString(String v) {
+        return track(v);
+    }
+    public synchronized String foreignToString(long v) {
+        return (String)this.get(v);
+    }
+    public synchronized long foreignBytes(byte[] v) {
+        return track(v);
+    }
+    public synchronized byte[] foreignToBytes(long v) {
+        return (byte[])this.get(v);
+    }
 }

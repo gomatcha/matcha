@@ -1,6 +1,7 @@
 #include "matchaforeign.h"
 #include "matchaforeign-java.h"
 #include <jni.h>
+#include <stdlib.h>
 #include <android/log.h>
 
 JNIEnv *sEnv;
@@ -9,10 +10,60 @@ jobject sTracker;
 
 #define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__);
 
+CGoBuffer MatchaStringToCGoBuffer(JNIEnv *env, jstring v) {
+    const char *nativeString = (*env)->GetStringUTFChars(env, v, 0);
+    
+    int len = strlen(nativeString);
+    char *buf = (char *)malloc(len);
+    strncpy(buf, nativeString, len);
+    
+    (*env)->ReleaseStringUTFChars(env, v, nativeString);
+   
+    CGoBuffer cstr;
+    cstr.ptr = buf;
+    cstr.len = len;
+    return cstr;
+}
+
+jstring MatchaCGoBufferToString(JNIEnv *env, CGoBuffer buf) {
+    char *str = malloc(buf.len+1);
+    strncpy(str, buf.ptr, buf.len);
+    str[buf.len] = '\0';
+    
+    jstring jstrBuf = (*sEnv)->NewStringUTF(sEnv, str);
+    free(buf.ptr);
+    free(str);
+    return jstrBuf;
+}
+
+CGoBuffer MatchaByteArrayToCGoBuffer(JNIEnv *env, jbyteArray v) {
+    // int len = [data length];
+    // if (len == 0) {
+    //     return (CGoBuffer){0};
+    // }
+    
+    int len = (*env)->GetArrayLength(env, v);
+    char *buf = (char *)malloc(len);
+    (*env)->GetByteArrayRegion(env, v, 0, len, (jbyte *)buf);
+  
+    CGoBuffer cstr;
+    cstr.ptr = buf;
+    cstr.len = len;
+    return cstr;
+    
+}
+
+jbyteArray MatchaCGoBufferToByteArray(JNIEnv *env, CGoBuffer buf) {
+    jbyteArray array = (*env)->NewByteArray(env, buf.len);
+    (*env)->SetByteArrayRegion(env, array, 0, buf.len, buf.ptr);
+    free(buf.ptr);
+    return array;
+}
+
 ObjcRef MatchaObjcBridge_() {
-    printf("MatchaObjcBridge, %p", sBridge);
     // jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "track", "(Ljava/lang/Object;)J");
     // return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
+    return 0; // TODO(KD):
 }
 
 ObjcRef MatchaObjcBool(bool v) {
@@ -63,22 +114,42 @@ GoRef MatchaObjcToGoRef(ObjcRef v) {
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
-ObjcRef MatchaObjcString(CGoBuffer str) {
-    return 0;
+ObjcRef MatchaObjcString(CGoBuffer buf) {
+    jstring jstrBuf = MatchaCGoBufferToString(sEnv, buf);
+    
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignString", "(Ljava/lang/String;)J");
+    long a = (*sEnv)->CallLongMethod(sEnv, sTracker, mid, jstrBuf);
+    
+    (*sEnv)->DeleteLocalRef(sEnv, jstrBuf);
+    return a;
 }
 
 CGoBuffer MatchaObjcToString(ObjcRef v) {
-    CGoBuffer buf = {};
-    return buf;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToString", "(J)Ljava/lang/String;");
+    jstring str = (jstring)(*sEnv)->CallObjectMethod(sEnv, sTracker, mid, v);
+    
+    return MatchaStringToCGoBuffer(sEnv, str);
 }
 
 ObjcRef MatchaObjcBytes(CGoBuffer bytes) {
-    return 0;
+    jbyteArray array = MatchaCGoBufferToByteArray(sEnv, bytes);
+    
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBytes", "([B)J");
+    long a = (*sEnv)->CallLongMethod(sEnv, sTracker, mid, array);
+    
+    (*sEnv)->DeleteLocalRef(sEnv, array);
+    return a;
 }
 
 CGoBuffer MatchaObjcToBytes(ObjcRef v) {
-    CGoBuffer buf = {};
-    return buf;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToBytes", "(J)[B");
+    jbyteArray str = (jbyteArray)(*sEnv)->CallObjectMethod(sEnv, sTracker, mid, v);
+    
+    return MatchaByteArrayToCGoBuffer(sEnv, str);
 }
 
 ObjcRef MatchaObjcArray() {
