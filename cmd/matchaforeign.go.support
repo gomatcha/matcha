@@ -6,7 +6,8 @@ package bridge
 
 /*
 // #cgo CFLAGS: -x objective-c -fobjc-arc -Werror
-// #cgo LDFLAGS: -framework Foundation
+// #cgo LDFLAGS: -framework Foundation -landroid -llog // TODO(KD): switch for android and objective c???
+#cgo LDFLAGS: -landroid -llog
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -25,6 +26,11 @@ import (
 //export TestFunc
 func TestFunc() {
     fmt.Println("you suck a fuck")
+    
+    a := Bool(true)
+    b := Int64(1234)
+    c := Float64(1.234)
+    fmt.Println("blah", a.ToBool(), b.ToInt64(), c.ToFloat64())
 }
 
 type Value struct {
@@ -107,13 +113,22 @@ func (v *Value)ToBytes() []byte {
 }
 
 func Interface(v interface{}) *Value {
+    // Start with a go value.
+    // Reflect on it.
     rv := reflect.ValueOf(v)
-    return newValue(C.MatchaObjcGoRef(matchaGoTrack(rv)))
+    // Track it, turning it into a goref.
+    ref := matchaGoTrack(rv)
+    // Wrap the goref in an foreign object, returning a foreign ref.
+    return newValue(C.MatchaObjcGoRef(ref))
 }
 
 func (v *Value)ToInterface() interface{} {
     defer runtime.KeepAlive(v)
-    return matchaGoGet(C.MatchaObjcToGoRef(v._ref())).Interface()
+    // Start with a foreign ref, referring to a foreign value wrapping a go ref.
+    // Get the goref.
+    ref := C.MatchaObjcToGoRef(v._ref())
+    // Get the go object, and unreflect.
+    return matchaGoGet(ref).Interface()
 }
 
 func Array(a ...*Value) *Value {

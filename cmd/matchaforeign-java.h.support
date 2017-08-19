@@ -3,9 +3,9 @@
 
 #include <jni.h>
 
-static JNIEnv *sEnv;
-static jobject sBridge;
-static jobject sTracker;
+extern JNIEnv *sEnv;
+extern jobject sBridge;
+extern jobject sTracker;
 
 ObjcRef MatchaTrackObjc(jobject v);
 void MatchaUntrackObjc(ObjcRef key);

@@ -39,4 +39,36 @@ public class Tracker {
         }
         return a;
     }
+    
+    public synchronized Object call(long v, String method, long args) {
+        return null;
+    }
+    
+    public synchronized long foreignBool(boolean v) {
+        return track(v);
+    }
+    public synchronized boolean foreignToBool(long v) {
+        boolean a = (Boolean)this.get(v);
+        return a;
+    }
+    public synchronized long foreignInt64(long v) {
+        return track(v);
+    }
+    public synchronized long foreignToInt64(long v) {
+        long a = (Long)this.get(v);
+        return a;
+    }
+    public synchronized long foreignFloat64(double v) {
+        return track(v);
+    }
+    public synchronized double foreignToFloat64(long v) {
+        double a = (Double)this.get(v);
+        return a;
+    }
+    public synchronized long foreignGoRef(long v) {
+        return track(new MatchaGoValue(v, false));
+    }
+    public synchronized long foreignToGoRef(long v) {
+        return ((MatchaGoValue)this.get(v)).goRef;
+    }
 }

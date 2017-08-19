@@ -5,6 +5,10 @@
 #include "matchago.h"
 #include "matchaforeign-java.h"
 #include <stdbool.h>
+#include <stdio.h>
+#include <android/log.h>
+
+#define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__);
 
 CGoBuffer MatchaStringToCGoBuffer(JNIEnv *env, jclass c, jstring v);
 CGoBuffer MatchaStringToCGoBuffer(JNIEnv *env, jclass c, jstring v) {
@@ -28,6 +32,8 @@ JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaInit(JNIEnv *env, jclass 
     sEnv = env;
     sTracker = (*env)->NewGlobalRef(env, tracker);
     sBridge = (*env)->NewGlobalRef(env, bridge);
+    
+    printf("matchaInit%p,%p,%p,%p", sTracker, tracker, sBridge, bridge);
     
     TestFunc();
     // JavaVM *jvm;
@@ -126,7 +132,7 @@ JNIEXPORT jlongArray JNICALL Java_matcha_MatchaGoValue_matchaGoToArray(JNIEnv *e
         arr[i] = matchaGoArrayAt(v, i);
     }
     
-    (*env)->ReleaseLongArrayElements(env, array, arr, NULL);
+    (*env)->ReleaseLongArrayElements(env, array, arr, 0);
     return array;
 }
 

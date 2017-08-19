@@ -11,9 +11,9 @@ public class MatchaGoValue {
    
    private static native void matchaInit(Object tracker, Object bridge);
    
-   public long goRef;
+   protected long goRef;
    
-   private MatchaGoValue(long goref, boolean empty) {
+   protected MatchaGoValue(long goref, boolean empty) {
       this.goRef = goref;
    }
    public MatchaGoValue(boolean v) {

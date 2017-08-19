@@ -1,41 +1,66 @@
 #include "matchaforeign.h"
 #include "matchaforeign-java.h"
 #include <jni.h>
+#include <android/log.h>
+
+JNIEnv *sEnv;
+jobject sBridge;
+jobject sTracker;
+
+#define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__);
 
 ObjcRef MatchaObjcBridge_() {
-    return MatchaTrackObjc(sBridge);
+    printf("MatchaObjcBridge, %p", sBridge);
+    // jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "track", "(Ljava/lang/Object;)J");
+    // return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
 ObjcRef MatchaObjcBool(bool v) {
-    return 0;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBool", "(Z)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
 bool MatchaObjcToBool(ObjcRef v) {
-    return false;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToBool", "(J)Z");
+    return (*sEnv)->CallBooleanMethod(sEnv, sTracker, mid, v);
 }
 
 ObjcRef MatchaObjcInt64(int64_t v) {
-    return 0;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignInt64", "(J)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
 int64_t MatchaObjcToInt64(ObjcRef v) {
-    return 0;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToInt64", "(J)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
 ObjcRef MatchaObjcFloat64(double v) {
-    return 0;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignFloat64", "(D)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
 double MatchaObjcToFloat64(ObjcRef v) {
-    return 0;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToFloat64", "(J)D");
+    return (*sEnv)->CallDoubleMethod(sEnv, sTracker, mid, v);
 }
 
 ObjcRef MatchaObjcGoRef(GoRef v) {
-    return 0;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignGoRef", "(J)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
 GoRef MatchaObjcToGoRef(ObjcRef v) {
-    return 0;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToGoRef", "(J)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
 ObjcRef MatchaObjcString(CGoBuffer str) {
@@ -77,6 +102,8 @@ ObjcRef MatchaObjcCallSentinel() {
 }
 
 ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args) {
+    
+    
     return 0;
 }
 
@@ -84,9 +111,6 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args) {
 ObjcRef MatchaTrackObjc(jobject v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "track", "(Ljava/lang/Object;)J");
-    if (mid == 0) {
-        // TODO(KD): Panic?
-    }
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
@@ -96,8 +120,5 @@ ObjcRef MatchaTrackObjc(jobject v) {
 void MatchaUntrackObjc(ObjcRef key) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "untrack", "(J)V");
-    if (mid == 0) {
-        // TODO(KD): Panic?
-    }
     (*sEnv)->CallVoidMethod(sEnv, sTracker, mid);
 }

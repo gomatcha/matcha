@@ -7,33 +7,7 @@
 + (MatchaObjcBridge *)sharedBridge;
 @end
 
-// ObjcRef MatchaObjcBridge_();
-
-// ObjcRef MatchaObjcBool(bool v);
-// bool MatchaObjcToBool(ObjcRef v);
-// ObjcRef MatchaObjcInt64(int64_t v);
-// int64_t MatchaObjcToInt64(ObjcRef v);
-// ObjcRef MatchaObjcFloat64(double v);
-// double MatchaObjcToFloat64(ObjcRef v);
-// ObjcRef MatchaObjcGoRef(GoRef v);
-// GoRef MatchaObjcToGoRef(ObjcRef v);
-// ObjcRef MatchaObjcString(CGoBuffer str); // Frees the buffer
-// CGoBuffer MatchaObjcToString(ObjcRef v);
-// ObjcRef MatchaObjcBytes(CGoBuffer bytes); // Frees the buffer
-// CGoBuffer MatchaObjcToBytes(ObjcRef v);
-
-// ObjcRef MatchaObjcArray();
-// int64_t MatchaObjcArrayLen(ObjcRef v);
-// void MatchaObjcArrayAppend(ObjcRef v, ObjcRef a);
-// ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t index);
-
-// // Call
-// ObjcRef MatchaObjcCallSentinel();
-// ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args);
-
 // Tracker
-ObjcRef MatchaTrackObjc(id value);
-id MatchaGetObjc(ObjcRef key);
 void MatchaUntrackObjc(ObjcRef key);
 
 // Utilities
