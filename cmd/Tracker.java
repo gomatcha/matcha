@@ -1,6 +1,7 @@
 package matcha;
 
 import java.util.Map;
+import android.util.Log;
 import java.util.HashMap;
 
 public class Tracker {
@@ -82,5 +83,21 @@ public class Tracker {
     }
     public synchronized byte[] foreignToBytes(long v) {
         return (byte[])this.get(v);
+    }
+    public synchronized long foreignArray(int v) {
+        long[] a = new long[v];
+        return track(a);
+    }
+    public synchronized void foreignArraySet(long v, long val, int idx) {
+        long[] a = (long[])this.get(v);
+        a[idx] = val;
+    }
+    public synchronized long foreignArrayAt(long v, int idx) {
+        long[] a = (long[])this.get(v);
+        return a[idx];
+    }
+    public synchronized long foreignArrayLen(long v) {
+        long[] a = (long[])this.get(v);
+        return a.length;
     }
 }

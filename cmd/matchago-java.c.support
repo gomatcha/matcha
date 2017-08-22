@@ -127,7 +127,6 @@ JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaGoFieldSet(JNIEnv *env, j
     matchaGoFieldSet(v, MatchaStringToCGoBuffer(env, v2), v3);
 }
 
-
 JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaGoUntrack(JNIEnv *env, jclass c, jlong v) {
     matchaGoUntrack(v);
 }

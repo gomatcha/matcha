@@ -3,6 +3,7 @@
 #include <jni.h>
 #include <stdlib.h>
 #include <android/log.h>
+#include <stdint.h>
 
 JNIEnv *sEnv;
 jobject sBridge;
@@ -50,7 +51,6 @@ CGoBuffer MatchaByteArrayToCGoBuffer(JNIEnv *env, jbyteArray v) {
     cstr.ptr = buf;
     cstr.len = len;
     return cstr;
-    
 }
 
 jbyteArray MatchaCGoBufferToByteArray(JNIEnv *env, CGoBuffer buf) {
@@ -152,23 +152,33 @@ CGoBuffer MatchaObjcToBytes(ObjcRef v) {
     return MatchaByteArrayToCGoBuffer(sEnv, str);
 }
 
-ObjcRef MatchaObjcArray() {
-    return 0;
+ObjcRef MatchaObjcArray(int64_t len) {
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignArray", "(I)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, len);
 }
 
 int64_t MatchaObjcArrayLen(ObjcRef v) {
-    return 0;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignArrayLen", "(J)J");
+    int64_t x = (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
+    return x;
 }
 
-void MatchaObjcArrayAppend(ObjcRef v, ObjcRef a) {
+void MatchaObjcArraySet(ObjcRef v, ObjcRef a, int64_t idx) {
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignArraySet", "(JJI)V");
+    (*sEnv)->CallVoidMethod(sEnv, sTracker, mid, v, a, idx);
 }
 
-ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t index) {
-    return 0;
+ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t idx) {
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignArrayAt", "(JI)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v, idx);
 }
 
-// Call
 ObjcRef MatchaObjcCallSentinel() {
+    // Not necessary on android.
     return 0;
 }
 

@@ -24,7 +24,7 @@ func Build(flags *Flags, args []string) error {
 }
 
 func Bind(flags *Flags, args []string) error {
-	flags.BuildIOS = false
+	flags.BuildIOS = true
 	flags.BuildAndroid = true
 
 	if !flags.BuildIOS && !flags.BuildAndroid {

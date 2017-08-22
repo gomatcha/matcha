@@ -143,20 +143,23 @@ CGoBuffer MatchaObjcToBytes(ObjcRef v) {
 
 // Array
 
-ObjcRef MatchaObjcArray() {
-    NSMutableArray *val = [NSMutableArray array];
+ObjcRef MatchaObjcArray(int64_t len) {
+    NSMutableArray *val = [NSMutableArray arrayWithCapacity:len];
+    for (NSInteger i = 0; i < len; i++) {
+        val[i] = @0;
+    }
     return MatchaTrackObjc(val);
+}
+
+void MatchaObjcArraySet(ObjcRef v, ObjcRef elem, int64_t idx) {
+    id obj = MatchaGetObjc(elem);
+    NSMutableArray *val = MatchaGetObjc(v);
+    val[idx] = obj;
 }
 
 int64_t MatchaObjcArrayLen(ObjcRef v) {
     NSMutableArray *val = MatchaGetObjc(v);
     return val.count;
-}
-
-void MatchaObjcArrayAppend(ObjcRef v, ObjcRef elem) {
-    id obj = MatchaGetObjc(elem);
-    NSMutableArray *val = MatchaGetObjc(v);
-    [val addObject:obj];
 }
 
 ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t index) {

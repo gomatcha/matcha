@@ -27,18 +27,16 @@ CGoBuffer MatchaObjcToString(ObjcRef v);
 ObjcRef MatchaObjcBytes(CGoBuffer bytes); // Frees the buffer
 CGoBuffer MatchaObjcToBytes(ObjcRef v);
 
-ObjcRef MatchaObjcArray();
+ObjcRef MatchaObjcArray(int64_t len);
+void MatchaObjcArraySet(ObjcRef v, ObjcRef elem, int64_t idx);
 int64_t MatchaObjcArrayLen(ObjcRef v);
-void MatchaObjcArrayAppend(ObjcRef v, ObjcRef a);
 ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t index);
 
 // Call
 ObjcRef MatchaObjcCallSentinel();
 ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args);
 
-// // Tracker
-// ObjcRef MatchaTrackObjc(id value);
-// id MatchaGetObjc(ObjcRef key);
+// Tracker
 void MatchaUntrackObjc(ObjcRef key);
 
 // ObjcRef MatchaObjcWithGo(GoRef v);
