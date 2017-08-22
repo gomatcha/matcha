@@ -6,10 +6,10 @@ public class MatchaGoValue {
    static {
       System.loadLibrary("gojni");
       
-      matchaInit(Tracker.singleton(), Bridge.singleton());
+      matchaInit(Tracker.singleton());
    }
    
-   private static native void matchaInit(Object tracker, Object bridge);
+   private static native void matchaInit(Object tracker);
    
    protected long goRef;
    
@@ -130,33 +130,4 @@ public class MatchaGoValue {
    protected void finalize() throws Throwable {
       matchaGoUntrack(this.goRef);
    }
-// - (id)initWithGoRef:(GoRef)ref;
-// - (id)initWithBool:(BOOL)v;
-// - (id)initWithInt:(int)v;
-// - (id)initWithLongLong:(long long)v;
-// - (id)initWithUnsignedLongLong:(unsigned long long)v;
-// - (id)initWithDouble:(double)v;
-// - (id)initWithString:(NSString *)v;
-// - (id)initWithData:(NSData *)v;
-// - (id)initWithArray:(NSArray<MatchaGoValue *> *)v;
-// - (id)initWithType:(NSString *)typeName;
-// - (id)initWithFunc:(NSString *)funcName;
-// @property (nonatomic, readonly) GoRef ref;
-// - (BOOL)toBool;
-// - (long long)toLongLong;
-// - (unsigned long long)toUnsignedLongLong;
-// - (double)toDouble;
-// - (NSString *)toString;
-// - (NSData *)toData;
-// - (NSArray *)toArray;
-// - (NSMapTable *)toMapTable;
-// // - (NSDictionary *)toDictionary;
-// - (BOOL)isNil;
-// - (BOOL)isEqual:(MatchaGoValue *)value;
-// - (MatchaGoValue *)elem;
-// - (NSArray<MatchaGoValue *> *)call:(NSString *)method args:(NSArray<MatchaGoValue *> *)args; // pass in nil for the method o call a closure.
-// - (MatchaGoValue *)field:(NSString *)name;
-// - (void)setField:(NSString *)name value:(MatchaGoValue *)value;
-// - (MatchaGoValue *)objectForKeyedSubscript:(NSString *)key;
-// - (void)setObject:(MatchaGoValue *)object forKeyedSubscript:(NSString *)key;
 }

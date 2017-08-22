@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Ljava/lang/Object;Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaInit
-  (JNIEnv *, jclass, jobject, jobject);
+  (JNIEnv *, jclass, jobject);
 
 /*
  * Class:     matcha_MatchaGoValue

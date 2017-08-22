@@ -1,8 +1,11 @@
 package matcha;
 
+import matcha.Bridge;
 import java.util.Map;
 import android.util.Log;
 import java.util.HashMap;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 public class Tracker {
     private static final Tracker instance = new Tracker();
@@ -40,11 +43,39 @@ public class Tracker {
         }
         return a;
     }
-    
-    public synchronized Object call(long v, String method, long args) {
-        return null;
+    public synchronized long foreignBridge() {
+        return track(Bridge.singleton());
     }
-    
+    public synchronized long foreignCall(long v, String method, long args) {
+        Log.v("Bridge", String.format("foreignCall, %d, %s, %d", v, method, args));
+        long[] va = (long[])this.get(args);
+        int len = 0;
+        if (va != null) {
+            len = va.length;
+        }
+        Object[] vb = new Object[len];
+        Class[] vc = new Class[len];
+        for (int i = 0; i < len; i++) {
+            Object e = this.get(va[i]);
+            vb[i] = e;
+            vc[i] = e.getClass();
+        }
+        
+        long test = 0;
+        try {
+            Object a = this.get(v);
+            Method m = a.getClass().getMethod(method, vc);
+            Object rlt = m.invoke(a, vb);
+            test = track(rlt);
+        } catch (NoSuchMethodException e) {
+            throw new IllegalArgumentException("No such method");
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException("Illegal access");
+        } catch (InvocationTargetException e) {
+            throw new IllegalArgumentException("Invocation target");
+        }
+        return test;
+    }
     public synchronized long foreignBool(boolean v) {
         return track(v);
     }
@@ -56,15 +87,21 @@ public class Tracker {
         return track(v);
     }
     public synchronized long foreignToInt64(long v) {
-        long a = (Long)this.get(v);
-        return a;
+        Object a = this.get(v);
+        if (a instanceof Integer) {
+            return ((Integer)a).longValue();
+        }
+        return (Long)a;
     }
     public synchronized long foreignFloat64(double v) {
         return track(v);
     }
     public synchronized double foreignToFloat64(long v) {
-        double a = (Double)this.get(v);
-        return a;
+        Object a = this.get(v);
+        if (a instanceof Float) {
+            return ((Float)a).doubleValue();
+        }
+        return (Double)a;
     }
     public synchronized long foreignGoRef(long v) {
         return track(new MatchaGoValue(v, false));

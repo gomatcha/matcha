@@ -12,16 +12,10 @@
 
 void TestFunc();
 
-JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaInit(JNIEnv *env, jclass c, jobject tracker, jobject bridge) {
+JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaInit(JNIEnv *env, jclass c, jobject tracker) {
     sEnv = env;
     sTracker = (*env)->NewGlobalRef(env, tracker);
-    sBridge = (*env)->NewGlobalRef(env, bridge);
-    
-    printf("matchaInit%p,%p,%p,%p", sTracker, tracker, sBridge, bridge);
-    
     TestFunc();
-    // JavaVM *jvm;
-    // (*env)->GetJavaVM(env, &jvm);
 }
 
 JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoBool(JNIEnv *env, jclass c, jboolean v) {

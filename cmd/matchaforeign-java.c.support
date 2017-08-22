@@ -6,7 +6,6 @@
 #include <stdint.h>
 
 JNIEnv *sEnv;
-jobject sBridge;
 jobject sTracker;
 
 #define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__);
@@ -61,9 +60,9 @@ jbyteArray MatchaCGoBufferToByteArray(JNIEnv *env, CGoBuffer buf) {
 }
 
 ObjcRef MatchaObjcBridge_() {
-    // jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "track", "(Ljava/lang/Object;)J");
-    // return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
-    return 0; // TODO(KD):
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBridge", "()J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid);
 }
 
 ObjcRef MatchaObjcBool(bool v) {
@@ -183,9 +182,11 @@ ObjcRef MatchaObjcCallSentinel() {
 }
 
 ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args) {
+    jstring method = MatchaCGoBufferToString(sEnv, str);
     
-    
-    return 0;
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignCall", "(JLjava/lang/String;J)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v, method, args);
 }
 
 // Tracker

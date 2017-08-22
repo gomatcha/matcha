@@ -4,7 +4,6 @@
 #include <jni.h>
 
 extern JNIEnv *sEnv;
-extern jobject sBridge;
 extern jobject sTracker;
 
 ObjcRef MatchaTrackObjc(jobject v);
