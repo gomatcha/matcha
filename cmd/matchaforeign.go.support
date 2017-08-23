@@ -5,9 +5,9 @@ package bridge
 // bindings.
 
 /*
-// #cgo CFLAGS: -x objective-c -fobjc-arc -Werror
-// #cgo LDFLAGS: -framework Foundation -landroid -llog // TODO(KD): switch for android and objective c???
-#cgo LDFLAGS: -landroid -llog
+#cgo CFLAGS: -x objective-c -fobjc-arc -Werror
+#cgo LDFLAGS: -framework Foundation
+// #cgo LDFLAGS: -landroid -llog
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -41,7 +41,7 @@ func TestFunc() {
     
     fmt.Println("blah2", arr2[0].ToBool(), arr2[1].ToInt64(), arr2[2].ToFloat64(), arr2[3].ToString(), string(arr2[4].ToBytes()), "~")
     
-    bridge := Bridge()
+    bridge := Bridge("a")
     fmt.Println("bridge", bridge)
     bridgetret := bridge.Call("test")
     fmt.Println("bridgeret", bridgetret.ToInt64(), bridgetret);
@@ -65,8 +65,9 @@ func (v *Value)_ref() C.ObjcRef {
     return C.ObjcRef(v.ref)
 }
 
-func Bridge() *Value {
-    return newValue(C.MatchaObjcBridge_())
+func Bridge(a string) *Value {
+    cstr := cString(a)
+    return newValue(C.MatchaForeignBridge(cstr))
 }
 
 func Nil() *Value {

@@ -25,7 +25,7 @@ func Build(flags *Flags, args []string) error {
 
 func Bind(flags *Flags, args []string) error {
 	flags.BuildIOS = true
-	flags.BuildAndroid = true
+	flags.BuildAndroid = false
 
 	if !flags.BuildIOS && !flags.BuildAndroid {
 		fmt.Println("No target specified. Use -ios or -android.")
@@ -141,13 +141,16 @@ func Bind(flags *Flags, args []string) error {
 			return fmt.Errorf("failed to create the binding package for iOS: %v", err)
 		}
 
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaobjc.h"), filepath.Join(cmdPath, "matchaobjc.h.support")); err != nil {
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.h"), filepath.Join(cmdPath, "matchaforeign.h.support")); err != nil {
 			return err
 		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaobjc.m"), filepath.Join(cmdPath, "matchaobjc.m.support")); err != nil {
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign-objc.h"), filepath.Join(cmdPath, "matchaforeign-objc.h.support")); err != nil {
 			return err
 		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaobjc.go"), filepath.Join(cmdPath, "matchaobjc.go.support")); err != nil {
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign-objc.m"), filepath.Join(cmdPath, "matchaforeign-objc.m.support")); err != nil {
+			return err
+		}
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.go"), filepath.Join(cmdPath, "matchaforeign.go.support")); err != nil {
 			return err
 		}
 		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago.h"), filepath.Join(cmdPath, "matchago.h.support")); err != nil {
@@ -192,7 +195,7 @@ func Bind(flags *Flags, args []string) error {
 			}
 
 			// Copy headers into Xcode project.
-			if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchaobjc.h"), filepath.Join(cmdPath, "matchaobjc.h.support")); err != nil {
+			if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchaobjc.h"), filepath.Join(cmdPath, "matchaforeign.h.support")); err != nil {
 				return err
 			}
 			if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchago.h"), filepath.Join(cmdPath, "matchago.h.support")); err != nil {

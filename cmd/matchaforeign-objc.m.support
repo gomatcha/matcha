@@ -2,8 +2,14 @@
 #include <stdint.h>
 #include <string.h>
 #import <Foundation/Foundation.h>
-#include "matchaobjc.h"
+#include "matchaforeign.h"
+#include "matchaforeign-objc.h"
 #include "matchago.h"
+#include "matchago-objc.h"
+
+@interface MatchaObjcBridge ()
+@property (nonatomic, strong) NSMutableDictionary<NSString *, id<NSObject>> *dictionary;
+@end
 
 @implementation MatchaObjcBridge
 + (id)sharedBridge {
@@ -14,6 +20,22 @@
     });
     return sBridge;
 }
+
+- (id)init {
+    if ((self = [super init])) {
+        self.dictionary = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
+- (void)setObject:(id<NSObject>)obj forKey:(NSString *)string {
+    self.dictionary[string] = obj;
+}
+
+- (id<NSObject>)objectForKey:(NSString *)string {
+    return self.dictionary[string];
+}
+
 @end
 
 @interface MatchaTracker : NSObject {
@@ -83,8 +105,9 @@
 
 @end
 
-ObjcRef MatchaObjcBridge_() {
-    id root = [MatchaObjcBridge sharedBridge];
+ObjcRef MatchaForeignBridge(CGoBuffer str) {
+    NSString *string = MatchaCGoBufferToNSString(str);
+    MatchaObjcBridge *root = [[MatchaObjcBridge sharedBridge] objectForKey:string];;
     return MatchaTrackObjc(root);
 }
 

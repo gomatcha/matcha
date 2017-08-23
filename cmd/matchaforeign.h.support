@@ -12,7 +12,7 @@ typedef struct CGoBuffer {
     int64_t len; // length in bytes
 } CGoBuffer;
 
-ObjcRef MatchaObjcBridge_();
+ObjcRef MatchaForeignBridge(CGoBuffer str); // Frees the buffer
 
 ObjcRef MatchaObjcBool(bool v);
 bool MatchaObjcToBool(ObjcRef v);

@@ -59,10 +59,12 @@ jbyteArray MatchaCGoBufferToByteArray(JNIEnv *env, CGoBuffer buf) {
     return array;
 }
 
-ObjcRef MatchaObjcBridge_() {
+ObjcRef MatchaForeignBridge(CGoBuffer str) {
+    jstring *string = MatchaCGoBufferToString(sEnv, str);
+    
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBridge", "()J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBridge", "(Ljava/lang/String;)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, string);
 }
 
 ObjcRef MatchaObjcBool(bool v) {

@@ -2,8 +2,8 @@ package matcha;
 
 import matcha.Bridge;
 import java.util.Map;
-import android.util.Log;
 import java.util.HashMap;
+import android.util.Log;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 
@@ -43,8 +43,9 @@ public class Tracker {
         }
         return a;
     }
-    public synchronized long foreignBridge() {
-        return track(Bridge.singleton());
+    public synchronized long foreignBridge(String key) {
+        Bridge bridge = Bridge.singleton();
+        return track(bridge.get(key));
     }
     public synchronized long foreignCall(long v, String method, long args) {
         Log.v("Bridge", String.format("foreignCall, %d, %s, %d", v, method, args));

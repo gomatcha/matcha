@@ -5,10 +5,13 @@
 
 @interface MatchaObjcBridge : NSObject
 + (MatchaObjcBridge *)sharedBridge;
+- (void)setObject:(id<NSObject>)obj forKey:(NSString *)string;
+- (id<NSObject>)objectForKey:(NSString *)string;
 @end
 
 // Tracker
-void MatchaUntrackObjc(ObjcRef key);
+ObjcRef MatchaTrackObjc(id value);
+id MatchaGetObjc(ObjcRef key);
 
 // Utilities
 NSString *MatchaCGoBufferToNSString(CGoBuffer buf); // Frees the buffer.

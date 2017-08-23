@@ -2,7 +2,7 @@
 #define MOCHIGO_OBJC_H
 
 #import <Foundation/Foundation.h>
-#import "matchaobjc.h"
+#import "matchaforeign.h"
 #import "matchago.h"
 @class MatchaGoValue;
 
