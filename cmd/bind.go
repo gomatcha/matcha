@@ -1,3 +1,7 @@
+// Copyright 2014 The Go Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package cmd
 
 import (
@@ -14,7 +18,7 @@ import (
 )
 
 func Build(flags *Flags, args []string) error {
-	iosDir, err := PackageDir(flags, "gomatcha.io/matcha/ios")
+	iosDir, err := PackageDir(flags, "gomatcha.io/matcha")
 	if err != nil {
 		return err
 	}
@@ -25,7 +29,7 @@ func Build(flags *Flags, args []string) error {
 
 func Bind(flags *Flags, args []string) error {
 	flags.BuildIOS = true
-	flags.BuildAndroid = false
+	flags.BuildAndroid = true
 
 	if !flags.BuildIOS && !flags.BuildAndroid {
 		fmt.Println("No target specified. Use -ios or -android.")
@@ -103,13 +107,6 @@ func Bind(flags *Flags, args []string) error {
 		}
 	}
 
-	// Build the "matcha/bridge" dir
-	gopathDir := filepath.Join(tempdir, "GOPATH")
-	bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "bridge")
-	if err := Mkdir(flags, bridgeDir); err != nil {
-		return err
-	}
-
 	// Get the supporting files
 	cmdPath, err := PackageDir(flags, "gomatcha.io/matcha/cmd")
 	if err != nil {
@@ -118,6 +115,13 @@ func Bind(flags *Flags, args []string) error {
 
 	// Begin iOS
 	if flags.BuildIOS {
+		// Build the "matcha/bridge" dir
+		gopathDir := filepath.Join(tempdir, "IOS-GOPATH")
+		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "bridge")
+		if err := Mkdir(flags, bridgeDir); err != nil {
+			return err
+		}
+
 		// Make $WORK/matcha-ios
 		workOutputDir := filepath.Join(tempdir, "matcha-ios")
 		if err := Mkdir(flags, workOutputDir); err != nil {
@@ -141,6 +145,9 @@ func Bind(flags *Flags, args []string) error {
 			return fmt.Errorf("failed to create the binding package for iOS: %v", err)
 		}
 
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matcha.go"), filepath.Join(cmdPath, "matcha-objc.go.support")); err != nil {
+			return err
+		}
 		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.h"), filepath.Join(cmdPath, "matchaforeign.h.support")); err != nil {
 			return err
 		}
@@ -272,12 +279,19 @@ func Bind(flags *Flags, args []string) error {
 			}
 		} else {
 			// Copy binary into place.
-			if err := CopyFile(flags, filepath.Join(outputDir, "MatchaBridge", "MatchaBridge", "MatchaBridge.a"), binaryPath); err != nil {
+			if err := CopyFile(flags, filepath.Join(outputDir, "ios", "MatchaBridge", "MatchaBridge", "MatchaBridge.a"), binaryPath); err != nil {
 				return err
 			}
 		}
 	}
 	if flags.BuildAndroid {
+		// Build the "matcha/bridge" dir
+		gopathDir := filepath.Join(tempdir, "ANDROID-GOPATH")
+		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "bridge")
+		if err := Mkdir(flags, bridgeDir); err != nil {
+			return err
+		}
+
 		pkgs2 := []*build.Package{}
 		for _, i := range pkgs {
 			pkgs2 = append(pkgs2, i)
@@ -305,6 +319,9 @@ func Bind(flags *Flags, args []string) error {
 			return fmt.Errorf("failed to create the main package for android: %v", err)
 		}
 
+		if err := CopyFile(flags, filepath.Join(bridgeDir, "matcha.go"), filepath.Join(cmdPath, "matcha-java.go.support")); err != nil {
+			return err
+		}
 		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.h"), filepath.Join(cmdPath, "matchaforeign.h.support")); err != nil {
 			return err
 		}
@@ -345,6 +362,19 @@ func Bind(flags *Flags, args []string) error {
 			return err
 		}
 
+		// Make $WORK/matcha-android
+		workOutputDir := filepath.Join(tempdir, "matcha-android")
+		if err := Mkdir(flags, workOutputDir); err != nil {
+			return err
+		}
+
+		// Make aar output file.
+		aarDirPath := filepath.Join(workOutputDir, "MatchaBridge")
+		aarPath := filepath.Join(workOutputDir, "MatchaBridge", "matchabridge.aar")
+		if err := Mkdir(flags, aarDirPath); err != nil {
+			return err
+		}
+
 		// Generate binding code and java source code only when processing the first package.
 		for _, arch := range androidArchs {
 			androidENV, err := GetAndroidEnv(gomobpath)
@@ -366,7 +396,18 @@ func Bind(flags *Flags, args []string) error {
 				return err
 			}
 		}
-		if err := BuildAAR(androidDir, pkgs2, androidArchs, tempdir); err != nil {
+		if err := BuildAAR(flags, androidDir, pkgs2, androidArchs, tempdir, aarPath); err != nil {
+			return err
+		}
+
+		// Create output dir
+		outputDir := flags.BuildO
+		if outputDir == "" {
+			outputDir = "Matcha-iOS"
+		}
+
+		// Copy binary into place.
+		if err := CopyFile(flags, filepath.Join(outputDir, "android", "MatchaBridge", "matchabridge.aar"), aarPath); err != nil {
 			return err
 		}
 	}

@@ -1,3 +1,7 @@
+// Copyright 2014 The Go Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package cmd
 
 import (
@@ -237,20 +241,10 @@ func AndroidAPIPath() (string, error) {
 //  aidl (optional, not relevant)
 //
 // javac and jar commands are needed to build classes.jar.
-func BuildAAR(androidDir string, pkgs []*build.Package, androidArchs []string, tmpdir string) (err error) {
-	buildO := ""
-	buildN := false
-	buildV := false
-
+func BuildAAR(flags *Flags, androidDir string, pkgs []*build.Package, androidArchs []string, tmpdir string, aarPath string) (err error) {
 	var out io.Writer = ioutil.Discard
-	if buildO == "" {
-		buildO = "matcha.aar"
-	}
-	if !strings.HasSuffix(buildO, ".aar") {
-		return fmt.Errorf("output file name %q does not end in '.aar'", buildO)
-	}
-	if !buildN {
-		f, err := os.Create(buildO)
+	if !flags.BuildN {
+		f, err := os.Create(aarPath)
 		if err != nil {
 			return err
 		}
@@ -264,7 +258,7 @@ func BuildAAR(androidDir string, pkgs []*build.Package, androidArchs []string, t
 
 	aarw := zip.NewWriter(out)
 	aarwcreate := func(name string) (io.Writer, error) {
-		if buildV {
+		if flags.BuildV {
 			fmt.Fprintf(os.Stderr, "aar: %s\n", name)
 		}
 		return aarw.Create(name)
@@ -288,7 +282,7 @@ func BuildAAR(androidDir string, pkgs []*build.Package, androidArchs []string, t
 		return err
 	}
 	src := filepath.Join(androidDir, "src/main/java")
-	if err := BuildJar(w, src, tmpdir); err != nil {
+	if err := BuildJar(flags, w, src, tmpdir); err != nil {
 		return err
 	}
 
@@ -341,7 +335,7 @@ func BuildAAR(androidDir string, pkgs []*build.Package, androidArchs []string, t
 		if err != nil {
 			return err
 		}
-		if !buildN {
+		if !flags.BuildN {
 			r, err := os.Open(filepath.Join(androidDir, "src/main/jniLibs/"+lib))
 			if err != nil {
 				return err
@@ -367,14 +361,11 @@ func BuildAAR(androidDir string, pkgs []*build.Package, androidArchs []string, t
 	return aarw.Close()
 }
 
-func BuildJar(w io.Writer, srcDir string, tmpdir string) error {
-	buildN := false
+func BuildJar(flags *Flags, w io.Writer, srcDir string, tmpdir string) error {
 	bindClasspath := ""
-	buildX := false
-	buildV := false
 
 	var srcFiles []string
-	if buildN {
+	if flags.BuildN {
 		srcFiles = []string{"*.java"}
 	} else {
 		err := filepath.Walk(srcDir, func(path string, info os.FileInfo, err error) error {
@@ -392,7 +383,7 @@ func BuildJar(w io.Writer, srcDir string, tmpdir string) error {
 	}
 
 	dst := filepath.Join(tmpdir, "javac-output")
-	if !buildN {
+	if !flags.BuildN {
 		if err := os.MkdirAll(dst, 0700); err != nil {
 			return err
 		}
@@ -423,15 +414,15 @@ func BuildJar(w io.Writer, srcDir string, tmpdir string) error {
 	}
 
 	// fmt.Println("javac", args)
-	if buildX {
-		// KD: printcmd("jar c -C %s .", dst)
-	}
-	if buildN {
+	// if buildX {
+	// KD: printcmd("jar c -C %s .", dst)
+	// }
+	if flags.BuildN {
 		return nil
 	}
 	jarw := zip.NewWriter(w)
 	jarwcreate := func(name string) (io.Writer, error) {
-		if buildV {
+		if flags.BuildV {
 			fmt.Fprintf(os.Stderr, "jar: %s\n", name)
 		}
 		return jarw.Create(name)

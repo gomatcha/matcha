@@ -1,0 +1,7 @@
+package bridge
+
+/*
+#cgo CFLAGS: 
+#cgo LDFLAGS: -landroid -llog
+*/
+import "C"

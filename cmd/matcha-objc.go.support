@@ -1,0 +1,7 @@
+package bridge
+
+/*
+#cgo CFLAGS: -x objective-c -fobjc-arc -Werror
+#cgo LDFLAGS: -framework Foundation
+*/
+import "C"

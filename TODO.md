@@ -1,5 +1,5 @@
 Documentation:
-* Bridging to Native
+* Get android project setup. with protobuf.
 
 High:
 * Android.
