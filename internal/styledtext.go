@@ -56,7 +56,7 @@ func (st *StyledText) Size(min layout.Point, max layout.Point, maxLines int) lay
 		return layout.Pt(0, 0)
 	}
 
-	pointData := bridge.Bridge().Call("sizeForAttributedString:maxLines:", bridge.Bytes(data), bridge.Int64(int64(maxLines))).ToInterface().([]byte)
+	pointData := bridge.Bridge("").Call("sizeForAttributedString:maxLines:", bridge.Bytes(data), bridge.Int64(int64(maxLines))).ToInterface().([]byte)
 	pbpoint := &pb.Point{}
 	err = proto.Unmarshal(pointData, pbpoint)
 	if err != nil {

@@ -5,22 +5,26 @@
 #import "MatchaDeadlockLogger.h"
 #import "MatchaProtobuf.h"
 
-@implementation MatchaObjcBridge (Extensions)
+@implementation MatchaObjcBridge_X
 
-- (void)configure {
++ (void)configure {
     static dispatch_once_t sOnce = 0;
     dispatch_once(&sOnce, ^{
         [MatchaDeadlockLogger sharedLogger]; // Initialize
+        
+        MatchaObjcBridge_X *x = [[MatchaObjcBridge_X alloc] init];
     
         static CADisplayLink *displayLink = nil;
         if (displayLink == nil) {
-            displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(screenUpdate)];
+            displayLink = [CADisplayLink displayLinkWithTarget:x selector:@selector(screenUpdate)];
     //        displayLink.preferredFramesPerSecond = 1;
             [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
         }
         
         MatchaGoValue *screenScaleFunc = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/internal/device setScreenScale"];
         [screenScaleFunc call:nil args:@[[[MatchaGoValue alloc] initWithDouble:UIScreen.mainScreen.scale]]];
+        
+        [[MatchaObjcBridge sharedBridge] setObject:x forKey:@""];
     });
 }
 

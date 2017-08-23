@@ -1,9 +1,7 @@
 #ifndef MOCHIGO_H
 #define MOCHIGO_H
 
-#import <Foundation/Foundation.h>
-#include "matchaobjc.h"
-@class MatchaGoValue;
+#include <stdbool.h>
 
 GoRef matchaGoBool(bool);
 bool matchaGoToBool(GoRef);
@@ -41,6 +39,9 @@ void matchaGoFieldSet(GoRef, CGoBuffer, GoRef);
 
 void matchaGoUntrack(GoRef);
 
+#import <Foundation/Foundation.h>
+@class MatchaGoValue;
+
 @interface MatchaGoBridge : NSObject
 + (MatchaGoBridge *)sharedBridge;
 @end
@@ -65,8 +66,6 @@ void matchaGoUntrack(GoRef);
 - (NSString *)toString;
 - (NSData *)toData;
 - (NSArray *)toArray;
-- (NSMapTable *)toMapTable;
-// - (NSDictionary *)toDictionary;
 - (BOOL)isNil;
 - (BOOL)isEqual:(MatchaGoValue *)value;
 - (MatchaGoValue *)elem;

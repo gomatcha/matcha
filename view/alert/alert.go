@@ -60,7 +60,7 @@ func (a *_alert) display() {
 	if err != nil {
 		return
 	}
-	bridge.Bridge().Call("displayAlert:", bridge.Bytes(data))
+	bridge.Bridge("").Call("displayAlert:", bridge.Bytes(data))
 }
 
 // Alert displays an alert with the given title, message and buttons. If no buttons are passed, a default OK button is created.

@@ -35,7 +35,8 @@
 
 - (id)initWithGoValue:(MatchaGoValue *)value {
     if ((self = [super initWithNibName:nil bundle:nil])) {
-        [[MatchaObjcBridge sharedBridge] configure];
+        [MatchaObjcBridge_X configure];
+        [[MatchaObjcBridge sharedBridge] setObject:[MatchaObjcBridge_X new] forKey:@""];
         
         self.goValue = value;
         self.identifier = (int)[value call:@"Id" args:nil][0].toLongLong;

@@ -47,7 +47,7 @@ type ImageResource struct {
 
 // MustLoadImage loads the image at path.
 func LoadImage(path string) (*ImageResource, error) {
-	propData := bridge.Bridge().Call("propertiesForResource:", bridge.String(path)).ToInterface().([]byte)
+	propData := bridge.Bridge("").Call("propertiesForResource:", bridge.String(path)).ToInterface().([]byte)
 	props := &pb.ImageProperties{}
 	err := proto.Unmarshal(propData, props)
 	if err != nil {
@@ -98,7 +98,7 @@ func (res *ImageResource) Scale() float64 {
 }
 
 func (res *ImageResource) load() {
-	data := bridge.Bridge().Call("imageForResource:", bridge.String(res.path)).ToInterface().([]byte)
+	data := bridge.Bridge("").Call("imageForResource:", bridge.String(res.path)).ToInterface().([]byte)
 	reader := bytes.NewReader(data)
 	img, _, err := image.Decode(reader)
 	if err != nil {

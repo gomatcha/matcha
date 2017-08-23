@@ -1,9 +1,8 @@
 #ifndef MOCHIOBJC_H
 #define MOCHIOBJC_H
 
-#import <Foundation/Foundation.h>
-
-int MatchaTest();
+#include <stdbool.h>
+#include <stdint.h>
 
 typedef int64_t ObjcRef;
 typedef int64_t GoRef;
@@ -13,11 +12,7 @@ typedef struct CGoBuffer {
     int64_t len; // length in bytes
 } CGoBuffer;
 
-@interface MatchaObjcBridge : NSObject
-+ (MatchaObjcBridge *)sharedBridge;
-@end
-
-ObjcRef MatchaObjcBridge_();
+ObjcRef MatchaForeignBridge(CGoBuffer str); // Frees the buffer
 
 ObjcRef MatchaObjcBool(bool v);
 bool MatchaObjcToBool(ObjcRef v);
@@ -32,33 +27,25 @@ CGoBuffer MatchaObjcToString(ObjcRef v);
 ObjcRef MatchaObjcBytes(CGoBuffer bytes); // Frees the buffer
 CGoBuffer MatchaObjcToBytes(ObjcRef v);
 
-ObjcRef MatchaObjcArray();
+ObjcRef MatchaObjcArray(int64_t len);
+void MatchaObjcArraySet(ObjcRef v, ObjcRef elem, int64_t idx);
 int64_t MatchaObjcArrayLen(ObjcRef v);
-void MatchaObjcArrayAppend(ObjcRef v, ObjcRef a);
 ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t index);
-
-// ObjcRef MatchaObjcDict();
-// ObjcRef MatchaObjcDictKeys(ObjcRef v);
-// ObjcRef MatchaObjcDictGet(ObjcRef v, ObjcRef key);
-// ObjcRef MatchaObjcDictSet(ObjcRef v, ObjcRef key, ObjCRef value);
 
 // Call
 ObjcRef MatchaObjcCallSentinel();
 ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args);
 
 // Tracker
-ObjcRef MatchaTrackObjc(id value);
-id MatchaGetObjc(ObjcRef key);
 void MatchaUntrackObjc(ObjcRef key);
-
-// Utilities
-NSString *MatchaCGoBufferToNSString(CGoBuffer buf); // Frees the buffer.
-CGoBuffer MatchaNSStringToCGoBuffer(NSString *str); // Allocates a buffer.
-NSData *MatchaCGoBufferToNSData(CGoBuffer buf); // Frees the buffer.
-CGoBuffer MatchaNSDataToCGoBuffer(NSData *data); // Allocates a buffer.
-
 
 // ObjcRef MatchaObjcWithGo(GoRef v);
 // GoRef MatchaObjcToGo(ObjcRef v);
+
+@interface MatchaObjcBridge : NSObject
++ (MatchaObjcBridge *)sharedBridge;
+- (void)setObject:(id<NSObject>)obj forKey:(NSString *)string;
+- (id<NSObject>)objectForKey:(NSString *)string;
+@end
 
 #endif //MOCHIOBJC_H

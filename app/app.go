@@ -7,5 +7,5 @@ import (
 
 // AssetsDir returns the path to the app's assets directory. `NSBundle.mainBundle.resourcePath`
 func AssetsDir() (string, error) {
-	return bridge.Bridge().Call("assetsDir").ToString(), nil
+	return bridge.Bridge("").Call("assetsDir").ToString(), nil
 }
