@@ -1,6 +1,6 @@
 package io.gomatcha.bridge;
 
-public class MatchaGoValue {
+public class GoValue {
    static {
       System.loadLibrary("gojni");
       
@@ -11,34 +11,34 @@ public class MatchaGoValue {
    
    protected long goRef;
    
-   protected MatchaGoValue(long goref, boolean empty) {
+   protected GoValue(long goref, boolean empty) {
       this.goRef = goref;
    }
-   public MatchaGoValue(boolean v) {
+   public GoValue(boolean v) {
       this(matchaGoBool(v), false);
    }
-   public MatchaGoValue(long v) {
+   public GoValue(long v) {
       this(matchaGoLong(v), false);
    }
-   public MatchaGoValue(double v) {
+   public GoValue(double v) {
       this(matchaGoDouble(v), false);
    }
-   public MatchaGoValue(String v) {
+   public GoValue(String v) {
       this(matchaGoString(v), false);
    }
-   public MatchaGoValue(byte[] v) {
+   public GoValue(byte[] v) {
       this(matchaGoByteArray(v), false);
    }
-   public MatchaGoValue(MatchaGoValue[] v) {
+   public GoValue(GoValue[] v) {
       this(makeGoArray(v), false);
    }
-   public static MatchaGoValue withFunc(String v) {
-      return new MatchaGoValue(matchaGoFunc(v), false);
+   public static GoValue withFunc(String v) {
+      return new GoValue(matchaGoFunc(v), false);
    }
-   public static MatchaGoValue withType(String v) {
-      return new MatchaGoValue(matchaGoType(v), false);
+   public static GoValue withType(String v) {
+      return new GoValue(matchaGoType(v), false);
    }
-   private static long makeGoArray(MatchaGoValue[] v) {
+   private static long makeGoArray(GoValue[] v) {
       long[] array = new long[v.length];
       for (int i = 0; i < v.length; i++) {
          array[i] = v[i].goRef;
@@ -70,12 +70,12 @@ public class MatchaGoValue {
    public byte[] toByteArray() {
       return matchaGoToByteArray(this.goRef);
    }
-   public MatchaGoValue[] toArray() {
+   public GoValue[] toArray() {
       long[] array = matchaGoToArray(this.goRef);
       
-      MatchaGoValue[] array2 = new MatchaGoValue[array.length];
+      GoValue[] array2 = new GoValue[array.length];
       for (int i = 0; i < array.length; i++) {
-         array2[i] = new MatchaGoValue(array[i], false);
+         array2[i] = new GoValue(array[i], false);
       }
       return array2;
    }
@@ -87,32 +87,32 @@ public class MatchaGoValue {
    private static native byte[] matchaGoToByteArray(long a);
    private static native long[] matchaGoToArray(long a);
    
-   public MatchaGoValue elem() {
-      return new MatchaGoValue(matchaGoElem(this.goRef), false);
+   public GoValue elem() {
+      return new GoValue(matchaGoElem(this.goRef), false);
    }
    
    public boolean isNil() {
       return matchaGoIsNil(this.goRef);
    }
    
-   public boolean equals(MatchaGoValue v) {
+   public boolean equals(GoValue v) {
       return matchaGoEqual(this.goRef, v.goRef);
    }
    
-   public MatchaGoValue[] call(String v, MatchaGoValue[] v2) {
+   public GoValue[] call(String v, GoValue[] v2) {
       if (v2 == null) {
-         v2 = new MatchaGoValue[0];
+         v2 = new GoValue[0];
       }
-      MatchaGoValue x = new MatchaGoValue(v2);
+      GoValue x = new GoValue(v2);
       long goRef = matchaGoCall(this.goRef, v, x.goRef);
-      return new MatchaGoValue(goRef, false).toArray();
+      return new GoValue(goRef, false).toArray();
    }
    
-   public MatchaGoValue field(String v) {
-      return new MatchaGoValue(matchaGoField(this.goRef, v), false);
+   public GoValue field(String v) {
+      return new GoValue(matchaGoField(this.goRef, v), false);
    }
    
-   public void setField(String a, MatchaGoValue v) {
+   public void setField(String a, GoValue v) {
       matchaGoFieldSet(this.goRef, a, v.goRef);
    }
    

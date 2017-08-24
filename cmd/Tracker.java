@@ -104,10 +104,10 @@ public class Tracker {
         return (Double)a;
     }
     public synchronized long foreignGoRef(long v) {
-        return track(new MatchaGoValue(v, false));
+        return track(new GoValue(v, false));
     }
     public synchronized long foreignToGoRef(long v) {
-        return ((MatchaGoValue)this.get(v)).goRef;
+        return ((GoValue)this.get(v)).goRef;
     }
     public synchronized long foreignString(String v) {
         return track(v);

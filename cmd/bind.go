@@ -352,7 +352,7 @@ func Bind(flags *Flags, args []string) error {
 		if err := Mkdir(flags, javaDir2); err != nil {
 			return err
 		}
-		if err := CopyFile(flags, filepath.Join(javaDir2, "MatchaGoValue.java"), filepath.Join(cmdPath, "MatchaGoValue.java")); err != nil {
+		if err := CopyFile(flags, filepath.Join(javaDir2, "GoValue.java"), filepath.Join(cmdPath, "GoValue.java")); err != nil {
 			return err
 		}
 		if err := CopyFile(flags, filepath.Join(javaDir2, "Bridge.java"), filepath.Join(cmdPath, "Bridge.java")); err != nil {
