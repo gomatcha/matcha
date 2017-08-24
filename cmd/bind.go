@@ -287,7 +287,7 @@ func Bind(flags *Flags, args []string) error {
 	if flags.BuildAndroid {
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "ANDROID-GOPATH")
-		bridgeDir := filepath.Join(gopathDir, "src", "io", "gomatcha", "bridge")
+		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "bridge")
 		if err := Mkdir(flags, bridgeDir); err != nil {
 			return err
 		}
