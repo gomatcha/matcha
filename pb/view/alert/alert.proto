@@ -3,6 +3,8 @@ package matcha.view.alert;
 
 option go_package = "alert";
 option objc_class_prefix = "MatchaAlertPB";
+option java_package = "io.gomatcha.matcha.pb.view.alert";
+option java_outer_classname = "PbAlert";
 
 message View {
     int64 id = 1;

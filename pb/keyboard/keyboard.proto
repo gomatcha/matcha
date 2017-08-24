@@ -3,6 +3,8 @@ package matcha.keyboard;
 
 option go_package = "keyboard";
 option objc_class_prefix = "MatchaKeyboardPB";
+option java_package = "io.gomatcha.matcha.pb.keyboard";
+option java_outer_classname = "PbKeyboard";
 
 enum Type {
     DEFAULT_TYPE = 0;

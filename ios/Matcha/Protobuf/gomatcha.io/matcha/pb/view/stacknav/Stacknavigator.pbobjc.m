@@ -14,7 +14,7 @@
 #endif
 
  #import "gomatcha.io/matcha/pb/view/stacknav/Stacknavigator.pbobjc.h"
- #import "gomatcha.io/matcha/pb/Color.pbobjc.h"
+ #import "gomatcha.io/matcha/pb/Image.pbobjc.h"
  #import "gomatcha.io/matcha/pb/text/Text.pbobjc.h"
 // @@protoc_insertion_point(imports)
 

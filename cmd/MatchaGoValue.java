@@ -1,6 +1,4 @@
-package matcha;
-
-import matcha.Bridge;
+package io.gomatcha.bridge;
 
 public class MatchaGoValue {
    static {

@@ -3,6 +3,8 @@ package segmentview;
 
 option go_package = "segmentview";
 option objc_class_prefix = "MatchaSegmentViewPb";
+option java_package = "io.gomatcha.matcha.pb.view.segmentview";
+option java_outer_classname = "PbSegmentView";
 
 message View {
     int64 value = 1;

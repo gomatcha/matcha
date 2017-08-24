@@ -1,6 +1,5 @@
-package matcha;
+package io.gomatcha.bridge;
 
-import matcha.Bridge;
 import java.util.Map;
 import java.util.HashMap;
 import android.util.Log;

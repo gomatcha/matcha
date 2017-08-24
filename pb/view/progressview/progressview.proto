@@ -1,9 +1,11 @@
 syntax = "proto3";
 package progressview;
-import "gomatcha.io/matcha/pb/color.proto";
+import "gomatcha.io/matcha/pb/image.proto";
 
 option go_package = "progressview";
 option objc_class_prefix = "MatchaProgressViewPB";
+option java_package = "io.gomatcha.matcha.pb.view.progressview";
+option java_outer_classname = "PbProgressView";
 
 message View {
     double progress = 1;

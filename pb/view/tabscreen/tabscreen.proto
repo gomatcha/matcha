@@ -1,11 +1,12 @@
 syntax = "proto3";
 package matcha.view.tabscreen;
 import "gomatcha.io/matcha/pb/image.proto";
-import "gomatcha.io/matcha/pb/color.proto";
 import "gomatcha.io/matcha/pb/text/text.proto";
 
 option go_package = "tabscreen";
 option objc_class_prefix = "MatchaTabScreenPB";
+option java_package = "io.gomatcha.matcha.pb.view.tabview";
+option java_outer_classname = "PbTabView";
 
 message ChildView {
     string title = 2;

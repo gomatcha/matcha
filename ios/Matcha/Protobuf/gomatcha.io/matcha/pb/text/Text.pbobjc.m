@@ -15,7 +15,7 @@
 
  #import "gomatcha.io/matcha/pb/text/Text.pbobjc.h"
  #import "gomatcha.io/matcha/pb/layout/Layout.pbobjc.h"
- #import "gomatcha.io/matcha/pb/Color.pbobjc.h"
+ #import "gomatcha.io/matcha/pb/Image.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push

@@ -102,6 +102,27 @@ typedef GPB_ENUM(MatchaPBImageOrResource_FieldNumber) {
 
 @end
 
+#pragma mark - MatchaPBColor
+
+typedef GPB_ENUM(MatchaPBColor_FieldNumber) {
+  MatchaPBColor_FieldNumber_Red = 1,
+  MatchaPBColor_FieldNumber_Blue = 2,
+  MatchaPBColor_FieldNumber_Green = 3,
+  MatchaPBColor_FieldNumber_Alpha = 4,
+};
+
+@interface MatchaPBColor : GPBMessage
+
+@property(nonatomic, readwrite) uint32_t red;
+
+@property(nonatomic, readwrite) uint32_t blue;
+
+@property(nonatomic, readwrite) uint32_t green;
+
+@property(nonatomic, readwrite) uint32_t alpha;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

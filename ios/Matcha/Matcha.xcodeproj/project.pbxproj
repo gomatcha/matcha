@@ -26,8 +26,6 @@
 		67F927091F27FFBB00C068AF /* Alert.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67F927071F27FFBB00C068AF /* Alert.pbobjc.h */; };
 		67F9270A1F27FFBB00C068AF /* Alert.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F927081F27FFBB00C068AF /* Alert.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBA701F099EDF005AFEDA /* Matcha.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA6E1F099EDF005AFEDA /* Matcha.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		67FEBAAB1F099F1D005AFEDA /* Color.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA7A1F099F1D005AFEDA /* Color.pbobjc.h */; };
-		67FEBAAC1F099F1D005AFEDA /* Color.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA7B1F099F1D005AFEDA /* Color.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBAAD1F099F1D005AFEDA /* Resource.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA7D1F099F1D005AFEDA /* Resource.pbobjc.h */; };
 		67FEBAAE1F099F1D005AFEDA /* Resource.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA7E1F099F1D005AFEDA /* Resource.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBAAF1F099F1D005AFEDA /* Image.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA7F1F099F1D005AFEDA /* Image.pbobjc.h */; };
@@ -126,8 +124,6 @@
 		67FEBA6B1F099EDF005AFEDA /* Matcha.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Matcha.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67FEBA6E1F099EDF005AFEDA /* Matcha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matcha.h; sourceTree = "<group>"; };
 		67FEBA6F1F099EDF005AFEDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		67FEBA7A1F099F1D005AFEDA /* Color.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.pbobjc.h; sourceTree = "<group>"; };
-		67FEBA7B1F099F1D005AFEDA /* Color.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Color.pbobjc.m; sourceTree = "<group>"; };
 		67FEBA7D1F099F1D005AFEDA /* Resource.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resource.pbobjc.h; sourceTree = "<group>"; };
 		67FEBA7E1F099F1D005AFEDA /* Resource.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resource.pbobjc.m; sourceTree = "<group>"; };
 		67FEBA7F1F099F1D005AFEDA /* Image.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.pbobjc.h; sourceTree = "<group>"; };
@@ -350,8 +346,6 @@
 			isa = PBXGroup;
 			children = (
 				6759EE581F2E686A00B8E0A9 /* app */,
-				67FEBA7A1F099F1D005AFEDA /* Color.pbobjc.h */,
-				67FEBA7B1F099F1D005AFEDA /* Color.pbobjc.m */,
 				67FEBA7C1F099F1D005AFEDA /* env */,
 				67FEBA7F1F099F1D005AFEDA /* Image.pbobjc.h */,
 				67FEBA801F099F1D005AFEDA /* Image.pbobjc.m */,
@@ -680,7 +674,6 @@
 				67FEBAC31F099F1D005AFEDA /* Stacknavigator.pbobjc.h in Headers */,
 				67FEBB0D1F09A18F005AFEDA /* MatchaProtobuf.h in Headers */,
 				673181B01F15F81B00E1839E /* Segmentview.pbobjc.h in Headers */,
-				67FEBAAB1F099F1D005AFEDA /* Color.pbobjc.h in Headers */,
 				67FEBAF91F09A18F005AFEDA /* MatchaViewController.h in Headers */,
 				67FEBAB71F099F1D005AFEDA /* Text.pbobjc.h in Headers */,
 				67FEBABD1F099F1D005AFEDA /* Imageview.pbobjc.h in Headers */,
@@ -788,7 +781,6 @@
 				67FEBB3B1F0A2048005AFEDA /* MatchaTextView.m in Sources */,
 				67FEBB101F09A18F005AFEDA /* MatchaObjcBridge.m in Sources */,
 				67FEBB1A1F09A18F005AFEDA /* MatchaButton.m in Sources */,
-				67FEBAAC1F099F1D005AFEDA /* Color.pbobjc.m in Sources */,
 				67FEBAB61F099F1D005AFEDA /* Paint.pbobjc.m in Sources */,
 				67FEBAB81F099F1D005AFEDA /* Text.pbobjc.m in Sources */,
 				67FEBB0E1F09A18F005AFEDA /* MatchaPressGestureRecognizer.m in Sources */,

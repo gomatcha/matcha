@@ -3,6 +3,8 @@ package app;
 
 option go_package = "app";
 option objc_class_prefix = "MatchaAppPB";
+option java_package = "io.gomatcha.matcha.pb.app";
+option java_outer_classname = "PbApp";
 
 message ActivityIndicator {
     bool visible = 1;

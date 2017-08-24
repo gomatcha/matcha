@@ -7,6 +7,8 @@ import "gomatcha.io/matcha/pb/layout/layout.proto";
 
 option go_package = "touch";
 option objc_class_prefix = "MatchaPBTouch";
+option java_package = "io.gomatcha.matcha.pb.touch";
+option java_outer_classname = "PbTouch";
 
 enum EventKind {
     EVENT_KIND_POSSIBLE = 0;

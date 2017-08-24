@@ -14,7 +14,7 @@
 #endif
 
  #import "gomatcha.io/matcha/pb/paint/Paint.pbobjc.h"
- #import "gomatcha.io/matcha/pb/Color.pbobjc.h"
+ #import "gomatcha.io/matcha/pb/Image.pbobjc.h"
  #import "gomatcha.io/matcha/pb/layout/Layout.pbobjc.h"
 // @@protoc_insertion_point(imports)
 

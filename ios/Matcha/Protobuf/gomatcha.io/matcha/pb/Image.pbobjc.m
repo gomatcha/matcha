@@ -238,6 +238,82 @@ typedef struct MatchaPBImageOrResource__storage_ {
 
 @end
 
+#pragma mark - MatchaPBColor
+
+@implementation MatchaPBColor
+
+@dynamic red;
+@dynamic blue;
+@dynamic green;
+@dynamic alpha;
+
+typedef struct MatchaPBColor__storage_ {
+  uint32_t _has_storage_[1];
+  uint32_t red;
+  uint32_t blue;
+  uint32_t green;
+  uint32_t alpha;
+} MatchaPBColor__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "red",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBColor_FieldNumber_Red,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(MatchaPBColor__storage_, red),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "blue",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBColor_FieldNumber_Blue,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(MatchaPBColor__storage_, blue),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "green",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBColor_FieldNumber_Green,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(MatchaPBColor__storage_, green),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "alpha",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBColor_FieldNumber_Alpha,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(MatchaPBColor__storage_, alpha),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeUInt32,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MatchaPBColor class]
+                                     rootClass:[MatchaPBImageRoot class]
+                                          file:MatchaPBImageRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MatchaPBColor__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

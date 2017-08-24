@@ -14,7 +14,7 @@
 #endif
 
  #import "gomatcha.io/matcha/pb/view/progressview/Progressview.pbobjc.h"
- #import "gomatcha.io/matcha/pb/Color.pbobjc.h"
+ #import "gomatcha.io/matcha/pb/Image.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push

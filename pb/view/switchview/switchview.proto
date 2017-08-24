@@ -3,6 +3,8 @@ package switchview;
 
 option go_package = "switchview";
 option objc_class_prefix = "MatchaPBSwitchView";
+option java_package = "io.gomatcha.matcha.pb.view.switchview";
+option java_outer_classname = "PbSwitchView";
 
 message View {
     bool value = 1;

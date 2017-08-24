@@ -12,34 +12,41 @@
 
 void TestFunc();
 
-JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaInit(JNIEnv *env, jclass c, jobject tracker) {
+jint JNI_OnLoad(JavaVM* vm, void* reserved)
+{
+    printf("WTF!!!");
+    return JNI_VERSION_1_6;
+}
+
+
+JNIEXPORT void JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaInit(JNIEnv *, jclass, jobject) {
     sEnv = env;
     sTracker = (*env)->NewGlobalRef(env, tracker);
     TestFunc();
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoBool(JNIEnv *env, jclass c, jboolean v) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoBool(JNIEnv *, jclass, jboolean) {
     return matchaGoBool(v);
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoLong(JNIEnv *env, jclass c, jlong v) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoLong(JNIEnv *, jclass, jlong) {
     return matchaGoInt64(v);
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoDouble(JNIEnv *env, jclass c, jdouble v) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoDouble(JNIEnv *, jclass, jdouble) {
     return matchaGoFloat64(v);
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoString(JNIEnv *env, jclass c, jstring v) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoString(JNIEnv *, jclass, jstring) {
     return matchaGoString(MatchaStringToCGoBuffer(env, v));
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoByteArray(JNIEnv *env, jclass c, jbyteArray v) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoByteArray(JNIEnv *, jclass, jbyteArray) {
     CGoBuffer cstr = MatchaByteArrayToCGoBuffer(env, v);
     return matchaGoBytes(cstr);
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoArray(JNIEnv *env, jclass c, jlongArray v) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoArray(JNIEnv *, jclass, jlongArray) {
     int len = (*env)->GetArrayLength(env, v);
     GoRef array = matchaGoArray();
     
@@ -54,38 +61,38 @@ JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoArray(JNIEnv *env, jcl
     return array;
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoFunc(JNIEnv *env, jclass c, jstring v) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoFunc(JNIEnv *, jclass, jstring) {
     return matchaGoFunc(MatchaStringToCGoBuffer(env, v));
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoType(JNIEnv *env, jclass c, jstring v) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoType(JNIEnv *, jclass, jstring) {
     return matchaGoType(MatchaStringToCGoBuffer(env, v));
 }
 
-JNIEXPORT jboolean JNICALL Java_matcha_MatchaGoValue_matchaGoToBool(JNIEnv *env, jclass c, jlong v) {
+JNIEXPORT jboolean JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoToBool(JNIEnv *, jclass, jlong) {
     return matchaGoToBool(v);
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoToLong(JNIEnv *env, jclass c, jlong v) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoToLong(JNIEnv *, jclass, jlong) {
     return matchaGoToInt64(v);
 }
 
-JNIEXPORT jdouble JNICALL Java_matcha_MatchaGoValue_matchaGoToDouble(JNIEnv *env, jclass c, jlong v) {
+JNIEXPORT jdouble JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoToDouble(JNIEnv *, jclass, jlong) {
     return matchaGoToFloat64(v);
 }
 
-JNIEXPORT jstring JNICALL Java_matcha_MatchaGoValue_matchaGoToString(JNIEnv *env, jclass c, jlong v) {
+JNIEXPORT jstring JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoToString(JNIEnv *, jclass, jlong) {
     CGoBuffer buf = matchaGoToString(v);
     return MatchaCGoBufferToString(env, buf);
 }
 
-JNIEXPORT jbyteArray JNICALL Java_matcha_MatchaGoValue_matchaGoToByteArray(JNIEnv *env, jclass c, jlong v) {
+JNIEXPORT jbyteArray JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoToByteArray(JNIEnv *, jclass, jlong) {
     CGoBuffer buf = matchaGoToBytes(v);
     jbyteArray a = MatchaCGoBufferToByteArray(env, buf);
     return a;
 }
 
-JNIEXPORT jlongArray JNICALL Java_matcha_MatchaGoValue_matchaGoToArray(JNIEnv *env, jclass c, jlong v) {
+JNIEXPORT jlongArray JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoToArray(JNIEnv *, jclass, jlong) {
     int len = matchaGoArrayLen(v);
     jlongArray array = (*env)->NewLongArray(env, len);
     jlong *arr = (*env)->GetLongArrayElements(env, array, NULL);
@@ -97,30 +104,30 @@ JNIEXPORT jlongArray JNICALL Java_matcha_MatchaGoValue_matchaGoToArray(JNIEnv *e
     return array;
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoElem(JNIEnv *env, jclass c, jlong v) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoElem(JNIEnv *, jclass, jlong) {
     return matchaGoElem(v);
 }
 
-JNIEXPORT jboolean JNICALL Java_matcha_MatchaGoValue_matchaGoIsNil(JNIEnv *env, jclass c, jlong v) {
+JNIEXPORT jboolean JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoIsNil(JNIEnv *, jclass, jlong) {
     return matchaGoIsNil(v);
 }
 
-JNIEXPORT jboolean JNICALL Java_matcha_MatchaGoValue_matchaGoEqual(JNIEnv *env, jclass c, jlong v, jlong v2) {
+JNIEXPORT jboolean JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoEqual(JNIEnv *, jclass, jlong, jlong) {
     return matchaGoEqual(v, v2);
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoCall(JNIEnv *env, jclass c, jlong v, jstring v2, jlong v3) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoCall(JNIEnv *, jclass, jlong, jstring, jlong) {
     return matchaGoCall(v, MatchaStringToCGoBuffer(env, v2), v3);
 }
 
-JNIEXPORT jlong JNICALL Java_matcha_MatchaGoValue_matchaGoField(JNIEnv *env, jclass c, jlong v, jstring v2) {
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoField(JNIEnv *, jclass, jlong, jstring) {
     return matchaGoField(v, MatchaStringToCGoBuffer(env, v2));
 }
 
-JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaGoFieldSet(JNIEnv *env, jclass c, jlong v, jstring v2, jlong v3) {
+JNIEXPORT void JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoFieldSet(JNIEnv *, jclass, jlong, jstring, jlong) {
     matchaGoFieldSet(v, MatchaStringToCGoBuffer(env, v2), v3);
 }
 
-JNIEXPORT void JNICALL Java_matcha_MatchaGoValue_matchaGoUntrack(JNIEnv *env, jclass c, jlong v) {
+JNIEXPORT void JNICALL Java_io_gomatcha_bridge_MatchaGoValue_matchaGoUntrack(JNIEnv *, jclass, jlong) {
     matchaGoUntrack(v);
 }

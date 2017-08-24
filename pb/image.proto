@@ -3,6 +3,8 @@ package matcha;
 
 option go_package = "pb";
 option objc_class_prefix = "MatchaPB";
+option java_package = "io.gomatcha.matcha.pb";
+option java_outer_classname = "Pb";
 
 message Image {
     int64 width = 1;
@@ -20,4 +22,11 @@ message ImageProperties {
 message ImageOrResource {
     Image image = 1;
     string path = 2;
+}
+
+message Color {
+    uint32 red = 1;
+    uint32 blue = 2;
+    uint32 green = 3;
+    uint32 alpha = 4;
 }

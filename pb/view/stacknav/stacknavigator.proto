@@ -1,10 +1,12 @@
 syntax = "proto3";
 package matcha.view.stacknav;
-import "gomatcha.io/matcha/pb/color.proto";
+import "gomatcha.io/matcha/pb/image.proto";
 import "gomatcha.io/matcha/pb/text/text.proto";
 
 option go_package = "stacknav";
 option objc_class_prefix = "MatchaStackScreenPB";
+option java_package = "io.gomatcha.matcha.pb.view.stackview";
+option java_outer_classname = "PbStackView";
 
 message ChildView {
     int64 screenId = 3;

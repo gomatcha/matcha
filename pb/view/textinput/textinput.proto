@@ -5,6 +5,8 @@ import "gomatcha.io/matcha/pb/keyboard/keyboard.proto";
 
 option go_package = "textinput";
 option objc_class_prefix = "MatchaTextInputPB";
+option java_package = "io.gomatcha.matcha.pb.view.textinput";
+option java_outer_classname = "PbTextInput";
 
 message View {
     matcha.text.StyledText styledText = 1;

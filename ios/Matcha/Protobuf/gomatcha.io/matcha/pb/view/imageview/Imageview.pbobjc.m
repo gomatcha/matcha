@@ -14,7 +14,6 @@
 #endif
 
  #import "gomatcha.io/matcha/pb/view/imageview/Imageview.pbobjc.h"
- #import "gomatcha.io/matcha/pb/Color.pbobjc.h"
  #import "gomatcha.io/matcha/pb/Image.pbobjc.h"
 // @@protoc_insertion_point(imports)
 

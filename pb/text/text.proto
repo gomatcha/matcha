@@ -1,10 +1,12 @@
 syntax = "proto3";
 package matcha.text;
 import "gomatcha.io/matcha/pb/layout/layout.proto";
-import "gomatcha.io/matcha/pb/color.proto";
+import "gomatcha.io/matcha/pb/image.proto";
 
 option go_package = "text";
 option objc_class_prefix = "MatchaPB";
+option java_package = "io.gomatcha.matcha.pb.text";
+option java_outer_classname = "PbText";
 
 message SizeFunc {
     StyledText text = 1;

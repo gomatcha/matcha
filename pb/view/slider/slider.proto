@@ -3,6 +3,8 @@ package slider;
 
 option go_package = "slider";
 option objc_class_prefix = "MatchaSliderPb";
+option java_package = "io.gomatcha.matcha.pb.view.slider";
+option java_outer_classname = "PbSlider";
 
 message View {
     double value = 1;

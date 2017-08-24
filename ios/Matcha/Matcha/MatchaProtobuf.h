@@ -14,7 +14,6 @@
 #import "Switchview.pbobjc.h"
 #import "Touch2.pbobjc.h"
 #import "Resource.pbobjc.h"
-#import "Color.pbobjc.h"
 #import "Image.pbobjc.h"
 #import "Textinput.pbobjc.h"
 #import "Keyboard.pbobjc.h"
