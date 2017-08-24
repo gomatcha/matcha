@@ -1,7 +1,11 @@
 Documentation:
-* Get android project setup. with protobuf.
+* Get android rectangles on screen.
+* Painters
+
+Target Android 4.1 API 16 JellyBean
 
 High:
+* Merge all view packages into view/iosview/androidview? androidview.NewStackView(). android.NewStackView(). view.NewTextInput(). view.
 * Android.
 * Delay any ui events while viewcontroller is updating.
 * Rebuild Instagram.
