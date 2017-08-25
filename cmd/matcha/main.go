@@ -32,6 +32,7 @@ var (
 	buildLdflags string // -ldflags
 	buildO       string // -o
 	buildBinary  bool   // -binary
+	buildTargets string // --targets
 )
 
 func init() {
@@ -58,6 +59,7 @@ var InitCmd = &cobra.Command{
 			BuildWork:    buildWork,
 			BuildGcflags: buildGcflags,
 			BuildLdflags: buildLdflags,
+			BuildTargets: buildTargets,
 		}
 		if err := cmd.Init(flags); err != nil {
 			fmt.Println(err)
@@ -73,6 +75,7 @@ func init() {
 	flags.BoolVar(&buildWork, "work", false, "print the name of the temporary work directory and do not delete it when exiting.")
 	flags.StringVar(&buildGcflags, "gcflags", "", "arguments to pass on each go tool compile invocation.")
 	flags.StringVar(&buildLdflags, "ldflags", "", "arguments to pass on each go tool link invocation.")
+	flags.StringVar(&buildTargets, "targets", "", "space separated os/arch. Valid values are: android, ios, android/arm, android/arm64, android/386, android/amd64, ios/arm, ios/arm64, ios/386, ios/amd64.")
 
 	RootCmd.AddCommand(BuildCmd)
 }
@@ -89,6 +92,7 @@ var BuildCmd = &cobra.Command{
 			BuildWork:    buildWork,
 			BuildGcflags: buildGcflags,
 			BuildLdflags: buildLdflags,
+			BuildTargets: buildTargets,
 		}
 		if err := cmd.Build(flags, args); err != nil {
 			fmt.Println(err)
@@ -106,6 +110,7 @@ func init() {
 	flags.StringVar(&buildGcflags, "gcflags", "", "arguments to pass on each go tool compile invocation.")
 	flags.StringVar(&buildLdflags, "ldflags", "", "arguments to pass on each go tool link invocation.")
 	flags.StringVar(&buildO, "output", "", "forces build to write the resulting object to the named output file.")
+	flags.StringVar(&buildTargets, "targets", "", "space separated os/arch. Valid values are: android, darwin, android/arm, android/arm64, android/386, android/amd64, darwin/arm, darwin/arm64, darwin/386, darwin/amd64.")
 
 	RootCmd.AddCommand(InstallCmd)
 }
@@ -124,6 +129,7 @@ var InstallCmd = &cobra.Command{
 			BuildLdflags: buildLdflags,
 			BuildO:       buildO,
 			BuildBinary:  buildBinary,
+			BuildTargets: buildTargets,
 		}
 		if err := cmd.Bind(flags, args); err != nil {
 			fmt.Println(err)

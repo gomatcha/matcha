@@ -54,7 +54,6 @@ public class MatchaView extends RelativeLayout {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         final double width = (double)w / this.getResources().getDisplayMetrics().densityDpi * DisplayMetrics.DENSITY_DEFAULT;
         final double height = (double)h / this.getResources().getDisplayMetrics().densityDpi * DisplayMetrics.DENSITY_DEFAULT;
-        Log.v("OnSizeChange", width  + "," + height +  "." + this.getResources().getDisplayMetrics().densityDpi + "." + DisplayMetrics.DENSITY_DEFAULT);
 
         this.post( new Runnable() {
             @Override

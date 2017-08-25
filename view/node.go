@@ -62,8 +62,6 @@ func (r *Root) start() {
 	id := r.id
 	r.ticker = internal.NewTicker(time.Hour * 99999)
 	_ = r.ticker.Notify(func() {
-		fmt.Println("notify!!!!!!")
-
 		matcha.MainLocker.Lock()
 		defer matcha.MainLocker.Unlock()
 

@@ -15,7 +15,39 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
+	"strings"
 )
+
+func ParseTargets(a string) map[string]struct{} {
+	targetsSlice := strings.Fields(a)
+	if len(targetsSlice) == 0 {
+		targetsSlice = []string{"android", "ios"}
+	}
+	targets := map[string]struct{}{}
+	for _, i := range targetsSlice {
+		switch i {
+		case "android":
+			targets["android"] = struct{}{}
+			targets["android/arm"] = struct{}{}
+			targets["android/arm64"] = struct{}{}
+			targets["android/386"] = struct{}{}
+			targets["android/amd64"] = struct{}{}
+		case "android/arm", "android/arm64", "android/386", "android/amd64":
+			targets["android"] = struct{}{}
+			targets[i] = struct{}{}
+		case "ios":
+			targets["ios"] = struct{}{}
+			targets["ios/arm"] = struct{}{}
+			targets["ios/arm64"] = struct{}{}
+			targets["ios/386"] = struct{}{}
+			targets["ios/amd64"] = struct{}{}
+		case "ios/arm", "ios/arm64", "ios/386", "ios/amd64":
+			targets["ios"] = struct{}{}
+			targets[i] = struct{}{}
+		}
+	}
+	return targets
+}
 
 func Build(flags *Flags, args []string) error {
 	iosDir, err := PackageDir(flags, "gomatcha.io/matcha")
@@ -28,13 +60,7 @@ func Build(flags *Flags, args []string) error {
 }
 
 func Bind(flags *Flags, args []string) error {
-	flags.BuildIOS = false
-	flags.BuildAndroid = true
-
-	if !flags.BuildIOS && !flags.BuildAndroid {
-		fmt.Println("No target specified. Use -ios or -android.")
-		return nil
-	}
+	targets := ParseTargets(flags.BuildTargets)
 
 	// Make $WORK.
 	tempdir, err := NewTmpDir(flags, "")
@@ -114,7 +140,7 @@ func Bind(flags *Flags, args []string) error {
 	}
 
 	// Begin iOS
-	if flags.BuildIOS {
+	if _, ok := targets["ios"]; ok {
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "IOS-GOPATH")
 		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "bridge")
@@ -211,21 +237,34 @@ func Bind(flags *Flags, args []string) error {
 		}
 
 		// Build platform binaries concurrently.
-		matchaDarwinArmEnv, err := DarwinArmEnv(flags)
-		if err != nil {
-			return err
+		envs := [][]string{}
+		if _, ok := targets["ios/arm"]; ok {
+			env, err := DarwinArmEnv(flags)
+			if err != nil {
+				return err
+			}
+			envs = append(envs, env)
 		}
-		matchaDarwinArm64Env, err := DarwinArm64Env(flags)
-		if err != nil {
-			return err
+		if _, ok := targets["ios/arm64"]; ok {
+			env, err := DarwinArm64Env(flags)
+			if err != nil {
+				return err
+			}
+			envs = append(envs, env)
 		}
-		matchaDarwin386Env, err := Darwin386Env(flags)
-		if err != nil {
-			return err
+		if _, ok := targets["ios/386"]; ok {
+			env, err := Darwin386Env(flags)
+			if err != nil {
+				return err
+			}
+			envs = append(envs, env)
 		}
-		matchaDarwinAmd64Env, err := DarwinAmd64Env(flags)
-		if err != nil {
-			return err
+		if _, ok := targets["ios/amd64"]; ok {
+			env, err := DarwinAmd64Env(flags)
+			if err != nil {
+				return err
+			}
+			envs = append(envs, env)
 		}
 
 		type archPath struct {
@@ -234,7 +273,7 @@ func Bind(flags *Flags, args []string) error {
 			err  error
 		}
 		archChan := make(chan archPath)
-		for _, i := range [][]string{matchaDarwinArmEnv, matchaDarwinArm64Env, matchaDarwinAmd64Env, matchaDarwin386Env} {
+		for _, i := range envs {
 			go func(env []string) {
 				arch := Getenv(env, "GOARCH")
 				env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+os.Getenv("GOPATH"))
@@ -284,7 +323,7 @@ func Bind(flags *Flags, args []string) error {
 			}
 		}
 	}
-	if flags.BuildAndroid {
+	if _, ok := targets["android"]; ok {
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "ANDROID-GOPATH")
 		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "bridge")
@@ -297,7 +336,20 @@ func Bind(flags *Flags, args []string) error {
 			pkgs2 = append(pkgs2, i)
 		}
 
-		androidArchs := []string{"arm", "arm64", "386", "amd64"}
+		androidArchs := []string{}
+		if _, ok := targets["android/arm"]; ok {
+			androidArchs = append(androidArchs, "arm")
+		}
+		if _, ok := targets["android/arm64"]; ok {
+			androidArchs = append(androidArchs, "arm64")
+		}
+		if _, ok := targets["android/386"]; ok {
+			androidArchs = append(androidArchs, "386")
+		}
+		if _, ok := targets["android/amd64"]; ok {
+			androidArchs = append(androidArchs, "amd64")
+		}
+
 		gomobpath, err := GoMobilePath()
 		if err != nil {
 			return err
