@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         //GoValue[] v3 = f.call("", null);
         //System.out.format("wubalubadub %s%n", v3[0].toString());
 
-        GoValue rootVC = GoValue.withFunc("gomatcha.io/matcha/examples/constraints New").call("", null)[0];
+        GoValue rootVC = GoValue.withFunc("gomatcha.io/matcha/examples/constraints New").call("")[0];
 
         MatchaView v = new MatchaView(this, rootVC);
         setContentView(v);
