@@ -283,7 +283,7 @@ func Bind(flags *Flags, args []string) error {
 			}(i)
 		}
 		archs := []archPath{}
-		for i := 0; i < 4; i++ {
+		for i := 0; i < len(envs); i++ {
 			arch := <-archChan
 			if arch.err != nil {
 				return arch.err
