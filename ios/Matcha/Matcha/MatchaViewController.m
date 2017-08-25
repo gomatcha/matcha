@@ -57,7 +57,9 @@
     if (!CGRectEqualToRect(self.lastFrame, self.view.frame)) {
         self.lastFrame = self.view.frame;
         
-        [self.goValue call:@"SetSize" args:@[[[MatchaGoValue alloc] initWithCGPoint:CGPointMake(self.view.frame.size.width, self.view.frame.size.height)]]];
+        MatchaGoValue *width = [[MatchaGoValue alloc] initWithDouble:self.view.frame.size.width];
+        MatchaGoValue *height = [[MatchaGoValue alloc] initWithDouble:self.view.frame.size.height];
+        [self.goValue call:@"SetSize" args:@[width, height]];
     }
 }
 
@@ -68,7 +70,7 @@
     return [self.goValue call:@"Call" args:@[goValue, goViewId, goArgs]];
 }
 
-- (void)update:(MatchaNodeRoot *)root {
+- (void)update:(MatchaViewPBRoot *)root {
     self.updating = true;
     [self.viewNode setRoot:root];
     

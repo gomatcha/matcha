@@ -54,10 +54,9 @@
 
 - (void)updateId:(NSInteger)identifier withProtobuf:(NSData *)protobuf {
     MatchaViewPBRoot *pbroot = [[MatchaViewPBRoot alloc] initWithData:protobuf error:nil];
-    MatchaNodeRoot *root = [[MatchaNodeRoot alloc] initWithProtobuf:pbroot];
     
     MatchaViewController *vc = [MatchaViewController viewControllerWithIdentifier:identifier];
-    [vc update:root];
+    [vc update:pbroot];
 }
 
 - (NSString *)assetsDir {

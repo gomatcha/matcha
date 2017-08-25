@@ -99,7 +99,7 @@ public class GoValue {
       return matchaGoEqual(this.goRef, v.goRef);
    }
    
-   public GoValue[] call(String v, GoValue[] v2) {
+   public GoValue[] call(String v, GoValue...v2) {
       if (v2 == null) {
          v2 = new GoValue[0];
       }

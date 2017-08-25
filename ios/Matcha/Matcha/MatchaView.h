@@ -33,7 +33,7 @@ void MatchaRegisterViewController(NSString *string, MatchaViewControllerRegistra
 
 @property (nonatomic, strong) UIViewController<MatchaChildViewController> *viewController;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, MatchaViewNode *> *children;
-- (void)setRoot:(MatchaNodeRoot *)root;
+- (void)setRoot:(MatchaViewPBRoot *)root;
 @property (nonatomic, strong) MatchaViewPBLayoutPaintNode *layoutPaintNode;
 @property (nonatomic, strong) MatchaBuildNode *buildNode;
 @property (nonatomic, strong) NSNumber *identifier;

@@ -85,7 +85,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     return self;
 }
 
-- (void)setRoot:(MatchaNodeRoot *)root {
+- (void)setRoot:(MatchaViewPBRoot *)root {
     MatchaViewPBLayoutPaintNode *pbLayoutPaintNode = [root.layoutPaintNodes objectForKey:self.identifier.longLongValue];
     
     MatchaViewPBBuildNode *pbBuildNode = [root.buildNodes objectForKey:self.identifier.longLongValue];
@@ -113,7 +113,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     NSMutableArray *unmodifiedKeys = [NSMutableArray array];
     if (buildNode != nil && ![buildNode.buildId isEqual:self.buildNode.buildId]) {        
         for (NSNumber *i in self.children) {
-            MatchaBuildNode *child = [root.buildNodes objectForKey:i.longLongValue];
+            MatchaViewPBBuildNode *child = [root.buildNodes objectForKey:i.longLongValue];
             if (child == nil) {
                 [removedKeys addObject:i];
             }
@@ -159,7 +159,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
         // Add/remove subviews
         for (NSNumber *i in addedKeys) {
             MatchaViewNode *child = children[i];
-            child.view.node = [[MatchaBuildNode alloc] initWithProtobuf:[root.buildNodes objectForKey:i.longLongValue]];
+            // child.view.node = [[MatchaBuildNode alloc] initWithProtobuf:[root.buildNodes objectForKey:i.longLongValue]];
             
             if (self.viewController) {
                 // no-op. The view controller will handle this itself.
@@ -246,8 +246,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
             scrollView.matchaContentOffset = origin;
             scrollView.contentOffset = origin;
             
-        } else if (self.parent.viewController == nil) {
-            // let view controllers do their own layout
+        } else if (self.parent.viewController == nil) { // let view controllers do their own layout
             if (!CGRectEqualToRect(f, self.frame)) {
                 self.materializedView.frame = f;
                 self.frame = f;

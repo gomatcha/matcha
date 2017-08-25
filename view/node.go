@@ -3,6 +3,7 @@ package view
 import (
 	"fmt"
 	"reflect"
+	"runtime"
 	"sort"
 	"strings"
 	"sync"
@@ -61,6 +62,8 @@ func (r *Root) start() {
 	id := r.id
 	r.ticker = internal.NewTicker(time.Hour * 99999)
 	_ = r.ticker.Notify(func() {
+		fmt.Println("notify!!!!!!")
+
 		matcha.MainLocker.Lock()
 		defer matcha.MainLocker.Unlock()
 
@@ -75,8 +78,12 @@ func (r *Root) start() {
 			return
 		}
 
-		// fmt.Println(r.root.node.debugString())
-		bridge.Bridge("").Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
+		fmt.Println(r.root.node.debugString())
+		if runtime.GOOS == "android" {
+			bridge.Bridge("").Call("updateViewWithProtobuf", bridge.Int64(id), bridge.Bytes(pb))
+		} else if runtime.GOOS == "darwin" {
+			bridge.Bridge("").Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
+		}
 	})
 }
 
@@ -121,11 +128,11 @@ func (r *Root) Size() layout.Point {
 }
 
 // SetSize sets the size of r.
-func (r *Root) SetSize(p layout.Point) {
+func (r *Root) SetSize(width, height float64) {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
-	r.size = p
+	r.size = layout.Pt(width, height)
 	r.root.addFlag(r.root.node.id, layoutFlag)
 }
 

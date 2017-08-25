@@ -5,6 +5,7 @@ import java.util.HashMap;
 import android.util.Log;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 public class Tracker {
     private static final Tracker instance = new Tracker();
@@ -47,7 +48,6 @@ public class Tracker {
         return track(bridge.get(key));
     }
     public synchronized long foreignCall(long v, String method, long args) {
-        Log.v("Bridge", String.format("foreignCall, %d, %s, %d", v, method, args));
         long[] va = (long[])this.get(args);
         int len = 0;
         if (va != null) {
@@ -64,15 +64,19 @@ public class Tracker {
         long test = 0;
         try {
             Object a = this.get(v);
+            // Log.v("Bridge", String.format("foreignCall, %s, %s", a.getClass().getName(), Arrays.toString(vc)));
             Method m = a.getClass().getMethod(method, vc);
             Object rlt = m.invoke(a, vb);
             test = track(rlt);
         } catch (NoSuchMethodException e) {
-            throw new IllegalArgumentException("No such method");
+            Log.v("Bridge", String.format("foreignCall, %d, %s, %d, %s", v, method, args, e.getCause()));
+            throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
-            throw new IllegalArgumentException("Illegal access");
+            Log.v("Bridge", String.format("foreignCall, %d, %s, %d, %s", v, method, args, e.getCause()));
+            throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
-            throw new IllegalArgumentException("Invocation target");
+            Log.v("Bridge", String.format("foreignCall, %d, %s, %d, %s", v, method, args, e.getCause()));
+            throw new RuntimeException(e);
         }
         return test;
     }

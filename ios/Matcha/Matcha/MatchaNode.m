@@ -1,23 +1,6 @@
 #import "MatchaNode.h"
 #import "MatchaProtobuf.h"
 
-@interface MatchaNodeRoot ()
-@property (nonatomic, strong) GPBInt64ObjectDictionary<MatchaViewPBLayoutPaintNode*> *layoutPaintNodes;
-@property (nonatomic, strong) GPBInt64ObjectDictionary<MatchaViewPBBuildNode*> *buildNodes;
-@property (nonatomic, strong) NSMutableDictionary<NSString*, GPBAny*> *middleware;
-@end
-
-@implementation MatchaNodeRoot
-- (id)initWithProtobuf:(MatchaViewPBRoot *)pbroot {
-    if ((self = [super init])) {
-        self.layoutPaintNodes = pbroot.layoutPaintNodes;
-        self.buildNodes = pbroot.buildNodes;
-        self.middleware = pbroot.middleware;
-    }
-    return self;
-}
-@end
-
 @interface MatchaBuildNode ()
 @property (nonatomic, strong) GPBInt64Array *childIds;
 @property (nonatomic, strong) NSMutableDictionary<NSString*, GPBAny*> *nativeValues;
