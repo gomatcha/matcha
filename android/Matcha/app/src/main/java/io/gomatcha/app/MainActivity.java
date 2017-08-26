@@ -21,25 +21,9 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        //GoValue f = GoValue.withFunc("TESTFUNC");
-        //GoValue[] v3 = f.call("", null);
-        //System.out.format("wubalubadub %s%n", v3[0].toString());
-
         GoValue rootVC = GoValue.withFunc("gomatcha.io/matcha/examples/constraints New").call("")[0];
 
         MatchaView v = new MatchaView(this, rootVC);
         setContentView(v);
     }
-
-    
-    // @Override
-    // public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-    //     MatchaView v = new MatchaView(parent);
-    //     return v;
-    //     // getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-    //     // View rootView = inflater.inflate(R.layout.fragment_single_image, parent, false);
-    //     // ImageView imageView = (ImageView)rootView.findViewById(R.id.currentImage);
-    //     // imageView.setImageBitmap(currentImage);
-    //     // return rootView;
-    // }
 }

@@ -48,7 +48,7 @@ public class Tracker {
         return track(bridge.get(key));
     }
     public synchronized long foreignCall(long v, String method, long args) {
-        long[] va = (long[])this.get(args);
+        Object[] va = (Object[])this.get(args);
         int len = 0;
         if (va != null) {
             len = va.length;
@@ -56,7 +56,7 @@ public class Tracker {
         Object[] vb = new Object[len];
         Class[] vc = new Class[len];
         for (int i = 0; i < len; i++) {
-            Object e = this.get(va[i]);
+            Object e = va[i];
             vb[i] = e;
             vc[i] = e.getClass();
         }
@@ -126,19 +126,19 @@ public class Tracker {
         return (byte[])this.get(v);
     }
     public synchronized long foreignArray(int v) {
-        long[] a = new long[v];
+        Object[] a = new Object[v];
         return track(a);
     }
     public synchronized void foreignArraySet(long v, long val, int idx) {
-        long[] a = (long[])this.get(v);
-        a[idx] = val;
+        Object[] a = (Object[])this.get(v);
+        a[idx] = this.get(val);
     }
     public synchronized long foreignArrayAt(long v, int idx) {
-        long[] a = (long[])this.get(v);
-        return a[idx];
+        Object[] a = (Object[])this.get(v);
+        return track(a[idx]);
     }
     public synchronized long foreignArrayLen(long v) {
-        long[] a = (long[])this.get(v);
+        Object[] a = (Object[])this.get(v);
         return a.length;
     }
 }

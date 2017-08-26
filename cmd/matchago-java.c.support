@@ -10,19 +10,11 @@
 
 #define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__);
 
-void TestFunc();
-
-jint JNI_OnLoad(JavaVM* vm, void* reserved)
-{
-    printf("WTF!!!");
-    return JNI_VERSION_1_6;
-}
-
-
 JNIEXPORT void JNICALL Java_io_gomatcha_bridge_GoValue_matchaInit(JNIEnv *env, jclass c, jobject tracker) {
+    (*env)->GetJavaVM(env, &sJavaVM);
+    sJavaVersion = (*env)->GetVersion(env);
     sEnv = env;
     sTracker = (*env)->NewGlobalRef(env, tracker);
-    TestFunc();
 }
 
 JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoBool(JNIEnv *env, jclass c, jboolean v) {

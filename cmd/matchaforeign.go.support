@@ -20,9 +20,7 @@ import (
 
 
 //export TestFunc
-func TestFunc() {
-    fmt.Println("you suck a fuck")
-    
+func TestFunc() {    
     a := Bool(true)
     b := Int64(1234)
     c := Float64(1.234)
@@ -39,8 +37,6 @@ func TestFunc() {
     
     bridge := Bridge("a")
     fmt.Println("bridge", bridge)
-    bridgetret := bridge.Call("test")
-    fmt.Println("bridgeret", bridgetret.ToInt64(), bridgetret);
 }
 
 type Value struct {
@@ -185,7 +181,6 @@ func (v *Value)Call(s string, args ...*Value) *Value {
         argsValue = Array(args...)
         defer runtime.KeepAlive(argsValue)
     }
-    
     return newValue(C.MatchaObjcCall(v._ref(), cString(s), argsValue._ref()))
 }
 

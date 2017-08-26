@@ -8,7 +8,6 @@ public class Bridge {
     private Map<String, Object> mapTable = new HashMap<String, Object>();
     private static final Bridge instance = new Bridge();
     private Bridge() {
-        this.put("a", new testClass());
     }
     public static Bridge singleton() {
         return instance;
@@ -18,12 +17,5 @@ public class Bridge {
     }
     public Object get(String j) {
         return this.mapTable.get(j);
-    }
-    
-    public class testClass {
-        public int test() {
-            Log.v("Bridge", "test");
-            return 42;
-        }
     }
 }

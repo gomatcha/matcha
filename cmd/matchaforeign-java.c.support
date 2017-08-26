@@ -5,7 +5,9 @@
 #include <android/log.h>
 #include <stdint.h>
 
+JavaVM *sJavaVM;
 JNIEnv *sEnv;
+jint sJavaVersion;
 jobject sTracker;
 
 #define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__);
@@ -202,7 +204,13 @@ ObjcRef MatchaTrackObjc(jobject v) {
 // }
 
 void MatchaUntrackObjc(ObjcRef key) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "untrack", "(J)V");
-    (*sEnv)->CallVoidMethod(sEnv, sTracker, mid);
+    JNIEnv *env = NULL;
+    jint success = (*sJavaVM)->GetEnv(sJavaVM, &env, sJavaVersion);
+    if (success == JNI_EDETACHED) {
+        (*sJavaVM)->AttachCurrentThread(sJavaVM, &env, NULL);
+    }
+
+    jclass cls = (*env)->GetObjectClass(env, sTracker);
+    jmethodID mid = (*env)->GetMethodID(env, cls, "untrack", "(J)V");
+    (*env)->CallVoidMethod(env, sTracker, mid, key);
 }

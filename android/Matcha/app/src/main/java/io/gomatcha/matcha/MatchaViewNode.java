@@ -101,10 +101,10 @@ public class MatchaViewNode extends Object {
         if (layoutPaintNode != null && this.layoutId != layoutPaintNode.getLayoutId()) {
             this.layoutId = layoutPaintNode.getLayoutId();
 
-            // for (int i = 0; i < layoutPaintNode.getChildOrderCount(); i++) {
-            //     MatchaViewNode childNode = children.get(layoutPaintNode.getChildOrder(i));
-            //     this.view.bringChildToFront(childNode.view); // TODO(KD): Can be done more performantly.
-            // }
+            for (int i = 0; i < layoutPaintNode.getChildOrderCount(); i++) {
+                MatchaViewNode childNode = children.get(layoutPaintNode.getChildOrder(i));
+                this.view.bringChildToFront(childNode.view); // TODO(KD): Can be done more performantly.
+            }
 
             double maxX = layoutPaintNode.getMaxx() * this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
             double maxY = layoutPaintNode.getMaxy() * this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;

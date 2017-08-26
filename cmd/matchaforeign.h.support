@@ -12,6 +12,8 @@ typedef struct CGoBuffer {
     int64_t len; // length in bytes
 } CGoBuffer;
 
+void TestFunc();
+
 ObjcRef MatchaForeignBridge(CGoBuffer str); // Frees the buffer
 
 ObjcRef MatchaObjcBool(bool v);

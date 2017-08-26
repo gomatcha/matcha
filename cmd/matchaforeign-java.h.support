@@ -3,7 +3,9 @@
 
 #include <jni.h>
 
+extern JavaVM *sJavaVM;
 extern JNIEnv *sEnv;
+extern jint sJavaVersion;
 extern jobject sTracker;
 
 ObjcRef MatchaTrackObjc(jobject v);

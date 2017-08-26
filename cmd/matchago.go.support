@@ -26,11 +26,6 @@ var goRoot struct {
 func init() {
     goRoot.types = map[string]reflect.Type{}
     goRoot.funcs = map[string]reflect.Value{}
-    
-    
-    RegisterFunc("TESTFUNC", func() string {
-        return "go kill yourself."
-    })
 }
 
 func RegisterType(str string, t reflect.Type) {

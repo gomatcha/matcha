@@ -1,13 +1,11 @@
-Documentation:
-* Get android rectangles on screen.
-* Painters
-
-Target Android 4.1 API 16 JellyBean
+* Get native android views working
+* Why is android crashing?
 
 High:
 * Merge all view packages into view/iosview/androidview? androidview.NewStackView(). android.NewStackView(). view.NewTextInput(). view.
 * Android.
 * Delay any ui events while viewcontroller is updating.
+* Full attributed text
 * Rebuild Instagram.
 * Modal presentation.
 
@@ -17,6 +15,7 @@ Medium:
 * TextField
 * Optimize middleware so they aren't called on every view.
 * Rotation / orientation
+* Painters
 
 Low:
 * Button should fade when disabled.
@@ -63,3 +62,5 @@ Pro:
 * MapView
 * GPS
 * Accessibility
+
+Target Android 4.1 API 16 JellyBean
