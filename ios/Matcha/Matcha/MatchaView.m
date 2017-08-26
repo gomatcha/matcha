@@ -95,6 +95,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     }
 //    NSAssert(self.buildNode == nil || [self.buildNode.nativeViewName isEqual:buildNode.nativeViewName], @"Node with different name");
     
+    // Create view
     if (self.view == nil && self.viewController == nil) {
         self.view = MatchaViewWithNode(buildNode, self);
         self.viewController = MatchaViewControllerWithNode(buildNode, self);

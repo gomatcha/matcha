@@ -36,10 +36,10 @@ public class MatchaViewNode extends Object {
         PbView.LayoutPaintNode layoutPaintNode = root.getLayoutPaintNodesOrDefault(id, null);
         PbView.BuildNode buildNode = root.getBuildNodesOrDefault(id, null);
 
+        // Create view
         if (this.view == null) {
-            this.view = new MatchaChildView(rootView.getContext(), this);
+            this.view = MatchaView.createView(buildNode.getBridgeName(), rootView.getContext(), this);
         }
-
 
         // Build children
         Map<Long, MatchaViewNode> children = new HashMap<Long, MatchaViewNode>();
@@ -56,6 +56,7 @@ public class MatchaViewNode extends Object {
                 MatchaViewNode prevChild = this.children.get(i);
                 if (prevChild == null) {
                     addedKeys.add(i);
+
                     MatchaViewNode child = new MatchaViewNode(this, this.rootView, i);
                     children.put(i, child);
                 } else {
@@ -64,7 +65,6 @@ public class MatchaViewNode extends Object {
                 }
             }
         } else {
-            // Log.v("", String.format("xx:%s, %s", buildNode, Arrays.toString(root.getLayoutPaintNodesMap().entrySet().toArray())));
             children = this.children;
         }
 

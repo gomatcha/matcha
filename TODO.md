@@ -1,5 +1,4 @@
 * Get native android views working
-* Why is android crashing?
 
 High:
 * Merge all view packages into view/iosview/androidview? androidview.NewStackView(). android.NewStackView(). view.NewTextInput(). view.

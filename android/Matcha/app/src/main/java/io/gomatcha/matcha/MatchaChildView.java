@@ -11,14 +11,12 @@ public class MatchaChildView extends RelativeLayout {
     MatchaViewNode viewNode;
     PbView.BuildNode buildNode;
 
-    public MatchaChildView(Context context, MatchaViewNode v) {
+    public MatchaChildView(Context context, MatchaViewNode node) {
         super(context);
-        viewNode = v;
-        
-        this.setBackgroundColor(Color.GREEN);
+        viewNode = node;
     }
 
-    void setNode(PbView.BuildNode buildNode) {
+    public void setNode(PbView.BuildNode buildNode) {
         this.buildNode = buildNode;
     }
 }
