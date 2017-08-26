@@ -36,12 +36,12 @@ func (m ResizeMode) MarshalProtobuf() imageview.ResizeMode {
 // View implements a view that displays an image.
 type View struct {
 	view.Embed
-	Image              image.Image
-	ResizeMode         ResizeMode
-	ImageTemplateColor color.Color
-	PaintStyle         *paint.Style
-	image              image.Image
-	pbImage            *pb.ImageOrResource
+	Image      image.Image
+	ResizeMode ResizeMode
+	ImageTint  color.Color
+	PaintStyle *paint.Style
+	image      image.Image
+	pbImage    *pb.ImageOrResource
 }
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
@@ -81,7 +81,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 			Image:      v.pbImage,
 			Scale:      scale,
 			ResizeMode: v.ResizeMode.MarshalProtobuf(),
-			Tint:       pb.ColorEncode(v.ImageTemplateColor),
+			Tint:       pb.ColorEncode(v.ImageTint),
 		},
 	}
 }

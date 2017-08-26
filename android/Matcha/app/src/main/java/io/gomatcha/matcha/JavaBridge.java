@@ -20,7 +20,7 @@ public class JavaBridge {
         callback = new Choreographer.FrameCallback() {
             @Override
             public void doFrame(long frameTimeNanos) {
-                GoValue.withFunc("gomatcha.io/matcha/animate screenUpdate").call("", null);
+                GoValue.withFunc("gomatcha.io/matcha/animate screenUpdate").call("");
                 Choreographer.getInstance().postFrameCallback(callback);
             }
         };

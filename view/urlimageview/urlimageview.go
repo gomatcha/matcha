@@ -45,7 +45,7 @@ type View struct {
 	ResizeMode imageview.ResizeMode
 	URL        string
 	Path       string
-	Tint       color.Color
+	ImageTint  color.Color
 	stage      view.Stage
 	// Image request
 	url        string
@@ -67,7 +67,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	chl := imageview.New()
 	chl.ResizeMode = v.ResizeMode
 	chl.Image = v.image
-	chl.ImageTemplateColor = v.Tint
+	chl.ImageTint = v.ImageTint
 
 	var painter paint.Painter
 	if v.PaintStyle != nil {

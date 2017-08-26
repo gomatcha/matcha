@@ -22,6 +22,7 @@ func ImageEncode(img image.Image) *Image {
 	if img == nil {
 		return nil
 	}
+
 	bounds := img.Bounds()
 	newImg := image.NewRGBA(bounds)
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
@@ -29,7 +30,6 @@ func ImageEncode(img image.Image) *Image {
 			newImg.Set(x, y, img.At(x, y))
 		}
 	}
-
 	return &Image{
 		Width:  int64(bounds.Max.X - bounds.Min.X),
 		Height: int64(bounds.Max.Y - bounds.Min.Y),
@@ -38,7 +38,7 @@ func ImageEncode(img image.Image) *Image {
 	}
 }
 
-func ImageDecode(img *Image) *image.RGBA {
+func ImageDecode(img *Image) image.Image {
 	return &image.RGBA{
 		Pix:    img.Data,
 		Stride: int(img.Stride),

@@ -1,6 +1,8 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -35,6 +37,33 @@ public class MatchaImageView extends MatchaChildView {
         super.setNode(buildNode);
         try {
             PbImageView.View proto = buildNode.getBridgeValue().unpack(PbImageView.View.class);
+            
+            Bitmap bitmap = Protobuf.newBitmap(proto.getImage());
+            if (bitmap != null) {
+                view.setImageBitmap(bitmap);
+            }
+            
+            switch (proto.getResizeMode()) {
+                case FIT:
+                    view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                    break;
+                case FILL:
+                    view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    break;
+                case STRETCH:
+                    view.setScaleType(ImageView.ScaleType.FIT_XY);
+                    break;
+                case CENTER:
+                    view.setScaleType(ImageView.ScaleType.CENTER);
+                    break;
+                case UNRECOGNIZED:
+                    view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                    break;
+            }
+
+            if (proto.hasTint()) {
+                view.setColorFilter(Protobuf.newColor(proto.getTint()));
+            }
         } catch (InvalidProtocolBufferException e) {
         }
     }

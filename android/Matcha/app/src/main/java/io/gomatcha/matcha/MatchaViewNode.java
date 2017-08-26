@@ -133,7 +133,7 @@ public class MatchaViewNode extends Object {
             PbPaint.Style paintStyle = layoutPaintNode.getPaintStyle();
             if (paintStyle.hasBackgroundColor()) {
                 Pb.Color c = paintStyle.getBackgroundColor();
-                this.view.setBackgroundColor(Color.argb(c.getAlpha()*255/65535, c.getRed()*255/65535, c.getGreen()*255/65535, c.getBlue()*255/65535));
+                this.view.setBackgroundColor(Protobuf.newColor(c));
             } else {
                 this.view.setBackgroundColor(Color.alpha(0));
             }
