@@ -27,6 +27,7 @@ public class Protobuf {
         }
         return newBitmap(image.getImage());
     }
+
     public static int newColor(Pb.Color c) {
         return Color.argb(c.getAlpha()*255/65535, c.getRed()*255/65535, c.getGreen()*255/65535, c.getBlue()*255/65535);
     }

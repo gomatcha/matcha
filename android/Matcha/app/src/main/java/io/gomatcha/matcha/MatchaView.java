@@ -35,6 +35,9 @@ public class MatchaView extends RelativeLayout {
         setBackgroundColor(Color.RED);
 
         views.add(new WeakReference<MatchaView>(this));
+
+        // Initialize JavaBridge
+        JavaBridge.init(context);
     }
 
     boolean loaded = false;

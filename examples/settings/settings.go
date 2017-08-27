@@ -85,7 +85,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		}
 		cell1 := NewBasicCell()
 		cell1.Title = "Airplane Mode"
-		cell1.Icon = app.MustLoadImage("Airplane")
+		cell1.Icon = app.MustLoadImage("airplane")
 		cell1.AccessoryView = switchView
 		cell1.HasIcon = true
 		group = append(group, cell1)
@@ -411,7 +411,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 	rightAnchor := l.Right()
 	if v.Chevron {
 		chevronView := imageview.New()
-		chevronView.Image = app.MustLoadImage("TableArrow")
+		chevronView.Image = app.MustLoadImage("table_arrow")
 		chevronView.ResizeMode = imageview.ResizeModeCenter
 		chevronView.ImageTint = chevronColor
 

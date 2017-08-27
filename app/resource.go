@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"image"
 	"image/color"
+	"runtime"
 
 	"golang.org/x/image/colornames"
 
@@ -47,7 +48,12 @@ type ImageResource struct {
 
 // MustLoadImage loads the image at path.
 func LoadImage(path string) (*ImageResource, error) {
-	propData := bridge.Bridge("").Call("propertiesForResource:", bridge.String(path)).ToInterface().([]byte)
+	var propData []byte
+	if runtime.GOOS == "android" {
+		propData = bridge.Bridge("").Call("getPropertiesForResource", bridge.String(path)).ToInterface().([]byte)
+	} else if runtime.GOOS == "darwin" {
+		propData = bridge.Bridge("").Call("propertiesForResource:", bridge.String(path)).ToInterface().([]byte)
+	}
 	props := &pb.ImageProperties{}
 	err := proto.Unmarshal(propData, props)
 	if err != nil {
@@ -98,7 +104,12 @@ func (res *ImageResource) Scale() float64 {
 }
 
 func (res *ImageResource) load() {
-	data := bridge.Bridge("").Call("imageForResource:", bridge.String(res.path)).ToInterface().([]byte)
+	var data []byte
+	if runtime.GOOS == "android" {
+		data = bridge.Bridge("").Call("getImageForResource", bridge.String(res.path)).ToInterface().([]byte)
+	} else if runtime.GOOS == "darwin" {
+		data = bridge.Bridge("").Call("imageForResource:", bridge.String(res.path)).ToInterface().([]byte)
+	}
 	reader := bytes.NewReader(data)
 	img, _, err := image.Decode(reader)
 	if err != nil {
