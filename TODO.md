@@ -1,5 +1,5 @@
 * Get native android views working
-* Android resource scale??
+* Android image resource scale??
 
 High:
 * Merge all view packages into view/iosview/androidview? androidview.NewStackView(). android.NewStackView(). view.NewTextInput(). view.
@@ -49,6 +49,8 @@ Very Low:
 * Animations: Spring, Delay, Batch, Reverse, Decay, Repeat
 * Rework Slider.FloatNotifier to use comm.Float64Value and give it a better name InOutValue?
 * Flexbox
+
+* Strikethrough doesn't work.
 
 Pro:
 * Webview

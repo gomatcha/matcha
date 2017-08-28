@@ -38,8 +38,22 @@ CGColorRef MatchaCGColorWithProtobuf(MatchaPBColor *value) {
 
 - (id)initWithProtobuf:(MatchaPBStyledText *)value {
     NSString *string = value.text.text;
-    NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:value.style];
-    return [[NSAttributedString alloc] initWithString:string attributes:attributes];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string];
+    
+    NSArray<MatchaPBTextStyle *> *stylesArray = value.stylesArray;
+    for (NSInteger i = 0; i < stylesArray.count; i++) {
+        NSInteger start = stylesArray[i].index;
+        NSInteger end = 0;
+        if (i != stylesArray.count - 1) {
+            end = stylesArray[i+1].index - 1;
+        } else {
+            end = string.length - 1;
+        }
+        
+        NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:stylesArray[i]];
+        [attributedString setAttributes:attributes range:NSMakeRange(start, end-start+1)];
+    }
+    return attributedString;
 }
 
 - (MatchaPBStyledText *)protobuf {
@@ -53,7 +67,7 @@ CGColorRef MatchaCGColorWithProtobuf(MatchaPBColor *value) {
     
     MatchaPBStyledText *styledText = [[MatchaPBStyledText alloc] init];
     styledText.text = text;
-    styledText.style = [NSAttributedString protobufWithAttributes:attributes];
+//    styledText.style = [NSAttributedString protobufWithAttributes:attributes];
     return styledText;
 }
 

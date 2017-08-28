@@ -6,7 +6,6 @@ import (
 	"image/color"
 
 	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
@@ -45,9 +44,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		Size:   20,
 	})
 	style.SetTextColor(v.Color)
-	t := text.New(v.Text)
-	st := internal.NewStyledText(t)
-	st.Set(style, 0, 0)
+	st := text.NewStyledText(v.Text, style)
 
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {
@@ -73,7 +70,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 }
 
 type layouter struct {
-	styledText *internal.StyledText
+	styledText *text.StyledText
 }
 
 func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {

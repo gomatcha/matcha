@@ -134,7 +134,7 @@ func (v *AddView) Build(ctx *view.Context) view.Model {
 	input.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
 	input.Text = v.text
 	input.Style = style
-	input.PlaceholderText = text.New("What needs to be done?")
+	input.Placeholder = "What needs to be done?"
 	input.PlaceholderStyle = placeholderStyle
 	input.KeyboardReturnType = keyboard.DoneReturnType
 	input.Responder = &v.responder

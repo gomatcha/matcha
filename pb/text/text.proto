@@ -19,7 +19,7 @@ message Text {
 }
 
 message StyledText {
-    TextStyle style = 1;
+    repeated TextStyle styles = 1;
     Text text = 2;
 }
 
@@ -68,6 +68,7 @@ enum Truncation {
 }
 
 message TextStyle {
+    int64 index = 1; // Only for StyledText
     TextAlignment textAlignment = 2;
     StrikethroughStyle strikethroughStyle = 4;
     matcha.Color strikethroughColor = 6;

@@ -18,6 +18,7 @@ import (
 
 type ResizeMode int
 
+// TODO(KD): ResizeModeFit and ResizeModeFill behave oddly on Android.
 const (
 	// The image is resized proportionally such that a single axis is filled.
 	ResizeModeFit ResizeMode = iota

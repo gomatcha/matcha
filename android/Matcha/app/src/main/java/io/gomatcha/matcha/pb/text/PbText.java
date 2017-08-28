@@ -2099,17 +2099,28 @@ public final class PbText {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.matcha.text.TextStyle style = 1;</code>
+     * <code>repeated .matcha.text.TextStyle styles = 1;</code>
      */
-    boolean hasStyle();
+    java.util.List<io.gomatcha.matcha.pb.text.PbText.TextStyle> 
+        getStylesList();
     /**
-     * <code>.matcha.text.TextStyle style = 1;</code>
+     * <code>repeated .matcha.text.TextStyle styles = 1;</code>
      */
-    io.gomatcha.matcha.pb.text.PbText.TextStyle getStyle();
+    io.gomatcha.matcha.pb.text.PbText.TextStyle getStyles(int index);
     /**
-     * <code>.matcha.text.TextStyle style = 1;</code>
+     * <code>repeated .matcha.text.TextStyle styles = 1;</code>
      */
-    io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder getStyleOrBuilder();
+    int getStylesCount();
+    /**
+     * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+     */
+    java.util.List<? extends io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder> 
+        getStylesOrBuilderList();
+    /**
+     * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+     */
+    io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder getStylesOrBuilder(
+        int index);
 
     /**
      * <code>.matcha.text.Text text = 2;</code>
@@ -2136,6 +2147,7 @@ public final class PbText {
       super(builder);
     }
     private StyledText() {
+      styles_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -2164,16 +2176,12 @@ public final class PbText {
               break;
             }
             case 10: {
-              io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder subBuilder = null;
-              if (style_ != null) {
-                subBuilder = style_.toBuilder();
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                styles_ = new java.util.ArrayList<io.gomatcha.matcha.pb.text.PbText.TextStyle>();
+                mutable_bitField0_ |= 0x00000001;
               }
-              style_ = input.readMessage(io.gomatcha.matcha.pb.text.PbText.TextStyle.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(style_);
-                style_ = subBuilder.buildPartial();
-              }
-
+              styles_.add(
+                  input.readMessage(io.gomatcha.matcha.pb.text.PbText.TextStyle.parser(), extensionRegistry));
               break;
             }
             case 18: {
@@ -2197,6 +2205,9 @@ public final class PbText {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          styles_ = java.util.Collections.unmodifiableList(styles_);
+        }
         makeExtensionsImmutable();
       }
     }
@@ -2212,25 +2223,40 @@ public final class PbText {
               io.gomatcha.matcha.pb.text.PbText.StyledText.class, io.gomatcha.matcha.pb.text.PbText.StyledText.Builder.class);
     }
 
-    public static final int STYLE_FIELD_NUMBER = 1;
-    private io.gomatcha.matcha.pb.text.PbText.TextStyle style_;
+    private int bitField0_;
+    public static final int STYLES_FIELD_NUMBER = 1;
+    private java.util.List<io.gomatcha.matcha.pb.text.PbText.TextStyle> styles_;
     /**
-     * <code>.matcha.text.TextStyle style = 1;</code>
+     * <code>repeated .matcha.text.TextStyle styles = 1;</code>
      */
-    public boolean hasStyle() {
-      return style_ != null;
+    public java.util.List<io.gomatcha.matcha.pb.text.PbText.TextStyle> getStylesList() {
+      return styles_;
     }
     /**
-     * <code>.matcha.text.TextStyle style = 1;</code>
+     * <code>repeated .matcha.text.TextStyle styles = 1;</code>
      */
-    public io.gomatcha.matcha.pb.text.PbText.TextStyle getStyle() {
-      return style_ == null ? io.gomatcha.matcha.pb.text.PbText.TextStyle.getDefaultInstance() : style_;
+    public java.util.List<? extends io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder> 
+        getStylesOrBuilderList() {
+      return styles_;
     }
     /**
-     * <code>.matcha.text.TextStyle style = 1;</code>
+     * <code>repeated .matcha.text.TextStyle styles = 1;</code>
      */
-    public io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder getStyleOrBuilder() {
-      return getStyle();
+    public int getStylesCount() {
+      return styles_.size();
+    }
+    /**
+     * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+     */
+    public io.gomatcha.matcha.pb.text.PbText.TextStyle getStyles(int index) {
+      return styles_.get(index);
+    }
+    /**
+     * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+     */
+    public io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder getStylesOrBuilder(
+        int index) {
+      return styles_.get(index);
     }
 
     public static final int TEXT_FIELD_NUMBER = 2;
@@ -2266,8 +2292,8 @@ public final class PbText {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (style_ != null) {
-        output.writeMessage(1, getStyle());
+      for (int i = 0; i < styles_.size(); i++) {
+        output.writeMessage(1, styles_.get(i));
       }
       if (text_ != null) {
         output.writeMessage(2, getText());
@@ -2279,9 +2305,9 @@ public final class PbText {
       if (size != -1) return size;
 
       size = 0;
-      if (style_ != null) {
+      for (int i = 0; i < styles_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getStyle());
+          .computeMessageSize(1, styles_.get(i));
       }
       if (text_ != null) {
         size += com.google.protobuf.CodedOutputStream
@@ -2303,11 +2329,8 @@ public final class PbText {
       io.gomatcha.matcha.pb.text.PbText.StyledText other = (io.gomatcha.matcha.pb.text.PbText.StyledText) obj;
 
       boolean result = true;
-      result = result && (hasStyle() == other.hasStyle());
-      if (hasStyle()) {
-        result = result && getStyle()
-            .equals(other.getStyle());
-      }
+      result = result && getStylesList()
+          .equals(other.getStylesList());
       result = result && (hasText() == other.hasText());
       if (hasText()) {
         result = result && getText()
@@ -2323,9 +2346,9 @@ public final class PbText {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasStyle()) {
-        hash = (37 * hash) + STYLE_FIELD_NUMBER;
-        hash = (53 * hash) + getStyle().hashCode();
+      if (getStylesCount() > 0) {
+        hash = (37 * hash) + STYLES_FIELD_NUMBER;
+        hash = (53 * hash) + getStylesList().hashCode();
       }
       if (hasText()) {
         hash = (37 * hash) + TEXT_FIELD_NUMBER;
@@ -2456,15 +2479,16 @@ public final class PbText {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getStylesFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
-        if (styleBuilder_ == null) {
-          style_ = null;
+        if (stylesBuilder_ == null) {
+          styles_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
-          style_ = null;
-          styleBuilder_ = null;
+          stylesBuilder_.clear();
         }
         if (textBuilder_ == null) {
           text_ = null;
@@ -2494,16 +2518,23 @@ public final class PbText {
 
       public io.gomatcha.matcha.pb.text.PbText.StyledText buildPartial() {
         io.gomatcha.matcha.pb.text.PbText.StyledText result = new io.gomatcha.matcha.pb.text.PbText.StyledText(this);
-        if (styleBuilder_ == null) {
-          result.style_ = style_;
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (stylesBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            styles_ = java.util.Collections.unmodifiableList(styles_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.styles_ = styles_;
         } else {
-          result.style_ = styleBuilder_.build();
+          result.styles_ = stylesBuilder_.build();
         }
         if (textBuilder_ == null) {
           result.text_ = text_;
         } else {
           result.text_ = textBuilder_.build();
         }
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -2545,8 +2576,31 @@ public final class PbText {
 
       public Builder mergeFrom(io.gomatcha.matcha.pb.text.PbText.StyledText other) {
         if (other == io.gomatcha.matcha.pb.text.PbText.StyledText.getDefaultInstance()) return this;
-        if (other.hasStyle()) {
-          mergeStyle(other.getStyle());
+        if (stylesBuilder_ == null) {
+          if (!other.styles_.isEmpty()) {
+            if (styles_.isEmpty()) {
+              styles_ = other.styles_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureStylesIsMutable();
+              styles_.addAll(other.styles_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.styles_.isEmpty()) {
+            if (stylesBuilder_.isEmpty()) {
+              stylesBuilder_.dispose();
+              stylesBuilder_ = null;
+              styles_ = other.styles_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              stylesBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getStylesFieldBuilder() : null;
+            } else {
+              stylesBuilder_.addAllMessages(other.styles_);
+            }
+          }
         }
         if (other.hasText()) {
           mergeText(other.getText());
@@ -2576,122 +2630,246 @@ public final class PbText {
         }
         return this;
       }
+      private int bitField0_;
 
-      private io.gomatcha.matcha.pb.text.PbText.TextStyle style_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.pb.text.PbText.TextStyle, io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder, io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder> styleBuilder_;
-      /**
-       * <code>.matcha.text.TextStyle style = 1;</code>
-       */
-      public boolean hasStyle() {
-        return styleBuilder_ != null || style_ != null;
+      private java.util.List<io.gomatcha.matcha.pb.text.PbText.TextStyle> styles_ =
+        java.util.Collections.emptyList();
+      private void ensureStylesIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          styles_ = new java.util.ArrayList<io.gomatcha.matcha.pb.text.PbText.TextStyle>(styles_);
+          bitField0_ |= 0x00000001;
+         }
       }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          io.gomatcha.matcha.pb.text.PbText.TextStyle, io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder, io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder> stylesBuilder_;
+
       /**
-       * <code>.matcha.text.TextStyle style = 1;</code>
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
        */
-      public io.gomatcha.matcha.pb.text.PbText.TextStyle getStyle() {
-        if (styleBuilder_ == null) {
-          return style_ == null ? io.gomatcha.matcha.pb.text.PbText.TextStyle.getDefaultInstance() : style_;
+      public java.util.List<io.gomatcha.matcha.pb.text.PbText.TextStyle> getStylesList() {
+        if (stylesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(styles_);
         } else {
-          return styleBuilder_.getMessage();
+          return stylesBuilder_.getMessageList();
         }
       }
       /**
-       * <code>.matcha.text.TextStyle style = 1;</code>
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
        */
-      public Builder setStyle(io.gomatcha.matcha.pb.text.PbText.TextStyle value) {
-        if (styleBuilder_ == null) {
+      public int getStylesCount() {
+        if (stylesBuilder_ == null) {
+          return styles_.size();
+        } else {
+          return stylesBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.TextStyle getStyles(int index) {
+        if (stylesBuilder_ == null) {
+          return styles_.get(index);
+        } else {
+          return stylesBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+       */
+      public Builder setStyles(
+          int index, io.gomatcha.matcha.pb.text.PbText.TextStyle value) {
+        if (stylesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          style_ = value;
+          ensureStylesIsMutable();
+          styles_.set(index, value);
           onChanged();
         } else {
-          styleBuilder_.setMessage(value);
+          stylesBuilder_.setMessage(index, value);
         }
-
         return this;
       }
       /**
-       * <code>.matcha.text.TextStyle style = 1;</code>
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
        */
-      public Builder setStyle(
-          io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder builderForValue) {
-        if (styleBuilder_ == null) {
-          style_ = builderForValue.build();
+      public Builder setStyles(
+          int index, io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder builderForValue) {
+        if (stylesBuilder_ == null) {
+          ensureStylesIsMutable();
+          styles_.set(index, builderForValue.build());
           onChanged();
         } else {
-          styleBuilder_.setMessage(builderForValue.build());
+          stylesBuilder_.setMessage(index, builderForValue.build());
         }
-
         return this;
       }
       /**
-       * <code>.matcha.text.TextStyle style = 1;</code>
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
        */
-      public Builder mergeStyle(io.gomatcha.matcha.pb.text.PbText.TextStyle value) {
-        if (styleBuilder_ == null) {
-          if (style_ != null) {
-            style_ =
-              io.gomatcha.matcha.pb.text.PbText.TextStyle.newBuilder(style_).mergeFrom(value).buildPartial();
-          } else {
-            style_ = value;
+      public Builder addStyles(io.gomatcha.matcha.pb.text.PbText.TextStyle value) {
+        if (stylesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
           }
+          ensureStylesIsMutable();
+          styles_.add(value);
           onChanged();
         } else {
-          styleBuilder_.mergeFrom(value);
+          stylesBuilder_.addMessage(value);
         }
-
         return this;
       }
       /**
-       * <code>.matcha.text.TextStyle style = 1;</code>
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
        */
-      public Builder clearStyle() {
-        if (styleBuilder_ == null) {
-          style_ = null;
+      public Builder addStyles(
+          int index, io.gomatcha.matcha.pb.text.PbText.TextStyle value) {
+        if (stylesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureStylesIsMutable();
+          styles_.add(index, value);
           onChanged();
         } else {
-          style_ = null;
-          styleBuilder_ = null;
+          stylesBuilder_.addMessage(index, value);
         }
-
         return this;
       }
       /**
-       * <code>.matcha.text.TextStyle style = 1;</code>
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
        */
-      public io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder getStyleBuilder() {
-        
-        onChanged();
-        return getStyleFieldBuilder().getBuilder();
+      public Builder addStyles(
+          io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder builderForValue) {
+        if (stylesBuilder_ == null) {
+          ensureStylesIsMutable();
+          styles_.add(builderForValue.build());
+          onChanged();
+        } else {
+          stylesBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
       }
       /**
-       * <code>.matcha.text.TextStyle style = 1;</code>
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
        */
-      public io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder getStyleOrBuilder() {
-        if (styleBuilder_ != null) {
-          return styleBuilder_.getMessageOrBuilder();
+      public Builder addStyles(
+          int index, io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder builderForValue) {
+        if (stylesBuilder_ == null) {
+          ensureStylesIsMutable();
+          styles_.add(index, builderForValue.build());
+          onChanged();
         } else {
-          return style_ == null ?
-              io.gomatcha.matcha.pb.text.PbText.TextStyle.getDefaultInstance() : style_;
+          stylesBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+       */
+      public Builder addAllStyles(
+          java.lang.Iterable<? extends io.gomatcha.matcha.pb.text.PbText.TextStyle> values) {
+        if (stylesBuilder_ == null) {
+          ensureStylesIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, styles_);
+          onChanged();
+        } else {
+          stylesBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+       */
+      public Builder clearStyles() {
+        if (stylesBuilder_ == null) {
+          styles_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          stylesBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+       */
+      public Builder removeStyles(int index) {
+        if (stylesBuilder_ == null) {
+          ensureStylesIsMutable();
+          styles_.remove(index);
+          onChanged();
+        } else {
+          stylesBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder getStylesBuilder(
+          int index) {
+        return getStylesFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder getStylesOrBuilder(
+          int index) {
+        if (stylesBuilder_ == null) {
+          return styles_.get(index);  } else {
+          return stylesBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>.matcha.text.TextStyle style = 1;</code>
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      public java.util.List<? extends io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder> 
+           getStylesOrBuilderList() {
+        if (stylesBuilder_ != null) {
+          return stylesBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(styles_);
+        }
+      }
+      /**
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder addStylesBuilder() {
+        return getStylesFieldBuilder().addBuilder(
+            io.gomatcha.matcha.pb.text.PbText.TextStyle.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder addStylesBuilder(
+          int index) {
+        return getStylesFieldBuilder().addBuilder(
+            index, io.gomatcha.matcha.pb.text.PbText.TextStyle.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .matcha.text.TextStyle styles = 1;</code>
+       */
+      public java.util.List<io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder> 
+           getStylesBuilderList() {
+        return getStylesFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
           io.gomatcha.matcha.pb.text.PbText.TextStyle, io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder, io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder> 
-          getStyleFieldBuilder() {
-        if (styleBuilder_ == null) {
-          styleBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          getStylesFieldBuilder() {
+        if (stylesBuilder_ == null) {
+          stylesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               io.gomatcha.matcha.pb.text.PbText.TextStyle, io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder, io.gomatcha.matcha.pb.text.PbText.TextStyleOrBuilder>(
-                  getStyle(),
+                  styles_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
-          style_ = null;
+          styles_ = null;
         }
-        return styleBuilder_;
+        return stylesBuilder_;
       }
 
       private io.gomatcha.matcha.pb.text.PbText.Text text_ = null;
@@ -3581,6 +3759,15 @@ public final class PbText {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * Only for StyledText
+     * </pre>
+     *
+     * <code>int64 index = 1;</code>
+     */
+    long getIndex();
+
+    /**
      * <code>.matcha.text.TextAlignment textAlignment = 2;</code>
      */
     int getTextAlignmentValue();
@@ -3714,6 +3901,7 @@ public final class PbText {
       super(builder);
     }
     private TextStyle() {
+      index_ = 0L;
       textAlignment_ = 0;
       strikethroughStyle_ = 0;
       underlineStyle_ = 0;
@@ -3748,6 +3936,11 @@ public final class PbText {
               if (!input.skipField(tag)) {
                 done = true;
               }
+              break;
+            }
+            case 8: {
+
+              index_ = input.readInt64();
               break;
             }
             case 16: {
@@ -3874,6 +4067,19 @@ public final class PbText {
       return io.gomatcha.matcha.pb.text.PbText.internal_static_matcha_text_TextStyle_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               io.gomatcha.matcha.pb.text.PbText.TextStyle.class, io.gomatcha.matcha.pb.text.PbText.TextStyle.Builder.class);
+    }
+
+    public static final int INDEX_FIELD_NUMBER = 1;
+    private long index_;
+    /**
+     * <pre>
+     * Only for StyledText
+     * </pre>
+     *
+     * <code>int64 index = 1;</code>
+     */
+    public long getIndex() {
+      return index_;
     }
 
     public static final int TEXTALIGNMENT_FIELD_NUMBER = 2;
@@ -4113,6 +4319,9 @@ public final class PbText {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (index_ != 0L) {
+        output.writeInt64(1, index_);
+      }
       if (textAlignment_ != io.gomatcha.matcha.pb.text.PbText.TextAlignment.TEXT_ALIGNMENT_LEFT.getNumber()) {
         output.writeEnum(2, textAlignment_);
       }
@@ -4159,6 +4368,10 @@ public final class PbText {
       if (size != -1) return size;
 
       size = 0;
+      if (index_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, index_);
+      }
       if (textAlignment_ != io.gomatcha.matcha.pb.text.PbText.TextAlignment.TEXT_ALIGNMENT_LEFT.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, textAlignment_);
@@ -4226,6 +4439,8 @@ public final class PbText {
       io.gomatcha.matcha.pb.text.PbText.TextStyle other = (io.gomatcha.matcha.pb.text.PbText.TextStyle) obj;
 
       boolean result = true;
+      result = result && (getIndex()
+          == other.getIndex());
       result = result && textAlignment_ == other.textAlignment_;
       result = result && strikethroughStyle_ == other.strikethroughStyle_;
       result = result && (hasStrikethroughColor() == other.hasStrikethroughColor());
@@ -4273,6 +4488,9 @@ public final class PbText {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + INDEX_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getIndex());
       hash = (37 * hash) + TEXTALIGNMENT_FIELD_NUMBER;
       hash = (53 * hash) + textAlignment_;
       hash = (37 * hash) + STRIKETHROUGHSTYLE_FIELD_NUMBER;
@@ -4439,6 +4657,8 @@ public final class PbText {
       }
       public Builder clear() {
         super.clear();
+        index_ = 0L;
+
         textAlignment_ = 0;
 
         strikethroughStyle_ = 0;
@@ -4503,6 +4723,7 @@ public final class PbText {
 
       public io.gomatcha.matcha.pb.text.PbText.TextStyle buildPartial() {
         io.gomatcha.matcha.pb.text.PbText.TextStyle result = new io.gomatcha.matcha.pb.text.PbText.TextStyle(this);
+        result.index_ = index_;
         result.textAlignment_ = textAlignment_;
         result.strikethroughStyle_ = strikethroughStyle_;
         if (strikethroughColorBuilder_ == null) {
@@ -4573,6 +4794,9 @@ public final class PbText {
 
       public Builder mergeFrom(io.gomatcha.matcha.pb.text.PbText.TextStyle other) {
         if (other == io.gomatcha.matcha.pb.text.PbText.TextStyle.getDefaultInstance()) return this;
+        if (other.getIndex() != 0L) {
+          setIndex(other.getIndex());
+        }
         if (other.textAlignment_ != 0) {
           setTextAlignmentValue(other.getTextAlignmentValue());
         }
@@ -4636,6 +4860,44 @@ public final class PbText {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private long index_ ;
+      /**
+       * <pre>
+       * Only for StyledText
+       * </pre>
+       *
+       * <code>int64 index = 1;</code>
+       */
+      public long getIndex() {
+        return index_;
+      }
+      /**
+       * <pre>
+       * Only for StyledText
+       * </pre>
+       *
+       * <code>int64 index = 1;</code>
+       */
+      public Builder setIndex(long value) {
+        
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Only for StyledText
+       * </pre>
+       *
+       * <code>int64 index = 1;</code>
+       */
+      public Builder clearIndex() {
+        
+        index_ = 0L;
+        onChanged();
         return this;
       }
 
@@ -5563,42 +5825,42 @@ public final class PbText {
       "atcha.text.StyledText\022%\n\007minSize\030\002 \001(\0132\024" +
       ".matcha.layout.Point\022%\n\007maxSize\030\003 \001(\0132\024." +
       "matcha.layout.Point\"\024\n\004Text\022\014\n\004text\030\001 \001(" +
-      "\t\"T\n\nStyledText\022%\n\005style\030\001 \001(\0132\026.matcha." +
-      "text.TextStyle\022\037\n\004text\030\002 \001(\0132\021.matcha.te" +
-      "xt.Text\"2\n\004Font\022\016\n\006family\030\001 \001(\t\022\014\n\004face\030",
-      "\002 \001(\t\022\014\n\004size\030\003 \001(\001\"\364\003\n\tTextStyle\0221\n\rtex" +
-      "tAlignment\030\002 \001(\0162\032.matcha.text.TextAlign" +
-      "ment\022;\n\022strikethroughStyle\030\004 \001(\0162\037.match" +
-      "a.text.StrikethroughStyle\022)\n\022strikethrou" +
-      "ghColor\030\006 \001(\0132\r.matcha.Color\0223\n\016underlin" +
-      "eStyle\030\010 \001(\0162\033.matcha.text.UnderlineStyl" +
-      "e\022%\n\016underlineColor\030\n \001(\0132\r.matcha.Color" +
-      "\022\037\n\004font\030\014 \001(\0132\021.matcha.text.Font\022\023\n\013hyp" +
-      "henation\030\016 \001(\001\022\032\n\022lineHeightMultiple\030\020 \001" +
-      "(\001\022\020\n\010maxLines\030\022 \001(\003\022 \n\ttextColor\030\024 \001(\0132",
-      "\r.matcha.Color\022#\n\004wrap\030\026 \001(\0162\025.matcha.te" +
-      "xt.TextWrap\022+\n\ntruncation\030\030 \001(\0162\027.matcha" +
-      ".text.Truncation\022\030\n\020truncationString\030\032 \001" +
-      "(\t*{\n\rTextAlignment\022\027\n\023TEXT_ALIGNMENT_LE" +
-      "FT\020\000\022\030\n\024TEXT_ALIGNMENT_RIGHT\020\001\022\031\n\025TEXT_A" +
-      "LIGNMENT_CENTER\020\002\022\034\n\030TEXT_ALIGNMENT_JUST" +
-      "IFIED\020\003*\321\001\n\022StrikethroughStyle\022\034\n\030STRIKE" +
-      "THROUGH_STYLE_NONE\020\000\022\036\n\032STRIKETHROUGH_ST" +
-      "YLE_SINGLE\020\001\022\036\n\032STRIKETHROUGH_STYLE_DOUB" +
-      "LE\020\002\022\035\n\031STRIKETHROUGH_STYLE_THICK\020\003\022\036\n\032S",
-      "TRIKETHROUGH_STYLE_DOTTED\020\004\022\036\n\032STRIKETHR" +
-      "OUGH_STYLE_DASHED\020\005*\265\001\n\016UnderlineStyle\022\030" +
-      "\n\024UNDRELINE_STYLE_NONE\020\000\022\032\n\026UNDRELINE_ST" +
-      "YLE_SINGLE\020\001\022\032\n\026UNDRELINE_STYLE_DOUBLE\020\002" +
-      "\022\031\n\025UNDRELINE_STYLE_THICK\020\003\022\032\n\026UNDRELINE" +
-      "_STYLE_DOTTED\020\004\022\032\n\026UNDRELINE_STYLE_DASHE" +
-      "D\020\005*K\n\010TextWrap\022\022\n\016TEXT_WRAP_NONE\020\000\022\022\n\016T" +
-      "EXT_WRAP_WORD\020\001\022\027\n\023TEXT_WRAP_CHARACTER\020\002" +
-      "*b\n\nTruncation\022\023\n\017TRUNCATION_NONE\020\000\022\024\n\020T" +
-      "RUNCATION_START\020\001\022\025\n\021TRUNCATION_MIDDLE\020\002",
-      "\022\022\n\016TRUNCATION_END\020\003B5\n\032io.gomatcha.matc" +
-      "ha.pb.textB\006PbTextZ\004text\242\002\010MatchaPBb\006pro" +
-      "to3"
+      "\t\"U\n\nStyledText\022&\n\006styles\030\001 \003(\0132\026.matcha" +
+      ".text.TextStyle\022\037\n\004text\030\002 \001(\0132\021.matcha.t" +
+      "ext.Text\"2\n\004Font\022\016\n\006family\030\001 \001(\t\022\014\n\004face",
+      "\030\002 \001(\t\022\014\n\004size\030\003 \001(\001\"\203\004\n\tTextStyle\022\r\n\005in" +
+      "dex\030\001 \001(\003\0221\n\rtextAlignment\030\002 \001(\0162\032.match" +
+      "a.text.TextAlignment\022;\n\022strikethroughSty" +
+      "le\030\004 \001(\0162\037.matcha.text.StrikethroughStyl" +
+      "e\022)\n\022strikethroughColor\030\006 \001(\0132\r.matcha.C" +
+      "olor\0223\n\016underlineStyle\030\010 \001(\0162\033.matcha.te" +
+      "xt.UnderlineStyle\022%\n\016underlineColor\030\n \001(" +
+      "\0132\r.matcha.Color\022\037\n\004font\030\014 \001(\0132\021.matcha." +
+      "text.Font\022\023\n\013hyphenation\030\016 \001(\001\022\032\n\022lineHe" +
+      "ightMultiple\030\020 \001(\001\022\020\n\010maxLines\030\022 \001(\003\022 \n\t",
+      "textColor\030\024 \001(\0132\r.matcha.Color\022#\n\004wrap\030\026" +
+      " \001(\0162\025.matcha.text.TextWrap\022+\n\ntruncatio" +
+      "n\030\030 \001(\0162\027.matcha.text.Truncation\022\030\n\020trun" +
+      "cationString\030\032 \001(\t*{\n\rTextAlignment\022\027\n\023T" +
+      "EXT_ALIGNMENT_LEFT\020\000\022\030\n\024TEXT_ALIGNMENT_R" +
+      "IGHT\020\001\022\031\n\025TEXT_ALIGNMENT_CENTER\020\002\022\034\n\030TEX" +
+      "T_ALIGNMENT_JUSTIFIED\020\003*\321\001\n\022Strikethroug" +
+      "hStyle\022\034\n\030STRIKETHROUGH_STYLE_NONE\020\000\022\036\n\032" +
+      "STRIKETHROUGH_STYLE_SINGLE\020\001\022\036\n\032STRIKETH" +
+      "ROUGH_STYLE_DOUBLE\020\002\022\035\n\031STRIKETHROUGH_ST",
+      "YLE_THICK\020\003\022\036\n\032STRIKETHROUGH_STYLE_DOTTE" +
+      "D\020\004\022\036\n\032STRIKETHROUGH_STYLE_DASHED\020\005*\265\001\n\016" +
+      "UnderlineStyle\022\030\n\024UNDRELINE_STYLE_NONE\020\000" +
+      "\022\032\n\026UNDRELINE_STYLE_SINGLE\020\001\022\032\n\026UNDRELIN" +
+      "E_STYLE_DOUBLE\020\002\022\031\n\025UNDRELINE_STYLE_THIC" +
+      "K\020\003\022\032\n\026UNDRELINE_STYLE_DOTTED\020\004\022\032\n\026UNDRE" +
+      "LINE_STYLE_DASHED\020\005*K\n\010TextWrap\022\022\n\016TEXT_" +
+      "WRAP_NONE\020\000\022\022\n\016TEXT_WRAP_WORD\020\001\022\027\n\023TEXT_" +
+      "WRAP_CHARACTER\020\002*b\n\nTruncation\022\023\n\017TRUNCA" +
+      "TION_NONE\020\000\022\024\n\020TRUNCATION_START\020\001\022\025\n\021TRU",
+      "NCATION_MIDDLE\020\002\022\022\n\016TRUNCATION_END\020\003B5\n\032" +
+      "io.gomatcha.matcha.pb.textB\006PbTextZ\004text" +
+      "\242\002\010MatchaPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5631,7 +5893,7 @@ public final class PbText {
     internal_static_matcha_text_StyledText_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_text_StyledText_descriptor,
-        new java.lang.String[] { "Style", "Text", });
+        new java.lang.String[] { "Styles", "Text", });
     internal_static_matcha_text_Font_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_matcha_text_Font_fieldAccessorTable = new
@@ -5643,7 +5905,7 @@ public final class PbText {
     internal_static_matcha_text_TextStyle_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_text_TextStyle_descriptor,
-        new java.lang.String[] { "TextAlignment", "StrikethroughStyle", "StrikethroughColor", "UnderlineStyle", "UnderlineColor", "Font", "Hyphenation", "LineHeightMultiple", "MaxLines", "TextColor", "Wrap", "Truncation", "TruncationString", });
+        new java.lang.String[] { "Index", "TextAlignment", "StrikethroughStyle", "StrikethroughColor", "UnderlineStyle", "UnderlineColor", "Font", "Hyphenation", "LineHeightMultiple", "MaxLines", "TextColor", "Wrap", "Truncation", "TruncationString", });
     io.gomatcha.matcha.pb.layout.PbLayout.getDescriptor();
     io.gomatcha.matcha.pb.Pb.getDescriptor();
   }

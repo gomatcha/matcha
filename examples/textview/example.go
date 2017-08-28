@@ -42,25 +42,54 @@ func (v *TextView) Lifecycle(from, to view.Stage) {
 func (v *TextView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl := textview.New()
-	chl.String = "Subtitle"
-	chl.Style.SetAlignment(text.AlignmentCenter)
-	chl.Style.SetStrikethroughStyle(text.StrikethroughStyleDouble)
-	chl.Style.SetStrikethroughColor(colornames.Blue)
-	chl.Style.SetUnderlineStyle(text.UnderlineStyleDouble)
-	chl.Style.SetUnderlineColor(colornames.Blue)
-	chl.Style.SetTextColor(colornames.Yellow)
-	chl.Style.SetFont(text.Font{
+	style := &text.Style{}
+	style.SetAlignment(text.AlignmentCenter)
+	style.SetStrikethroughStyle(text.StrikethroughStyleDouble)
+	style.SetStrikethroughColor(colornames.Blue)
+	style.SetUnderlineStyle(text.UnderlineStyleDouble)
+	style.SetUnderlineColor(colornames.Green)
+	style.SetTextColor(colornames.Yellow)
+	style.SetFont(text.Font{
 		Family: "Helvetica Neue",
 		Face:   "Bold",
 		Size:   20,
 	})
+
+	style2 := &text.Style{}
+	style2.SetAlignment(text.AlignmentCenter)
+	style2.SetStrikethroughStyle(text.StrikethroughStyleDouble)
+	style2.SetStrikethroughColor(colornames.Blue)
+	style2.SetUnderlineStyle(text.UnderlineStyleDouble)
+	style2.SetUnderlineColor(colornames.Green)
+	style2.SetTextColor(colornames.Red)
+	style2.SetFont(text.Font{
+		Family: "Helvetica Neue",
+		Size:   10,
+	})
+
+	st := text.NewStyledText("Subtitle", style)
+	st.Set(style2, 0, 3)
+
+	chl := textview.New()
+	chl.StyledText = st
 	chlP := view.WithPainter(chl, &paint.Style{BackgroundColor: colornames.Blue})
 	chlG := l.Add(chlP, func(s *constraint.Solver) {
 		s.TopEqual(constraint.Const(100))
 		s.LeftEqual(constraint.Const(100))
 	})
+
 	reverse := textview.New()
+	reverse.Style.SetAlignment(text.AlignmentCenter)
+	reverse.Style.SetStrikethroughStyle(text.StrikethroughStyleDouble)
+	reverse.Style.SetStrikethroughColor(colornames.Blue)
+	reverse.Style.SetUnderlineStyle(text.UnderlineStyleDouble)
+	reverse.Style.SetUnderlineColor(colornames.Green)
+	reverse.Style.SetTextColor(colornames.Black)
+	reverse.Style.SetFont(text.Font{
+		Family: "Helvetica Neue",
+		Face:   "Bold",
+		Size:   20,
+	})
 	reverse.String = Reverse(v.text.String())
 	l.Add(reverse, func(s *constraint.Solver) {
 		s.TopEqual(chlG.Bottom())

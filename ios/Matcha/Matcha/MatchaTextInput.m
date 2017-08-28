@@ -26,7 +26,7 @@
     NSError *error = nil;
     MatchaTextInputPBView *view = (id)[state unpackMessageClass:[MatchaTextInputPBView class] error:&error];
     
-    NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:view.styledText.style];
+    NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:view.styledText.stylesArray[0]];
     self.font = attributes[NSFontAttributeName];
     self.textColor = attributes[NSForegroundColorAttributeName];
     

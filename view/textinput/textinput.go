@@ -6,7 +6,6 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/keyboard"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
@@ -23,7 +22,7 @@ type View struct {
 	Text               *text.Text
 	text               *text.Text
 	Style              *text.Style
-	PlaceholderText    *text.Text
+	Placeholder        string
 	PlaceholderStyle   *text.Style
 	SecureTextEntry    bool
 	KeyboardType       keyboard.Type
@@ -64,15 +63,9 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	if t == nil {
 		t = v.text
 	}
-	st := internal.NewStyledText(t)
-	st.Set(style, 0, 0)
+	st := text.NewStyledText(t.String(), style)
 
-	placeholder := v.PlaceholderText
-	if placeholder == nil {
-		placeholder = text.New("")
-	}
-	placeholderStyledText := internal.NewStyledText(placeholder)
-	placeholderStyledText.Set(v.PlaceholderStyle, 0, 0)
+	placeholderStyledText := text.NewStyledText(v.Placeholder, v.PlaceholderStyle)
 
 	if v.Responder != v.prevResponder {
 		if v.prevResponder != nil {
@@ -159,7 +152,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 }
 
 type layouter struct {
-	styledText *internal.StyledText
+	styledText *text.StyledText
 	multiline  bool
 }
 

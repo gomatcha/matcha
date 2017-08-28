@@ -367,12 +367,12 @@ typedef struct MatchaPBText__storage_ {
 
 @implementation MatchaPBStyledText
 
-@dynamic hasStyle, style;
+@dynamic stylesArray, stylesArray_Count;
 @dynamic hasText, text;
 
 typedef struct MatchaPBStyledText__storage_ {
   uint32_t _has_storage_[1];
-  MatchaPBTextStyle *style;
+  NSMutableArray *stylesArray;
   MatchaPBText *text;
 } MatchaPBStyledText__storage_;
 
@@ -383,19 +383,19 @@ typedef struct MatchaPBStyledText__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "style",
+        .name = "stylesArray",
         .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBTextStyle),
-        .number = MatchaPBStyledText_FieldNumber_Style,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MatchaPBStyledText__storage_, style),
-        .flags = GPBFieldOptional,
+        .number = MatchaPBStyledText_FieldNumber_StylesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MatchaPBStyledText__storage_, stylesArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "text",
         .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBText),
         .number = MatchaPBStyledText_FieldNumber_Text,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(MatchaPBStyledText__storage_, text),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -486,6 +486,7 @@ typedef struct MatchaPBFont__storage_ {
 
 @implementation MatchaPBTextStyle
 
+@dynamic index;
 @dynamic textAlignment;
 @dynamic strikethroughStyle;
 @dynamic hasStrikethroughColor, strikethroughColor;
@@ -512,6 +513,7 @@ typedef struct MatchaPBTextStyle__storage_ {
   MatchaPBFont *font;
   MatchaPBColor *textColor;
   NSString *truncationString;
+  int64_t index;
   double hyphenation;
   double lineHeightMultiple;
   int64_t maxLines;
@@ -524,10 +526,19 @@ typedef struct MatchaPBTextStyle__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
+        .name = "index",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_Index,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, index),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
         .name = "textAlignment",
         .dataTypeSpecific.enumDescFunc = MatchaPBTextAlignment_EnumDescriptor,
         .number = MatchaPBTextStyle_FieldNumber_TextAlignment,
-        .hasIndex = 0,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, textAlignment),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -536,7 +547,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "strikethroughStyle",
         .dataTypeSpecific.enumDescFunc = MatchaPBStrikethroughStyle_EnumDescriptor,
         .number = MatchaPBTextStyle_FieldNumber_StrikethroughStyle,
-        .hasIndex = 1,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, strikethroughStyle),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -545,7 +556,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "strikethroughColor",
         .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
         .number = MatchaPBTextStyle_FieldNumber_StrikethroughColor,
-        .hasIndex = 2,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, strikethroughColor),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
@@ -554,7 +565,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "underlineStyle",
         .dataTypeSpecific.enumDescFunc = MatchaPBUnderlineStyle_EnumDescriptor,
         .number = MatchaPBTextStyle_FieldNumber_UnderlineStyle,
-        .hasIndex = 3,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, underlineStyle),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -563,7 +574,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "underlineColor",
         .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
         .number = MatchaPBTextStyle_FieldNumber_UnderlineColor,
-        .hasIndex = 4,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, underlineColor),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
@@ -572,7 +583,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "font",
         .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBFont),
         .number = MatchaPBTextStyle_FieldNumber_Font,
-        .hasIndex = 5,
+        .hasIndex = 6,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, font),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -581,7 +592,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "hyphenation",
         .dataTypeSpecific.className = NULL,
         .number = MatchaPBTextStyle_FieldNumber_Hyphenation,
-        .hasIndex = 6,
+        .hasIndex = 7,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, hyphenation),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeDouble,
@@ -590,7 +601,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "lineHeightMultiple",
         .dataTypeSpecific.className = NULL,
         .number = MatchaPBTextStyle_FieldNumber_LineHeightMultiple,
-        .hasIndex = 7,
+        .hasIndex = 8,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, lineHeightMultiple),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeDouble,
@@ -599,7 +610,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "maxLines",
         .dataTypeSpecific.className = NULL,
         .number = MatchaPBTextStyle_FieldNumber_MaxLines,
-        .hasIndex = 8,
+        .hasIndex = 9,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, maxLines),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeInt64,
@@ -608,7 +619,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "textColor",
         .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
         .number = MatchaPBTextStyle_FieldNumber_TextColor,
-        .hasIndex = 9,
+        .hasIndex = 10,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, textColor),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
@@ -617,7 +628,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "wrap",
         .dataTypeSpecific.enumDescFunc = MatchaPBTextWrap_EnumDescriptor,
         .number = MatchaPBTextStyle_FieldNumber_Wrap,
-        .hasIndex = 10,
+        .hasIndex = 11,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, wrap),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -626,7 +637,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "truncation",
         .dataTypeSpecific.enumDescFunc = MatchaPBTruncation_EnumDescriptor,
         .number = MatchaPBTextStyle_FieldNumber_Truncation,
-        .hasIndex = 11,
+        .hasIndex = 12,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, truncation),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -635,7 +646,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "truncationString",
         .dataTypeSpecific.className = NULL,
         .number = MatchaPBTextStyle_FieldNumber_TruncationString,
-        .hasIndex = 12,
+        .hasIndex = 13,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, truncationString),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeString,

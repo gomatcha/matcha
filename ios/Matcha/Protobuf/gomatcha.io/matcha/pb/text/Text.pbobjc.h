@@ -208,15 +208,15 @@ typedef GPB_ENUM(MatchaPBText_FieldNumber) {
 #pragma mark - MatchaPBStyledText
 
 typedef GPB_ENUM(MatchaPBStyledText_FieldNumber) {
-  MatchaPBStyledText_FieldNumber_Style = 1,
+  MatchaPBStyledText_FieldNumber_StylesArray = 1,
   MatchaPBStyledText_FieldNumber_Text = 2,
 };
 
 @interface MatchaPBStyledText : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBTextStyle *style;
-/** Test to see if @c style has been set. */
-@property(nonatomic, readwrite) BOOL hasStyle;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MatchaPBTextStyle*> *stylesArray;
+/** The number of items in @c stylesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger stylesArray_Count;
 
 @property(nonatomic, readwrite, strong, null_resettable) MatchaPBText *text;
 /** Test to see if @c text has been set. */
@@ -245,6 +245,7 @@ typedef GPB_ENUM(MatchaPBFont_FieldNumber) {
 #pragma mark - MatchaPBTextStyle
 
 typedef GPB_ENUM(MatchaPBTextStyle_FieldNumber) {
+  MatchaPBTextStyle_FieldNumber_Index = 1,
   MatchaPBTextStyle_FieldNumber_TextAlignment = 2,
   MatchaPBTextStyle_FieldNumber_StrikethroughStyle = 4,
   MatchaPBTextStyle_FieldNumber_StrikethroughColor = 6,
@@ -261,6 +262,9 @@ typedef GPB_ENUM(MatchaPBTextStyle_FieldNumber) {
 };
 
 @interface MatchaPBTextStyle : GPBMessage
+
+/** Only for StyledText */
+@property(nonatomic, readwrite) int64_t index;
 
 @property(nonatomic, readwrite) MatchaPBTextAlignment textAlignment;
 

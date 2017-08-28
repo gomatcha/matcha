@@ -3,7 +3,6 @@ package textview
 
 import (
 	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/text"
@@ -17,6 +16,7 @@ type View struct {
 	String     string
 	Text       *text.Text
 	Style      *text.Style
+	StyledText *text.StyledText // TODO(KD): subscribe to StyledText and Text
 	MaxLines   int
 }
 
@@ -29,12 +29,14 @@ func New() *View {
 
 // Build implements the view.View interface.
 func (v *View) Build(ctx *view.Context) view.Model {
-	t := v.Text
-	if t == nil {
-		t = text.New(v.String)
+	st := v.StyledText
+	if st == nil {
+		t := v.Text
+		if t == nil {
+			t = text.New(v.String)
+		}
+		st = text.NewStyledText(t.String(), v.Style)
 	}
-	st := internal.NewStyledText(t)
-	st.Set(v.Style, 0, 0)
 
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {
@@ -49,7 +51,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 }
 
 type layouter struct {
-	styledText *internal.StyledText
+	styledText *text.StyledText
 	maxLines   int
 }
 
