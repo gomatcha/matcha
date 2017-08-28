@@ -20,7 +20,7 @@ import (
 // View implements a native button view.
 type View struct {
 	view.Embed
-	Text       string
+	String     string
 	Color      color.Color
 	OnPress    func()
 	Enabled    bool
@@ -44,7 +44,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		Size:   20,
 	})
 	style.SetTextColor(v.Color)
-	st := text.NewStyledText(v.Text, style)
+	st := text.NewStyledText(v.String, style)
 
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {

@@ -32,7 +32,7 @@ func (v *ButtonView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := button.New()
-	chl1.Text = "Press Me"
+	chl1.String = "Press Me"
 	chl1.OnPress = func() {
 		alert.Alert("Button Pressed", "")
 	}
@@ -43,7 +43,7 @@ func (v *ButtonView) Build(ctx *view.Context) view.Model {
 	})
 
 	chl2 := button.New()
-	chl2.Text = "Press Me"
+	chl2.String = "Press Me"
 	chl2.Color = colornames.Red
 	chl2.Enabled = false
 	chl2.OnPress = func() {

@@ -135,7 +135,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 	})
 
 	chl8 := button.New()
-	chl8.Text = "Button"
+	chl8.String = "Button"
 	chl8.OnPress = func() {
 		v.counter += 1
 		v.Signal()

@@ -97,7 +97,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 	})
 
 	button1 := button.New()
-	button1.Text = "Toggle Keyboard"
+	button1.String = "Toggle Keyboard"
 	button1.OnPress = func() {
 		if !v.responder.Visible() {
 			v.responder.Show()
