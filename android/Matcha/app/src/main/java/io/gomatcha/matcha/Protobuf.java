@@ -2,11 +2,32 @@ package io.gomatcha.matcha;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PointF;
+import android.graphics.Typeface;
+import android.text.Layout;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.AlignmentSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.LineHeightSpan;
+import android.text.style.StrikethroughSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TypefaceSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.gomatcha.matcha.pb.Pb;
+import io.gomatcha.matcha.pb.keyboard.PbKeyboard;
+import io.gomatcha.matcha.pb.layout.PbLayout;
+import io.gomatcha.matcha.pb.text.PbText;
+
+import static android.text.Spanned.SPAN_INCLUSIVE_EXCLUSIVE;
+import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 
 public class Protobuf {
     public static Bitmap newBitmap(Pb.Image image) {
@@ -30,5 +51,133 @@ public class Protobuf {
 
     public static int newColor(Pb.Color c) {
         return Color.argb(c.getAlpha()*255/65535, c.getRed()*255/65535, c.getGreen()*255/65535, c.getBlue()*255/65535);
+    }
+    
+    public static PointF newPoint(PbLayout.Point pt) {
+        return new PointF((float)pt.getX(), (float)pt.getY());
+    }
+    
+    public static PbLayout.Point toProtubuf(PointF pt) {
+        PbLayout.Point.Builder builder = PbLayout.Point.newBuilder();
+        builder.setX(pt.x);
+        builder.setY(pt.y);
+        return builder.build();
+    }
+    
+    public static SpannableString newAttributedString(PbText.StyledText st) {
+        SpannableString str = new SpannableString(st.getText().getText());
+        List<PbText.TextStyle> styles = st.getStylesList();
+        for (int i = 0; i < styles.size(); i++) {
+            PbText.TextStyle style = styles.get(i);
+            int start = (int)style.getIndex();
+            int end = 0;
+            if (i < styles.size() - 1) {
+                end = (int)styles.get(i+1).getIndex();
+            } else {
+                end = str.length();
+            }
+            ArrayList<Object> spans = newSpanArrayList(style);
+            for (Object j : spans) {
+                str.setSpan(j, start, end, SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+        }
+        return str;
+    }
+    
+    public static ArrayList<Object> newSpanArrayList(PbText.TextStyle textStyle) {
+        ArrayList<Object> arrayList = new ArrayList<Object>();
+        
+        Object span;
+        switch (textStyle.getTextAlignment()) {
+            case TEXT_ALIGNMENT_LEFT:
+                span = new AlignmentSpan.Standard(Layout.Alignment.ALIGN_NORMAL);
+                break;
+            case TEXT_ALIGNMENT_RIGHT:
+                span = new AlignmentSpan.Standard(Layout.Alignment.ALIGN_OPPOSITE);
+                break;
+            case TEXT_ALIGNMENT_CENTER:
+                span = new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER);
+                break;
+            case TEXT_ALIGNMENT_JUSTIFIED:
+                span = new AlignmentSpan.Standard(Layout.Alignment.ALIGN_NORMAL);
+                break;
+            default:
+                span = new AlignmentSpan.Standard(Layout.Alignment.ALIGN_NORMAL);
+                break;
+        }
+        if (span != null) {
+            arrayList.add(span);
+        }
+        
+        span = null;
+        switch (textStyle.getStrikethroughStyle()) {
+            case STRIKETHROUGH_STYLE_NONE:
+                break;
+            case STRIKETHROUGH_STYLE_SINGLE:
+            case STRIKETHROUGH_STYLE_DOUBLE:
+            case STRIKETHROUGH_STYLE_THICK:
+            case STRIKETHROUGH_STYLE_DOTTED:
+            case STRIKETHROUGH_STYLE_DASHED:
+            default:
+                span = new StrikethroughSpan();
+                break;
+        }
+        if (span != null) {
+            arrayList.add(span);
+        }
+        
+        // TODO(KD): Strikethrough color...
+        // TODO(KD): Underline color...
+        
+        span = null;
+        switch (textStyle.getUnderlineStyle()) {
+            case UNDRELINE_STYLE_NONE:
+                break;
+            case UNDRELINE_STYLE_SINGLE:
+            case UNDRELINE_STYLE_DOUBLE:
+            case UNDRELINE_STYLE_THICK:
+            case UNDRELINE_STYLE_DOTTED:
+            case UNDRELINE_STYLE_DASHED:
+            default:
+                span = new UnderlineSpan();
+                break;
+        }
+        if (span != null) {
+            arrayList.add(span);
+        }
+
+        PbText.Font font = textStyle.getFont();
+        span = new TypefaceSpan(font.getFamily());
+        arrayList.add(span);
+
+        span = new AbsoluteSizeSpan((int)font.getSize(), true);
+        arrayList.add(span);
+
+        // span = new LineHeightSpan();
+
+        int color = newColor(textStyle.getTextColor());
+        span = new ForegroundColorSpan(color);
+        arrayList.add(span);
+
+        // TODO(KD): AttributeKeyTextWrap
+        // TODO(KD): AttributeKeyTruncation
+        // TODO(KD): AttributeKeyTruncationString
+
+        // TODO(KD):
+        // span = null;
+        // if (font.getFace() == "Bold") {
+        //     span = new StyleSpan(Typeface.BOLD);
+        // }
+        // if (font.getFace() == "Italic") {
+        //     span = new StyleSpan(Typeface.ITALIC);
+        // }
+        // if (font.getFace() == "Bold Italic") {
+        //     span = new StyleSpan(Typeface.BOLD_ITALIC);
+        // }
+        // if (span != null) {
+        //     arrayList.add(span);
+        // }
+
+        return arrayList;
     }
 }

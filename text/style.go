@@ -55,7 +55,7 @@ func (a UnderlineStyle) MarshalProtobuf() pbtext.UnderlineStyle {
 
 // StrikethroughStyle represents a text font.
 type Font struct {
-	Family string
+	Family string // Postscript name
 	Face   string
 	Size   float64
 }

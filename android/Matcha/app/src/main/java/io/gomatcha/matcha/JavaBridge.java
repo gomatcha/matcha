@@ -4,7 +4,12 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
+import android.text.Layout;
+import android.text.SpannableString;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.Choreographer;
 
@@ -16,6 +21,8 @@ import java.nio.ByteBuffer;
 import io.gomatcha.app.R;
 import io.gomatcha.bridge.*;
 import io.gomatcha.matcha.pb.Pb;
+import io.gomatcha.matcha.pb.layout.PbLayout;
+import io.gomatcha.matcha.pb.text.PbText;
 import io.gomatcha.matcha.pb.view.PbView;
 
 public class JavaBridge {
@@ -42,7 +49,6 @@ public class JavaBridge {
     }
 
     void updateViewWithProtobuf(Long id, byte[] protobuf) {
-        Log.v("X", "updateViewWithProtobuf");
         for (WeakReference<MatchaView> i : MatchaView.views) {
             if (i.get().identifier == id) {
                 try {
@@ -52,6 +58,37 @@ public class JavaBridge {
 
                 }
             }
+        }
+    }
+
+    GoValue sizeForStyledText(byte[] protobuf, Long maxLines) {
+        try {
+            PbText.SizeFunc sizeFunc = PbText.SizeFunc.parseFrom(protobuf);
+            SpannableString str = Protobuf.newAttributedString(sizeFunc.getText());
+            PointF minSize = Protobuf.newPoint(sizeFunc.getMinSize());
+            PointF maxSize = Protobuf.newPoint(sizeFunc.getMaxSize());
+
+            TextPaint textPaint = new TextPaint();
+            // textPaint.getTextBounds(someText, 0, someText.length(), bounds);
+            StaticLayout layout = new StaticLayout(str, textPaint, 1000, Layout.Alignment.ALIGN_NORMAL, 0, 0, false);
+            int height = layout.getHeight();
+            int width = layout.getWidth();
+            int lines = layout.getLineCount();
+
+            float maxWidth = 0;
+            for (int i = 0; i < lines; i++) {
+                float lineWidth = layout.getLineWidth(i);
+                if (lineWidth > maxWidth) {
+                    maxWidth = lineWidth;
+                }
+            }
+
+            PbLayout.Point p = Protobuf.toProtubuf(new PointF(maxWidth+5f, height)); // TODO(KD): Why am I adding 5f?
+            Log.v("size", str + p.toString() + maxSize.x);
+            return new GoValue(p.toByteArray());
+        } catch (InvalidProtocolBufferException e) {
+            PbLayout.Point p = Protobuf.toProtubuf(new PointF(0, 0));
+            return new GoValue(p.toByteArray());
         }
     }
 

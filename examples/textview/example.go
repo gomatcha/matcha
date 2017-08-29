@@ -91,6 +91,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 		Size:   20,
 	})
 	reverse.String = Reverse(v.text.String())
+	reverse.PaintStyle = &paint.Style{BackgroundColor: colornames.Green}
 	l.Add(reverse, func(s *constraint.Solver) {
 		s.TopEqual(chlG.Bottom())
 		s.LeftEqual(chlG.Left())
