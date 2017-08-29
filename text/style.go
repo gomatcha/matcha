@@ -55,15 +55,13 @@ func (a UnderlineStyle) MarshalProtobuf() pbtext.UnderlineStyle {
 
 // StrikethroughStyle represents a text font.
 type Font struct {
-	Family string // Postscript name
-	Face   string
-	Size   float64
+	Name string // Postscript name
+	Size float64
 }
 
 func (f Font) MarshalProtobuf() *pbtext.Font {
 	return &pbtext.Font{
-		Family: f.Family,
-		Face:   f.Face,
+		Family: f.Name,
 		Size:   f.Size,
 	}
 }
@@ -151,8 +149,8 @@ func (f *Style) get(k styleKey) interface{} {
 		return color.Gray{0}
 	case styleKeyFont:
 		return Font{
-			Family: "Helvetica Neue",
-			Size:   14,
+			Name: "HelveticaNeue",
+			Size: 14,
 		}
 	case styleKeyHyphenation:
 		return float64(0.0)

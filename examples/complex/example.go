@@ -111,9 +111,8 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 	chl5.Style.SetUnderlineStyle(text.UnderlineStyleDouble)
 	chl5.Style.SetUnderlineColor(colornames.Green)
 	chl5.Style.SetFont(text.Font{
-		Family: "American Typewriter",
-		Face:   "Bold",
-		Size:   20,
+		Name: "AmericanTypewriter-Bold",
+		Size: 20,
 	})
 	chl5p := view.WithPainter(chl5, &paint.Style{BackgroundColor: colornames.Cyan})
 
@@ -125,8 +124,8 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 	chl6 := textview.New()
 	chl6.String = fmt.Sprintf("Counter: %v", v.counter)
 	chl6.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   20,
+		Name: "HelveticaNeue",
+		Size: 20,
 	})
 	chl6p := view.WithPainter(chl6, &paint.Style{BackgroundColor: colornames.Red})
 	g6 := l.Add(chl6p, func(s *constraint.Solver) {
@@ -291,8 +290,8 @@ func (v *TableCell) Build(ctx *view.Context) view.Model {
 	textView := textview.New()
 	textView.String = v.String
 	textView.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   20,
+		Name: "HelveticaNeue",
+		Size: 20,
 	})
 	l.Add(textView, func(s *constraint.Solver) {
 		s.LeftEqual(l.Left().Add(10))

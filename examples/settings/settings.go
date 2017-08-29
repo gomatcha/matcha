@@ -310,8 +310,8 @@ func (v *SpacerHeader) Build(ctx *view.Context) view.Model {
 	titleView := textview.New()
 	titleView.String = strings.ToTitle(v.Title)
 	titleView.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   13,
+		Name: "HelveticaNeue",
+		Size: 13,
 	})
 	titleView.Style.SetTextColor(spacerTitleColor)
 	// titleView.Painter = &paint.Style{BackgroundColor: colornames.Red}
@@ -346,8 +346,8 @@ func (v *SpacerDescription) Build(ctx *view.Context) view.Model {
 	titleView := textview.New()
 	titleView.String = v.Description
 	titleView.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   13,
+		Name: "HelveticaNeue",
+		Size: 13,
 	})
 	titleView.Style.SetTextColor(spacerTitleColor)
 
@@ -439,8 +439,8 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 		subtitleView := textview.New()
 		subtitleView.String = v.Subtitle
 		subtitleView.Style.SetFont(text.Font{
-			Family: "Helvetica Neue",
-			Size:   14,
+			Name: "HelveticaNeue",
+			Size: 14,
 		})
 		subtitleView.Style.SetTextColor(subtitleColor)
 
@@ -455,8 +455,8 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 	titleView := textview.New()
 	titleView.String = v.Title
 	titleView.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   14,
+		Name: "HelveticaNeue",
+		Size: 14,
 	})
 	titleView.Style.SetTextColor(titleColor)
 

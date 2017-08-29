@@ -1,5 +1,6 @@
 * Get native android views working
 * Android image resource scale??
+* FontWithName? or open struct?
 
 High:
 * Merge all view packages into view/iosview/androidview? androidview.NewStackView(). android.NewStackView(). view.NewTextInput(). view.

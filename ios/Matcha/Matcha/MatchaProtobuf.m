@@ -309,23 +309,26 @@ CGColorRef MatchaCGColorWithProtobuf(MatchaPBColor *value) {
 @implementation UIFont (Matcha)
 
 - (id)initWithProtobuf:(MatchaPBFont *)value {
-    NSMutableDictionary *attr = [NSMutableDictionary dictionary];
-    attr[UIFontDescriptorFamilyAttribute] = value.family;
-    attr[UIFontDescriptorFaceAttribute] = value.face;
-    attr[UIFontDescriptorSizeAttribute] = @(value.size);
-    
-    UIFontDescriptor *desc = [[UIFontDescriptor alloc] initWithFontAttributes:attr];
-    UIFont *font = [UIFont fontWithDescriptor:desc size:0];
-    return font;
+    return [UIFont fontWithName:value.family size:value.size];
+//    NSMutableDictionary *attr = [NSMutableDictionary dictionary];
+//    attr[UIFontDescriptorFamilyAttribute] = value.family;
+//    attr[UIFontDescriptorFaceAttribute] = value.face;
+//    attr[UIFontDescriptorSizeAttribute] = @(value.size);
+//    
+//    UIFontDescriptor *desc = [[UIFontDescriptor alloc] initWithFontAttributes:attr];
+//    UIFont *font = [UIFont fontWithDescriptor:desc size:0];
+//    return font;
 }
 
 - (MatchaPBFont *)protobuf {
     NSDictionary *attr = self.fontDescriptor.fontAttributes;
     
     MatchaPBFont *font = [[MatchaPBFont alloc] init];
-    font.family = attr[UIFontDescriptorFamilyAttribute];
-    font.face = attr[UIFontDescriptorFaceAttribute];
+    font.family = self.fontName;
     font.size = ((NSNumber *)attr[UIFontDescriptorSizeAttribute]).doubleValue;
+//    font.family = attr[UIFontDescriptorFamilyAttribute];
+//    font.face = attr[UIFontDescriptorFaceAttribute];
+//    font.size = ((NSNumber *)attr[UIFontDescriptorSizeAttribute]).doubleValue;
     return font;
 }
 

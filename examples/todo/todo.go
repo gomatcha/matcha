@@ -33,9 +33,8 @@ func init() {
 		v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 1}
 		v.TitleTextStyle = &text.Style{}
 		v.TitleTextStyle.SetFont(text.Font{
-			Family: "Helvetica Neue",
-			Face:   "Medium",
-			Size:   20,
+			Name: "HelveticaNeue-Medium",
+			Size: 20,
 		})
 		v.TitleTextStyle.SetTextColor(colornames.White)
 		return view.NewRoot(v)
@@ -119,14 +118,14 @@ func (v *AddView) Build(ctx *view.Context) view.Model {
 
 	style := &text.Style{}
 	style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   20,
+		Name: "HelveticaNeue",
+		Size: 20,
 	})
 
 	placeholderStyle := &text.Style{}
 	placeholderStyle.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   20,
+		Name: "HelveticaNeue",
+		Size: 20,
 	})
 	placeholderStyle.SetTextColor(colornames.Lightgray)
 

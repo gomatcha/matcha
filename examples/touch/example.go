@@ -52,8 +52,8 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 	chl2 := textview.New()
 	chl2.String = fmt.Sprintf("Counter: %v", v.counter)
 	chl2.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   20,
+		Name: "HelveticaNeue",
+		Size: 20,
 	})
 	g2 := l.Add(chl2, func(s *constraint.Solver) {
 		s.TopEqual(g1.Bottom())
@@ -76,8 +76,8 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 	chl4 := textview.New()
 	chl4.String = fmt.Sprintf("Press: %v", v.pressCounter)
 	chl4.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   20,
+		Name: "HelveticaNeue",
+		Size: 20,
 	})
 	g4 := l.Add(chl4, func(s *constraint.Solver) {
 		s.TopEqual(g3.Bottom())

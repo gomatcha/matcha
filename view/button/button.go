@@ -40,8 +40,8 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	style := &text.Style{}
 	style.SetAlignment(text.AlignmentCenter)
 	style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   20,
+		Name: "HelveticaNeue",
+		Size: 20,
 	})
 	style.SetTextColor(v.Color)
 	st := text.NewStyledText(v.String, style)
