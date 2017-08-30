@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -31,6 +32,12 @@ public class MatchaButton extends MatchaChildView {
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view = new Button(context);
+        view.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MatchaButton.this.viewNode.rootView.call("OnPress", MatchaButton.this.viewNode.id);
+            }
+        });
         addView(view, params);
     }
 

@@ -73,7 +73,12 @@ public class MatchaView extends RelativeLayout {
     protected void finalize() {
         goValue.call("Stop");
     }
-    
+
+    GoValue[] call(String func, long viewId, GoValue... args) {
+        GoValue[] args2 = new GoValue[]{new GoValue(func), new GoValue(viewId), new GoValue(args)};
+        return this.goValue.call("Call", args2);
+    }
+
     // View registry
     static Map<String, ViewFactory> viewRegistry = new HashMap<String, ViewFactory>();
 

@@ -2,7 +2,7 @@
 * Android Text Input
 
 * Android image resource scale??
-* FontWithName? or open struct?
+* FontWithName? or open struct? What happens when we can't find a font?
 * Should font be a pointer?
 
 High:
