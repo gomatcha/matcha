@@ -15,6 +15,10 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        flatDir {
+            dirs '../Protobuf'
+            dirs '../MatchaBridge'
+        }
     }
 }
 

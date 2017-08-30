@@ -82,6 +82,7 @@ public class MatchaView extends RelativeLayout {
             Class.forName("io.gomatcha.matcha.MatchaBasicView");
             Class.forName("io.gomatcha.matcha.MatchaImageView");
             Class.forName("io.gomatcha.matcha.MatchaTextView");
+            Class.forName("io.gomatcha.matcha.MatchaButton");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
