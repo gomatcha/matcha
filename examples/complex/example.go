@@ -23,7 +23,6 @@ import (
 	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios"
 	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/segmentview"
 	"gomatcha.io/matcha/view/slider"
 	"gomatcha.io/matcha/view/switchview"
 	"gomatcha.io/matcha/view/textview"
@@ -239,7 +238,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Width(150)
 	})
 
-	chl14 := segmentview.New()
+	chl14 := ios.NewSegmentView()
 	chl14.Value = v.segmentValue
 	chl14.Titles = []string{"Title1", "Title2", "Title3"}
 	chl14.OnValueChange = func(a int) {

@@ -1,4 +1,4 @@
-// Package progressview implements a native progress view.
+// Package ios implements a native ios views.
 package ios
 
 import (

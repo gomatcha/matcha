@@ -1,5 +1,4 @@
-// Package segmentview implements a native segmented control.
-package segmentview
+package ios
 
 import (
 	"fmt"
@@ -11,7 +10,7 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
-type View struct {
+type SegmentView struct {
 	view.Embed
 	Enabled       bool
 	Momentary     bool
@@ -21,15 +20,15 @@ type View struct {
 	PaintStyle    *paint.Style
 }
 
-// New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New() *View {
-	return &View{
+// NewSegmentView returns either the previous View in ctx with matching key, or a new View if none exists.
+func NewSegmentView() *SegmentView {
+	return &SegmentView{
 		Enabled: true,
 	}
 }
 
 // Build implements view.View.
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *SegmentView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(29)

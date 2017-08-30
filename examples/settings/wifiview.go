@@ -10,8 +10,8 @@ import (
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/alert"
 	"gomatcha.io/matcha/view/imageview"
+	"gomatcha.io/matcha/view/ios"
 	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/segmentview"
 	"gomatcha.io/matcha/view/stackview"
 	"gomatcha.io/matcha/view/switchview"
 )
@@ -323,7 +323,7 @@ func (v *SegmentCell) Build(ctx *view.Context) view.Model {
 		s.WidthEqual(l.MinGuide().Width())
 	})
 
-	segment := segmentview.New()
+	segment := ios.NewSegmentView()
 	segment.Titles = v.Titles
 	segment.Value = v.Value
 	segment.OnValueChange = func(a int) {

@@ -1,6 +1,7 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.text.SpannableString;
 import android.util.Log;
@@ -11,9 +12,16 @@ import android.widget.RelativeLayout;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import io.gomatcha.app.R;
 import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.alert.PbAlert;
 import io.gomatcha.matcha.pb.view.button.PbButton;
+
+import static android.R.color.primary_text_dark;
+import static android.R.color.primary_text_light;
+import static android.R.color.secondary_text_dark;
+import static android.R.color.secondary_text_dark_nodisable;
+import static android.R.color.secondary_text_light;
 
 public class MatchaButton extends MatchaChildView {
     Button view;
@@ -49,9 +57,12 @@ public class MatchaButton extends MatchaChildView {
             view.setEnabled(proto.getEnabled());
             view.setText(proto.getStr());
 
-            if (proto.hasColor()) {
+            if (proto.hasColor() && proto.getEnabled()) {
                 int color = Protobuf.newColor(proto.getColor());
                 view.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+                view.setTextColor(Color.WHITE);
+            } else {
+                // TODO(KD): reset background and text color
             }
 
         } catch (InvalidProtocolBufferException e) {
