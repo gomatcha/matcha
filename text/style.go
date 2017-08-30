@@ -2,6 +2,7 @@ package text
 
 import (
 	"image/color"
+	"runtime"
 
 	"gomatcha.io/matcha/pb"
 	pbtext "gomatcha.io/matcha/pb/text"
@@ -51,6 +52,51 @@ const (
 
 func (a UnderlineStyle) MarshalProtobuf() pbtext.UnderlineStyle {
 	return pbtext.UnderlineStyle(a)
+}
+
+func DefaultFont(size float64) Font {
+	if runtime.GOOS == "android" {
+		return Font{
+			Name: "sans-serif",
+			Size: size,
+		}
+	} else if runtime.GOOS == "darwin" {
+		return Font{
+			Name: "HelveticaNeue",
+			Size: size,
+		}
+	}
+	return Font{}
+}
+
+func DefaultBoldFont(size float64) Font {
+	if runtime.GOOS == "android" {
+		return Font{
+			Name: "sans-serif-bold",
+			Size: size,
+		}
+	} else if runtime.GOOS == "darwin" {
+		return Font{
+			Name: "HelveticaNeue-Bold",
+			Size: size,
+		}
+	}
+	return Font{}
+}
+
+func DefaultItalicFont(size float64) Font {
+	if runtime.GOOS == "android" {
+		return Font{
+			Name: "sans-serif-italic",
+			Size: size,
+		}
+	} else if runtime.GOOS == "darwin" {
+		return Font{
+			Name: "HelveticaNeue-Italic",
+			Size: size,
+		}
+	}
+	return Font{}
 }
 
 // StrikethroughStyle represents a text font.

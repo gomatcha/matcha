@@ -19,17 +19,14 @@ public final class PbButton {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.matcha.text.StyledText styledText = 1;</code>
+     * <code>string str = 1;</code>
      */
-    boolean hasStyledText();
+    java.lang.String getStr();
     /**
-     * <code>.matcha.text.StyledText styledText = 1;</code>
+     * <code>string str = 1;</code>
      */
-    io.gomatcha.matcha.pb.text.PbText.StyledText getStyledText();
-    /**
-     * <code>.matcha.text.StyledText styledText = 1;</code>
-     */
-    io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getStyledTextOrBuilder();
+    com.google.protobuf.ByteString
+        getStrBytes();
 
     /**
      * <code>bool enabled = 2;</code>
@@ -61,6 +58,7 @@ public final class PbButton {
       super(builder);
     }
     private View() {
+      str_ = "";
       enabled_ = false;
     }
 
@@ -90,16 +88,9 @@ public final class PbButton {
               break;
             }
             case 10: {
-              io.gomatcha.matcha.pb.text.PbText.StyledText.Builder subBuilder = null;
-              if (styledText_ != null) {
-                subBuilder = styledText_.toBuilder();
-              }
-              styledText_ = input.readMessage(io.gomatcha.matcha.pb.text.PbText.StyledText.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(styledText_);
-                styledText_ = subBuilder.buildPartial();
-              }
+              java.lang.String s = input.readStringRequireUtf8();
 
+              str_ = s;
               break;
             }
             case 16: {
@@ -143,25 +134,38 @@ public final class PbButton {
               io.gomatcha.matcha.pb.view.button.PbButton.View.class, io.gomatcha.matcha.pb.view.button.PbButton.View.Builder.class);
     }
 
-    public static final int STYLEDTEXT_FIELD_NUMBER = 1;
-    private io.gomatcha.matcha.pb.text.PbText.StyledText styledText_;
+    public static final int STR_FIELD_NUMBER = 1;
+    private volatile java.lang.Object str_;
     /**
-     * <code>.matcha.text.StyledText styledText = 1;</code>
+     * <code>string str = 1;</code>
      */
-    public boolean hasStyledText() {
-      return styledText_ != null;
+    public java.lang.String getStr() {
+      java.lang.Object ref = str_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        str_ = s;
+        return s;
+      }
     }
     /**
-     * <code>.matcha.text.StyledText styledText = 1;</code>
+     * <code>string str = 1;</code>
      */
-    public io.gomatcha.matcha.pb.text.PbText.StyledText getStyledText() {
-      return styledText_ == null ? io.gomatcha.matcha.pb.text.PbText.StyledText.getDefaultInstance() : styledText_;
-    }
-    /**
-     * <code>.matcha.text.StyledText styledText = 1;</code>
-     */
-    public io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getStyledTextOrBuilder() {
-      return getStyledText();
+    public com.google.protobuf.ByteString
+        getStrBytes() {
+      java.lang.Object ref = str_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        str_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     public static final int ENABLED_FIELD_NUMBER = 2;
@@ -206,8 +210,8 @@ public final class PbButton {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (styledText_ != null) {
-        output.writeMessage(1, getStyledText());
+      if (!getStrBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, str_);
       }
       if (enabled_ != false) {
         output.writeBool(2, enabled_);
@@ -222,9 +226,8 @@ public final class PbButton {
       if (size != -1) return size;
 
       size = 0;
-      if (styledText_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getStyledText());
+      if (!getStrBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, str_);
       }
       if (enabled_ != false) {
         size += com.google.protobuf.CodedOutputStream
@@ -250,11 +253,8 @@ public final class PbButton {
       io.gomatcha.matcha.pb.view.button.PbButton.View other = (io.gomatcha.matcha.pb.view.button.PbButton.View) obj;
 
       boolean result = true;
-      result = result && (hasStyledText() == other.hasStyledText());
-      if (hasStyledText()) {
-        result = result && getStyledText()
-            .equals(other.getStyledText());
-      }
+      result = result && getStr()
+          .equals(other.getStr());
       result = result && (getEnabled()
           == other.getEnabled());
       result = result && (hasColor() == other.hasColor());
@@ -272,10 +272,8 @@ public final class PbButton {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasStyledText()) {
-        hash = (37 * hash) + STYLEDTEXT_FIELD_NUMBER;
-        hash = (53 * hash) + getStyledText().hashCode();
-      }
+      hash = (37 * hash) + STR_FIELD_NUMBER;
+      hash = (53 * hash) + getStr().hashCode();
       hash = (37 * hash) + ENABLED_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getEnabled());
@@ -412,12 +410,8 @@ public final class PbButton {
       }
       public Builder clear() {
         super.clear();
-        if (styledTextBuilder_ == null) {
-          styledText_ = null;
-        } else {
-          styledText_ = null;
-          styledTextBuilder_ = null;
-        }
+        str_ = "";
+
         enabled_ = false;
 
         if (colorBuilder_ == null) {
@@ -448,11 +442,7 @@ public final class PbButton {
 
       public io.gomatcha.matcha.pb.view.button.PbButton.View buildPartial() {
         io.gomatcha.matcha.pb.view.button.PbButton.View result = new io.gomatcha.matcha.pb.view.button.PbButton.View(this);
-        if (styledTextBuilder_ == null) {
-          result.styledText_ = styledText_;
-        } else {
-          result.styledText_ = styledTextBuilder_.build();
-        }
+        result.str_ = str_;
         result.enabled_ = enabled_;
         if (colorBuilder_ == null) {
           result.color_ = color_;
@@ -500,8 +490,9 @@ public final class PbButton {
 
       public Builder mergeFrom(io.gomatcha.matcha.pb.view.button.PbButton.View other) {
         if (other == io.gomatcha.matcha.pb.view.button.PbButton.View.getDefaultInstance()) return this;
-        if (other.hasStyledText()) {
-          mergeStyledText(other.getStyledText());
+        if (!other.getStr().isEmpty()) {
+          str_ = other.str_;
+          onChanged();
         }
         if (other.getEnabled() != false) {
           setEnabled(other.getEnabled());
@@ -535,121 +526,73 @@ public final class PbButton {
         return this;
       }
 
-      private io.gomatcha.matcha.pb.text.PbText.StyledText styledText_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.pb.text.PbText.StyledText, io.gomatcha.matcha.pb.text.PbText.StyledText.Builder, io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder> styledTextBuilder_;
+      private java.lang.Object str_ = "";
       /**
-       * <code>.matcha.text.StyledText styledText = 1;</code>
+       * <code>string str = 1;</code>
        */
-      public boolean hasStyledText() {
-        return styledTextBuilder_ != null || styledText_ != null;
-      }
-      /**
-       * <code>.matcha.text.StyledText styledText = 1;</code>
-       */
-      public io.gomatcha.matcha.pb.text.PbText.StyledText getStyledText() {
-        if (styledTextBuilder_ == null) {
-          return styledText_ == null ? io.gomatcha.matcha.pb.text.PbText.StyledText.getDefaultInstance() : styledText_;
+      public java.lang.String getStr() {
+        java.lang.Object ref = str_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          str_ = s;
+          return s;
         } else {
-          return styledTextBuilder_.getMessage();
+          return (java.lang.String) ref;
         }
       }
       /**
-       * <code>.matcha.text.StyledText styledText = 1;</code>
+       * <code>string str = 1;</code>
        */
-      public Builder setStyledText(io.gomatcha.matcha.pb.text.PbText.StyledText value) {
-        if (styledTextBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          styledText_ = value;
-          onChanged();
+      public com.google.protobuf.ByteString
+          getStrBytes() {
+        java.lang.Object ref = str_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          str_ = b;
+          return b;
         } else {
-          styledTextBuilder_.setMessage(value);
+          return (com.google.protobuf.ByteString) ref;
         }
-
-        return this;
       }
       /**
-       * <code>.matcha.text.StyledText styledText = 1;</code>
+       * <code>string str = 1;</code>
        */
-      public Builder setStyledText(
-          io.gomatcha.matcha.pb.text.PbText.StyledText.Builder builderForValue) {
-        if (styledTextBuilder_ == null) {
-          styledText_ = builderForValue.build();
-          onChanged();
-        } else {
-          styledTextBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.text.StyledText styledText = 1;</code>
-       */
-      public Builder mergeStyledText(io.gomatcha.matcha.pb.text.PbText.StyledText value) {
-        if (styledTextBuilder_ == null) {
-          if (styledText_ != null) {
-            styledText_ =
-              io.gomatcha.matcha.pb.text.PbText.StyledText.newBuilder(styledText_).mergeFrom(value).buildPartial();
-          } else {
-            styledText_ = value;
-          }
-          onChanged();
-        } else {
-          styledTextBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.text.StyledText styledText = 1;</code>
-       */
-      public Builder clearStyledText() {
-        if (styledTextBuilder_ == null) {
-          styledText_ = null;
-          onChanged();
-        } else {
-          styledText_ = null;
-          styledTextBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.text.StyledText styledText = 1;</code>
-       */
-      public io.gomatcha.matcha.pb.text.PbText.StyledText.Builder getStyledTextBuilder() {
-        
+      public Builder setStr(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        str_ = value;
         onChanged();
-        return getStyledTextFieldBuilder().getBuilder();
+        return this;
       }
       /**
-       * <code>.matcha.text.StyledText styledText = 1;</code>
+       * <code>string str = 1;</code>
        */
-      public io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getStyledTextOrBuilder() {
-        if (styledTextBuilder_ != null) {
-          return styledTextBuilder_.getMessageOrBuilder();
-        } else {
-          return styledText_ == null ?
-              io.gomatcha.matcha.pb.text.PbText.StyledText.getDefaultInstance() : styledText_;
-        }
+      public Builder clearStr() {
+        
+        str_ = getDefaultInstance().getStr();
+        onChanged();
+        return this;
       }
       /**
-       * <code>.matcha.text.StyledText styledText = 1;</code>
+       * <code>string str = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.pb.text.PbText.StyledText, io.gomatcha.matcha.pb.text.PbText.StyledText.Builder, io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder> 
-          getStyledTextFieldBuilder() {
-        if (styledTextBuilder_ == null) {
-          styledTextBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.pb.text.PbText.StyledText, io.gomatcha.matcha.pb.text.PbText.StyledText.Builder, io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder>(
-                  getStyledText(),
-                  getParentForChildren(),
-                  isClean());
-          styledText_ = null;
-        }
-        return styledTextBuilder_;
+      public Builder setStrBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        str_ = value;
+        onChanged();
+        return this;
       }
 
       private boolean enabled_ ;
@@ -858,14 +801,12 @@ public final class PbButton {
   static {
     java.lang.String[] descriptorData = {
       "\n.gomatcha.io/matcha/pb/view/button/butt" +
-      "on.proto\022\022matcha.view.button\032%gomatcha.i" +
-      "o/matcha/pb/text/text.proto\032!gomatcha.io" +
-      "/matcha/pb/image.proto\"b\n\004View\022+\n\nstyled" +
-      "Text\030\001 \001(\0132\027.matcha.text.StyledText\022\017\n\007e" +
-      "nabled\030\002 \001(\010\022\034\n\005color\030\003 \001(\0132\r.matcha.Col" +
-      "orBF\n!io.gomatcha.matcha.pb.view.buttonB" +
-      "\010PbButtonZ\006button\242\002\016MatchaButtonPBb\006prot" +
-      "o3"
+      "on.proto\022\022matcha.view.button\032!gomatcha.i" +
+      "o/matcha/pb/image.proto\"B\n\004View\022\013\n\003str\030\001" +
+      " \001(\t\022\017\n\007enabled\030\002 \001(\010\022\034\n\005color\030\003 \001(\0132\r.m" +
+      "atcha.ColorBF\n!io.gomatcha.matcha.pb.vie" +
+      "w.buttonB\010PbButtonZ\006button\242\002\016MatchaButto" +
+      "nPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -878,7 +819,6 @@ public final class PbButton {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          io.gomatcha.matcha.pb.text.PbText.getDescriptor(),
           io.gomatcha.matcha.pb.Pb.getDescriptor(),
         }, assigner);
     internal_static_matcha_view_button_View_descriptor =
@@ -886,8 +826,7 @@ public final class PbButton {
     internal_static_matcha_view_button_View_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_button_View_descriptor,
-        new java.lang.String[] { "StyledText", "Enabled", "Color", });
-    io.gomatcha.matcha.pb.text.PbText.getDescriptor();
+        new java.lang.String[] { "Str", "Enabled", "Color", });
     io.gomatcha.matcha.pb.Pb.getDescriptor();
   }
 

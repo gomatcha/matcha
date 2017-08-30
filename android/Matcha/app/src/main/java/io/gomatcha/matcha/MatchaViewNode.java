@@ -39,6 +39,7 @@ public class MatchaViewNode extends Object {
         // Create view
         if (this.view == null) {
             this.view = MatchaView.createView(buildNode.getBridgeName(), rootView.getContext(), this);
+            this.view.setClipChildren(false);
         }
 
         // Build children
@@ -87,7 +88,6 @@ public class MatchaViewNode extends Object {
                 
                 MatchaViewNode childNode = children.get(i);
                 this.view.addView(childNode.view, params);
-                Log.v("addView", String.format("%s, %s", childNode.id, params));
             }
             for (long i : removedKeys) {
                 MatchaViewNode childNode = children.get(i);
@@ -121,8 +121,6 @@ public class MatchaViewNode extends Object {
                 params.leftMargin = (int)minX;
                 params.topMargin = (int)minY;
                 this.view.setLayoutParams(params);
-
-                Log.v("setLayoutParams", String.format("%s, %s", this.id, params));
             }
         }
 

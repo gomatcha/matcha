@@ -147,6 +147,17 @@ public class Protobuf {
         }
 
         PbText.Font font = textStyle.getFont();
+        String fontName = font.getFamily();
+        if (fontName.endsWith("-bold")) {
+            fontName = fontName.substring(0, fontName.length() - 5);
+            arrayList.add(new StyleSpan(Typeface.BOLD));
+        } else if (fontName.endsWith("-italic")) {
+            fontName = fontName.substring(0, fontName.length() - 7);
+            arrayList.add(new StyleSpan(Typeface.ITALIC));
+        } else if (fontName.endsWith("-bolditalic")) {
+            fontName = fontName.substring(0, fontName.length() - 11);
+            arrayList.add(new StyleSpan(Typeface.BOLD_ITALIC));
+        }
         span = new TypefaceSpan(font.getFamily());
         arrayList.add(span);
 
@@ -162,21 +173,6 @@ public class Protobuf {
         // TODO(KD): AttributeKeyTextWrap
         // TODO(KD): AttributeKeyTruncation
         // TODO(KD): AttributeKeyTruncationString
-
-        // TODO(KD):
-        // span = null;
-        // if (font.getFace() == "Bold") {
-        //     span = new StyleSpan(Typeface.BOLD);
-        // }
-        // if (font.getFace() == "Italic") {
-        //     span = new StyleSpan(Typeface.ITALIC);
-        // }
-        // if (font.getFace() == "Bold Italic") {
-        //     span = new StyleSpan(Typeface.BOLD_ITALIC);
-        // }
-        // if (span != null) {
-        //     arrayList.add(span);
-        // }
 
         return arrayList;
     }

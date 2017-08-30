@@ -24,8 +24,13 @@
     _node = value;
     MatchaButtonPBView *pbbutton = (id)[value.nativeViewState unpackMessageClass:[MatchaButtonPBView class] error:NULL];
     
-    NSAttributedString *string = [[NSAttributedString alloc] initWithProtobuf:pbbutton.styledText];
-    [self.button setAttributedTitle:string forState:UIControlStateNormal];
+    if (pbbutton.hasColor) {
+        self.button.tintColor = [[UIColor alloc] initWithProtobuf:pbbutton.color];
+    } else {
+        self.button.tintColor = nil;
+    }
+    self.button.titleLabel.font = [UIFont systemFontOfSize:20];
+    [self.button setTitle:pbbutton.str forState:UIControlStateNormal];
     self.button.enabled = pbbutton.enabled;
 }
 

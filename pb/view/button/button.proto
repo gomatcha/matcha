@@ -1,6 +1,5 @@
 syntax = "proto3";
 package matcha.view.button;
-import "gomatcha.io/matcha/pb/text/text.proto";
 import "gomatcha.io/matcha/pb/image.proto";
 
 option go_package = "button";
@@ -9,7 +8,7 @@ option java_package = "io.gomatcha.matcha.pb.view.button";
 option java_outer_classname = "PbButton";
 
 message View {
-    matcha.text.StyledText styledText = 1;
+    string str = 1;
     bool enabled = 2;
     matcha.Color color = 3;
 }

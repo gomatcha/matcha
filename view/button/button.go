@@ -4,6 +4,8 @@ package button
 import (
 	"image"
 	"image/color"
+	"runtime"
+	"strings"
 
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
@@ -31,33 +33,23 @@ type View struct {
 func New() *View {
 	return &View{
 		Enabled: true,
-		Color:   color.RGBA{14, 122, 254, 255},
 	}
 }
 
 // Build implements view.View.
 func (v *View) Build(ctx *view.Context) view.Model {
-	style := &text.Style{}
-	style.SetAlignment(text.AlignmentCenter)
-	style.SetFont(text.Font{
-		Name: "HelveticaNeue",
-		Size: 20,
-	})
-	style.SetTextColor(v.Color)
-	st := text.NewStyledText(v.String, style)
-
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
 	}
 	return view.Model{
 		Painter:        painter,
-		Layouter:       &layouter{styledText: st},
+		Layouter:       &layouter{str: v.String},
 		NativeViewName: "gomatcha.io/matcha/view/button",
 		NativeViewState: &pbbutton.View{
-			StyledText: st.MarshalProtobuf(),
-			Enabled:    v.Enabled,
-			Color:      pb.ColorEncode(v.Color),
+			Str:     v.String,
+			Enabled: v.Enabled,
+			Color:   pb.ColorEncode(v.Color),
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnPress": func() {
@@ -70,14 +62,30 @@ func (v *View) Build(ctx *view.Context) view.Model {
 }
 
 type layouter struct {
-	styledText *text.StyledText
+	str string
 }
 
 func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
-	const padding = 10.0
-	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
-	g := layout.Guide{Frame: layout.Rt(0, 0, size.X+padding*2, size.Y+padding*2)}
-	return g, nil
+	if runtime.GOOS == "android" {
+		style := &text.Style{}
+		style.SetFont(text.DefaultFont(14))
+		st := text.NewStyledText(strings.ToUpper(l.str), style)
+		size := st.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
+
+		const padding = 16.0
+		g := layout.Guide{Frame: layout.Rt(0, 0, size.X+padding*2+16, 48)}
+		return g, nil
+	} else if runtime.GOOS == "darwin" {
+		style := &text.Style{}
+		style.SetFont(text.DefaultFont(20))
+		st := text.NewStyledText(l.str, style)
+		size := st.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
+
+		const padding = 10.0
+		g := layout.Guide{Frame: layout.Rt(0, 0, size.X+padding*2, size.Y+padding*2)}
+		return g, nil
+	}
+	return layout.Guide{}, nil
 }
 
 func (l *layouter) Notify(f func()) comm.Id {

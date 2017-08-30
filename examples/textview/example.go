@@ -97,6 +97,8 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 	})
 
 	button1 := button.New()
+	// button1.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
+	// button1.Color = colornames.Green
 	button1.String = "Toggle Keyboard"
 	button1.OnPress = func() {
 		if !v.responder.Visible() {

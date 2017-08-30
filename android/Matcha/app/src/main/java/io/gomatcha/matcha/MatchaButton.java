@@ -1,6 +1,9 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
+import android.text.SpannableString;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -18,7 +21,7 @@ public class MatchaButton extends MatchaChildView {
         MatchaView.registerView("gomatcha.io/matcha/view/button", new MatchaView.ViewFactory() {
             @Override
             public MatchaChildView createView(Context context, MatchaViewNode node) {
-                return new MatchaTextView(context, node);
+                return new MatchaButton(context, node);
             }
         });
     }
@@ -36,6 +39,14 @@ public class MatchaButton extends MatchaChildView {
         super.setNode(buildNode);
         try {
             PbButton.View proto = buildNode.getBridgeValue().unpack(PbButton.View.class);
+            view.setEnabled(proto.getEnabled());
+            view.setText(proto.getStr());
+
+            if (proto.hasColor()) {
+                int color = Protobuf.newColor(proto.getColor());
+                view.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+            }
+
         } catch (InvalidProtocolBufferException e) {
         }
     }

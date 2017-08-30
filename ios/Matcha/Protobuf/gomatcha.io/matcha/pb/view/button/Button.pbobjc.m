@@ -14,7 +14,6 @@
 #endif
 
  #import "gomatcha.io/matcha/pb/view/button/Button.pbobjc.h"
- #import "gomatcha.io/matcha/pb/text/Text.pbobjc.h"
  #import "gomatcha.io/matcha/pb/Image.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -49,13 +48,13 @@ static GPBFileDescriptor *MatchaButtonPBButtonRoot_FileDescriptor(void) {
 
 @implementation MatchaButtonPBView
 
-@dynamic hasStyledText, styledText;
+@dynamic str;
 @dynamic enabled;
 @dynamic hasColor, color;
 
 typedef struct MatchaButtonPBView__storage_ {
   uint32_t _has_storage_[1];
-  MatchaPBStyledText *styledText;
+  NSString *str;
   MatchaPBColor *color;
 } MatchaButtonPBView__storage_;
 
@@ -66,13 +65,13 @@ typedef struct MatchaButtonPBView__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "styledText",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBStyledText),
-        .number = MatchaButtonPBView_FieldNumber_StyledText,
+        .name = "str",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaButtonPBView_FieldNumber_Str,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MatchaButtonPBView__storage_, styledText),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(MatchaButtonPBView__storage_, str),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "enabled",
@@ -101,11 +100,6 @@ typedef struct MatchaButtonPBView__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MatchaButtonPBView__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\001\n\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
