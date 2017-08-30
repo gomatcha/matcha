@@ -7,7 +7,7 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/progressview"
+	"gomatcha.io/matcha/view/ios"
 	"gomatcha.io/matcha/view/slider"
 )
 
@@ -31,7 +31,7 @@ func NewProgressView() *ProgressView {
 func (v *ProgressView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	progressv := progressview.New()
+	progressv := ios.NewProgressView()
 	progressv.ProgressNotifier = v.value
 	progressv.ProgressColor = colornames.Red
 	l.Add(progressv, func(s *constraint.Solver) {

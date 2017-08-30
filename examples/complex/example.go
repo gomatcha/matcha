@@ -21,7 +21,7 @@ import (
 	"gomatcha.io/matcha/view/basicview"
 	"gomatcha.io/matcha/view/button"
 	"gomatcha.io/matcha/view/imageview"
-	"gomatcha.io/matcha/view/progressview"
+	"gomatcha.io/matcha/view/ios"
 	"gomatcha.io/matcha/view/scrollview"
 	"gomatcha.io/matcha/view/segmentview"
 	"gomatcha.io/matcha/view/slider"
@@ -230,7 +230,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Width(150)
 	})
 
-	chl13 := progressview.New()
+	chl13 := ios.NewProgressView()
 	chl13.ProgressNotifier = &v.sliderValue
 	chl13.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
 	_ = l.Add(chl13, func(s *constraint.Solver) {

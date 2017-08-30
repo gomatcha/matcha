@@ -1,5 +1,5 @@
 // Package progressview implements a native progress view.
-package progressview
+package ios
 
 import (
 	"image/color"
@@ -12,8 +12,8 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
-// View implements a progess view.
-type View struct {
+// ProgressView implements a progess view.
+type ProgressView struct {
 	view.Embed
 	Progress         float64
 	ProgressNotifier comm.Float64Notifier
@@ -22,13 +22,13 @@ type View struct {
 	progressNotifier comm.Float64Notifier
 }
 
-// New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New() *View {
-	return &View{}
+// NewProgressView returns either the previous View in ctx with matching key, or a new View if none exists.
+func NewProgressView() *ProgressView {
+	return &ProgressView{}
 }
 
 // Lifecycle implements the view.View interface.
-func (v *View) Lifecycle(from, to view.Stage) {
+func (v *ProgressView) Lifecycle(from, to view.Stage) {
 	if view.ExitsStage(from, to, view.StageMounted) {
 		if v.progressNotifier != nil {
 			v.Unsubscribe(v.progressNotifier)
@@ -37,7 +37,7 @@ func (v *View) Lifecycle(from, to view.Stage) {
 }
 
 // Build implements the view.View interface.
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *ProgressView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(2) // 2.5 if its a bar
