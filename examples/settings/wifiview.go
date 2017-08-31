@@ -186,7 +186,6 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 			alert.Alert("Forget Wi-Fi Network?", "Your iPhone will no longer join this Wi-Fi network.",
 				&alert.Button{
 					Title: "Cancel",
-					Style: alert.ButtonStyleCancel,
 				},
 				&alert.Button{
 					Title: "Forget",

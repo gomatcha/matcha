@@ -10,6 +10,8 @@
 package alert
 
 import (
+	"runtime"
+
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/bridge"
 	pbalert "gomatcha.io/matcha/pb/view/alert"
@@ -60,7 +62,11 @@ func (a *_alert) display() {
 	if err != nil {
 		return
 	}
-	bridge.Bridge("").Call("displayAlert:", bridge.Bytes(data))
+	if runtime.GOOS == "android" {
+		bridge.Bridge("").Call("displayAlert", bridge.Bytes(data))
+	} else if runtime.GOOS == "darwin" {
+		bridge.Bridge("").Call("displayAlert:", bridge.Bytes(data))
+	}
 }
 
 // Alert displays an alert with the given title, message and buttons. If no buttons are passed, a default OK button is created.
@@ -78,23 +84,23 @@ func Alert(title, message string, buttons ...*Button) {
 
 // Button represents an alert button.
 type Button struct {
-	Title   string
-	Style   ButtonStyle
+	Title string
+	// Style   ButtonStyle
 	OnPress func()
 }
 
 func (a *Button) marshalProtobuf() *pbalert.Button {
 	return &pbalert.Button{
 		Title: a.Title,
-		Style: pbalert.ButtonStyle(a.Style),
+		// Style: pbalert.ButtonStyle(a.Style),
 	}
 }
 
-// Alert button styles.
-type ButtonStyle int
+// // Alert button styles.
+// type ButtonStyle int
 
-const (
-	ButtonStyleDefault ButtonStyle = iota
-	ButtonStyleCancel
-	ButtonStyleDestructive
-)
+// const (
+// 	ButtonStyleDefault ButtonStyle = iota
+// 	ButtonStyleCancel
+// 	ButtonStyleDestructive
+// )

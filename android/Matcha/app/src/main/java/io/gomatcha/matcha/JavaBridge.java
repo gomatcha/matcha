@@ -1,6 +1,8 @@
 package io.gomatcha.matcha;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +19,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
+import java.util.List;
 
 import io.gomatcha.app.R;
 import io.gomatcha.bridge.*;
@@ -24,6 +27,7 @@ import io.gomatcha.matcha.pb.Pb;
 import io.gomatcha.matcha.pb.layout.PbLayout;
 import io.gomatcha.matcha.pb.text.PbText;
 import io.gomatcha.matcha.pb.view.PbView;
+import io.gomatcha.matcha.pb.view.alert.PbAlert;
 
 public class JavaBridge {
     static Choreographer.FrameCallback callback;
@@ -119,5 +123,50 @@ public class JavaBridge {
         builder.setScale(1); // TODO(KD): Figure out which image density was selected. https://developer.android.com/guide/practices/screens_support.html
 
         return new GoValue(builder.build().toByteArray());
+    }
+    
+    void displayAlert(byte[] protobuf) {
+        try {
+            final PbAlert.View alert = PbAlert.View.parseFrom(protobuf);
+        
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(alert.getTitle());
+            if (alert.getMessage().length() > 0) {
+                builder.setMessage(alert.getMessage());
+            }
+
+            List<PbAlert.Button> buttons = alert.getButtonsList();
+            if (buttons.size() == 0) {
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                       // no-op?
+                   }
+                });
+            }
+            if (buttons.size() > 0) {
+                builder.setPositiveButton(buttons.get(0).getTitle(), new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                       GoValue.withFunc("gomatcha.io/matcha/view/alert onPress").call("", new GoValue(alert.getId()), new GoValue(0));
+                   }
+                });
+            }
+            if (buttons.size() > 1) {
+                builder.setNegativeButton(buttons.get(1).getTitle(), new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                       GoValue.withFunc("gomatcha.io/matcha/view/alert onPress").call("", new GoValue(alert.getId()), new GoValue(1));
+                   }
+                });
+            }
+            if (buttons.size() > 2) {
+                builder.setNeutralButton(buttons.get(2).getTitle(), new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                       GoValue.withFunc("gomatcha.io/matcha/view/alert onPress").call("", new GoValue(alert.getId()), new GoValue(2));
+                   }
+                });
+            }
+            builder.setCancelable(false);
+            builder.show();
+        } catch (InvalidProtocolBufferException e) {
+        }
     }
 }
