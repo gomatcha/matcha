@@ -32,7 +32,6 @@ public class MatchaSwitchView extends MatchaChildView {
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view = new Switch(context);
-        view.setBackgroundColor(Color.RED);
         view.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked != checked) {
@@ -52,7 +51,7 @@ public class MatchaSwitchView extends MatchaChildView {
             PbSwitchView.View proto = buildNode.getBridgeValue().unpack(PbSwitchView.View.class);
             checked = proto.getValue();
             view.setChecked(proto.getValue());
-            //view.setEnabled(proto.getEnabled());
+            view.setEnabled(proto.getEnabled());
         } catch (InvalidProtocolBufferException e) {
         }
     }

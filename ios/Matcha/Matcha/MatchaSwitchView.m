@@ -24,7 +24,8 @@
     NSError *error = nil;
     MatchaPBSwitchViewView *view = (id)[state unpackMessageClass:[MatchaPBSwitchViewView class] error:&error];
     if (view != nil) {
-        self.on = view.value;
+        [self setOn:view.value animated:true];
+        self.enabled = view.enabled;
     }
 }
 

@@ -48,11 +48,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef GPB_ENUM(MatchaPBSwitchViewView_FieldNumber) {
   MatchaPBSwitchViewView_FieldNumber_Value = 1,
+  MatchaPBSwitchViewView_FieldNumber_Enabled = 2,
 };
 
 @interface MatchaPBSwitchViewView : GPBMessage
 
 @property(nonatomic, readwrite) BOOL value;
+
+@property(nonatomic, readwrite) BOOL enabled;
 
 @end
 

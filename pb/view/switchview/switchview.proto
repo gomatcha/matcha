@@ -8,6 +8,7 @@ option java_outer_classname = "PbSwitchView";
 
 message View {
     bool value = 1;
+    bool enabled = 2;
 }
 
 message Event {

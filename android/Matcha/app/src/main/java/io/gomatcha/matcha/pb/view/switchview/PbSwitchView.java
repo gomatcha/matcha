@@ -22,6 +22,11 @@ public final class PbSwitchView {
      * <code>bool value = 1;</code>
      */
     boolean getValue();
+
+    /**
+     * <code>bool enabled = 2;</code>
+     */
+    boolean getEnabled();
   }
   /**
    * Protobuf type {@code switchview.View}
@@ -36,6 +41,7 @@ public final class PbSwitchView {
     }
     private View() {
       value_ = false;
+      enabled_ = false;
     }
 
     @java.lang.Override
@@ -66,6 +72,11 @@ public final class PbSwitchView {
             case 8: {
 
               value_ = input.readBool();
+              break;
+            }
+            case 16: {
+
+              enabled_ = input.readBool();
               break;
             }
           }
@@ -100,6 +111,15 @@ public final class PbSwitchView {
       return value_;
     }
 
+    public static final int ENABLED_FIELD_NUMBER = 2;
+    private boolean enabled_;
+    /**
+     * <code>bool enabled = 2;</code>
+     */
+    public boolean getEnabled() {
+      return enabled_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -115,6 +135,9 @@ public final class PbSwitchView {
       if (value_ != false) {
         output.writeBool(1, value_);
       }
+      if (enabled_ != false) {
+        output.writeBool(2, enabled_);
+      }
     }
 
     public int getSerializedSize() {
@@ -125,6 +148,10 @@ public final class PbSwitchView {
       if (value_ != false) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(1, value_);
+      }
+      if (enabled_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, enabled_);
       }
       memoizedSize = size;
       return size;
@@ -144,6 +171,8 @@ public final class PbSwitchView {
       boolean result = true;
       result = result && (getValue()
           == other.getValue());
+      result = result && (getEnabled()
+          == other.getEnabled());
       return result;
     }
 
@@ -157,6 +186,9 @@ public final class PbSwitchView {
       hash = (37 * hash) + VALUE_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getValue());
+      hash = (37 * hash) + ENABLED_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getEnabled());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -288,6 +320,8 @@ public final class PbSwitchView {
         super.clear();
         value_ = false;
 
+        enabled_ = false;
+
         return this;
       }
 
@@ -311,6 +345,7 @@ public final class PbSwitchView {
       public io.gomatcha.matcha.pb.view.switchview.PbSwitchView.View buildPartial() {
         io.gomatcha.matcha.pb.view.switchview.PbSwitchView.View result = new io.gomatcha.matcha.pb.view.switchview.PbSwitchView.View(this);
         result.value_ = value_;
+        result.enabled_ = enabled_;
         onBuilt();
         return result;
       }
@@ -354,6 +389,9 @@ public final class PbSwitchView {
         if (other == io.gomatcha.matcha.pb.view.switchview.PbSwitchView.View.getDefaultInstance()) return this;
         if (other.getValue() != false) {
           setValue(other.getValue());
+        }
+        if (other.getEnabled() != false) {
+          setEnabled(other.getEnabled());
         }
         onChanged();
         return this;
@@ -403,6 +441,32 @@ public final class PbSwitchView {
       public Builder clearValue() {
         
         value_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean enabled_ ;
+      /**
+       * <code>bool enabled = 2;</code>
+       */
+      public boolean getEnabled() {
+        return enabled_;
+      }
+      /**
+       * <code>bool enabled = 2;</code>
+       */
+      public Builder setEnabled(boolean value) {
+        
+        enabled_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool enabled = 2;</code>
+       */
+      public Builder clearEnabled() {
+        
+        enabled_ = false;
         onChanged();
         return this;
       }
@@ -916,11 +980,11 @@ public final class PbSwitchView {
   static {
     java.lang.String[] descriptorData = {
       "\n6gomatcha.io/matcha/pb/view/switchview/" +
-      "switchview.proto\022\nswitchview\"\025\n\004View\022\r\n\005" +
-      "value\030\001 \001(\010\"\026\n\005Event\022\r\n\005value\030\001 \001(\010BV\n%i" +
-      "o.gomatcha.matcha.pb.view.switchviewB\014Pb" +
-      "SwitchViewZ\nswitchview\242\002\022MatchaPBSwitchV" +
-      "iewb\006proto3"
+      "switchview.proto\022\nswitchview\"&\n\004View\022\r\n\005" +
+      "value\030\001 \001(\010\022\017\n\007enabled\030\002 \001(\010\"\026\n\005Event\022\r\n" +
+      "\005value\030\001 \001(\010BV\n%io.gomatcha.matcha.pb.vi" +
+      "ew.switchviewB\014PbSwitchViewZ\nswitchview\242" +
+      "\002\022MatchaPBSwitchViewb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -939,7 +1003,7 @@ public final class PbSwitchView {
     internal_static_switchview_View_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_switchview_View_descriptor,
-        new java.lang.String[] { "Value", });
+        new java.lang.String[] { "Value", "Enabled", });
     internal_static_switchview_Event_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_switchview_Event_fieldAccessorTable = new

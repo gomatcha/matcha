@@ -13,6 +13,7 @@ import (
 
 type View struct {
 	view.Embed
+	Enabled       bool
 	Value         bool
 	OnValueChange func(value bool)
 	PaintStyle    *paint.Style
@@ -20,7 +21,9 @@ type View struct {
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
 func New() *View {
-	return &View{}
+	return &View{
+		Enabled: true,
+	}
 }
 
 // Build implements view.View.
@@ -42,7 +45,8 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/switch",
 		NativeViewState: &switchview.View{
-			Value: v.Value,
+			Value:   v.Value,
+			Enabled: v.Enabled,
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnChange": func(data []byte) {

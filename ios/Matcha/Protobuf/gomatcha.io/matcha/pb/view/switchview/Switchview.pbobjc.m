@@ -48,6 +48,7 @@ static GPBFileDescriptor *MatchaPBSwitchViewSwitchviewRoot_FileDescriptor(void) 
 @implementation MatchaPBSwitchViewView
 
 @dynamic value;
+@dynamic enabled;
 
 typedef struct MatchaPBSwitchViewView__storage_ {
   uint32_t _has_storage_[1];
@@ -65,6 +66,15 @@ typedef struct MatchaPBSwitchViewView__storage_ {
         .number = MatchaPBSwitchViewView_FieldNumber_Value,
         .hasIndex = 0,
         .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "enabled",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBSwitchViewView_FieldNumber_Enabled,
+        .hasIndex = 2,
+        .offset = 3,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
