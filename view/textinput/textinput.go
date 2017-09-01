@@ -33,7 +33,7 @@ type View struct {
 	Responder          *keyboard.Responder
 	prevResponder      *keyboard.Responder
 	responder          *keyboard.Responder
-	MaxLines           int
+	MaxLines           int // This is used only for sizing.
 	OnTextChange       func(*text.Text)
 	OnSubmit           func()
 	OnFocus            func(*keyboard.Responder)

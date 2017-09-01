@@ -3,8 +3,10 @@ package io.gomatcha.matcha;
 import android.accessibilityservice.AccessibilityService;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.SpannableString;
@@ -47,23 +49,15 @@ public class MatchaTextInputView extends MatchaChildView {
         });
     }
 
-    public void showKeyboardWithFocus(Activity a) {
-        try {
-            view.requestFocus();
-            InputMethodManager imm = (InputMethodManager) a.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-            a.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public MatchaTextInputView(Context context, MatchaViewNode node) {
         super(context, node);
         final Context ctx = context;
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view = new EditText(context);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+            view.setBackground(null);
+        }
         view.setGravity(Gravity.TOP);
         view.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
