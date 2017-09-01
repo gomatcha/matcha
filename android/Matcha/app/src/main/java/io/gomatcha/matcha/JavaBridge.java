@@ -88,7 +88,6 @@ public class JavaBridge {
             }
 
             PbLayout.Point p = Protobuf.toProtubuf(new PointF(maxWidth+5f, height)); // TODO(KD): Why am I adding 5f?
-            Log.v("size", str + p.toString() + maxSize.x);
             return new GoValue(p.toByteArray());
         } catch (InvalidProtocolBufferException e) {
             PbLayout.Point p = Protobuf.toProtubuf(new PointF(0, 0));

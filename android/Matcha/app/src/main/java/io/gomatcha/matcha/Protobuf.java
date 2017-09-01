@@ -7,6 +7,7 @@ import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.text.Layout;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
@@ -82,6 +83,14 @@ public class Protobuf {
             }
         }
         return str;
+    }
+
+    public static PbText.StyledText toProtobuf(SpannableStringBuilder str) {
+        PbText.Text.Builder textBuilder = PbText.Text.newBuilder().setText(str.toString());
+
+        PbText.StyledText.Builder builder = PbText.StyledText.newBuilder();
+        builder.setText(textBuilder.build());
+        return builder.build();
     }
     
     public static ArrayList<Object> newSpanArrayList(PbText.TextStyle textStyle) {

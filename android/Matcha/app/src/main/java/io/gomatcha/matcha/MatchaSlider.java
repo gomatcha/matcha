@@ -67,7 +67,6 @@ public class MatchaSlider extends MatchaChildView {
             this.value = view.getProgress();
             this.maxValue = proto.getMaxValue();
             this.minValue = proto.getMinValue();
-            Log.v("x", "+" + this.value);
         } catch (InvalidProtocolBufferException e) {
         }
     }

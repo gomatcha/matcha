@@ -52,7 +52,6 @@ public class MatchaImageView extends MatchaChildView {
                 view.setImageResource(id);
             }
 
-            Log.v("resize", "" + proto.getResizeMode());
             switch (proto.getResizeMode()) {
                 case FIT:
                     view.setScaleType(ImageView.ScaleType.FIT_XY);

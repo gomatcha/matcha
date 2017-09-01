@@ -1,5 +1,4 @@
-// Package textview provides examples of how to use the matcha/view/textview package.
-package textview
+package view
 
 import (
 	"golang.org/x/image/colornames"
@@ -15,8 +14,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/textview New", func() *view.Root {
-		return view.NewRoot(New())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewTextView", func() *view.Root {
+		return view.NewRoot(NewTextView())
 	})
 }
 
@@ -26,7 +25,7 @@ type TextView struct {
 	responder *keyboard.Responder
 }
 
-func New() *TextView {
+func NewTextView() *TextView {
 	return &TextView{
 		text:      text.New("blah"),
 		responder: &keyboard.Responder{},

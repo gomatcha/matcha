@@ -1,5 +1,7 @@
 * Get native android views working
 * Android Text Input
+* Remove external repository example
+* Move matcha/view/Root into matcha/Root?
 
 * Android image resource scale??
 * FontWithName? or open struct? What happens when we can't find a font?

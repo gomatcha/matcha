@@ -33,6 +33,8 @@ public class MatchaView extends RelativeLayout {
         long viewid = v.call("ViewId")[0].toLong();
         node = new MatchaViewNode(null, this, viewid);
         setBackgroundColor(Color.RED);
+        setFocusable(true);
+        setFocusableInTouchMode(true);
 
         views.add(new WeakReference<MatchaView>(this));
 
@@ -87,6 +89,7 @@ public class MatchaView extends RelativeLayout {
             Class.forName("io.gomatcha.matcha.MatchaBasicView");
             Class.forName("io.gomatcha.matcha.MatchaImageView");
             Class.forName("io.gomatcha.matcha.MatchaTextView");
+            Class.forName("io.gomatcha.matcha.MatchaTextInputView");
             Class.forName("io.gomatcha.matcha.MatchaSwitchView");
             Class.forName("io.gomatcha.matcha.MatchaButton");
             Class.forName("io.gomatcha.matcha.MatchaSlider");

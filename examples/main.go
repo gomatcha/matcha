@@ -13,7 +13,6 @@ import (
 	_ "gomatcha.io/matcha/examples/stackview"
 	_ "gomatcha.io/matcha/examples/table"
 	_ "gomatcha.io/matcha/examples/tabview"
-	_ "gomatcha.io/matcha/examples/textview"
 	_ "gomatcha.io/matcha/examples/todo"
 	_ "gomatcha.io/matcha/examples/touch"
 	_ "gomatcha.io/matcha/examples/view"
