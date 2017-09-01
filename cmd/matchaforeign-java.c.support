@@ -213,4 +213,5 @@ void MatchaUntrackObjc(ObjcRef key) {
     jclass cls = (*env)->GetObjectClass(env, sTracker);
     jmethodID mid = (*env)->GetMethodID(env, cls, "untrack", "(J)V");
     (*env)->CallVoidMethod(env, sTracker, mid, key);
+    (*env)->DeleteLocalRef(env, cls);
 }
