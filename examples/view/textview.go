@@ -72,7 +72,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 	chl.StyledText = st
 	chlP := view.WithPainter(chl, &paint.Style{BackgroundColor: colornames.Blue})
 	chlG := l.Add(chlP, func(s *constraint.Solver) {
-		s.TopEqual(constraint.Const(100))
+		s.TopEqual(constraint.Const(50))
 		s.LeftEqual(constraint.Const(100))
 		s.Width(200)
 	})
@@ -107,22 +107,23 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 		}
 	}
 	l.Add(button1, func(s *constraint.Solver) {
-		s.Top(300)
+		s.Top(200)
 		s.Left(100)
 	})
 
 	input := textinput.New()
 	input.Text = v.text
+	input.Placeholder = "Placeholder"
 	input.KeyboardType = keyboard.URLType
-	input.KeyboardAppearance = keyboard.DarkAppearance
-	input.KeyboardReturnType = keyboard.GoogleReturnType
+	input.MaxLines = 1
+	input.KeyboardReturnType = keyboard.SearchReturnType
 	input.Responder = v.responder
 	input.OnTextChange = func(t *text.Text) {
 		v.Signal()
 	}
 	input.PaintStyle = &paint.Style{BackgroundColor: colornames.Lightgray}
 	l.Add(input, func(s *constraint.Solver) {
-		s.Top(200)
+		s.Top(100)
 		s.Left(100)
 		s.Width(200)
 		s.Height(100)

@@ -79,7 +79,7 @@ public class Protobuf {
             }
             ArrayList<Object> spans = newSpanArrayList(style);
             for (Object j : spans) {
-                str.setSpan(j, start, end, SPAN_INCLUSIVE_EXCLUSIVE);
+                str.setSpan(j, start, end, SPAN_INCLUSIVE_INCLUSIVE);
             }
         }
         return str;

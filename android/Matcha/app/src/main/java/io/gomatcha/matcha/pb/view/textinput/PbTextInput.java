@@ -77,9 +77,9 @@ public final class PbTextInput {
     io.gomatcha.matcha.pb.keyboard.PbKeyboard.ReturnType getKeyboardReturnType();
 
     /**
-     * <code>bool multiline = 8;</code>
+     * <code>int64 maxLines = 8;</code>
      */
-    boolean getMultiline();
+    long getMaxLines();
 
     /**
      * <code>bool secureTextEntry = 9;</code>
@@ -102,7 +102,7 @@ public final class PbTextInput {
       keyboardType_ = 0;
       keyboardAppearance_ = 0;
       keyboardReturnType_ = 0;
-      multiline_ = false;
+      maxLines_ = 0L;
       secureTextEntry_ = false;
     }
 
@@ -182,7 +182,7 @@ public final class PbTextInput {
             }
             case 64: {
 
-              multiline_ = input.readBool();
+              maxLines_ = input.readInt64();
               break;
             }
             case 72: {
@@ -312,13 +312,13 @@ public final class PbTextInput {
       return result == null ? io.gomatcha.matcha.pb.keyboard.PbKeyboard.ReturnType.UNRECOGNIZED : result;
     }
 
-    public static final int MULTILINE_FIELD_NUMBER = 8;
-    private boolean multiline_;
+    public static final int MAXLINES_FIELD_NUMBER = 8;
+    private long maxLines_;
     /**
-     * <code>bool multiline = 8;</code>
+     * <code>int64 maxLines = 8;</code>
      */
-    public boolean getMultiline() {
-      return multiline_;
+    public long getMaxLines() {
+      return maxLines_;
     }
 
     public static final int SECURETEXTENTRY_FIELD_NUMBER = 9;
@@ -360,8 +360,8 @@ public final class PbTextInput {
       if (keyboardReturnType_ != io.gomatcha.matcha.pb.keyboard.PbKeyboard.ReturnType.DEFAULT_RETURN_TYPE.getNumber()) {
         output.writeEnum(7, keyboardReturnType_);
       }
-      if (multiline_ != false) {
-        output.writeBool(8, multiline_);
+      if (maxLines_ != 0L) {
+        output.writeInt64(8, maxLines_);
       }
       if (secureTextEntry_ != false) {
         output.writeBool(9, secureTextEntry_);
@@ -397,9 +397,9 @@ public final class PbTextInput {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(7, keyboardReturnType_);
       }
-      if (multiline_ != false) {
+      if (maxLines_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(8, multiline_);
+          .computeInt64Size(8, maxLines_);
       }
       if (secureTextEntry_ != false) {
         size += com.google.protobuf.CodedOutputStream
@@ -436,8 +436,8 @@ public final class PbTextInput {
       result = result && keyboardType_ == other.keyboardType_;
       result = result && keyboardAppearance_ == other.keyboardAppearance_;
       result = result && keyboardReturnType_ == other.keyboardReturnType_;
-      result = result && (getMultiline()
-          == other.getMultiline());
+      result = result && (getMaxLines()
+          == other.getMaxLines());
       result = result && (getSecureTextEntry()
           == other.getSecureTextEntry());
       return result;
@@ -467,9 +467,9 @@ public final class PbTextInput {
       hash = (53 * hash) + keyboardAppearance_;
       hash = (37 * hash) + KEYBOARDRETURNTYPE_FIELD_NUMBER;
       hash = (53 * hash) + keyboardReturnType_;
-      hash = (37 * hash) + MULTILINE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getMultiline());
+      hash = (37 * hash) + MAXLINES_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getMaxLines());
       hash = (37 * hash) + SECURETEXTENTRY_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getSecureTextEntry());
@@ -622,7 +622,7 @@ public final class PbTextInput {
 
         keyboardReturnType_ = 0;
 
-        multiline_ = false;
+        maxLines_ = 0L;
 
         secureTextEntry_ = false;
 
@@ -662,7 +662,7 @@ public final class PbTextInput {
         result.keyboardType_ = keyboardType_;
         result.keyboardAppearance_ = keyboardAppearance_;
         result.keyboardReturnType_ = keyboardReturnType_;
-        result.multiline_ = multiline_;
+        result.maxLines_ = maxLines_;
         result.secureTextEntry_ = secureTextEntry_;
         onBuilt();
         return result;
@@ -723,8 +723,8 @@ public final class PbTextInput {
         if (other.keyboardReturnType_ != 0) {
           setKeyboardReturnTypeValue(other.getKeyboardReturnTypeValue());
         }
-        if (other.getMultiline() != false) {
-          setMultiline(other.getMultiline());
+        if (other.getMaxLines() != 0L) {
+          setMaxLines(other.getMaxLines());
         }
         if (other.getSecureTextEntry() != false) {
           setSecureTextEntry(other.getSecureTextEntry());
@@ -1147,28 +1147,28 @@ public final class PbTextInput {
         return this;
       }
 
-      private boolean multiline_ ;
+      private long maxLines_ ;
       /**
-       * <code>bool multiline = 8;</code>
+       * <code>int64 maxLines = 8;</code>
        */
-      public boolean getMultiline() {
-        return multiline_;
+      public long getMaxLines() {
+        return maxLines_;
       }
       /**
-       * <code>bool multiline = 8;</code>
+       * <code>int64 maxLines = 8;</code>
        */
-      public Builder setMultiline(boolean value) {
+      public Builder setMaxLines(long value) {
         
-        multiline_ = value;
+        maxLines_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool multiline = 8;</code>
+       * <code>int64 maxLines = 8;</code>
        */
-      public Builder clearMultiline() {
+      public Builder clearMaxLines() {
         
-        multiline_ = false;
+        maxLines_ = 0L;
         onChanged();
         return this;
       }
@@ -2668,19 +2668,19 @@ public final class PbTextInput {
       "extinput.proto\022\025matcha.view.textinput\032%g" +
       "omatcha.io/matcha/pb/text/text.proto\032-go" +
       "matcha.io/matcha/pb/keyboard/keyboard.pr" +
-      "oto\"\301\002\n\004View\022+\n\nstyledText\030\001 \001(\0132\027.match" +
+      "oto\"\300\002\n\004View\022+\n\nstyledText\030\001 \001(\0132\027.match" +
       "a.text.StyledText\0220\n\017placeholderText\030\002 \001" +
       "(\0132\027.matcha.text.StyledText\022\017\n\007focused\030\004" +
       " \001(\010\022+\n\014keyboardType\030\005 \001(\0162\025.matcha.keyb" +
       "oard.Type\0227\n\022keyboardAppearance\030\006 \001(\0162\033." +
       "matcha.keyboard.Appearance\0227\n\022keyboardRe",
       "turnType\030\007 \001(\0162\033.matcha.keyboard.ReturnT" +
-      "ype\022\021\n\tmultiline\030\010 \001(\010\022\027\n\017secureTextEntr" +
-      "y\030\t \001(\010\"4\n\005Event\022+\n\nstyledText\030\001 \001(\0132\027.m" +
-      "atcha.text.StyledText\"\035\n\nFocusEvent\022\017\n\007f" +
-      "ocused\030\001 \001(\010\"\r\n\013SubmitEventBR\n$io.gomatc" +
-      "ha.matcha.pb.view.textinputB\013PbTextInput" +
-      "Z\ttextinput\242\002\021MatchaTextInputPBb\006proto3"
+      "ype\022\020\n\010maxLines\030\010 \001(\003\022\027\n\017secureTextEntry" +
+      "\030\t \001(\010\"4\n\005Event\022+\n\nstyledText\030\001 \001(\0132\027.ma" +
+      "tcha.text.StyledText\"\035\n\nFocusEvent\022\017\n\007fo" +
+      "cused\030\001 \001(\010\"\r\n\013SubmitEventBR\n$io.gomatch" +
+      "a.matcha.pb.view.textinputB\013PbTextInputZ" +
+      "\ttextinput\242\002\021MatchaTextInputPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2701,7 +2701,7 @@ public final class PbTextInput {
     internal_static_matcha_view_textinput_View_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_textinput_View_descriptor,
-        new java.lang.String[] { "StyledText", "PlaceholderText", "Focused", "KeyboardType", "KeyboardAppearance", "KeyboardReturnType", "Multiline", "SecureTextEntry", });
+        new java.lang.String[] { "StyledText", "PlaceholderText", "Focused", "KeyboardType", "KeyboardAppearance", "KeyboardReturnType", "MaxLines", "SecureTextEntry", });
     internal_static_matcha_view_textinput_Event_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_matcha_view_textinput_Event_fieldAccessorTable = new

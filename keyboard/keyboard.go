@@ -47,21 +47,21 @@ func (t Type) MarshalProtobuf() keyboard.Type {
 	return keyboard.Type(t)
 }
 
-// Appearance defines the appearance of the keyboard.
-type Appearance int
+// // Appearance defines the appearance of the keyboard.
+// type Appearance int
 
-const (
-	// Default keyboard appearnce
-	DefaultAppearance Appearance = iota
-	// Light keyboard appearance
-	LightAppearance
-	// Dark keyboard appearance
-	DarkAppearance
-)
+// const (
+// 	// Default keyboard appearnce
+// 	DefaultAppearance Appearance = iota
+// 	// Light keyboard appearance
+// 	LightAppearance
+// 	// Dark keyboard appearance
+// 	DarkAppearance
+// )
 
-func (a Appearance) MarshalProtobuf() keyboard.Appearance {
-	return keyboard.Appearance(a)
-}
+// func (a Appearance) MarshalProtobuf() keyboard.Appearance {
+// 	return keyboard.Appearance(a)
+// }
 
 // ReturnType defines the keyboard return key style
 type ReturnType int

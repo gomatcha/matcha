@@ -15,7 +15,7 @@ message View {
     matcha.keyboard.Type keyboardType = 5;
     matcha.keyboard.Appearance keyboardAppearance = 6;
     matcha.keyboard.ReturnType keyboardReturnType = 7;
-    bool multiline = 8;
+    int64 maxLines = 8;
     bool secureTextEntry = 9;
 }
 

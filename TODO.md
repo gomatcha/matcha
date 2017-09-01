@@ -1,7 +1,8 @@
 * Get native android views working
-* Android Text Input
+* Android Text Input, placeholder, number of lines. font
 * Remove external repository example
 * Move matcha/view/Root into matcha/Root?
+* Should keyboard package be moved into view?
 
 * Android image resource scale??
 * FontWithName? or open struct? What happens when we can't find a font?

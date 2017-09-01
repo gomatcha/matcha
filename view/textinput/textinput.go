@@ -3,6 +3,9 @@ package textinput
 
 import (
 	"fmt"
+	"runtime"
+
+	"golang.org/x/image/colornames"
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/comm"
@@ -24,14 +27,13 @@ type View struct {
 	Style              *text.Style
 	Placeholder        string
 	PlaceholderStyle   *text.Style
-	SecureTextEntry    bool
+	Password           bool
 	KeyboardType       keyboard.Type
-	KeyboardAppearance keyboard.Appearance
 	KeyboardReturnType keyboard.ReturnType
 	Responder          *keyboard.Responder
 	prevResponder      *keyboard.Responder
 	responder          *keyboard.Responder
-	Multiline          bool
+	MaxLines           int
 	OnTextChange       func(*text.Text)
 	OnSubmit           func()
 	OnFocus            func(*keyboard.Responder)
@@ -57,6 +59,11 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	style := v.Style
 	if style == nil {
 		style = &text.Style{}
+		if runtime.GOOS == "android" {
+			style.SetFont(text.DefaultFont(18))
+		} else if runtime.GOOS == "darwin" {
+			style.SetFont(text.DefaultFont(18))
+		}
 	}
 
 	t := v.Text
@@ -65,7 +72,18 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	}
 	st := text.NewStyledText(t.String(), style)
 
-	placeholderStyledText := text.NewStyledText(v.Placeholder, v.PlaceholderStyle)
+	placeholderStyle := v.PlaceholderStyle
+	if placeholderStyle == nil {
+		placeholderStyle = &text.Style{}
+		if runtime.GOOS == "android" {
+			placeholderStyle.SetFont(text.DefaultFont(18))
+			placeholderStyle.SetTextColor(colornames.Gray)
+		} else if runtime.GOOS == "darwin" {
+			placeholderStyle.SetFont(text.DefaultFont(18))
+			placeholderStyle.SetTextColor(colornames.Lightgray)
+		}
+	}
+	placeholderStyledText := text.NewStyledText(v.Placeholder, placeholderStyle)
 
 	if v.Responder != v.prevResponder {
 		if v.prevResponder != nil {
@@ -88,18 +106,17 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		painter = v.PaintStyle
 	}
 	return view.Model{
-		Layouter:       &layouter{styledText: st, multiline: v.Multiline},
+		Layouter:       &layouter{styledText: st, maxLines: v.MaxLines},
 		Painter:        painter,
 		NativeViewName: "gomatcha.io/matcha/view/textinput",
 		NativeViewState: &textinput.View{
 			StyledText:         st.MarshalProtobuf(),
 			PlaceholderText:    placeholderStyledText.MarshalProtobuf(),
 			KeyboardType:       v.KeyboardType.MarshalProtobuf(),
-			KeyboardAppearance: v.KeyboardAppearance.MarshalProtobuf(),
 			KeyboardReturnType: v.KeyboardReturnType.MarshalProtobuf(),
 			Focused:            responder.Visible(),
-			Multiline:          v.Multiline,
-			SecureTextEntry:    v.SecureTextEntry,
+			MaxLines:           int64(v.MaxLines),
+			SecureTextEntry:    v.Password,
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnTextChange": func(data []byte) {
@@ -153,11 +170,11 @@ func (v *View) Build(ctx *view.Context) view.Model {
 
 type layouter struct {
 	styledText *text.StyledText
-	multiline  bool
+	maxLines   int
 }
 
 func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
-	if !l.multiline {
+	if l.maxLines == 1 {
 		size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
 		size.Y += 15
 		if size.Y < 30 {

@@ -58,7 +58,7 @@ typedef GPB_ENUM(MatchaTextInputPBView_FieldNumber) {
   MatchaTextInputPBView_FieldNumber_KeyboardType = 5,
   MatchaTextInputPBView_FieldNumber_KeyboardAppearance = 6,
   MatchaTextInputPBView_FieldNumber_KeyboardReturnType = 7,
-  MatchaTextInputPBView_FieldNumber_Multiline = 8,
+  MatchaTextInputPBView_FieldNumber_MaxLines = 8,
   MatchaTextInputPBView_FieldNumber_SecureTextEntry = 9,
 };
 
@@ -80,7 +80,7 @@ typedef GPB_ENUM(MatchaTextInputPBView_FieldNumber) {
 
 @property(nonatomic, readwrite) enum MatchaKeyboardPBReturnType keyboardReturnType;
 
-@property(nonatomic, readwrite) BOOL multiline;
+@property(nonatomic, readwrite) int64_t maxLines;
 
 @property(nonatomic, readwrite) BOOL secureTextEntry;
 

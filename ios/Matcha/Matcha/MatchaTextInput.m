@@ -45,7 +45,7 @@
     self.keyboardType = MatchaKeyboardTypeWithProtobuf(view.keyboardType);
     self.keyboardAppearance = MatchaKeyboardAppearanceWithProtobuf(view.keyboardAppearance);
     self.returnKeyType = MatchaReturnTypeWithProtobuf(view.keyboardReturnType);
-    self.multiline = view.multiline;
+    self.multiline = view.maxLines != 1;
     self.secureTextEntry = view.secureTextEntry;
     
     if (self.hasFocus && !self.isFirstResponder) {

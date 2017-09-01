@@ -12,7 +12,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         
         GoValue rootVC = GoValue.withFunc("gomatcha.io/matcha/examples/view NewTextView").call("")[0];
 

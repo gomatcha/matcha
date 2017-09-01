@@ -55,7 +55,7 @@ static GPBFileDescriptor *MatchaTextInputPBTextinputRoot_FileDescriptor(void) {
 @dynamic keyboardType;
 @dynamic keyboardAppearance;
 @dynamic keyboardReturnType;
-@dynamic multiline;
+@dynamic maxLines;
 @dynamic secureTextEntry;
 
 typedef struct MatchaTextInputPBView__storage_ {
@@ -65,6 +65,7 @@ typedef struct MatchaTextInputPBView__storage_ {
   MatchaKeyboardPBReturnType keyboardReturnType;
   MatchaPBStyledText *styledText;
   MatchaPBStyledText *placeholderText;
+  int64_t maxLines;
 } MatchaTextInputPBView__storage_;
 
 // This method is threadsafe because it is initially called
@@ -128,20 +129,20 @@ typedef struct MatchaTextInputPBView__storage_ {
         .dataType = GPBDataTypeEnum,
       },
       {
-        .name = "multiline",
+        .name = "maxLines",
         .dataTypeSpecific.className = NULL,
-        .number = MatchaTextInputPBView_FieldNumber_Multiline,
+        .number = MatchaTextInputPBView_FieldNumber_MaxLines,
         .hasIndex = 7,
-        .offset = 8,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeBool,
+        .offset = (uint32_t)offsetof(MatchaTextInputPBView__storage_, maxLines),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeInt64,
       },
       {
         .name = "secureTextEntry",
         .dataTypeSpecific.className = NULL,
         .number = MatchaTextInputPBView_FieldNumber_SecureTextEntry,
-        .hasIndex = 9,
-        .offset = 10,  // Stored in _has_storage_ to save space.
+        .hasIndex = 8,
+        .offset = 9,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeBool,
       },
@@ -156,7 +157,7 @@ typedef struct MatchaTextInputPBView__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\006\001\n\000\002\017\000\005\014\000\006\022\000\007\022\000\t\017\000";
+        "\007\001\n\000\002\017\000\005\014\000\006\022\000\007\022\000\010\010\000\t\017\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
