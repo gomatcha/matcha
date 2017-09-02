@@ -51,67 +51,14 @@ func (r RecognizerList) OptionKey() string {
 }
 
 type Recognizer interface {
-	marshalProtobuf() (proto.Message, map[string]interface{})
-	equal(Recognizer) bool
+	Build() Model
+	TouchKey() int64
 }
 
-// TapEvent is emitted by TapRecognizer, representing its current state.
-type TapEvent struct {
-	// Kind      EventKind // TODO(KD):
-
-	Timestamp time.Time
-	Position  layout.Point
-}
-
-func (e *TapEvent) unmarshalProtobuf(ev *pbtouch.TapEvent) error {
-	t, _ := ptypes.Timestamp(ev.Timestamp)
-	e.Timestamp = t
-	// e.Kind = EventKind(ev.Kind)
-	e.Position.UnmarshalProtobuf(ev.Position)
-	return nil
-}
-
-// PressRecognizer is a discrete recognizer that detects a number of taps.
-type TapRecognizer struct {
-	Count   int
-	OnTouch func(*TapEvent)
-}
-
-func (r *TapRecognizer) equal(a Recognizer) bool {
-	b, ok := a.(*TapRecognizer)
-	if !ok {
-		return false
-	}
-	return r.Count == b.Count
-}
-
-func (r *TapRecognizer) marshalProtobuf() (proto.Message, map[string]interface{}) {
-	funcId := newFuncId()
-	f := func(data []byte) {
-		pbevent := &pbtouch.TapEvent{}
-		err := proto.Unmarshal(data, pbevent)
-		if err != nil {
-			fmt.Println("error", err)
-			return
-		}
-
-		event := &TapEvent{}
-		if err := event.unmarshalProtobuf(pbevent); err != nil {
-			fmt.Println("error", err)
-			return
-		}
-
-		if r.OnTouch != nil {
-			r.OnTouch(event)
-		}
-	}
-
-	return &pbtouch.TapRecognizer{
-			Count:          int64(r.Count),
-			RecognizedFunc: funcId,
-		}, map[string]interface{}{
-			strconv.Itoa(int(funcId)): f,
-		}
+type Model struct {
+	NativeViewName  string
+	NativeViewState proto.Message
+	NativeFuncs     map[string]interface{}
 }
 
 // EventKind are the possible recognizer states
@@ -134,6 +81,66 @@ const (
 	// Gesture recognition succeded.
 	EventKindRecognized
 )
+
+// TapEvent is emitted by TapRecognizer, representing its current state.
+type TapEvent struct {
+	// Kind      EventKind // TODO(KD):
+
+	Timestamp time.Time
+	Position  layout.Point
+}
+
+func (e *TapEvent) unmarshalProtobuf(ev *pbtouch.TapEvent) error {
+	t, _ := ptypes.Timestamp(ev.Timestamp)
+	e.Timestamp = t
+	// e.Kind = EventKind(ev.Kind)
+	e.Position.UnmarshalProtobuf(ev.Position)
+	return nil
+}
+
+// PressRecognizer is a discrete recognizer that detects a number of taps.
+type TapRecognizer struct {
+	Key     int64
+	Count   int
+	OnTouch func(*TapEvent)
+}
+
+func (r *TapRecognizer) TouchKey() int64 {
+	return r.Key
+}
+
+func (r *TapRecognizer) Build() Model {
+	funcId := newFuncId()
+	f := func(data []byte) {
+		pbevent := &pbtouch.TapEvent{}
+		err := proto.Unmarshal(data, pbevent)
+		if err != nil {
+			fmt.Println("error", err)
+			return
+		}
+
+		event := &TapEvent{}
+		if err := event.unmarshalProtobuf(pbevent); err != nil {
+			fmt.Println("error", err)
+			return
+		}
+
+		if r.OnTouch != nil {
+			r.OnTouch(event)
+		}
+	}
+
+	return Model{
+		NativeViewName: "",
+		NativeViewState: &pbtouch.TapRecognizer{
+			Count:          int64(r.Count),
+			RecognizedFunc: funcId,
+		},
+		NativeFuncs: map[string]interface{}{
+			strconv.Itoa(int(funcId)): f,
+		},
+	}
+}
 
 // PressEvent is emitted by PressRecognizer, representing its current state.
 type PressEvent struct {
@@ -161,19 +168,16 @@ func (e *PressEvent) unmarshalProtobuf(ev *pbtouch.PressEvent) error {
 
 // PressRecognizer is a continuous recognizer that detects single presses with a given duration.
 type PressRecognizer struct {
+	Key         int64
 	MinDuration time.Duration
 	OnTouch     func(e *PressEvent)
 }
 
-func (r *PressRecognizer) equal(a Recognizer) bool {
-	b, ok := a.(*PressRecognizer)
-	if !ok {
-		return false
-	}
-	return r.MinDuration == b.MinDuration
+func (r *PressRecognizer) TouchKey() int64 {
+	return r.Key
 }
 
-func (r *PressRecognizer) marshalProtobuf() (proto.Message, map[string]interface{}) {
+func (r *PressRecognizer) Build() Model {
 	funcId := newFuncId()
 	f := func(data []byte) {
 		event := &PressEvent{}
@@ -193,12 +197,16 @@ func (r *PressRecognizer) marshalProtobuf() (proto.Message, map[string]interface
 		}
 	}
 
-	return &pbtouch.PressRecognizer{
+	return Model{
+		NativeViewName: "",
+		NativeViewState: &pbtouch.PressRecognizer{
 			MinDuration: ptypes.DurationProto(r.MinDuration),
 			FuncId:      funcId,
-		}, map[string]interface{}{
+		},
+		NativeFuncs: map[string]interface{}{
 			strconv.Itoa(int(funcId)): f,
-		}
+		},
+	}
 }
 
 // ButtonEvent is emitted by ButtonRecognizer, representing its current state.
@@ -221,19 +229,16 @@ func (e *ButtonEvent) unmarshalProtobuf(ev *pbtouch.ButtonEvent) error {
 
 // ButtonRecognizer is a discrete recognizer that mimics the behavior of a button. The recognizer will fail if the touch ends outside of the view's bounds.
 type ButtonRecognizer struct {
+	Key           int64
 	OnTouch       func(e *ButtonEvent)
 	IgnoresScroll bool
 }
 
-func (r *ButtonRecognizer) equal(a Recognizer) bool {
-	_, ok := a.(*ButtonRecognizer)
-	if !ok {
-		return false
-	}
-	return true
+func (r *ButtonRecognizer) TouchKey() int64 {
+	return r.Key
 }
 
-func (r *ButtonRecognizer) marshalProtobuf() (proto.Message, map[string]interface{}) {
+func (r *ButtonRecognizer) Build() Model {
 	funcId := newFuncId()
 	f := func(data []byte) {
 		event := &ButtonEvent{}
@@ -254,10 +259,14 @@ func (r *ButtonRecognizer) marshalProtobuf() (proto.Message, map[string]interfac
 		}
 	}
 
-	return &pbtouch.ButtonRecognizer{
+	return Model{
+		NativeViewName: "",
+		NativeViewState: &pbtouch.ButtonRecognizer{
 			OnEvent:       funcId,
 			IgnoresScroll: r.IgnoresScroll,
-		}, map[string]interface{}{
+		},
+		NativeFuncs: map[string]interface{}{
 			strconv.Itoa(int(funcId)): f,
-		}
+		},
+	}
 }

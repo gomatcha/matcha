@@ -9,11 +9,6 @@ import (
 	"gomatcha.io/matcha/touch"
 )
 
-type recognizer interface {
-	marshalProtobuf() (proto.Message, map[string]interface{})
-	equal(touch.Recognizer) bool
-}
-
 func init() {
 	internal.RegisterMiddleware(func() interface{} { return &touchMiddleware{radix: radix.NewRadix()} })
 }
@@ -55,7 +50,7 @@ func (r *touchMiddleware) Build(ctx *Context, next *Model) {
 			}
 
 			// Check that the recognizers are equal.
-			if !i.(recognizer).equal(v) {
+			if internal.ReflectName(i) != internal.ReflectName(v) || i.TouchKey() != v.TouchKey() {
 				continue
 			}
 
@@ -85,8 +80,8 @@ func (r *touchMiddleware) Build(ctx *Context, next *Model) {
 	pbRecognizers := &pbtouch.RecognizerList{}
 	allFuncs := map[string]interface{}{}
 	for k, v := range ids {
-		msg, funcs := v.(recognizer).marshalProtobuf()
-		pbAny, err := ptypes.MarshalAny(msg)
+		model := v.Build()
+		pbAny, err := ptypes.MarshalAny(model.NativeViewState)
 		if err != nil {
 			continue
 		}
@@ -96,7 +91,7 @@ func (r *touchMiddleware) Build(ctx *Context, next *Model) {
 			Recognizer: pbAny,
 		}
 		pbRecognizers.Recognizers = append(pbRecognizers.Recognizers, pbRecognizer)
-		for k2, v2 := range funcs {
+		for k2, v2 := range model.NativeFuncs {
 			allFuncs[k2] = v2
 		}
 	}
