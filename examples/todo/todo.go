@@ -18,8 +18,6 @@ import (
 	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios/stackview"
 	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/textinput"
-	"gomatcha.io/matcha/view/textview"
 )
 
 func init() {
@@ -128,7 +126,7 @@ func (v *AddView) Build(ctx *view.Context) view.Model {
 	})
 	placeholderStyle.SetTextColor(colornames.Lightgray)
 
-	input := textinput.New()
+	input := view.NewTextInput()
 	input.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
 	input.Text = v.text
 	input.Style = style

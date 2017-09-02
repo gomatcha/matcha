@@ -18,7 +18,6 @@ import (
 	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios/stackview"
 	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/textview"
 	"gomatcha.io/matcha/view/urlimageview"
 )
 

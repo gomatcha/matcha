@@ -10,7 +10,6 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/textview"
 )
 
 func init() {

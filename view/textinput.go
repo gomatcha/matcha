@@ -1,5 +1,4 @@
-// Package textinput implements a text input field.
-package textinput
+package view
 
 import (
 	"fmt"
@@ -14,13 +13,12 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb/view/textinput"
 	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/view"
 )
 
-// View represents a text input view. View mutates the Text and
+// TextInput represents a text input view. TextInput mutates the Text and
 // StyledText fields in place.
-type View struct {
-	view.Embed
+type TextInput struct {
+	Embed
 	PaintStyle         *paint.Style
 	Text               *text.Text
 	text               *text.Text
@@ -39,23 +37,23 @@ type View struct {
 	OnFocus            func(*keyboard.Responder)
 }
 
-// New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New() *View {
-	return &View{
+// NewTextInput returns either the previous View in ctx with matching key, or a new View if none exists.
+func NewTextInput() *TextInput {
+	return &TextInput{
 		text:      text.New(""),
 		responder: &keyboard.Responder{},
 	}
 }
 
 // Lifecyle implements the view.View interface.
-func (v *View) Lifecycle(from, to view.Stage) {
-	if view.ExitsStage(from, to, view.StageMounted) {
+func (v *TextInput) Lifecycle(from, to Stage) {
+	if ExitsStage(from, to, StageMounted) {
 		v.Unsubscribe(v.prevResponder)
 	}
 }
 
 // Build implements the view.View interface.
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *TextInput) Build(ctx *Context) Model {
 	style := v.Style
 	if style == nil {
 		style = &text.Style{}
@@ -105,8 +103,8 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
 	}
-	return view.Model{
-		Layouter:       &layouter{styledText: st, maxLines: v.MaxLines},
+	return Model{
+		Layouter:       &textInputLayouter{styledText: st, maxLines: v.MaxLines},
 		Painter:        painter,
 		NativeViewName: "gomatcha.io/matcha/view/textinput",
 		NativeViewState: &textinput.View{
@@ -168,12 +166,12 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	}
 }
 
-type layouter struct {
+type textInputLayouter struct {
 	styledText *text.StyledText
 	maxLines   int
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *textInputLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	if l.maxLines == 1 {
 		size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
 		size.Y += 15
@@ -188,10 +186,10 @@ func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	}
 }
 
-func (l *layouter) Notify(f func()) comm.Id {
+func (l *textInputLayouter) Notify(f func()) comm.Id {
 	return 0 // no-op
 }
 
-func (l *layouter) Unnotify(id comm.Id) {
+func (l *textInputLayouter) Unnotify(id comm.Id) {
 	// no-op
 }

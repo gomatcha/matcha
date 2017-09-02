@@ -9,8 +9,6 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/button"
-	"gomatcha.io/matcha/view/textinput"
-	"gomatcha.io/matcha/view/textview"
 )
 
 func init() {
@@ -111,7 +109,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 		s.Left(100)
 	})
 
-	input := textinput.New()
+	input := view.NewTextInput()
 	input.Text = v.text
 	input.Placeholder = "Placeholder"
 	input.KeyboardType = keyboard.URLType
