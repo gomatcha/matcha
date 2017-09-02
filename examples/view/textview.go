@@ -8,7 +8,6 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/button"
 )
 
 func init() {
@@ -93,7 +92,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 		s.LeftEqual(chlG.Left())
 	})
 
-	button1 := button.New()
+	button1 := view.NewButton()
 	// button1.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
 	// button1.Color = colornames.Green
 	button1.String = "Toggle Keyboard"

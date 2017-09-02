@@ -11,7 +11,6 @@ import (
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb/view/scrollview"
-	"gomatcha.io/matcha/view"
 )
 
 // ScrollDirection represents the X and Y axis.

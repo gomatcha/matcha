@@ -7,7 +7,6 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/button"
 )
 
 func init() {
@@ -30,7 +29,7 @@ func NewButtonView() *ButtonView {
 func (v *ButtonView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := button.New()
+	chl1 := view.NewButton()
 	chl1.Enabled = true
 	chl1.String = "Press Me"
 	chl1.OnPress = func() {
@@ -42,7 +41,7 @@ func (v *ButtonView) Build(ctx *view.Context) view.Model {
 		s.Width(200)
 	})
 
-	chl2 := button.New()
+	chl2 := view.NewButton()
 	chl2.String = "Press Me"
 	chl2.Color = colornames.Red
 	chl2.Enabled = false

@@ -1,5 +1,4 @@
-// Package button implements a native button view.
-package button
+package view
 
 import (
 	"image"
@@ -9,18 +8,16 @@ import (
 
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb"
 	pbbutton "gomatcha.io/matcha/pb/view/button"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
-	"gomatcha.io/matcha/view"
 )
 
-// View implements a native button view.
-type View struct {
-	view.Embed
+// Button implements a native button view.
+type Button struct {
+	Embed
 	String     string
 	Color      color.Color
 	OnPress    func()
@@ -28,22 +25,22 @@ type View struct {
 	PaintStyle *paint.Style
 }
 
-// New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New() *View {
-	return &View{
+// NewButton returns either the previous View in ctx with matching key, or a new View if none exists.
+func NewButton() *Button {
+	return &Button{
 		Enabled: true,
 	}
 }
 
 // Build implements view.View.
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *Button) Build(ctx *Context) Model {
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
 	}
-	return view.Model{
+	return Model{
 		Painter:        painter,
-		Layouter:       &layouter{str: v.String},
+		Layouter:       &buttonLayouter{str: v.String},
 		NativeViewName: "gomatcha.io/matcha/view/button",
 		NativeViewState: &pbbutton.View{
 			Str:     v.String,
@@ -60,11 +57,11 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	}
 }
 
-type layouter struct {
+type buttonLayouter struct {
 	str string
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *buttonLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	if runtime.GOOS == "android" {
 		style := &text.Style{}
 		style.SetFont(text.DefaultFont(14))
@@ -87,16 +84,16 @@ func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	return layout.Guide{}, nil
 }
 
-func (l *layouter) Notify(f func()) comm.Id {
+func (l *buttonLayouter) Notify(f func()) comm.Id {
 	return 0 // no-op
 }
 
-func (l *layouter) Unnotify(id comm.Id) {
+func (l *buttonLayouter) Unnotify(id comm.Id) {
 	// no-op
 }
 
 type ImageButton struct {
-	view.Embed
+	Embed
 	Image      image.Image
 	OnPress    func()
 	PaintStyle *paint.Style
@@ -106,23 +103,10 @@ func NewImageButton() *ImageButton {
 	return &ImageButton{}
 }
 
-func (v *ImageButton) Build(ctx *view.Context) view.Model {
-	l := &constraint.Layouter{}
-
-	iv := view.NewImageView()
-	iv.ResizeMode = view.ImageResizeModeCenter
+func (v *ImageButton) Build(ctx *Context) Model {
+	iv := NewImageView()
+	iv.ResizeMode = ImageResizeModeCenter
 	iv.Image = v.Image
-	ivg := l.Add(iv, func(s *constraint.Solver) {
-		s.Left(0)
-		s.Top(0)
-		s.HeightLess(l.MaxGuide().Height())
-		s.WidthLess(l.MaxGuide().Width())
-	})
-
-	l.Solve(func(s *constraint.Solver) {
-		s.WidthEqual(ivg.Width())
-		s.HeightEqual(ivg.Height())
-	})
 
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {
@@ -136,12 +120,29 @@ func (v *ImageButton) Build(ctx *view.Context) view.Model {
 			}
 		},
 	}
-	return view.Model{
-		Children: l.Views(),
-		Layouter: l,
+	return Model{
+		Children: []View{iv},
+		Layouter: &imageButtonLayouter{},
 		Painter:  painter,
-		Options: []view.Option{
+		Options: []Option{
 			touch.RecognizerList{t},
 		},
 	}
+}
+
+type imageButtonLayouter struct {
+	str string
+}
+
+func (l *imageButtonLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+	g := ctx.LayoutChild(0, ctx.MinSize, ctx.MaxSize)
+	return g, []layout.Guide{g}
+}
+
+func (l *imageButtonLayouter) Notify(f func()) comm.Id {
+	return 0 // no-op
+}
+
+func (l *imageButtonLayouter) Unnotify(id comm.Id) {
+	// no-op
 }

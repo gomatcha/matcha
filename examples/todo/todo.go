@@ -16,7 +16,6 @@ import (
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios/stackview"
-	"gomatcha.io/matcha/view/scrollview"
 )
 
 func init() {

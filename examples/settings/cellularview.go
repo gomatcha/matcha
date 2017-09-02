@@ -4,7 +4,6 @@ import (
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/scrollview"
 )
 
 type CellularView struct {

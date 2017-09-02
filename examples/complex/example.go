@@ -17,9 +17,7 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/button"
 	"gomatcha.io/matcha/view/ios"
-	"gomatcha.io/matcha/view/scrollview"
 	"gomatcha.io/matcha/view/urlimageview"
 )
 
@@ -126,7 +124,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(g2.Right().Add(-15))
 	})
 
-	chl8 := button.New()
+	chl8 := view.NewButton()
 	chl8.String = "Button"
 	chl8.OnPress = func() {
 		v.counter += 1

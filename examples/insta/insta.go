@@ -14,9 +14,7 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/button"
 	"gomatcha.io/matcha/view/ios/stackview"
-	"gomatcha.io/matcha/view/scrollview"
 	"gomatcha.io/matcha/view/urlimageview"
 )
 
@@ -273,7 +271,7 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 		s.Height(65)
 	})
 
-	likeButton := button.NewImageButton()
+	likeButton := view.NewImageButton()
 	if v.Liked {
 		likeButton.Image = app.MustLoadImage("LikeFilled")
 	} else {
@@ -291,7 +289,7 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 		s.Left(13)
 	})
 
-	commentButton := button.NewImageButton()
+	commentButton := view.NewImageButton()
 	commentButton.Image = app.MustLoadImage("Comment")
 	commentButton.OnPress = func() {
 		if v.OnTouchComment != nil {
@@ -303,7 +301,7 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 		s.LeftEqual(likeGuide.Right().Add(13))
 	})
 
-	shareButton := button.NewImageButton()
+	shareButton := view.NewImageButton()
 	shareButton.Image = app.MustLoadImage("Share")
 	shareButton.OnPress = func() {
 		if v.OnTouchShare != nil {
@@ -315,7 +313,7 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 		s.LeftEqual(commentGuide.Right().Add(13))
 	})
 
-	bookmarkButton := button.NewImageButton()
+	bookmarkButton := view.NewImageButton()
 	if v.Bookmarked {
 		bookmarkButton.Image = app.MustLoadImage("BookmarkFilled")
 	} else {
