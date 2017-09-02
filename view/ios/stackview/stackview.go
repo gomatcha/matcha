@@ -7,7 +7,7 @@ Building a simple StackView:
 		stack *stackview.Stack
 	}
 	func NewAppView() *AppView {
-		child := basicview.New()
+		child := view.NewBasicView()
 		child.Painter = &paint.Style{BackgroundColor: colornames.Red}
 		appview := &AppView{
 			stack: &stackview.Stack{},
@@ -25,7 +25,7 @@ Building a simple StackView:
 
 Modifying the stack:
 
-	child := basicview.New()
+	child := view.NewBasicView()
 	child.Painter = &paint.Style{BackgroundColor: colornames.Green}
 	v.Stack.Push(child)
 

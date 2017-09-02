@@ -10,7 +10,6 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/basicview"
 	"gomatcha.io/matcha/view/ios/stackview"
 )
 
@@ -96,7 +95,7 @@ func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
 		s.WidthEqual(constraint.Const(100))
 	})
 
-	titleView := basicview.New()
+	titleView := view.NewBasicView()
 	titleView.Painter = &paint.Style{BackgroundColor: colornames.Red}
 	titleView.Layouter = l
 
@@ -107,7 +106,7 @@ func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
 		s.HeightEqual(constraint.Const(50))
 		s.WidthEqual(constraint.Const(50))
 	})
-	rightView := basicview.New()
+	rightView := view.NewBasicView()
 	rightView.Painter = &paint.Style{BackgroundColor: colornames.Blue}
 	rightView.Layouter = l2
 
@@ -118,7 +117,7 @@ func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
 		s.HeightEqual(constraint.Const(50))
 		s.WidthEqual(constraint.Const(50))
 	})
-	leftView := basicview.New()
+	leftView := view.NewBasicView()
 	leftView.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
 	leftView.Layouter = l3
 

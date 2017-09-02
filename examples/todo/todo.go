@@ -15,7 +15,6 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/basicview"
 	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios/stackview"
 	"gomatcha.io/matcha/view/scrollview"
@@ -151,7 +150,7 @@ func (v *AddView) Build(ctx *view.Context) view.Model {
 		s.CenterYEqual(l.CenterY())
 	})
 
-	separator := basicview.New()
+	separator := view.NewBasicView()
 	separator.Painter = &paint.Style{BackgroundColor: color.RGBA{203, 202, 207, 255}}
 	l.Add(separator, func(s *constraint.Solver) {
 		s.Height(1)
@@ -212,7 +211,7 @@ func (v *TodoView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(deleteGuide.Left().Add(-15))
 	})
 
-	separator := basicview.New()
+	separator := view.NewBasicView()
 	separator.Painter = &paint.Style{BackgroundColor: color.RGBA{203, 202, 207, 255}}
 	l.Add(separator, func(s *constraint.Solver) {
 		s.Height(1)

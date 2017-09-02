@@ -17,7 +17,7 @@ import (
 	pbalert "gomatcha.io/matcha/pb/view/alert"
 )
 
-var maxId int64
+var alertMaxId int64
 var alerts map[int64]*_alert
 
 func init() {
@@ -37,7 +37,7 @@ func init() {
 type _alert struct {
 	Title   string
 	Message string
-	Buttons []*Button
+	Buttons []*AlertButton
 }
 
 func (a *_alert) marshalProtobuf(id int64) *pbalert.View {
@@ -55,10 +55,10 @@ func (a *_alert) marshalProtobuf(id int64) *pbalert.View {
 }
 
 func (a *_alert) display() {
-	maxId += 1
-	alerts[maxId] = a
+	alertMaxId += 1
+	alerts[alertMaxId] = a
 
-	data, err := proto.Marshal(a.marshalProtobuf(maxId))
+	data, err := proto.Marshal(a.marshalProtobuf(alertMaxId))
 	if err != nil {
 		return
 	}
@@ -70,9 +70,9 @@ func (a *_alert) display() {
 }
 
 // Alert displays an alert with the given title, message and buttons. If no buttons are passed, a default OK button is created.
-func Alert(title, message string, buttons ...*Button) {
+func Alert(title, message string, buttons ...*AlertButton) {
 	if len(buttons) == 0 {
-		buttons = []*Button{&Button{Title: "OK"}}
+		buttons = []*AlertButton{&AlertButton{Title: "OK"}}
 	}
 	a := _alert{
 		Title:   title,
@@ -82,14 +82,14 @@ func Alert(title, message string, buttons ...*Button) {
 	a.display()
 }
 
-// Button represents an alert button.
-type Button struct {
+// AlertButton represents an alert button.
+type AlertButton struct {
 	Title string
 	// Style   ButtonStyle
 	OnPress func()
 }
 
-func (a *Button) marshalProtobuf() *pbalert.Button {
+func (a *AlertButton) marshalProtobuf() *pbalert.Button {
 	return &pbalert.Button{
 		Title: a.Title,
 		// Style: pbalert.ButtonStyle(a.Style),

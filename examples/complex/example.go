@@ -18,7 +18,6 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/alert"
-	"gomatcha.io/matcha/view/basicview"
 	"gomatcha.io/matcha/view/button"
 	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios"
@@ -64,7 +63,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 	value := animate.FloatLerp{Start: 0, End: 150}.Notifier(&v.value)
 	// value := animate.FloatInterpolate(animate.FloatLerp{Start: 0, End: 150}, &v.value)
 
-	chl1 := basicview.New()
+	chl1 := view.NewBasicView()
 	chl1.Painter = &paint.AnimatedStyle{
 		BackgroundColor: animate.RGBALerp{Start: colornames.Red, End: colornames.Yellow}.Notifier(&v.value),
 	}
@@ -75,7 +74,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(constraint.Notifier(value))
 	})
 
-	chl2 := basicview.New()
+	chl2 := view.NewBasicView()
 	chl2.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
 	g2 := l.Add(chl2, func(s *constraint.Solver) {
 		s.TopEqual(g1.Bottom())
@@ -84,7 +83,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(300)
 	})
 
-	chl3 := basicview.New()
+	chl3 := view.NewBasicView()
 	chl3.Painter = &paint.Style{BackgroundColor: colornames.Blue}
 	g3 := l.Add(chl3, func(s *constraint.Solver) {
 		s.TopEqual(g2.Bottom())
@@ -93,7 +92,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(100)
 	})
 
-	chl4 := basicview.New()
+	chl4 := view.NewBasicView()
 	chl4.Painter = &paint.Style{BackgroundColor: colornames.Magenta}
 	g4 := l.Add(chl4, func(s *constraint.Solver) {
 		s.TopEqual(g2.Bottom())
@@ -139,13 +138,13 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		v.Signal()
 
 		alert.Alert("Alert", "Message",
-			&alert.Button{
+			&alert.AlertButton{
 				Title: "OK",
 				OnPress: func() {
 					fmt.Println("OK")
 				},
 			},
-			&alert.Button{
+			&alert.AlertButton{
 				Title: "Cancel",
 				OnPress: func() {
 					fmt.Println("Cancel")

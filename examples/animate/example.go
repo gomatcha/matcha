@@ -10,7 +10,6 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/basicview"
 )
 
 func init() {
@@ -39,7 +38,7 @@ func (v *View) Lifecycle(from, to view.Stage) {
 func (v *View) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl := basicview.New()
+	chl := view.NewBasicView()
 	// chl.Painter = &paint.AnimatedStyle{BackgroundColor: v.colorTicker}
 	l.Add(chl, func(s *constraint.Solver) {
 		s.TopEqual(constraint.Const(0))

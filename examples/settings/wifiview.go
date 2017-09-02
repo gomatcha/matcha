@@ -184,10 +184,10 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 		cell1.Title = "Forget This Network"
 		cell1.OnTap = func() {
 			alert.Alert("Forget Wi-Fi Network?", "Your iPhone will no longer join this Wi-Fi network.",
-				&alert.Button{
+				&alert.AlertButton{
 					Title: "Cancel",
 				},
-				&alert.Button{
+				&alert.AlertButton{
 					Title: "Forget",
 					OnPress: func() {
 						v.app.Stack.Pop()

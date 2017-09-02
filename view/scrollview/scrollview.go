@@ -13,7 +13,6 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb/view/scrollview"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/basicview"
 )
 
 // Direction represents the X and Y axis.
@@ -52,7 +51,7 @@ func New() *View {
 
 // Build implements view.View.
 func (v *View) Build(ctx *view.Context) view.Model {
-	child := basicview.New()
+	child := view.NewBasicView()
 	child.Children = v.ContentChildren
 	child.Layouter = v.ContentLayouter
 	child.Painter = v.ContentPainter
