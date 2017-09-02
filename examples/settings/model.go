@@ -2,7 +2,7 @@ package settings
 
 import (
 	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/view/stackview"
+	"gomatcha.io/matcha/view/ios/stackview"
 )
 
 type App struct {

@@ -4,7 +4,7 @@ import (
 	"math/rand"
 
 	golorem "github.com/drhodes/golorem"
-	"gomatcha.io/matcha/view/stackview"
+	"gomatcha.io/matcha/view/ios/stackview"
 )
 
 type App struct {

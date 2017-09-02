@@ -11,8 +11,8 @@ import (
 	"gomatcha.io/matcha/view/alert"
 	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios"
+	"gomatcha.io/matcha/view/ios/stackview"
 	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/stackview"
 	"gomatcha.io/matcha/view/switchview"
 )
 
