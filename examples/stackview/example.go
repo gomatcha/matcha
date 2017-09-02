@@ -10,24 +10,24 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/ios/stackview"
+	"gomatcha.io/matcha/view/ios"
 )
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/stackview New", func() *view.Root {
 		app := &App{
-			stack: &stackview.Stack{},
+			stack: &ios.Stack{},
 		}
 
 		view1 := NewTouchView(app)
 		view1.Color = colornames.Blue
-		bar1 := &stackview.Bar{
+		bar1 := &ios.Bar{
 			Title: "Title 1",
 		}
 
 		// view2 := NewTouchView(nil, "", app)
 		// view2.Color = colornames.Red
-		// bar2 := &stackview.Bar{
+		// bar2 := &ios.Bar{
 		// 	Title: "Title 2",
 		// }
 
@@ -36,11 +36,11 @@ func init() {
 		// view4 := NewTouchView(nil, "", app)
 		// view4.Color = colornames.Green
 
-		v := stackview.New()
+		v := ios.NewStackView()
 		v.Stack = app.stack
 		v.Stack.SetViews(
-			stackview.WithBar(view1, bar1),
-			// stackview.WithBar(view2, bar2),
+			ios.WithBar(view1, bar1),
+			// ios.WithBar(view2, bar2),
 			// view3,
 			// view4,
 		)
@@ -49,14 +49,14 @@ func init() {
 }
 
 type App struct {
-	stack *stackview.Stack
+	stack *ios.Stack
 }
 
 type TouchView struct {
 	view.Embed
 	app   *App
 	Color color.Color
-	bar   *stackview.Bar
+	bar   *ios.Bar
 }
 
 func NewTouchView(app *App) *TouchView {
@@ -86,7 +86,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
+func (v *TouchView) StackBar(ctx *view.Context) *ios.Bar {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.TopEqual(constraint.Const(0))
@@ -121,7 +121,7 @@ func (v *TouchView) StackBar(ctx *view.Context) *stackview.Bar {
 	leftView.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
 	leftView.Layouter = l3
 
-	return &stackview.Bar{
+	return &ios.Bar{
 		Title:      "Title",
 		TitleView:  titleView,
 		RightViews: []view.View{rightView},

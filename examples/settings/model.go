@@ -2,11 +2,11 @@ package settings
 
 import (
 	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/view/ios/stackview"
+	"gomatcha.io/matcha/view/ios"
 )
 
 type App struct {
-	Stack     *stackview.Stack
+	Stack     *ios.Stack
 	Wifi      *Wifi
 	Bluetooth *Bluetooth
 
@@ -16,7 +16,7 @@ type App struct {
 
 func NewApp() *App {
 	return &App{
-		Stack:        &stackview.Stack{},
+		Stack:        &ios.Stack{},
 		Wifi:         NewWifi(),
 		Bluetooth:    NewBluetooth(),
 		airplaneMode: false,

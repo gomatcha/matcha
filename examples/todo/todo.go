@@ -15,15 +15,15 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/ios/stackview"
+	"gomatcha.io/matcha/view/ios"
 )
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/todo New", func() *view.Root {
 		appview := NewAppView()
 
-		v := stackview.New()
-		v.Stack = &stackview.Stack{}
+		v := ios.NewStackView()
+		v.Stack = &ios.Stack{}
 		v.Stack.SetViews(appview)
 		v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 1}
 		v.TitleTextStyle = &text.Style{}
@@ -87,8 +87,8 @@ func (v *AppView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *AppView) StackBar(ctx *view.Context) *stackview.Bar {
-	return &stackview.Bar{Title: "To Do Example"}
+func (v *AppView) StackBar(ctx *view.Context) *ios.Bar {
+	return &ios.Bar{Title: "To Do Example"}
 }
 
 type AddView struct {

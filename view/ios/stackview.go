@@ -1,36 +1,4 @@
-/* Package stackview implements a UINavigationController component.
-
-Building a simple StackView:
-
-	type AppView struct {
-		view.Embed
-		stack *stackview.Stack
-	}
-	func NewAppView() *AppView {
-		child := view.NewBasicView()
-		child.Painter = &paint.Style{BackgroundColor: colornames.Red}
-		appview := &AppView{
-			stack: &stackview.Stack{},
-		}
-		appview.stack.SetViews(child)
-		return appview
-	}
-	func (v *AppView) Build(ctx *view.Context) view.Model {
-		child := stackview.New()
-		child.Stack = v.stack
-		return view.Model{
-			Children: []view.View{child},
-		}
-	}
-
-Modifying the stack:
-
-	child := view.NewBasicView()
-	child.Painter = &paint.Style{BackgroundColor: colornames.Green}
-	v.Stack.Push(child)
-
-*/
-package stackview
+package ios
 
 import (
 	"fmt"
@@ -104,7 +72,39 @@ func (s *Stack) Unnotify(id comm.Id) {
 	s.relay.Unnotify(id)
 }
 
-type View struct {
+/* Package stackview implements a UINavigationController component.
+
+Building a simple StackView:
+
+	type AppView struct {
+		view.Embed
+		stack *ios.Stack
+	}
+	func NewAppView() *AppView {
+		child := view.NewBasicView()
+		child.Painter = &paint.Style{BackgroundColor: colornames.Red}
+		appview := &AppView{
+			stack: &ios.Stack{},
+		}
+		appview.stack.SetViews(child)
+		return appview
+	}
+	func (v *AppView) Build(ctx *view.Context) view.Model {
+		child := ios.New()
+		child.Stack = v.stack
+		return view.Model{
+			Children: []view.View{child},
+		}
+	}
+
+Modifying the stack:
+
+	child := view.NewBasicView()
+	child.Painter = &paint.Style{BackgroundColor: colornames.Green}
+	v.Stack.Push(child)
+
+*/
+type StackView struct {
 	view.Embed
 	Stack          *Stack
 	stack          *Stack
@@ -115,13 +115,13 @@ type View struct {
 	// ids      []int64
 }
 
-// New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New() *View {
-	return &View{}
+// NewStackView returns either the previous View in ctx with matching key, or a new View if none exists.
+func NewStackView() *StackView {
+	return &StackView{}
 }
 
 // Lifecyle implements the view.View interface.
-func (v *View) Lifecycle(from, to view.Stage) {
+func (v *StackView) Lifecycle(from, to view.Stage) {
 	if view.ExitsStage(from, to, view.StageMounted) {
 		if v.stack != nil {
 			v.Unsubscribe(v.stack)
@@ -130,7 +130,7 @@ func (v *View) Lifecycle(from, to view.Stage) {
 }
 
 // Build implements the view.View interface.
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *StackView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	// Subscribe to the stack
@@ -149,7 +149,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		chld := v.Stack.childrenMap[id]
 		// Create the bar.
 		var bar *Bar
-		if childView, ok := chld.(ChildView); ok {
+		if childView, ok := chld.(StackChildView); ok {
 			bar = childView.StackBar(ctx)
 		} else {
 			bar = &Bar{
@@ -158,7 +158,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 		}
 
 		// Add the bar.
-		barV := &barView{
+		barV := &stackBarView{
 			Embed: view.Embed{Key: strconv.Itoa(int(id))},
 			Bar:   bar,
 		}
@@ -218,17 +218,17 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	}
 }
 
-type ChildView interface {
+type StackChildView interface {
 	view.View
 	StackBar(*view.Context) *Bar // TODO(KD): Doesn't this make it harder to wrap??
 }
 
-type barView struct {
+type stackBarView struct {
 	view.Embed
 	Bar *Bar
 }
 
-func (v *barView) Build(ctx *view.Context) view.Model {
+func (v *stackBarView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	// iOS does the layouting for us. We just need the correct sizes.

@@ -1,5 +1,4 @@
-// Package tabview implements a UITabBar component.
-package tabview
+package ios
 
 import (
 	"fmt"
@@ -58,7 +57,7 @@ func (s *Tabs) Unnotify(id comm.Id) {
 	s.relay.Unnotify(id)
 }
 
-type View struct {
+type TabView struct {
 	view.Embed
 	Tabs                *Tabs
 	BarColor            color.Color
@@ -69,13 +68,13 @@ type View struct {
 	tabs                *Tabs
 }
 
-// New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New() *View {
-	return &View{}
+// NewTabView returns either the previous View in ctx with matching key, or a new View if none exists.
+func NewTabView() *TabView {
+	return &TabView{}
 }
 
 // Lifecyle implements the view.View interface.
-func (v *View) Lifecycle(from, to view.Stage) {
+func (v *TabView) Lifecycle(from, to view.Stage) {
 	if view.ExitsStage(from, to, view.StageMounted) {
 		if v.tabs != nil {
 			v.Unsubscribe(v.tabs)
@@ -84,7 +83,7 @@ func (v *View) Lifecycle(from, to view.Stage) {
 }
 
 // Build implements the view.View interface.
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *TabView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	// Subscribe to the group
@@ -101,11 +100,11 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	childrenPb := []*tabnavpb.ChildView{}
 	for _, chld := range v.Tabs.Views() {
 		// Create the button
-		var button *Button
-		if childView, ok := chld.(ChildView); ok {
+		var button *TabButton
+		if childView, ok := chld.(TabChildView); ok {
 			button = childView.TabButton(ctx)
 		} else {
-			button = &Button{
+			button = &TabButton{
 				Title: "Title",
 			}
 		}
@@ -165,31 +164,31 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	}
 }
 
-type ChildView interface {
+type TabChildView interface {
 	view.View
-	TabButton(*view.Context) *Button
+	TabButton(*view.Context) *TabButton
 }
 
-// Button describes a UITabBarItem.
-type Button struct {
+// TabButton describes a UITabBarItem.
+type TabButton struct {
 	Title        string
 	Icon         image.Image
 	SelectedIcon image.Image
 	Badge        string
 }
 
-func WithButton(s view.View, button *Button) view.View {
-	return &viewWrapper{
+func WithTabButton(s view.View, button *TabButton) view.View {
+	return &tabButtonWrapper{
 		View:   s,
 		button: button,
 	}
 }
 
-type viewWrapper struct {
+type tabButtonWrapper struct {
 	view.View
-	button *Button
+	button *TabButton
 }
 
-func (v *viewWrapper) TabButton(*view.Context) *Button {
+func (v *tabButtonWrapper) TabButton(*view.Context) *TabButton {
 	return v.button
 }

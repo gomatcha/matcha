@@ -9,7 +9,6 @@ import (
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
-	"gomatcha.io/matcha/view/ios/stackview"
 )
 
 type WifiView struct {
@@ -136,8 +135,8 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *WifiView) StackBar(ctx *view.Context) *stackview.Bar {
-	return &stackview.Bar{Title: "Wi-Fi"}
+func (v *WifiView) StackBar(ctx *view.Context) *ios.Bar {
+	return &ios.Bar{Title: "Wi-Fi"}
 }
 
 type WifiNetworkView struct {
@@ -294,8 +293,8 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *WifiNetworkView) StackBar(*view.Context) *stackview.Bar {
-	return &stackview.Bar{
+func (v *WifiNetworkView) StackBar(*view.Context) *ios.Bar {
+	return &ios.Bar{
 		Title: v.network.SSID(),
 	}
 }

@@ -3,12 +3,13 @@ package insta
 import (
 	"math/rand"
 
+	"gomatcha.io/matcha/view/ios"
+
 	golorem "github.com/drhodes/golorem"
-	"gomatcha.io/matcha/view/ios/stackview"
 )
 
 type App struct {
-	Stack *stackview.Stack
+	Stack *ios.Stack
 	Posts []*Post
 }
 
@@ -19,7 +20,7 @@ func NewApp() *App {
 	}
 
 	return &App{
-		Stack: &stackview.Stack{},
+		Stack: &ios.Stack{},
 		Posts: posts,
 	}
 }

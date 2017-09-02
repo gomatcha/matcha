@@ -14,7 +14,7 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/ios/stackview"
+	"gomatcha.io/matcha/view/ios"
 	"gomatcha.io/matcha/view/urlimageview"
 )
 
@@ -22,7 +22,7 @@ func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/insta New", func() *view.Root {
 		app := NewApp()
 
-		v := stackview.New()
+		v := ios.NewStackView()
 		v.Stack = app.Stack
 		v.Stack.SetViews(NewRootView(app))
 		return view.NewRoot(v)
@@ -59,8 +59,8 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-// func (v *RootView) StackBar(ctx *view.Context) *stackview.Bar {
-// 	return &stackview.Bar{Title: "Settings Example"}
+// func (v *RootView) StackBar(ctx *view.Context) *ies.Bar {
+// 	return &ies.Bar{Title: "Settings Example"}
 // }
 
 type PostView struct {

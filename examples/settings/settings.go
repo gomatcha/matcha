@@ -15,7 +15,7 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/ios/stackview"
+	"gomatcha.io/matcha/view/ios"
 )
 
 var (
@@ -33,7 +33,7 @@ func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/settings New", func() *view.Root {
 		app := NewApp()
 
-		v := stackview.New()
+		v := ios.NewStackView()
 		v.Stack = app.Stack
 		v.Stack.SetViews(NewRootView(app))
 		return view.NewRoot(v)
@@ -203,8 +203,8 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *RootView) StackBar(ctx *view.Context) *stackview.Bar {
-	return &stackview.Bar{Title: "Settings Example"}
+func (v *RootView) StackBar(ctx *view.Context) *ios.Bar {
+	return &ios.Bar{Title: "Settings Example"}
 }
 
 func AddSeparators(vs []view.View) []view.View {

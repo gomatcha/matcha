@@ -9,16 +9,16 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/ios/tabview"
+	"gomatcha.io/matcha/view/ios"
 )
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/tabview New", func() *view.Root {
-		app := &App{tabs: &tabview.Tabs{}}
+		app := &App{tabs: &ios.Tabs{}}
 
 		view1 := NewTouchView(app)
 		view1.Color = colornames.Blue
-		button1 := &tabview.Button{
+		button1 := &ios.TabButton{
 			Title: "Title 1",
 			Badge: "badge",
 			// Icon:         env.MustLoadImage("TabCamera"),
@@ -27,7 +27,7 @@ func init() {
 
 		view2 := NewTouchView(app)
 		view2.Color = colornames.Red
-		button2 := &tabview.Button{
+		button2 := &ios.TabButton{
 			Title: "Title 2",
 			// Icon:         env.MustLoadImage("TabMap"),
 			// SelectedIcon: env.MustLoadImage("TabMapFilled"),
@@ -39,15 +39,15 @@ func init() {
 		view4 := NewTouchView(app)
 		view4.Color = colornames.Green
 
-		v := tabview.New()
+		v := ios.NewTabView()
 		v.BarColor = colornames.White
 		v.SelectedColor = colornames.Red
 		v.UnselectedColor = colornames.Darkgray
 		v.Tabs = app.tabs
 		v.Tabs.SetSelectedIndex(1)
 		v.Tabs.SetViews(
-			tabview.WithButton(view1, button1),
-			tabview.WithButton(view2, button2),
+			ios.WithTabButton(view1, button1),
+			ios.WithTabButton(view2, button2),
 			view3,
 			view4,
 		)
@@ -56,20 +56,20 @@ func init() {
 }
 
 type App struct {
-	tabs *tabview.Tabs
+	tabs *ios.Tabs
 }
 
 type TouchView struct {
 	view.Embed
 	app    *App
 	Color  color.Color
-	button *tabview.Button
+	button *ios.TabButton
 }
 
 func NewTouchView(app *App) *TouchView {
 	return &TouchView{
 		app: app,
-		button: &tabview.Button{
+		button: &ios.TabButton{
 			Title: "Testing",
 			// Icon:         env.MustLoadImage("TabSearch"),
 			// SelectedIcon: env.MustLoadImage("TabSearchFilled"),
@@ -95,6 +95,6 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *TouchView) TabButton(*view.Context) *tabview.Button {
+func (v *TouchView) TabButton(*view.Context) *ios.TabButton {
 	return v.button
 }

@@ -11,18 +11,17 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/ios/stackview"
-	"gomatcha.io/matcha/view/ios/tabview"
+	"gomatcha.io/matcha/view/ios"
 )
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/screen New", func() *view.Root {
 		app := &App{
-			stack1: &stackview.Stack{},
-			stack2: &stackview.Stack{},
-			stack3: &stackview.Stack{},
-			stack4: &stackview.Stack{},
-			tabs:   &tabview.Tabs{},
+			stack1: &ios.Stack{},
+			stack2: &ios.Stack{},
+			stack3: &ios.Stack{},
+			stack4: &ios.Stack{},
+			tabs:   &ios.Tabs{},
 		}
 
 		// Configure the stacks
@@ -32,13 +31,13 @@ func init() {
 		app.stack4.SetViews(NewTouchView(nil, "", app))
 
 		// Configure the tabs
-		stackview1 := stackview.New()
+		stackview1 := ios.NewStackView()
 		stackview1.Stack = app.stack1
-		stackview2 := stackview.New()
+		stackview2 := ios.NewStackView()
 		stackview2.Stack = app.stack2
-		stackview3 := stackview.New()
+		stackview3 := ios.NewStackView()
 		stackview3.Stack = app.stack3
-		stackview4 := stackview.New()
+		stackview4 := ios.NewStackView()
 		stackview4.Stack = app.stack4
 		app.tabs.SetViews(
 			stackview1,
@@ -48,21 +47,21 @@ func init() {
 		)
 
 		// Return tabview
-		v := tabview.New()
+		v := ios.NewTabView()
 		v.Tabs = app.tabs
 		return view.NewRoot(v)
 	})
 }
 
 type App struct {
-	tabs   *tabview.Tabs
-	stack1 *stackview.Stack
-	stack2 *stackview.Stack
-	stack3 *stackview.Stack
-	stack4 *stackview.Stack
+	tabs   *ios.Tabs
+	stack1 *ios.Stack
+	stack2 *ios.Stack
+	stack3 *ios.Stack
+	stack4 *ios.Stack
 }
 
-func (app *App) CurrentStackView() *stackview.Stack {
+func (app *App) CurrentStackView() *ios.Stack {
 	switch app.tabs.SelectedIndex() {
 	case 0:
 		return app.stack1
