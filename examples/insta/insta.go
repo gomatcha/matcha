@@ -15,7 +15,6 @@ import (
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/button"
-	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios/stackview"
 	"gomatcha.io/matcha/view/scrollview"
 	"gomatcha.io/matcha/view/urlimageview"
@@ -214,9 +213,9 @@ func (v *PostImageView) Build(ctx *view.Context) view.Model {
 	})
 
 	if v.showHeart {
-		heart := imageview.New()
+		heart := view.NewImageView()
 		heart.Image = app.MustLoadImage("Heart")
-		heart.ResizeMode = imageview.ResizeModeCenter
+		heart.ResizeMode = view.ImageResizeModeCenter
 		heart.PaintStyle = &paint.Style{
 			ShadowRadius: 10,
 			ShadowOffset: layout.Pt(0, 3),

@@ -15,7 +15,6 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios/stackview"
 	"gomatcha.io/matcha/view/scrollview"
 )
@@ -241,7 +240,7 @@ func (v *Checkbox) Build(ctx *view.Context) view.Model {
 		s.Height(40)
 	})
 
-	imageView := imageview.New()
+	imageView := view.NewImageView()
 	if v.Value {
 		imageView.Image = app.MustLoadImage("CheckboxChecked")
 	} else {
@@ -288,7 +287,7 @@ func (v *DeleteButton) Build(ctx *view.Context) view.Model {
 		s.Height(40)
 	})
 
-	imageView := imageview.New()
+	imageView := view.NewImageView()
 	imageView.Image = app.MustLoadImage("Delete")
 	l.Add(imageView, func(s *constraint.Solver) {
 		s.CenterXEqual(l.CenterX())

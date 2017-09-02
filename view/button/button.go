@@ -16,7 +16,6 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/imageview"
 )
 
 // View implements a native button view.
@@ -110,8 +109,8 @@ func NewImageButton() *ImageButton {
 func (v *ImageButton) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	iv := imageview.New()
-	iv.ResizeMode = imageview.ResizeModeCenter
+	iv := view.NewImageView()
+	iv.ResizeMode = view.ImageResizeModeCenter
 	iv.Image = v.Image
 	ivg := l.Add(iv, func(s *constraint.Solver) {
 		s.Left(0)

@@ -11,7 +11,6 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/urlimageview"
 )
 
@@ -34,7 +33,7 @@ func (v *ImageView) Build(ctx *view.Context) view.Model {
 
 	chl := urlimageview.New()
 	chl.URL = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
-	chl.ResizeMode = imageview.ResizeModeFit
+	chl.ResizeMode = view.ImageResizeModeFit
 	chl.PaintStyle = &paint.Style{BackgroundColor: colornames.Pink}
 	g1 := l.Add(chl, func(s *constraint.Solver) {
 		s.Top(50)
@@ -43,9 +42,9 @@ func (v *ImageView) Build(ctx *view.Context) view.Model {
 		s.Height(200)
 	})
 
-	chl2 := imageview.New()
+	chl2 := view.NewImageView()
 	chl2.Image = app.MustLoadImage("airplane")
-	chl2.ResizeMode = imageview.ResizeModeCenter
+	chl2.ResizeMode = view.ImageResizeModeCenter
 	g2 := l.Add(chl2, func(s *constraint.Solver) {
 		s.TopEqual(g1.Bottom())
 		s.LeftEqual(g1.Left())
@@ -53,9 +52,9 @@ func (v *ImageView) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(g1.Height())
 	})
 
-	chl3 := imageview.New()
+	chl3 := view.NewImageView()
 	chl3.Image = app.MustLoadImage("table_arrow")
-	chl3.ResizeMode = imageview.ResizeModeStretch
+	chl3.ResizeMode = view.ImageResizeModeStretch
 	chl3.PaintStyle = &paint.Style{BackgroundColor: colornames.Lightgray}
 	chl3.ImageTint = colornames.Blue
 	l.Add(chl3, func(s *constraint.Solver) {

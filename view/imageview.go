@@ -1,5 +1,4 @@
-// Package imageview implements a view that can display an image.
-package imageview
+package view
 
 import (
 	"image"
@@ -13,45 +12,44 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb"
 	"gomatcha.io/matcha/pb/view/imageview"
-	"gomatcha.io/matcha/view"
 )
 
-type ResizeMode int
+type ImageResizeMode int
 
 // TODO(KD): ResizeModeFit and ResizeModeFill behave oddly on Android.
 const (
 	// The image is resized proportionally such that a single axis is filled.
-	ResizeModeFit ResizeMode = iota
+	ImageResizeModeFit ImageResizeMode = iota
 	// The image is resized proportionally such that the entire view is filled.
-	ResizeModeFill
+	ImageResizeModeFill
 	// The image is stretched to fill the view.
-	ResizeModeStretch
+	ImageResizeModeStretch
 	// The image is centered in the view with its natural size.
-	ResizeModeCenter
+	ImageResizeModeCenter
 )
 
-func (m ResizeMode) MarshalProtobuf() imageview.ResizeMode {
+func (m ImageResizeMode) MarshalProtobuf() imageview.ResizeMode {
 	return imageview.ResizeMode(m)
 }
 
-// View implements a view that displays an image.
-type View struct {
-	view.Embed
+// ImageView implements a view that displays an image.
+type ImageView struct {
+	Embed
 	Image      image.Image
-	ResizeMode ResizeMode
+	ResizeMode ImageResizeMode
 	ImageTint  color.Color
 	PaintStyle *paint.Style
 	image      image.Image
 	pbImage    *pb.ImageOrResource
 }
 
-// New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New() *View {
-	return &View{}
+// NewImageView returns either the previous View in ctx with matching key, or a new View if none exists.
+func NewImageView() *ImageView {
+	return &ImageView{}
 }
 
 // Build implements view.View.
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *ImageView) Build(ctx *Context) Model {
 	if v.Image != v.image {
 		v.image = v.Image
 		v.pbImage = app.ImageMarshalProtobuf(v.image)
@@ -59,7 +57,7 @@ func (v *View) Build(ctx *view.Context) view.Model {
 
 	// Default to Center if we don't have an image
 	bounds := image.Rect(0, 0, 0, 0)
-	resizeMode := ResizeModeCenter
+	resizeMode := ImageResizeModeCenter
 	scale := 1.0
 	if v.image != nil {
 		bounds = v.image.Bounds()
@@ -74,9 +72,9 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
 	}
-	return view.Model{
+	return Model{
 		Painter:        painter,
-		Layouter:       &layouter{bounds: bounds, resizeMode: resizeMode, scale: scale},
+		Layouter:       &imageViewLayouter{bounds: bounds, resizeMode: resizeMode, scale: scale},
 		NativeViewName: "gomatcha.io/matcha/view/imageview",
 		NativeViewState: &imageview.View{
 			Image:      v.pbImage,
@@ -87,16 +85,16 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	}
 }
 
-type layouter struct {
+type imageViewLayouter struct {
 	bounds     image.Rectangle
 	scale      float64
-	resizeMode ResizeMode
+	resizeMode ImageResizeMode
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *imageViewLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{Frame: layout.Rect{Max: ctx.MinSize}}
 	switch l.resizeMode {
-	case ResizeModeFit:
+	case ImageResizeModeFit:
 		imgRatio := float64(l.bounds.Dx()) / l.scale / float64(l.bounds.Dy()) / l.scale
 		maxRatio := ctx.MinSize.X / ctx.MinSize.Y
 		if imgRatio > maxRatio {
@@ -104,20 +102,20 @@ func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 		} else {
 			g.Frame.Max = layout.Pt(ctx.MinSize.Y/imgRatio, ctx.MinSize.Y)
 		}
-	case ResizeModeFill:
+	case ImageResizeModeFill:
 		fallthrough
-	case ResizeModeStretch:
+	case ImageResizeModeStretch:
 		g.Frame.Max = ctx.MinSize
-	case ResizeModeCenter:
+	case ImageResizeModeCenter:
 		g.Frame.Max = layout.Pt(float64(l.bounds.Dx())/l.scale, float64(l.bounds.Dy())/l.scale)
 	}
 	return g, nil
 }
 
-func (l *layouter) Notify(f func()) comm.Id {
+func (l *imageViewLayouter) Notify(f func()) comm.Id {
 	return 0 // no-op
 }
 
-func (l *layouter) Unnotify(id comm.Id) {
+func (l *imageViewLayouter) Unnotify(id comm.Id) {
 	// no-op
 }

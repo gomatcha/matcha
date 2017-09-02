@@ -8,7 +8,6 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios"
 	"gomatcha.io/matcha/view/ios/stackview"
 	"gomatcha.io/matcha/view/scrollview"
@@ -358,7 +357,7 @@ func (v *InfoButton) Build(ctx *view.Context) view.Model {
 		s.Height(44)
 	})
 
-	img := imageview.New()
+	img := view.NewImageView()
 	img.Image = app.MustLoadImage("Info")
 	l.Add(img, func(s *constraint.Solver) {
 		s.Width(22)

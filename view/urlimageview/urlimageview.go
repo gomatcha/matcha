@@ -14,7 +14,6 @@ import (
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/imageview"
 )
 
 // Layouter that returns the child's layout
@@ -42,7 +41,7 @@ func (l layouter) Unnotify(id comm.Id) {
 type View struct {
 	view.Embed
 	PaintStyle *paint.Style
-	ResizeMode imageview.ResizeMode
+	ResizeMode view.ImageResizeMode
 	URL        string
 	Path       string
 	ImageTint  color.Color
@@ -64,7 +63,7 @@ func New() *View {
 func (v *View) Build(ctx *view.Context) view.Model {
 	v.reload()
 
-	chl := imageview.New()
+	chl := view.NewImageView()
 	chl.ResizeMode = v.ResizeMode
 	chl.Image = v.image
 	chl.ImageTint = v.ImageTint

@@ -15,7 +15,6 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios/stackview"
 	"gomatcha.io/matcha/view/scrollview"
 )
@@ -391,9 +390,9 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	leftAnchor := l.Left()
 	if v.HasIcon {
-		iconView := imageview.New()
+		iconView := view.NewImageView()
 		iconView.Image = v.Icon
-		iconView.ResizeMode = imageview.ResizeModeFill
+		iconView.ResizeMode = view.ImageResizeModeFill
 		pIconView := view.WithPainter(iconView, &paint.Style{BackgroundColor: colornames.Lightgray, CornerRadius: 5})
 
 		iconGuide := l.Add(pIconView, func(s *constraint.Solver) {
@@ -407,9 +406,9 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	rightAnchor := l.Right()
 	if v.Chevron {
-		chevronView := imageview.New()
+		chevronView := view.NewImageView()
 		chevronView.Image = app.MustLoadImage("table_arrow")
-		chevronView.ResizeMode = imageview.ResizeModeCenter
+		chevronView.ResizeMode = view.ImageResizeModeCenter
 		chevronView.ImageTint = chevronColor
 
 		chevronGuide := l.Add(chevronView, func(s *constraint.Solver) {
