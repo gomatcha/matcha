@@ -68,7 +68,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 	st := text.NewStyledText("Subtitle", style)
 	st.Set(style2, 0, 3)
 
-	chl := textview.New()
+	chl := view.NewTextView()
 	chl.StyledText = st
 	chlP := view.WithPainter(chl, &paint.Style{BackgroundColor: colornames.Blue})
 	chlG := l.Add(chlP, func(s *constraint.Solver) {
@@ -77,7 +77,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 		s.Width(200)
 	})
 
-	reverse := textview.New()
+	reverse := view.NewTextView()
 	reverse.Style.SetAlignment(text.AlignmentCenter)
 	reverse.Style.SetStrikethroughStyle(text.StrikethroughStyleDouble)
 	reverse.Style.SetStrikethroughColor(colornames.Blue)

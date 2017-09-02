@@ -18,7 +18,6 @@ import (
 	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios/stackview"
 	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/switchview"
 	"gomatcha.io/matcha/view/textview"
 )
 
@@ -76,7 +75,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New()
+		switchView := view.NewSwitch()
 		switchView.Value = v.app.AirplaneMode()
 		switchView.OnValueChange = func(value bool) {
 			fmt.Println("blah")
@@ -306,7 +305,7 @@ func (v *SpacerHeader) Build(ctx *view.Context) view.Model {
 		s.WidthEqual(l.MaxGuide().Width())
 	})
 
-	titleView := textview.New()
+	titleView := view.NewTextView()
 	titleView.String = strings.ToTitle(v.Title)
 	titleView.Style.SetFont(text.Font{
 		Name: "HelveticaNeue",
@@ -342,7 +341,7 @@ func NewSpacerDescription() *SpacerDescription {
 func (v *SpacerDescription) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	titleView := textview.New()
+	titleView := view.NewTextView()
 	titleView.String = v.Description
 	titleView.Style.SetFont(text.Font{
 		Name: "HelveticaNeue",
@@ -435,7 +434,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	if len(v.Subtitle) > 0 {
 		fmt.Println("subtitle", v.Subtitle)
-		subtitleView := textview.New()
+		subtitleView := view.NewTextView()
 		subtitleView.String = v.Subtitle
 		subtitleView.Style.SetFont(text.Font{
 			Name: "HelveticaNeue",
@@ -451,7 +450,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 		rightAnchor = subtitleGuide.Left()
 	}
 
-	titleView := textview.New()
+	titleView := view.NewTextView()
 	titleView.String = v.Title
 	titleView.Style.SetFont(text.Font{
 		Name: "HelveticaNeue",

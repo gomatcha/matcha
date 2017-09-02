@@ -8,7 +8,6 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
-	"gomatcha.io/matcha/view/slider"
 )
 
 func init() {
@@ -40,7 +39,7 @@ func (v *ProgressView) Build(ctx *view.Context) view.Model {
 		s.Width(200)
 	})
 
-	sliderv := slider.New()
+	sliderv := view.NewSlider()
 	sliderv.MaxValue = 1
 	sliderv.MinValue = 0
 	sliderv.OnValueChange = func(value float64) {

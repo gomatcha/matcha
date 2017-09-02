@@ -8,7 +8,6 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/switchview"
 )
 
 func init() {
@@ -31,7 +30,7 @@ func NewSwitchView() *SwitchView {
 func (v *SwitchView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := switchview.New()
+	chl1 := view.NewSwitch()
 	chl1.Value = v.value
 	chl1.PaintStyle = &paint.Style{BackgroundColor: colornames.Green}
 	chl1.OnValueChange = func(value bool) {
@@ -44,7 +43,7 @@ func (v *SwitchView) Build(ctx *view.Context) view.Model {
 		s.Left(100)
 	})
 
-	chl2 := switchview.New()
+	chl2 := view.NewSwitch()
 	chl2.Value = v.value
 	chl2.Enabled = false
 	chl2.OnValueChange = func(value bool) {

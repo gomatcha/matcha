@@ -5,7 +5,6 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/switchview"
 )
 
 type BluetoothView struct {
@@ -37,7 +36,7 @@ func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New()
+		switchView := view.NewSwitch()
 		switchView.Value = v.app.Bluetooth.Enabled()
 		switchView.OnValueChange = func(value bool) {
 			v.app.Bluetooth.SetEnabled(!v.app.Bluetooth.Enabled())

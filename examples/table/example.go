@@ -74,7 +74,7 @@ func (v *TableCell) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(constraint.Const(50))
 	})
 
-	textView := textview.New()
+	textView := view.NewTextView()
 	textView.String = v.String
 	textView.Style.SetFont(text.Font{
 		Name: "HelveticaNeue",

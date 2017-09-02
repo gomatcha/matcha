@@ -1,13 +1,13 @@
 // Package alert implements basic alerts.
 //
-//  alert.Alert("Title", "Message") // Has an OK button by default.
-//  alert.Alert("Title", "Message", &Button{
+//  view.Alert("Title", "Message") // Has an OK button by default.
+//  view.Alert("Title", "Message", &Button{
 //      Title:"Cancel",
 //      OnPress: func() {
 //          // Do something
 //      }
 //  })
-package alert
+package view
 
 import (
 	"runtime"
@@ -84,23 +84,12 @@ func Alert(title, message string, buttons ...*AlertButton) {
 
 // AlertButton represents an alert button.
 type AlertButton struct {
-	Title string
-	// Style   ButtonStyle
+	Title   string
 	OnPress func()
 }
 
 func (a *AlertButton) marshalProtobuf() *pbalert.Button {
 	return &pbalert.Button{
 		Title: a.Title,
-		// Style: pbalert.ButtonStyle(a.Style),
 	}
 }
-
-// // Alert button styles.
-// type ButtonStyle int
-
-// const (
-// 	ButtonStyleDefault ButtonStyle = iota
-// 	ButtonStyleCancel
-// 	ButtonStyleDestructive
-// )

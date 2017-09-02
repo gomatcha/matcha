@@ -8,11 +8,10 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/slider"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewSlider", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view Slider", func() *view.Root {
 		return view.NewRoot(NewSlider())
 	})
 }
@@ -31,7 +30,7 @@ func NewSlider() *Slider {
 func (v *Slider) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := slider.New()
+	chl1 := view.NewSlider()
 	chl1.MinValue = -5
 	chl1.MaxValue = 5
 	chl1.Value = v.value
@@ -50,7 +49,7 @@ func (v *Slider) Build(ctx *view.Context) view.Model {
 		s.Width(200)
 	})
 
-	chl2 := slider.New()
+	chl2 := view.NewSlider()
 	chl2.Value = v.value
 	chl2.MinValue = -10
 	chl2.MaxValue = 10

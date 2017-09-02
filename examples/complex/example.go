@@ -17,13 +17,10 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/alert"
 	"gomatcha.io/matcha/view/button"
 	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios"
 	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/slider"
-	"gomatcha.io/matcha/view/switchview"
 	"gomatcha.io/matcha/view/textview"
 	"gomatcha.io/matcha/view/urlimageview"
 )
@@ -101,7 +98,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(50)
 	})
 
-	chl5 := textview.New()
+	chl5 := view.NewTextView()
 	chl5.String = "Subtitle"
 	chl5.Style.SetAlignment(text.AlignmentCenter)
 	chl5.Style.SetStrikethroughStyle(text.StrikethroughStyleSingle)
@@ -119,7 +116,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(g2.Right().Add(-15))
 	})
 
-	chl6 := textview.New()
+	chl6 := view.NewTextView()
 	chl6.String = fmt.Sprintf("Counter: %v", v.counter)
 	chl6.Style.SetFont(text.Font{
 		Name: "HelveticaNeue",
@@ -137,14 +134,14 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		v.counter += 1
 		v.Signal()
 
-		alert.Alert("Alert", "Message",
-			&alert.AlertButton{
+		view.Alert("Alert", "Message",
+			&view.AlertButton{
 				Title: "OK",
 				OnPress: func() {
 					fmt.Println("OK")
 				},
 			},
-			&alert.AlertButton{
+			&view.AlertButton{
 				Title: "Cancel",
 				OnPress: func() {
 					fmt.Println("Cancel")
@@ -170,7 +167,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 			s.Height(200)
 		})
 	}
-	chl11 := switchview.New()
+	chl11 := view.NewSwitch()
 	chl11.OnValueChange = func(value bool) {
 		a := 0.0
 		if value {
@@ -213,7 +210,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(200)
 	})
 
-	chl12 := slider.New()
+	chl12 := view.NewSlider()
 	chl12.ValueNotifier = &v.sliderValue
 	chl12.MaxValue = 1
 	chl12.MinValue = 0
@@ -285,7 +282,7 @@ func (v *TableCell) Build(ctx *view.Context) view.Model {
 		s.Height(50)
 	})
 
-	textView := textview.New()
+	textView := view.NewTextView()
 	textView.String = v.String
 	textView.Style.SetFont(text.Font{
 		Name: "HelveticaNeue",

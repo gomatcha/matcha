@@ -8,12 +8,10 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/alert"
 	"gomatcha.io/matcha/view/imageview"
 	"gomatcha.io/matcha/view/ios"
 	"gomatcha.io/matcha/view/ios/stackview"
 	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/switchview"
 )
 
 type WifiView struct {
@@ -44,7 +42,7 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New()
+		switchView := view.NewSwitch()
 		switchView.Value = v.app.Wifi.Enabled()
 		switchView.OnValueChange = func(value bool) {
 			v.app.Wifi.SetEnabled(!v.app.Wifi.Enabled())
@@ -110,7 +108,7 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 			spacer := NewSpacer()
 			l.Add(spacer, nil)
 
-			switchView := switchview.New()
+			switchView := view.NewSwitch()
 			switchView.Value = v.app.Wifi.AskToJoin()
 			switchView.OnValueChange = func(a bool) {
 				v.app.Wifi.SetAskToJoin(a)
@@ -183,11 +181,11 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 		cell1 := NewBasicCell()
 		cell1.Title = "Forget This Network"
 		cell1.OnTap = func() {
-			alert.Alert("Forget Wi-Fi Network?", "Your iPhone will no longer join this Wi-Fi network.",
-				&alert.AlertButton{
+			view.Alert("Forget Wi-Fi Network?", "Your iPhone will no longer join this Wi-Fi network.",
+				&view.AlertButton{
 					Title: "Cancel",
 				},
-				&alert.AlertButton{
+				&view.AlertButton{
 					Title: "Forget",
 					OnPress: func() {
 						v.app.Stack.Pop()
@@ -247,7 +245,7 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 		cell1 := NewBasicCell()
 		cell1.Title = "Renew Lease"
 		cell1.OnTap = func() {
-			alert.Alert("Renewing Lease...", "")
+			view.Alert("Renewing Lease...", "")
 		}
 
 		for _, i := range AddSeparators([]view.View{cell1}) {

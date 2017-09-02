@@ -177,7 +177,7 @@ func (v *PostHeaderView) Build(ctx *view.Context) view.Model {
 		s.CenterYEqual(l.CenterY())
 	})
 
-	titleView := textview.New()
+	titleView := view.NewTextView()
 	titleView.MaxLines = 1
 	titleView.String = v.Title
 	l.Add(titleView, func(s *constraint.Solver) {
@@ -336,7 +336,7 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(l.Right().Add(-13))
 	})
 
-	likeTextView := textview.New()
+	likeTextView := view.NewTextView()
 	likeTextView.String = fmt.Sprintf("%v Likes", v.LikeCount)
 	l.Add(likeTextView, func(s *constraint.Solver) {
 		s.Top(50)
@@ -366,7 +366,7 @@ func (v *CommentsView) Build(ctx *view.Context) view.Model {
 	topGuide := l.Top().Add(13)
 
 	for _, i := range v.Comments {
-		textView := textview.New()
+		textView := view.NewTextView()
 		textView.String = i.UserName + i.Text
 		textGuide := l.Add(textView, func(s *constraint.Solver) {
 			s.TopEqual(topGuide)

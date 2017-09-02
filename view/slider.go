@@ -1,5 +1,4 @@
-// Package slider implements a native slider.
-package slider
+package view
 
 import (
 	"fmt"
@@ -9,27 +8,26 @@ import (
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb/view/slider"
-	"gomatcha.io/matcha/view"
 )
 
-type layouter struct {
+type sliderLayouter struct {
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *sliderLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{Frame: layout.Rt(0, 0, ctx.MinSize.X, 31)}
 	return g, nil
 }
 
-func (l *layouter) Notify(f func()) comm.Id {
+func (l *sliderLayouter) Notify(f func()) comm.Id {
 	return 0 // no-op
 }
 
-func (l *layouter) Unnotify(id comm.Id) {
+func (l *sliderLayouter) Unnotify(id comm.Id) {
 	// no-op
 }
 
-type View struct {
-	view.Embed
+type Slider struct {
+	Embed
 	PaintStyle    *paint.Style
 	Value         float64
 	ValueNotifier comm.Float64Notifier
@@ -42,16 +40,16 @@ type View struct {
 }
 
 // New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New() *View {
-	return &View{
+func NewSlider() *Slider {
+	return &Slider{
 		MaxValue: 1,
 		MinValue: 0,
 		Enabled:  true,
 	}
 }
 
-func (v *View) Lifecycle(from, to view.Stage) {
-	if view.ExitsStage(from, to, view.StageMounted) {
+func (v *Slider) Lifecycle(from, to Stage) {
+	if ExitsStage(from, to, StageMounted) {
 		if v.valueNotifier != nil {
 			v.Unsubscribe(v.valueNotifier)
 		}
@@ -59,7 +57,7 @@ func (v *View) Lifecycle(from, to view.Stage) {
 }
 
 // Build implements view.View.
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *Slider) Build(ctx *Context) Model {
 	val := v.Value
 	if v.ValueNotifier != nil {
 		val = v.ValueNotifier.Value()
@@ -79,9 +77,9 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
 	}
-	return view.Model{
+	return Model{
 		Painter:        painter,
-		Layouter:       &layouter{},
+		Layouter:       &sliderLayouter{},
 		NativeViewName: "gomatcha.io/matcha/view/slider",
 		NativeViewState: &slider.View{
 			Value:    val,

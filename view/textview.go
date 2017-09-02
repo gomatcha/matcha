@@ -1,17 +1,15 @@
-// Package textview implements a text area.
-package textview
+package view
 
 import (
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/view"
 )
 
-// View displays a multiline text region within it bounds.
-type View struct {
-	view.Embed
+// TextView displays a multiline text region within it bounds.
+type TextView struct {
+	Embed
 	PaintStyle *paint.Style
 	String     string
 	Text       *text.Text
@@ -20,15 +18,15 @@ type View struct {
 	MaxLines   int
 }
 
-// New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New() *View {
-	return &View{
+// NewTextView returns either the previous View in ctx with matching key, or a new View if none exists.
+func NewTextView() *TextView {
+	return &TextView{
 		Style: &text.Style{},
 	}
 }
 
 // Build implements the view.View interface.
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *TextView) Build(ctx *Context) Model {
 	st := v.StyledText
 	if st == nil {
 		t := v.Text
@@ -42,29 +40,29 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
 	}
-	return view.Model{
+	return Model{
 		Painter:         painter,
-		Layouter:        &layouter{styledText: st, maxLines: v.MaxLines},
+		Layouter:        &textViewLayouter{styledText: st, maxLines: v.MaxLines},
 		NativeViewName:  "gomatcha.io/matcha/view/textview",
 		NativeViewState: st.MarshalProtobuf(),
 	}
 }
 
-type layouter struct {
+type textViewLayouter struct {
 	styledText *text.StyledText
 	maxLines   int
 }
 
-func (l *layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *textViewLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, l.maxLines)
 	g := layout.Guide{Frame: layout.Rt(0, 0, size.X, size.Y)}
 	return g, nil
 }
 
-func (l *layouter) Notify(f func()) comm.Id {
+func (l *textViewLayouter) Notify(f func()) comm.Id {
 	return 0 // no-op
 }
 
-func (l *layouter) Unnotify(id comm.Id) {
+func (l *textViewLayouter) Unnotify(id comm.Id) {
 	// no-op
 }

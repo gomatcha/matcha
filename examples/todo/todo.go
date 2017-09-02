@@ -202,7 +202,7 @@ func (v *TodoView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(l.Right().Add(-15))
 	})
 
-	titleView := textview.New()
+	titleView := view.NewTextView()
 	titleView.String = v.Todo.Title
 	titleView.Style = nil //...
 	l.Add(titleView, func(s *constraint.Solver) {
