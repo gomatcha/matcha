@@ -37,7 +37,7 @@ func (v *TableView) Build(ctx *view.Context) view.Model {
 		childLayouter.Add(childView, nil)
 	}
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.PaintStyle = &paint.Style{BackgroundColor: colornames.Cyan}
 	scrollView.ContentPainter = &paint.Style{BackgroundColor: colornames.White}
 	scrollView.ContentLayouter = childLayouter

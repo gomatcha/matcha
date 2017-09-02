@@ -127,7 +127,7 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 		}
 	}
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
@@ -285,7 +285,7 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 	spacer := NewSpacer()
 	l.Add(spacer, nil)
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 

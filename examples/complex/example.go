@@ -193,7 +193,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		childLayouter.Add(childView, nil)
 	}
 
-	chl10 := scrollview.New()
+	chl10 := view.NewScrollView()
 	chl10.PaintStyle = &paint.Style{BackgroundColor: colornames.Cyan}
 	chl10.ContentPainter = &paint.Style{BackgroundColor: colornames.White}
 	chl10.ContentLayouter = childLayouter

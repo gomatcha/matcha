@@ -79,7 +79,7 @@ func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 		}
 	}
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.ContentLayouter = l
 	scrollView.ContentChildren = l.Views()
 

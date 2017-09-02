@@ -76,7 +76,7 @@ func (v *AppView) Build(ctx *view.Context) view.Model {
 	}
 	l.Add(addView, nil)
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 	return view.Model{

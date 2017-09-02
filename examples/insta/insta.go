@@ -51,7 +51,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		l.Add(postView, nil)
 	}
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
