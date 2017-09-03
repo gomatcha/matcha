@@ -45,10 +45,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 	style.SetUnderlineStyle(text.UnderlineStyleDouble)
 	style.SetUnderlineColor(colornames.Green)
 	style.SetTextColor(colornames.Yellow)
-	style.SetFont(text.Font{
-		Name: "HelveticaNeue-Bold",
-		Size: 20,
-	})
+	style.SetFont(text.FontWithName("HelveticaNeue-Bold", 20))
 
 	style2 := &text.Style{}
 	style2.SetAlignment(text.AlignmentLeft)
@@ -57,10 +54,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 	style2.SetUnderlineStyle(text.UnderlineStyleDouble)
 	style2.SetUnderlineColor(colornames.Green)
 	style2.SetTextColor(colornames.Red)
-	style2.SetFont(text.Font{
-		Name: "HelveticaNeue",
-		Size: 10,
-	})
+	style2.SetFont(text.FontWithName("HelveticaNeue", 10))
 
 	st := text.NewStyledText("Subtitle", style)
 	st.Set(style2, 0, 3)
@@ -81,10 +75,7 @@ func (v *TextView) Build(ctx *view.Context) view.Model {
 	reverse.Style.SetUnderlineStyle(text.UnderlineStyleDouble)
 	reverse.Style.SetUnderlineColor(colornames.Green)
 	reverse.Style.SetTextColor(colornames.Black)
-	reverse.Style.SetFont(text.Font{
-		Name: "HelveticaNeue-Bold",
-		Size: 20,
-	})
+	reverse.Style.SetFont(text.FontWithName("HelveticaNeue-Bold", 20))
 	reverse.String = Reverse(v.text.String())
 	reverse.PaintStyle = &paint.Style{BackgroundColor: colornames.Green}
 	l.Add(reverse, func(s *constraint.Solver) {

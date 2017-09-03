@@ -1,12 +1,10 @@
 * Get native android views working
-* Android Text Input, placeholder, number of lines. font
+* Android Text Input, number of lines. font
 * Remove external repository example
 * Move matcha/view/Root into matcha/Root?
 * Should keyboard package be moved into view?
-
+* Should statusbar/activity indicator, be moved into ios/android
 * Android image resource scale??
-* FontWithName? or open struct? What happens when we can't find a font?
-* Should font be a pointer?
 
 High:
 * Merge all view packages into view/iosview/androidview? androidview.NewStackView(). android.NewStackView(). view.NewTextInput(). view.

@@ -74,10 +74,7 @@ func (v *TableCell) Build(ctx *view.Context) view.Model {
 
 	textView := view.NewTextView()
 	textView.String = v.String
-	textView.Style.SetFont(text.Font{
-		Name: "HelveticaNeue",
-		Size: 20,
-	})
+	textView.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
 	l.Add(textView, func(s *constraint.Solver) {
 		s.LeftEqual(l.Left().Add(10))
 		s.RightEqual(l.Right().Add(-10))

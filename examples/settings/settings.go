@@ -304,10 +304,7 @@ func (v *SpacerHeader) Build(ctx *view.Context) view.Model {
 
 	titleView := view.NewTextView()
 	titleView.String = strings.ToTitle(v.Title)
-	titleView.Style.SetFont(text.Font{
-		Name: "HelveticaNeue",
-		Size: 13,
-	})
+	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 13))
 	titleView.Style.SetTextColor(spacerTitleColor)
 	// titleView.Painter = &paint.Style{BackgroundColor: colornames.Red}
 
@@ -340,10 +337,7 @@ func (v *SpacerDescription) Build(ctx *view.Context) view.Model {
 
 	titleView := view.NewTextView()
 	titleView.String = v.Description
-	titleView.Style.SetFont(text.Font{
-		Name: "HelveticaNeue",
-		Size: 13,
-	})
+	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 13))
 	titleView.Style.SetTextColor(spacerTitleColor)
 
 	titleGuide := l.Add(titleView, func(s *constraint.Solver) {
@@ -433,10 +427,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 		fmt.Println("subtitle", v.Subtitle)
 		subtitleView := view.NewTextView()
 		subtitleView.String = v.Subtitle
-		subtitleView.Style.SetFont(text.Font{
-			Name: "HelveticaNeue",
-			Size: 14,
-		})
+		subtitleView.Style.SetFont(text.FontWithName("HelveticaNeue", 14))
 		subtitleView.Style.SetTextColor(subtitleColor)
 
 		subtitleGuide := l.Add(subtitleView, func(s *constraint.Solver) {
@@ -449,10 +440,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	titleView := view.NewTextView()
 	titleView.String = v.Title
-	titleView.Style.SetFont(text.Font{
-		Name: "HelveticaNeue",
-		Size: 14,
-	})
+	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 14))
 	titleView.Style.SetTextColor(titleColor)
 
 	titleGuide := l.Add(titleView, func(s *constraint.Solver) {
