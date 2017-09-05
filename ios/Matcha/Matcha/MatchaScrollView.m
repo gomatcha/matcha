@@ -22,9 +22,9 @@
 - (void)setNode:(MatchaBuildNode *)value {
     _node = value;
     
-    if (self.subviews.count > 0) {
-        self.contentSize = ((UIView *)self.subviews[0]).frame.size;
-    }
+//    if (self.subviews.count > 0) {
+//        self.contentSize = ((UIView *)self.subviews[0]).frame.size;
+//    }
     
     GPBAny *state = value.nativeViewState;
     NSError *error = nil;

@@ -246,6 +246,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
             self.materializedView.frame = f;
             scrollView.matchaContentOffset = origin;
             scrollView.contentOffset = origin;
+            scrollView.contentSize = f.size;
             
         } else if (self.parent.viewController == nil) { // let view controllers do their own layout
             if (!CGRectEqualToRect(f, self.frame)) {

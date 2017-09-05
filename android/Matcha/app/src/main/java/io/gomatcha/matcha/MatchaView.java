@@ -3,8 +3,6 @@ package io.gomatcha.matcha;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 import java.lang.ref.WeakReference;
@@ -93,6 +91,7 @@ public class MatchaView extends RelativeLayout {
             Class.forName("io.gomatcha.matcha.MatchaSwitchView");
             Class.forName("io.gomatcha.matcha.MatchaButton");
             Class.forName("io.gomatcha.matcha.MatchaSlider");
+            Class.forName("io.gomatcha.matcha.MatchaScrollView");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

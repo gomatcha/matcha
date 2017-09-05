@@ -14,9 +14,14 @@ public class MatchaChildView extends RelativeLayout {
     public MatchaChildView(Context context, MatchaViewNode node) {
         super(context);
         viewNode = node;
+        this.setClipChildren(false);
     }
 
     public void setNode(PbView.BuildNode buildNode) {
         this.buildNode = buildNode;
+    }
+
+    public RelativeLayout getLayout() {
+        return this;
     }
 }

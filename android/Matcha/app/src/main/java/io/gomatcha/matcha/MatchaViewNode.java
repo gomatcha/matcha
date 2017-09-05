@@ -39,8 +39,8 @@ public class MatchaViewNode extends Object {
         // Create view
         if (this.view == null) {
             this.view = MatchaView.createView(buildNode.getBridgeName(), rootView.getContext(), this);
-            this.view.setClipChildren(false);
         }
+        RelativeLayout layout = this.view.getLayout();
 
         // Build children
         Map<Long, MatchaViewNode> children = new HashMap<Long, MatchaViewNode>();
@@ -87,11 +87,11 @@ public class MatchaViewNode extends Object {
                 params.topMargin = 100;
                 
                 MatchaViewNode childNode = children.get(i);
-                this.view.addView(childNode.view, params);
+                layout.addView(childNode.view, params);
             }
             for (long i : removedKeys) {
                 MatchaViewNode childNode = children.get(i);
-                this.view.removeView(childNode.view);
+                layout.removeView(childNode.view);
             }
 
             // Update gesture recognizers... TODO(KD):
@@ -103,7 +103,7 @@ public class MatchaViewNode extends Object {
 
             for (int i = 0; i < layoutPaintNode.getChildOrderCount(); i++) {
                 MatchaViewNode childNode = children.get(layoutPaintNode.getChildOrder(i));
-                this.view.bringChildToFront(childNode.view); // TODO(KD): Can be done more performantly.
+                layout.bringChildToFront(childNode.view); // TODO(KD): Can be done more performantly.
             }
 
             double maxX = layoutPaintNode.getMaxx() * this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
@@ -111,7 +111,9 @@ public class MatchaViewNode extends Object {
             double minX = layoutPaintNode.getMinx() * this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
             double minY = layoutPaintNode.getMiny() * this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
 
-            if (this.parent != null) {
+            if (this.parent == null) {
+            // } else if (this.parent.view.getClass().isInstance(MatchaScrollView.class)) {
+            } else {
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)this.view.getLayoutParams();
                 if (params == null) {
                     params = new RelativeLayout.LayoutParams(0, 0);

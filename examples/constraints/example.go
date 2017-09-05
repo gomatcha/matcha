@@ -35,8 +35,7 @@ func (v *ConstraintsView) Build(ctx *view.Context) view.Model {
 		s.Height(100)
 	})
 
-	chl2 := view.NewBasicView()
-	chl2.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
+	chl2 := NewConstraintsChildView()
 	g2 := l.Add(chl2, func(s *constraint.Solver) {
 		// s.TopEqual(g1.Bottom())
 		// s.LeftEqual(g1.Left())
@@ -66,5 +65,30 @@ func (v *ConstraintsView) Build(ctx *view.Context) view.Model {
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.Green},
+	}
+}
+
+type ConstraintsChildView struct {
+	view.Embed
+}
+
+func NewConstraintsChildView() *ConstraintsChildView {
+	return &ConstraintsChildView{}
+}
+
+func (v *ConstraintsChildView) Build(ctx *view.Context) view.Model {
+	l := &constraint.Layouter{}
+
+	chl1 := view.NewBasicView()
+	chl1.Painter = &paint.Style{BackgroundColor: colornames.Red}
+	_ = l.Add(chl1, func(s *constraint.Solver) {
+		s.Width(50)
+		s.Height(50)
+	})
+
+	return view.Model{
+		Children: l.Views(),
+		Layouter: l,
+		Painter:  &paint.Style{BackgroundColor: colornames.Yellow},
 	}
 }

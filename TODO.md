@@ -5,9 +5,10 @@
 * Should keyboard package be moved into view?
 * Should statusbar/activity indicator, be moved into ios/android
 * Android image resource scale??
+* Android scroll view.
+* ios unknown view.
 
 High:
-* Merge all view packages into view/iosview/androidview? androidview.NewStackView(). android.NewStackView(). view.NewTextInput(). view.
 * Android.
 * Delay any ui events while viewcontroller is updating.
 * Rebuild Instagram.
