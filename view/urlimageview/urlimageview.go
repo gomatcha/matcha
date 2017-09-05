@@ -3,11 +3,9 @@ package urlimageview
 
 import (
 	"context"
-	"errors"
 	"image"
 	"image/color"
 	"net/http"
-	"os"
 
 	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
@@ -47,8 +45,6 @@ type View struct {
 	ImageTint  color.Color
 	stage      view.Stage
 	// Image request
-	url        string
-	path       string
 	cancelFunc context.CancelFunc
 	image      image.Image
 	err        error
@@ -79,6 +75,15 @@ func (v *View) Build(ctx *view.Context) view.Model {
 	}
 }
 
+func (v *View) Update(v2 view.View) {
+	if v2.(*View).URL != v.URL {
+		v.cancel()
+		v.image = nil
+		v.err = nil
+	}
+	view.CopyFields(v, v2)
+}
+
 // Lifecycle implements view.View.
 func (v *View) Lifecycle(from, to view.Stage) {
 	v.stage = to
@@ -91,31 +96,28 @@ func (v *View) reload() {
 		return
 	}
 
-	if v.URL != v.url || v.Path != v.path || v.cancelFunc == nil {
-		v.cancel()
-
-		c, cancelFunc := context.WithCancel(context.Background())
-		v.url = v.URL
-		v.path = v.Path
-		v.cancelFunc = cancelFunc
-		v.image = nil
-		v.err = nil
-		go func(url, path string) {
-			image, err := loadImageURL(url, path)
-
-			matcha.MainLocker.Lock()
-			defer matcha.MainLocker.Unlock()
-
-			select {
-			case <-c.Done():
-			default:
-				v.cancelFunc()
-				v.image = image
-				v.err = err
-				v.Signal()
-			}
-		}(v.url, v.path)
+	if v.URL == "" || v.cancelFunc != nil || v.image != nil || v.err != nil {
+		return
 	}
+
+	c, cancelFunc := context.WithCancel(context.Background())
+	v.cancelFunc = cancelFunc
+	go func(url string) {
+		image, err := loadImageURL(url)
+
+		matcha.MainLocker.Lock()
+		defer matcha.MainLocker.Unlock()
+
+		select {
+		case <-c.Done():
+		default:
+			v.cancelFunc()
+			v.cancelFunc = nil
+			v.image = image
+			v.err = err
+			v.Signal()
+		}
+	}(v.URL)
 }
 
 func (v *View) cancel() {
@@ -125,23 +127,12 @@ func (v *View) cancel() {
 	}
 }
 
-func loadImageURL(url, path string) (image.Image, error) {
-	if len(url) > 0 {
-		resp, err := http.Get(url)
-		if err != nil {
-			return nil, err
-		}
-		defer resp.Body.Close()
-		img, _, err := image.Decode(resp.Body)
-		return img, err
-	} else if len(path) > 0 {
-		file, err := os.Open(path)
-		if err != nil {
-			return nil, err
-		}
-		defer file.Close()
-		img, _, err := image.Decode(file)
-		return img, err
+func loadImageURL(url string) (image.Image, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
 	}
-	return nil, errors.New("URLImageView.loadImageURL: No url or path")
+	defer resp.Body.Close()
+	img, _, err := image.Decode(resp.Body)
+	return img, err
 }

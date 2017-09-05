@@ -476,19 +476,12 @@ func (n *node) build() {
 				prevView := prevNode.view
 				newView := i
 
+				// Copy all public fields from new to old, if embed.Update is called.
 				if prevView != newView {
-					// iType := reflect.TypeOf(i).Elem()
-					// iName := iType.PkgPath() + "." + iType.Name()
-
-					// Copy all public fields from new to old that aren't Embed
-					va := reflect.ValueOf(prevView).Elem()
-					vb := reflect.ValueOf(newView).Elem()
-					for i := 0; i < va.NumField(); i++ {
-						fa := va.Field(i)
-						if fa.CanSet() && va.Type().Field(i).Name != "Embed" {
-							fa.Set(vb.Field(i))
-							// fmt.Println("set", va.Type().Field(i).Name)
-						}
+					embedUpdate = false
+					prevView.Update(newView)
+					if embedUpdate {
+						CopyFields(prevView, newView)
 					}
 				}
 

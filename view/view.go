@@ -3,6 +3,7 @@
 package view
 
 import (
+	"reflect"
 	"sync"
 
 	"github.com/gogo/protobuf/proto"
@@ -17,12 +18,15 @@ type View interface {
 	Build(*Context) Model
 	Lifecycle(from, to Stage)
 	ViewKey() interface{}
+	Update(View)
 	comm.Notifier
 }
 
 type Option interface {
 	OptionKey() string
 }
+
+var embedUpdate bool
 
 // Embed is a convenience struct that provides a default implementation of View. It also wraps a comm.Relay.
 type Embed struct {
@@ -55,6 +59,11 @@ func (e *Embed) Lifecycle(from, to Stage) {
 	// no-op
 }
 
+// Update is an empty implementation of View's Update method.
+func (e *Embed) Update(v View) {
+	embedUpdate = true
+}
+
 // Notify calls Notify(id) on the underlying comm.Relay.
 func (e *Embed) Notify(f func()) comm.Id {
 	return e.relay.Notify(f)
@@ -78,6 +87,18 @@ func (e *Embed) Unsubscribe(n comm.Notifier) {
 // Update calls Signal() on the underlying comm.Relay.
 func (e *Embed) Signal() {
 	e.relay.Signal()
+}
+
+// Copy all public fields from src to dst, that aren't 'Embed'.
+func CopyFields(dst, src View) {
+	va := reflect.ValueOf(dst).Elem()
+	vb := reflect.ValueOf(src).Elem()
+	for i := 0; i < va.NumField(); i++ {
+		fa := va.Field(i)
+		if fa.CanSet() && va.Type().Field(i).Name != "Embed" {
+			fa.Set(vb.Field(i))
+		}
+	}
 }
 
 type Stage int
