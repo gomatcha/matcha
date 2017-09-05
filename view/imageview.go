@@ -1,11 +1,15 @@
 package view
 
 import (
+	"context"
+	"fmt"
 	"image"
 	"image/color"
 	_ "image/jpeg"
 	_ "image/png"
+	"net/http"
 
+	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/app"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
@@ -39,7 +43,12 @@ type ImageView struct {
 	ResizeMode ImageResizeMode
 	ImageTint  color.Color
 	PaintStyle *paint.Style
-	image      image.Image
+	stage      Stage
+
+	URL        string
+	cancelFunc context.CancelFunc
+	urlImage   image.Image
+	err        error
 	pbImage    *pb.ImageOrResource
 }
 
@@ -50,20 +59,24 @@ func NewImageView() *ImageView {
 
 // Build implements view.View.
 func (v *ImageView) Build(ctx *Context) Model {
-	if v.Image != v.image {
-		v.image = v.Image
-		v.pbImage = app.ImageMarshalProtobuf(v.image)
+	if v.pbImage == nil {
+		if v.Image != nil {
+			v.pbImage = app.ImageMarshalProtobuf(v.Image)
+		} else if v.urlImage != nil {
+			v.pbImage = app.ImageMarshalProtobuf(v.urlImage)
+		}
 	}
+	fmt.Println("build", v.pbImage != nil, v.urlImage != nil)
 
 	// Default to Center if we don't have an image
 	bounds := image.Rect(0, 0, 0, 0)
 	resizeMode := ImageResizeModeCenter
 	scale := 1.0
-	if v.image != nil {
-		bounds = v.image.Bounds()
+	if v.Image != nil {
+		bounds = v.Image.Bounds()
 		resizeMode = v.ResizeMode
 
-		if res, ok := v.image.(*app.ImageResource); ok {
+		if res, ok := v.Image.(*app.ImageResource); ok {
 			scale = res.Scale()
 		}
 	}
@@ -82,6 +95,62 @@ func (v *ImageView) Build(ctx *Context) Model {
 			ResizeMode: v.ResizeMode.MarshalProtobuf(),
 			Tint:       pb.ColorEncode(v.ImageTint),
 		},
+	}
+}
+
+// Lifecycle implements view.View.
+func (v *ImageView) Lifecycle(from, to Stage) {
+	v.stage = to
+	v.reload()
+}
+
+func (v *ImageView) Update(v2 View) {
+	if v2.(*ImageView).Image != v.Image {
+		v.pbImage = nil
+	}
+	if v2.(*ImageView).URL != v.URL {
+		v.cancel()
+		v.urlImage = nil
+		v.err = nil
+	}
+	CopyFields(v, v2)
+}
+
+func (v *ImageView) reload() {
+	if v.stage < StageMounted {
+		v.cancel()
+		return
+	}
+	if v.URL == "" || v.Image != nil || v.cancelFunc != nil || v.urlImage != nil || v.err != nil {
+		return
+	}
+	fmt.Println("load")
+
+	c, cancelFunc := context.WithCancel(context.Background())
+	v.cancelFunc = cancelFunc
+	go func(url string) {
+		image, err := loadImageURL(url)
+
+		matcha.MainLocker.Lock()
+		defer matcha.MainLocker.Unlock()
+
+		select {
+		case <-c.Done():
+		default:
+			v.cancelFunc()
+			v.cancelFunc = nil
+			v.urlImage = image
+			v.err = err
+			v.Signal()
+			fmt.Println("load complete", v.urlImage != nil, v.err)
+		}
+	}(v.URL)
+}
+
+func (v *ImageView) cancel() {
+	if v.cancelFunc != nil {
+		v.cancelFunc()
+		v.cancelFunc = nil
 	}
 }
 
@@ -118,4 +187,14 @@ func (l *imageViewLayouter) Notify(f func()) comm.Id {
 
 func (l *imageViewLayouter) Unnotify(id comm.Id) {
 	// no-op
+}
+
+func loadImageURL(url string) (image.Image, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	img, _, err := image.Decode(resp.Body)
+	return img, err
 }

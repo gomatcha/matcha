@@ -11,7 +11,6 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/urlimageview"
 )
 
 func init() {
@@ -31,7 +30,7 @@ func NewImageView() *ImageView {
 func (v *ImageView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl := urlimageview.New()
+	chl := view.NewImageView()
 	chl.URL = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
 	chl.ResizeMode = view.ImageResizeModeFit
 	chl.PaintStyle = &paint.Style{BackgroundColor: colornames.Pink}
