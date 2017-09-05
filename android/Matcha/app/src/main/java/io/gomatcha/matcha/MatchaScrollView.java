@@ -16,7 +16,6 @@ import io.gomatcha.matcha.pb.view.scrollview.PbScrollView;
 public class MatchaScrollView extends MatchaChildView {
     ScrollView view;
     RelativeLayout childView;
-    boolean scrollable;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/scrollview", new MatchaView.ViewFactory() {
@@ -34,13 +33,7 @@ public class MatchaScrollView extends MatchaChildView {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view = new ScrollView(context);
         view.setFillViewport(true);
-        /*
-        view.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return scrollable;
-            }
-        }); */
+
         addView(view, params);
 
         childView = new RelativeLayout(context);
@@ -51,13 +44,20 @@ public class MatchaScrollView extends MatchaChildView {
     public void setNode(PbView.BuildNode buildNode) {
         super.setNode(buildNode);
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                Log.v("HELLO", "CLIPCHILDREN" + view.getClipChildren());
-            }
             PbScrollView.View proto = buildNode.getBridgeValue().unpack(PbScrollView.View.class);
             view.setVerticalScrollBarEnabled(proto.getShowsVerticalScrollIndicator());
             view.setHorizontalScrollBarEnabled(proto.getShowsHorizontalScrollIndicator());
-            // scrollable = proto.getScrollEnabled();
+            
+            if (!proto.getScrollEnabled()) {
+                view.setOnTouchListener(new OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        return false;
+                    }
+                });
+            } else {
+                view.setOnTouchListener(null);
+            }
         } catch (InvalidProtocolBufferException e) {
         }
     }
