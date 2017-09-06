@@ -76,7 +76,7 @@ func (r *Root) start() {
 			return
 		}
 
-		fmt.Println(r.root.node.debugString())
+		// fmt.Println(r.root.node.debugString())
 		if runtime.GOOS == "android" {
 			bridge.Bridge("").Call("updateViewWithProtobuf", bridge.Int64(id), bridge.Bytes(pb))
 		} else if runtime.GOOS == "darwin" {
@@ -454,13 +454,10 @@ func (n *node) build() {
 			var prevNode *node
 
 			iKey := i.ViewKey()
-			iType := reflect.TypeOf(i).Elem()
-			iName := iType.Name() + iType.PkgPath()
+			iName := internal.ReflectName(i)
 			for jIdx, j := range prevChildren {
-				jType := reflect.TypeOf(j.view).Elem()
-				jName := jType.Name() + jType.PkgPath()
+				jName := internal.ReflectName(j)
 				if jKey := j.view.ViewKey(); iKey == jKey && iName == jName {
-					// fmt.Println("found")
 					prevNode = j
 
 					// delete from prevchildren

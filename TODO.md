@@ -9,8 +9,8 @@
 * Android stackview
 
 High:
-* Android tocuh recognizers
-* Android.
+* Android better gesture recognizers
+* Pan gesture
 * Delay any ui events while viewcontroller is updating.
 * Rebuild Instagram.
 * Modal presentation.

@@ -8,6 +8,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 )
@@ -145,6 +146,17 @@ type painterView struct {
 	painter paint.Painter
 }
 
+func (v *painterView) ViewKey() interface{} {
+	return struct {
+		A interface{}
+		B interface{}
+	}{A: v.View.ViewKey(), B: internal.ReflectName(v.View)}
+}
+
+func (v *painterView) Update(v2 View) {
+	v.View.Update(v2.(*painterView).View)
+}
+
 func (v *painterView) Build(ctx *Context) Model {
 	m := v.View.Build(ctx)
 	m.Painter = v.painter
@@ -159,6 +171,17 @@ func WithOptions(v View, opts []Option) View {
 type optionsView struct {
 	View
 	options []Option
+}
+
+func (v *optionsView) ViewKey() interface{} {
+	return struct {
+		A interface{}
+		B interface{}
+	}{A: v.View.ViewKey(), B: internal.ReflectName(v.View)}
+}
+
+func (v *optionsView) Update(v2 View) {
+	v.View.Update(v2.(*optionsView).View)
 }
 
 func (v *optionsView) Build(ctx *Context) Model {
