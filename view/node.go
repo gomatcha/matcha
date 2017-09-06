@@ -134,25 +134,14 @@ func (r *Root) SetSize(width, height float64) {
 	r.root.addFlag(r.root.node.id, layoutFlag)
 }
 
-// Context specifies the supporting context for building a View.
-type Context struct {
-	valid     bool
-	node      *node
-	skipBuild map[int]struct{}
-}
-
 func newId() Id {
 	return Id(atomic.AddInt64(&maxId, 1))
 }
 
-// SkipBuild marks the child ids as not needing to be rebuilt.
-func (ctx *Context) SkipBuild(ids ...int) {
-	if ctx.skipBuild == nil {
-		ctx.skipBuild = map[int]struct{}{}
-	}
-	for _, i := range ids {
-		ctx.skipBuild[i] = struct{}{}
-	}
+// Context specifies the supporting context for building a View.
+type Context struct {
+	valid bool
+	node  *node
 }
 
 // Path returns the path of Ids from the root to the view.
@@ -448,7 +437,7 @@ func (n *node) build() {
 		copy(prevChildren, n.children)
 
 		children := []*node{}
-		for idx, i := range viewModel.Children {
+		for _, i := range viewModel.Children {
 			// Find the corresponding previous node.
 			var prevNode *node
 
@@ -487,9 +476,7 @@ func (n *node) build() {
 				children = append(children, prevNode)
 
 				// Mark as needing rebuild
-				if _, ok := ctx.skipBuild[idx]; !ok {
-					n.root.updateFlags[prevNode.id] |= buildFlag
-				}
+				n.root.updateFlags[prevNode.id] |= buildFlag
 			} else {
 				// If view was added for the first time...
 				newView := i
