@@ -57,11 +57,6 @@ UIView<MatchaChildView> *MatchaViewWithNode(MatchaBuildNode *node, MatchaViewNod
         child = block(viewNode);
     }
     [sLock unlock];
-
-    if (child == nil) {
-        child = [[MatchaUnknownView alloc] initWithViewNode:viewNode];
-    }
-    
     return child;
 }
 
@@ -98,13 +93,13 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     if (pbBuildNode != nil) {
         buildNode = [[MatchaBuildNode alloc] initWithProtobuf:pbBuildNode];
     }
-//    NSAssert(self.buildNode == nil || [self.buildNode.nativeViewName isEqual:buildNode.nativeViewName], @"Node with different name");
     
     // Create view
     if (self.view == nil && self.viewController == nil) {
         self.view = MatchaViewWithNode(buildNode, self);
         self.viewController = MatchaViewControllerWithNode(buildNode, self);
         if (self.view == nil && self.viewController == nil) {
+            self.view = [[MatchaUnknownView alloc] initWithViewNode:self];
             NSLog(@"Cannot find corresponding view or view controller for node: %@", buildNode.nativeViewName);
         }
         self.materializedView.autoresizingMask = UIViewAutoresizingNone;

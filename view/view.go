@@ -164,7 +164,7 @@ func (v *painterView) Build(ctx *Context) Model {
 }
 
 // WithOptions wraps the view v, and adds the given options to its Model.Options.
-func WithOptions(v View, opts []Option) View {
+func WithOptions(v View, opts ...Option) View {
 	return &optionsView{View: v, options: opts}
 }
 

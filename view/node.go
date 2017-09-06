@@ -76,7 +76,7 @@ func (r *Root) start() {
 			return
 		}
 
-		fmt.Println(r.root.node.debugString())
+		// fmt.Println(r.root.node.debugString())g
 		if runtime.GOOS == "android" {
 			bridge.Bridge("").Call("updateViewWithProtobuf", bridge.Int64(id), bridge.Bytes(pb))
 		} else if runtime.GOOS == "darwin" {
@@ -446,7 +446,6 @@ func (n *node) build() {
 		//
 		prevChildren := make([]*node, len(n.children))
 		copy(prevChildren, n.children)
-		// fmt.Println("keys", n.root.keys, n.root.ids)
 
 		children := []*node{}
 		for idx, i := range viewModel.Children {

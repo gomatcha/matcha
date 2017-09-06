@@ -177,18 +177,10 @@ type TabButton struct {
 	Badge        string
 }
 
-func WithTabButton(s view.View, button *TabButton) view.View {
-	return &tabButtonWrapper{
-		View:   s,
-		button: button,
-	}
+func (t *TabButton) OptionKey() string {
+	return "gomatcha.io/view/ios TabButton"
 }
 
-type tabButtonWrapper struct {
-	view.View
-	button *TabButton
-}
-
-func (v *tabButtonWrapper) TabButton(*view.Context) *TabButton {
-	return v.button
+func WithTabButton(v view.View, button *TabButton) view.View {
+	return view.WithOptions(v, button)
 }
