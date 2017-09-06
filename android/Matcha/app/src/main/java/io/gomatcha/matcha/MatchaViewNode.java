@@ -86,15 +86,11 @@ public class MatchaViewNode extends Object {
 
             // Add/remove subviews
             for (long i : addedKeys) {
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(300, 300);
-                params.leftMargin = 100;
-                params.topMargin = 100;
-                
                 MatchaViewNode childNode = children.get(i);
-                layout.addView(childNode.view, params);
+                layout.addView(childNode.view);
             }
             for (long i : removedKeys) {
-                MatchaViewNode childNode = children.get(i);
+                MatchaViewNode childNode = this.children.get(i);
                 layout.removeView(childNode.view);
             }
 
