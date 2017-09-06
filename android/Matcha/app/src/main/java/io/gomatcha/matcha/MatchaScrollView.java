@@ -47,7 +47,7 @@ public class MatchaScrollView extends MatchaChildView {
             PbScrollView.View proto = buildNode.getBridgeValue().unpack(PbScrollView.View.class);
             view.setVerticalScrollBarEnabled(proto.getShowsVerticalScrollIndicator());
             view.setHorizontalScrollBarEnabled(proto.getShowsHorizontalScrollIndicator());
-            
+
             if (!proto.getScrollEnabled()) {
                 view.setOnTouchListener(new OnTouchListener() {
                     @Override

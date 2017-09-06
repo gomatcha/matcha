@@ -6,6 +6,7 @@
 #import "MatchaSwitchView.h"
 #import "MatchaButtonGestureRecognizer.h"
 #import "MatchaScrollView.h"
+#import "MatchaUnknownView.h"
 
 static NSLock *sLock = nil;
 static NSMutableDictionary *sViewDict = nil;
@@ -57,6 +58,10 @@ UIView<MatchaChildView> *MatchaViewWithNode(MatchaBuildNode *node, MatchaViewNod
     }
     [sLock unlock];
 
+    if (child == nil) {
+        child = [[MatchaUnknownView alloc] initWithViewNode:viewNode];
+    }
+    
     return child;
 }
 
