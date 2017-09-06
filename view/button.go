@@ -113,7 +113,7 @@ func (v *ImageButton) Build(ctx *Context) Model {
 		painter = v.PaintStyle
 	}
 
-	t := &touch.ButtonRecognizer{
+	t := &touch.ButtonGesture{
 		OnTouch: func(e *touch.ButtonEvent) {
 			if e.Kind == touch.EventKindRecognized && v.OnPress != nil {
 				v.OnPress()
@@ -125,7 +125,7 @@ func (v *ImageButton) Build(ctx *Context) Model {
 		Layouter: &imageButtonLayouter{},
 		Painter:  painter,
 		Options: []Option{
-			touch.RecognizerList{t},
+			touch.GestureList{t},
 		},
 	}
 }

@@ -452,7 +452,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	var options []view.Option
 	if v.OnTap != nil {
-		tap := &touch.ButtonRecognizer{
+		tap := &touch.ButtonGesture{
 			OnTouch: func(e *touch.ButtonEvent) {
 				switch e.Kind {
 				case touch.EventKindPossible:
@@ -466,7 +466,7 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 				v.Signal()
 			},
 		}
-		options = append(options, touch.RecognizerList{tap})
+		options = append(options, touch.GestureList{tap})
 	}
 
 	var color color.Color

@@ -18,7 +18,6 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
-	"gomatcha.io/matcha/view/urlimageview"
 )
 
 func init() {
@@ -145,7 +144,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 	})
 
 	if v.counter%2 == 0 {
-		chl9 := urlimageview.New()
+		chl9 := view.NewImageView()
 		chl9.URL = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
 		chl9.ResizeMode = view.ImageResizeModeFit
 		pChl9 := view.WithPainter(chl9, &paint.Style{BackgroundColor: colornames.Cyan})

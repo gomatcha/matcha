@@ -108,7 +108,7 @@ func NewPressChildView() *PressChildView {
 }
 
 func (v *PressChildView) Build(ctx *view.Context) view.Model {
-	tap := &touch.PressRecognizer{
+	tap := &touch.PressGesture{
 		MinDuration: time.Second / 2,
 		OnTouch: func(e *touch.PressEvent) {
 			v.OnPress()
@@ -118,7 +118,7 @@ func (v *PressChildView) Build(ctx *view.Context) view.Model {
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
-			touch.RecognizerList{tap},
+			touch.GestureList{tap},
 		},
 		// Values: map[string]interface{}{
 		// 	touch.Key: []touch.Recognizer{tap},
@@ -144,7 +144,7 @@ func NewTouchChildView() *TouchChildView {
 }
 
 func (v *TouchChildView) Build(ctx *view.Context) view.Model {
-	tap := &touch.TapRecognizer{
+	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {
 			v.OnTouch()
@@ -154,7 +154,7 @@ func (v *TouchChildView) Build(ctx *view.Context) view.Model {
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
-			touch.RecognizerList{tap},
+			touch.GestureList{tap},
 		},
 	}
 }
@@ -169,7 +169,7 @@ func NewButtonChildView() *ButtonChildView {
 }
 
 func (v *ButtonChildView) Build(ctx *view.Context) view.Model {
-	button := &touch.ButtonRecognizer{
+	button := &touch.ButtonGesture{
 		OnTouch: func(e *touch.ButtonEvent) {
 			fmt.Println("On Touch:s", e.Kind)
 		},
@@ -178,7 +178,7 @@ func (v *ButtonChildView) Build(ctx *view.Context) view.Model {
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
-			touch.RecognizerList{button},
+			touch.GestureList{button},
 		},
 	}
 }

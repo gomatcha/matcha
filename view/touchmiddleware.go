@@ -25,16 +25,16 @@ func (r *touchMiddleware) MarshalProtobuf() proto.Message {
 func (r *touchMiddleware) Build(ctx *Context, next *Model) {
 	path := idSliceToIntSlice(ctx.Path())
 	node := r.radix.At(path)
-	var prevIds map[int64]touch.Recognizer
+	var prevIds map[int64]touch.Gesture
 	if node != nil {
-		prevIds, _ = node.Value.(map[int64]touch.Recognizer)
+		prevIds, _ = node.Value.(map[int64]touch.Gesture)
 	}
 
-	ids := map[int64]touch.Recognizer{}
+	ids := map[int64]touch.Gesture{}
 
-	var rs touch.RecognizerList
+	var rs touch.GestureList
 	for _, i := range next.Options {
-		rs, _ = i.(touch.RecognizerList)
+		rs, _ = i.(touch.GestureList)
 		if rs != nil {
 			break
 		}

@@ -1,10 +1,10 @@
 /*
-Package constraint implements touch recognizers.
+Package touch implements gesture recognizers.
 
 Create the touch recognizer in the Build function.
 
  func (v *MyView) Build(ctx *view.Context) view.Model {
- 	tap := &touch.TapRecognizer{
+ 	tap := &touch.TapGesture{
  		Count: 1,
  		OnTouch: func(e *touch.TapEvent) {
  			// Respond to touch events. This callback occurs on main thread.
@@ -44,13 +44,13 @@ func newFuncId() int64 {
 	return atomic.AddInt64(&maxFuncId, 1)
 }
 
-type RecognizerList []Recognizer
+type GestureList []Gesture
 
-func (r RecognizerList) OptionKey() string {
+func (r GestureList) OptionKey() string {
 	return "gomatcha.io/matcha/touch"
 }
 
-type Recognizer interface {
+type Gesture interface {
 	Build() Model
 	TouchKey() int64
 }
@@ -82,7 +82,7 @@ const (
 	EventKindRecognized
 )
 
-// TapEvent is emitted by TapRecognizer, representing its current state.
+// TapEvent is emitted by TapGesture, representing its current state.
 type TapEvent struct {
 	// Kind      EventKind // TODO(KD):
 
@@ -99,17 +99,17 @@ func (e *TapEvent) unmarshalProtobuf(ev *pbtouch.TapEvent) error {
 }
 
 // PressRecognizer is a discrete recognizer that detects a number of taps.
-type TapRecognizer struct {
+type TapGesture struct {
 	Key     int64
 	Count   int
 	OnTouch func(*TapEvent)
 }
 
-func (r *TapRecognizer) TouchKey() int64 {
+func (r *TapGesture) TouchKey() int64 {
 	return r.Key
 }
 
-func (r *TapRecognizer) Build() Model {
+func (r *TapGesture) Build() Model {
 	funcId := newFuncId()
 	f := func(data []byte) {
 		pbevent := &pbtouch.TapEvent{}
@@ -166,18 +166,18 @@ func (e *PressEvent) unmarshalProtobuf(ev *pbtouch.PressEvent) error {
 	return nil
 }
 
-// PressRecognizer is a continuous recognizer that detects single presses with a given duration.
-type PressRecognizer struct {
+// PressGesture is a continuous recognizer that detects single presses with a given duration.
+type PressGesture struct {
 	Key         int64
 	MinDuration time.Duration
 	OnTouch     func(e *PressEvent)
 }
 
-func (r *PressRecognizer) TouchKey() int64 {
+func (r *PressGesture) TouchKey() int64 {
 	return r.Key
 }
 
-func (r *PressRecognizer) Build() Model {
+func (r *PressGesture) Build() Model {
 	funcId := newFuncId()
 	f := func(data []byte) {
 		event := &PressEvent{}
@@ -227,18 +227,18 @@ func (e *ButtonEvent) unmarshalProtobuf(ev *pbtouch.ButtonEvent) error {
 	return nil
 }
 
-// ButtonRecognizer is a discrete recognizer that mimics the behavior of a button. The recognizer will fail if the touch ends outside of the view's bounds.
-type ButtonRecognizer struct {
+// ButtonGesture is a discrete recognizer that mimics the behavior of a button. The recognizer will fail if the touch ends outside of the view's bounds.
+type ButtonGesture struct {
 	Key           int64
 	OnTouch       func(e *ButtonEvent)
 	IgnoresScroll bool
 }
 
-func (r *ButtonRecognizer) TouchKey() int64 {
+func (r *ButtonGesture) TouchKey() int64 {
 	return r.Key
 }
 
-func (r *ButtonRecognizer) Build() Model {
+func (r *ButtonGesture) Build() Model {
 	funcId := newFuncId()
 	f := func(data []byte) {
 		event := &ButtonEvent{}

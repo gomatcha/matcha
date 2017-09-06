@@ -66,7 +66,6 @@ func (v *ImageView) Build(ctx *Context) Model {
 			v.pbImage = app.ImageMarshalProtobuf(v.urlImage)
 		}
 	}
-	fmt.Println("build", v.pbImage != nil, v.urlImage != nil)
 
 	// Default to Center if we don't have an image
 	bounds := image.Rect(0, 0, 0, 0)
@@ -124,7 +123,6 @@ func (v *ImageView) reload() {
 	if v.URL == "" || v.Image != nil || v.cancelFunc != nil || v.urlImage != nil || v.err != nil {
 		return
 	}
-	fmt.Println("load")
 
 	c, cancelFunc := context.WithCancel(context.Background())
 	v.cancelFunc = cancelFunc
@@ -142,7 +140,6 @@ func (v *ImageView) reload() {
 			v.urlImage = image
 			v.err = err
 			v.Signal()
-			fmt.Println("load complete", v.urlImage != nil, v.err)
 		}
 	}(v.URL)
 }

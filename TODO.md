@@ -8,7 +8,6 @@
 * Android tocuh recognizers
 * Android tabview
 * Android stackview
-* ios unknown view.
 
 High:
 * Android.

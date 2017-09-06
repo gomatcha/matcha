@@ -15,7 +15,6 @@ import (
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
-	"gomatcha.io/matcha/view/urlimageview"
 )
 
 func init() {
@@ -163,7 +162,7 @@ func (v *PostHeaderView) Build(ctx *view.Context) view.Model {
 		s.Height(60)
 	})
 
-	imageView := urlimageview.New()
+	imageView := view.NewImageView()
 	imageView.PaintStyle = &paint.Style{CornerRadius: 16, BackgroundColor: colornames.Gray}
 	imageView.URL = v.ImageURL
 	g := l.Add(imageView, func(s *constraint.Solver) {
@@ -203,7 +202,7 @@ func NewPostImageView() *PostImageView {
 func (v *PostImageView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	image := urlimageview.New()
+	image := view.NewImageView()
 	image.URL = v.ImageURL
 	l.Add(image, func(s *constraint.Solver) {
 		s.WidthEqual(l.Width())
@@ -225,7 +224,7 @@ func (v *PostImageView) Build(ctx *view.Context) view.Model {
 		})
 	}
 
-	tap := &touch.TapRecognizer{
+	tap := &touch.TapGesture{
 		Count: 2,
 		OnTouch: func(e *touch.TapEvent) {
 			v.showHeart = true
@@ -245,7 +244,7 @@ func (v *PostImageView) Build(ctx *view.Context) view.Model {
 		Children: l.Views(),
 		Layouter: l,
 		Options: []view.Option{
-			touch.RecognizerList{tap},
+			touch.GestureList{tap},
 		},
 	}
 }

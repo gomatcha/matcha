@@ -243,7 +243,7 @@ func (v *Checkbox) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(l.Height())
 	})
 
-	button := &touch.ButtonRecognizer{
+	button := &touch.ButtonGesture{
 		OnTouch: func(e *touch.ButtonEvent) {
 			if e.Kind == touch.EventKindRecognized {
 				v.OnValueChange(!v.Value)
@@ -256,7 +256,7 @@ func (v *Checkbox) Build(ctx *view.Context) view.Model {
 		// Painter:  painter,
 		Layouter: l,
 		Options: []view.Option{
-			touch.RecognizerList{button},
+			touch.GestureList{button},
 		},
 	}
 }
@@ -286,7 +286,7 @@ func (v *DeleteButton) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(l.Height())
 	})
 
-	button := &touch.ButtonRecognizer{
+	button := &touch.ButtonGesture{
 		OnTouch: func(e *touch.ButtonEvent) {
 			if e.Kind == touch.EventKindRecognized {
 				v.OnPress()
@@ -298,7 +298,7 @@ func (v *DeleteButton) Build(ctx *view.Context) view.Model {
 		Children: l.Views(),
 		Layouter: l,
 		Options: []view.Option{
-			touch.RecognizerList{button},
+			touch.GestureList{button},
 		},
 	}
 }

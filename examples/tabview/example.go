@@ -78,7 +78,7 @@ func NewTouchView(app *App) *TouchView {
 }
 
 func (v *TouchView) Build(ctx *view.Context) view.Model {
-	tap := &touch.TapRecognizer{
+	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {
 			v.app.tabs.SetSelectedIndex(0)
@@ -90,7 +90,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: v.Color},
 		Options: []view.Option{
-			touch.RecognizerList{tap},
+			touch.GestureList{tap},
 		},
 	}
 }

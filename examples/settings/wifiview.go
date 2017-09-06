@@ -363,7 +363,7 @@ func (v *InfoButton) Build(ctx *view.Context) view.Model {
 		s.RightEqual(l.Right())
 	})
 
-	button := &touch.ButtonRecognizer{
+	button := &touch.ButtonGesture{
 		OnTouch: func(e *touch.ButtonEvent) {
 			if e.Kind == touch.EventKindRecognized && v.OnPress != nil {
 				v.OnPress()
@@ -376,7 +376,7 @@ func (v *InfoButton) Build(ctx *view.Context) view.Model {
 		Layouter: l,
 		Painter:  v.PaintStyle,
 		Options: []view.Option{
-			touch.RecognizerList{button},
+			touch.GestureList{button},
 		},
 	}
 }
