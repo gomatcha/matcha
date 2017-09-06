@@ -5,11 +5,11 @@
 * Should keyboard package be moved into view?
 * Should statusbar/activity indicator, be moved into ios/android
 * Android image resource scale??
-* Android tocuh recognizers
 * Android tabview
 * Android stackview
 
 High:
+* Android tocuh recognizers
 * Android.
 * Delay any ui events while viewcontroller is updating.
 * Rebuild Instagram.

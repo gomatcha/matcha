@@ -82,7 +82,7 @@ public class MatchaChildView extends RelativeLayout {
                         .setKind(PbTouch.EventKind.EVENT_KIND_RECOGNIZED)
                         .build();
 
-                childView.viewNode.rootView.call(String.format("%d", proto.getFuncId()), childView.viewNode.id, new GoValue(e.toByteArray()));
+                childView.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", proto.getOnEvent()), childView.viewNode.id, new GoValue(e.toByteArray()));
             } catch (InvalidProtocolBufferException e) {
             }
         }
@@ -104,7 +104,7 @@ public class MatchaChildView extends RelativeLayout {
                         .setPosition(Protobuf.toProtobuf(new PointF(event.getX() / ratio, event.getY() / ratio)))
                         .build();
 
-                childView.viewNode.rootView.call(String.format("%d", proto.getRecognizedFunc()), childView.viewNode.id, new GoValue(e.toByteArray()));
+                childView.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", proto.getOnEvent()), childView.viewNode.id, new GoValue(e.toByteArray()));
                 return true;
             } catch (InvalidProtocolBufferException e) {
             }
@@ -128,7 +128,7 @@ public class MatchaChildView extends RelativeLayout {
                         .setPosition(Protobuf.toProtobuf(new PointF(event.getX() / ratio, event.getY() / ratio)))
                         .build();
 
-                childView.viewNode.rootView.call(String.format("%d", proto.getRecognizedFunc()), childView.viewNode.id, new GoValue(e.toByteArray()));
+                childView.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", proto.getOnEvent()), childView.viewNode.id, new GoValue(e.toByteArray()));
                 return true;
             } catch (InvalidProtocolBufferException e) {
             }

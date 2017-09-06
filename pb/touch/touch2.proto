@@ -39,7 +39,7 @@ message ButtonEvent {
 
 message TapRecognizer {
     int64 count = 1;
-    int64 recognizedFunc = 2;
+    int64 onEvent = 2;
 }
 
 message TapEvent {
@@ -50,7 +50,7 @@ message TapEvent {
 
 message PressRecognizer {
     google.protobuf.Duration minDuration = 1;
-    int64 funcId = 2;
+    int64 onEvent = 2;
 }
 
 message PressEvent {

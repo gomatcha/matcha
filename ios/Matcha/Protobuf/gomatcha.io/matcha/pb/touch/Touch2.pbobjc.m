@@ -329,12 +329,12 @@ void SetMatchaPBTouchButtonEvent_Kind_RawValue(MatchaPBTouchButtonEvent *message
 @implementation MatchaPBTouchTapRecognizer
 
 @dynamic count;
-@dynamic recognizedFunc;
+@dynamic onEvent;
 
 typedef struct MatchaPBTouchTapRecognizer__storage_ {
   uint32_t _has_storage_[1];
   int64_t count;
-  int64_t recognizedFunc;
+  int64_t onEvent;
 } MatchaPBTouchTapRecognizer__storage_;
 
 // This method is threadsafe because it is initially called
@@ -353,11 +353,11 @@ typedef struct MatchaPBTouchTapRecognizer__storage_ {
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "recognizedFunc",
+        .name = "onEvent",
         .dataTypeSpecific.className = NULL,
-        .number = MatchaPBTouchTapRecognizer_FieldNumber_RecognizedFunc,
+        .number = MatchaPBTouchTapRecognizer_FieldNumber_OnEvent,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(MatchaPBTouchTapRecognizer__storage_, recognizedFunc),
+        .offset = (uint32_t)offsetof(MatchaPBTouchTapRecognizer__storage_, onEvent),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeInt64,
       },
@@ -372,7 +372,7 @@ typedef struct MatchaPBTouchTapRecognizer__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\001\002\016\000";
+        "\001\002\007\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
@@ -465,12 +465,12 @@ void SetMatchaPBTouchTapEvent_Kind_RawValue(MatchaPBTouchTapEvent *message, int3
 @implementation MatchaPBTouchPressRecognizer
 
 @dynamic hasMinDuration, minDuration;
-@dynamic funcId;
+@dynamic onEvent;
 
 typedef struct MatchaPBTouchPressRecognizer__storage_ {
   uint32_t _has_storage_[1];
   GPBDuration *minDuration;
-  int64_t funcId;
+  int64_t onEvent;
 } MatchaPBTouchPressRecognizer__storage_;
 
 // This method is threadsafe because it is initially called
@@ -489,11 +489,11 @@ typedef struct MatchaPBTouchPressRecognizer__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "funcId",
+        .name = "onEvent",
         .dataTypeSpecific.className = NULL,
-        .number = MatchaPBTouchPressRecognizer_FieldNumber_FuncId,
+        .number = MatchaPBTouchPressRecognizer_FieldNumber_OnEvent,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(MatchaPBTouchPressRecognizer__storage_, funcId),
+        .offset = (uint32_t)offsetof(MatchaPBTouchPressRecognizer__storage_, onEvent),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeInt64,
       },
@@ -508,7 +508,7 @@ typedef struct MatchaPBTouchPressRecognizer__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\002\001\013\000\002\006\000";
+        "\002\001\013\000\002\007\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");

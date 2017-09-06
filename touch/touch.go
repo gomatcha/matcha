@@ -27,7 +27,6 @@ package touch
 
 import (
 	"fmt"
-	"strconv"
 	"sync/atomic"
 	"time"
 
@@ -132,11 +131,11 @@ func (r *TapGesture) Build() Model {
 	return Model{
 		NativeViewName: "",
 		NativeViewState: &pbtouch.TapRecognizer{
-			Count:          int64(r.Count),
-			RecognizedFunc: funcId,
+			Count:   int64(r.Count),
+			OnEvent: funcId,
 		},
 		NativeFuncs: map[string]interface{}{
-			strconv.Itoa(int(funcId)): f,
+			fmt.Sprintf("gomatcha.io/matcha/touch %v", funcId): f,
 		},
 	}
 }
@@ -200,10 +199,10 @@ func (r *PressGesture) Build() Model {
 		NativeViewName: "",
 		NativeViewState: &pbtouch.PressRecognizer{
 			MinDuration: ptypes.DurationProto(r.MinDuration),
-			FuncId:      funcId,
+			OnEvent:     funcId,
 		},
 		NativeFuncs: map[string]interface{}{
-			strconv.Itoa(int(funcId)): f,
+			fmt.Sprintf("gomatcha.io/matcha/touch %v", funcId): f,
 		},
 	}
 }
@@ -265,7 +264,7 @@ func (r *ButtonGesture) Build() Model {
 			IgnoresScroll: r.IgnoresScroll,
 		},
 		NativeFuncs: map[string]interface{}{
-			strconv.Itoa(int(funcId)): f,
+			fmt.Sprintf("gomatcha.io/matcha/touch %v", funcId): f,
 		},
 	}
 }

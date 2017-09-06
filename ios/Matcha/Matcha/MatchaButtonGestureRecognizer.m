@@ -74,7 +74,7 @@
     NSData *data = [event data];
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
     
-    [self.viewController call:[NSString stringWithFormat:@"%@", @(self.funcId)] viewId:self.viewId args:@[value]];
+    [self.viewController call:[NSString stringWithFormat:@"gomatcha.io/matcha/touch %@", @(self.funcId)] viewId:self.viewId args:@[value]];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {

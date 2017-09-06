@@ -19,7 +19,7 @@
     if ((self = [super initWithTarget:self action:@selector(action:)])) {
         self.minimumPressDuration = pbTapRecognizer.minDuration.timeInterval;
         self.viewController = viewController;
-        self.funcId = pbTapRecognizer.funcId;
+        self.funcId = pbTapRecognizer.onEvent;
         self.viewId = viewId;
     }
     return self;
@@ -31,7 +31,7 @@
     if (pbTapRecognizer == nil) {
         return;
     }
-    self.funcId = pbTapRecognizer.funcId;
+    self.funcId = pbTapRecognizer.onEvent;
 }
 
 - (void)disable {
@@ -65,7 +65,7 @@
     NSData *data = [event data];
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
     
-    [self.viewController call:[NSString stringWithFormat:@"%@",@(self.funcId)] viewId:self.viewId args:@[value]];
+    [self.viewController call:[NSString stringWithFormat:@"gomatcha.io/matcha/touch %@",@(self.funcId)] viewId:self.viewId args:@[value]];
 }
 
 @end

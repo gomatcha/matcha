@@ -155,14 +155,14 @@ void SetMatchaPBTouchButtonEvent_Kind_RawValue(MatchaPBTouchButtonEvent *message
 
 typedef GPB_ENUM(MatchaPBTouchTapRecognizer_FieldNumber) {
   MatchaPBTouchTapRecognizer_FieldNumber_Count = 1,
-  MatchaPBTouchTapRecognizer_FieldNumber_RecognizedFunc = 2,
+  MatchaPBTouchTapRecognizer_FieldNumber_OnEvent = 2,
 };
 
 @interface MatchaPBTouchTapRecognizer : GPBMessage
 
 @property(nonatomic, readwrite) int64_t count;
 
-@property(nonatomic, readwrite) int64_t recognizedFunc;
+@property(nonatomic, readwrite) int64_t onEvent;
 
 @end
 
@@ -204,7 +204,7 @@ void SetMatchaPBTouchTapEvent_Kind_RawValue(MatchaPBTouchTapEvent *message, int3
 
 typedef GPB_ENUM(MatchaPBTouchPressRecognizer_FieldNumber) {
   MatchaPBTouchPressRecognizer_FieldNumber_MinDuration = 1,
-  MatchaPBTouchPressRecognizer_FieldNumber_FuncId = 2,
+  MatchaPBTouchPressRecognizer_FieldNumber_OnEvent = 2,
 };
 
 @interface MatchaPBTouchPressRecognizer : GPBMessage
@@ -213,7 +213,7 @@ typedef GPB_ENUM(MatchaPBTouchPressRecognizer_FieldNumber) {
 /** Test to see if @c minDuration has been set. */
 @property(nonatomic, readwrite) BOOL hasMinDuration;
 
-@property(nonatomic, readwrite) int64_t funcId;
+@property(nonatomic, readwrite) int64_t onEvent;
 
 @end
 

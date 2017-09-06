@@ -2753,9 +2753,9 @@ public final class PbTouch {
     long getCount();
 
     /**
-     * <code>int64 recognizedFunc = 2;</code>
+     * <code>int64 onEvent = 2;</code>
      */
-    long getRecognizedFunc();
+    long getOnEvent();
   }
   /**
    * Protobuf type {@code matcha.touch.TapRecognizer}
@@ -2770,7 +2770,7 @@ public final class PbTouch {
     }
     private TapRecognizer() {
       count_ = 0L;
-      recognizedFunc_ = 0L;
+      onEvent_ = 0L;
     }
 
     @java.lang.Override
@@ -2805,7 +2805,7 @@ public final class PbTouch {
             }
             case 16: {
 
-              recognizedFunc_ = input.readInt64();
+              onEvent_ = input.readInt64();
               break;
             }
           }
@@ -2840,13 +2840,13 @@ public final class PbTouch {
       return count_;
     }
 
-    public static final int RECOGNIZEDFUNC_FIELD_NUMBER = 2;
-    private long recognizedFunc_;
+    public static final int ONEVENT_FIELD_NUMBER = 2;
+    private long onEvent_;
     /**
-     * <code>int64 recognizedFunc = 2;</code>
+     * <code>int64 onEvent = 2;</code>
      */
-    public long getRecognizedFunc() {
-      return recognizedFunc_;
+    public long getOnEvent() {
+      return onEvent_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2864,8 +2864,8 @@ public final class PbTouch {
       if (count_ != 0L) {
         output.writeInt64(1, count_);
       }
-      if (recognizedFunc_ != 0L) {
-        output.writeInt64(2, recognizedFunc_);
+      if (onEvent_ != 0L) {
+        output.writeInt64(2, onEvent_);
       }
     }
 
@@ -2878,9 +2878,9 @@ public final class PbTouch {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, count_);
       }
-      if (recognizedFunc_ != 0L) {
+      if (onEvent_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(2, recognizedFunc_);
+          .computeInt64Size(2, onEvent_);
       }
       memoizedSize = size;
       return size;
@@ -2900,8 +2900,8 @@ public final class PbTouch {
       boolean result = true;
       result = result && (getCount()
           == other.getCount());
-      result = result && (getRecognizedFunc()
-          == other.getRecognizedFunc());
+      result = result && (getOnEvent()
+          == other.getOnEvent());
       return result;
     }
 
@@ -2915,9 +2915,9 @@ public final class PbTouch {
       hash = (37 * hash) + COUNT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getCount());
-      hash = (37 * hash) + RECOGNIZEDFUNC_FIELD_NUMBER;
+      hash = (37 * hash) + ONEVENT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getRecognizedFunc());
+          getOnEvent());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3049,7 +3049,7 @@ public final class PbTouch {
         super.clear();
         count_ = 0L;
 
-        recognizedFunc_ = 0L;
+        onEvent_ = 0L;
 
         return this;
       }
@@ -3074,7 +3074,7 @@ public final class PbTouch {
       public io.gomatcha.matcha.pb.touch.PbTouch.TapRecognizer buildPartial() {
         io.gomatcha.matcha.pb.touch.PbTouch.TapRecognizer result = new io.gomatcha.matcha.pb.touch.PbTouch.TapRecognizer(this);
         result.count_ = count_;
-        result.recognizedFunc_ = recognizedFunc_;
+        result.onEvent_ = onEvent_;
         onBuilt();
         return result;
       }
@@ -3119,8 +3119,8 @@ public final class PbTouch {
         if (other.getCount() != 0L) {
           setCount(other.getCount());
         }
-        if (other.getRecognizedFunc() != 0L) {
-          setRecognizedFunc(other.getRecognizedFunc());
+        if (other.getOnEvent() != 0L) {
+          setOnEvent(other.getOnEvent());
         }
         onChanged();
         return this;
@@ -3174,28 +3174,28 @@ public final class PbTouch {
         return this;
       }
 
-      private long recognizedFunc_ ;
+      private long onEvent_ ;
       /**
-       * <code>int64 recognizedFunc = 2;</code>
+       * <code>int64 onEvent = 2;</code>
        */
-      public long getRecognizedFunc() {
-        return recognizedFunc_;
+      public long getOnEvent() {
+        return onEvent_;
       }
       /**
-       * <code>int64 recognizedFunc = 2;</code>
+       * <code>int64 onEvent = 2;</code>
        */
-      public Builder setRecognizedFunc(long value) {
+      public Builder setOnEvent(long value) {
         
-        recognizedFunc_ = value;
+        onEvent_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int64 recognizedFunc = 2;</code>
+       * <code>int64 onEvent = 2;</code>
        */
-      public Builder clearRecognizedFunc() {
+      public Builder clearOnEvent() {
         
-        recognizedFunc_ = 0L;
+        onEvent_ = 0L;
         onChanged();
         return this;
       }
@@ -4123,9 +4123,9 @@ public final class PbTouch {
     com.google.protobuf.DurationOrBuilder getMinDurationOrBuilder();
 
     /**
-     * <code>int64 funcId = 2;</code>
+     * <code>int64 onEvent = 2;</code>
      */
-    long getFuncId();
+    long getOnEvent();
   }
   /**
    * Protobuf type {@code matcha.touch.PressRecognizer}
@@ -4139,7 +4139,7 @@ public final class PbTouch {
       super(builder);
     }
     private PressRecognizer() {
-      funcId_ = 0L;
+      onEvent_ = 0L;
     }
 
     @java.lang.Override
@@ -4182,7 +4182,7 @@ public final class PbTouch {
             }
             case 16: {
 
-              funcId_ = input.readInt64();
+              onEvent_ = input.readInt64();
               break;
             }
           }
@@ -4229,13 +4229,13 @@ public final class PbTouch {
       return getMinDuration();
     }
 
-    public static final int FUNCID_FIELD_NUMBER = 2;
-    private long funcId_;
+    public static final int ONEVENT_FIELD_NUMBER = 2;
+    private long onEvent_;
     /**
-     * <code>int64 funcId = 2;</code>
+     * <code>int64 onEvent = 2;</code>
      */
-    public long getFuncId() {
-      return funcId_;
+    public long getOnEvent() {
+      return onEvent_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -4253,8 +4253,8 @@ public final class PbTouch {
       if (minDuration_ != null) {
         output.writeMessage(1, getMinDuration());
       }
-      if (funcId_ != 0L) {
-        output.writeInt64(2, funcId_);
+      if (onEvent_ != 0L) {
+        output.writeInt64(2, onEvent_);
       }
     }
 
@@ -4267,9 +4267,9 @@ public final class PbTouch {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getMinDuration());
       }
-      if (funcId_ != 0L) {
+      if (onEvent_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(2, funcId_);
+          .computeInt64Size(2, onEvent_);
       }
       memoizedSize = size;
       return size;
@@ -4292,8 +4292,8 @@ public final class PbTouch {
         result = result && getMinDuration()
             .equals(other.getMinDuration());
       }
-      result = result && (getFuncId()
-          == other.getFuncId());
+      result = result && (getOnEvent()
+          == other.getOnEvent());
       return result;
     }
 
@@ -4308,9 +4308,9 @@ public final class PbTouch {
         hash = (37 * hash) + MINDURATION_FIELD_NUMBER;
         hash = (53 * hash) + getMinDuration().hashCode();
       }
-      hash = (37 * hash) + FUNCID_FIELD_NUMBER;
+      hash = (37 * hash) + ONEVENT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getFuncId());
+          getOnEvent());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4446,7 +4446,7 @@ public final class PbTouch {
           minDuration_ = null;
           minDurationBuilder_ = null;
         }
-        funcId_ = 0L;
+        onEvent_ = 0L;
 
         return this;
       }
@@ -4475,7 +4475,7 @@ public final class PbTouch {
         } else {
           result.minDuration_ = minDurationBuilder_.build();
         }
-        result.funcId_ = funcId_;
+        result.onEvent_ = onEvent_;
         onBuilt();
         return result;
       }
@@ -4520,8 +4520,8 @@ public final class PbTouch {
         if (other.hasMinDuration()) {
           mergeMinDuration(other.getMinDuration());
         }
-        if (other.getFuncId() != 0L) {
-          setFuncId(other.getFuncId());
+        if (other.getOnEvent() != 0L) {
+          setOnEvent(other.getOnEvent());
         }
         onChanged();
         return this;
@@ -4666,28 +4666,28 @@ public final class PbTouch {
         return minDurationBuilder_;
       }
 
-      private long funcId_ ;
+      private long onEvent_ ;
       /**
-       * <code>int64 funcId = 2;</code>
+       * <code>int64 onEvent = 2;</code>
        */
-      public long getFuncId() {
-        return funcId_;
+      public long getOnEvent() {
+        return onEvent_;
       }
       /**
-       * <code>int64 funcId = 2;</code>
+       * <code>int64 onEvent = 2;</code>
        */
-      public Builder setFuncId(long value) {
+      public Builder setOnEvent(long value) {
         
-        funcId_ = value;
+        onEvent_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int64 funcId = 2;</code>
+       * <code>int64 onEvent = 2;</code>
        */
-      public Builder clearFuncId() {
+      public Builder clearOnEvent() {
         
-        funcId_ = 0L;
+        onEvent_ = 0L;
         onChanged();
         return this;
       }
@@ -5852,23 +5852,23 @@ public final class PbTouch {
       "\003\022\025\n\rignoresScroll\030\002 \001(\010\"s\n\013ButtonEvent\022",
       "-\n\ttimestamp\030\001 \001(\0132\032.google.protobuf.Tim" +
       "estamp\022\016\n\006inside\030\003 \001(\010\022%\n\004kind\030\004 \001(\0162\027.m" +
-      "atcha.touch.EventKind\"6\n\rTapRecognizer\022\r" +
-      "\n\005count\030\001 \001(\003\022\026\n\016recognizedFunc\030\002 \001(\003\"\210\001" +
-      "\n\010TapEvent\022-\n\ttimestamp\030\001 \001(\0132\032.google.p" +
-      "rotobuf.Timestamp\022&\n\010position\030\002 \001(\0132\024.ma" +
-      "tcha.layout.Point\022%\n\004kind\030\003 \001(\0162\027.matcha" +
-      ".touch.EventKind\"Q\n\017PressRecognizer\022.\n\013m" +
-      "inDuration\030\001 \001(\0132\031.google.protobuf.Durat" +
-      "ion\022\016\n\006funcId\030\002 \001(\003\"\267\001\n\nPressEvent\022-\n\tti",
-      "mestamp\030\001 \001(\0132\032.google.protobuf.Timestam" +
-      "p\022&\n\010position\030\002 \001(\0132\024.matcha.layout.Poin" +
-      "t\022%\n\004kind\030\003 \001(\0162\027.matcha.touch.EventKind" +
-      "\022+\n\010duration\030\004 \001(\0132\031.google.protobuf.Dur" +
-      "ation*n\n\tEventKind\022\027\n\023EVENT_KIND_POSSIBL" +
-      "E\020\000\022\026\n\022EVENT_KIND_CHANGED\020\001\022\025\n\021EVENT_KIN" +
-      "D_FAILED\020\002\022\031\n\025EVENT_KIND_RECOGNIZED\020\003B=\n" +
-      "\033io.gomatcha.matcha.pb.touchB\007PbTouchZ\005t" +
-      "ouch\242\002\rMatchaPBTouchb\006proto3"
+      "atcha.touch.EventKind\"/\n\rTapRecognizer\022\r" +
+      "\n\005count\030\001 \001(\003\022\017\n\007onEvent\030\002 \001(\003\"\210\001\n\010TapEv" +
+      "ent\022-\n\ttimestamp\030\001 \001(\0132\032.google.protobuf" +
+      ".Timestamp\022&\n\010position\030\002 \001(\0132\024.matcha.la" +
+      "yout.Point\022%\n\004kind\030\003 \001(\0162\027.matcha.touch." +
+      "EventKind\"R\n\017PressRecognizer\022.\n\013minDurat" +
+      "ion\030\001 \001(\0132\031.google.protobuf.Duration\022\017\n\007" +
+      "onEvent\030\002 \001(\003\"\267\001\n\nPressEvent\022-\n\ttimestam",
+      "p\030\001 \001(\0132\032.google.protobuf.Timestamp\022&\n\010p" +
+      "osition\030\002 \001(\0132\024.matcha.layout.Point\022%\n\004k" +
+      "ind\030\003 \001(\0162\027.matcha.touch.EventKind\022+\n\010du" +
+      "ration\030\004 \001(\0132\031.google.protobuf.Duration*" +
+      "n\n\tEventKind\022\027\n\023EVENT_KIND_POSSIBLE\020\000\022\026\n" +
+      "\022EVENT_KIND_CHANGED\020\001\022\025\n\021EVENT_KIND_FAIL" +
+      "ED\020\002\022\031\n\025EVENT_KIND_RECOGNIZED\020\003B=\n\033io.go" +
+      "matcha.matcha.pb.touchB\007PbTouchZ\005touch\242\002" +
+      "\rMatchaPBTouchb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5915,7 +5915,7 @@ public final class PbTouch {
     internal_static_matcha_touch_TapRecognizer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_touch_TapRecognizer_descriptor,
-        new java.lang.String[] { "Count", "RecognizedFunc", });
+        new java.lang.String[] { "Count", "OnEvent", });
     internal_static_matcha_touch_TapEvent_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_matcha_touch_TapEvent_fieldAccessorTable = new
@@ -5927,7 +5927,7 @@ public final class PbTouch {
     internal_static_matcha_touch_PressRecognizer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_touch_PressRecognizer_descriptor,
-        new java.lang.String[] { "MinDuration", "FuncId", });
+        new java.lang.String[] { "MinDuration", "OnEvent", });
     internal_static_matcha_touch_PressEvent_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_matcha_touch_PressEvent_fieldAccessorTable = new
