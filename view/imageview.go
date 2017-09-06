@@ -2,7 +2,6 @@ package view
 
 import (
 	"context"
-	"fmt"
 	"image"
 	"image/color"
 	_ "image/jpeg"

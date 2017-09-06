@@ -18,8 +18,12 @@ import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 
+import com.google.protobuf.Duration;
+import com.google.protobuf.Timestamp;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.gomatcha.matcha.pb.Pb;
@@ -31,6 +35,26 @@ import static android.text.Spanned.SPAN_INCLUSIVE_EXCLUSIVE;
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 
 public class Protobuf {
+    public static long newMillis(Duration d) {
+        return d.getSeconds() * 1000 + d.getNanos() / 1000000;
+    }
+
+    public static Duration toProtobuf(long millis) {
+        return Duration.newBuilder()
+                .setNanos((int)(millis % 1000 * 1000000))
+                .setSeconds(millis/1000)
+                .build();
+    }
+
+    public static Date newDate(Timestamp t) {
+        return new Date(t.getSeconds() * 1000 + t.getNanos() / 1000000);
+    }
+
+    public static Timestamp toProtobuf(Date d) {
+        long millis = d.getTime();
+        return Timestamp.newBuilder().setSeconds(millis/1000).setNanos((int)(millis % 1000 * 1000000)).build();
+    }
+
     public static Bitmap newBitmap(Pb.Image image) {
         byte[] buf2 = new byte[(int)image.getWidth()*(int)image.getHeight()*4];
         image.getData().copyTo(buf2, 0);
@@ -58,7 +82,7 @@ public class Protobuf {
         return new PointF((float)pt.getX(), (float)pt.getY());
     }
     
-    public static PbLayout.Point toProtubuf(PointF pt) {
+    public static PbLayout.Point toProtobuf(PointF pt) {
         PbLayout.Point.Builder builder = PbLayout.Point.newBuilder();
         builder.setX(pt.x);
         builder.setY(pt.y);

@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.AbsoluteLayout;
 import android.widget.RelativeLayout;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,7 +16,9 @@ import java.util.Map;
 
 import io.gomatcha.matcha.pb.Pb;
 import io.gomatcha.matcha.pb.paint.PbPaint;
+import io.gomatcha.matcha.pb.touch.PbTouch;
 import io.gomatcha.matcha.pb.view.PbView;
+import io.gomatcha.matcha.pb.view.scrollview.PbScrollView;
 
 public class MatchaViewNode extends Object {
     MatchaViewNode parent;
@@ -95,6 +99,23 @@ public class MatchaViewNode extends Object {
             }
 
             // Update gesture recognizers... TODO(KD):
+            com.google.protobuf.Any gestures = buildNode.getValuesMap().get("gomatcha.io/matcha/touch");
+            if (gestures != null) {
+                try {
+                    PbTouch.RecognizerList proto = gestures.unpack(PbTouch.RecognizerList.class);
+                    for (PbTouch.Recognizer i : proto.getRecognizersList()) {
+                        String type = i.getRecognizer().getTypeUrl();
+                        if (type.equals("type.googleapis.com/matcha.touch.TapRecognizer")) {
+                            this.view.matchaGestureDetector.tapGesture = i.getRecognizer();
+                        } else if (type.equals("type.googleapis.com/matcha.touch.PressRecognizer")) {
+                            this.view.matchaGestureDetector.pressGesture = i.getRecognizer();
+                        } else if (type.equals("type.googleapis.com/matcha.touch.ButtonRecognizer")) {
+                            this.view.matchaGestureDetector.buttonGesture = i.getRecognizer();
+                        }
+                    }
+                } catch (InvalidProtocolBufferException e) {
+                }
+            }
         }
 
         // Layout subviews
@@ -106,10 +127,11 @@ public class MatchaViewNode extends Object {
                 layout.bringChildToFront(childNode.view); // TODO(KD): Can be done more performantly.
             }
 
-            double maxX = layoutPaintNode.getMaxx() * this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
-            double maxY = layoutPaintNode.getMaxy() * this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
-            double minX = layoutPaintNode.getMinx() * this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
-            double minY = layoutPaintNode.getMiny() * this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+            double ratio = (float)this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+            double maxX = layoutPaintNode.getMaxx() * ratio;
+            double maxY = layoutPaintNode.getMaxy() * ratio;
+            double minX = layoutPaintNode.getMinx() * ratio;
+            double minY = layoutPaintNode.getMiny() * ratio;
 
             if (this.parent == null) {
             // } else if (this.parent.view.getClass().isInstance(MatchaScrollView.class)) {

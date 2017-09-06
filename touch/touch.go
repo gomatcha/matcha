@@ -85,7 +85,6 @@ const (
 // TapEvent is emitted by TapGesture, representing its current state.
 type TapEvent struct {
 	// Kind      EventKind // TODO(KD):
-
 	Timestamp time.Time
 	Position  layout.Point
 }
