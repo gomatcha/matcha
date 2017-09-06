@@ -28,7 +28,11 @@ func (v *AddRemoveView) Build(ctx *view.Context) view.Model {
 
 	chl1 := view.NewButton()
 	chl1.Enabled = true
-	chl1.String = "Press Me"
+	if !v.showView {
+		chl1.String = "Add"
+	} else {
+		chl1.String = "Remove"
+	}
 	chl1.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
 	chl1.OnPress = func() {
 		v.showView = !v.showView

@@ -76,7 +76,7 @@ func (r *Root) start() {
 			return
 		}
 
-		// fmt.Println(r.root.node.debugString())
+		fmt.Println(r.root.node.debugString())
 		if runtime.GOOS == "android" {
 			bridge.Bridge("").Call("updateViewWithProtobuf", bridge.Int64(id), bridge.Bytes(pb))
 		} else if runtime.GOOS == "darwin" {
@@ -456,8 +456,10 @@ func (n *node) build() {
 			iKey := i.ViewKey()
 			iName := internal.ReflectName(i)
 			for jIdx, j := range prevChildren {
-				jName := internal.ReflectName(j)
-				if jKey := j.view.ViewKey(); iKey == jKey && iName == jName {
+				jName := internal.ReflectName(j.view)
+				jKey := j.view.ViewKey()
+
+				if iKey == jKey && iName == jName {
 					prevNode = j
 
 					// delete from prevchildren

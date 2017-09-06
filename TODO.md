@@ -3,7 +3,6 @@
 * Remove external repository example
 * Move matcha/view/Root into matcha/Root?
 * Should keyboard package be moved into view?
-* Shloud touch be renamed pointer?
 * Should statusbar/activity indicator, be moved into ios/android
 * Android image resource scale??
 * Android tabview
