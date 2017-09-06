@@ -1,5 +1,4 @@
-// Package constraints provides examples of how to use the matcha/layout/constraint package.
-package constraints
+package layout
 
 import (
 	"golang.org/x/image/colornames"
@@ -10,8 +9,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/constraints New", func() *view.Root {
-		return view.NewRoot(New())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/layout NewConstraintsView", func() *view.Root {
+		return view.NewRoot(NewConstraintsView())
 	})
 }
 
@@ -19,7 +18,7 @@ type ConstraintsView struct {
 	view.Embed
 }
 
-func New() *ConstraintsView {
+func NewConstraintsView() *ConstraintsView {
 	return &ConstraintsView{}
 }
 

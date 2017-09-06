@@ -1,5 +1,4 @@
-// Package table provides examples of how to use the matcha/layout/table package.
-package table
+package layout
 
 import (
 	"golang.org/x/image/colornames"
@@ -12,8 +11,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/table New", func() *view.Root {
-		return view.NewRoot(New())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/layout NewTableView", func() *view.Root {
+		return view.NewRoot(NewTableView())
 	})
 }
 
@@ -21,7 +20,7 @@ type TableView struct {
 	view.Embed
 }
 
-func New() *TableView {
+func NewTableView() *TableView {
 	return &TableView{}
 }
 

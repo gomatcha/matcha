@@ -1,5 +1,4 @@
-// Package tabview provides examples of how to use the matcha/view/tabview package.
-package tabview
+package ios
 
 import (
 	"image/color"
@@ -13,7 +12,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/tabview New", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/ios NewTabView", func() *view.Root {
 		app := &App{tabs: &ios.Tabs{}}
 
 		view1 := NewTouchView(app)
