@@ -1,5 +1,4 @@
-// Package screen provides examples of how to add navigation components.
-package screen
+package ios
 
 import (
 	"fmt"
@@ -22,23 +21,23 @@ func init() {
 		stackview4 := ios.NewStackView()
 		tabview := ios.NewTabView()
 
-		app := &App{
+		app := &NavigationApp{
 			stack1: stackview1.Stack,
 			stack2: stackview2.Stack,
 			stack3: stackview3.Stack,
 			stack4: stackview4.Stack,
 			tabs:   tabview.Tabs,
 		}
-		app.stack1.SetViews(NewTouchView(app))
-		app.stack2.SetViews(NewTouchView(app))
-		app.stack3.SetViews(NewTouchView(app))
-		app.stack4.SetViews(NewTouchView(app))
+		app.stack1.SetViews(NewNavigationChild(app))
+		app.stack2.SetViews(NewNavigationChild(app))
+		app.stack3.SetViews(NewNavigationChild(app))
+		app.stack4.SetViews(NewNavigationChild(app))
 		app.tabs.SetViews(stackview1, stackview2, stackview3, stackview4)
 		return view.NewRoot(tabview)
 	})
 }
 
-type App struct {
+type NavigationApp struct {
 	tabs   *ios.Tabs
 	stack1 *ios.Stack
 	stack2 *ios.Stack
@@ -46,7 +45,7 @@ type App struct {
 	stack4 *ios.Stack
 }
 
-func (app *App) CurrentStackView() *ios.Stack {
+func (app *NavigationApp) CurrentStackView() *ios.Stack {
 	switch app.tabs.SelectedIndex() {
 	case 0:
 		return app.stack1
@@ -60,24 +59,24 @@ func (app *App) CurrentStackView() *ios.Stack {
 	return nil
 }
 
-type TouchView struct {
+type NavigationChild struct {
 	view.Embed
-	app   *App
+	app   *NavigationApp
 	Color color.Color
 }
 
-func NewTouchView(app *App) *TouchView {
-	return &TouchView{
+func NewNavigationChild(app *NavigationApp) *NavigationChild {
+	return &NavigationChild{
 		Color: colornames.White,
 		app:   app,
 	}
 }
 
-func (v *TouchView) Build(ctx *view.Context) view.Model {
+func (v *NavigationChild) Build(ctx *view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {
-			child := NewTouchView(v.app)
+			child := NewNavigationChild(v.app)
 			child.Color = colornames.Red
 			v.app.CurrentStackView().Push(child)
 			fmt.Println("child", child)

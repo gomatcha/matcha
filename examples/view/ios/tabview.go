@@ -13,9 +13,9 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/ios NewTabView", func() *view.Root {
-		app := &App{tabs: &ios.Tabs{}}
+		app := &TabApp{tabs: &ios.Tabs{}}
 
-		view1 := NewTouchView(app)
+		view1 := NewTabChild(app)
 		view1.Color = colornames.Blue
 		view1.button = &ios.TabButton{
 			Title: "Title 1",
@@ -24,7 +24,7 @@ func init() {
 			// SelectedIcon: env.MustLoadImage("TabCameraFilled"),
 		}
 
-		view2 := NewTouchView(app)
+		view2 := NewTabChild(app)
 		view2.Color = colornames.Red
 		view2.button = &ios.TabButton{
 			Title: "Title 2",
@@ -32,10 +32,10 @@ func init() {
 			// SelectedIcon: env.MustLoadImage("TabMapFilled"),
 		}
 
-		view3 := NewTouchView(app)
+		view3 := NewTabChild(app)
 		view3.Color = colornames.Yellow
 
-		view4 := NewTouchView(app)
+		view4 := NewTabChild(app)
 		view4.Color = colornames.Green
 
 		v := ios.NewTabView()
@@ -54,19 +54,19 @@ func init() {
 	})
 }
 
-type App struct {
+type TabApp struct {
 	tabs *ios.Tabs
 }
 
-type TouchView struct {
+type TabChild struct {
 	view.Embed
-	app    *App
+	app    *TabApp
 	Color  color.Color
 	button *ios.TabButton
 }
 
-func NewTouchView(app *App) *TouchView {
-	return &TouchView{
+func NewTabChild(app *TabApp) *TabChild {
+	return &TabChild{
 		app: app,
 		button: &ios.TabButton{
 			Title: "Testing",
@@ -76,7 +76,7 @@ func NewTouchView(app *App) *TouchView {
 	}
 }
 
-func (v *TouchView) Build(ctx *view.Context) view.Model {
+func (v *TabChild) Build(ctx *view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {
