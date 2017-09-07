@@ -31,7 +31,7 @@ func (v *TableView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	childLayouter := &table.Layouter{
-		Direction: layout.DirectionLeft,
+		StartEdge: layout.EdgeLeft,
 	}
 	for i := 0; i < 20; i++ {
 		childView := NewTableCell()

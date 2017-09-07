@@ -14,13 +14,13 @@ const (
 	AxisX
 )
 
-type Direction int
+type Edge int
 
 const (
-	DirectionUp Direction = 1 << iota
-	DirectionDown
-	DirectionLeft
-	DirectionRight
+	EdgeTop Edge = 1 << iota
+	EdgeBottom
+	EdgeLeft
+	EdgeRight
 )
 
 // Rect represents a 2D rectangle with the top left corner at Min and the bottom
