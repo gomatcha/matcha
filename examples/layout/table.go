@@ -1,6 +1,8 @@
 package layout
 
 import (
+	"fmt"
+
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/layout/constraint"
@@ -27,10 +29,12 @@ func NewTableView() *TableView {
 func (v *TableView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	childLayouter := &table.Layouter{}
+	childLayouter := &table.Layouter{
+		Direction: table.DirectionUp,
+	}
 	for i := 0; i < 20; i++ {
 		childView := NewTableCell()
-		childView.String = "TEST TEST"
+		childView.String = fmt.Sprintf("Cell %v", i)
 		childView.Painter = &paint.Style{BackgroundColor: colornames.Red}
 		childLayouter.Add(childView, nil)
 	}

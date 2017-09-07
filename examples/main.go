@@ -8,7 +8,6 @@ import (
 	_ "gomatcha.io/matcha/examples/insta"
 	_ "gomatcha.io/matcha/examples/layout"
 	_ "gomatcha.io/matcha/examples/paint"
-	_ "gomatcha.io/matcha/examples/screen"
 	_ "gomatcha.io/matcha/examples/settings"
 	_ "gomatcha.io/matcha/examples/todo"
 	_ "gomatcha.io/matcha/examples/touch"

@@ -3,16 +3,16 @@
 * Move matcha/view/Root into matcha/Root?
 * Should keyboard package be moved into view?
 * Should statusbar/activity indicator, be moved into ios/android
-* Android image resource scale??
-* Android tabview
-* Android stackview
 
 High:
+* Android tabview
+* Android stackview
 * Android better gesture recognizers
-* Pan gesture
+* More Touch Recognizers: Pan, Swipe, Pinch, EdgePan, Rotation
 * Delay any ui events while viewcontroller is updating.
 * Rebuild Instagram.
 * Modal presentation.
+* Horizontal scroll views.
 * Better tables
 * Android custom view example
 
@@ -20,29 +20,26 @@ Medium:
 * Multiple view controllers.
 * Picker
 * TextField
-* Optimize middleware so they aren't called on every view.
 * Rotation / orientation
-* Painters
+* StackBar height / hidden, color
+* Android image resource scale??
 
 Low:
-* Button should fade when disabled.
+* Optimize middleware so they aren't called on every view.
 * Improve function call performance.
 * Switching quickly between navigation item causes visual glitch. 2 quick backs.
 * How to respond to memory pressure?
 * Have matcha flag that generates a new xcodeproj for easy setup.
-* Add tests around core functionality. Store, etc.
 * Examples. Start rebuild a few apps. Pintrest, Instagram, Settings, Slack
-* Modal presentation
-* Asset catalog
-* StackBar height / hidden, color
-* More Touch Recognizers: Pan, Swipe, Pinch, EdgePan, Rotation
 * Table ScrollBehaviors, Table Direction
 * Custom painters.
 * Compile a list of things that should be easy to do and implement them. Button activation cancelled by vertical scrolling but not horizontal, Pinch to zoom, Highlighting a view and dragging outside of it and back in., Horizontal swipe on tableview to show delete button, Touch driven animations. AKA swipe back to navigate.
-* Building for iPhone 5 Simulator doesn't work.
 * Guide.Insets, GUide.Transform? Layout.Insets(top, left, bottom, right)?
 
 Very Low:
+* Building for iPhone 5 Simulator doesn't work.
+* Add tests around core functionality. Store, etc.
+* Button should fade when disabled.
 * Statusbar color
 * Automatically insert copyright notice.
 * Text selection.
