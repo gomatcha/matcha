@@ -15,13 +15,13 @@ import (
 
 type ScrollView struct {
 	Embed
-	Directions          layout.Axis
-	IndicatorDirections layout.Axis
-	ScrollEnabled       bool
-	ScrollPosition      *ScrollPosition
-	scrollPosition      *ScrollPosition
-	offset              *layout.Point
-	OnScroll            func(position layout.Point)
+	Axes           layout.Axis
+	IndicatorAxes  layout.Axis
+	ScrollEnabled  bool
+	ScrollPosition *ScrollPosition
+	scrollPosition *ScrollPosition
+	offset         *layout.Point
+	OnScroll       func(position layout.Point)
 
 	ContentChildren []View
 	ContentPainter  paint.Painter
@@ -32,10 +32,10 @@ type ScrollView struct {
 // NewScrollView returns either the previous View in ctx with matching key, or a new View if none exists.
 func NewScrollView() *ScrollView {
 	return &ScrollView{
-		Directions:          layout.AxisVertical,
-		IndicatorDirections: layout.AxisVertical | layout.AxisHorizontal,
-		ScrollEnabled:       true,
-		offset:              &layout.Point{},
+		Axes:          layout.AxisVertical,
+		IndicatorAxes: layout.AxisVertical | layout.AxisHorizontal,
+		ScrollEnabled: true,
+		offset:        &layout.Point{},
 	}
 }
 
@@ -54,15 +54,15 @@ func (v *ScrollView) Build(ctx *Context) Model {
 		Children: []View{child},
 		Painter:  painter,
 		Layouter: &scrollViewLayouter{
-			directions:     v.Directions,
+			axes:           v.Axes,
 			scrollPosition: v.ScrollPosition,
 			offset:         v.offset,
 		},
 		NativeViewName: "gomatcha.io/matcha/view/scrollview",
 		NativeViewState: &scrollview.View{
 			ScrollEnabled:                  v.ScrollEnabled,
-			ShowsHorizontalScrollIndicator: v.IndicatorDirections&layout.AxisVertical == layout.AxisVertical,
-			ShowsVerticalScrollIndicator:   v.IndicatorDirections&layout.AxisHorizontal == layout.AxisHorizontal,
+			ShowsHorizontalScrollIndicator: v.IndicatorAxes&layout.AxisVertical == layout.AxisVertical,
+			ShowsVerticalScrollIndicator:   v.IndicatorAxes&layout.AxisHorizontal == layout.AxisHorizontal,
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnScroll": func(data []byte) {
@@ -89,17 +89,17 @@ func (v *ScrollView) Build(ctx *Context) Model {
 }
 
 type scrollViewLayouter struct {
-	directions     layout.Axis
+	axes           layout.Axis
 	scrollPosition *ScrollPosition
 	offset         *layout.Point
 }
 
 func (l *scrollViewLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	minSize := ctx.MinSize
-	if l.directions&layout.AxisVertical == layout.AxisVertical {
+	if l.axes&layout.AxisVertical == layout.AxisVertical {
 		minSize.X = 0
 	}
-	if l.directions&layout.AxisHorizontal == layout.AxisHorizontal {
+	if l.axes&layout.AxisHorizontal == layout.AxisHorizontal {
 		minSize.Y = 0
 	}
 
