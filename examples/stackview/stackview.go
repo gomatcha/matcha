@@ -21,7 +21,7 @@ func init() {
 
 		view1 := NewTouchView(app)
 		view1.Color = colornames.Blue
-		bar1 := &ios.Bar{
+		bar1 := &ios.StackBar{
 			Title: "Title 1",
 		}
 
@@ -39,7 +39,7 @@ func init() {
 		v := ios.NewStackView()
 		v.Stack = app.stack
 		v.Stack.SetViews(
-			ios.WithBar(view1, bar1),
+			view.WithOptions(view1, bar1),
 			// ios.WithBar(view2, bar2),
 			// view3,
 			// view4,
@@ -56,7 +56,7 @@ type TouchView struct {
 	view.Embed
 	app   *App
 	Color color.Color
-	bar   *ios.Bar
+	bar   *ios.StackBar
 }
 
 func NewTouchView(app *App) *TouchView {
@@ -78,15 +78,6 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 		},
 	}
 
-	return view.Model{
-		Painter: &paint.Style{BackgroundColor: v.Color},
-		Options: []view.Option{
-			touch.GestureList{tap},
-		},
-	}
-}
-
-func (v *TouchView) StackBar(ctx *view.Context) *ios.Bar {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.TopEqual(constraint.Const(0))
@@ -121,10 +112,16 @@ func (v *TouchView) StackBar(ctx *view.Context) *ios.Bar {
 	leftView.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
 	leftView.Layouter = l3
 
-	return &ios.Bar{
-		Title:      "Title",
-		TitleView:  titleView,
-		RightViews: []view.View{rightView},
-		LeftViews:  []view.View{leftView},
+	return view.Model{
+		Painter: &paint.Style{BackgroundColor: v.Color},
+		Options: []view.Option{
+			touch.GestureList{tap},
+			&ios.StackBar{
+				Title:      "Title",
+				TitleView:  titleView,
+				RightViews: []view.View{rightView},
+				LeftViews:  []view.View{leftView},
+			},
+		},
 	}
 }

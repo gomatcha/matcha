@@ -17,7 +17,7 @@ func init() {
 
 		view1 := NewTouchView(app)
 		view1.Color = colornames.Blue
-		button1 := &ios.TabButton{
+		view1.button = &ios.TabButton{
 			Title: "Title 1",
 			Badge: "badge",
 			// Icon:         env.MustLoadImage("TabCamera"),
@@ -26,7 +26,7 @@ func init() {
 
 		view2 := NewTouchView(app)
 		view2.Color = colornames.Red
-		button2 := &ios.TabButton{
+		view2.button = &ios.TabButton{
 			Title: "Title 2",
 			// Icon:         env.MustLoadImage("TabMap"),
 			// SelectedIcon: env.MustLoadImage("TabMapFilled"),
@@ -45,8 +45,8 @@ func init() {
 		v.Tabs = app.tabs
 		v.Tabs.SetSelectedIndex(1)
 		v.Tabs.SetViews(
-			ios.WithTabButton(view1, button1),
-			ios.WithTabButton(view2, button2),
+			view1,
+			view2,
 			view3,
 			view4,
 		)
@@ -90,10 +90,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 		Painter: &paint.Style{BackgroundColor: v.Color},
 		Options: []view.Option{
 			touch.GestureList{tap},
+			v.button,
 		},
 	}
-}
-
-func (v *TouchView) TabButton(*view.Context) *ios.TabButton {
-	return v.button
 }

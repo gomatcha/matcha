@@ -84,8 +84,8 @@ func (v *AppView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *AppView) StackBar(ctx *view.Context) *ios.Bar {
-	return &ios.Bar{Title: "To Do Example"}
+func (v *AppView) StackBar(ctx *view.Context) *ios.StackBar {
+	return &ios.StackBar{Title: "To Do Example"}
 }
 
 type AddView struct {

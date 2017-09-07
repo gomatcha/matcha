@@ -72,8 +72,7 @@ func (s *Stack) Unnotify(id comm.Id) {
 	s.relay.Unnotify(id)
 }
 
-/* Package stackview implements a UINavigationController component.
-
+/*
 Building a simple StackView:
 
 	type AppView struct {
@@ -147,12 +146,17 @@ func (v *StackView) Build(ctx *view.Context) view.Model {
 	childrenPb := []*stacknav.ChildView{}
 	for _, id := range v.Stack.childIds {
 		chld := v.Stack.childrenMap[id]
-		// Create the bar.
-		var bar *Bar
-		if childView, ok := chld.(StackChildView); ok {
-			bar = childView.StackBar(ctx)
-		} else {
-			bar = &Bar{
+
+		// Find the bar.
+		var bar *StackBar
+		for _, opts := range chld.Build(nil).Options {
+			var ok bool
+			if bar, ok = opts.(*StackBar); ok {
+				break
+			}
+		}
+		if bar == nil {
+			bar = &StackBar{
 				Title: "Title",
 			}
 		}
@@ -218,14 +222,9 @@ func (v *StackView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-type StackChildView interface {
-	view.View
-	StackBar(*view.Context) *Bar // TODO(KD): Doesn't this make it harder to wrap??
-}
-
 type stackBarView struct {
 	view.Embed
-	Bar *Bar
+	Bar *StackBar
 }
 
 func (v *stackBarView) Build(ctx *view.Context) view.Model {
@@ -280,7 +279,7 @@ func (v *stackBarView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-type Bar struct {
+type StackBar struct {
 	Title            string
 	BackButtonTitle  string
 	BackButtonHidden bool
@@ -290,18 +289,6 @@ type Bar struct {
 	LeftViews  []view.View
 }
 
-func WithBar(s view.View, bar *Bar) view.View {
-	return &viewWrapper{
-		View:     s,
-		stackBar: bar,
-	}
-}
-
-type viewWrapper struct {
-	view.View
-	stackBar *Bar
-}
-
-func (s *viewWrapper) StackBar(*view.Context) *Bar {
-	return s.stackBar
+func (t *StackBar) OptionKey() string {
+	return "gomatcha.io/view/ios StackBar"
 }

@@ -203,8 +203,8 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *RootView) StackBar(ctx *view.Context) *ios.Bar {
-	return &ios.Bar{Title: "Settings Example"}
+func (v *RootView) StackBar(ctx *view.Context) *ios.StackBar {
+	return &ios.StackBar{Title: "Settings Example"}
 }
 
 func AddSeparators(vs []view.View) []view.View {

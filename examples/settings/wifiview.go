@@ -135,8 +135,8 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *WifiView) StackBar(ctx *view.Context) *ios.Bar {
-	return &ios.Bar{Title: "Wi-Fi"}
+func (v *WifiView) StackBar(ctx *view.Context) *ios.StackBar {
+	return &ios.StackBar{Title: "Wi-Fi"}
 }
 
 type WifiNetworkView struct {
@@ -293,8 +293,8 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *WifiNetworkView) StackBar(*view.Context) *ios.Bar {
-	return &ios.Bar{
+func (v *WifiNetworkView) StackBar(*view.Context) *ios.StackBar {
+	return &ios.StackBar{
 		Title: v.network.SSID(),
 	}
 }

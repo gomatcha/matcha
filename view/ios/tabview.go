@@ -99,11 +99,17 @@ func (v *TabView) Build(ctx *view.Context) view.Model {
 
 	childrenPb := []*tabnavpb.ChildView{}
 	for _, chld := range v.Tabs.Views() {
-		// Create the button
+		// Find the button
 		var button *TabButton
-		if childView, ok := chld.(TabChildView); ok {
-			button = childView.TabButton(ctx)
-		} else {
+
+		for _, opts := range chld.Build(nil).Options {
+			var ok bool
+			if button, ok = opts.(*TabButton); ok {
+				break
+			}
+		}
+
+		if button == nil {
 			button = &TabButton{
 				Title: "Title",
 			}
@@ -164,11 +170,6 @@ func (v *TabView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-type TabChildView interface {
-	view.View
-	TabButton(*view.Context) *TabButton
-}
-
 // TabButton describes a UITabBarItem.
 type TabButton struct {
 	Title        string
@@ -179,8 +180,4 @@ type TabButton struct {
 
 func (t *TabButton) OptionKey() string {
 	return "gomatcha.io/view/ios TabButton"
-}
-
-func WithTabButton(v view.View, button *TabButton) view.View {
-	return view.WithOptions(v, button)
 }
