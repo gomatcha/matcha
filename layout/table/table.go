@@ -14,6 +14,7 @@ Package table implements a vertical, single column layout system. Views are laye
 package table
 
 import (
+	"fmt"
 	"math"
 
 	"gomatcha.io/matcha/comm"
@@ -24,19 +25,12 @@ import (
 // Direction is the axis on which the Layouter layouts.
 type Direction int
 
-const (
-	DirectionDown Direction = iota
-	DirectionUp
-	DirectionLeft
-	DirectionRight
-)
-
 // Behavior does nothing at the moment.
 type Behavior interface {
 }
 
 type Layouter struct {
-	Direction Direction
+	Direction layout.Direction
 	views     []view.View
 }
 
@@ -54,12 +48,13 @@ func (l *Layouter) Add(v view.View, b Behavior) {
 func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{}
 	gs := []layout.Guide{}
+	fmt.Println("minsize", ctx.MinSize, ctx.MaxSize)
 
-	if l.Direction == DirectionDown || l.Direction == DirectionUp {
+	if l.Direction == layout.DirectionDown || l.Direction == layout.DirectionUp {
 		y := 0.0
 		x := ctx.MinSize.X
 		for i := range l.views {
-			if l.Direction == DirectionUp {
+			if l.Direction == layout.DirectionUp {
 				i = len(l.views) - i - 1
 			}
 			g := ctx.LayoutChild(i, layout.Pt(x, 0), layout.Pt(x, math.Inf(1)))
@@ -69,10 +64,24 @@ func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 			y += g.Height()
 		}
 		g.Frame = layout.Rt(0, 0, x, y)
+	} else {
+		y := ctx.MinSize.Y
+		x := 0.0
+		for i := range l.views {
+			if l.Direction == layout.DirectionRight {
+				i = len(l.views) - i - 1
+			}
+			g := ctx.LayoutChild(i, layout.Pt(0, y), layout.Pt(math.Inf(1), y))
+			g.Frame = layout.Rt(x, 0, x+g.Width(), g.Height())
+			g.ZIndex = i
+			gs = append(gs, g)
+			x += g.Width()
+		}
+		g.Frame = layout.Rt(0, 0, x, y)
 	}
 
 	// reverse slice
-	if l.Direction == DirectionUp {
+	if l.Direction == layout.DirectionUp || l.Direction == layout.DirectionLeft {
 		for i := len(gs)/2 - 1; i >= 0; i-- {
 			opp := len(gs) - 1 - i
 			gs[i], gs[opp] = gs[opp], gs[i]

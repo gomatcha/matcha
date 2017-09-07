@@ -24,7 +24,7 @@ type Context struct {
 	MinSize    Point
 	MaxSize    Point
 	ChildCount int
-	LayoutFunc func(int, Point, Point) Guide
+	LayoutFunc func(int, Point, Point) Guide // TODO(KD): this should be private...
 }
 
 func (l *Context) LayoutChild(idx int, minSize, maxSize Point) Guide {

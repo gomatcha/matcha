@@ -7,6 +7,22 @@ import (
 	pblayout "gomatcha.io/matcha/pb/layout"
 )
 
+type Axis int
+
+const (
+	AxisVertical Axis = 1 << iota
+	AxisHorizontal
+)
+
+type Direction int
+
+const (
+	DirectionUp Direction = 1 << iota
+	DirectionDown
+	DirectionLeft
+	DirectionRight
+)
+
 // Rect represents a 2D rectangle with the top left corner at Min and the bottom
 // right corner at Max.
 type Rect struct {

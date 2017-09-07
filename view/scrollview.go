@@ -13,18 +13,10 @@ import (
 	"gomatcha.io/matcha/pb/view/scrollview"
 )
 
-// ScrollDirection represents the X and Y axis.
-type ScrollDirection int
-
-const (
-	ScrollDirectionHorizontal ScrollDirection = 1 << iota
-	ScrollDirectionVertical
-)
-
 type ScrollView struct {
 	Embed
-	Directions          ScrollDirection
-	IndicatorDirections ScrollDirection
+	Directions          layout.Axis
+	IndicatorDirections layout.Axis
 	ScrollEnabled       bool
 	ScrollPosition      *ScrollPosition
 	scrollPosition      *ScrollPosition
@@ -40,8 +32,8 @@ type ScrollView struct {
 // NewScrollView returns either the previous View in ctx with matching key, or a new View if none exists.
 func NewScrollView() *ScrollView {
 	return &ScrollView{
-		Directions:          ScrollDirectionVertical,
-		IndicatorDirections: ScrollDirectionVertical | ScrollDirectionHorizontal,
+		Directions:          layout.AxisVertical,
+		IndicatorDirections: layout.AxisVertical | layout.AxisHorizontal,
 		ScrollEnabled:       true,
 		offset:              &layout.Point{},
 	}
@@ -69,8 +61,8 @@ func (v *ScrollView) Build(ctx *Context) Model {
 		NativeViewName: "gomatcha.io/matcha/view/scrollview",
 		NativeViewState: &scrollview.View{
 			ScrollEnabled:                  v.ScrollEnabled,
-			ShowsHorizontalScrollIndicator: v.IndicatorDirections&ScrollDirectionHorizontal == ScrollDirectionHorizontal,
-			ShowsVerticalScrollIndicator:   v.IndicatorDirections&ScrollDirectionVertical == ScrollDirectionVertical,
+			ShowsHorizontalScrollIndicator: v.IndicatorDirections&layout.AxisVertical == layout.AxisVertical,
+			ShowsVerticalScrollIndicator:   v.IndicatorDirections&layout.AxisHorizontal == layout.AxisHorizontal,
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnScroll": func(data []byte) {
@@ -97,17 +89,17 @@ func (v *ScrollView) Build(ctx *Context) Model {
 }
 
 type scrollViewLayouter struct {
-	directions     ScrollDirection
+	directions     layout.Axis
 	scrollPosition *ScrollPosition
 	offset         *layout.Point
 }
 
 func (l *scrollViewLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	minSize := ctx.MinSize
-	if l.directions&ScrollDirectionHorizontal == ScrollDirectionHorizontal {
+	if l.directions&layout.AxisVertical == layout.AxisVertical {
 		minSize.X = 0
 	}
-	if l.directions&ScrollDirectionVertical == ScrollDirectionVertical {
+	if l.directions&layout.AxisHorizontal == layout.AxisHorizontal {
 		minSize.Y = 0
 	}
 
