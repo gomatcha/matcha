@@ -44,7 +44,7 @@ func (v *TableView) Build(ctx *view.Context) view.Model {
 	sv.ContentPainter = &paint.Style{BackgroundColor: colornames.White}
 	sv.ContentLayouter = childLayouter
 	sv.ContentChildren = childLayouter.Views()
-	sv.Axes = layout.AxisX
+	sv.ScrollAxes = layout.AxisX
 	sv.PaintStyle = &paint.Style{BackgroundColor: colornames.Cyan}
 	_ = l.Add(sv, func(s *constraint.Solver) {
 		s.Top(0)

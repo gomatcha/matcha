@@ -15,7 +15,7 @@ import (
 
 type ScrollView struct {
 	Embed
-	Axes           layout.Axis
+	ScrollAxes     layout.Axis
 	IndicatorAxes  layout.Axis
 	ScrollEnabled  bool
 	ScrollPosition *ScrollPosition
@@ -32,7 +32,7 @@ type ScrollView struct {
 // NewScrollView returns either the previous View in ctx with matching key, or a new View if none exists.
 func NewScrollView() *ScrollView {
 	return &ScrollView{
-		Axes:          layout.AxisY,
+		ScrollAxes:    layout.AxisY,
 		IndicatorAxes: layout.AxisY | layout.AxisX,
 		ScrollEnabled: true,
 		offset:        &layout.Point{},
@@ -54,15 +54,15 @@ func (v *ScrollView) Build(ctx *Context) Model {
 		Children: []View{child},
 		Painter:  painter,
 		Layouter: &scrollViewLayouter{
-			axes:           v.Axes,
+			axes:           v.ScrollAxes,
 			scrollPosition: v.ScrollPosition,
 			offset:         v.offset,
 		},
 		NativeViewName: "gomatcha.io/matcha/view/scrollview",
 		NativeViewState: &scrollview.View{
 			ScrollEnabled:                  v.ScrollEnabled,
-			Horizontal:                     v.Axes|layout.AxisX == layout.AxisX,
-			Vertical:                       v.Axes|layout.AxisY == layout.AxisY,
+			Horizontal:                     v.ScrollAxes|layout.AxisX == layout.AxisX,
+			Vertical:                       v.ScrollAxes|layout.AxisY == layout.AxisY,
 			ShowsHorizontalScrollIndicator: v.IndicatorAxes&layout.AxisY == layout.AxisY,
 			ShowsVerticalScrollIndicator:   v.IndicatorAxes&layout.AxisX == layout.AxisX,
 		},

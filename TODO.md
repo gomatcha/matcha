@@ -1,23 +1,17 @@
-* Get native android views working
-* Android Text Input, number of lines. font
-* Move matcha/view/Root into matcha/Root?
-* Should keyboard package be moved into view?
-* Should statusbar/activity indicator, be moved into ios/android
-
 High:
 * Android tabview
 * Android stackview
 * Android better gesture recognizers
-* More Touch Recognizers: Pan, Swipe, Pinch, EdgePan, Rotation
-* Delay any ui events while viewcontroller is updating.
+* More Touch Recognizers: Pan, Swipe, Pinch, Rotation
 * Rebuild Instagram.
 * Modal presentation.
-* Horizontal scroll views.
-* Better tables
 * Android custom view example
+* Android Text Input, number of lines. font
+* Move matcha/view/Root into matcha/Root?
+* Should statusbar/activity indicator, be moved into ios/android
 
 Medium:
-* Multiple view controllers.
+* Delay any ui events while viewcontroller is updating??
 * Picker
 * TextField
 * Rotation / orientation
@@ -35,6 +29,7 @@ Low:
 * Custom painters.
 * Compile a list of things that should be easy to do and implement them. Button activation cancelled by vertical scrolling but not horizontal, Pinch to zoom, Highlighting a view and dragging outside of it and back in., Horizontal swipe on tableview to show delete button, Touch driven animations. AKA swipe back to navigate.
 * Guide.Insets, GUide.Transform? Layout.Insets(top, left, bottom, right)?
+* Table behaviors
 
 Very Low:
 * Building for iPhone 5 Simulator doesn't work.
