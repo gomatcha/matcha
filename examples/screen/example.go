@@ -16,40 +16,25 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/screen New", func() *view.Root {
-		app := &App{
-			stack1: &ios.Stack{},
-			stack2: &ios.Stack{},
-			stack3: &ios.Stack{},
-			stack4: &ios.Stack{},
-			tabs:   &ios.Tabs{},
-		}
-
-		// Configure the stacks
-		app.stack1.SetViews(NewTouchView(nil, "", app))
-		app.stack2.SetViews(NewTouchView(nil, "", app))
-		app.stack3.SetViews(NewTouchView(nil, "", app))
-		app.stack4.SetViews(NewTouchView(nil, "", app))
-
-		// Configure the tabs
 		stackview1 := ios.NewStackView()
-		stackview1.Stack = app.stack1
 		stackview2 := ios.NewStackView()
-		stackview2.Stack = app.stack2
 		stackview3 := ios.NewStackView()
-		stackview3.Stack = app.stack3
 		stackview4 := ios.NewStackView()
-		stackview4.Stack = app.stack4
-		app.tabs.SetViews(
-			stackview1,
-			stackview2,
-			stackview3,
-			stackview4,
-		)
+		tabview := ios.NewTabView()
 
-		// Return tabview
-		v := ios.NewTabView()
-		v.Tabs = app.tabs
-		return view.NewRoot(v)
+		app := &App{
+			stack1: stackview1.Stack,
+			stack2: stackview2.Stack,
+			stack3: stackview3.Stack,
+			stack4: stackview4.Stack,
+			tabs:   tabview.Tabs,
+		}
+		app.stack1.SetViews(NewTouchView(app))
+		app.stack2.SetViews(NewTouchView(app))
+		app.stack3.SetViews(NewTouchView(app))
+		app.stack4.SetViews(NewTouchView(app))
+		app.tabs.SetViews(stackview1, stackview2, stackview3, stackview4)
+		return view.NewRoot(tabview)
 	})
 }
 
@@ -81,7 +66,7 @@ type TouchView struct {
 	Color color.Color
 }
 
-func NewTouchView(ctx *view.Context, key string, app *App) *TouchView {
+func NewTouchView(app *App) *TouchView {
 	return &TouchView{
 		Color: colornames.White,
 		app:   app,
@@ -92,7 +77,7 @@ func (v *TouchView) Build(ctx *view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {
-			child := NewTouchView(nil, "", v.app)
+			child := NewTouchView(v.app)
 			child.Color = colornames.Red
 			v.app.CurrentStackView().Push(child)
 			fmt.Println("child", child)

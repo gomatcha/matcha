@@ -2,16 +2,16 @@
 package custom
 
 import (
-	"github.com/overcyn/customview"
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/examples/custom/customview"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/custom New", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/customview New", func() *view.Root {
 		return view.NewRoot(New())
 	})
 }

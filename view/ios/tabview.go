@@ -47,6 +47,13 @@ func (s *Tabs) SelectedIndex() int {
 	return s.selectedIndex
 }
 
+func (s *Tabs) SelectedView() view.View {
+	if s.selectedIndex > len(s.children)-1 {
+		return nil
+	}
+	return s.children[s.selectedIndex]
+}
+
 // Notify implements the comm.Notifier interface.
 func (s *Tabs) Notify(f func()) comm.Id {
 	return s.relay.Notify(f)
@@ -70,7 +77,9 @@ type TabView struct {
 
 // NewTabView returns either the previous View in ctx with matching key, or a new View if none exists.
 func NewTabView() *TabView {
-	return &TabView{}
+	return &TabView{
+		Tabs: &Tabs{},
+	}
 }
 
 // Lifecyle implements the view.View interface.

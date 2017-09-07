@@ -23,12 +23,12 @@ type Stack struct {
 	maxId       int64
 }
 
-func (s *Stack) SetViews(ss ...view.View) {
+func (s *Stack) SetViews(vs ...view.View) {
 	if s.childrenMap == nil {
 		s.childrenMap = map[int64]view.View{}
 	}
 
-	for _, i := range ss {
+	for _, i := range vs {
 		s.maxId += 1
 		s.childIds = append(s.childIds, s.maxId)
 		s.childrenMap[s.maxId] = i
@@ -116,7 +116,9 @@ type StackView struct {
 
 // NewStackView returns either the previous View in ctx with matching key, or a new View if none exists.
 func NewStackView() *StackView {
-	return &StackView{}
+	return &StackView{
+		Stack: &Stack{},
+	}
 }
 
 // Lifecyle implements the view.View interface.

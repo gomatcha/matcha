@@ -1,6 +1,5 @@
 * Get native android views working
 * Android Text Input, number of lines. font
-* Remove external repository example
 * Move matcha/view/Root into matcha/Root?
 * Should keyboard package be moved into view?
 * Should statusbar/activity indicator, be moved into ios/android
@@ -15,6 +14,7 @@ High:
 * Rebuild Instagram.
 * Modal presentation.
 * Better tables
+* Android custom view example
 
 Medium:
 * Multiple view controllers.
@@ -45,7 +45,6 @@ Low:
 Very Low:
 * Statusbar color
 * Automatically insert copyright notice.
-* StyledText
 * Text selection.
 * Localization
 * View 3d transforms.

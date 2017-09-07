@@ -1,5 +1,4 @@
-// Package stackview provides examples of how to use the matcha/view/stackview package.
-package stackview
+package ios
 
 import (
 	"image/color"
@@ -14,65 +13,56 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/stackview New", func() *view.Root {
-		app := &App{
-			stack: &ios.Stack{},
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/ios NewStackView", func() *view.Root {
+		stackview := ios.NewStackView()
+		app := &StackViewApp{
+			stack: stackview.Stack,
 		}
 
-		view1 := NewTouchView(app)
+		view1 := NewStackViewPage(app)
 		view1.Color = colornames.Blue
-		bar1 := &ios.StackBar{
-			Title: "Title 1",
-		}
+		v1 := view.WithOptions(view1, &ios.StackBar{Title: "Title 1"})
 
-		// view2 := NewTouchView(nil, "", app)
-		// view2.Color = colornames.Red
-		// bar2 := &ios.Bar{
-		// 	Title: "Title 2",
-		// }
+		view2 := NewStackViewPage(app)
+		view2.Color = colornames.Red
+		v2 := view.WithOptions(view2, &ios.StackBar{Title: "Title 2"})
 
-		// view3 := NewTouchView(nil, "", app)
-		// view3.Color = colornames.Yellow
-		// view4 := NewTouchView(nil, "", app)
-		// view4.Color = colornames.Green
+		view3 := NewStackViewPage(app)
+		view3.Color = colornames.Yellow
 
-		v := ios.NewStackView()
-		v.Stack = app.stack
-		v.Stack.SetViews(
-			view.WithOptions(view1, bar1),
-			// ios.WithBar(view2, bar2),
-			// view3,
-			// view4,
-		)
-		return view.NewRoot(v)
+		view4 := NewStackViewPage(app)
+		view4.Color = colornames.Green
+
+		app.stack.SetViews(v1, v2, view3, view4)
+		return view.NewRoot(stackview)
 	})
 }
 
-type App struct {
+type StackViewApp struct {
 	stack *ios.Stack
 }
 
-type TouchView struct {
+type StackViewPage struct {
 	view.Embed
-	app   *App
+	app   *StackViewApp
 	Color color.Color
 	bar   *ios.StackBar
 }
 
-func NewTouchView(app *App) *TouchView {
-	return &TouchView{
+func NewStackViewPage(app *StackViewApp) *StackViewPage {
+	return &StackViewPage{
 		app: app,
 	}
 }
 
-func (v *TouchView) Build(ctx *view.Context) view.Model {
+func (v *StackViewPage) Build(ctx *view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {
 			// v.bar.Title = "Updated"
 			// v.Signal()
 
-			child := NewTouchView(v.app)
+			child := NewStackViewPage(v.app)
 			child.Color = colornames.Purple
 			v.app.stack.Push(child)
 		},
