@@ -25,7 +25,7 @@ import (
 // Direction is the axis on which the Layouter layouts.
 type Direction int
 
-// Behavior does nothing at the moment.
+// TODO(KD): Behavior does nothing at the moment.
 type Behavior interface {
 }
 

@@ -49,6 +49,8 @@ static GPBFileDescriptor *MatchaScrollViewPBScrollviewRoot_FileDescriptor(void) 
 @implementation MatchaScrollViewPBView
 
 @dynamic scrollEnabled;
+@dynamic horizontal;
+@dynamic vertical;
 @dynamic showsHorizontalScrollIndicator;
 @dynamic showsVerticalScrollIndicator;
 
@@ -75,8 +77,8 @@ typedef struct MatchaScrollViewPBView__storage_ {
         .name = "showsHorizontalScrollIndicator",
         .dataTypeSpecific.className = NULL,
         .number = MatchaScrollViewPBView_FieldNumber_ShowsHorizontalScrollIndicator,
-        .hasIndex = 2,
-        .offset = 3,  // Stored in _has_storage_ to save space.
+        .hasIndex = 6,
+        .offset = 7,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeBool,
       },
@@ -84,9 +86,27 @@ typedef struct MatchaScrollViewPBView__storage_ {
         .name = "showsVerticalScrollIndicator",
         .dataTypeSpecific.className = NULL,
         .number = MatchaScrollViewPBView_FieldNumber_ShowsVerticalScrollIndicator,
+        .hasIndex = 8,
+        .offset = 9,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "horizontal",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaScrollViewPBView_FieldNumber_Horizontal,
+        .hasIndex = 2,
+        .offset = 3,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "vertical",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaScrollViewPBView_FieldNumber_Vertical,
         .hasIndex = 4,
         .offset = 5,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
     };

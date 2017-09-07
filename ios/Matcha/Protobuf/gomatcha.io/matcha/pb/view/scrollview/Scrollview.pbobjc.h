@@ -52,11 +52,17 @@ typedef GPB_ENUM(MatchaScrollViewPBView_FieldNumber) {
   MatchaScrollViewPBView_FieldNumber_ScrollEnabled = 1,
   MatchaScrollViewPBView_FieldNumber_ShowsHorizontalScrollIndicator = 2,
   MatchaScrollViewPBView_FieldNumber_ShowsVerticalScrollIndicator = 3,
+  MatchaScrollViewPBView_FieldNumber_Horizontal = 4,
+  MatchaScrollViewPBView_FieldNumber_Vertical = 5,
 };
 
 @interface MatchaScrollViewPBView : GPBMessage
 
 @property(nonatomic, readwrite) BOOL scrollEnabled;
+
+@property(nonatomic, readwrite) BOOL horizontal;
+
+@property(nonatomic, readwrite) BOOL vertical;
 
 @property(nonatomic, readwrite) BOOL showsHorizontalScrollIndicator;
 

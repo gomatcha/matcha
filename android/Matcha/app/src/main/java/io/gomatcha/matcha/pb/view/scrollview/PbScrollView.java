@@ -24,6 +24,16 @@ public final class PbScrollView {
     boolean getScrollEnabled();
 
     /**
+     * <code>bool horizontal = 4;</code>
+     */
+    boolean getHorizontal();
+
+    /**
+     * <code>bool vertical = 5;</code>
+     */
+    boolean getVertical();
+
+    /**
      * <code>bool showsHorizontalScrollIndicator = 2;</code>
      */
     boolean getShowsHorizontalScrollIndicator();
@@ -46,6 +56,8 @@ public final class PbScrollView {
     }
     private View() {
       scrollEnabled_ = false;
+      horizontal_ = false;
+      vertical_ = false;
       showsHorizontalScrollIndicator_ = false;
       showsVerticalScrollIndicator_ = false;
     }
@@ -90,6 +102,16 @@ public final class PbScrollView {
               showsVerticalScrollIndicator_ = input.readBool();
               break;
             }
+            case 32: {
+
+              horizontal_ = input.readBool();
+              break;
+            }
+            case 40: {
+
+              vertical_ = input.readBool();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -120,6 +142,24 @@ public final class PbScrollView {
      */
     public boolean getScrollEnabled() {
       return scrollEnabled_;
+    }
+
+    public static final int HORIZONTAL_FIELD_NUMBER = 4;
+    private boolean horizontal_;
+    /**
+     * <code>bool horizontal = 4;</code>
+     */
+    public boolean getHorizontal() {
+      return horizontal_;
+    }
+
+    public static final int VERTICAL_FIELD_NUMBER = 5;
+    private boolean vertical_;
+    /**
+     * <code>bool vertical = 5;</code>
+     */
+    public boolean getVertical() {
+      return vertical_;
     }
 
     public static final int SHOWSHORIZONTALSCROLLINDICATOR_FIELD_NUMBER = 2;
@@ -161,6 +201,12 @@ public final class PbScrollView {
       if (showsVerticalScrollIndicator_ != false) {
         output.writeBool(3, showsVerticalScrollIndicator_);
       }
+      if (horizontal_ != false) {
+        output.writeBool(4, horizontal_);
+      }
+      if (vertical_ != false) {
+        output.writeBool(5, vertical_);
+      }
     }
 
     public int getSerializedSize() {
@@ -180,6 +226,14 @@ public final class PbScrollView {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(3, showsVerticalScrollIndicator_);
       }
+      if (horizontal_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, horizontal_);
+      }
+      if (vertical_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(5, vertical_);
+      }
       memoizedSize = size;
       return size;
     }
@@ -198,6 +252,10 @@ public final class PbScrollView {
       boolean result = true;
       result = result && (getScrollEnabled()
           == other.getScrollEnabled());
+      result = result && (getHorizontal()
+          == other.getHorizontal());
+      result = result && (getVertical()
+          == other.getVertical());
       result = result && (getShowsHorizontalScrollIndicator()
           == other.getShowsHorizontalScrollIndicator());
       result = result && (getShowsVerticalScrollIndicator()
@@ -215,6 +273,12 @@ public final class PbScrollView {
       hash = (37 * hash) + SCROLLENABLED_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getScrollEnabled());
+      hash = (37 * hash) + HORIZONTAL_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getHorizontal());
+      hash = (37 * hash) + VERTICAL_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getVertical());
       hash = (37 * hash) + SHOWSHORIZONTALSCROLLINDICATOR_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getShowsHorizontalScrollIndicator());
@@ -352,6 +416,10 @@ public final class PbScrollView {
         super.clear();
         scrollEnabled_ = false;
 
+        horizontal_ = false;
+
+        vertical_ = false;
+
         showsHorizontalScrollIndicator_ = false;
 
         showsVerticalScrollIndicator_ = false;
@@ -379,6 +447,8 @@ public final class PbScrollView {
       public io.gomatcha.matcha.pb.view.scrollview.PbScrollView.View buildPartial() {
         io.gomatcha.matcha.pb.view.scrollview.PbScrollView.View result = new io.gomatcha.matcha.pb.view.scrollview.PbScrollView.View(this);
         result.scrollEnabled_ = scrollEnabled_;
+        result.horizontal_ = horizontal_;
+        result.vertical_ = vertical_;
         result.showsHorizontalScrollIndicator_ = showsHorizontalScrollIndicator_;
         result.showsVerticalScrollIndicator_ = showsVerticalScrollIndicator_;
         onBuilt();
@@ -424,6 +494,12 @@ public final class PbScrollView {
         if (other == io.gomatcha.matcha.pb.view.scrollview.PbScrollView.View.getDefaultInstance()) return this;
         if (other.getScrollEnabled() != false) {
           setScrollEnabled(other.getScrollEnabled());
+        }
+        if (other.getHorizontal() != false) {
+          setHorizontal(other.getHorizontal());
+        }
+        if (other.getVertical() != false) {
+          setVertical(other.getVertical());
         }
         if (other.getShowsHorizontalScrollIndicator() != false) {
           setShowsHorizontalScrollIndicator(other.getShowsHorizontalScrollIndicator());
@@ -479,6 +555,58 @@ public final class PbScrollView {
       public Builder clearScrollEnabled() {
         
         scrollEnabled_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean horizontal_ ;
+      /**
+       * <code>bool horizontal = 4;</code>
+       */
+      public boolean getHorizontal() {
+        return horizontal_;
+      }
+      /**
+       * <code>bool horizontal = 4;</code>
+       */
+      public Builder setHorizontal(boolean value) {
+        
+        horizontal_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool horizontal = 4;</code>
+       */
+      public Builder clearHorizontal() {
+        
+        horizontal_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean vertical_ ;
+      /**
+       * <code>bool vertical = 5;</code>
+       */
+      public boolean getVertical() {
+        return vertical_;
+      }
+      /**
+       * <code>bool vertical = 5;</code>
+       */
+      public Builder setVertical(boolean value) {
+        
+        vertical_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool vertical = 5;</code>
+       */
+      public Builder clearVertical() {
+        
+        vertical_ = false;
         onChanged();
         return this;
       }
@@ -1176,13 +1304,14 @@ public final class PbScrollView {
       "\n6gomatcha.io/matcha/pb/view/scrollview/" +
       "scrollview.proto\022\026matcha.view.scrollview" +
       "\032)gomatcha.io/matcha/pb/layout/layout.pr" +
-      "oto\"k\n\004View\022\025\n\rscrollEnabled\030\001 \001(\010\022&\n\036sh" +
-      "owsHorizontalScrollIndicator\030\002 \001(\010\022$\n\034sh" +
-      "owsVerticalScrollIndicator\030\003 \001(\010\":\n\013Scro" +
-      "llEvent\022+\n\rcontentOffset\030\001 \001(\0132\024.matcha." +
-      "layout.PointBV\n%io.gomatcha.matcha.pb.vi" +
-      "ew.scrollviewB\014PbScrollViewZ\nscrollview\242" +
-      "\002\022MatchaScrollViewPBb\006proto3"
+      "oto\"\221\001\n\004View\022\025\n\rscrollEnabled\030\001 \001(\010\022\022\n\nh" +
+      "orizontal\030\004 \001(\010\022\020\n\010vertical\030\005 \001(\010\022&\n\036sho" +
+      "wsHorizontalScrollIndicator\030\002 \001(\010\022$\n\034sho" +
+      "wsVerticalScrollIndicator\030\003 \001(\010\":\n\013Scrol" +
+      "lEvent\022+\n\rcontentOffset\030\001 \001(\0132\024.matcha.l" +
+      "ayout.PointBV\n%io.gomatcha.matcha.pb.vie" +
+      "w.scrollviewB\014PbScrollViewZ\nscrollview\242\002",
+      "\022MatchaScrollViewPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1202,7 +1331,7 @@ public final class PbScrollView {
     internal_static_matcha_view_scrollview_View_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_scrollview_View_descriptor,
-        new java.lang.String[] { "ScrollEnabled", "ShowsHorizontalScrollIndicator", "ShowsVerticalScrollIndicator", });
+        new java.lang.String[] { "ScrollEnabled", "Horizontal", "Vertical", "ShowsHorizontalScrollIndicator", "ShowsVerticalScrollIndicator", });
     internal_static_matcha_view_scrollview_ScrollEvent_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_matcha_view_scrollview_ScrollEvent_fieldAccessorTable = new

@@ -10,8 +10,8 @@ import (
 type Axis int
 
 const (
-	AxisVertical Axis = 1 << iota
-	AxisHorizontal
+	AxisY Axis = 1 << iota
+	AxisX
 )
 
 type Direction int

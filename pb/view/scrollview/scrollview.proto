@@ -9,6 +9,8 @@ option java_outer_classname = "PbScrollView";
 
 message View {
   bool scrollEnabled = 1;
+  bool horizontal = 4;
+  bool vertical = 5;
   bool showsHorizontalScrollIndicator = 2;
   bool showsVerticalScrollIndicator = 3;
 }

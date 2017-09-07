@@ -14,7 +14,6 @@
     if ((self = [super initWithFrame:CGRectZero])) {
         self.viewNode = viewNode;
         self.delegate = self;
-        self.alwaysBounceVertical = true; // TODO(KD):
     }
     return self;
 }
@@ -29,6 +28,8 @@
         self.scrollEnabled = pbscrollview.scrollEnabled;
         self.showsVerticalScrollIndicator = pbscrollview.showsVerticalScrollIndicator;
         self.showsHorizontalScrollIndicator = pbscrollview.showsHorizontalScrollIndicator;
+        self.alwaysBounceVertical = pbscrollview.vertical;
+        self.alwaysBounceHorizontal = pbscrollview.horizontal;
     }
 }
 

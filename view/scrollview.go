@@ -32,8 +32,8 @@ type ScrollView struct {
 // NewScrollView returns either the previous View in ctx with matching key, or a new View if none exists.
 func NewScrollView() *ScrollView {
 	return &ScrollView{
-		Axes:          layout.AxisVertical,
-		IndicatorAxes: layout.AxisVertical | layout.AxisHorizontal,
+		Axes:          layout.AxisY,
+		IndicatorAxes: layout.AxisY | layout.AxisX,
 		ScrollEnabled: true,
 		offset:        &layout.Point{},
 	}
@@ -61,8 +61,10 @@ func (v *ScrollView) Build(ctx *Context) Model {
 		NativeViewName: "gomatcha.io/matcha/view/scrollview",
 		NativeViewState: &scrollview.View{
 			ScrollEnabled:                  v.ScrollEnabled,
-			ShowsHorizontalScrollIndicator: v.IndicatorAxes&layout.AxisVertical == layout.AxisVertical,
-			ShowsVerticalScrollIndicator:   v.IndicatorAxes&layout.AxisHorizontal == layout.AxisHorizontal,
+			Horizontal:                     v.Axes|layout.AxisX == layout.AxisX,
+			Vertical:                       v.Axes|layout.AxisY == layout.AxisY,
+			ShowsHorizontalScrollIndicator: v.IndicatorAxes&layout.AxisY == layout.AxisY,
+			ShowsVerticalScrollIndicator:   v.IndicatorAxes&layout.AxisX == layout.AxisX,
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnScroll": func(data []byte) {
@@ -96,14 +98,17 @@ type scrollViewLayouter struct {
 
 func (l *scrollViewLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	minSize := ctx.MinSize
-	if l.axes&layout.AxisVertical == layout.AxisVertical {
-		minSize.X = 0
-	}
-	if l.axes&layout.AxisHorizontal == layout.AxisHorizontal {
+	maxSize := ctx.MaxSize
+	if l.axes&layout.AxisY == layout.AxisY {
 		minSize.Y = 0
+		maxSize.Y = math.Inf(1)
+	}
+	if l.axes&layout.AxisX == layout.AxisX {
+		minSize.X = 0
+		maxSize.X = math.Inf(1)
 	}
 
-	g := ctx.LayoutChild(0, minSize, layout.Pt(math.Inf(1), math.Inf(1)))
+	g := ctx.LayoutChild(0, minSize, maxSize)
 	g.Frame = layout.Rt(-l.offset.X, -l.offset.Y, g.Width()-l.offset.X, g.Height()-l.offset.Y)
 	gs := []layout.Guide{g}
 

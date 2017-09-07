@@ -3,7 +3,6 @@
 * Move matcha/view/Root into matcha/Root?
 * Should keyboard package be moved into view?
 * Should statusbar/activity indicator, be moved into ios/android
-* Use layout axis/direction?
 
 High:
 * Android tabview
