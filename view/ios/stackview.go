@@ -37,7 +37,6 @@ func (s *Stack) SetViews(vs ...view.View) {
 }
 
 func (s *Stack) setChildIds(ids []int64) {
-	fmt.Printf("prev:%v new:%v", s.childIds, ids)
 	s.childIds = ids
 	s.relay.Signal()
 }

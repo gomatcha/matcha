@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        GoValue rootVC = GoValue.withFunc("gomatcha.io/matcha/examples/view NewAddRemoveView").call("")[0];
+        GoValue rootVC = GoValue.withFunc("gomatcha.io/matcha/examples/view/android NewSwipeView").call("")[0];
 
         MatchaView v = new MatchaView(this, rootVC);
         setContentView(v);

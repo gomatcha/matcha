@@ -12,5 +12,6 @@ import (
 	_ "gomatcha.io/matcha/examples/todo"
 	_ "gomatcha.io/matcha/examples/touch"
 	_ "gomatcha.io/matcha/examples/view"
+	_ "gomatcha.io/matcha/examples/view/android"
 	_ "gomatcha.io/matcha/examples/view/ios"
 )
