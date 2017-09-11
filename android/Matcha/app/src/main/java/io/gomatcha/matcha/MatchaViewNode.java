@@ -85,13 +85,21 @@ public class MatchaViewNode extends Object {
             this.view.setNode(buildNode);
 
             // Add/remove subviews
-            for (long i : addedKeys) {
-                MatchaViewNode childNode = children.get(i);
-                layout.addView(childNode.view);
-            }
-            for (long i : removedKeys) {
-                MatchaViewNode childNode = this.children.get(i);
-                layout.removeView(childNode.view);
+            if (this.view.isContainerView()) {
+                ArrayList<View> childViews = new ArrayList<View>();
+                for (Long i : children.keySet()) {
+                    childViews.add(children.get(i).view);
+                }
+                this.view.setChildViews(childViews);
+            } else {
+                for (long i : addedKeys) {
+                    MatchaViewNode childNode = children.get(i);
+                    layout.addView(childNode.view);
+                }
+                for (long i : removedKeys) {
+                    MatchaViewNode childNode = this.children.get(i);
+                    layout.removeView(childNode.view);
+                }
             }
 
             // Update gesture recognizers... TODO(KD):
@@ -130,6 +138,7 @@ public class MatchaViewNode extends Object {
             double minY = layoutPaintNode.getMiny() * ratio;
 
             if (this.parent == null) {
+            } else if (this.parent.view.isContainerView()) {
             // } else if (this.parent.view.getClass().isInstance(MatchaScrollView.class)) {
             } else {
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)this.view.getLayoutParams();

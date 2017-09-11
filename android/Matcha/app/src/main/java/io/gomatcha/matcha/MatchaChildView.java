@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.google.protobuf.Duration;
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import io.gomatcha.bridge.GoValue;
@@ -47,6 +48,14 @@ public class MatchaChildView extends RelativeLayout {
 
     public void setNode(PbView.BuildNode buildNode) {
         this.buildNode = buildNode;
+    }
+
+    public boolean isContainerView() {
+        return false;
+    }
+
+    public void setChildViews(ArrayList<View> childViews) {
+        // no-op
     }
 
     public RelativeLayout getLayout() {
