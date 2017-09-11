@@ -26,7 +26,7 @@ type Behavior interface {
 }
 
 type Layouter struct {
-	StartEdge layout.Edge
+	StartEdge layout.Edge // If no edges or more than one edge is specified layout.EdgeTop will be used.
 	views     []view.View
 }
 
@@ -45,11 +45,19 @@ func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{}
 	gs := []layout.Guide{}
 
-	if l.StartEdge == layout.EdgeBottom || l.StartEdge == layout.EdgeTop {
+	startEdge := l.StartEdge
+	switch startEdge {
+	case layout.EdgeTop, layout.EdgeBottom, layout.EdgeRight, layout.EdgeLeft:
+		// no-op
+	default:
+		startEdge = layout.EdgeTop
+	}
+
+	if startEdge == layout.EdgeBottom || startEdge == layout.EdgeTop {
 		y := 0.0
 		x := ctx.MinSize.X
 		for i := range l.views {
-			if l.StartEdge == layout.EdgeBottom {
+			if startEdge == layout.EdgeBottom {
 				i = len(l.views) - i - 1
 			}
 			g := ctx.LayoutChild(i, layout.Pt(x, 0), layout.Pt(x, math.Inf(1)))
@@ -63,7 +71,7 @@ func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 		y := ctx.MinSize.Y
 		x := 0.0
 		for i := range l.views {
-			if l.StartEdge == layout.EdgeLeft {
+			if startEdge == layout.EdgeLeft {
 				i = len(l.views) - i - 1
 			}
 			g := ctx.LayoutChild(i, layout.Pt(0, y), layout.Pt(math.Inf(1), y))
@@ -76,7 +84,7 @@ func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 	}
 
 	// reverse slice
-	if l.StartEdge == layout.EdgeBottom || l.StartEdge == layout.EdgeLeft {
+	if startEdge == layout.EdgeBottom || startEdge == layout.EdgeLeft {
 		for i := len(gs)/2 - 1; i >= 0; i-- {
 			opp := len(gs) - 1 - i
 			gs[i], gs[opp] = gs[opp], gs[i]

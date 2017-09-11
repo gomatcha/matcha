@@ -682,7 +682,7 @@ func (r _range) intersect(r2 _range) _range {
 
 func (r _range) isValid() bool {
 	if r.max < r.min {
-		fmt.Println("invalid2", r.max-r.min)
+		fmt.Println("invalid2", r.max, r.min)
 	}
 	return r.max >= r.min
 }
