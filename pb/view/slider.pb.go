@@ -6,11 +6,14 @@ Package view is a generated protocol buffer package.
 
 It is generated from these files:
 	gomatcha.io/matcha/pb/view/slider.proto
+	gomatcha.io/matcha/pb/view/switchview.proto
 	gomatcha.io/matcha/pb/view/view.proto
 
 It has these top-level messages:
 	Slider
 	SliderEvent
+	SwitchView
+	SwitchEvent
 	BuildNode
 	LayoutPaintNode
 	Root

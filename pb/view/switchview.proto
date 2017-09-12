@@ -1,0 +1,16 @@
+syntax = "proto3";
+package matcha.view;
+
+option go_package = "view";
+option objc_class_prefix = "MatchaViewPb";
+option java_package = "io.gomatcha.matcha.pb.view";
+option java_outer_classname = "PbSwitchView";
+
+message SwitchView {
+    bool value = 1;
+    bool enabled = 2;
+}
+
+message SwitchEvent {
+    bool value = 1;
+}

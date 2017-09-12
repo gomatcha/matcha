@@ -22,7 +22,7 @@
     _node = value;
     GPBAny *state = value.nativeViewState;
     NSError *error = nil;
-    MatchaPBSwitchViewView *view = (id)[state unpackMessageClass:[MatchaPBSwitchViewView class] error:&error];
+    MatchaViewPbSwitchView *view = (id)[state unpackMessageClass:[MatchaViewPbSwitchView class] error:&error];
     if (view != nil) {
         [self setOn:view.value animated:true];
         self.enabled = view.enabled;
@@ -30,7 +30,7 @@
 }
 
 - (void)onChange:(id)sender {
-    MatchaPBSwitchViewEvent *event = [[MatchaPBSwitchViewEvent alloc] init];
+    MatchaViewPbSwitchEvent *event = [[MatchaViewPbSwitchEvent alloc] init];
     event.value = self.on;
     
     NSData *data = [event data];
