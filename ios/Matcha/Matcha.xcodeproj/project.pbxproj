@@ -9,16 +9,12 @@
 /* Begin PBXBuildFile section */
 		671B30581F5F509D00F2ABFE /* MatchaUnknownView.h in Headers */ = {isa = PBXBuildFile; fileRef = 671B30561F5F509C00F2ABFE /* MatchaUnknownView.h */; };
 		671B30591F5F509D00F2ABFE /* MatchaUnknownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 671B30571F5F509C00F2ABFE /* MatchaUnknownView.m */; };
-		6731819D1F0DAB3400E1839E /* Progressview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6731819B1F0DAB3400E1839E /* Progressview.pbobjc.h */; };
-		6731819E1F0DAB3400E1839E /* Progressview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6731819C1F0DAB3400E1839E /* Progressview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		673181A21F0DB38F00E1839E /* MatchaProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = 673181A01F0DB38F00E1839E /* MatchaProgressView.h */; };
 		673181A31F0DB38F00E1839E /* MatchaProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 673181A11F0DB38F00E1839E /* MatchaProgressView.m */; };
 		673181A61F14667900E1839E /* UITextView+Placeholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 673181A41F14667900E1839E /* UITextView+Placeholder.h */; };
 		673181A71F14667900E1839E /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 673181A51F14667900E1839E /* UITextView+Placeholder.m */; };
 		673181AB1F15F7C600E1839E /* MatchaSegmentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 673181A91F15F7C600E1839E /* MatchaSegmentView.h */; };
 		673181AC1F15F7C600E1839E /* MatchaSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 673181AA1F15F7C600E1839E /* MatchaSegmentView.m */; };
-		673181B01F15F81B00E1839E /* Segmentview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 673181AE1F15F81B00E1839E /* Segmentview.pbobjc.h */; };
-		673181B11F15F81B00E1839E /* Segmentview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 673181AF1F15F81B00E1839E /* Segmentview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6732F9E71F6763FA002DC2EF /* Slider.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9E51F6763FA002DC2EF /* Slider.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6732F9E81F6763FA002DC2EF /* Slider.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9E61F6763FA002DC2EF /* Slider.pbobjc.h */; };
 		6732F9EC1F6766B5002DC2EF /* Stackview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9EA1F6766B5002DC2EF /* Stackview.pbobjc.h */; };
@@ -35,13 +31,18 @@
 		6732FA031F67A668002DC2EF /* Imageview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9FD1F67A668002DC2EF /* Imageview.pbobjc.h */; };
 		6732FA041F67A668002DC2EF /* Alert.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9FE1F67A668002DC2EF /* Alert.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6732FA051F67A668002DC2EF /* Alert.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9FF1F67A668002DC2EF /* Alert.pbobjc.h */; };
+		6732FA081F67A9D0002DC2EF /* Scrollview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732FA061F67A9D0002DC2EF /* Scrollview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6732FA091F67A9D0002DC2EF /* Scrollview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732FA071F67A9D0002DC2EF /* Scrollview.pbobjc.h */; };
+		6732FA0E1F67A9D6002DC2EF /* Segmentview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732FA0A1F67A9D6002DC2EF /* Segmentview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6732FA0F1F67A9D6002DC2EF /* Segmentview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732FA0B1F67A9D6002DC2EF /* Segmentview.pbobjc.h */; };
+		6732FA101F67A9D6002DC2EF /* Progressview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732FA0C1F67A9D6002DC2EF /* Progressview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6732FA111F67A9D6002DC2EF /* Progressview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732FA0D1F67A9D6002DC2EF /* Progressview.pbobjc.h */; };
 		6759EE521F2E632C00B8E0A9 /* MatchaMiddleware.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */; };
 		6759EE531F2E632C00B8E0A9 /* MatchaMiddleware.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */; };
 		6759EE561F2E64EC00B8E0A9 /* MatchaStatusBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE541F2E64EC00B8E0A9 /* MatchaStatusBar.h */; };
 		6759EE571F2E64EC00B8E0A9 /* MatchaStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759EE551F2E64EC00B8E0A9 /* MatchaStatusBar.m */; };
 		6759EE5B1F2E686A00B8E0A9 /* Statusbar.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE591F2E686A00B8E0A9 /* Statusbar.pbobjc.h */; };
 		6759EE5C1F2E686A00B8E0A9 /* Statusbar.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759EE5A1F2E686A00B8E0A9 /* Statusbar.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		67F927091F27FFBB00C068AF /* Alert.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67F927071F27FFBB00C068AF /* Alert.pbobjc.h */; };
 		67FEBA701F099EDF005AFEDA /* Matcha.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA6E1F099EDF005AFEDA /* Matcha.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67FEBAAD1F099F1D005AFEDA /* Resource.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA7D1F099F1D005AFEDA /* Resource.pbobjc.h */; };
 		67FEBAAE1F099F1D005AFEDA /* Resource.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA7E1F099F1D005AFEDA /* Resource.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -57,10 +58,6 @@
 		67FEBAB81F099F1D005AFEDA /* Text.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA8C1F099F1D005AFEDA /* Text.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBAB91F099F1D005AFEDA /* Touch2.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA8E1F099F1D005AFEDA /* Touch2.pbobjc.h */; };
 		67FEBABA1F099F1D005AFEDA /* Touch2.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA8F1F099F1D005AFEDA /* Touch2.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		67FEBABD1F099F1D005AFEDA /* Imageview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA951F099F1D005AFEDA /* Imageview.pbobjc.h */; };
-		67FEBABF1F099F1D005AFEDA /* Scrollview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA981F099F1D005AFEDA /* Scrollview.pbobjc.h */; };
-		67FEBAC01F099F1D005AFEDA /* Scrollview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA991F099F1D005AFEDA /* Scrollview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		67FEBAC91F099F1D005AFEDA /* Textinput.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAA71F099F1D005AFEDA /* Textinput.pbobjc.h */; };
 		67FEBACB1F099F1D005AFEDA /* View.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAA91F099F1D005AFEDA /* View.pbobjc.h */; };
 		67FEBACC1F099F1D005AFEDA /* View.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAAA1F099F1D005AFEDA /* View.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBAD11F09A096005AFEDA /* MatchaBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67FEBAD01F09A096005AFEDA /* MatchaBridge.framework */; };
@@ -110,16 +107,12 @@
 /* Begin PBXFileReference section */
 		671B30561F5F509C00F2ABFE /* MatchaUnknownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaUnknownView.h; sourceTree = "<group>"; };
 		671B30571F5F509C00F2ABFE /* MatchaUnknownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaUnknownView.m; sourceTree = "<group>"; };
-		6731819B1F0DAB3400E1839E /* Progressview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Progressview.pbobjc.h; sourceTree = "<group>"; };
-		6731819C1F0DAB3400E1839E /* Progressview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Progressview.pbobjc.m; sourceTree = "<group>"; };
 		673181A01F0DB38F00E1839E /* MatchaProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaProgressView.h; sourceTree = "<group>"; };
 		673181A11F0DB38F00E1839E /* MatchaProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaProgressView.m; sourceTree = "<group>"; };
 		673181A41F14667900E1839E /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		673181A51F14667900E1839E /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		673181A91F15F7C600E1839E /* MatchaSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaSegmentView.h; sourceTree = "<group>"; };
 		673181AA1F15F7C600E1839E /* MatchaSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaSegmentView.m; sourceTree = "<group>"; };
-		673181AE1F15F81B00E1839E /* Segmentview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segmentview.pbobjc.h; sourceTree = "<group>"; };
-		673181AF1F15F81B00E1839E /* Segmentview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segmentview.pbobjc.m; sourceTree = "<group>"; };
 		6732F9E51F6763FA002DC2EF /* Slider.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Slider.pbobjc.m; sourceTree = "<group>"; };
 		6732F9E61F6763FA002DC2EF /* Slider.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slider.pbobjc.h; sourceTree = "<group>"; };
 		6732F9EA1F6766B5002DC2EF /* Stackview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stackview.pbobjc.h; sourceTree = "<group>"; };
@@ -136,14 +129,18 @@
 		6732F9FD1F67A668002DC2EF /* Imageview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Imageview.pbobjc.h; sourceTree = "<group>"; };
 		6732F9FE1F67A668002DC2EF /* Alert.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alert.pbobjc.m; sourceTree = "<group>"; };
 		6732F9FF1F67A668002DC2EF /* Alert.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alert.pbobjc.h; sourceTree = "<group>"; };
+		6732FA061F67A9D0002DC2EF /* Scrollview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scrollview.pbobjc.m; sourceTree = "<group>"; };
+		6732FA071F67A9D0002DC2EF /* Scrollview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scrollview.pbobjc.h; sourceTree = "<group>"; };
+		6732FA0A1F67A9D6002DC2EF /* Segmentview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segmentview.pbobjc.m; sourceTree = "<group>"; };
+		6732FA0B1F67A9D6002DC2EF /* Segmentview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segmentview.pbobjc.h; sourceTree = "<group>"; };
+		6732FA0C1F67A9D6002DC2EF /* Progressview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Progressview.pbobjc.m; sourceTree = "<group>"; };
+		6732FA0D1F67A9D6002DC2EF /* Progressview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Progressview.pbobjc.h; sourceTree = "<group>"; };
 		6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaMiddleware.h; sourceTree = "<group>"; };
 		6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaMiddleware.m; sourceTree = "<group>"; };
 		6759EE541F2E64EC00B8E0A9 /* MatchaStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaStatusBar.h; sourceTree = "<group>"; };
 		6759EE551F2E64EC00B8E0A9 /* MatchaStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaStatusBar.m; sourceTree = "<group>"; };
 		6759EE591F2E686A00B8E0A9 /* Statusbar.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statusbar.pbobjc.h; sourceTree = "<group>"; };
 		6759EE5A1F2E686A00B8E0A9 /* Statusbar.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Statusbar.pbobjc.m; sourceTree = "<group>"; };
-		67F927071F27FFBB00C068AF /* Alert.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alert.pbobjc.h; sourceTree = "<group>"; };
-		67F927081F27FFBB00C068AF /* Alert.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alert.pbobjc.m; sourceTree = "<group>"; };
 		67FEBA6B1F099EDF005AFEDA /* Matcha.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Matcha.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67FEBA6E1F099EDF005AFEDA /* Matcha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matcha.h; sourceTree = "<group>"; };
 		67FEBA6F1F099EDF005AFEDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -161,12 +158,6 @@
 		67FEBA8C1F099F1D005AFEDA /* Text.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Text.pbobjc.m; sourceTree = "<group>"; };
 		67FEBA8E1F099F1D005AFEDA /* Touch2.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Touch2.pbobjc.h; sourceTree = "<group>"; };
 		67FEBA8F1F099F1D005AFEDA /* Touch2.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Touch2.pbobjc.m; sourceTree = "<group>"; };
-		67FEBA951F099F1D005AFEDA /* Imageview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Imageview.pbobjc.h; sourceTree = "<group>"; };
-		67FEBA961F099F1D005AFEDA /* Imageview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Imageview.pbobjc.m; sourceTree = "<group>"; };
-		67FEBA981F099F1D005AFEDA /* Scrollview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scrollview.pbobjc.h; sourceTree = "<group>"; };
-		67FEBA991F099F1D005AFEDA /* Scrollview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scrollview.pbobjc.m; sourceTree = "<group>"; };
-		67FEBAA71F099F1D005AFEDA /* Textinput.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Textinput.pbobjc.h; sourceTree = "<group>"; };
-		67FEBAA81F099F1D005AFEDA /* Textinput.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Textinput.pbobjc.m; sourceTree = "<group>"; };
 		67FEBAA91F099F1D005AFEDA /* View.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = View.pbobjc.h; sourceTree = "<group>"; };
 		67FEBAAA1F099F1D005AFEDA /* View.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = View.pbobjc.m; sourceTree = "<group>"; };
 		67FEBAD01F09A096005AFEDA /* MatchaBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MatchaBridge.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/Untitled-epuxtzarwalcfgdrjxdszmmpsgml/Build/Products/Debug-iphonesimulator/MatchaBridge.framework"; sourceTree = "<group>"; };
@@ -235,15 +226,6 @@
 			name = UnknownView;
 			sourceTree = "<group>";
 		};
-		6731819A1F0DAB3400E1839E /* progressview */ = {
-			isa = PBXGroup;
-			children = (
-				6731819B1F0DAB3400E1839E /* Progressview.pbobjc.h */,
-				6731819C1F0DAB3400E1839E /* Progressview.pbobjc.m */,
-			);
-			path = progressview;
-			sourceTree = "<group>";
-		};
 		6731819F1F0DB36B00E1839E /* ProgressView */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,18 +244,13 @@
 			name = SegmentView;
 			sourceTree = "<group>";
 		};
-		673181AD1F15F81B00E1839E /* segmentview */ = {
-			isa = PBXGroup;
-			children = (
-				673181AE1F15F81B00E1839E /* Segmentview.pbobjc.h */,
-				673181AF1F15F81B00E1839E /* Segmentview.pbobjc.m */,
-			);
-			path = segmentview;
-			sourceTree = "<group>";
-		};
 		6732F9E91F6766B5002DC2EF /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				6732FA0A1F67A9D6002DC2EF /* Segmentview.pbobjc.m */,
+				6732FA0B1F67A9D6002DC2EF /* Segmentview.pbobjc.h */,
+				6732FA0C1F67A9D6002DC2EF /* Progressview.pbobjc.m */,
+				6732FA0D1F67A9D6002DC2EF /* Progressview.pbobjc.h */,
 				6732F9EE1F676925002DC2EF /* Tabview.pbobjc.m */,
 				6732F9EF1F676925002DC2EF /* Tabview.pbobjc.h */,
 				6732F9EA1F6766B5002DC2EF /* Stackview.pbobjc.h */,
@@ -300,15 +277,6 @@
 				67FEBAF61F09A18F005AFEDA /* MatchaBridge.m */,
 			);
 			name = Utilities;
-			sourceTree = "<group>";
-		};
-		67F927061F27FFBB00C068AF /* alert */ = {
-			isa = PBXGroup;
-			children = (
-				67F927071F27FFBB00C068AF /* Alert.pbobjc.h */,
-				67F927081F27FFBB00C068AF /* Alert.pbobjc.m */,
-			);
-			path = alert;
 			sourceTree = "<group>";
 		};
 		67FEBA611F099EDF005AFEDA = {
@@ -449,6 +417,9 @@
 		67FEBA901F099F1D005AFEDA /* view */ = {
 			isa = PBXGroup;
 			children = (
+				6732F9E91F6766B5002DC2EF /* ios */,
+				6732FA061F67A9D0002DC2EF /* Scrollview.pbobjc.m */,
+				6732FA071F67A9D0002DC2EF /* Scrollview.pbobjc.h */,
 				6732F9FA1F67A668002DC2EF /* Textinput.pbobjc.m */,
 				6732F9FB1F67A668002DC2EF /* Textinput.pbobjc.h */,
 				6732F9FC1F67A668002DC2EF /* Imageview.pbobjc.m */,
@@ -459,46 +430,12 @@
 				6732F9F71F67A409002DC2EF /* Button.pbobjc.h */,
 				6732F9F21F67A1B5002DC2EF /* Switchview.pbobjc.m */,
 				6732F9F31F67A1B5002DC2EF /* Switchview.pbobjc.h */,
-				6732F9E91F6766B5002DC2EF /* ios */,
 				6732F9E51F6763FA002DC2EF /* Slider.pbobjc.m */,
 				6732F9E61F6763FA002DC2EF /* Slider.pbobjc.h */,
-				67F927061F27FFBB00C068AF /* alert */,
-				673181AD1F15F81B00E1839E /* segmentview */,
-				6731819A1F0DAB3400E1839E /* progressview */,
-				67FEBA941F099F1D005AFEDA /* imageview */,
-				67FEBA971F099F1D005AFEDA /* scrollview */,
-				67FEBAA61F099F1D005AFEDA /* textinput */,
 				67FEBAA91F099F1D005AFEDA /* View.pbobjc.h */,
 				67FEBAAA1F099F1D005AFEDA /* View.pbobjc.m */,
 			);
 			path = view;
-			sourceTree = "<group>";
-		};
-		67FEBA941F099F1D005AFEDA /* imageview */ = {
-			isa = PBXGroup;
-			children = (
-				67FEBA951F099F1D005AFEDA /* Imageview.pbobjc.h */,
-				67FEBA961F099F1D005AFEDA /* Imageview.pbobjc.m */,
-			);
-			path = imageview;
-			sourceTree = "<group>";
-		};
-		67FEBA971F099F1D005AFEDA /* scrollview */ = {
-			isa = PBXGroup;
-			children = (
-				67FEBA981F099F1D005AFEDA /* Scrollview.pbobjc.h */,
-				67FEBA991F099F1D005AFEDA /* Scrollview.pbobjc.m */,
-			);
-			path = scrollview;
-			sourceTree = "<group>";
-		};
-		67FEBAA61F099F1D005AFEDA /* textinput */ = {
-			isa = PBXGroup;
-			children = (
-				67FEBAA71F099F1D005AFEDA /* Textinput.pbobjc.h */,
-				67FEBAA81F099F1D005AFEDA /* Textinput.pbobjc.m */,
-			);
-			path = textinput;
 			sourceTree = "<group>";
 		};
 		67FEBACD1F09A00C005AFEDA /* Frameworks */ = {
@@ -647,10 +584,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				67FEBA701F099EDF005AFEDA /* Matcha.h in Headers */,
-				67FEBABF1F099F1D005AFEDA /* Scrollview.pbobjc.h in Headers */,
 				67FEBAAF1F099F1D005AFEDA /* Image.pbobjc.h in Headers */,
 				673181AB1F15F7C600E1839E /* MatchaSegmentView.h in Headers */,
-				6731819D1F0DAB3400E1839E /* Progressview.pbobjc.h in Headers */,
 				67FEBB0B1F09A18F005AFEDA /* MatchaScrollView.h in Headers */,
 				6732FA051F67A668002DC2EF /* Alert.pbobjc.h in Headers */,
 				6732FA031F67A668002DC2EF /* Imageview.pbobjc.h in Headers */,
@@ -660,7 +595,9 @@
 				6732F9EC1F6766B5002DC2EF /* Stackview.pbobjc.h in Headers */,
 				67FEBAFF1F09A18F005AFEDA /* MatchaTextInput.h in Headers */,
 				6759EE521F2E632C00B8E0A9 /* MatchaMiddleware.h in Headers */,
+				6732FA0F1F67A9D6002DC2EF /* Segmentview.pbobjc.h in Headers */,
 				67FEBB1D1F09A18F005AFEDA /* MatchaBridge.h in Headers */,
+				6732FA091F67A9D0002DC2EF /* Scrollview.pbobjc.h in Headers */,
 				6732F9E81F6763FA002DC2EF /* Slider.pbobjc.h in Headers */,
 				67FEBB071F09A18F005AFEDA /* MatchaStackView.h in Headers */,
 				67FEBAFB1F09A18F005AFEDA /* MatchaView.h in Headers */,
@@ -671,12 +608,10 @@
 				6759EE561F2E64EC00B8E0A9 /* MatchaStatusBar.h in Headers */,
 				67FEBAB51F099F1D005AFEDA /* Paint.pbobjc.h in Headers */,
 				67FEBB0D1F09A18F005AFEDA /* MatchaProtobuf.h in Headers */,
-				673181B01F15F81B00E1839E /* Segmentview.pbobjc.h in Headers */,
 				6732F9F51F67A1B5002DC2EF /* Switchview.pbobjc.h in Headers */,
 				67FEBAF91F09A18F005AFEDA /* MatchaViewController.h in Headers */,
 				67FEBAB71F099F1D005AFEDA /* Text.pbobjc.h in Headers */,
 				6732FA011F67A668002DC2EF /* Textinput.pbobjc.h in Headers */,
-				67FEBABD1F099F1D005AFEDA /* Imageview.pbobjc.h in Headers */,
 				67FEBB0F1F09A18F005AFEDA /* MatchaPressGestureRecognizer.h in Headers */,
 				67FEBB351F0A1FF6005AFEDA /* MatchaBasicView.h in Headers */,
 				67FEBB171F09A18F005AFEDA /* MatchaDeadlockLogger.h in Headers */,
@@ -690,11 +625,10 @@
 				6759EE5B1F2E686A00B8E0A9 /* Statusbar.pbobjc.h in Headers */,
 				6732F9F91F67A409002DC2EF /* Button.pbobjc.h in Headers */,
 				67FEBB051F09A18F005AFEDA /* MatchaSwitchView.h in Headers */,
-				67F927091F27FFBB00C068AF /* Alert.pbobjc.h in Headers */,
 				67FEBB011F09A18F005AFEDA /* MatchaTapGestureRecognizer.h in Headers */,
-				67FEBAC91F099F1D005AFEDA /* Textinput.pbobjc.h in Headers */,
 				67FEBB091F09A18F005AFEDA /* MatchaSlider.h in Headers */,
 				67FEBB191F09A18F005AFEDA /* MatchaButtonGestureRecognizer.h in Headers */,
+				6732FA111F67A9D6002DC2EF /* Progressview.pbobjc.h in Headers */,
 				67FEBAB91F099F1D005AFEDA /* Touch2.pbobjc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -769,13 +703,12 @@
 			files = (
 				67FEBB041F09A18F005AFEDA /* MatchaSwitchView.m in Sources */,
 				67FEBB081F09A18F005AFEDA /* MatchaSlider.m in Sources */,
+				6732FA0E1F67A9D6002DC2EF /* Segmentview.pbobjc.m in Sources */,
 				6732F9F01F676925002DC2EF /* Tabview.pbobjc.m in Sources */,
 				6732F9F81F67A409002DC2EF /* Button.pbobjc.m in Sources */,
 				6759EE571F2E64EC00B8E0A9 /* MatchaStatusBar.m in Sources */,
 				67FEBAB41F099F1D005AFEDA /* Layout.pbobjc.m in Sources */,
-				67FEBAC01F099F1D005AFEDA /* Scrollview.pbobjc.m in Sources */,
 				6732F9ED1F6766B5002DC2EF /* Stackview.pbobjc.m in Sources */,
-				673181B11F15F81B00E1839E /* Segmentview.pbobjc.m in Sources */,
 				67FEBB0C1F09A18F005AFEDA /* MatchaProtobuf.m in Sources */,
 				67FEBAAE1F099F1D005AFEDA /* Resource.pbobjc.m in Sources */,
 				67FEBB0A1F09A18F005AFEDA /* MatchaScrollView.m in Sources */,
@@ -790,9 +723,9 @@
 				67FEBB0E1F09A18F005AFEDA /* MatchaPressGestureRecognizer.m in Sources */,
 				67FEBABA1F099F1D005AFEDA /* Touch2.pbobjc.m in Sources */,
 				6732FA021F67A668002DC2EF /* Imageview.pbobjc.m in Sources */,
-				6731819E1F0DAB3400E1839E /* Progressview.pbobjc.m in Sources */,
 				6759EE531F2E632C00B8E0A9 /* MatchaMiddleware.m in Sources */,
 				673181A71F14667900E1839E /* UITextView+Placeholder.m in Sources */,
+				6732FA101F67A9D6002DC2EF /* Progressview.pbobjc.m in Sources */,
 				6759EE5C1F2E686A00B8E0A9 /* Statusbar.pbobjc.m in Sources */,
 				67FEBB001F09A18F005AFEDA /* MatchaTapGestureRecognizer.m in Sources */,
 				67FEBAF81F09A18F005AFEDA /* MatchaViewController.m in Sources */,
@@ -804,6 +737,7 @@
 				67FEBB1C1F09A18F005AFEDA /* MatchaBridge.m in Sources */,
 				671B30591F5F509D00F2ABFE /* MatchaUnknownView.m in Sources */,
 				67FEBAFE1F09A18F005AFEDA /* MatchaTextInput.m in Sources */,
+				6732FA081F67A9D0002DC2EF /* Scrollview.pbobjc.m in Sources */,
 				67FEBB121F09A18F005AFEDA /* MatchaNode.m in Sources */,
 				67FEBB161F09A18F005AFEDA /* MatchaDeadlockLogger.m in Sources */,
 				67FEBB361F0A1FF6005AFEDA /* MatchaBasicView.m in Sources */,

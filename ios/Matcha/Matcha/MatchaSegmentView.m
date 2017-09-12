@@ -18,7 +18,7 @@
 
 - (void)setNode:(MatchaBuildNode *)value {
     _node = value;
-    MatchaSegmentViewPbView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaSegmentViewPbView class] error:nil];
+    MatchaiOSPBSegmentView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaiOSPBSegmentView class] error:nil];
     
     [self removeAllSegments];
     for (NSInteger i = 0; i < view.titlesArray.count; i++) {
@@ -30,7 +30,7 @@
 }
 
 - (void)onChange:(id)sender {
-    MatchaSegmentViewPbEvent *event = [[MatchaSegmentViewPbEvent alloc] init];
+    MatchaiOSPBSegmentViewEvent *event = [[MatchaiOSPBSegmentViewEvent alloc] init];
     event.value = self.selectedSegmentIndex;
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
     

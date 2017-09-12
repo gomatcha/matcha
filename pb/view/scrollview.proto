@@ -1,13 +1,13 @@
 syntax = "proto3";
-package matcha.view.scrollview;
+package matcha.view;
 import "gomatcha.io/matcha/pb/layout/layout.proto";
 
-option go_package = "scrollview";
-option objc_class_prefix = "MatchaScrollViewPB";
-option java_package = "io.gomatcha.matcha.pb.view.scrollview";
+option go_package = "view";
+option objc_class_prefix = "MatchaViewPB";
+option java_package = "io.gomatcha.matcha.pb.view";
 option java_outer_classname = "PbScrollView";
 
-message View {
+message ScrollView {
   bool scrollEnabled = 1;
   bool horizontal = 4;
   bool vertical = 5;

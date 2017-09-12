@@ -18,7 +18,7 @@ import io.gomatcha.matcha.pb.Pb;
 import io.gomatcha.matcha.pb.paint.PbPaint;
 import io.gomatcha.matcha.pb.touch.PbTouch;
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.scrollview.PbScrollView;
+import io.gomatcha.matcha.pb.view.PbScrollView;
 
 public class MatchaViewNode extends Object {
     MatchaViewNode parent;

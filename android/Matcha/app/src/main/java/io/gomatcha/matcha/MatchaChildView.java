@@ -15,14 +15,12 @@ import android.widget.RelativeLayout;
 import com.google.protobuf.Duration;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.pb.touch.PbTouch;
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.slider.PbSlider;
 
 public class MatchaChildView extends RelativeLayout {
     MatchaViewNode viewNode;

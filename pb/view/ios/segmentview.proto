@@ -1,0 +1,18 @@
+syntax = "proto3";
+package matcha.view.ios;
+
+option go_package = "ios";
+option objc_class_prefix = "MatchaiOSPB";
+option java_package = "io.gomatcha.matcha.pb.view.ios";
+option java_outer_classname = "PbSegmentView";
+
+message SegmentView {
+    int64 value = 1;
+    repeated string titles = 2;
+    bool momentary = 3;
+    bool enabled = 4;
+}
+
+message SegmentViewEvent {
+    int64 value = 1;
+}

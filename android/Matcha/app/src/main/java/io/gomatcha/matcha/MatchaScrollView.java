@@ -11,7 +11,7 @@ import android.widget.ScrollView;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.scrollview.PbScrollView;
+import io.gomatcha.matcha.pb.view.PbScrollView;
 
 public class MatchaScrollView extends MatchaChildView {
     ScrollView view;
@@ -44,7 +44,7 @@ public class MatchaScrollView extends MatchaChildView {
     public void setNode(PbView.BuildNode buildNode) {
         super.setNode(buildNode);
         try {
-            PbScrollView.View proto = buildNode.getBridgeValue().unpack(PbScrollView.View.class);
+            PbScrollView.ScrollView proto = buildNode.getBridgeValue().unpack(PbScrollView.ScrollView.class);
             view.setVerticalScrollBarEnabled(proto.getShowsVerticalScrollIndicator());
             view.setHorizontalScrollBarEnabled(proto.getShowsHorizontalScrollIndicator());
 

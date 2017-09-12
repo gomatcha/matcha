@@ -8,6 +8,7 @@ It is generated from these files:
 	gomatcha.io/matcha/pb/view/alert.proto
 	gomatcha.io/matcha/pb/view/button.proto
 	gomatcha.io/matcha/pb/view/imageview.proto
+	gomatcha.io/matcha/pb/view/scrollview.proto
 	gomatcha.io/matcha/pb/view/slider.proto
 	gomatcha.io/matcha/pb/view/switchview.proto
 	gomatcha.io/matcha/pb/view/textinput.proto
@@ -18,6 +19,8 @@ It has these top-level messages:
 	AlertButton
 	Button
 	ImageView
+	ScrollView
+	ScrollEvent
 	Slider
 	SliderEvent
 	SwitchView

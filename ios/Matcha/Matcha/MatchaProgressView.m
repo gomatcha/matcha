@@ -18,7 +18,7 @@
 
 - (void)setNode:(MatchaBuildNode *)value {
     _node = value;
-    MatchaProgressViewPBView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaProgressViewPBView class] error:nil];
+    MatchaiOSPBProgressView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaiOSPBProgressView class] error:nil];
     self.progress = view.progress;
     self.tintColor = [[UIColor alloc] initWithProtobuf:view.progressColor];
 }

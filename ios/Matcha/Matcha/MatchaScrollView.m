@@ -23,7 +23,7 @@
     
     GPBAny *state = value.nativeViewState;
     NSError *error = nil;
-    MatchaScrollViewPBView *pbscrollview = (id)[state unpackMessageClass:[MatchaScrollViewPBView class] error:&error];
+    MatchaViewPBScrollView *pbscrollview = (id)[state unpackMessageClass:[MatchaViewPBScrollView class] error:&error];
     if (pbscrollview != nil) {
         self.scrollEnabled = pbscrollview.scrollEnabled;
         self.showsVerticalScrollIndicator = pbscrollview.showsVerticalScrollIndicator;
@@ -38,7 +38,7 @@
         return;
     }
     
-    MatchaScrollViewPBScrollEvent *event = [[MatchaScrollViewPBScrollEvent alloc] init];
+    MatchaViewPBScrollEvent *event = [[MatchaViewPBScrollEvent alloc] init];
     event.contentOffset = [[MatchaLayoutPBPoint alloc] initWithCGPoint:scrollView.contentOffset];
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
     [self.viewNode.rootVC call:@"OnScroll" viewId:self.node.identifier.longLongValue args:@[value]];

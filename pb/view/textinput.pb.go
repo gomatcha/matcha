@@ -28,7 +28,7 @@ type TextInput struct {
 func (m *TextInput) Reset()                    { *m = TextInput{} }
 func (m *TextInput) String() string            { return proto.CompactTextString(m) }
 func (*TextInput) ProtoMessage()               {}
-func (*TextInput) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{0} }
+func (*TextInput) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{0} }
 
 func (m *TextInput) GetStyledText() *matcha_text.StyledText {
 	if m != nil {
@@ -93,7 +93,7 @@ type TextInputEvent struct {
 func (m *TextInputEvent) Reset()                    { *m = TextInputEvent{} }
 func (m *TextInputEvent) String() string            { return proto.CompactTextString(m) }
 func (*TextInputEvent) ProtoMessage()               {}
-func (*TextInputEvent) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{1} }
+func (*TextInputEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{1} }
 
 func (m *TextInputEvent) GetStyledText() *matcha_text.StyledText {
 	if m != nil {
@@ -109,7 +109,7 @@ type TextInputFocusEvent struct {
 func (m *TextInputFocusEvent) Reset()                    { *m = TextInputFocusEvent{} }
 func (m *TextInputFocusEvent) String() string            { return proto.CompactTextString(m) }
 func (*TextInputFocusEvent) ProtoMessage()               {}
-func (*TextInputFocusEvent) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{2} }
+func (*TextInputFocusEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{2} }
 
 func (m *TextInputFocusEvent) GetFocused() bool {
 	if m != nil {
@@ -124,7 +124,7 @@ type TextInputSubmitEvent struct {
 func (m *TextInputSubmitEvent) Reset()                    { *m = TextInputSubmitEvent{} }
 func (m *TextInputSubmitEvent) String() string            { return proto.CompactTextString(m) }
 func (*TextInputSubmitEvent) ProtoMessage()               {}
-func (*TextInputSubmitEvent) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{3} }
+func (*TextInputSubmitEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{3} }
 
 func init() {
 	proto.RegisterType((*TextInput)(nil), "matcha.view.TextInput")
@@ -133,9 +133,9 @@ func init() {
 	proto.RegisterType((*TextInputSubmitEvent)(nil), "matcha.view.TextInputSubmitEvent")
 }
 
-func init() { proto.RegisterFile("gomatcha.io/matcha/pb/view/textinput.proto", fileDescriptor5) }
+func init() { proto.RegisterFile("gomatcha.io/matcha/pb/view/textinput.proto", fileDescriptor6) }
 
-var fileDescriptor5 = []byte{
+var fileDescriptor6 = []byte{
 	// 379 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x52, 0x4d, 0x4b, 0xeb, 0x40,
 	0x14, 0x25, 0x6d, 0x5f, 0x3f, 0xa6, 0xa5, 0x85, 0x79, 0xef, 0x69, 0x88, 0x9b, 0x10, 0x10, 0x82,

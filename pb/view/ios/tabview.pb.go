@@ -24,7 +24,7 @@ type TabChildView struct {
 func (m *TabChildView) Reset()                    { *m = TabChildView{} }
 func (m *TabChildView) String() string            { return proto.CompactTextString(m) }
 func (*TabChildView) ProtoMessage()               {}
-func (*TabChildView) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
+func (*TabChildView) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{0} }
 
 func (m *TabChildView) GetTitle() string {
 	if m != nil {
@@ -67,7 +67,7 @@ type TabView struct {
 func (m *TabView) Reset()                    { *m = TabView{} }
 func (m *TabView) String() string            { return proto.CompactTextString(m) }
 func (*TabView) ProtoMessage()               {}
-func (*TabView) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
+func (*TabView) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{1} }
 
 func (m *TabView) GetScreens() []*TabChildView {
 	if m != nil {
@@ -125,7 +125,7 @@ type TabEvent struct {
 func (m *TabEvent) Reset()                    { *m = TabEvent{} }
 func (m *TabEvent) String() string            { return proto.CompactTextString(m) }
 func (*TabEvent) ProtoMessage()               {}
-func (*TabEvent) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{2} }
+func (*TabEvent) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{2} }
 
 func (m *TabEvent) GetSelectedIndex() int64 {
 	if m != nil {
@@ -140,9 +140,9 @@ func init() {
 	proto.RegisterType((*TabEvent)(nil), "matcha.view.ios.TabEvent")
 }
 
-func init() { proto.RegisterFile("gomatcha.io/matcha/pb/view/ios/tabview.proto", fileDescriptor1) }
+func init() { proto.RegisterFile("gomatcha.io/matcha/pb/view/ios/tabview.proto", fileDescriptor3) }
 
-var fileDescriptor1 = []byte{
+var fileDescriptor3 = []byte{
 	// 393 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x92, 0xdd, 0x6a, 0xe2, 0x40,
 	0x14, 0xc7, 0x89, 0xf1, 0x73, 0x54, 0x64, 0x67, 0x97, 0xdd, 0x20, 0xec, 0xe2, 0x4a, 0x0b, 0x96,

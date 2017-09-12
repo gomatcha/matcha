@@ -10,7 +10,7 @@ import (
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pb/view/scrollview"
+	pbview "gomatcha.io/matcha/pb/view"
 )
 
 type ScrollView struct {
@@ -59,7 +59,7 @@ func (v *ScrollView) Build(ctx *Context) Model {
 			offset:         v.offset,
 		},
 		NativeViewName: "gomatcha.io/matcha/view/scrollview",
-		NativeViewState: &scrollview.View{
+		NativeViewState: &pbview.ScrollView{
 			ScrollEnabled:                  v.ScrollEnabled,
 			Horizontal:                     v.ScrollAxes|layout.AxisX == layout.AxisX,
 			Vertical:                       v.ScrollAxes|layout.AxisY == layout.AxisY,
@@ -68,7 +68,7 @@ func (v *ScrollView) Build(ctx *Context) Model {
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnScroll": func(data []byte) {
-				event := &scrollview.ScrollEvent{}
+				event := &pbview.ScrollEvent{}
 				err := proto.Unmarshal(data, event)
 				if err != nil {
 					fmt.Println("error", err)

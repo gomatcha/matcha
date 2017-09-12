@@ -4,20 +4,15 @@ import android.content.Context;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
-import android.support.v7.app.ActionBar;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.gomatcha.app.R;
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.stackview.PbStackView;
-import io.gomatcha.matcha.pb.view.switchview.PbSwitchView;
+import io.gomatcha.matcha.pb.view.android.PbStackView;
 
 public class MatchaStackView extends MatchaChildView {
     Toolbar toolbar;
@@ -60,7 +55,7 @@ public class MatchaStackView extends MatchaChildView {
     public void setNode(PbView.BuildNode buildNode) {
         super.setNode(buildNode);
         try {
-            PbStackView.View proto = buildNode.getBridgeValue().unpack(PbStackView.View.class);
+            PbStackView.StackView proto = buildNode.getBridgeValue().unpack(PbStackView.StackView.class);
         } catch (InvalidProtocolBufferException e) {
         }
     }

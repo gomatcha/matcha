@@ -1,20 +1,14 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.text.SpannableString;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import io.gomatcha.matcha.pb.Pb;
 import io.gomatcha.matcha.pb.text.PbText;
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.imageview.PbImageView;
 
 public class MatchaTextView extends MatchaChildView {
     TextView view;
