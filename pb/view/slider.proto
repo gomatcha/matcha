@@ -1,18 +1,18 @@
 syntax = "proto3";
-package slider;
+package matcha.view;
 
-option go_package = "slider";
-option objc_class_prefix = "MatchaSliderPb";
-option java_package = "io.gomatcha.matcha.pb.view.slider";
+option go_package = "view";
+option objc_class_prefix = "MatchaViewPb";
+option java_package = "io.gomatcha.matcha.pb.view";
 option java_outer_classname = "PbSlider";
 
-message View {
+message Slider {
     double value = 1;
     double maxValue = 2;
     double minValue = 3;
     bool enabled = 4;
 }
 
-message Event {
+message SliderEvent {
     double value = 1;
 }

@@ -9,7 +9,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.slider.PbSlider;
+import io.gomatcha.matcha.pb.view.PbSlider;
 
 public class MatchaSlider extends MatchaChildView {
     SeekBar view;
@@ -38,7 +38,7 @@ public class MatchaSlider extends MatchaChildView {
                 if (b && i != value ) {
                     double maxValue = MatchaSlider.this.maxValue;
                     double minValue = MatchaSlider.this.minValue;
-                    PbSlider.Event proto = PbSlider.Event.newBuilder().setValue((double) i / 10000.0 * (maxValue - minValue) + minValue).build();
+                    PbSlider.SliderEvent proto = PbSlider.SliderEvent.newBuilder().setValue((double) i / 10000.0 * (maxValue - minValue) + minValue).build();
                     MatchaSlider.this.viewNode.rootView.call("OnValueChange", MatchaSlider.this.viewNode.id, new GoValue(proto.toByteArray()));
                 }
             }
@@ -50,7 +50,7 @@ public class MatchaSlider extends MatchaChildView {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 double maxValue = MatchaSlider.this.maxValue;
                 double minValue = MatchaSlider.this.minValue;
-                PbSlider.Event proto = PbSlider.Event.newBuilder().setValue((double)MatchaSlider.this.view.getProgress()/10000.0 * (maxValue - minValue) + minValue).build();
+                PbSlider.SliderEvent proto = PbSlider.SliderEvent.newBuilder().setValue((double)MatchaSlider.this.view.getProgress()/10000.0 * (maxValue - minValue) + minValue).build();
                 MatchaSlider.this.viewNode.rootView.call("OnSubmit", MatchaSlider.this.viewNode.id, new GoValue(proto.toByteArray()));
             }
         });
@@ -61,7 +61,7 @@ public class MatchaSlider extends MatchaChildView {
     public void setNode(PbView.BuildNode buildNode) {
         super.setNode(buildNode);
         try {
-            PbSlider.View proto = buildNode.getBridgeValue().unpack(PbSlider.View.class);
+            PbSlider.Slider proto = buildNode.getBridgeValue().unpack(PbSlider.Slider.class);
             view.setEnabled(proto.getEnabled());
             view.setProgress((int)((proto.getValue()- proto.getMinValue())*10000.0/(proto.getMaxValue() - proto.getMinValue())));
             this.value = view.getProgress();

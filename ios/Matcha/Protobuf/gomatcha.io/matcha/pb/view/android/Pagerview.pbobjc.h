@@ -27,11 +27,11 @@
 
 CF_EXTERN_C_BEGIN
 
-@class MatchaPagerViewPBPagerChildView;
+@class MatchaAndroidPBPagerChildView;
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - MatchaPagerViewPBPagerviewRoot
+#pragma mark - MatchaAndroidPBPagerviewRoot
 
 /**
  * Exposes the extension registry for this file.
@@ -43,16 +43,16 @@ NS_ASSUME_NONNULL_BEGIN
  * which is a @c GPBExtensionRegistry that includes all the extensions defined by
  * this file and all files that it depends on.
  **/
-@interface MatchaPagerViewPBPagerviewRoot : GPBRootObject
+@interface MatchaAndroidPBPagerviewRoot : GPBRootObject
 @end
 
-#pragma mark - MatchaPagerViewPBPagerChildView
+#pragma mark - MatchaAndroidPBPagerChildView
 
-typedef GPB_ENUM(MatchaPagerViewPBPagerChildView_FieldNumber) {
-  MatchaPagerViewPBPagerChildView_FieldNumber_Title = 2,
+typedef GPB_ENUM(MatchaAndroidPBPagerChildView_FieldNumber) {
+  MatchaAndroidPBPagerChildView_FieldNumber_Title = 2,
 };
 
-@interface MatchaPagerViewPBPagerChildView : GPBMessage
+@interface MatchaAndroidPBPagerChildView : GPBMessage
 
 /**
  * matcha.ImageOrResource icon = 3;
@@ -63,16 +63,16 @@ typedef GPB_ENUM(MatchaPagerViewPBPagerChildView_FieldNumber) {
 
 @end
 
-#pragma mark - MatchaPagerViewPBPagerView
+#pragma mark - MatchaAndroidPBPagerView
 
-typedef GPB_ENUM(MatchaPagerViewPBPagerView_FieldNumber) {
-  MatchaPagerViewPBPagerView_FieldNumber_ChildViewsArray = 1,
-  MatchaPagerViewPBPagerView_FieldNumber_SelectedIndex = 2,
+typedef GPB_ENUM(MatchaAndroidPBPagerView_FieldNumber) {
+  MatchaAndroidPBPagerView_FieldNumber_ChildViewsArray = 1,
+  MatchaAndroidPBPagerView_FieldNumber_SelectedIndex = 2,
 };
 
-@interface MatchaPagerViewPBPagerView : GPBMessage
+@interface MatchaAndroidPBPagerView : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MatchaPagerViewPBPagerChildView*> *childViewsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MatchaAndroidPBPagerChildView*> *childViewsArray;
 /** The number of items in @c childViewsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger childViewsArray_Count;
 
@@ -87,13 +87,13 @@ typedef GPB_ENUM(MatchaPagerViewPBPagerView_FieldNumber) {
 
 @end
 
-#pragma mark - MatchaPagerViewPBPagerEvent
+#pragma mark - MatchaAndroidPBPagerEvent
 
-typedef GPB_ENUM(MatchaPagerViewPBPagerEvent_FieldNumber) {
-  MatchaPagerViewPBPagerEvent_FieldNumber_SelectedIndex = 1,
+typedef GPB_ENUM(MatchaAndroidPBPagerEvent_FieldNumber) {
+  MatchaAndroidPBPagerEvent_FieldNumber_SelectedIndex = 1,
 };
 
-@interface MatchaPagerViewPBPagerEvent : GPBMessage
+@interface MatchaAndroidPBPagerEvent : GPBMessage
 
 @property(nonatomic, readwrite) int64_t selectedIndex;
 

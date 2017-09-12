@@ -7,7 +7,7 @@ import (
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pb/view/slider"
+	pbview "gomatcha.io/matcha/pb/view"
 )
 
 type sliderLayouter struct {
@@ -81,7 +81,7 @@ func (v *Slider) Build(ctx *Context) Model {
 		Painter:        painter,
 		Layouter:       &sliderLayouter{},
 		NativeViewName: "gomatcha.io/matcha/view/slider",
-		NativeViewState: &slider.View{
+		NativeViewState: &pbview.Slider{
 			Value:    val,
 			MaxValue: v.MaxValue,
 			MinValue: v.MinValue,
@@ -89,7 +89,7 @@ func (v *Slider) Build(ctx *Context) Model {
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnValueChange": func(data []byte) {
-				event := &slider.Event{}
+				event := &pbview.SliderEvent{}
 				err := proto.Unmarshal(data, event)
 				if err != nil {
 					fmt.Println("error", err)
@@ -101,7 +101,7 @@ func (v *Slider) Build(ctx *Context) Model {
 				}
 			},
 			"OnSubmit": func(data []byte) {
-				event := &slider.Event{}
+				event := &pbview.SliderEvent{}
 				err := proto.Unmarshal(data, event)
 				if err != nil {
 					fmt.Println("error", err)

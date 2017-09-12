@@ -1,5 +1,4 @@
 High:
-* Android tabview
 * Android stackview
 * Android better gesture recognizers
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation

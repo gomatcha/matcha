@@ -19,7 +19,7 @@
 
 - (void)setNode:(MatchaBuildNode *)value {
     _node = value;
-    MatchaSliderPbView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaSliderPbView class] error:nil];
+    MatchaViewPbSlider *view = (id)[value.nativeViewState unpackMessageClass:[MatchaViewPbSlider class] error:nil];
     
     self.enabled = view.enabled;
     self.value = view.value;
@@ -28,7 +28,7 @@
 }
 
 - (void)onChange:(id)sender forEvent:(UIEvent *)e {
-    MatchaSliderPbEvent *event = [[MatchaSliderPbEvent alloc] init];
+    MatchaViewPbSliderEvent *event = [[MatchaViewPbSliderEvent alloc] init];
     event.value = self.value;
     
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];

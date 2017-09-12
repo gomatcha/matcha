@@ -19,40 +19,40 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-#pragma mark - MatchaPagerViewPBPagerviewRoot
+#pragma mark - MatchaAndroidPBPagerviewRoot
 
-@implementation MatchaPagerViewPBPagerviewRoot
+@implementation MatchaAndroidPBPagerviewRoot
 
 // No extensions in the file and no imports, so no need to generate
 // +extensionRegistry.
 
 @end
 
-#pragma mark - MatchaPagerViewPBPagerviewRoot_FileDescriptor
+#pragma mark - MatchaAndroidPBPagerviewRoot_FileDescriptor
 
-static GPBFileDescriptor *MatchaPagerViewPBPagerviewRoot_FileDescriptor(void) {
+static GPBFileDescriptor *MatchaAndroidPBPagerviewRoot_FileDescriptor(void) {
   // This is called by +initialize so there is no need to worry
   // about thread safety of the singleton.
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
     GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
     descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"matcha.view.android"
-                                                 objcPrefix:@"MatchaPagerViewPB"
+                                                 objcPrefix:@"MatchaAndroidPB"
                                                      syntax:GPBFileSyntaxProto3];
   }
   return descriptor;
 }
 
-#pragma mark - MatchaPagerViewPBPagerChildView
+#pragma mark - MatchaAndroidPBPagerChildView
 
-@implementation MatchaPagerViewPBPagerChildView
+@implementation MatchaAndroidPBPagerChildView
 
 @dynamic title;
 
-typedef struct MatchaPagerViewPBPagerChildView__storage_ {
+typedef struct MatchaAndroidPBPagerChildView__storage_ {
   uint32_t _has_storage_[1];
   NSString *title;
-} MatchaPagerViewPBPagerChildView__storage_;
+} MatchaAndroidPBPagerChildView__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -63,20 +63,20 @@ typedef struct MatchaPagerViewPBPagerChildView__storage_ {
       {
         .name = "title",
         .dataTypeSpecific.className = NULL,
-        .number = MatchaPagerViewPBPagerChildView_FieldNumber_Title,
+        .number = MatchaAndroidPBPagerChildView_FieldNumber_Title,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MatchaPagerViewPBPagerChildView__storage_, title),
+        .offset = (uint32_t)offsetof(MatchaAndroidPBPagerChildView__storage_, title),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[MatchaPagerViewPBPagerChildView class]
-                                     rootClass:[MatchaPagerViewPBPagerviewRoot class]
-                                          file:MatchaPagerViewPBPagerviewRoot_FileDescriptor()
+        [GPBDescriptor allocDescriptorForClass:[MatchaAndroidPBPagerChildView class]
+                                     rootClass:[MatchaAndroidPBPagerviewRoot class]
+                                          file:MatchaAndroidPBPagerviewRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(MatchaPagerViewPBPagerChildView__storage_)
+                                   storageSize:sizeof(MatchaAndroidPBPagerChildView__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
@@ -86,18 +86,18 @@ typedef struct MatchaPagerViewPBPagerChildView__storage_ {
 
 @end
 
-#pragma mark - MatchaPagerViewPBPagerView
+#pragma mark - MatchaAndroidPBPagerView
 
-@implementation MatchaPagerViewPBPagerView
+@implementation MatchaAndroidPBPagerView
 
 @dynamic childViewsArray, childViewsArray_Count;
 @dynamic selectedIndex;
 
-typedef struct MatchaPagerViewPBPagerView__storage_ {
+typedef struct MatchaAndroidPBPagerView__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *childViewsArray;
   int64_t selectedIndex;
-} MatchaPagerViewPBPagerView__storage_;
+} MatchaAndroidPBPagerView__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -107,30 +107,30 @@ typedef struct MatchaPagerViewPBPagerView__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "childViewsArray",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPagerViewPBPagerChildView),
-        .number = MatchaPagerViewPBPagerView_FieldNumber_ChildViewsArray,
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaAndroidPBPagerChildView),
+        .number = MatchaAndroidPBPagerView_FieldNumber_ChildViewsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(MatchaPagerViewPBPagerView__storage_, childViewsArray),
+        .offset = (uint32_t)offsetof(MatchaAndroidPBPagerView__storage_, childViewsArray),
         .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "selectedIndex",
         .dataTypeSpecific.className = NULL,
-        .number = MatchaPagerViewPBPagerView_FieldNumber_SelectedIndex,
+        .number = MatchaAndroidPBPagerView_FieldNumber_SelectedIndex,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MatchaPagerViewPBPagerView__storage_, selectedIndex),
+        .offset = (uint32_t)offsetof(MatchaAndroidPBPagerView__storage_, selectedIndex),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[MatchaPagerViewPBPagerView class]
-                                     rootClass:[MatchaPagerViewPBPagerviewRoot class]
-                                          file:MatchaPagerViewPBPagerviewRoot_FileDescriptor()
+        [GPBDescriptor allocDescriptorForClass:[MatchaAndroidPBPagerView class]
+                                     rootClass:[MatchaAndroidPBPagerviewRoot class]
+                                          file:MatchaAndroidPBPagerviewRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(MatchaPagerViewPBPagerView__storage_)
+                                   storageSize:sizeof(MatchaAndroidPBPagerView__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
@@ -145,16 +145,16 @@ typedef struct MatchaPagerViewPBPagerView__storage_ {
 
 @end
 
-#pragma mark - MatchaPagerViewPBPagerEvent
+#pragma mark - MatchaAndroidPBPagerEvent
 
-@implementation MatchaPagerViewPBPagerEvent
+@implementation MatchaAndroidPBPagerEvent
 
 @dynamic selectedIndex;
 
-typedef struct MatchaPagerViewPBPagerEvent__storage_ {
+typedef struct MatchaAndroidPBPagerEvent__storage_ {
   uint32_t _has_storage_[1];
   int64_t selectedIndex;
-} MatchaPagerViewPBPagerEvent__storage_;
+} MatchaAndroidPBPagerEvent__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -165,20 +165,20 @@ typedef struct MatchaPagerViewPBPagerEvent__storage_ {
       {
         .name = "selectedIndex",
         .dataTypeSpecific.className = NULL,
-        .number = MatchaPagerViewPBPagerEvent_FieldNumber_SelectedIndex,
+        .number = MatchaAndroidPBPagerEvent_FieldNumber_SelectedIndex,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MatchaPagerViewPBPagerEvent__storage_, selectedIndex),
+        .offset = (uint32_t)offsetof(MatchaAndroidPBPagerEvent__storage_, selectedIndex),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[MatchaPagerViewPBPagerEvent class]
-                                     rootClass:[MatchaPagerViewPBPagerviewRoot class]
-                                          file:MatchaPagerViewPBPagerviewRoot_FileDescriptor()
+        [GPBDescriptor allocDescriptorForClass:[MatchaAndroidPBPagerEvent class]
+                                     rootClass:[MatchaAndroidPBPagerviewRoot class]
+                                          file:MatchaAndroidPBPagerviewRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(MatchaPagerViewPBPagerEvent__storage_)
+                                   storageSize:sizeof(MatchaAndroidPBPagerEvent__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
