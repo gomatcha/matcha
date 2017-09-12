@@ -22,7 +22,7 @@
 
 - (void)setNode:(MatchaBuildNode *)value {
     _node = value;
-    MatchaButtonPBView *pbbutton = (id)[value.nativeViewState unpackMessageClass:[MatchaButtonPBView class] error:NULL];
+    MatchaViewPbButton *pbbutton = (id)[value.nativeViewState unpackMessageClass:[MatchaViewPbButton class] error:NULL];
     
     if (pbbutton.hasColor) {
         self.button.tintColor = [[UIColor alloc] initWithProtobuf:pbbutton.color];

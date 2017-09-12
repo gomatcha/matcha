@@ -13,15 +13,8 @@ import android.widget.RelativeLayout;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.app.R;
+import io.gomatcha.matcha.pb.view.PbButton;
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.alert.PbAlert;
-import io.gomatcha.matcha.pb.view.button.PbButton;
-
-import static android.R.color.primary_text_dark;
-import static android.R.color.primary_text_light;
-import static android.R.color.secondary_text_dark;
-import static android.R.color.secondary_text_dark_nodisable;
-import static android.R.color.secondary_text_light;
 
 public class MatchaButton extends MatchaChildView {
     Button view;
@@ -53,7 +46,7 @@ public class MatchaButton extends MatchaChildView {
     public void setNode(PbView.BuildNode buildNode) {
         super.setNode(buildNode);
         try {
-            PbButton.View proto = buildNode.getBridgeValue().unpack(PbButton.View.class);
+            PbButton.Button proto = buildNode.getBridgeValue().unpack(PbButton.Button.class);
             view.setEnabled(proto.getEnabled());
             view.setText(proto.getStr());
 

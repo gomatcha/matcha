@@ -27,6 +27,8 @@
 		6732F9F11F676925002DC2EF /* Tabview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9EF1F676925002DC2EF /* Tabview.pbobjc.h */; };
 		6732F9F41F67A1B5002DC2EF /* Switchview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9F21F67A1B5002DC2EF /* Switchview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6732F9F51F67A1B5002DC2EF /* Switchview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9F31F67A1B5002DC2EF /* Switchview.pbobjc.h */; };
+		6732F9F81F67A409002DC2EF /* Button.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9F61F67A409002DC2EF /* Button.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6732F9F91F67A409002DC2EF /* Button.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9F71F67A409002DC2EF /* Button.pbobjc.h */; };
 		6759EE521F2E632C00B8E0A9 /* MatchaMiddleware.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */; };
 		6759EE531F2E632C00B8E0A9 /* MatchaMiddleware.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */; };
 		6759EE561F2E64EC00B8E0A9 /* MatchaStatusBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE541F2E64EC00B8E0A9 /* MatchaStatusBar.h */; };
@@ -50,8 +52,6 @@
 		67FEBAB81F099F1D005AFEDA /* Text.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA8C1F099F1D005AFEDA /* Text.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBAB91F099F1D005AFEDA /* Touch2.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA8E1F099F1D005AFEDA /* Touch2.pbobjc.h */; };
 		67FEBABA1F099F1D005AFEDA /* Touch2.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA8F1F099F1D005AFEDA /* Touch2.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		67FEBABB1F099F1D005AFEDA /* Button.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA921F099F1D005AFEDA /* Button.pbobjc.h */; };
-		67FEBABC1F099F1D005AFEDA /* Button.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA931F099F1D005AFEDA /* Button.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBABD1F099F1D005AFEDA /* Imageview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA951F099F1D005AFEDA /* Imageview.pbobjc.h */; };
 		67FEBABE1F099F1D005AFEDA /* Imageview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA961F099F1D005AFEDA /* Imageview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBABF1F099F1D005AFEDA /* Scrollview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA981F099F1D005AFEDA /* Scrollview.pbobjc.h */; };
@@ -125,6 +125,8 @@
 		6732F9EF1F676925002DC2EF /* Tabview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tabview.pbobjc.h; sourceTree = "<group>"; };
 		6732F9F21F67A1B5002DC2EF /* Switchview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Switchview.pbobjc.m; sourceTree = "<group>"; };
 		6732F9F31F67A1B5002DC2EF /* Switchview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Switchview.pbobjc.h; sourceTree = "<group>"; };
+		6732F9F61F67A409002DC2EF /* Button.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button.pbobjc.m; sourceTree = "<group>"; };
+		6732F9F71F67A409002DC2EF /* Button.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.pbobjc.h; sourceTree = "<group>"; };
 		6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaMiddleware.h; sourceTree = "<group>"; };
 		6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaMiddleware.m; sourceTree = "<group>"; };
 		6759EE541F2E64EC00B8E0A9 /* MatchaStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaStatusBar.h; sourceTree = "<group>"; };
@@ -150,8 +152,6 @@
 		67FEBA8C1F099F1D005AFEDA /* Text.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Text.pbobjc.m; sourceTree = "<group>"; };
 		67FEBA8E1F099F1D005AFEDA /* Touch2.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Touch2.pbobjc.h; sourceTree = "<group>"; };
 		67FEBA8F1F099F1D005AFEDA /* Touch2.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Touch2.pbobjc.m; sourceTree = "<group>"; };
-		67FEBA921F099F1D005AFEDA /* Button.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.pbobjc.h; sourceTree = "<group>"; };
-		67FEBA931F099F1D005AFEDA /* Button.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button.pbobjc.m; sourceTree = "<group>"; };
 		67FEBA951F099F1D005AFEDA /* Imageview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Imageview.pbobjc.h; sourceTree = "<group>"; };
 		67FEBA961F099F1D005AFEDA /* Imageview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Imageview.pbobjc.m; sourceTree = "<group>"; };
 		67FEBA981F099F1D005AFEDA /* Scrollview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scrollview.pbobjc.h; sourceTree = "<group>"; };
@@ -440,6 +440,8 @@
 		67FEBA901F099F1D005AFEDA /* view */ = {
 			isa = PBXGroup;
 			children = (
+				6732F9F61F67A409002DC2EF /* Button.pbobjc.m */,
+				6732F9F71F67A409002DC2EF /* Button.pbobjc.h */,
 				6732F9F21F67A1B5002DC2EF /* Switchview.pbobjc.m */,
 				6732F9F31F67A1B5002DC2EF /* Switchview.pbobjc.h */,
 				6732F9E91F6766B5002DC2EF /* ios */,
@@ -448,7 +450,6 @@
 				67F927061F27FFBB00C068AF /* alert */,
 				673181AD1F15F81B00E1839E /* segmentview */,
 				6731819A1F0DAB3400E1839E /* progressview */,
-				67FEBA911F099F1D005AFEDA /* button */,
 				67FEBA941F099F1D005AFEDA /* imageview */,
 				67FEBA971F099F1D005AFEDA /* scrollview */,
 				67FEBAA61F099F1D005AFEDA /* textinput */,
@@ -456,15 +457,6 @@
 				67FEBAAA1F099F1D005AFEDA /* View.pbobjc.m */,
 			);
 			path = view;
-			sourceTree = "<group>";
-		};
-		67FEBA911F099F1D005AFEDA /* button */ = {
-			isa = PBXGroup;
-			children = (
-				67FEBA921F099F1D005AFEDA /* Button.pbobjc.h */,
-				67FEBA931F099F1D005AFEDA /* Button.pbobjc.m */,
-			);
-			path = button;
 			sourceTree = "<group>";
 		};
 		67FEBA941F099F1D005AFEDA /* imageview */ = {
@@ -649,7 +641,6 @@
 				67FEBB1B1F09A18F005AFEDA /* MatchaButton.h in Headers */,
 				67FEBAB11F099F1D005AFEDA /* Keyboard.pbobjc.h in Headers */,
 				6732F9EC1F6766B5002DC2EF /* Stackview.pbobjc.h in Headers */,
-				67FEBABB1F099F1D005AFEDA /* Button.pbobjc.h in Headers */,
 				67FEBAFF1F09A18F005AFEDA /* MatchaTextInput.h in Headers */,
 				6759EE521F2E632C00B8E0A9 /* MatchaMiddleware.h in Headers */,
 				67FEBB1D1F09A18F005AFEDA /* MatchaBridge.h in Headers */,
@@ -679,6 +670,7 @@
 				673181A61F14667900E1839E /* UITextView+Placeholder.h in Headers */,
 				67FEBB031F09A18F005AFEDA /* MatchaTabView.h in Headers */,
 				6759EE5B1F2E686A00B8E0A9 /* Statusbar.pbobjc.h in Headers */,
+				6732F9F91F67A409002DC2EF /* Button.pbobjc.h in Headers */,
 				67FEBB051F09A18F005AFEDA /* MatchaSwitchView.h in Headers */,
 				67F927091F27FFBB00C068AF /* Alert.pbobjc.h in Headers */,
 				67FEBB011F09A18F005AFEDA /* MatchaTapGestureRecognizer.h in Headers */,
@@ -761,6 +753,7 @@
 				67FEBACA1F099F1D005AFEDA /* Textinput.pbobjc.m in Sources */,
 				67FEBB081F09A18F005AFEDA /* MatchaSlider.m in Sources */,
 				6732F9F01F676925002DC2EF /* Tabview.pbobjc.m in Sources */,
+				6732F9F81F67A409002DC2EF /* Button.pbobjc.m in Sources */,
 				6759EE571F2E64EC00B8E0A9 /* MatchaStatusBar.m in Sources */,
 				67FEBAB41F099F1D005AFEDA /* Layout.pbobjc.m in Sources */,
 				67FEBAC01F099F1D005AFEDA /* Scrollview.pbobjc.m in Sources */,
@@ -778,7 +771,6 @@
 				67FEBAB61F099F1D005AFEDA /* Paint.pbobjc.m in Sources */,
 				67FEBAB81F099F1D005AFEDA /* Text.pbobjc.m in Sources */,
 				67FEBB0E1F09A18F005AFEDA /* MatchaPressGestureRecognizer.m in Sources */,
-				67FEBABC1F099F1D005AFEDA /* Button.pbobjc.m in Sources */,
 				67FEBABA1F099F1D005AFEDA /* Touch2.pbobjc.m in Sources */,
 				67F9270A1F27FFBB00C068AF /* Alert.pbobjc.m in Sources */,
 				6731819E1F0DAB3400E1839E /* Progressview.pbobjc.m in Sources */,

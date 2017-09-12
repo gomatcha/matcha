@@ -10,7 +10,7 @@ import (
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb"
-	pbbutton "gomatcha.io/matcha/pb/view/button"
+	pbview "gomatcha.io/matcha/pb/view"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 )
@@ -42,7 +42,7 @@ func (v *Button) Build(ctx *Context) Model {
 		Painter:        painter,
 		Layouter:       &buttonLayouter{str: v.String},
 		NativeViewName: "gomatcha.io/matcha/view/button",
-		NativeViewState: &pbbutton.View{
+		NativeViewState: &pbview.Button{
 			Str:     v.String,
 			Enabled: v.Enabled,
 			Color:   pb.ColorEncode(v.Color),

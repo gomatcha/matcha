@@ -27,7 +27,7 @@ type BuildNode struct {
 func (m *BuildNode) Reset()                    { *m = BuildNode{} }
 func (m *BuildNode) String() string            { return proto.CompactTextString(m) }
 func (*BuildNode) ProtoMessage()               {}
-func (*BuildNode) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
+func (*BuildNode) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{0} }
 
 func (m *BuildNode) GetId() int64 {
 	if m != nil {
@@ -96,7 +96,7 @@ type LayoutPaintNode struct {
 func (m *LayoutPaintNode) Reset()                    { *m = LayoutPaintNode{} }
 func (m *LayoutPaintNode) String() string            { return proto.CompactTextString(m) }
 func (*LayoutPaintNode) ProtoMessage()               {}
-func (*LayoutPaintNode) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
+func (*LayoutPaintNode) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{1} }
 
 func (m *LayoutPaintNode) GetId() int64 {
 	if m != nil {
@@ -177,7 +177,7 @@ type Root struct {
 func (m *Root) Reset()                    { *m = Root{} }
 func (m *Root) String() string            { return proto.CompactTextString(m) }
 func (*Root) ProtoMessage()               {}
-func (*Root) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{2} }
+func (*Root) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{2} }
 
 func (m *Root) GetLayoutPaintNodes() map[int64]*LayoutPaintNode {
 	if m != nil {
@@ -206,9 +206,9 @@ func init() {
 	proto.RegisterType((*Root)(nil), "matcha.view.Root")
 }
 
-func init() { proto.RegisterFile("gomatcha.io/matcha/pb/view/view.proto", fileDescriptor2) }
+func init() { proto.RegisterFile("gomatcha.io/matcha/pb/view/view.proto", fileDescriptor3) }
 
-var fileDescriptor2 = []byte{
+var fileDescriptor3 = []byte{
 	// 586 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0xdd, 0x6e, 0xd3, 0x30,
 	0x14, 0x56, 0xe2, 0x2e, 0x5b, 0x4f, 0x10, 0x9b, 0xcc, 0x98, 0x4c, 0x84, 0x50, 0xa9, 0x84, 0x56,
