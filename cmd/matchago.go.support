@@ -184,11 +184,8 @@ func matchaGoType(v C.CGoBuffer) C.GoRef {
 func matchaGoFunc(v C.CGoBuffer) C.GoRef {
     str := goString(v)
     f, ok := goRoot.funcs[str]
-    if ok {
-    //     fmt.Println("matchaGoFunc", str, f)
-    } else {
-        fmt.Println("what", len(str))
-        fmt.Println("error", goRoot.funcs, ".", str, ".", len(str), ".")
+    if !ok {
+        fmt.Println("No such function:", str)
     }
     return matchaGoTrack(f)
 }
