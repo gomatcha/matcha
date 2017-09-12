@@ -1,22 +1,22 @@
 syntax = "proto3";
-package matcha.view.tabscreen;
+package matcha.view.ios;
 import "gomatcha.io/matcha/pb/image.proto";
 import "gomatcha.io/matcha/pb/text/text.proto";
 
-option go_package = "tabscreen";
-option objc_class_prefix = "MatchaTabScreenPB";
-option java_package = "io.gomatcha.matcha.pb.view.tabview";
+option go_package = "ios";
+option objc_class_prefix = "MatchaiOSPB";
+option java_package = "io.gomatcha.matcha.pb.view.ios";
 option java_outer_classname = "PbTabView";
 
-message ChildView {
+message TabChildView {
     string title = 2;
     matcha.ImageOrResource icon = 3;
     matcha.ImageOrResource selectedIcon = 4;
     string badge = 5;
 }
 
-message View {
-    repeated ChildView screens = 1;
+message TabView {
+    repeated TabChildView screens = 1;
     int64 selectedIndex = 2;
     matcha.Color barColor = 3;
     matcha.Color selectedColor = 6;
@@ -25,6 +25,6 @@ message View {
     matcha.text.TextStyle unselectedTextStyle = 9;
 }
 
-message Event {
+message TabEvent {
     int64 selectedIndex = 1;
 }

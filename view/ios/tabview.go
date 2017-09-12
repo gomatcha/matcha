@@ -11,7 +11,7 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/pb"
 	pbtext "gomatcha.io/matcha/pb/text"
-	tabnavpb "gomatcha.io/matcha/pb/view/tabscreen"
+	pbios "gomatcha.io/matcha/pb/view/ios"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )
@@ -106,7 +106,7 @@ func (v *TabView) Build(ctx *view.Context) view.Model {
 		v.tabs = v.Tabs
 	}
 
-	childrenPb := []*tabnavpb.ChildView{}
+	childrenPb := []*pbios.TabChildView{}
 	for _, chld := range v.Tabs.Views() {
 		// Find the button
 		var button *TabButton
@@ -133,7 +133,7 @@ func (v *TabView) Build(ctx *view.Context) view.Model {
 		})
 
 		// Add to protobuf.
-		childrenPb = append(childrenPb, &tabnavpb.ChildView{
+		childrenPb = append(childrenPb, &pbios.TabChildView{
 			Title:        button.Title,
 			Icon:         app.ImageMarshalProtobuf(button.Icon),
 			SelectedIcon: app.ImageMarshalProtobuf(button.SelectedIcon),
@@ -155,7 +155,7 @@ func (v *TabView) Build(ctx *view.Context) view.Model {
 		Children:       l.Views(),
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/tabscreen",
-		NativeViewState: &tabnavpb.View{
+		NativeViewState: &pbios.TabView{
 			Screens:             childrenPb,
 			SelectedIndex:       int64(v.Tabs.SelectedIndex()),
 			BarColor:            pb.ColorEncode(v.BarColor),
@@ -166,7 +166,7 @@ func (v *TabView) Build(ctx *view.Context) view.Model {
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnSelect": func(data []byte) {
-				pbevent := &tabnavpb.Event{}
+				pbevent := &pbios.TabEvent{}
 				err := proto.Unmarshal(data, pbevent)
 				if err != nil {
 					fmt.Println("error", err)

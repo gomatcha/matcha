@@ -15,7 +15,7 @@ public final class PbStackView {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface StackChildViewOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:matcha.view.stacknav.StackChildView)
+      // @@protoc_insertion_point(interface_extends:matcha.view.ios.StackChildView)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -24,11 +24,11 @@ public final class PbStackView {
     long getScreenId();
   }
   /**
-   * Protobuf type {@code matcha.view.stacknav.StackChildView}
+   * Protobuf type {@code matcha.view.ios.StackChildView}
    */
   public  static final class StackChildView extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:matcha.view.stacknav.StackChildView)
+      // @@protoc_insertion_point(message_implements:matcha.view.ios.StackChildView)
       StackChildViewOrBuilder {
     // Use StackChildView.newBuilder() to construct.
     private StackChildView(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -81,12 +81,12 @@ public final class PbStackView {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackChildView_descriptor;
+      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackChildView_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackChildView_fieldAccessorTable
+      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackChildView_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.class, io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.Builder.class);
     }
@@ -251,20 +251,20 @@ public final class PbStackView {
       return builder;
     }
     /**
-     * Protobuf type {@code matcha.view.stacknav.StackChildView}
+     * Protobuf type {@code matcha.view.ios.StackChildView}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:matcha.view.stacknav.StackChildView)
+        // @@protoc_insertion_point(builder_implements:matcha.view.ios.StackChildView)
         io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildViewOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackChildView_descriptor;
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackChildView_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackChildView_fieldAccessorTable
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackChildView_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.class, io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.Builder.class);
       }
@@ -293,7 +293,7 @@ public final class PbStackView {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackChildView_descriptor;
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackChildView_descriptor;
       }
 
       public io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView getDefaultInstanceForType() {
@@ -417,10 +417,10 @@ public final class PbStackView {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:matcha.view.stacknav.StackChildView)
+      // @@protoc_insertion_point(builder_scope:matcha.view.ios.StackChildView)
     }
 
-    // @@protoc_insertion_point(class_scope:matcha.view.stacknav.StackChildView)
+    // @@protoc_insertion_point(class_scope:matcha.view.ios.StackChildView)
     private static final io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView();
@@ -456,29 +456,29 @@ public final class PbStackView {
   }
 
   public interface StackViewOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:matcha.view.stacknav.StackView)
+      // @@protoc_insertion_point(interface_extends:matcha.view.ios.StackView)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+     * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
      */
     java.util.List<io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView> 
         getChildrenList();
     /**
-     * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+     * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
      */
     io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView getChildren(int index);
     /**
-     * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+     * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
      */
     int getChildrenCount();
     /**
-     * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+     * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
      */
     java.util.List<? extends io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildViewOrBuilder> 
         getChildrenOrBuilderList();
     /**
-     * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+     * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
      */
     io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildViewOrBuilder getChildrenOrBuilder(
         int index);
@@ -523,11 +523,11 @@ public final class PbStackView {
     io.gomatcha.matcha.pb.Pb.ColorOrBuilder getBarColorOrBuilder();
   }
   /**
-   * Protobuf type {@code matcha.view.stacknav.StackView}
+   * Protobuf type {@code matcha.view.ios.StackView}
    */
   public  static final class StackView extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:matcha.view.stacknav.StackView)
+      // @@protoc_insertion_point(message_implements:matcha.view.ios.StackView)
       StackViewOrBuilder {
     // Use StackView.newBuilder() to construct.
     private StackView(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -626,12 +626,12 @@ public final class PbStackView {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackView_descriptor;
+      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackView_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackView_fieldAccessorTable
+      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackView_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               io.gomatcha.matcha.pb.view.ios.PbStackView.StackView.class, io.gomatcha.matcha.pb.view.ios.PbStackView.StackView.Builder.class);
     }
@@ -640,32 +640,32 @@ public final class PbStackView {
     public static final int CHILDREN_FIELD_NUMBER = 1;
     private java.util.List<io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView> children_;
     /**
-     * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+     * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
      */
     public java.util.List<io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView> getChildrenList() {
       return children_;
     }
     /**
-     * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+     * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
      */
     public java.util.List<? extends io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildViewOrBuilder> 
         getChildrenOrBuilderList() {
       return children_;
     }
     /**
-     * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+     * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
      */
     public int getChildrenCount() {
       return children_.size();
     }
     /**
-     * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+     * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
      */
     public io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView getChildren(int index) {
       return children_.get(index);
     }
     /**
-     * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+     * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
      */
     public io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildViewOrBuilder getChildrenOrBuilder(
         int index) {
@@ -935,20 +935,20 @@ public final class PbStackView {
       return builder;
     }
     /**
-     * Protobuf type {@code matcha.view.stacknav.StackView}
+     * Protobuf type {@code matcha.view.ios.StackView}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:matcha.view.stacknav.StackView)
+        // @@protoc_insertion_point(builder_implements:matcha.view.ios.StackView)
         io.gomatcha.matcha.pb.view.ios.PbStackView.StackViewOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackView_descriptor;
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackView_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackView_fieldAccessorTable
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackView_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 io.gomatcha.matcha.pb.view.ios.PbStackView.StackView.class, io.gomatcha.matcha.pb.view.ios.PbStackView.StackView.Builder.class);
       }
@@ -1000,7 +1000,7 @@ public final class PbStackView {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackView_descriptor;
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackView_descriptor;
       }
 
       public io.gomatcha.matcha.pb.view.ios.PbStackView.StackView getDefaultInstanceForType() {
@@ -1160,7 +1160,7 @@ public final class PbStackView {
           io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView, io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.Builder, io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildViewOrBuilder> childrenBuilder_;
 
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public java.util.List<io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView> getChildrenList() {
         if (childrenBuilder_ == null) {
@@ -1170,7 +1170,7 @@ public final class PbStackView {
         }
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public int getChildrenCount() {
         if (childrenBuilder_ == null) {
@@ -1180,7 +1180,7 @@ public final class PbStackView {
         }
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView getChildren(int index) {
         if (childrenBuilder_ == null) {
@@ -1190,7 +1190,7 @@ public final class PbStackView {
         }
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public Builder setChildren(
           int index, io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView value) {
@@ -1207,7 +1207,7 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public Builder setChildren(
           int index, io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.Builder builderForValue) {
@@ -1221,7 +1221,7 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public Builder addChildren(io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView value) {
         if (childrenBuilder_ == null) {
@@ -1237,7 +1237,7 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public Builder addChildren(
           int index, io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView value) {
@@ -1254,7 +1254,7 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public Builder addChildren(
           io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.Builder builderForValue) {
@@ -1268,7 +1268,7 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public Builder addChildren(
           int index, io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.Builder builderForValue) {
@@ -1282,7 +1282,7 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public Builder addAllChildren(
           java.lang.Iterable<? extends io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView> values) {
@@ -1297,7 +1297,7 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public Builder clearChildren() {
         if (childrenBuilder_ == null) {
@@ -1310,7 +1310,7 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public Builder removeChildren(int index) {
         if (childrenBuilder_ == null) {
@@ -1323,14 +1323,14 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.Builder getChildrenBuilder(
           int index) {
         return getChildrenFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildViewOrBuilder getChildrenOrBuilder(
           int index) {
@@ -1340,7 +1340,7 @@ public final class PbStackView {
         }
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public java.util.List<? extends io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildViewOrBuilder> 
            getChildrenOrBuilderList() {
@@ -1351,14 +1351,14 @@ public final class PbStackView {
         }
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.Builder addChildrenBuilder() {
         return getChildrenFieldBuilder().addBuilder(
             io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.getDefaultInstance());
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.Builder addChildrenBuilder(
           int index) {
@@ -1366,7 +1366,7 @@ public final class PbStackView {
             index, io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.getDefaultInstance());
       }
       /**
-       * <code>repeated .matcha.view.stacknav.StackChildView children = 1;</code>
+       * <code>repeated .matcha.view.ios.StackChildView children = 1;</code>
        */
       public java.util.List<io.gomatcha.matcha.pb.view.ios.PbStackView.StackChildView.Builder> 
            getChildrenBuilderList() {
@@ -1748,10 +1748,10 @@ public final class PbStackView {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:matcha.view.stacknav.StackView)
+      // @@protoc_insertion_point(builder_scope:matcha.view.ios.StackView)
     }
 
-    // @@protoc_insertion_point(class_scope:matcha.view.stacknav.StackView)
+    // @@protoc_insertion_point(class_scope:matcha.view.ios.StackView)
     private static final io.gomatcha.matcha.pb.view.ios.PbStackView.StackView DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new io.gomatcha.matcha.pb.view.ios.PbStackView.StackView();
@@ -1787,7 +1787,7 @@ public final class PbStackView {
   }
 
   public interface StackBarOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:matcha.view.stacknav.StackBar)
+      // @@protoc_insertion_point(interface_extends:matcha.view.ios.StackBar)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -1836,11 +1836,11 @@ public final class PbStackView {
     long getLeftViewCount();
   }
   /**
-   * Protobuf type {@code matcha.view.stacknav.StackBar}
+   * Protobuf type {@code matcha.view.ios.StackBar}
    */
   public  static final class StackBar extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:matcha.view.stacknav.StackBar)
+      // @@protoc_insertion_point(message_implements:matcha.view.ios.StackBar)
       StackBarOrBuilder {
     // Use StackBar.newBuilder() to construct.
     private StackBar(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -1931,12 +1931,12 @@ public final class PbStackView {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackBar_descriptor;
+      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackBar_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackBar_fieldAccessorTable
+      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackBar_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               io.gomatcha.matcha.pb.view.ios.PbStackView.StackBar.class, io.gomatcha.matcha.pb.view.ios.PbStackView.StackBar.Builder.class);
     }
@@ -2273,20 +2273,20 @@ public final class PbStackView {
       return builder;
     }
     /**
-     * Protobuf type {@code matcha.view.stacknav.StackBar}
+     * Protobuf type {@code matcha.view.ios.StackBar}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:matcha.view.stacknav.StackBar)
+        // @@protoc_insertion_point(builder_implements:matcha.view.ios.StackBar)
         io.gomatcha.matcha.pb.view.ios.PbStackView.StackBarOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackBar_descriptor;
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackBar_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackBar_fieldAccessorTable
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackBar_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 io.gomatcha.matcha.pb.view.ios.PbStackView.StackBar.class, io.gomatcha.matcha.pb.view.ios.PbStackView.StackBar.Builder.class);
       }
@@ -2327,7 +2327,7 @@ public final class PbStackView {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackBar_descriptor;
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackBar_descriptor;
       }
 
       public io.gomatcha.matcha.pb.view.ios.PbStackView.StackBar getDefaultInstanceForType() {
@@ -2719,10 +2719,10 @@ public final class PbStackView {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:matcha.view.stacknav.StackBar)
+      // @@protoc_insertion_point(builder_scope:matcha.view.ios.StackBar)
     }
 
-    // @@protoc_insertion_point(class_scope:matcha.view.stacknav.StackBar)
+    // @@protoc_insertion_point(class_scope:matcha.view.ios.StackBar)
     private static final io.gomatcha.matcha.pb.view.ios.PbStackView.StackBar DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new io.gomatcha.matcha.pb.view.ios.PbStackView.StackBar();
@@ -2758,7 +2758,7 @@ public final class PbStackView {
   }
 
   public interface StackEventOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:matcha.view.stacknav.StackEvent)
+      // @@protoc_insertion_point(interface_extends:matcha.view.ios.StackEvent)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -2775,11 +2775,11 @@ public final class PbStackView {
     long getId(int index);
   }
   /**
-   * Protobuf type {@code matcha.view.stacknav.StackEvent}
+   * Protobuf type {@code matcha.view.ios.StackEvent}
    */
   public  static final class StackEvent extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:matcha.view.stacknav.StackEvent)
+      // @@protoc_insertion_point(message_implements:matcha.view.ios.StackEvent)
       StackEventOrBuilder {
     // Use StackEvent.newBuilder() to construct.
     private StackEvent(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -2851,12 +2851,12 @@ public final class PbStackView {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackEvent_descriptor;
+      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackEvent_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackEvent_fieldAccessorTable
+      return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackEvent_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               io.gomatcha.matcha.pb.view.ios.PbStackView.StackEvent.class, io.gomatcha.matcha.pb.view.ios.PbStackView.StackEvent.Builder.class);
     }
@@ -3051,20 +3051,20 @@ public final class PbStackView {
       return builder;
     }
     /**
-     * Protobuf type {@code matcha.view.stacknav.StackEvent}
+     * Protobuf type {@code matcha.view.ios.StackEvent}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:matcha.view.stacknav.StackEvent)
+        // @@protoc_insertion_point(builder_implements:matcha.view.ios.StackEvent)
         io.gomatcha.matcha.pb.view.ios.PbStackView.StackEventOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackEvent_descriptor;
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackEvent_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackEvent_fieldAccessorTable
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackEvent_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 io.gomatcha.matcha.pb.view.ios.PbStackView.StackEvent.class, io.gomatcha.matcha.pb.view.ios.PbStackView.StackEvent.Builder.class);
       }
@@ -3093,7 +3093,7 @@ public final class PbStackView {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_stacknav_StackEvent_descriptor;
+        return io.gomatcha.matcha.pb.view.ios.PbStackView.internal_static_matcha_view_ios_StackEvent_descriptor;
       }
 
       public io.gomatcha.matcha.pb.view.ios.PbStackView.StackEvent getDefaultInstanceForType() {
@@ -3270,10 +3270,10 @@ public final class PbStackView {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:matcha.view.stacknav.StackEvent)
+      // @@protoc_insertion_point(builder_scope:matcha.view.ios.StackEvent)
     }
 
-    // @@protoc_insertion_point(class_scope:matcha.view.stacknav.StackEvent)
+    // @@protoc_insertion_point(class_scope:matcha.view.ios.StackEvent)
     private static final io.gomatcha.matcha.pb.view.ios.PbStackView.StackEvent DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new io.gomatcha.matcha.pb.view.ios.PbStackView.StackEvent();
@@ -3309,25 +3309,25 @@ public final class PbStackView {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_matcha_view_stacknav_StackChildView_descriptor;
+    internal_static_matcha_view_ios_StackChildView_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_matcha_view_stacknav_StackChildView_fieldAccessorTable;
+      internal_static_matcha_view_ios_StackChildView_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_matcha_view_stacknav_StackView_descriptor;
+    internal_static_matcha_view_ios_StackView_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_matcha_view_stacknav_StackView_fieldAccessorTable;
+      internal_static_matcha_view_ios_StackView_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_matcha_view_stacknav_StackBar_descriptor;
+    internal_static_matcha_view_ios_StackBar_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_matcha_view_stacknav_StackBar_fieldAccessorTable;
+      internal_static_matcha_view_ios_StackBar_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_matcha_view_stacknav_StackEvent_descriptor;
+    internal_static_matcha_view_ios_StackEvent_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_matcha_view_stacknav_StackEvent_fieldAccessorTable;
+      internal_static_matcha_view_ios_StackEvent_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3338,22 +3338,22 @@ public final class PbStackView {
   static {
     java.lang.String[] descriptorData = {
       "\n.gomatcha.io/matcha/pb/view/ios/stackvi" +
-      "ew.proto\022\024matcha.view.stacknav\032!gomatcha" +
-      ".io/matcha/pb/image.proto\032%gomatcha.io/m" +
-      "atcha/pb/text/text.proto\"\"\n\016StackChildVi" +
-      "ew\022\020\n\010screenId\030\003 \001(\003\"\303\001\n\tStackView\0226\n\010ch" +
-      "ildren\030\001 \003(\0132$.matcha.view.stacknav.Stac" +
-      "kChildView\022.\n\016titleTextStyle\030\002 \001(\0132\026.mat" +
-      "cha.text.TextStyle\022-\n\rbackTextStyle\030\003 \001(" +
-      "\0132\026.matcha.text.TextStyle\022\037\n\010barColor\030\004 " +
-      "\001(\0132\r.matcha.Color\"\260\001\n\010StackBar\022\r\n\005title",
-      "\030\001 \001(\t\022\030\n\020backButtonHidden\030\007 \001(\010\022\035\n\025cust" +
-      "omBackButtonTitle\030\002 \001(\010\022\027\n\017backButtonTit" +
-      "le\030\003 \001(\t\022\024\n\014hasTitleView\030\004 \001(\010\022\026\n\016rightV" +
-      "iewCount\030\005 \001(\003\022\025\n\rleftViewCount\030\006 \001(\003\"\030\n" +
-      "\nStackEvent\022\n\n\002id\030\001 \003(\003B@\n\036io.gomatcha.m" +
-      "atcha.pb.view.iosB\013PbStackViewZ\003ios\242\002\013Ma" +
-      "tchaiOSPBb\006proto3"
+      "ew.proto\022\017matcha.view.ios\032!gomatcha.io/m" +
+      "atcha/pb/image.proto\032%gomatcha.io/matcha" +
+      "/pb/text/text.proto\"\"\n\016StackChildView\022\020\n" +
+      "\010screenId\030\003 \001(\003\"\276\001\n\tStackView\0221\n\010childre" +
+      "n\030\001 \003(\0132\037.matcha.view.ios.StackChildView" +
+      "\022.\n\016titleTextStyle\030\002 \001(\0132\026.matcha.text.T" +
+      "extStyle\022-\n\rbackTextStyle\030\003 \001(\0132\026.matcha" +
+      ".text.TextStyle\022\037\n\010barColor\030\004 \001(\0132\r.matc" +
+      "ha.Color\"\260\001\n\010StackBar\022\r\n\005title\030\001 \001(\t\022\030\n\020",
+      "backButtonHidden\030\007 \001(\010\022\035\n\025customBackButt" +
+      "onTitle\030\002 \001(\010\022\027\n\017backButtonTitle\030\003 \001(\t\022\024" +
+      "\n\014hasTitleView\030\004 \001(\010\022\026\n\016rightViewCount\030\005" +
+      " \001(\003\022\025\n\rleftViewCount\030\006 \001(\003\"\030\n\nStackEven" +
+      "t\022\n\n\002id\030\001 \003(\003B@\n\036io.gomatcha.matcha.pb.v" +
+      "iew.iosB\013PbStackViewZ\003ios\242\002\013MatchaiOSPBb" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3369,29 +3369,29 @@ public final class PbStackView {
           io.gomatcha.matcha.pb.Pb.getDescriptor(),
           io.gomatcha.matcha.pb.text.PbText.getDescriptor(),
         }, assigner);
-    internal_static_matcha_view_stacknav_StackChildView_descriptor =
+    internal_static_matcha_view_ios_StackChildView_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_matcha_view_stacknav_StackChildView_fieldAccessorTable = new
+    internal_static_matcha_view_ios_StackChildView_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_matcha_view_stacknav_StackChildView_descriptor,
+        internal_static_matcha_view_ios_StackChildView_descriptor,
         new java.lang.String[] { "ScreenId", });
-    internal_static_matcha_view_stacknav_StackView_descriptor =
+    internal_static_matcha_view_ios_StackView_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_matcha_view_stacknav_StackView_fieldAccessorTable = new
+    internal_static_matcha_view_ios_StackView_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_matcha_view_stacknav_StackView_descriptor,
+        internal_static_matcha_view_ios_StackView_descriptor,
         new java.lang.String[] { "Children", "TitleTextStyle", "BackTextStyle", "BarColor", });
-    internal_static_matcha_view_stacknav_StackBar_descriptor =
+    internal_static_matcha_view_ios_StackBar_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_matcha_view_stacknav_StackBar_fieldAccessorTable = new
+    internal_static_matcha_view_ios_StackBar_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_matcha_view_stacknav_StackBar_descriptor,
+        internal_static_matcha_view_ios_StackBar_descriptor,
         new java.lang.String[] { "Title", "BackButtonHidden", "CustomBackButtonTitle", "BackButtonTitle", "HasTitleView", "RightViewCount", "LeftViewCount", });
-    internal_static_matcha_view_stacknav_StackEvent_descriptor =
+    internal_static_matcha_view_ios_StackEvent_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_matcha_view_stacknav_StackEvent_fieldAccessorTable = new
+    internal_static_matcha_view_ios_StackEvent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_matcha_view_stacknav_StackEvent_descriptor,
+        internal_static_matcha_view_ios_StackEvent_descriptor,
         new java.lang.String[] { "Id", });
     io.gomatcha.matcha.pb.Pb.getDescriptor();
     io.gomatcha.matcha.pb.text.PbText.getDescriptor();

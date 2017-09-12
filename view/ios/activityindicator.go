@@ -1,4 +1,4 @@
-package view
+package ios
 
 import (
 	"github.com/gogo/protobuf/proto"
@@ -6,7 +6,20 @@ import (
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
 	pbapp "gomatcha.io/matcha/pb/app"
+	"gomatcha.io/matcha/view"
 )
+
+// If any view has an ActivityIndicator option, the spinner will be visible.
+//  return view.Model{
+//      Options: []view.Option{app.ActivityIndicator{}}
+//  }
+type ActivityIndicator struct {
+	// ActivityIndicator has no fields.
+}
+
+func (a ActivityIndicator) OptionKey() string {
+	return "gomatcha.io/matcha/app activity"
+}
 
 func init() {
 	internal.RegisterMiddleware(func() interface{} {
@@ -20,7 +33,7 @@ type activityIndicatorMiddleware struct {
 	radix *radix.Radix
 }
 
-func (m *activityIndicatorMiddleware) Build(ctx *Context, model *Model) {
+func (m *activityIndicatorMiddleware) Build(ctx *view.Context, model *view.Model) {
 	path := idSliceToIntSlice(ctx.Path())
 
 	add := false
@@ -48,12 +61,4 @@ func (m *activityIndicatorMiddleware) MarshalProtobuf() proto.Message {
 
 func (m *activityIndicatorMiddleware) Key() string {
 	return "gomatcha.io/matcha/app activity"
-}
-
-func idSliceToIntSlice(ids []Id) []int64 {
-	ints := make([]int64, len(ids))
-	for idx, i := range ids {
-		ints[idx] = int64(i)
-	}
-	return ints
 }

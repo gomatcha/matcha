@@ -7,7 +7,6 @@ High:
 * Android custom view example
 * Android Text Input, number of lines. font
 * Move matcha/view/Root into matcha/Root?
-* Should statusbar/activity indicator, be moved into ios/android
 
 Medium:
 * Delay any ui events while viewcontroller is updating??

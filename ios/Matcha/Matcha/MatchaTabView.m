@@ -22,7 +22,7 @@
 
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
     GPBAny *state = self.node.nativeViewState;
-    MatchaTabScreenPBView *pbTabNavigator = (id)[state unpackMessageClass:[MatchaTabScreenPBView class] error:nil];
+    MatchaiOSPBTabView *pbTabNavigator = (id)[state unpackMessageClass:[MatchaiOSPBTabView class] error:nil];
     
     self.tabBar.barTintColor = pbTabNavigator.hasBarColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.barColor] : nil;
     self.tabBar.tintColor = pbTabNavigator.hasBarColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.selectedColor] : nil;
@@ -39,7 +39,7 @@
     
     NSMutableArray *viewControllers = [NSMutableArray array];
     for (NSInteger idx = 0; idx < pbTabNavigator.screensArray.count; idx++) {
-        MatchaTabScreenPBChildView *i = pbTabNavigator.screensArray[idx];
+        MatchaiOSPBTabChildView *i = pbTabNavigator.screensArray[idx];
         UIViewController *vc = childVCs[idx];
         vc.tabBarItem.title = i.title;
         vc.tabBarItem.badgeValue = i.badge.length == 0 ? nil : i.badge;
@@ -53,7 +53,7 @@
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    MatchaTabScreenPBEvent *event = [[MatchaTabScreenPBEvent alloc] init];
+    MatchaiOSPBTabEvent *event = [[MatchaiOSPBTabEvent alloc] init];
     event.selectedIndex = tabBarController.selectedIndex;
     
     NSData *data = [event data];

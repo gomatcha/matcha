@@ -38,7 +38,7 @@ static GPBFileDescriptor *MatchaiOSPBStackviewRoot_FileDescriptor(void) {
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
     GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
-    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"matcha.view.stacknav"
+    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"matcha.view.ios"
                                                  objcPrefix:@"MatchaiOSPB"
                                                      syntax:GPBFileSyntaxProto3];
   }

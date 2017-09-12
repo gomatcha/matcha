@@ -1,5 +1,5 @@
 syntax = "proto3";
-package matcha.view.stacknav;
+package matcha.view.ios;
 import "gomatcha.io/matcha/pb/image.proto";
 import "gomatcha.io/matcha/pb/text/text.proto";
 
