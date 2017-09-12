@@ -17,6 +17,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.pb.touch.PbTouch;
@@ -54,7 +55,7 @@ public class MatchaChildView extends RelativeLayout {
         return false;
     }
 
-    public void setChildViews(ArrayList<View> childViews) {
+    public void setChildViews(List<View> childViews) {
         // no-op
     }
 

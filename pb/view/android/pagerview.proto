@@ -3,7 +3,7 @@ package matcha.view.android;
 // import "gomatcha.io/matcha/pb/image.proto";
 // import "gomatcha.io/matcha/pb/text/text.proto";
 
-option go_package = "pagerview";
+option go_package = "android";
 option objc_class_prefix = "MatchaPagerViewPB";
 option java_package = "io.gomatcha.matcha.pb.view.android";
 option java_outer_classname = "PbPagerView";

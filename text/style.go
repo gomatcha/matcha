@@ -183,10 +183,7 @@ func (f *Style) get(k styleKey) interface{} {
 	case styleKeyUnderlineColor:
 		return color.Gray{0}
 	case styleKeyFont:
-		return &Font{
-			name: "HelveticaNeue",
-			size: 14,
-		}
+		return DefaultFont(14)
 	case styleKeyHyphenation:
 		return float64(0.0)
 	case styleKeyLineHeightMultiple:

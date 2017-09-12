@@ -72,7 +72,7 @@ public class MatchaPagerView extends MatchaChildView {
     }
 
     @Override
-    public void setChildViews(ArrayList<View> childViews) {
+    public void setChildViews(List<View> childViews) {
         pagerAdapter.childViews = childViews;
         pagerAdapter.notifyDataSetChanged();
         tabStrip.setViewPager(viewPager);
@@ -92,7 +92,7 @@ public class MatchaPagerView extends MatchaChildView {
     }
 
     public class MatchaPagerAdapter extends PagerAdapter {
-        ArrayList<View> childViews;
+        List<View> childViews;
         List<PbPagerView.PagerChildView> protoChildViews;
 
         @Override

@@ -177,6 +177,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 	})
 
 	childLayouter := &table.Layouter{}
+	childLayouter.StartEdge = layout.EdgeTop
 	for i := 0; i < 20; i++ {
 		childView := NewTableCell()
 		childView.String = "TEST TEST"

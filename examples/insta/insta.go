@@ -12,6 +12,7 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
@@ -175,6 +176,7 @@ func (v *PostHeaderView) Build(ctx *view.Context) view.Model {
 	titleView := view.NewTextView()
 	titleView.MaxLines = 1
 	titleView.String = v.Title
+	titleView.Style.SetFont(BoldFont())
 	l.Add(titleView, func(s *constraint.Solver) {
 		s.LeftEqual(g.Right().Add(10))
 		s.CenterYEqual(l.CenterY())
@@ -332,7 +334,8 @@ func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
 	})
 
 	likeTextView := view.NewTextView()
-	likeTextView.String = fmt.Sprintf("%v Likes", v.LikeCount)
+	likeTextView.String = fmt.Sprintf("%v likes", v.LikeCount)
+	likeTextView.Style.SetFont(BoldFont())
 	l.Add(likeTextView, func(s *constraint.Solver) {
 		s.Top(50)
 		s.LeftEqual(l.Left().Add(13))
@@ -358,22 +361,48 @@ func NewCommentsView() *CommentsView {
 func (v *CommentsView) Build(ctx *view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	topGuide := l.Top().Add(13)
+	topGuide := l.Top().Add(10)
 
 	for _, i := range v.Comments {
+		textStyle := &text.Style{}
+		textStyle.SetFont(RegularFont())
+
+		usernameStyle := &text.Style{}
+		usernameStyle.SetFont(BoldFont())
+
+		st := text.NewStyledText(i.UserName+" "+i.Text, textStyle)
+		st.Set(usernameStyle, 0, len(i.UserName))
+
 		textView := view.NewTextView()
-		textView.String = i.UserName + i.Text
+		textView.StyledText = st
+		// textView.String = i.UserName + " " + i.Text
 		textGuide := l.Add(textView, func(s *constraint.Solver) {
 			s.TopEqual(topGuide)
 			s.LeftEqual(l.Left().Add(13))
 			s.RightEqual(l.Right().Add(-13))
 		})
 
-		topGuide = textGuide.Top()
+		topGuide = textGuide.Bottom().Add(3)
 	}
+
+	l.Solve(func(s *constraint.Solver) {
+		s.LeftEqual(l.Left())
+		s.RightEqual(l.Right())
+		s.Top(0)
+		s.BottomEqual(topGuide.Add(10))
+	})
 
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
+		Painter:  &paint.Style{BackgroundColor: colornames.White},
 	}
+}
+
+func BoldFont() *text.Font {
+	return text.FontWithName("HelveticaNeue-Bold", 13)
+}
+
+func RegularFont() *text.Font {
+	return text.FontWithName("HelveticaNeue", 13)
 }

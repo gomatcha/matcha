@@ -3,6 +3,7 @@ package io.gomatcha.matcha;
 import android.content.Context;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -10,6 +11,10 @@ import android.support.v7.app.ActionBar;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.gomatcha.app.R;
 import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.stackview.PbStackView;
 import io.gomatcha.matcha.pb.view.switchview.PbSwitchView;
@@ -18,7 +23,7 @@ public class MatchaStackView extends MatchaChildView {
     Toolbar toolbar;
 
     static {
-        MatchaView.registerView("gomatcha.io/matcha/view/stacknav", new MatchaView.ViewFactory() {
+        MatchaView.registerView("gomatcha.io/matcha/view/android StackView", new MatchaView.ViewFactory() {
             @Override
             public MatchaChildView createView(Context context, MatchaViewNode node) {
                 return new MatchaStackView(context, node);
@@ -29,11 +34,26 @@ public class MatchaStackView extends MatchaChildView {
     public MatchaStackView(Context context, MatchaViewNode node) {
         super(context, node);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         toolbar = new Toolbar(context);
         toolbar.setTitle("TEST");
+        toolbar.setId(MatchaPagerView.generateViewId());
+        toolbar.setBackgroundColor(0xffff0000);
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material);
+        toolbar.setNavigationOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.v("x", "onClick");
+            }
+        });
+
         addView(toolbar, params);
-        Log.v("x", "what");
+
+        RelativeLayout.LayoutParams contentParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        contentParams.addRule(RelativeLayout.BELOW, toolbar.getId());
+        View view = new View(context);
+        view.setBackgroundColor(0xff00ffff);
+        addView(view, contentParams);
     }
 
     @Override
@@ -43,5 +63,15 @@ public class MatchaStackView extends MatchaChildView {
             PbStackView.View proto = buildNode.getBridgeValue().unpack(PbStackView.View.class);
         } catch (InvalidProtocolBufferException e) {
         }
+    }
+
+    @Override
+    public boolean isContainerView() {
+        return true;
+    }
+
+    @Override
+    public void setChildViews(List<View> childViews) {
+
     }
 }

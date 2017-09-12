@@ -1,4 +1,4 @@
-package view
+package android
 
 import (
 	"golang.org/x/image/colornames"

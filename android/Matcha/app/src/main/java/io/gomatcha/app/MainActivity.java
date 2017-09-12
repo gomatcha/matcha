@@ -12,8 +12,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        GoValue rootVC = GoValue.withFunc("gomatcha.io/matcha/examples/view/android NewPagerView").call("")[0];
+
+        this.getSupportActionBar().hide();
+        GoValue rootVC = GoValue.withFunc("gomatcha.io/matcha/examples/view/android NewStackView").call("")[0];
 
         MatchaView v = new MatchaView(this, rootVC);
         setContentView(v);

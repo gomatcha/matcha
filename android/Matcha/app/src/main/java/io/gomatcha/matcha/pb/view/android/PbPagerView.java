@@ -1905,10 +1905,10 @@ public final class PbPagerView {
       "erChildView\022\r\n\005title\030\002 \001(\t\"[\n\tPagerView\022" +
       "7\n\nchildViews\030\001 \003(\0132#.matcha.view.androi" +
       "d.PagerChildView\022\025\n\rselectedIndex\030\002 \001(\003\"" +
-      "#\n\nPagerEvent\022\025\n\rselectedIndex\030\001 \001(\003BP\n\"" +
+      "#\n\nPagerEvent\022\025\n\rselectedIndex\030\001 \001(\003BN\n\"" +
       "io.gomatcha.matcha.pb.view.androidB\013PbPa" +
-      "gerViewZ\tpagerview\242\002\021MatchaPagerViewPBb\006" +
-      "proto3"
+      "gerViewZ\007android\242\002\021MatchaPagerViewPBb\006pr" +
+      "oto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

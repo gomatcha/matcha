@@ -1,0 +1,26 @@
+syntax = "proto3";
+package matcha.view.android;
+
+option go_package = "android";
+option objc_class_prefix = "MatchaAndroidPB";
+option java_package = "io.gomatcha.matcha.pb.view.android";
+option java_outer_classname = "PbStackView";
+
+message StackChildView {
+    int64 screenId = 3;
+}
+
+message StackView {
+    repeated StackChildView children = 1;
+    //matcha.text.TextStyle titleTextStyle = 2;
+    //matcha.text.TextStyle backTextStyle = 3;
+    //matcha.Color barColor = 4;
+}
+
+message StackBar {
+    string title = 1;
+}
+
+message StackEvent {
+    repeated int64 id = 1;
+}
