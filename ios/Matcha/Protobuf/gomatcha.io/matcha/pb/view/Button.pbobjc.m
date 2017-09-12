@@ -37,7 +37,7 @@ static GPBFileDescriptor *MatchaViewPbButtonRoot_FileDescriptor(void) {
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
     GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
-    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"matcha.view.button"
+    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"matcha.view"
                                                  objcPrefix:@"MatchaViewPb"
                                                      syntax:GPBFileSyntaxProto3];
   }

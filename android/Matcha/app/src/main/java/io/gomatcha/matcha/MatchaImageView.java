@@ -12,7 +12,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.matcha.pb.Pb;
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.imageview.PbImageView;
+import io.gomatcha.matcha.pb.view.PbImageView;
 
 public class MatchaImageView extends MatchaChildView {
     ImageView view;
@@ -38,7 +38,7 @@ public class MatchaImageView extends MatchaChildView {
     public void setNode(PbView.BuildNode buildNode) {
         super.setNode(buildNode);
         try {
-            PbImageView.View proto = buildNode.getBridgeValue().unpack(PbImageView.View.class);
+            PbImageView.ImageView proto = buildNode.getBridgeValue().unpack(PbImageView.ImageView.class);
 
             Pb.ImageOrResource imageOrResource = proto.getImage();
             if (imageOrResource.hasImage()) {

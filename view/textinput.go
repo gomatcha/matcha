@@ -11,7 +11,7 @@ import (
 	"gomatcha.io/matcha/keyboard"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pb/view/textinput"
+	pbview "gomatcha.io/matcha/pb/view"
 	"gomatcha.io/matcha/text"
 )
 
@@ -107,7 +107,7 @@ func (v *TextInput) Build(ctx *Context) Model {
 		Layouter:       &textInputLayouter{styledText: st, maxLines: v.MaxLines},
 		Painter:        painter,
 		NativeViewName: "gomatcha.io/matcha/view/textinput",
-		NativeViewState: &textinput.View{
+		NativeViewState: &pbview.TextInput{
 			StyledText:         st.MarshalProtobuf(),
 			PlaceholderText:    placeholderStyledText.MarshalProtobuf(),
 			KeyboardType:       v.KeyboardType.MarshalProtobuf(),
@@ -118,7 +118,7 @@ func (v *TextInput) Build(ctx *Context) Model {
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnTextChange": func(data []byte) {
-				pbevent := &textinput.Event{}
+				pbevent := &pbview.TextInputEvent{}
 				err := proto.Unmarshal(data, pbevent)
 				if err != nil {
 					fmt.Println("error", err)
@@ -141,7 +141,7 @@ func (v *TextInput) Build(ctx *Context) Model {
 				}
 			},
 			"OnFocus": func(data []byte) {
-				pbevent := &textinput.FocusEvent{}
+				pbevent := &pbview.TextInputFocusEvent{}
 				err := proto.Unmarshal(data, pbevent)
 				if err != nil {
 					fmt.Println("error", err)

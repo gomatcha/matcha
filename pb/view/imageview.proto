@@ -1,22 +1,22 @@
 syntax = "proto3";
-package matcha.view.imageview;
+package matcha.view;
 import "gomatcha.io/matcha/pb/image.proto";
 
-option go_package = "imageview";
-option objc_class_prefix = "MatchaImageViewPB";
-option java_package = "io.gomatcha.matcha.pb.view.imageview";
+option go_package = "view";
+option objc_class_prefix = "MatchaViewPB";
+option java_package = "io.gomatcha.matcha.pb.view";
 option java_outer_classname = "PbImageView";
 
-enum ResizeMode {
+enum ImageResizeMode {
     FIT = 0;
     FILL = 1;
     STRETCH = 2;
     CENTER = 3;
 }
 
-message View {
+message ImageView {
     matcha.ImageOrResource image = 1;
-    ResizeMode resizeMode = 2;
+    ImageResizeMode resizeMode = 2;
     matcha.Color tint = 3;
     double scale = 5;
 }

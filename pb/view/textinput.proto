@@ -1,14 +1,14 @@
 syntax = "proto3";
-package matcha.view.textinput;
+package matcha.view;
 import "gomatcha.io/matcha/pb/text/text.proto";
 import "gomatcha.io/matcha/pb/keyboard/keyboard.proto";
 
-option go_package = "textinput";
-option objc_class_prefix = "MatchaTextInputPB";
-option java_package = "io.gomatcha.matcha.pb.view.textinput";
+option go_package = "view";
+option objc_class_prefix = "MatchaViewPB";
+option java_package = "io.gomatcha.matcha.pb.view";
 option java_outer_classname = "PbTextInput";
 
-message View {
+message TextInput {
     matcha.text.StyledText styledText = 1;
     matcha.text.StyledText placeholderText = 2;
     bool focused = 4;
@@ -19,13 +19,13 @@ message View {
     bool secureTextEntry = 9;
 }
 
-message Event {
+message TextInputEvent {
     matcha.text.StyledText styledText = 1;
 }
 
-message FocusEvent {
+message TextInputFocusEvent {
     bool focused = 1;
 }
 
-message SubmitEvent {
+message TextInputSubmitEvent {
 }

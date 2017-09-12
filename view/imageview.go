@@ -14,7 +14,7 @@ import (
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb"
-	"gomatcha.io/matcha/pb/view/imageview"
+	pbview "gomatcha.io/matcha/pb/view"
 )
 
 type ImageResizeMode int
@@ -31,8 +31,8 @@ const (
 	ImageResizeModeCenter
 )
 
-func (m ImageResizeMode) MarshalProtobuf() imageview.ResizeMode {
-	return imageview.ResizeMode(m)
+func (m ImageResizeMode) MarshalProtobuf() pbview.ImageResizeMode {
+	return pbview.ImageResizeMode(m)
 }
 
 // ImageView implements a view that displays an image.
@@ -87,7 +87,7 @@ func (v *ImageView) Build(ctx *Context) Model {
 		Painter:        painter,
 		Layouter:       &imageViewLayouter{bounds: bounds, resizeMode: resizeMode, scale: scale},
 		NativeViewName: "gomatcha.io/matcha/view/imageview",
-		NativeViewState: &imageview.View{
+		NativeViewState: &pbview.ImageView{
 			Image:      v.pbImage,
 			Scale:      scale,
 			ResizeMode: v.ResizeMode.MarshalProtobuf(),

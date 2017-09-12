@@ -20,7 +20,7 @@ type SwitchView struct {
 func (m *SwitchView) Reset()                    { *m = SwitchView{} }
 func (m *SwitchView) String() string            { return proto.CompactTextString(m) }
 func (*SwitchView) ProtoMessage()               {}
-func (*SwitchView) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
+func (*SwitchView) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{0} }
 
 func (m *SwitchView) GetValue() bool {
 	if m != nil {
@@ -43,7 +43,7 @@ type SwitchEvent struct {
 func (m *SwitchEvent) Reset()                    { *m = SwitchEvent{} }
 func (m *SwitchEvent) String() string            { return proto.CompactTextString(m) }
 func (*SwitchEvent) ProtoMessage()               {}
-func (*SwitchEvent) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
+func (*SwitchEvent) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{1} }
 
 func (m *SwitchEvent) GetValue() bool {
 	if m != nil {
@@ -57,9 +57,9 @@ func init() {
 	proto.RegisterType((*SwitchEvent)(nil), "matcha.view.SwitchEvent")
 }
 
-func init() { proto.RegisterFile("gomatcha.io/matcha/pb/view/switchview.proto", fileDescriptor2) }
+func init() { proto.RegisterFile("gomatcha.io/matcha/pb/view/switchview.proto", fileDescriptor4) }
 
-var fileDescriptor2 = []byte{
+var fileDescriptor4 = []byte{
 	// 168 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xd2, 0x4e, 0xcf, 0xcf, 0x4d,
 	0x2c, 0x49, 0xce, 0x48, 0xd4, 0xcb, 0xcc, 0xd7, 0x87, 0xb0, 0xf4, 0x0b, 0x92, 0xf4, 0xcb, 0x32,

@@ -27,7 +27,7 @@ import io.gomatcha.matcha.pb.Pb;
 import io.gomatcha.matcha.pb.layout.PbLayout;
 import io.gomatcha.matcha.pb.text.PbText;
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.alert.PbAlert;
+import io.gomatcha.matcha.pb.view.PbAlert;
 
 public class JavaBridge {
     static Choreographer.FrameCallback callback;
@@ -126,7 +126,7 @@ public class JavaBridge {
     
     void displayAlert(byte[] protobuf) {
         try {
-            final PbAlert.View alert = PbAlert.View.parseFrom(protobuf);
+            final PbAlert.Alert alert = PbAlert.Alert.parseFrom(protobuf);
         
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(alert.getTitle());
@@ -134,7 +134,7 @@ public class JavaBridge {
                 builder.setMessage(alert.getMessage());
             }
 
-            List<PbAlert.Button> buttons = alert.getButtonsList();
+            List<PbAlert.AlertButton> buttons = alert.getButtonsList();
             if (buttons.size() == 0) {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {

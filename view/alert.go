@@ -14,7 +14,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/bridge"
-	pbalert "gomatcha.io/matcha/pb/view/alert"
+	pbview "gomatcha.io/matcha/pb/view"
 )
 
 var alertMaxId int64
@@ -40,13 +40,13 @@ type _alert struct {
 	Buttons []*AlertButton
 }
 
-func (a *_alert) marshalProtobuf(id int64) *pbalert.View {
-	b := []*pbalert.Button{}
+func (a *_alert) marshalProtobuf(id int64) *pbview.Alert {
+	b := []*pbview.AlertButton{}
 	for _, i := range a.Buttons {
 		b = append(b, i.marshalProtobuf())
 	}
 
-	return &pbalert.View{
+	return &pbview.Alert{
 		Id:      id,
 		Title:   a.Title,
 		Message: a.Message,
@@ -88,8 +88,8 @@ type AlertButton struct {
 	OnPress func()
 }
 
-func (a *AlertButton) marshalProtobuf() *pbalert.Button {
-	return &pbalert.Button{
+func (a *AlertButton) marshalProtobuf() *pbview.AlertButton {
+	return &pbview.AlertButton{
 		Title: a.Title,
 	}
 }

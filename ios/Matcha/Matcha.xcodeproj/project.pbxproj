@@ -29,6 +29,12 @@
 		6732F9F51F67A1B5002DC2EF /* Switchview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9F31F67A1B5002DC2EF /* Switchview.pbobjc.h */; };
 		6732F9F81F67A409002DC2EF /* Button.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9F61F67A409002DC2EF /* Button.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6732F9F91F67A409002DC2EF /* Button.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9F71F67A409002DC2EF /* Button.pbobjc.h */; };
+		6732FA001F67A668002DC2EF /* Textinput.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9FA1F67A668002DC2EF /* Textinput.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6732FA011F67A668002DC2EF /* Textinput.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9FB1F67A668002DC2EF /* Textinput.pbobjc.h */; };
+		6732FA021F67A668002DC2EF /* Imageview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9FC1F67A668002DC2EF /* Imageview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6732FA031F67A668002DC2EF /* Imageview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9FD1F67A668002DC2EF /* Imageview.pbobjc.h */; };
+		6732FA041F67A668002DC2EF /* Alert.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9FE1F67A668002DC2EF /* Alert.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6732FA051F67A668002DC2EF /* Alert.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9FF1F67A668002DC2EF /* Alert.pbobjc.h */; };
 		6759EE521F2E632C00B8E0A9 /* MatchaMiddleware.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */; };
 		6759EE531F2E632C00B8E0A9 /* MatchaMiddleware.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */; };
 		6759EE561F2E64EC00B8E0A9 /* MatchaStatusBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE541F2E64EC00B8E0A9 /* MatchaStatusBar.h */; };
@@ -36,7 +42,6 @@
 		6759EE5B1F2E686A00B8E0A9 /* Statusbar.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE591F2E686A00B8E0A9 /* Statusbar.pbobjc.h */; };
 		6759EE5C1F2E686A00B8E0A9 /* Statusbar.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759EE5A1F2E686A00B8E0A9 /* Statusbar.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67F927091F27FFBB00C068AF /* Alert.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67F927071F27FFBB00C068AF /* Alert.pbobjc.h */; };
-		67F9270A1F27FFBB00C068AF /* Alert.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F927081F27FFBB00C068AF /* Alert.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBA701F099EDF005AFEDA /* Matcha.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA6E1F099EDF005AFEDA /* Matcha.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67FEBAAD1F099F1D005AFEDA /* Resource.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA7D1F099F1D005AFEDA /* Resource.pbobjc.h */; };
 		67FEBAAE1F099F1D005AFEDA /* Resource.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA7E1F099F1D005AFEDA /* Resource.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -53,11 +58,9 @@
 		67FEBAB91F099F1D005AFEDA /* Touch2.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA8E1F099F1D005AFEDA /* Touch2.pbobjc.h */; };
 		67FEBABA1F099F1D005AFEDA /* Touch2.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA8F1F099F1D005AFEDA /* Touch2.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBABD1F099F1D005AFEDA /* Imageview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA951F099F1D005AFEDA /* Imageview.pbobjc.h */; };
-		67FEBABE1F099F1D005AFEDA /* Imageview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA961F099F1D005AFEDA /* Imageview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBABF1F099F1D005AFEDA /* Scrollview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA981F099F1D005AFEDA /* Scrollview.pbobjc.h */; };
 		67FEBAC01F099F1D005AFEDA /* Scrollview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA991F099F1D005AFEDA /* Scrollview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBAC91F099F1D005AFEDA /* Textinput.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAA71F099F1D005AFEDA /* Textinput.pbobjc.h */; };
-		67FEBACA1F099F1D005AFEDA /* Textinput.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAA81F099F1D005AFEDA /* Textinput.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBACB1F099F1D005AFEDA /* View.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAA91F099F1D005AFEDA /* View.pbobjc.h */; };
 		67FEBACC1F099F1D005AFEDA /* View.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAAA1F099F1D005AFEDA /* View.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBAD11F09A096005AFEDA /* MatchaBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67FEBAD01F09A096005AFEDA /* MatchaBridge.framework */; };
@@ -127,6 +130,12 @@
 		6732F9F31F67A1B5002DC2EF /* Switchview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Switchview.pbobjc.h; sourceTree = "<group>"; };
 		6732F9F61F67A409002DC2EF /* Button.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button.pbobjc.m; sourceTree = "<group>"; };
 		6732F9F71F67A409002DC2EF /* Button.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.pbobjc.h; sourceTree = "<group>"; };
+		6732F9FA1F67A668002DC2EF /* Textinput.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Textinput.pbobjc.m; sourceTree = "<group>"; };
+		6732F9FB1F67A668002DC2EF /* Textinput.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Textinput.pbobjc.h; sourceTree = "<group>"; };
+		6732F9FC1F67A668002DC2EF /* Imageview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Imageview.pbobjc.m; sourceTree = "<group>"; };
+		6732F9FD1F67A668002DC2EF /* Imageview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Imageview.pbobjc.h; sourceTree = "<group>"; };
+		6732F9FE1F67A668002DC2EF /* Alert.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alert.pbobjc.m; sourceTree = "<group>"; };
+		6732F9FF1F67A668002DC2EF /* Alert.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alert.pbobjc.h; sourceTree = "<group>"; };
 		6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaMiddleware.h; sourceTree = "<group>"; };
 		6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaMiddleware.m; sourceTree = "<group>"; };
 		6759EE541F2E64EC00B8E0A9 /* MatchaStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaStatusBar.h; sourceTree = "<group>"; };
@@ -440,6 +449,12 @@
 		67FEBA901F099F1D005AFEDA /* view */ = {
 			isa = PBXGroup;
 			children = (
+				6732F9FA1F67A668002DC2EF /* Textinput.pbobjc.m */,
+				6732F9FB1F67A668002DC2EF /* Textinput.pbobjc.h */,
+				6732F9FC1F67A668002DC2EF /* Imageview.pbobjc.m */,
+				6732F9FD1F67A668002DC2EF /* Imageview.pbobjc.h */,
+				6732F9FE1F67A668002DC2EF /* Alert.pbobjc.m */,
+				6732F9FF1F67A668002DC2EF /* Alert.pbobjc.h */,
 				6732F9F61F67A409002DC2EF /* Button.pbobjc.m */,
 				6732F9F71F67A409002DC2EF /* Button.pbobjc.h */,
 				6732F9F21F67A1B5002DC2EF /* Switchview.pbobjc.m */,
@@ -637,6 +652,8 @@
 				673181AB1F15F7C600E1839E /* MatchaSegmentView.h in Headers */,
 				6731819D1F0DAB3400E1839E /* Progressview.pbobjc.h in Headers */,
 				67FEBB0B1F09A18F005AFEDA /* MatchaScrollView.h in Headers */,
+				6732FA051F67A668002DC2EF /* Alert.pbobjc.h in Headers */,
+				6732FA031F67A668002DC2EF /* Imageview.pbobjc.h in Headers */,
 				67FEBB3F1F0A209B005AFEDA /* MatchaImageView.h in Headers */,
 				67FEBB1B1F09A18F005AFEDA /* MatchaButton.h in Headers */,
 				67FEBAB11F099F1D005AFEDA /* Keyboard.pbobjc.h in Headers */,
@@ -658,6 +675,7 @@
 				6732F9F51F67A1B5002DC2EF /* Switchview.pbobjc.h in Headers */,
 				67FEBAF91F09A18F005AFEDA /* MatchaViewController.h in Headers */,
 				67FEBAB71F099F1D005AFEDA /* Text.pbobjc.h in Headers */,
+				6732FA011F67A668002DC2EF /* Textinput.pbobjc.h in Headers */,
 				67FEBABD1F099F1D005AFEDA /* Imageview.pbobjc.h in Headers */,
 				67FEBB0F1F09A18F005AFEDA /* MatchaPressGestureRecognizer.h in Headers */,
 				67FEBB351F0A1FF6005AFEDA /* MatchaBasicView.h in Headers */,
@@ -750,7 +768,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				67FEBB041F09A18F005AFEDA /* MatchaSwitchView.m in Sources */,
-				67FEBACA1F099F1D005AFEDA /* Textinput.pbobjc.m in Sources */,
 				67FEBB081F09A18F005AFEDA /* MatchaSlider.m in Sources */,
 				6732F9F01F676925002DC2EF /* Tabview.pbobjc.m in Sources */,
 				6732F9F81F67A409002DC2EF /* Button.pbobjc.m in Sources */,
@@ -760,11 +777,11 @@
 				6732F9ED1F6766B5002DC2EF /* Stackview.pbobjc.m in Sources */,
 				673181B11F15F81B00E1839E /* Segmentview.pbobjc.m in Sources */,
 				67FEBB0C1F09A18F005AFEDA /* MatchaProtobuf.m in Sources */,
-				67FEBABE1F099F1D005AFEDA /* Imageview.pbobjc.m in Sources */,
 				67FEBAAE1F099F1D005AFEDA /* Resource.pbobjc.m in Sources */,
 				67FEBB0A1F09A18F005AFEDA /* MatchaScrollView.m in Sources */,
 				67FEBB401F0A209B005AFEDA /* MatchaImageView.m in Sources */,
 				67FEBB3B1F0A2048005AFEDA /* MatchaTextView.m in Sources */,
+				6732FA001F67A668002DC2EF /* Textinput.pbobjc.m in Sources */,
 				67FEBB101F09A18F005AFEDA /* MatchaObjcBridge.m in Sources */,
 				67FEBB1A1F09A18F005AFEDA /* MatchaButton.m in Sources */,
 				6732F9F41F67A1B5002DC2EF /* Switchview.pbobjc.m in Sources */,
@@ -772,7 +789,7 @@
 				67FEBAB81F099F1D005AFEDA /* Text.pbobjc.m in Sources */,
 				67FEBB0E1F09A18F005AFEDA /* MatchaPressGestureRecognizer.m in Sources */,
 				67FEBABA1F099F1D005AFEDA /* Touch2.pbobjc.m in Sources */,
-				67F9270A1F27FFBB00C068AF /* Alert.pbobjc.m in Sources */,
+				6732FA021F67A668002DC2EF /* Imageview.pbobjc.m in Sources */,
 				6731819E1F0DAB3400E1839E /* Progressview.pbobjc.m in Sources */,
 				6759EE531F2E632C00B8E0A9 /* MatchaMiddleware.m in Sources */,
 				673181A71F14667900E1839E /* UITextView+Placeholder.m in Sources */,
@@ -794,6 +811,7 @@
 				67FEBB061F09A18F005AFEDA /* MatchaStackView.m in Sources */,
 				67FEBAB21F099F1D005AFEDA /* Keyboard.pbobjc.m in Sources */,
 				67FEBB181F09A18F005AFEDA /* MatchaButtonGestureRecognizer.m in Sources */,
+				6732FA041F67A668002DC2EF /* Alert.pbobjc.m in Sources */,
 				6732F9E71F6763FA002DC2EF /* Slider.pbobjc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

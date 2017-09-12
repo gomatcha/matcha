@@ -30,8 +30,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.pb.text.PbText;
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.slider.PbSlider;
-import io.gomatcha.matcha.pb.view.textinput.PbTextInput;
+import io.gomatcha.matcha.pb.view.PbTextInput;
 
 import static android.widget.TextView.BufferType.EDITABLE;
 
@@ -80,7 +79,7 @@ public class MatchaTextInputView extends MatchaChildView {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!editing) {
                     PbText.StyledText styledText = Protobuf.toProtobuf((SpannableStringBuilder) charSequence);
-                    PbTextInput.Event proto = PbTextInput.Event.newBuilder().setStyledText(styledText).build();
+                    PbTextInput.TextInputEvent proto = PbTextInput.TextInputEvent.newBuilder().setStyledText(styledText).build();
                     MatchaTextInputView.this.viewNode.rootView.call("OnTextChange", MatchaTextInputView.this.viewNode.id, new GoValue(proto.toByteArray()));
                 }
             }
@@ -93,7 +92,7 @@ public class MatchaTextInputView extends MatchaChildView {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (!editing) {
-                    PbTextInput.FocusEvent proto = PbTextInput.FocusEvent.newBuilder().setFocused(b).build();
+                    PbTextInput.TextInputFocusEvent proto = PbTextInput.TextInputFocusEvent.newBuilder().setFocused(b).build();
                     MatchaTextInputView.this.viewNode.rootView.call("OnFocus", MatchaTextInputView.this.viewNode.id, new GoValue(proto.toByteArray()));
                 }
             }
@@ -106,7 +105,7 @@ public class MatchaTextInputView extends MatchaChildView {
         super.setNode(buildNode);
         try {
             editing = true;
-            PbTextInput.View proto = buildNode.getBridgeValue().unpack(PbTextInput.View.class);
+            PbTextInput.TextInput proto = buildNode.getBridgeValue().unpack(PbTextInput.TextInput.class);
             SpannableString str = Protobuf.newAttributedString(proto.getStyledText());
             if (!str.toString().equals(view.getText().toString())) {
                 view.setText(str, TextView.BufferType.SPANNABLE);

@@ -17,22 +17,22 @@
 
 - (void)setNode:(MatchaBuildNode *)value {
     _node = value;
-    MatchaImageViewPBView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaImageViewPBView class] error:nil];
+    MatchaViewPBImageView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaViewPBImageView class] error:nil];
     
     UIImage *image = [[UIImage alloc] initWithImageOrResourceProtobuf:view.image];
     
     switch (view.resizeMode) {
-        case MatchaImageViewPBResizeMode_GPBUnrecognizedEnumeratorValue:
-        case MatchaImageViewPBResizeMode_Fit:
+        case MatchaViewPBImageResizeMode_GPBUnrecognizedEnumeratorValue:
+        case MatchaViewPBImageResizeMode_Fit:
             self.contentMode = UIViewContentModeScaleAspectFit;
             break;
-        case MatchaImageViewPBResizeMode_Fill:
+        case MatchaViewPBImageResizeMode_Fill:
             self.contentMode = UIViewContentModeScaleAspectFill;
             break;
-        case MatchaImageViewPBResizeMode_Stretch:
+        case MatchaViewPBImageResizeMode_Stretch:
             self.contentMode = UIViewContentModeScaleToFill;
             break;
-        case MatchaImageViewPBResizeMode_Center:
+        case MatchaViewPBImageResizeMode_Center:
             self.contentMode = UIViewContentModeCenter;
             break;
     }

@@ -15,7 +15,7 @@ public final class PbButton {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface ButtonOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:matcha.view.button.Button)
+      // @@protoc_insertion_point(interface_extends:matcha.view.Button)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -47,11 +47,11 @@ public final class PbButton {
     io.gomatcha.matcha.pb.Pb.ColorOrBuilder getColorOrBuilder();
   }
   /**
-   * Protobuf type {@code matcha.view.button.Button}
+   * Protobuf type {@code matcha.view.Button}
    */
   public  static final class Button extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:matcha.view.button.Button)
+      // @@protoc_insertion_point(message_implements:matcha.view.Button)
       ButtonOrBuilder {
     // Use Button.newBuilder() to construct.
     private Button(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -124,12 +124,12 @@ public final class PbButton {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return io.gomatcha.matcha.pb.view.PbButton.internal_static_matcha_view_button_Button_descriptor;
+      return io.gomatcha.matcha.pb.view.PbButton.internal_static_matcha_view_Button_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return io.gomatcha.matcha.pb.view.PbButton.internal_static_matcha_view_button_Button_fieldAccessorTable
+      return io.gomatcha.matcha.pb.view.PbButton.internal_static_matcha_view_Button_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               io.gomatcha.matcha.pb.view.PbButton.Button.class, io.gomatcha.matcha.pb.view.PbButton.Button.Builder.class);
     }
@@ -375,20 +375,20 @@ public final class PbButton {
       return builder;
     }
     /**
-     * Protobuf type {@code matcha.view.button.Button}
+     * Protobuf type {@code matcha.view.Button}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:matcha.view.button.Button)
+        // @@protoc_insertion_point(builder_implements:matcha.view.Button)
         io.gomatcha.matcha.pb.view.PbButton.ButtonOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return io.gomatcha.matcha.pb.view.PbButton.internal_static_matcha_view_button_Button_descriptor;
+        return io.gomatcha.matcha.pb.view.PbButton.internal_static_matcha_view_Button_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return io.gomatcha.matcha.pb.view.PbButton.internal_static_matcha_view_button_Button_fieldAccessorTable
+        return io.gomatcha.matcha.pb.view.PbButton.internal_static_matcha_view_Button_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 io.gomatcha.matcha.pb.view.PbButton.Button.class, io.gomatcha.matcha.pb.view.PbButton.Button.Builder.class);
       }
@@ -425,7 +425,7 @@ public final class PbButton {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return io.gomatcha.matcha.pb.view.PbButton.internal_static_matcha_view_button_Button_descriptor;
+        return io.gomatcha.matcha.pb.view.PbButton.internal_static_matcha_view_Button_descriptor;
       }
 
       public io.gomatcha.matcha.pb.view.PbButton.Button getDefaultInstanceForType() {
@@ -748,10 +748,10 @@ public final class PbButton {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:matcha.view.button.Button)
+      // @@protoc_insertion_point(builder_scope:matcha.view.Button)
     }
 
-    // @@protoc_insertion_point(class_scope:matcha.view.button.Button)
+    // @@protoc_insertion_point(class_scope:matcha.view.Button)
     private static final io.gomatcha.matcha.pb.view.PbButton.Button DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new io.gomatcha.matcha.pb.view.PbButton.Button();
@@ -787,10 +787,10 @@ public final class PbButton {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_matcha_view_button_Button_descriptor;
+    internal_static_matcha_view_Button_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_matcha_view_button_Button_fieldAccessorTable;
+      internal_static_matcha_view_Button_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -801,11 +801,11 @@ public final class PbButton {
   static {
     java.lang.String[] descriptorData = {
       "\n\'gomatcha.io/matcha/pb/view/button.prot" +
-      "o\022\022matcha.view.button\032!gomatcha.io/match" +
-      "a/pb/image.proto\"D\n\006Button\022\013\n\003str\030\001 \001(\t\022" +
-      "\017\n\007enabled\030\002 \001(\010\022\034\n\005color\030\003 \001(\0132\r.matcha" +
-      ".ColorB;\n\032io.gomatcha.matcha.pb.viewB\010Pb" +
-      "ButtonZ\004view\242\002\014MatchaViewPbb\006proto3"
+      "o\022\013matcha.view\032!gomatcha.io/matcha/pb/im" +
+      "age.proto\"D\n\006Button\022\013\n\003str\030\001 \001(\t\022\017\n\007enab" +
+      "led\030\002 \001(\010\022\034\n\005color\030\003 \001(\0132\r.matcha.ColorB" +
+      ";\n\032io.gomatcha.matcha.pb.viewB\010PbButtonZ" +
+      "\004view\242\002\014MatchaViewPbb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -820,11 +820,11 @@ public final class PbButton {
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           io.gomatcha.matcha.pb.Pb.getDescriptor(),
         }, assigner);
-    internal_static_matcha_view_button_Button_descriptor =
+    internal_static_matcha_view_Button_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_matcha_view_button_Button_fieldAccessorTable = new
+    internal_static_matcha_view_Button_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_matcha_view_button_Button_descriptor,
+        internal_static_matcha_view_Button_descriptor,
         new java.lang.String[] { "Str", "Enabled", "Color", });
     io.gomatcha.matcha.pb.Pb.getDescriptor();
   }

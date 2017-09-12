@@ -24,7 +24,7 @@
     _node = value;
     GPBAny *state = value.nativeViewState;
     NSError *error = nil;
-    MatchaTextInputPBView *view = (id)[state unpackMessageClass:[MatchaTextInputPBView class] error:&error];
+    MatchaViewPBTextInput *view = (id)[state unpackMessageClass:[MatchaViewPBTextInput class] error:&error];
     
     NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:view.styledText.stylesArray[0]];
     self.font = attributes[NSFontAttributeName];
@@ -60,7 +60,7 @@
         return;
     }
     self.attrStr2 = self.attributedText;
-    MatchaTextInputPBEvent *event = [[MatchaTextInputPBEvent alloc] init];
+    MatchaViewPBTextInputEvent *event = [[MatchaViewPBTextInputEvent alloc] init];
     event.styledText = self.attributedText.protobuf;
     
     NSData *data = [event data];
@@ -87,7 +87,7 @@
 
 - (void)focusDidChange {
     if ((self.hasFocus && !self.isFirstResponder) || (!self.hasFocus && self.isFirstResponder)) {
-        MatchaTextInputPBFocusEvent *event = [[MatchaTextInputPBFocusEvent alloc] init];
+        MatchaViewPBTextInputFocusEvent *event = [[MatchaViewPBTextInputFocusEvent alloc] init];
         event.focused = self.isFirstResponder;
         
         MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];

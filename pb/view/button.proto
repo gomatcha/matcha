@@ -1,5 +1,5 @@
 syntax = "proto3";
-package matcha.view.button;
+package matcha.view;
 import "gomatcha.io/matcha/pb/image.proto";
 
 option go_package = "view";
