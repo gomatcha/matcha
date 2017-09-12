@@ -20,7 +20,7 @@ const (
 // to use this component.
 //  return view.Model{
 //      Options: []view.Option{
-//          app.StatusBar{ Style: app.StatusBarStyleLight },
+//          ios.StatusBar{ Style: ios.StatusBarStyleLight },
 //      },
 //  }
 type StatusBar struct {
