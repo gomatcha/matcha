@@ -38,16 +38,12 @@ typedef GPB_ENUM(MatchaKeyboardPBType) {
    * of the field.
    **/
   MatchaKeyboardPBType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  MatchaKeyboardPBType_DefaultType = 0,
+  MatchaKeyboardPBType_TextType = 0,
   MatchaKeyboardPBType_NumberType = 1,
-  MatchaKeyboardPBType_NumberPunctuationType = 2,
-  MatchaKeyboardPBType_DecimalType = 3,
+  MatchaKeyboardPBType_EmailType = 2,
+  MatchaKeyboardPBType_URLType = 3,
   MatchaKeyboardPBType_PhoneType = 4,
-  MatchaKeyboardPBType_AsciiType = 5,
-  MatchaKeyboardPBType_EmailType = 6,
-  MatchaKeyboardPBType_URLType = 7,
-  MatchaKeyboardPBType_WebSearchType = 8,
-  MatchaKeyboardPBType_NamePhoneType = 9,
+  MatchaKeyboardPBType_DateTimeType = 5,
 };
 
 GPBEnumDescriptor *MatchaKeyboardPBType_EnumDescriptor(void);

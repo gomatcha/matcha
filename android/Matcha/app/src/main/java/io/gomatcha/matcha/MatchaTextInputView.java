@@ -127,23 +127,14 @@ public class MatchaTextInputView extends MatchaChildView {
             }
             int inputType;
             switch (proto.getKeyboardType()) {
-                case DEFAULT_TYPE:
+                case TEXT_TYPE:
                     inputType = InputType.TYPE_CLASS_TEXT;
                 break;
                 case NUMBER_TYPE:
                     inputType = InputType.TYPE_CLASS_NUMBER;
                 break;
-                case NUMBER_PUNCTUATION_TYPE:
-                    inputType = InputType.TYPE_CLASS_NUMBER;
-                break;
-                case DECIMAL_TYPE:
-                    inputType = InputType.TYPE_CLASS_NUMBER;
-                break;
                 case PHONE_TYPE:
                     inputType = InputType.TYPE_CLASS_PHONE;
-                break;
-                case ASCII_TYPE:
-                    inputType = InputType.TYPE_CLASS_TEXT;
                 break;
                 case EMAIL_TYPE:
                     inputType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
@@ -151,11 +142,8 @@ public class MatchaTextInputView extends MatchaChildView {
                 case URL_TYPE:
                     inputType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI;
                 break;
-                case WEB_SEARCH_TYPE:
-                    inputType = InputType.TYPE_CLASS_TEXT;
-                break;
-                case NAME_PHONE_TYPE:
-                    inputType = InputType.TYPE_CLASS_TEXT;
+                case DATE_TIME_TYPE:
+                    inputType = InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_NORMAL;
                 break;
                 default:
                     inputType = InputType.TYPE_CLASS_TEXT;

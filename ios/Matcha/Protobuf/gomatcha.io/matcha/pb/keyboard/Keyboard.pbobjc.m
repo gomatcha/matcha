@@ -34,23 +34,17 @@ GPBEnumDescriptor *MatchaKeyboardPBType_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "DefaultType\000NumberType\000NumberPunctuation"
-        "Type\000DecimalType\000PhoneType\000AsciiType\000Ema"
-        "ilType\000URLType\000WebSearchType\000NamePhoneTy"
-        "pe\000";
+        "TextType\000NumberType\000EmailType\000URLType\000Ph"
+        "oneType\000DateTimeType\000";
     static const int32_t values[] = {
-        MatchaKeyboardPBType_DefaultType,
+        MatchaKeyboardPBType_TextType,
         MatchaKeyboardPBType_NumberType,
-        MatchaKeyboardPBType_NumberPunctuationType,
-        MatchaKeyboardPBType_DecimalType,
-        MatchaKeyboardPBType_PhoneType,
-        MatchaKeyboardPBType_AsciiType,
         MatchaKeyboardPBType_EmailType,
         MatchaKeyboardPBType_URLType,
-        MatchaKeyboardPBType_WebSearchType,
-        MatchaKeyboardPBType_NamePhoneType,
+        MatchaKeyboardPBType_PhoneType,
+        MatchaKeyboardPBType_DateTimeType,
     };
-    static const char *extraTextFormatInfo = "\001\007\003\344\000";
+    static const char *extraTextFormatInfo = "\001\003\003\344\000";
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(MatchaKeyboardPBType)
                                        valueNames:valueNames
@@ -67,16 +61,12 @@ GPBEnumDescriptor *MatchaKeyboardPBType_EnumDescriptor(void) {
 
 BOOL MatchaKeyboardPBType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case MatchaKeyboardPBType_DefaultType:
+    case MatchaKeyboardPBType_TextType:
     case MatchaKeyboardPBType_NumberType:
-    case MatchaKeyboardPBType_NumberPunctuationType:
-    case MatchaKeyboardPBType_DecimalType:
-    case MatchaKeyboardPBType_PhoneType:
-    case MatchaKeyboardPBType_AsciiType:
     case MatchaKeyboardPBType_EmailType:
     case MatchaKeyboardPBType_URLType:
-    case MatchaKeyboardPBType_WebSearchType:
-    case MatchaKeyboardPBType_NamePhoneType:
+    case MatchaKeyboardPBType_PhoneType:
+    case MatchaKeyboardPBType_DateTimeType:
       return YES;
     default:
       return NO;

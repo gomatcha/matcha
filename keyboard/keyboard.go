@@ -21,34 +21,13 @@ import (
 type Type int
 
 const (
-	// Default
-	DefaultType Type = iota
-	// Numbers
+	TextType Type = iota
 	NumberType
-	// Numbers + Punctuation
-	NumberPunctuationType
-	// Numbers + '.'
-	DecimalType
-	// Numbers + Phone keys
-	PhoneType
-	// Ascii
-	ASCIIType
-	// Ascii + '@' + '.'
 	EmailType
-	// Ascii + '.' + '/' + '.com'
 	URLType
-	// Ascii + '.' + 'go'
-	WebSearchType
-	// Ascii + Phone
-	NamePhoneType
+	PhoneType
+	// DateTimeType
 )
-
-// datetime
-// emailAddress
-// number
-// phone
-// text
-// url
 
 func (t Type) MarshalProtobuf() keyboard.Type {
 	return keyboard.Type(t)

@@ -55,7 +55,7 @@ func (m *TextInput) GetKeyboardType() matcha_keyboard.Type {
 	if m != nil {
 		return m.KeyboardType
 	}
-	return matcha_keyboard.Type_DEFAULT_TYPE
+	return matcha_keyboard.Type_TEXT_TYPE
 }
 
 func (m *TextInput) GetKeyboardAppearance() matcha_keyboard.Appearance {

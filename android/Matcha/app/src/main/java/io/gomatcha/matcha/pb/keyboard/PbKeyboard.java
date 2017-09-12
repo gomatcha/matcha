@@ -20,88 +20,56 @@ public final class PbKeyboard {
   public enum Type
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
-     * <code>DEFAULT_TYPE = 0;</code>
+     * <code>TEXT_TYPE = 0;</code>
      */
-    DEFAULT_TYPE(0),
+    TEXT_TYPE(0),
     /**
      * <code>NUMBER_TYPE = 1;</code>
      */
     NUMBER_TYPE(1),
     /**
-     * <code>NUMBER_PUNCTUATION_TYPE = 2;</code>
+     * <code>EMAIL_TYPE = 2;</code>
      */
-    NUMBER_PUNCTUATION_TYPE(2),
+    EMAIL_TYPE(2),
     /**
-     * <code>DECIMAL_TYPE = 3;</code>
+     * <code>URL_TYPE = 3;</code>
      */
-    DECIMAL_TYPE(3),
+    URL_TYPE(3),
     /**
      * <code>PHONE_TYPE = 4;</code>
      */
     PHONE_TYPE(4),
     /**
-     * <code>ASCII_TYPE = 5;</code>
+     * <code>DATE_TIME_TYPE = 5;</code>
      */
-    ASCII_TYPE(5),
-    /**
-     * <code>EMAIL_TYPE = 6;</code>
-     */
-    EMAIL_TYPE(6),
-    /**
-     * <code>URL_TYPE = 7;</code>
-     */
-    URL_TYPE(7),
-    /**
-     * <code>WEB_SEARCH_TYPE = 8;</code>
-     */
-    WEB_SEARCH_TYPE(8),
-    /**
-     * <code>NAME_PHONE_TYPE = 9;</code>
-     */
-    NAME_PHONE_TYPE(9),
+    DATE_TIME_TYPE(5),
     UNRECOGNIZED(-1),
     ;
 
     /**
-     * <code>DEFAULT_TYPE = 0;</code>
+     * <code>TEXT_TYPE = 0;</code>
      */
-    public static final int DEFAULT_TYPE_VALUE = 0;
+    public static final int TEXT_TYPE_VALUE = 0;
     /**
      * <code>NUMBER_TYPE = 1;</code>
      */
     public static final int NUMBER_TYPE_VALUE = 1;
     /**
-     * <code>NUMBER_PUNCTUATION_TYPE = 2;</code>
+     * <code>EMAIL_TYPE = 2;</code>
      */
-    public static final int NUMBER_PUNCTUATION_TYPE_VALUE = 2;
+    public static final int EMAIL_TYPE_VALUE = 2;
     /**
-     * <code>DECIMAL_TYPE = 3;</code>
+     * <code>URL_TYPE = 3;</code>
      */
-    public static final int DECIMAL_TYPE_VALUE = 3;
+    public static final int URL_TYPE_VALUE = 3;
     /**
      * <code>PHONE_TYPE = 4;</code>
      */
     public static final int PHONE_TYPE_VALUE = 4;
     /**
-     * <code>ASCII_TYPE = 5;</code>
+     * <code>DATE_TIME_TYPE = 5;</code>
      */
-    public static final int ASCII_TYPE_VALUE = 5;
-    /**
-     * <code>EMAIL_TYPE = 6;</code>
-     */
-    public static final int EMAIL_TYPE_VALUE = 6;
-    /**
-     * <code>URL_TYPE = 7;</code>
-     */
-    public static final int URL_TYPE_VALUE = 7;
-    /**
-     * <code>WEB_SEARCH_TYPE = 8;</code>
-     */
-    public static final int WEB_SEARCH_TYPE_VALUE = 8;
-    /**
-     * <code>NAME_PHONE_TYPE = 9;</code>
-     */
-    public static final int NAME_PHONE_TYPE_VALUE = 9;
+    public static final int DATE_TIME_TYPE_VALUE = 5;
 
 
     public final int getNumber() {
@@ -122,16 +90,12 @@ public final class PbKeyboard {
 
     public static Type forNumber(int value) {
       switch (value) {
-        case 0: return DEFAULT_TYPE;
+        case 0: return TEXT_TYPE;
         case 1: return NUMBER_TYPE;
-        case 2: return NUMBER_PUNCTUATION_TYPE;
-        case 3: return DECIMAL_TYPE;
+        case 2: return EMAIL_TYPE;
+        case 3: return URL_TYPE;
         case 4: return PHONE_TYPE;
-        case 5: return ASCII_TYPE;
-        case 6: return EMAIL_TYPE;
-        case 7: return URL_TYPE;
-        case 8: return WEB_SEARCH_TYPE;
-        case 9: return NAME_PHONE_TYPE;
+        case 5: return DATE_TIME_TYPE;
         default: return null;
       }
     }
@@ -489,24 +453,21 @@ public final class PbKeyboard {
   static {
     java.lang.String[] descriptorData = {
       "\n-gomatcha.io/matcha/pb/keyboard/keyboar" +
-      "d.proto\022\017matcha.keyboard*\300\001\n\004Type\022\020\n\014DEF" +
-      "AULT_TYPE\020\000\022\017\n\013NUMBER_TYPE\020\001\022\033\n\027NUMBER_P" +
-      "UNCTUATION_TYPE\020\002\022\020\n\014DECIMAL_TYPE\020\003\022\016\n\nP" +
-      "HONE_TYPE\020\004\022\016\n\nASCII_TYPE\020\005\022\016\n\nEMAIL_TYP" +
-      "E\020\006\022\014\n\010URL_TYPE\020\007\022\023\n\017WEB_SEARCH_TYPE\020\010\022\023" +
-      "\n\017NAME_PHONE_TYPE\020\t*O\n\nAppearance\022\026\n\022DEF" +
-      "AULT_APPEARANCE\020\000\022\024\n\020LIGHT_APPEARANCE\020\001\022" +
-      "\023\n\017DARK_APPEARANCE\020\002*\251\002\n\nReturnType\022\027\n\023D" +
-      "EFAULT_RETURN_TYPE\020\000\022\022\n\016GO_RETURN_TYPE\020\001",
-      "\022\026\n\022GOOGLE_RETURN_TYPE\020\002\022\024\n\020JOIN_RETURN_" +
-      "TYPE\020\003\022\024\n\020NEXT_RETURN_TYPE\020\004\022\025\n\021ROUTE_RE" +
-      "TURN_TYPE\020\005\022\026\n\022SEARCH_RETURN_TYPE\020\006\022\024\n\020S" +
-      "END_RETURN_TYPE\020\007\022\025\n\021YAHOO_RETURN_TYPE\020\010" +
-      "\022\024\n\020DONE_RETURN_TYPE\020\t\022\036\n\032EMERGENCY_CALL" +
-      "_RETURN_TYPE\020\n\022\030\n\024CONTINUE_RETURN_TYPE\020\013" +
-      "BI\n\036io.gomatcha.matcha.pb.keyboardB\nPbKe" +
-      "yboardZ\010keyboard\242\002\020MatchaKeyboardPBb\006pro" +
-      "to3"
+      "d.proto\022\017matcha.keyboard*h\n\004Type\022\r\n\tTEXT" +
+      "_TYPE\020\000\022\017\n\013NUMBER_TYPE\020\001\022\016\n\nEMAIL_TYPE\020\002" +
+      "\022\014\n\010URL_TYPE\020\003\022\016\n\nPHONE_TYPE\020\004\022\022\n\016DATE_T" +
+      "IME_TYPE\020\005*O\n\nAppearance\022\026\n\022DEFAULT_APPE" +
+      "ARANCE\020\000\022\024\n\020LIGHT_APPEARANCE\020\001\022\023\n\017DARK_A" +
+      "PPEARANCE\020\002*\251\002\n\nReturnType\022\027\n\023DEFAULT_RE" +
+      "TURN_TYPE\020\000\022\022\n\016GO_RETURN_TYPE\020\001\022\026\n\022GOOGL" +
+      "E_RETURN_TYPE\020\002\022\024\n\020JOIN_RETURN_TYPE\020\003\022\024\n" +
+      "\020NEXT_RETURN_TYPE\020\004\022\025\n\021ROUTE_RETURN_TYPE",
+      "\020\005\022\026\n\022SEARCH_RETURN_TYPE\020\006\022\024\n\020SEND_RETUR" +
+      "N_TYPE\020\007\022\025\n\021YAHOO_RETURN_TYPE\020\010\022\024\n\020DONE_" +
+      "RETURN_TYPE\020\t\022\036\n\032EMERGENCY_CALL_RETURN_T" +
+      "YPE\020\n\022\030\n\024CONTINUE_RETURN_TYPE\020\013BI\n\036io.go" +
+      "matcha.matcha.pb.keyboardB\nPbKeyboardZ\010k" +
+      "eyboard\242\002\020MatchaKeyboardPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

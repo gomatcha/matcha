@@ -351,7 +351,7 @@ public final class PbTextInput {
       if (focused_ != false) {
         output.writeBool(4, focused_);
       }
-      if (keyboardType_ != io.gomatcha.matcha.pb.keyboard.PbKeyboard.Type.DEFAULT_TYPE.getNumber()) {
+      if (keyboardType_ != io.gomatcha.matcha.pb.keyboard.PbKeyboard.Type.TEXT_TYPE.getNumber()) {
         output.writeEnum(5, keyboardType_);
       }
       if (keyboardAppearance_ != io.gomatcha.matcha.pb.keyboard.PbKeyboard.Appearance.DEFAULT_APPEARANCE.getNumber()) {
@@ -385,7 +385,7 @@ public final class PbTextInput {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(4, focused_);
       }
-      if (keyboardType_ != io.gomatcha.matcha.pb.keyboard.PbKeyboard.Type.DEFAULT_TYPE.getNumber()) {
+      if (keyboardType_ != io.gomatcha.matcha.pb.keyboard.PbKeyboard.Type.TEXT_TYPE.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(5, keyboardType_);
       }

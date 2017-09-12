@@ -7,16 +7,12 @@ option java_package = "io.gomatcha.matcha.pb.keyboard";
 option java_outer_classname = "PbKeyboard";
 
 enum Type {
-    DEFAULT_TYPE = 0;
+    TEXT_TYPE = 0;
     NUMBER_TYPE = 1;
-    NUMBER_PUNCTUATION_TYPE = 2;
-    DECIMAL_TYPE = 3;
+    EMAIL_TYPE = 2;
+    URL_TYPE = 3;
     PHONE_TYPE = 4;
-    ASCII_TYPE = 5;
-    EMAIL_TYPE = 6;
-    URL_TYPE = 7;
-    WEB_SEARCH_TYPE = 8;
-    NAME_PHONE_TYPE = 9;
+    DATE_TIME_TYPE = 5;
 }
 
 enum Appearance {

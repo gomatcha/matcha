@@ -408,28 +408,13 @@ UIKeyboardType MatchaKeyboardTypeWithProtobuf(MatchaKeyboardPBType a) {
     UIKeyboardType t = UIKeyboardTypeDefault;
     switch (a) {
     case MatchaKeyboardPBType_GPBUnrecognizedEnumeratorValue:
-    case MatchaKeyboardPBType_DefaultType: {
+    case MatchaKeyboardPBType_DateTimeType:
+    case MatchaKeyboardPBType_TextType: {
         t = UIKeyboardTypeDefault;
         break;
     }
     case MatchaKeyboardPBType_NumberType: {
         t = UIKeyboardTypeNumberPad;
-        break;
-    }
-    case MatchaKeyboardPBType_NumberPunctuationType: {
-        t = UIKeyboardTypeNumbersAndPunctuation;
-        break;
-    }
-    case MatchaKeyboardPBType_DecimalType: {
-        t = UIKeyboardTypeDecimalPad;
-        break;
-    }
-    case MatchaKeyboardPBType_PhoneType: {
-        t = UIKeyboardTypePhonePad;
-        break;
-    }
-    case MatchaKeyboardPBType_AsciiType: {
-        t = UIKeyboardTypeASCIICapable;
         break;
     }
     case MatchaKeyboardPBType_EmailType: {
@@ -440,12 +425,8 @@ UIKeyboardType MatchaKeyboardTypeWithProtobuf(MatchaKeyboardPBType a) {
         t = UIKeyboardTypeURL;
         break;
     }
-    case MatchaKeyboardPBType_WebSearchType: {
-        t = UIKeyboardTypeWebSearch;
-        break;
-    }
-    case MatchaKeyboardPBType_NamePhoneType: {
-        t = UIKeyboardTypeNamePhonePad;
+    case MatchaKeyboardPBType_PhoneType: {
+        t = UIKeyboardTypePhonePad;
         break;
     }
     }
