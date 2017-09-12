@@ -49,10 +49,10 @@
 }
 
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
-    MatchaStackScreenPBView *view = (id)[self.node.nativeViewState unpackMessageClass:[MatchaStackScreenPBView class] error:nil];
+    MatchaiOSPBStackView *view = (id)[self.node.nativeViewState unpackMessageClass:[MatchaiOSPBStackView class] error:nil];
     
     NSMutableArray *prevIds = [NSMutableArray array];
-    for (MatchaStackScreenPBChildView *i in view.childrenArray) {
+    for (MatchaiOSPBStackChildView *i in view.childrenArray) {
         [prevIds addObject:@(i.screenId)];
     }
     if ([self.prevIds isEqual:prevIds]) {
@@ -67,7 +67,7 @@
 
     NSMutableArray *viewControllers = [NSMutableArray array];
     for (NSInteger i = 0; i < view.childrenArray.count; i++) {
-        MatchaStackScreenPBChildView *childView = view.childrenArray[i];
+        MatchaiOSPBStackChildView *childView = view.childrenArray[i];
         MatchaStackBar *bar = (id)childVCs[i * 2];
         UIViewController *vc = childVCs[i * 2 + 1];
         vc.navigationItem.title = bar.titleString;
@@ -113,7 +113,7 @@
     for (NSNumber *i in prevIds) {
         [array addValue:i.longLongValue];
     }
-    MatchaStackScreenPBStackEvent *event = [[MatchaStackScreenPBStackEvent alloc] init];
+    MatchaiOSPBStackEvent *event = [[MatchaiOSPBStackEvent alloc] init];
     event.idArray = array;
     
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
@@ -136,7 +136,7 @@
 }
 
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
-    MatchaStackScreenPBBar *bar = (id)[self.node.nativeViewState unpackMessageClass:[MatchaStackScreenPBBar class] error:nil];
+    MatchaiOSPBStackBar *bar = (id)[self.node.nativeViewState unpackMessageClass:[MatchaiOSPBStackBar class] error:nil];
     NSInteger idx = 0;
     
     self.titleString = bar.title;

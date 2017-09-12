@@ -10,7 +10,7 @@
 #import "Button.pbobjc.h"
 #import "Paint.pbobjc.h"
 #import "Tabscreen.pbobjc.h"
-#import "Stacknavigator.pbobjc.h"
+#import "Stackview.pbobjc.h"
 #import "Switchview.pbobjc.h"
 #import "Touch2.pbobjc.h"
 #import "Resource.pbobjc.h"

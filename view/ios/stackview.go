@@ -10,7 +10,7 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/pb"
 	pbtext "gomatcha.io/matcha/pb/text"
-	"gomatcha.io/matcha/pb/view/stacknav"
+	pbios "gomatcha.io/matcha/pb/view/ios"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )
@@ -144,7 +144,7 @@ func (v *StackView) Build(ctx *view.Context) view.Model {
 		v.stack = v.Stack
 	}
 
-	childrenPb := []*stacknav.ChildView{}
+	childrenPb := []*pbios.StackChildView{}
 	for _, id := range v.Stack.childIds {
 		chld := v.Stack.childrenMap[id]
 
@@ -183,7 +183,7 @@ func (v *StackView) Build(ctx *view.Context) view.Model {
 		})
 
 		// Add ids to protobuf.
-		childrenPb = append(childrenPb, &stacknav.ChildView{
+		childrenPb = append(childrenPb, &pbios.StackChildView{
 			ScreenId: int64(id),
 		})
 	}
@@ -202,7 +202,7 @@ func (v *StackView) Build(ctx *view.Context) view.Model {
 		Children:       l.Views(),
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/stacknav",
-		NativeViewState: &stacknav.View{
+		NativeViewState: &pbios.StackView{
 			Children:       childrenPb,
 			TitleTextStyle: titleTextStyle,
 			BackTextStyle:  backTextStyle,
@@ -210,7 +210,7 @@ func (v *StackView) Build(ctx *view.Context) view.Model {
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnChange": func(data []byte) {
-				pbevent := &stacknav.StackEvent{}
+				pbevent := &pbios.StackEvent{}
 				err := proto.Unmarshal(data, pbevent)
 				if err != nil {
 					fmt.Println("error", err)
@@ -268,7 +268,7 @@ func (v *stackBarView) Build(ctx *view.Context) view.Model {
 		Layouter:       l,
 		Children:       l.Views(),
 		NativeViewName: "gomatcha.io/matcha/view/stacknav Bar",
-		NativeViewState: &stacknav.Bar{
+		NativeViewState: &pbios.StackBar{
 			Title: v.Bar.Title,
 			CustomBackButtonTitle: len(v.Bar.BackButtonTitle) > 0,
 			BackButtonTitle:       v.Bar.BackButtonTitle,

@@ -19,8 +19,10 @@
 		673181AC1F15F7C600E1839E /* MatchaSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 673181AA1F15F7C600E1839E /* MatchaSegmentView.m */; };
 		673181B01F15F81B00E1839E /* Segmentview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 673181AE1F15F81B00E1839E /* Segmentview.pbobjc.h */; };
 		673181B11F15F81B00E1839E /* Segmentview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 673181AF1F15F81B00E1839E /* Segmentview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6732F9E71F6763FA002DC2EF /* Slider.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9E51F6763FA002DC2EF /* Slider.pbobjc.m */; };
+		6732F9E71F6763FA002DC2EF /* Slider.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9E51F6763FA002DC2EF /* Slider.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6732F9E81F6763FA002DC2EF /* Slider.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9E61F6763FA002DC2EF /* Slider.pbobjc.h */; };
+		6732F9EC1F6766B5002DC2EF /* Stackview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732F9EA1F6766B5002DC2EF /* Stackview.pbobjc.h */; };
+		6732F9ED1F6766B5002DC2EF /* Stackview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732F9EB1F6766B5002DC2EF /* Stackview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6759EE521F2E632C00B8E0A9 /* MatchaMiddleware.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */; };
 		6759EE531F2E632C00B8E0A9 /* MatchaMiddleware.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */; };
 		6759EE561F2E64EC00B8E0A9 /* MatchaStatusBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE541F2E64EC00B8E0A9 /* MatchaStatusBar.h */; };
@@ -50,8 +52,6 @@
 		67FEBABE1F099F1D005AFEDA /* Imageview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA961F099F1D005AFEDA /* Imageview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBABF1F099F1D005AFEDA /* Scrollview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA981F099F1D005AFEDA /* Scrollview.pbobjc.h */; };
 		67FEBAC01F099F1D005AFEDA /* Scrollview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA991F099F1D005AFEDA /* Scrollview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		67FEBAC31F099F1D005AFEDA /* Stacknavigator.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA9E1F099F1D005AFEDA /* Stacknavigator.pbobjc.h */; };
-		67FEBAC41F099F1D005AFEDA /* Stacknavigator.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBA9F1F099F1D005AFEDA /* Stacknavigator.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBAC51F099F1D005AFEDA /* Switchview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAA11F099F1D005AFEDA /* Switchview.pbobjc.h */; };
 		67FEBAC61F099F1D005AFEDA /* Switchview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAA21F099F1D005AFEDA /* Switchview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67FEBAC71F099F1D005AFEDA /* Tabscreen.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAA41F099F1D005AFEDA /* Tabscreen.pbobjc.h */; };
@@ -119,6 +119,8 @@
 		673181AF1F15F81B00E1839E /* Segmentview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segmentview.pbobjc.m; sourceTree = "<group>"; };
 		6732F9E51F6763FA002DC2EF /* Slider.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Slider.pbobjc.m; sourceTree = "<group>"; };
 		6732F9E61F6763FA002DC2EF /* Slider.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slider.pbobjc.h; sourceTree = "<group>"; };
+		6732F9EA1F6766B5002DC2EF /* Stackview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stackview.pbobjc.h; sourceTree = "<group>"; };
+		6732F9EB1F6766B5002DC2EF /* Stackview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stackview.pbobjc.m; sourceTree = "<group>"; };
 		6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaMiddleware.h; sourceTree = "<group>"; };
 		6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaMiddleware.m; sourceTree = "<group>"; };
 		6759EE541F2E64EC00B8E0A9 /* MatchaStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaStatusBar.h; sourceTree = "<group>"; };
@@ -150,8 +152,6 @@
 		67FEBA961F099F1D005AFEDA /* Imageview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Imageview.pbobjc.m; sourceTree = "<group>"; };
 		67FEBA981F099F1D005AFEDA /* Scrollview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scrollview.pbobjc.h; sourceTree = "<group>"; };
 		67FEBA991F099F1D005AFEDA /* Scrollview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scrollview.pbobjc.m; sourceTree = "<group>"; };
-		67FEBA9E1F099F1D005AFEDA /* Stacknavigator.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stacknavigator.pbobjc.h; sourceTree = "<group>"; };
-		67FEBA9F1F099F1D005AFEDA /* Stacknavigator.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stacknavigator.pbobjc.m; sourceTree = "<group>"; };
 		67FEBAA11F099F1D005AFEDA /* Switchview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Switchview.pbobjc.h; sourceTree = "<group>"; };
 		67FEBAA21F099F1D005AFEDA /* Switchview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Switchview.pbobjc.m; sourceTree = "<group>"; };
 		67FEBAA41F099F1D005AFEDA /* Tabscreen.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tabscreen.pbobjc.h; sourceTree = "<group>"; };
@@ -260,6 +260,15 @@
 				673181AF1F15F81B00E1839E /* Segmentview.pbobjc.m */,
 			);
 			path = segmentview;
+			sourceTree = "<group>";
+		};
+		6732F9E91F6766B5002DC2EF /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				6732F9EA1F6766B5002DC2EF /* Stackview.pbobjc.h */,
+				6732F9EB1F6766B5002DC2EF /* Stackview.pbobjc.m */,
+			);
+			path = ios;
 			sourceTree = "<group>";
 		};
 		6759EE581F2E686A00B8E0A9 /* app */ = {
@@ -429,6 +438,7 @@
 		67FEBA901F099F1D005AFEDA /* view */ = {
 			isa = PBXGroup;
 			children = (
+				6732F9E91F6766B5002DC2EF /* ios */,
 				6732F9E51F6763FA002DC2EF /* Slider.pbobjc.m */,
 				6732F9E61F6763FA002DC2EF /* Slider.pbobjc.h */,
 				67F927061F27FFBB00C068AF /* alert */,
@@ -437,7 +447,6 @@
 				67FEBA911F099F1D005AFEDA /* button */,
 				67FEBA941F099F1D005AFEDA /* imageview */,
 				67FEBA971F099F1D005AFEDA /* scrollview */,
-				67FEBA9D1F099F1D005AFEDA /* stacknav */,
 				67FEBAA01F099F1D005AFEDA /* switchview */,
 				67FEBAA31F099F1D005AFEDA /* tabscreen */,
 				67FEBAA61F099F1D005AFEDA /* textinput */,
@@ -472,15 +481,6 @@
 				67FEBA991F099F1D005AFEDA /* Scrollview.pbobjc.m */,
 			);
 			path = scrollview;
-			sourceTree = "<group>";
-		};
-		67FEBA9D1F099F1D005AFEDA /* stacknav */ = {
-			isa = PBXGroup;
-			children = (
-				67FEBA9E1F099F1D005AFEDA /* Stacknavigator.pbobjc.h */,
-				67FEBA9F1F099F1D005AFEDA /* Stacknavigator.pbobjc.m */,
-			);
-			path = stacknav;
 			sourceTree = "<group>";
 		};
 		67FEBAA01F099F1D005AFEDA /* switchview */ = {
@@ -664,6 +664,7 @@
 				67FEBB3F1F0A209B005AFEDA /* MatchaImageView.h in Headers */,
 				67FEBB1B1F09A18F005AFEDA /* MatchaButton.h in Headers */,
 				67FEBAB11F099F1D005AFEDA /* Keyboard.pbobjc.h in Headers */,
+				6732F9EC1F6766B5002DC2EF /* Stackview.pbobjc.h in Headers */,
 				67FEBABB1F099F1D005AFEDA /* Button.pbobjc.h in Headers */,
 				67FEBAFF1F09A18F005AFEDA /* MatchaTextInput.h in Headers */,
 				6759EE521F2E632C00B8E0A9 /* MatchaMiddleware.h in Headers */,
@@ -678,7 +679,6 @@
 				671B30581F5F509D00F2ABFE /* MatchaUnknownView.h in Headers */,
 				6759EE561F2E64EC00B8E0A9 /* MatchaStatusBar.h in Headers */,
 				67FEBAB51F099F1D005AFEDA /* Paint.pbobjc.h in Headers */,
-				67FEBAC31F099F1D005AFEDA /* Stacknavigator.pbobjc.h in Headers */,
 				67FEBB0D1F09A18F005AFEDA /* MatchaProtobuf.h in Headers */,
 				673181B01F15F81B00E1839E /* Segmentview.pbobjc.h in Headers */,
 				67FEBAF91F09A18F005AFEDA /* MatchaViewController.h in Headers */,
@@ -779,6 +779,7 @@
 				6759EE571F2E64EC00B8E0A9 /* MatchaStatusBar.m in Sources */,
 				67FEBAB41F099F1D005AFEDA /* Layout.pbobjc.m in Sources */,
 				67FEBAC01F099F1D005AFEDA /* Scrollview.pbobjc.m in Sources */,
+				6732F9ED1F6766B5002DC2EF /* Stackview.pbobjc.m in Sources */,
 				673181B11F15F81B00E1839E /* Segmentview.pbobjc.m in Sources */,
 				67FEBB0C1F09A18F005AFEDA /* MatchaProtobuf.m in Sources */,
 				67FEBABE1F099F1D005AFEDA /* Imageview.pbobjc.m in Sources */,
@@ -791,7 +792,6 @@
 				67FEBAB61F099F1D005AFEDA /* Paint.pbobjc.m in Sources */,
 				67FEBAB81F099F1D005AFEDA /* Text.pbobjc.m in Sources */,
 				67FEBB0E1F09A18F005AFEDA /* MatchaPressGestureRecognizer.m in Sources */,
-				67FEBAC41F099F1D005AFEDA /* Stacknavigator.pbobjc.m in Sources */,
 				67FEBABC1F099F1D005AFEDA /* Button.pbobjc.m in Sources */,
 				67FEBAC81F099F1D005AFEDA /* Tabscreen.pbobjc.m in Sources */,
 				67FEBABA1F099F1D005AFEDA /* Touch2.pbobjc.m in Sources */,

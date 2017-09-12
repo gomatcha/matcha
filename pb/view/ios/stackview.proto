@@ -3,23 +3,23 @@ package matcha.view.stacknav;
 import "gomatcha.io/matcha/pb/image.proto";
 import "gomatcha.io/matcha/pb/text/text.proto";
 
-option go_package = "stacknav";
-option objc_class_prefix = "MatchaStackScreenPB";
-option java_package = "io.gomatcha.matcha.pb.view.stackview";
+option go_package = "ios";
+option objc_class_prefix = "MatchaiOSPB";
+option java_package = "io.gomatcha.matcha.pb.view.ios";
 option java_outer_classname = "PbStackView";
 
-message ChildView {
+message StackChildView {
     int64 screenId = 3;
 }
 
-message View {
-    repeated ChildView children = 1;
+message StackView {
+    repeated StackChildView children = 1;
     matcha.text.TextStyle titleTextStyle = 2;
     matcha.text.TextStyle backTextStyle = 3;
     matcha.Color barColor = 4;
 }
 
-message Bar {
+message StackBar {
     string title = 1;
     bool backButtonHidden = 7;
     bool customBackButtonTitle = 2;
