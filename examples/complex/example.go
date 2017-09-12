@@ -9,7 +9,6 @@ import (
 
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/animate"
-	"gomatcha.io/matcha/app"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/constraint"
@@ -240,7 +239,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 
 	options := []view.Option{}
 	if v.counter%2 == 0 {
-		options = append(options, app.ActivityIndicator{})
+		options = append(options, ios.ActivityIndicator{})
 		options = append(options, ios.StatusBar{
 			Hidden: true,
 			Style:  ios.StatusBarStyleDark,

@@ -2,7 +2,6 @@ package ios
 
 import (
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/app"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
 	pbapp "gomatcha.io/matcha/pb/app"
@@ -38,7 +37,7 @@ func (m *activityIndicatorMiddleware) Build(ctx *view.Context, model *view.Model
 
 	add := false
 	for _, i := range model.Options {
-		if _, ok := i.(app.ActivityIndicator); ok {
+		if _, ok := i.(ActivityIndicator); ok {
 			add = true
 		}
 	}

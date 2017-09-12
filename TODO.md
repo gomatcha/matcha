@@ -3,12 +3,13 @@ High:
 * Android better gesture recognizers
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation
 * Rebuild Instagram.
-* Modal presentation.
 * Android custom view example
 * Android Text Input, number of lines. font
 * Move matcha/view/Root into matcha/Root?
+* Don't crash if function is missing.
 
 Medium:
+* Modal presentation.
 * Delay any ui events while viewcontroller is updating??
 * Picker
 * TextField
