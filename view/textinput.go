@@ -53,7 +53,7 @@ func (v *TextInput) Lifecycle(from, to Stage) {
 }
 
 // Build implements the view.View interface.
-func (v *TextInput) Build(ctx *Context) Model {
+func (v *TextInput) Build(ctx Context) Model {
 	style := v.Style
 	if style == nil {
 		style = &text.Style{}
@@ -171,17 +171,17 @@ type textInputLayouter struct {
 	maxLines   int
 }
 
-func (l *textInputLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *textInputLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	if l.maxLines == 1 {
-		size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
+		size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize(), 1)
 		size.Y += 15
 		if size.Y < 30 {
 			size.Y = 30
 		}
-		g := layout.Guide{Frame: layout.Rt(0, 0, ctx.MinSize.X, size.Y)}
+		g := layout.Guide{Frame: layout.Rt(0, 0, ctx.MinSize().X, size.Y)}
 		return g, nil
 	} else {
-		g := layout.Guide{Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y)}
+		g := layout.Guide{Frame: layout.Rt(0, 0, ctx.MinSize().X, ctx.MinSize().Y)}
 		return g, nil
 	}
 }

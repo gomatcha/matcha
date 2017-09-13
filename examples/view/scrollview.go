@@ -23,7 +23,7 @@ func NewScrollView() *ScrollView {
 	return &ScrollView{}
 }
 
-func (v *ScrollView) Build(ctx *view.Context) view.Model {
+func (v *ScrollView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	childLayouter := &table.Layouter{}
@@ -57,7 +57,7 @@ func NewTableCell() *TableCell {
 	return &TableCell{}
 }
 
-func (v *TableCell) Build(ctx *view.Context) view.Model {
+func (v *TableCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(50)

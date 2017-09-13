@@ -87,7 +87,7 @@ Building a simple StackView:
 		appview.stack.SetViews(child)
 		return appview
 	}
-	func (v *AppView) Build(ctx *view.Context) view.Model {
+	func (v *AppView) Build(ctx view.Context2) view.Model {
 		child := ios.New()
 		child.Stack = v.stack
 		return view.Model{
@@ -130,7 +130,7 @@ func (v *StackView) Lifecycle(from, to view.Stage) {
 }
 
 // Build implements the view.View interface.
-func (v *StackView) Build(ctx *view.Context) view.Model {
+func (v *StackView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	// Subscribe to the stack
@@ -228,7 +228,7 @@ type stackBarView struct {
 	Bar *StackBar
 }
 
-func (v *stackBarView) Build(ctx *view.Context) view.Model {
+func (v *stackBarView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	// iOS does the layouting for us. We just need the correct sizes.

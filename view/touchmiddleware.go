@@ -22,7 +22,7 @@ func (r *touchMiddleware) MarshalProtobuf() proto.Message {
 	return nil
 }
 
-func (r *touchMiddleware) Build(ctx *Context, next *Model) {
+func (r *touchMiddleware) Build(ctx Context, next *Model) {
 	path := idSliceToIntSlice(ctx.Path())
 	node := r.radix.At(path)
 	var prevIds map[int64]touch.Gesture

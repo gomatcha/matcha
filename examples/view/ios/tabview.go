@@ -76,7 +76,7 @@ func NewTabChild(app *TabApp) *TabChild {
 	}
 }
 
-func (v *TabChild) Build(ctx *view.Context) view.Model {
+func (v *TabChild) Build(ctx view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {

@@ -13,8 +13,8 @@ import (
 type sliderLayouter struct {
 }
 
-func (l *sliderLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
-	g := layout.Guide{Frame: layout.Rt(0, 0, ctx.MinSize.X, 31)}
+func (l *sliderLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
+	g := layout.Guide{Frame: layout.Rt(0, 0, ctx.MinSize().X, 31)}
 	return g, nil
 }
 
@@ -57,7 +57,7 @@ func (v *Slider) Lifecycle(from, to Stage) {
 }
 
 // Build implements view.View.
-func (v *Slider) Build(ctx *Context) Model {
+func (v *Slider) Build(ctx Context) Model {
 	val := v.Value
 	if v.ValueNotifier != nil {
 		val = v.ValueNotifier.Value()

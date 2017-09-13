@@ -26,7 +26,7 @@ func NewButtonView() *ButtonView {
 	}
 }
 
-func (v *ButtonView) Build(ctx *view.Context) view.Model {
+func (v *ButtonView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewButton()

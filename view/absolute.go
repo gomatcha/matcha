@@ -24,7 +24,7 @@ func (l *absoluteLayouter) Views() []View {
 }
 
 // Layout implements the view.Layouter interface.
-func (l *absoluteLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *absoluteLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	// TODO(KD): Need to call layoutChild.
 	for i := 0; i < len(l.childGuides); i++ {
 		g := l.childGuides[i]

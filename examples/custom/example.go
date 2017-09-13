@@ -24,7 +24,7 @@ func New() *View {
 	return &View{}
 }
 
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *View) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := customview.New()

@@ -25,7 +25,7 @@ func NewSwitch() *Switch {
 }
 
 // Build implements view.View.
-func (v *Switch) Build(ctx *Context) Model {
+func (v *Switch) Build(ctx Context) Model {
 	l := &absoluteLayouter{
 		Guide: layout.Guide{
 			Frame: layout.Rt(0, 0, 51, 31),

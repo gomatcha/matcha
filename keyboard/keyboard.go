@@ -110,7 +110,7 @@ func (g *Responder) Unnotify(id comm.Id) {
 // 	return &Middleware{radix: radix.NewRadix()}
 // }
 
-// func (m *Middleware) Build(ctx *view.Context, next *view.Model) {
+// func (m *Middleware) Build(ctx view.Context2, next *view.Model) {
 // 	responder, ok := next.Values[Key].(*Responder)
 // 	path := []int64{}
 // 	for _, i := range ctx.Path() {

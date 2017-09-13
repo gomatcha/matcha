@@ -41,7 +41,7 @@ func NewRootView(app *App) *RootView {
 	}
 }
 
-func (v *RootView) Build(ctx *view.Context) view.Model {
+func (v *RootView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 
 	for _, i := range v.app.Posts {
@@ -75,7 +75,7 @@ func NewPostView(p *Post) *PostView {
 	}
 }
 
-func (v *PostView) Build(ctx *view.Context) view.Model {
+func (v *PostView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	header := NewPostHeaderView()
@@ -157,7 +157,7 @@ func NewPostHeaderView() *PostHeaderView {
 	return &PostHeaderView{}
 }
 
-func (v *PostHeaderView) Build(ctx *view.Context) view.Model {
+func (v *PostHeaderView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(60)
@@ -201,7 +201,7 @@ func NewPostImageView() *PostImageView {
 	return &PostImageView{}
 }
 
-func (v *PostImageView) Build(ctx *view.Context) view.Model {
+func (v *PostImageView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	image := view.NewImageView()
@@ -266,7 +266,7 @@ func NewPostButtonsView() *PostButtonsView {
 	return &PostButtonsView{}
 }
 
-func (v *PostButtonsView) Build(ctx *view.Context) view.Model {
+func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(65)
@@ -358,7 +358,7 @@ func NewCommentsView() *CommentsView {
 	return &CommentsView{}
 }
 
-func (v *CommentsView) Build(ctx *view.Context) view.Model {
+func (v *CommentsView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	topGuide := l.Top().Add(10)

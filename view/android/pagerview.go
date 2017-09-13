@@ -79,7 +79,7 @@ func (v *PagerView) Lifecycle(from, to view.Stage) {
 }
 
 // Build implements the view.View interface.
-func (v *PagerView) Build(ctx *view.Context) view.Model {
+func (v *PagerView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	// Subscribe to the group

@@ -31,7 +31,7 @@ func (v *WifiView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *WifiView) Build(ctx *view.Context) view.Model {
+func (v *WifiView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 	{
 		group := []view.View{}
@@ -135,10 +135,6 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *WifiView) StackBar(ctx *view.Context) *ios.StackBar {
-	return &ios.StackBar{Title: "Wi-Fi"}
-}
-
 type WifiNetworkView struct {
 	view.Embed
 	app     *App
@@ -166,7 +162,7 @@ func (v *WifiNetworkView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
+func (v *WifiNetworkView) Build(ctx view.Context) view.Model {
 	props := v.network.Properties()
 
 	l := &table.Layouter{}
@@ -290,12 +286,9 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
-	}
-}
-
-func (v *WifiNetworkView) StackBar(*view.Context) *ios.StackBar {
-	return &ios.StackBar{
-		Title: v.network.SSID(),
+		Options: []view.Option{
+			&ios.StackBar{Title: v.network.SSID()},
+		},
 	}
 }
 
@@ -310,7 +303,7 @@ func NewSegmentCell() *SegmentCell {
 	return &SegmentCell{}
 }
 
-func (v *SegmentCell) Build(ctx *view.Context) view.Model {
+func (v *SegmentCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(44)
@@ -348,7 +341,7 @@ func NewInfoButton() *InfoButton {
 	return &InfoButton{}
 }
 
-func (v *InfoButton) Build(ctx *view.Context) view.Model {
+func (v *InfoButton) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Width(44)

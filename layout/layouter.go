@@ -16,21 +16,15 @@ func init() {
 }
 
 type Layouter interface {
-	Layout(ctx *Context) (Guide, []Guide)
+	Layout(ctx Context) (Guide, []Guide)
 	comm.Notifier
 }
 
-type Context struct {
-	MinSize    Point
-	MaxSize    Point
-	ChildCount int
-	LayoutFunc func(int, Point, Point) Guide // TODO(KD): this should be private...
-}
-
-func (l *Context) LayoutChild(idx int, minSize, maxSize Point) Guide {
-	g := l.LayoutFunc(idx, minSize, maxSize)
-	g.Frame = g.Frame.Add(Pt(-g.Frame.Min.X, -g.Frame.Min.Y))
-	return g
+type Context interface {
+	MaxSize() Point
+	MinSize() Point
+	ChildCount() int
+	LayoutChild(idx int, minSize, maxSize Point) Guide
 }
 
 // Guide represents the position of a view.
@@ -85,21 +79,4 @@ func (g Guide) CenterX() float64 {
 // CenterY returns the vertical center of g.
 func (g Guide) CenterY() float64 {
 	return (g.Frame.Max.Y - g.Frame.Min.Y) / 2
-}
-
-// Fit adjusts the frame of the guide to be within MinSize and MaxSize of the LayoutContext.
-func (g Guide) Fit(ctx *Context) Guide {
-	if g.Width() < ctx.MinSize.X {
-		g.Frame.Max.X = ctx.MinSize.X - g.Frame.Min.X
-	}
-	if g.Height() < ctx.MinSize.Y {
-		g.Frame.Max.Y = ctx.MinSize.Y - g.Frame.Min.Y
-	}
-	if g.Width() > ctx.MaxSize.X {
-		g.Frame.Max.X = ctx.MaxSize.X - g.Frame.Min.X
-	}
-	if g.Height() > ctx.MaxSize.Y {
-		g.Frame.Max.Y = ctx.MaxSize.Y - g.Frame.Min.Y
-	}
-	return g
 }

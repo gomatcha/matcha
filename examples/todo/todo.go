@@ -47,7 +47,7 @@ func NewAppView() *AppView {
 	return &AppView{}
 }
 
-func (v *AppView) Build(ctx *view.Context) view.Model {
+func (v *AppView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 
 	for i, todo := range v.Todos {
@@ -84,10 +84,6 @@ func (v *AppView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *AppView) StackBar(ctx *view.Context) *ios.StackBar {
-	return &ios.StackBar{Title: "To Do Example"}
-}
-
 type AddView struct {
 	view.Embed
 	text      *text.Text
@@ -101,7 +97,7 @@ func NewAddView() *AddView {
 	}
 }
 
-func (v *AddView) Build(ctx *view.Context) view.Model {
+func (v *AddView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(50)
@@ -163,7 +159,7 @@ func NewTodoView() *TodoView {
 	return &TodoView{}
 }
 
-func (v *TodoView) Build(ctx *view.Context) view.Model {
+func (v *TodoView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(50)
@@ -223,7 +219,7 @@ func NewCheckbox() *Checkbox {
 	return &Checkbox{}
 }
 
-func (v *Checkbox) Build(ctx *view.Context) view.Model {
+func (v *Checkbox) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Width(40)
@@ -270,7 +266,7 @@ func NewDeleteButton() *DeleteButton {
 	return &DeleteButton{}
 }
 
-func (v *DeleteButton) Build(ctx *view.Context) view.Model {
+func (v *DeleteButton) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Width(40)

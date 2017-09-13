@@ -32,7 +32,7 @@ type activityIndicatorMiddleware struct {
 	radix *radix.Radix
 }
 
-func (m *activityIndicatorMiddleware) Build(ctx *view.Context, model *view.Model) {
+func (m *activityIndicatorMiddleware) Build(ctx view.Context, model *view.Model) {
 	path := idSliceToIntSlice(ctx.Path())
 
 	add := false

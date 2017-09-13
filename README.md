@@ -87,7 +87,7 @@ func NewTutorialView() *TutorialView {
 
 // Similar to React's render function. Views specify their properties and
 // children in Build().
-func (v *TutorialView) Build(ctx *view.Context) view.Model {
+func (v *TutorialView) Build(ctx view.Context) view.Model {
     l := &constraint.Layouter{}
 
     // Get the textview for the given key (hellotext), either initializing it or fetching

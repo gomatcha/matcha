@@ -25,7 +25,7 @@ func New() *PaintView {
 	return &PaintView{}
 }
 
-func (v *PaintView) Build(ctx *view.Context) view.Model {
+func (v *PaintView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewBasicView()

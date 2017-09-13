@@ -57,7 +57,7 @@ func NewImageView() *ImageView {
 }
 
 // Build implements view.View.
-func (v *ImageView) Build(ctx *Context) Model {
+func (v *ImageView) Build(ctx Context) Model {
 	if v.pbImage == nil {
 		if v.Image != nil {
 			v.pbImage = app.ImageMarshalProtobuf(v.Image)
@@ -156,21 +156,21 @@ type imageViewLayouter struct {
 	resizeMode ImageResizeMode
 }
 
-func (l *imageViewLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
-	g := layout.Guide{Frame: layout.Rect{Max: ctx.MinSize}}
+func (l *imageViewLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
+	g := layout.Guide{Frame: layout.Rect{Max: ctx.MinSize()}}
 	switch l.resizeMode {
 	case ImageResizeModeFit:
 		imgRatio := float64(l.bounds.Dx()) / l.scale / float64(l.bounds.Dy()) / l.scale
-		maxRatio := ctx.MinSize.X / ctx.MinSize.Y
+		maxRatio := ctx.MinSize().X / ctx.MinSize().Y
 		if imgRatio > maxRatio {
-			g.Frame.Max = layout.Pt(ctx.MinSize.X, ctx.MinSize.X/imgRatio)
+			g.Frame.Max = layout.Pt(ctx.MinSize().X, ctx.MinSize().X/imgRatio)
 		} else {
-			g.Frame.Max = layout.Pt(ctx.MinSize.Y/imgRatio, ctx.MinSize.Y)
+			g.Frame.Max = layout.Pt(ctx.MinSize().Y/imgRatio, ctx.MinSize().Y)
 		}
 	case ImageResizeModeFill:
 		fallthrough
 	case ImageResizeModeStretch:
-		g.Frame.Max = ctx.MinSize
+		g.Frame.Max = ctx.MinSize()
 	case ImageResizeModeCenter:
 		g.Frame.Max = layout.Pt(float64(l.bounds.Dx())/l.scale, float64(l.bounds.Dy())/l.scale)
 	}

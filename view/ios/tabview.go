@@ -92,7 +92,7 @@ func (v *TabView) Lifecycle(from, to view.Stage) {
 }
 
 // Build implements the view.View interface.
-func (v *TabView) Build(ctx *view.Context) view.Model {
+func (v *TabView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	// Subscribe to the group

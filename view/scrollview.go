@@ -40,7 +40,7 @@ func NewScrollView() *ScrollView {
 }
 
 // Build implements view.View.
-func (v *ScrollView) Build(ctx *Context) Model {
+func (v *ScrollView) Build(ctx Context) Model {
 	child := NewBasicView()
 	child.Children = v.ContentChildren
 	child.Layouter = v.ContentLayouter
@@ -96,9 +96,9 @@ type scrollViewLayouter struct {
 	offset         *layout.Point
 }
 
-func (l *scrollViewLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
-	minSize := ctx.MinSize
-	maxSize := ctx.MaxSize
+func (l *scrollViewLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
+	minSize := ctx.MinSize()
+	maxSize := ctx.MaxSize()
 	if l.axes&layout.AxisY == layout.AxisY {
 		minSize.Y = 0
 		maxSize.Y = math.Inf(1)
@@ -113,7 +113,7 @@ func (l *scrollViewLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout
 	gs := []layout.Guide{g}
 
 	return layout.Guide{
-		Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),
+		Frame: layout.Rt(0, 0, ctx.MinSize().X, ctx.MinSize().Y),
 	}, gs
 }
 

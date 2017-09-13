@@ -28,7 +28,7 @@ var maxId int64
 
 // Middleware is called on the result of View.Build(*context).
 type middleware interface {
-	Build(*Context, *Model)
+	Build(Context, *Model)
 	MarshalProtobuf() proto.Message
 	Key() string
 }
@@ -138,14 +138,18 @@ func newId() Id {
 	return Id(atomic.AddInt64(&maxId, 1))
 }
 
-// Context specifies the supporting context for building a View.
-type Context struct {
+type Context interface {
+	Path() []Id
+}
+
+// viewContext specifies the supporting context for building a View.
+type viewContext struct {
 	valid bool
 	node  *node
 }
 
 // Path returns the path of Ids from the root to the view.
-func (ctx *Context) Path() []Id {
+func (ctx *viewContext) Path() []Id {
 	if ctx.node == nil {
 		return []Id{0}
 	}
@@ -422,7 +426,7 @@ func (n *node) build() {
 		}
 
 		// Generate the new viewModel.
-		ctx := &Context{valid: true, node: n}
+		ctx := &viewContext{valid: true, node: n}
 		temp := n.view.Build(ctx)
 		viewModel := &temp
 
@@ -560,11 +564,11 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 	n.layoutMaxSize = maxSize
 
 	// Create the LayoutContext
-	ctx := &layout.Context{
-		MinSize:    minSize,
-		MaxSize:    maxSize,
-		ChildCount: len(n.children),
-		LayoutFunc: func(idx int, minSize, maxSize layout.Point) layout.Guide {
+	ctx := &layoutContext{
+		minSize:    minSize,
+		maxnSize:   maxSize,
+		childCount: len(n.children),
+		layoutFunc: func(idx int, minSize, maxSize layout.Point) layout.Guide {
 			if idx >= len(n.children) {
 				fmt.Println("Attempting to layout unknown child: ", idx)
 				return layout.Guide{}
@@ -580,7 +584,7 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 		layouter = &full.Layouter{}
 	}
 	g, gs := layouter.Layout(ctx)
-	g = g.Fit(ctx)
+	g = ctx.fitGuide(g)
 
 	//
 	for idx, i := range n.children {
@@ -641,4 +645,45 @@ func (n *node) debugString() string {
 		str += "\n" + strings.Join(all, "\n")
 	}
 	return str
+}
+
+type layoutContext struct {
+	minSize    layout.Point
+	maxnSize   layout.Point
+	childCount int
+	layoutFunc func(int, layout.Point, layout.Point) layout.Guide // TODO(KD): this should be private...
+}
+
+func (l *layoutContext) MinSize() layout.Point {
+	return l.minSize
+}
+
+func (l *layoutContext) MaxSize() layout.Point {
+	return l.maxnSize
+}
+
+func (l *layoutContext) ChildCount() int {
+	return l.childCount
+}
+
+func (l *layoutContext) LayoutChild(idx int, minSize, maxSize layout.Point) layout.Guide {
+	g := l.layoutFunc(idx, minSize, maxSize)
+	g.Frame = g.Frame.Add(layout.Pt(-g.Frame.Min.X, -g.Frame.Min.Y))
+	return g
+}
+
+func (l *layoutContext) fitGuide(g layout.Guide) layout.Guide {
+	if g.Width() < l.MinSize().X {
+		g.Frame.Max.X = l.MinSize().X - g.Frame.Min.X
+	}
+	if g.Height() < l.MinSize().Y {
+		g.Frame.Max.Y = l.MinSize().Y - g.Frame.Min.Y
+	}
+	if g.Width() > l.MaxSize().X {
+		g.Frame.Max.X = l.MaxSize().X - g.Frame.Min.X
+	}
+	if g.Height() > l.MaxSize().Y {
+		g.Frame.Max.Y = l.MaxSize().Y - g.Frame.Min.Y
+	}
+	return g
 }

@@ -48,7 +48,7 @@ func (v *NestedView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *NestedView) Build(ctx *view.Context) view.Model {
+func (v *NestedView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	value := animate.FloatLerp{Start: 0, End: 150}.Notifier(&v.value)
@@ -264,7 +264,7 @@ func NewTableCell() *TableCell {
 	return &TableCell{}
 }
 
-func (v *TableCell) Build(ctx *view.Context) view.Model {
+func (v *TableCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	l.Solve(func(s *constraint.Solver) {

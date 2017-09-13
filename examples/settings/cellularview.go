@@ -18,7 +18,7 @@ func NewCellularView(app *App) *CellularView {
 	}
 }
 
-func (v *CellularView) Build(ctx *view.Context) view.Model {
+func (v *CellularView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 	chlds := []view.View{}
 

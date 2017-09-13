@@ -33,7 +33,7 @@ func NewButton() *Button {
 }
 
 // Build implements view.View.
-func (v *Button) Build(ctx *Context) Model {
+func (v *Button) Build(ctx Context) Model {
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
@@ -61,12 +61,12 @@ type buttonLayouter struct {
 	str string
 }
 
-func (l *buttonLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *buttonLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	if runtime.GOOS == "android" {
 		style := &text.Style{}
 		style.SetFont(text.DefaultFont(14))
 		st := text.NewStyledText(strings.ToUpper(l.str), style)
-		size := st.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
+		size := st.Size(layout.Pt(0, 0), ctx.MaxSize(), 1)
 
 		const padding = 16.0
 		g := layout.Guide{Frame: layout.Rt(0, 0, size.X+padding*2+16, 48)}
@@ -75,7 +75,7 @@ func (l *buttonLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Gui
 		style := &text.Style{}
 		style.SetFont(text.DefaultFont(20))
 		st := text.NewStyledText(l.str, style)
-		size := st.Size(layout.Pt(0, 0), ctx.MaxSize, 1)
+		size := st.Size(layout.Pt(0, 0), ctx.MaxSize(), 1)
 
 		const padding = 10.0
 		g := layout.Guide{Frame: layout.Rt(0, 0, size.X+padding*2, size.Y+padding*2)}
@@ -103,7 +103,7 @@ func NewImageButton() *ImageButton {
 	return &ImageButton{}
 }
 
-func (v *ImageButton) Build(ctx *Context) Model {
+func (v *ImageButton) Build(ctx Context) Model {
 	iv := NewImageView()
 	iv.ResizeMode = ImageResizeModeCenter
 	iv.Image = v.Image
@@ -134,8 +134,8 @@ type imageButtonLayouter struct {
 	str string
 }
 
-func (l *imageButtonLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
-	g := ctx.LayoutChild(0, ctx.MinSize, ctx.MaxSize)
+func (l *imageButtonLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
+	g := ctx.LayoutChild(0, ctx.MinSize(), ctx.MaxSize())
 	return g, []layout.Guide{g}
 }
 

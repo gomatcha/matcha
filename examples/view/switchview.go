@@ -27,7 +27,7 @@ func NewSwitchView() *SwitchView {
 	}
 }
 
-func (v *SwitchView) Build(ctx *view.Context) view.Model {
+func (v *SwitchView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewSwitch()

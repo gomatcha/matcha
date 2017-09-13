@@ -25,7 +25,7 @@ func NewStatusBarView() *StatusBarView {
 	return &StatusBarView{}
 }
 
-func (v *StatusBarView) Build(ctx *view.Context) view.Model {
+func (v *StatusBarView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewButton()

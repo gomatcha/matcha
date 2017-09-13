@@ -41,7 +41,7 @@ func (l *Layouter) Add(v view.View, b Behavior) {
 }
 
 // Layout implements the view.Layouter interface.
-func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{}
 	gs := []layout.Guide{}
 
@@ -55,7 +55,7 @@ func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 
 	if startEdge == layout.EdgeBottom || startEdge == layout.EdgeTop {
 		y := 0.0
-		x := ctx.MinSize.X
+		x := ctx.MinSize().X
 		for i := range l.views {
 			if startEdge == layout.EdgeBottom {
 				i = len(l.views) - i - 1
@@ -68,7 +68,7 @@ func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
 		}
 		g.Frame = layout.Rt(0, 0, x, y)
 	} else {
-		y := ctx.MinSize.Y
+		y := ctx.MinSize().Y
 		x := 0.0
 		for i := range l.views {
 			if startEdge == layout.EdgeLeft {

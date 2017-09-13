@@ -27,7 +27,7 @@ func (v *BluetoothView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *BluetoothView) Build(ctx *view.Context) view.Model {
+func (v *BluetoothView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 	{
 		group := []view.View{}

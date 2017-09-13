@@ -18,7 +18,7 @@ func NewBasicView() *BasicView {
 }
 
 // Build implements view.View.
-func (v *BasicView) Build(ctx *Context) Model {
+func (v *BasicView) Build(ctx Context) Model {
 	return Model{
 		Children: v.Children,
 		Painter:  v.Painter,

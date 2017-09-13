@@ -1,5 +1,5 @@
 // Package paint implements view display properties.
-//  func (v *View) Build(ctx *view.Context) view.Model {
+//  func (v *View) Build(ctx view.Context2) view.Model {
 //  	return view.Model{
 //  		Painter: &paint.Style{
 //  			BackgroundColor: colornames.Green,

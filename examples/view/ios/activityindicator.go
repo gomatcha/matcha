@@ -24,7 +24,7 @@ func NewActivityIndicatorView() *ActivityIndicatorView {
 	return &ActivityIndicatorView{}
 }
 
-func (v *ActivityIndicatorView) Build(ctx *view.Context) view.Model {
+func (v *ActivityIndicatorView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewButton()

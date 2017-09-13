@@ -27,7 +27,7 @@ func NewSlider() *Slider {
 	}
 }
 
-func (v *Slider) Build(ctx *view.Context) view.Model {
+func (v *Slider) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewSlider()

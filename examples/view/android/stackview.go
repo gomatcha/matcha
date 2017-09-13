@@ -55,7 +55,7 @@ func NewStackChild(app *StackApp) *StackChild {
 	}
 }
 
-func (v *StackChild) Build(ctx *view.Context) view.Model {
+func (v *StackChild) Build(ctx view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {

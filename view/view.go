@@ -16,7 +16,7 @@ import (
 type Id int64
 
 type View interface {
-	Build(*Context) Model
+	Build(Context) Model
 	Lifecycle(from, to Stage)
 	ViewKey() interface{}
 	Update(View)
@@ -44,7 +44,7 @@ func NewEmbed(key interface{}) Embed {
 }
 
 // Build is an empty implementation of View's Build method.
-func (e *Embed) Build(ctx *Context) Model {
+func (e *Embed) Build(ctx Context) Model {
 	return Model{}
 }
 
@@ -157,7 +157,7 @@ func (v *painterView) Update(v2 View) {
 	v.View.Update(v2.(*painterView).View)
 }
 
-func (v *painterView) Build(ctx *Context) Model {
+func (v *painterView) Build(ctx Context) Model {
 	m := v.View.Build(ctx)
 	m.Painter = v.painter
 	return m
@@ -184,7 +184,7 @@ func (v *optionsView) Update(v2 View) {
 	v.View.Update(v2.(*optionsView).View)
 }
 
-func (v *optionsView) Build(ctx *Context) Model {
+func (v *optionsView) Build(ctx Context) Model {
 	m := v.View.Build(ctx)
 	m.Options = append(m.Options, v.options...)
 	return m

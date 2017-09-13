@@ -47,7 +47,7 @@ func NewPagerChildView() *PagerChildView {
 	return &PagerChildView{}
 }
 
-func (v *PagerChildView) Build(ctx *view.Context) view.Model {
+func (v *PagerChildView) Build(ctx view.Context) view.Model {
 	var p paint.Painter
 	if v.PaintStyle != nil {
 		p = v.PaintStyle

@@ -37,7 +37,7 @@ func (v *ProgressView) Lifecycle(from, to view.Stage) {
 }
 
 // Build implements the view.View interface.
-func (v *ProgressView) Build(ctx *view.Context) view.Model {
+func (v *ProgressView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(2) // 2.5 if its a bar

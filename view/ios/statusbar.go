@@ -44,7 +44,7 @@ type statusBarMiddleware struct {
 	radix *radix.Radix
 }
 
-func (m *statusBarMiddleware) Build(ctx *view.Context, model *view.Model) {
+func (m *statusBarMiddleware) Build(ctx view.Context, model *view.Model) {
 	path := idSliceToIntSlice(ctx.Path())
 
 	add := false

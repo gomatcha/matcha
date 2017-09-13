@@ -40,7 +40,7 @@ func (l *Layouter) Views() []view.View {
 }
 
 // Layout implements the view.Layouter interface.
-func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	// TODO(KD): Need to call layoutChild.
 	for i := 0; i < len(l.childGuides); i++ {
 		g := l.childGuides[i]

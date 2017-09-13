@@ -3,7 +3,7 @@ Package touch implements gesture recognizers.
 
 Create the touch recognizer in the Build function.
 
- func (v *MyView) Build(ctx *view.Context) view.Model {
+ func (v *MyView) Build(ctx view.Context2) view.Model {
  	tap := &touch.TapGesture{
  		Count: 1,
  		OnTouch: func(e *touch.TapEvent) {

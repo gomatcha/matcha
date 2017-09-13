@@ -27,7 +27,7 @@ func NewImageView() *ImageView {
 	return &ImageView{}
 }
 
-func (v *ImageView) Build(ctx *view.Context) view.Model {
+func (v *ImageView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl := view.NewImageView()

@@ -26,7 +26,7 @@ func NewTextView() *TextView {
 }
 
 // Build implements the view.View interface.
-func (v *TextView) Build(ctx *Context) Model {
+func (v *TextView) Build(ctx Context) Model {
 	st := v.StyledText
 	if st == nil {
 		t := v.Text
@@ -53,8 +53,8 @@ type textViewLayouter struct {
 	maxLines   int
 }
 
-func (l *textViewLayouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
-	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize, l.maxLines)
+func (l *textViewLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
+	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize(), l.maxLines)
 	g := layout.Guide{Frame: layout.Rt(0, 0, size.X, size.Y)}
 	return g, nil
 }

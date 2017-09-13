@@ -285,7 +285,7 @@ type Solver struct {
 	constraints []constraint
 }
 
-func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
+func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
 	cr := newConstrainedRect()
 
 	for _, i := range s.constraints {
@@ -590,16 +590,16 @@ func (l *Layouter) MaxGuide() *Guide {
 }
 
 // Layout evaluates the constraints and returns the calculated guide and child guides.
-func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	l.initialize()
 	l.min.matchaGuide = &layout.Guide{
-		Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),
+		Frame: layout.Rt(0, 0, ctx.MinSize().X, ctx.MinSize().Y),
 	}
 	l.max.matchaGuide = &layout.Guide{
-		Frame: layout.Rt(0, 0, ctx.MaxSize.X, ctx.MaxSize.Y),
+		Frame: layout.Rt(0, 0, ctx.MaxSize().X, ctx.MaxSize().Y),
 	}
 	l.Guide.matchaGuide = &layout.Guide{
-		Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),
+		Frame: layout.Rt(0, 0, ctx.MinSize().X, ctx.MinSize().Y),
 	}
 	// TODO(KD): reset all guides
 

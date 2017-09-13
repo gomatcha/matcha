@@ -35,7 +35,7 @@ func (v *TextView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *TextView) Build(ctx *view.Context) view.Model {
+func (v *TextView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	style := &text.Style{}

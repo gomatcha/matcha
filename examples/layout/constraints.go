@@ -22,7 +22,7 @@ func NewConstraintsView() *ConstraintsView {
 	return &ConstraintsView{}
 }
 
-func (v *ConstraintsView) Build(ctx *view.Context) view.Model {
+func (v *ConstraintsView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewBasicView()
@@ -75,7 +75,7 @@ func NewConstraintsChildView() *ConstraintsChildView {
 	return &ConstraintsChildView{}
 }
 
-func (v *ConstraintsChildView) Build(ctx *view.Context) view.Model {
+func (v *ConstraintsChildView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewBasicView()

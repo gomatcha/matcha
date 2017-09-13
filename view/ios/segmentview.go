@@ -28,7 +28,7 @@ func NewSegmentView() *SegmentView {
 }
 
 // Build implements view.View.
-func (v *SegmentView) Build(ctx *view.Context) view.Model {
+func (v *SegmentView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(29)

@@ -32,7 +32,7 @@ func New() *TouchView {
 	}
 }
 
-func (v *TouchView) Build(ctx *view.Context) view.Model {
+func (v *TouchView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := NewTouchChildView()
@@ -107,7 +107,7 @@ func NewPressChildView() *PressChildView {
 	return &PressChildView{}
 }
 
-func (v *PressChildView) Build(ctx *view.Context) view.Model {
+func (v *PressChildView) Build(ctx view.Context) view.Model {
 	tap := &touch.PressGesture{
 		MinDuration: time.Second / 2,
 		OnTouch: func(e *touch.PressEvent) {
@@ -143,7 +143,7 @@ func NewTouchChildView() *TouchChildView {
 	return &TouchChildView{}
 }
 
-func (v *TouchChildView) Build(ctx *view.Context) view.Model {
+func (v *TouchChildView) Build(ctx view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {
@@ -168,7 +168,7 @@ func NewButtonChildView() *ButtonChildView {
 	return &ButtonChildView{}
 }
 
-func (v *ButtonChildView) Build(ctx *view.Context) view.Model {
+func (v *ButtonChildView) Build(ctx view.Context) view.Model {
 	button := &touch.ButtonGesture{
 		OnTouch: func(e *touch.ButtonEvent) {
 			fmt.Println("On Touch:s", e.Kind)

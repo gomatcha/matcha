@@ -27,7 +27,7 @@ func NewProgressView() *ProgressView {
 	}
 }
 
-func (v *ProgressView) Build(ctx *view.Context) view.Model {
+func (v *ProgressView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	progressv := ios.NewProgressView()

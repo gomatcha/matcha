@@ -35,7 +35,7 @@ func (v *View) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *View) Build(ctx *view.Context) view.Model {
+func (v *View) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl := view.NewBasicView()

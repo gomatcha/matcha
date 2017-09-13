@@ -64,7 +64,7 @@ func (v *RootView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *RootView) Build(ctx *view.Context) view.Model {
+func (v *RootView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 	{
 		group := []view.View{}
@@ -203,10 +203,6 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 	}
 }
 
-func (v *RootView) StackBar(ctx *view.Context) *ios.StackBar {
-	return &ios.StackBar{Title: "Settings Example"}
-}
-
 func AddSeparators(vs []view.View) []view.View {
 	newViews := []view.View{}
 
@@ -237,7 +233,7 @@ func NewSeparator() *Separator {
 	return &Separator{}
 }
 
-func (v *Separator) Build(ctx *view.Context) view.Model {
+func (v *Separator) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(0.5)
@@ -270,7 +266,7 @@ func NewSpacer() *Spacer {
 	}
 }
 
-func (v *Spacer) Build(ctx *view.Context) view.Model {
+func (v *Spacer) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(v.Height)
@@ -295,7 +291,7 @@ func NewSpacerHeader() *SpacerHeader {
 	}
 }
 
-func (v *SpacerHeader) Build(ctx *view.Context) view.Model {
+func (v *SpacerHeader) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(v.Height)
@@ -332,7 +328,7 @@ func NewSpacerDescription() *SpacerDescription {
 	return &SpacerDescription{}
 }
 
-func (v *SpacerDescription) Build(ctx *view.Context) view.Model {
+func (v *SpacerDescription) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	titleView := view.NewTextView()
@@ -374,7 +370,7 @@ func NewBasicCell() *BasicCell {
 	return &BasicCell{}
 }
 
-func (v *BasicCell) Build(ctx *view.Context) view.Model {
+func (v *BasicCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(44)

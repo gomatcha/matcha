@@ -4,7 +4,6 @@ High:
 * Rebuild Instagram.
 * Android custom view example
 * Move matcha/view/Root into matcha/Root?
-* Make view.Context and layout.Context into interfaces?
 
 Medium:
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation
