@@ -1,14 +1,14 @@
-High:
 * Android stackview
-* Android better gesture recognizers
-* Rebuild Instagram.
+
+High:
 * Android custom view example
 * Move matcha/view/Root into matcha/Root?
 
 Medium:
+* Android better gesture recognizers
+* Rebuild Instagram.
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation
 * Modal presentation.
-* Delay any ui events while viewcontroller is updating??
 * Picker
 * TextField
 * Rotation / orientation
@@ -16,6 +16,7 @@ Medium:
 * Android image resource scale??
 
 Low:
+* Delay any ui events while viewcontroller is updating??
 * Optimize middleware so they aren't called on every view.
 * Improve function call performance.
 * Switching quickly between navigation item causes visual glitch. 2 quick backs.
