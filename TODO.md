@@ -3,8 +3,8 @@ High:
 * Android better gesture recognizers
 * Rebuild Instagram.
 * Android custom view example
-* Android Text Input, number of lines. font
 * Move matcha/view/Root into matcha/Root?
+* Make view.Context and layout.Context into interfaces?
 
 Medium:
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation
@@ -45,7 +45,6 @@ Very Low:
 * Animations: Spring, Delay, Batch, Reverse, Decay, Repeat
 * Rework Slider.FloatNotifier to use comm.Float64Value and give it a better name InOutValue?
 * Flexbox
-
 * Strikethrough doesn't work.
 
 Pro:

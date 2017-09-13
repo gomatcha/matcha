@@ -6,14 +6,21 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Looper;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Choreographer;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -32,12 +39,14 @@ import io.gomatcha.matcha.pb.view.PbAlert;
 public class JavaBridge {
     static Choreographer.FrameCallback callback;
     static Context context;
+    static TextView textView;
 
     static synchronized void init(Context ctx) {
         if (context != null) {
             return;
         }
         context = ctx;
+        textView = new TextView(context);
 
         Bridge bridge = Bridge.singleton();
         bridge.put("", new JavaBridge());
@@ -72,24 +81,24 @@ public class JavaBridge {
             PointF minSize = Protobuf.newPoint(sizeFunc.getMinSize());
             PointF maxSize = Protobuf.newPoint(sizeFunc.getMaxSize());
 
-            TextPaint textPaint = new TextPaint();
-            // textPaint.getTextBounds(someText, 0, someText.length(), bounds);
-            StaticLayout layout = new StaticLayout(str, textPaint, 1000, Layout.Alignment.ALIGN_NORMAL, 0, 0, false);
-            int height = layout.getHeight();
-            int width = layout.getWidth();
-            int lines = layout.getLineCount();
+            float ratio = (float)context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+            int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(maxSize.x*ratio), View.MeasureSpec.AT_MOST);
+            int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(maxSize.y*ratio), View.MeasureSpec.AT_MOST);
 
-            float maxWidth = 0;
-            for (int i = 0; i < lines; i++) {
-                float lineWidth = layout.getLineWidth(i);
-                if (lineWidth > maxWidth) {
-                    maxWidth = lineWidth;
-                }
-            }
+            textView.setText(str);
+            textView.setMaxLines(maxLines.intValue());
+            textView.measure(widthMeasureSpec, heightMeasureSpec);
+            // We need this or setText throws a null pointer exception.
+            textView.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
 
-            PbLayout.Point p = Protobuf.toProtobuf(new PointF(maxWidth+5f, height)); // TODO(KD): Why am I adding 5f?
+            PointF calculatedSize = new PointF();
+            calculatedSize.x = (float)textView.getMeasuredWidth() / ratio + 1;
+            calculatedSize.y = (float)textView.getMeasuredHeight() / ratio;
+            PbLayout.Point p = Protobuf.toProtobuf(calculatedSize);
+
             return new GoValue(p.toByteArray());
         } catch (InvalidProtocolBufferException e) {
+            Log.v("x", "exception" + e);
             PbLayout.Point p = Protobuf.toProtobuf(new PointF(0, 0));
             return new GoValue(p.toByteArray());
         }
