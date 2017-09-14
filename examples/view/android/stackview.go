@@ -111,8 +111,8 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 				Title:    "Title",
 				Subtitle: "Subtitle",
 				Color:    colornames.White,
-				Items: []*android.StackBarItem{
-					&android.StackBarItem{
+				Buttons: []*android.StackBarButton{
+					&android.StackBarButton{
 						Title: "item",
 					},
 				},

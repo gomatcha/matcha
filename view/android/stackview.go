@@ -193,7 +193,7 @@ type stackBarView struct {
 func (v *stackBarView) Build(ctx view.Context) view.Model {
 	funcs := map[string]interface{}{}
 	items := []*android.StackBarItem{}
-	for idx, i := range v.Bar.Items {
+	for idx, i := range v.Bar.Buttons {
 		items = append(items, i.marshalProtobuf())
 		funcs[strconv.Itoa(idx)] = i.OnPress
 	}
@@ -215,7 +215,7 @@ type StackBar struct {
 	Title    string
 	Subtitle string
 	Color    color.Color
-	Items    []*StackBarItem
+	Buttons  []*StackBarButton
 	Hidden   bool
 }
 
@@ -223,7 +223,7 @@ func (t *StackBar) OptionKey() string {
 	return "gomatcha.io/view/android StackBar"
 }
 
-type StackBarItem struct {
+type StackBarButton struct {
 	Title    string
 	Icon     image.Image
 	IconTint color.Color
@@ -231,7 +231,7 @@ type StackBarItem struct {
 	OnPress  func()
 }
 
-func (v *StackBarItem) marshalProtobuf() *android.StackBarItem {
+func (v *StackBarButton) marshalProtobuf() *android.StackBarItem {
 	return &android.StackBarItem{
 		Title:    v.Title,
 		Icon:     app.ImageMarshalProtobuf(v.Icon),
