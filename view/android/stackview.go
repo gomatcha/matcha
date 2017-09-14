@@ -1,6 +1,7 @@
 package android
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/gogo/protobuf/proto"
@@ -173,7 +174,7 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 				v.Stack.Pop()
 			},
 			"CanBack": func() bool {
-				return len(v.Stack.childIds) > 2
+				return len(v.Stack.childIds) >= 2
 			},
 		},
 	}
@@ -260,25 +261,21 @@ func init() {
 		}
 		return stackMiddlewareVar
 	})
-	bridge.RegisterFunc("gomatcha.io/view/android StackBarOnBack", onBack)
-	bridge.RegisterFunc("gomatcha.io/view/android StackBarCanBack", canBack)
-}
-
-func canBack() bool {
-	canBack := false
-	stackMiddlewareVar.radix.Range(func(path []int64, node *radix.Node) {
-		canBack = node.Value.(map[string]interface{})["CanBack"].(func() bool)()
+	bridge.RegisterFunc("gomatcha.io/view/android StackBarOnBack", func() {
+		didBack := false
+		stackMiddlewareVar.radix.Range(func(path []int64, node *radix.Node) {
+			if !didBack {
+				didBack = true
+				node.Value.(map[string]interface{})["OnBack"].(func())()
+			}
+		})
 	})
-	return canBack
-}
-
-func onBack() {
-	didBack := false
-	stackMiddlewareVar.radix.Range(func(path []int64, node *radix.Node) {
-		if !didBack {
-			didBack = true
-			node.Value.(map[string]interface{})["OnBack"].(func())()
-		}
+	bridge.RegisterFunc("gomatcha.io/view/android StackBarCanBack", func() bool {
+		canBack := false
+		stackMiddlewareVar.radix.Range(func(path []int64, node *radix.Node) {
+			canBack = node.Value.(map[string]interface{})["CanBack"].(func() bool)()
+		})
+		return canBack
 	})
 }
 

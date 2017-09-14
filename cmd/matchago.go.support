@@ -208,8 +208,9 @@ func matchaGoElem(v C.GoRef) C.GoRef {
 
 //export matchaGoCall
 func matchaGoCall(v C.GoRef, name C.CGoBuffer, args C.GoRef) C.GoRef {
-    rv := matchaGoGet(v)
     str := goString(name)
+    fmt.Println("goCall: ", str)
+    rv := matchaGoGet(v)
     
     var function reflect.Value
     if str == "" {

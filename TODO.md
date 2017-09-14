@@ -1,4 +1,5 @@
 * Android stackview
+* Crash on "Stop"
 
 High:
 * Android custom view example
