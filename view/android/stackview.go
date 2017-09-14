@@ -154,7 +154,7 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 			s.Top(0)
 			s.Left(0)
 			s.WidthEqual(l.MaxGuide().Width())
-			s.HeightEqual(l.MaxGuide().Height().Add(-56 - 24)) // TODO(KD): Respect bar actual height, shorter when rotated, etc...
+			s.HeightEqual(l.MaxGuide().Height().Add(-56)) // TODO(KD): Respect bar actual height, shorter when rotated, etc...
 		})
 
 		// Add ids to protobuf.
