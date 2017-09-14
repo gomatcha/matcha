@@ -61,3 +61,11 @@ func (m *activityIndicatorMiddleware) MarshalProtobuf() proto.Message {
 func (m *activityIndicatorMiddleware) Key() string {
 	return "gomatcha.io/matcha/app activity"
 }
+
+func idSliceToIntSlice(ids []view.Id) []int64 {
+	ints := make([]int64, len(ids))
+	for idx, i := range ids {
+		ints[idx] = int64(i)
+	}
+	return ints
+}

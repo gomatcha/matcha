@@ -3,6 +3,8 @@ package io.gomatcha.matcha;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.RelativeLayout;
 
 import java.lang.ref.WeakReference;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.gomatcha.bridge.Bridge;
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.JavaBridge;
 import io.gomatcha.matcha.pb.view.PbView;
@@ -115,4 +118,27 @@ public class MatchaView extends RelativeLayout {
         }
         return factory.createView(context, node);
     }
+
+    String TAG = "x";
+    @Override
+    public boolean dispatchKeyEventPreIme(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            KeyEvent.DispatcherState state = getKeyDispatcherState();
+            if (state != null) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {
+                    GoValue[] rlt = GoValue.withFunc("gomatcha.io/view/android StackBarCanBack").call("");
+                    if (!rlt[0].toBool()) {
+                        return false;
+                    }
+                    state.startTracking(event, this);
+                    return true;
+                } else if (event.getAction() == KeyEvent.ACTION_UP && !event.isCanceled() && state.isTracking(event)) {
+                    GoValue.withFunc("gomatcha.io/view/android StackBarOnBack").call("");
+                    return true;
+                }
+            }
+        }
+        return super.dispatchKeyEventPreIme(event);
+    }
+
 }

@@ -19,6 +19,7 @@ message StackView {
 
 message StackBar {
     string title = 1;
+    bool backButtonHidden = 2;
 }
 
 message StackEvent {

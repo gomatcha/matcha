@@ -12,6 +12,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.gomatcha.matcha.pb.Pb;
@@ -28,6 +29,7 @@ public class MatchaViewNode extends Object {
     long layoutId;
     long paintId;
     Map<Long, MatchaViewNode> children = new HashMap<Long, MatchaViewNode>();
+    ArrayList<MatchaViewNode> childList = new ArrayList<MatchaViewNode>();
     MatchaChildView view;
 
     public MatchaViewNode(MatchaViewNode parent, MatchaView rootView, long id) {
@@ -48,6 +50,7 @@ public class MatchaViewNode extends Object {
 
         // Build children
         Map<Long, MatchaViewNode> children = new HashMap<Long, MatchaViewNode>();
+        ArrayList<MatchaViewNode> childList = new ArrayList<MatchaViewNode>();
         ArrayList<Long> removedKeys = new ArrayList<Long>();
         ArrayList<Long> addedKeys = new ArrayList<Long>();
         ArrayList<Long> unmodifiedKeys = new ArrayList<Long>();
@@ -63,14 +66,17 @@ public class MatchaViewNode extends Object {
                     addedKeys.add(i);
 
                     MatchaViewNode child = new MatchaViewNode(this, this.rootView, i);
+                    childList.add(child);
                     children.put(i, child);
                 } else {
                     unmodifiedKeys.add(i);
+                    childList.add(prevChild);
                     children.put(i, prevChild);
                 }
             }
         } else {
             children = this.children;
+            childList = this.childList;
         }
 
         // Update children
@@ -87,8 +93,8 @@ public class MatchaViewNode extends Object {
             // Add/remove subviews
             if (this.view.isContainerView()) {
                 ArrayList<View> childViews = new ArrayList<View>();
-                for (Long i : children.keySet()) {
-                    childViews.add(children.get(i).view);
+                for (MatchaViewNode i : childList) {
+                    childViews.add(i.view);
                 }
                 this.view.setChildViews(childViews);
             } else {

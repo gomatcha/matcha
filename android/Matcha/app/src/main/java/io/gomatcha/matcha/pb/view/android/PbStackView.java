@@ -1382,6 +1382,11 @@ public final class PbStackView {
      */
     com.google.protobuf.ByteString
         getTitleBytes();
+
+    /**
+     * <code>bool backButtonHidden = 2;</code>
+     */
+    boolean getBackButtonHidden();
   }
   /**
    * Protobuf type {@code matcha.view.android.StackBar}
@@ -1396,6 +1401,7 @@ public final class PbStackView {
     }
     private StackBar() {
       title_ = "";
+      backButtonHidden_ = false;
     }
 
     @java.lang.Override
@@ -1427,6 +1433,11 @@ public final class PbStackView {
               java.lang.String s = input.readStringRequireUtf8();
 
               title_ = s;
+              break;
+            }
+            case 16: {
+
+              backButtonHidden_ = input.readBool();
               break;
             }
           }
@@ -1486,6 +1497,15 @@ public final class PbStackView {
       }
     }
 
+    public static final int BACKBUTTONHIDDEN_FIELD_NUMBER = 2;
+    private boolean backButtonHidden_;
+    /**
+     * <code>bool backButtonHidden = 2;</code>
+     */
+    public boolean getBackButtonHidden() {
+      return backButtonHidden_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -1501,6 +1521,9 @@ public final class PbStackView {
       if (!getTitleBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, title_);
       }
+      if (backButtonHidden_ != false) {
+        output.writeBool(2, backButtonHidden_);
+      }
     }
 
     public int getSerializedSize() {
@@ -1510,6 +1533,10 @@ public final class PbStackView {
       size = 0;
       if (!getTitleBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, title_);
+      }
+      if (backButtonHidden_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, backButtonHidden_);
       }
       memoizedSize = size;
       return size;
@@ -1529,6 +1556,8 @@ public final class PbStackView {
       boolean result = true;
       result = result && getTitle()
           .equals(other.getTitle());
+      result = result && (getBackButtonHidden()
+          == other.getBackButtonHidden());
       return result;
     }
 
@@ -1541,6 +1570,9 @@ public final class PbStackView {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TITLE_FIELD_NUMBER;
       hash = (53 * hash) + getTitle().hashCode();
+      hash = (37 * hash) + BACKBUTTONHIDDEN_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getBackButtonHidden());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1672,6 +1704,8 @@ public final class PbStackView {
         super.clear();
         title_ = "";
 
+        backButtonHidden_ = false;
+
         return this;
       }
 
@@ -1695,6 +1729,7 @@ public final class PbStackView {
       public io.gomatcha.matcha.pb.view.android.PbStackView.StackBar buildPartial() {
         io.gomatcha.matcha.pb.view.android.PbStackView.StackBar result = new io.gomatcha.matcha.pb.view.android.PbStackView.StackBar(this);
         result.title_ = title_;
+        result.backButtonHidden_ = backButtonHidden_;
         onBuilt();
         return result;
       }
@@ -1739,6 +1774,9 @@ public final class PbStackView {
         if (!other.getTitle().isEmpty()) {
           title_ = other.title_;
           onChanged();
+        }
+        if (other.getBackButtonHidden() != false) {
+          setBackButtonHidden(other.getBackButtonHidden());
         }
         onChanged();
         return this;
@@ -1831,6 +1869,32 @@ public final class PbStackView {
   checkByteStringIsUtf8(value);
         
         title_ = value;
+        onChanged();
+        return this;
+      }
+
+      private boolean backButtonHidden_ ;
+      /**
+       * <code>bool backButtonHidden = 2;</code>
+       */
+      public boolean getBackButtonHidden() {
+        return backButtonHidden_;
+      }
+      /**
+       * <code>bool backButtonHidden = 2;</code>
+       */
+      public Builder setBackButtonHidden(boolean value) {
+        
+        backButtonHidden_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool backButtonHidden = 2;</code>
+       */
+      public Builder clearBackButtonHidden() {
+        
+        backButtonHidden_ = false;
         onChanged();
         return this;
       }
@@ -2467,10 +2531,11 @@ public final class PbStackView {
       "ckview.proto\022\023matcha.view.android\"\"\n\016Sta" +
       "ckChildView\022\020\n\010screenId\030\003 \001(\003\"B\n\tStackVi" +
       "ew\0225\n\010children\030\001 \003(\0132#.matcha.view.andro" +
-      "id.StackChildView\"\031\n\010StackBar\022\r\n\005title\030\001" +
-      " \001(\t\"\030\n\nStackEvent\022\n\n\002id\030\001 \003(\003BL\n\"io.gom" +
-      "atcha.matcha.pb.view.androidB\013PbStackVie" +
-      "wZ\007android\242\002\017MatchaAndroidPBb\006proto3"
+      "id.StackChildView\"3\n\010StackBar\022\r\n\005title\030\001" +
+      " \001(\t\022\030\n\020backButtonHidden\030\002 \001(\010\"\030\n\nStackE" +
+      "vent\022\n\n\002id\030\001 \003(\003BL\n\"io.gomatcha.matcha.p" +
+      "b.view.androidB\013PbStackViewZ\007android\242\002\017M" +
+      "atchaAndroidPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2501,7 +2566,7 @@ public final class PbStackView {
     internal_static_matcha_view_android_StackBar_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_StackBar_descriptor,
-        new java.lang.String[] { "Title", });
+        new java.lang.String[] { "Title", "BackButtonHidden", });
     internal_static_matcha_view_android_StackEvent_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_matcha_view_android_StackEvent_fieldAccessorTable = new

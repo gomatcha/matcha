@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.gomatcha.app.R;
+import io.gomatcha.bridge.GoValue;
+import io.gomatcha.matcha.pb.view.PbSwitchView;
 import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.android.PbStackView;
 
@@ -59,6 +61,7 @@ public class MatchaStackView extends MatchaChildView {
         for (int i = 0; i < childViews.size() / 2; i++) {
             RelativeLayout layout = new RelativeLayout(getContext());
 
+            Log.v("x", childViews.toString());
             RelativeLayout.LayoutParams toolbarParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             MatchaToolbarView toolbar = (MatchaToolbarView)childViews.get(i*2);
             ViewParent toolbarParent = toolbar.getParent();
@@ -66,6 +69,7 @@ public class MatchaStackView extends MatchaChildView {
                 ((RelativeLayout)toolbarParent).removeView(toolbar);
             }
             toolbar.setId(MatchaPagerView.generateViewId());
+            toolbar.stackView = this;
             layout.addView(toolbar, toolbarParams);
 
             RelativeLayout.LayoutParams childViewParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -80,5 +84,9 @@ public class MatchaStackView extends MatchaChildView {
             toolbarViews.add(layout);
         }
         stackView2.setChildViews(toolbarViews);
+    }
+
+    public void back() {
+        viewNode.rootView.call("OnBack", viewNode.id);
     }
 }

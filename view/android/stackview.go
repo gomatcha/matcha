@@ -3,7 +3,12 @@ package android
 import (
 	"strconv"
 
+	"github.com/gogo/protobuf/proto"
+
+	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
+	"gomatcha.io/matcha/internal/radix"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/pb/view/android"
 	"gomatcha.io/matcha/view"
@@ -52,6 +57,9 @@ func (s *Stack) Push(vs view.View) {
 }
 
 func (s *Stack) Pop() {
+	if len(s.childIds) <= 1 {
+		return
+	}
 	delete(s.childrenMap, s.childIds[len(s.childIds)-1])
 	s.childIds = s.childIds[:len(s.childIds)-1]
 	s.relay.Signal()
@@ -108,7 +116,7 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 	}
 
 	childrenPb := []*android.StackChildView{}
-	for _, id := range v.Stack.childIds {
+	for idx, id := range v.Stack.childIds {
 		chld := v.Stack.childrenMap[id]
 
 		// Find the bar.
@@ -127,8 +135,9 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 
 		// Add the bar.
 		barV := &stackBarView{
-			Embed: view.Embed{Key: strconv.Itoa(int(id))},
-			Bar:   bar,
+			Embed:           view.Embed{Key: strconv.Itoa(int(id))},
+			Bar:             bar,
+			NeedsBackButton: idx != 0,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
 			s.Top(0)
@@ -160,23 +169,20 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 			// BarColor: pb.ColorEncode(v.BarColor),
 		},
 		NativeFuncs: map[string]interface{}{
-		// "OnChange": func(data []byte) {
-		// 	pbevent := &stacknav.StackEvent{}
-		// 	err := proto.Unmarshal(data, pbevent)
-		// 	if err != nil {
-		// 		fmt.Println("error", err)
-		// 		return
-		// 	}
-
-		// 	v.Stack.setChildIds(pbevent.Id)
-		// },
+			"OnBack": func() {
+				v.Stack.Pop()
+			},
+			"CanBack": func() bool {
+				return len(v.Stack.childIds) > 2
+			},
 		},
 	}
 }
 
 type stackBarView struct {
 	view.Embed
-	Bar *StackBar
+	Bar             *StackBar
+	NeedsBackButton bool
 }
 
 func (v *stackBarView) Build(ctx view.Context) view.Model {
@@ -223,7 +229,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 			Title: v.Bar.Title,
 			// CustomBackButtonTitle: len(v.Bar.BackButtonTitle) > 0,
 			// BackButtonTitle:       v.Bar.BackButtonTitle,
-			// BackButtonHidden:      v.Bar.BackButtonHidden,
+			BackButtonHidden: !v.NeedsBackButton,
 			// HasTitleView:          hasTitleView,
 			// RightViewCount:        rightViewCount,
 			// LeftViewCount:         leftViewCount,
@@ -243,4 +249,71 @@ type StackBar struct {
 
 func (t *StackBar) OptionKey() string {
 	return "gomatcha.io/view/android StackBar"
+}
+
+var stackMiddlewareVar *stackMiddleware
+
+func init() {
+	internal.RegisterMiddleware(func() interface{} {
+		stackMiddlewareVar = &stackMiddleware{
+			radix: radix.NewRadix(),
+		}
+		return stackMiddlewareVar
+	})
+	bridge.RegisterFunc("gomatcha.io/view/android StackBarOnBack", onBack)
+	bridge.RegisterFunc("gomatcha.io/view/android StackBarCanBack", canBack)
+}
+
+func canBack() bool {
+	canBack := false
+	stackMiddlewareVar.radix.Range(func(path []int64, node *radix.Node) {
+		canBack = node.Value.(map[string]interface{})["CanBack"].(func() bool)()
+	})
+	return canBack
+}
+
+func onBack() {
+	didBack := false
+	stackMiddlewareVar.radix.Range(func(path []int64, node *radix.Node) {
+		if !didBack {
+			didBack = true
+			node.Value.(map[string]interface{})["OnBack"].(func())()
+		}
+	})
+}
+
+type stackMiddleware struct {
+	radix *radix.Radix
+}
+
+func (m *stackMiddleware) Build(ctx view.Context, model *view.Model) {
+	path := idSliceToIntSlice(ctx.Path())
+
+	var nativeFuncs map[string]interface{}
+	if model.NativeViewName == "gomatcha.io/matcha/view/android StackView" {
+		nativeFuncs = model.NativeFuncs
+	}
+
+	if nativeFuncs != nil {
+		n := m.radix.Insert(path)
+		n.Value = nativeFuncs
+	} else {
+		m.radix.Delete(path)
+	}
+}
+
+func (m *stackMiddleware) MarshalProtobuf() proto.Message {
+	return nil
+}
+
+func (m *stackMiddleware) Key() string {
+	return "gomatcha.io/matcha/view/android stackMiddleware"
+}
+
+func idSliceToIntSlice(ids []view.Id) []int64 {
+	ints := make([]int64, len(ids))
+	for idx, i := range ids {
+		ints[idx] = int64(i)
+	}
+	return ints
 }

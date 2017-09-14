@@ -15,6 +15,7 @@ import io.gomatcha.matcha.pb.view.android.PbStackView;
 
 public class MatchaToolbarView extends MatchaChildView {
     Toolbar toolbar;
+    MatchaStackView stackView;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/android stackBarView", new MatchaView.ViewFactory() {
@@ -30,14 +31,11 @@ public class MatchaToolbarView extends MatchaChildView {
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         toolbar = new Toolbar(context);
-        toolbar.setTitle("TEST");
         toolbar.setId(MatchaPagerView.generateViewId());
-        toolbar.setBackgroundColor(0xffff0000);
-        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material);
         toolbar.setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.v("x", "onClick");
+                stackView.back();
             }
         });
         addView(toolbar, params);
@@ -48,6 +46,12 @@ public class MatchaToolbarView extends MatchaChildView {
         super.setNode(buildNode);
         try {
             PbStackView.StackBar proto = buildNode.getBridgeValue().unpack(PbStackView.StackBar.class);
+            toolbar.setTitle(proto.getTitle());
+            if (proto.getBackButtonHidden()) {
+                toolbar.setNavigationIcon(null);
+            } else {
+                toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material);
+            }
         } catch (InvalidProtocolBufferException e) {
         }
     }
