@@ -108,10 +108,14 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 		Options: []view.Option{
 			touch.GestureList{tap},
 			&android.StackBar{
-				Title:      "Title",
-				TitleView:  titleView,
-				RightViews: []view.View{rightView},
-				LeftViews:  []view.View{leftView},
+				Title:    "Title",
+				Subtitle: "Subtitle",
+				Color:    colornames.White,
+				Items: []*android.StackBarItem{
+					&android.StackBarItem{
+						Title: "item",
+					},
+				},
 			},
 		},
 	}

@@ -4,10 +4,14 @@ import android.content.Context;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+
+import java.util.List;
 
 import io.gomatcha.app.R;
 import io.gomatcha.matcha.pb.view.PbView;
@@ -46,11 +50,22 @@ public class MatchaToolbarView extends MatchaChildView {
         super.setNode(buildNode);
         try {
             PbStackView.StackBar proto = buildNode.getBridgeValue().unpack(PbStackView.StackBar.class);
+
             toolbar.setTitle(proto.getTitle());
+            toolbar.setSubtitle(proto.getSubtitle());
             if (proto.getBackButtonHidden()) {
                 toolbar.setNavigationIcon(null);
             } else {
                 toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material);
+            }
+
+            List<PbStackView.StackBarItem> itemList = proto.getItemsList();
+            Menu menu = toolbar.getMenu();
+            menu.clear();
+            for (int i = 0; i < itemList.size(); i++) {
+                PbStackView.StackBarItem protoItem = itemList.get(i);
+                MenuItem item = menu.add(0, Menu.FIRST + i, Menu.NONE, protoItem.getTitle());
+                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             }
         } catch (InvalidProtocolBufferException e) {
         }

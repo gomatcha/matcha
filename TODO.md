@@ -1,5 +1,9 @@
 * Android stackview
+* Stackview animation
+* Stackview button items
 * Crash on "Stop"
+* Change enabled to disabled.
+* Change OnPress to OnActivate, OnSelect?
 
 High:
 * Android custom view example

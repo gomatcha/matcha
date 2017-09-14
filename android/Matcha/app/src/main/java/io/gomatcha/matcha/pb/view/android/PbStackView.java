@@ -1384,6 +1384,53 @@ public final class PbStackView {
         getTitleBytes();
 
     /**
+     * <code>string subtitle = 3;</code>
+     */
+    java.lang.String getSubtitle();
+    /**
+     * <code>string subtitle = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getSubtitleBytes();
+
+    /**
+     * <code>.matcha.Color color = 4;</code>
+     */
+    boolean hasColor();
+    /**
+     * <code>.matcha.Color color = 4;</code>
+     */
+    io.gomatcha.matcha.pb.Pb.Color getColor();
+    /**
+     * <code>.matcha.Color color = 4;</code>
+     */
+    io.gomatcha.matcha.pb.Pb.ColorOrBuilder getColorOrBuilder();
+
+    /**
+     * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+     */
+    java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem> 
+        getItemsList();
+    /**
+     * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+     */
+    io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem getItems(int index);
+    /**
+     * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+     */
+    int getItemsCount();
+    /**
+     * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+     */
+    java.util.List<? extends io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder> 
+        getItemsOrBuilderList();
+    /**
+     * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+     */
+    io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder getItemsOrBuilder(
+        int index);
+
+    /**
      * <code>bool backButtonHidden = 2;</code>
      */
     boolean getBackButtonHidden();
@@ -1401,6 +1448,8 @@ public final class PbStackView {
     }
     private StackBar() {
       title_ = "";
+      subtitle_ = "";
+      items_ = java.util.Collections.emptyList();
       backButtonHidden_ = false;
     }
 
@@ -1440,6 +1489,34 @@ public final class PbStackView {
               backButtonHidden_ = input.readBool();
               break;
             }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              subtitle_ = s;
+              break;
+            }
+            case 34: {
+              io.gomatcha.matcha.pb.Pb.Color.Builder subBuilder = null;
+              if (color_ != null) {
+                subBuilder = color_.toBuilder();
+              }
+              color_ = input.readMessage(io.gomatcha.matcha.pb.Pb.Color.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(color_);
+                color_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 42: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                items_ = new java.util.ArrayList<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              items_.add(
+                  input.readMessage(io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.parser(), extensionRegistry));
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -1448,6 +1525,9 @@ public final class PbStackView {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          items_ = java.util.Collections.unmodifiableList(items_);
+        }
         makeExtensionsImmutable();
       }
     }
@@ -1463,6 +1543,7 @@ public final class PbStackView {
               io.gomatcha.matcha.pb.view.android.PbStackView.StackBar.class, io.gomatcha.matcha.pb.view.android.PbStackView.StackBar.Builder.class);
     }
 
+    private int bitField0_;
     public static final int TITLE_FIELD_NUMBER = 1;
     private volatile java.lang.Object title_;
     /**
@@ -1497,6 +1578,96 @@ public final class PbStackView {
       }
     }
 
+    public static final int SUBTITLE_FIELD_NUMBER = 3;
+    private volatile java.lang.Object subtitle_;
+    /**
+     * <code>string subtitle = 3;</code>
+     */
+    public java.lang.String getSubtitle() {
+      java.lang.Object ref = subtitle_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        subtitle_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string subtitle = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getSubtitleBytes() {
+      java.lang.Object ref = subtitle_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        subtitle_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int COLOR_FIELD_NUMBER = 4;
+    private io.gomatcha.matcha.pb.Pb.Color color_;
+    /**
+     * <code>.matcha.Color color = 4;</code>
+     */
+    public boolean hasColor() {
+      return color_ != null;
+    }
+    /**
+     * <code>.matcha.Color color = 4;</code>
+     */
+    public io.gomatcha.matcha.pb.Pb.Color getColor() {
+      return color_ == null ? io.gomatcha.matcha.pb.Pb.Color.getDefaultInstance() : color_;
+    }
+    /**
+     * <code>.matcha.Color color = 4;</code>
+     */
+    public io.gomatcha.matcha.pb.Pb.ColorOrBuilder getColorOrBuilder() {
+      return getColor();
+    }
+
+    public static final int ITEMS_FIELD_NUMBER = 5;
+    private java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem> items_;
+    /**
+     * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+     */
+    public java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem> getItemsList() {
+      return items_;
+    }
+    /**
+     * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+     */
+    public java.util.List<? extends io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder> 
+        getItemsOrBuilderList() {
+      return items_;
+    }
+    /**
+     * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+     */
+    public int getItemsCount() {
+      return items_.size();
+    }
+    /**
+     * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+     */
+    public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem getItems(int index) {
+      return items_.get(index);
+    }
+    /**
+     * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+     */
+    public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder getItemsOrBuilder(
+        int index) {
+      return items_.get(index);
+    }
+
     public static final int BACKBUTTONHIDDEN_FIELD_NUMBER = 2;
     private boolean backButtonHidden_;
     /**
@@ -1524,6 +1695,15 @@ public final class PbStackView {
       if (backButtonHidden_ != false) {
         output.writeBool(2, backButtonHidden_);
       }
+      if (!getSubtitleBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, subtitle_);
+      }
+      if (color_ != null) {
+        output.writeMessage(4, getColor());
+      }
+      for (int i = 0; i < items_.size(); i++) {
+        output.writeMessage(5, items_.get(i));
+      }
     }
 
     public int getSerializedSize() {
@@ -1537,6 +1717,17 @@ public final class PbStackView {
       if (backButtonHidden_ != false) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(2, backButtonHidden_);
+      }
+      if (!getSubtitleBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, subtitle_);
+      }
+      if (color_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, getColor());
+      }
+      for (int i = 0; i < items_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, items_.get(i));
       }
       memoizedSize = size;
       return size;
@@ -1556,6 +1747,15 @@ public final class PbStackView {
       boolean result = true;
       result = result && getTitle()
           .equals(other.getTitle());
+      result = result && getSubtitle()
+          .equals(other.getSubtitle());
+      result = result && (hasColor() == other.hasColor());
+      if (hasColor()) {
+        result = result && getColor()
+            .equals(other.getColor());
+      }
+      result = result && getItemsList()
+          .equals(other.getItemsList());
       result = result && (getBackButtonHidden()
           == other.getBackButtonHidden());
       return result;
@@ -1570,6 +1770,16 @@ public final class PbStackView {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TITLE_FIELD_NUMBER;
       hash = (53 * hash) + getTitle().hashCode();
+      hash = (37 * hash) + SUBTITLE_FIELD_NUMBER;
+      hash = (53 * hash) + getSubtitle().hashCode();
+      if (hasColor()) {
+        hash = (37 * hash) + COLOR_FIELD_NUMBER;
+        hash = (53 * hash) + getColor().hashCode();
+      }
+      if (getItemsCount() > 0) {
+        hash = (37 * hash) + ITEMS_FIELD_NUMBER;
+        hash = (53 * hash) + getItemsList().hashCode();
+      }
       hash = (37 * hash) + BACKBUTTONHIDDEN_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getBackButtonHidden());
@@ -1698,12 +1908,27 @@ public final class PbStackView {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getItemsFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
         title_ = "";
 
+        subtitle_ = "";
+
+        if (colorBuilder_ == null) {
+          color_ = null;
+        } else {
+          color_ = null;
+          colorBuilder_ = null;
+        }
+        if (itemsBuilder_ == null) {
+          items_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          itemsBuilder_.clear();
+        }
         backButtonHidden_ = false;
 
         return this;
@@ -1728,8 +1953,26 @@ public final class PbStackView {
 
       public io.gomatcha.matcha.pb.view.android.PbStackView.StackBar buildPartial() {
         io.gomatcha.matcha.pb.view.android.PbStackView.StackBar result = new io.gomatcha.matcha.pb.view.android.PbStackView.StackBar(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
         result.title_ = title_;
+        result.subtitle_ = subtitle_;
+        if (colorBuilder_ == null) {
+          result.color_ = color_;
+        } else {
+          result.color_ = colorBuilder_.build();
+        }
+        if (itemsBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            items_ = java.util.Collections.unmodifiableList(items_);
+            bitField0_ = (bitField0_ & ~0x00000008);
+          }
+          result.items_ = items_;
+        } else {
+          result.items_ = itemsBuilder_.build();
+        }
         result.backButtonHidden_ = backButtonHidden_;
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -1775,6 +2018,39 @@ public final class PbStackView {
           title_ = other.title_;
           onChanged();
         }
+        if (!other.getSubtitle().isEmpty()) {
+          subtitle_ = other.subtitle_;
+          onChanged();
+        }
+        if (other.hasColor()) {
+          mergeColor(other.getColor());
+        }
+        if (itemsBuilder_ == null) {
+          if (!other.items_.isEmpty()) {
+            if (items_.isEmpty()) {
+              items_ = other.items_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+            } else {
+              ensureItemsIsMutable();
+              items_.addAll(other.items_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.items_.isEmpty()) {
+            if (itemsBuilder_.isEmpty()) {
+              itemsBuilder_.dispose();
+              itemsBuilder_ = null;
+              items_ = other.items_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+              itemsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getItemsFieldBuilder() : null;
+            } else {
+              itemsBuilder_.addAllMessages(other.items_);
+            }
+          }
+        }
         if (other.getBackButtonHidden() != false) {
           setBackButtonHidden(other.getBackButtonHidden());
         }
@@ -1795,6 +2071,1165 @@ public final class PbStackView {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (io.gomatcha.matcha.pb.view.android.PbStackView.StackBar) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object title_ = "";
+      /**
+       * <code>string title = 1;</code>
+       */
+      public java.lang.String getTitle() {
+        java.lang.Object ref = title_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          title_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string title = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTitleBytes() {
+        java.lang.Object ref = title_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          title_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string title = 1;</code>
+       */
+      public Builder setTitle(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        title_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string title = 1;</code>
+       */
+      public Builder clearTitle() {
+        
+        title_ = getDefaultInstance().getTitle();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string title = 1;</code>
+       */
+      public Builder setTitleBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        title_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object subtitle_ = "";
+      /**
+       * <code>string subtitle = 3;</code>
+       */
+      public java.lang.String getSubtitle() {
+        java.lang.Object ref = subtitle_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          subtitle_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string subtitle = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSubtitleBytes() {
+        java.lang.Object ref = subtitle_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          subtitle_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string subtitle = 3;</code>
+       */
+      public Builder setSubtitle(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        subtitle_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string subtitle = 3;</code>
+       */
+      public Builder clearSubtitle() {
+        
+        subtitle_ = getDefaultInstance().getSubtitle();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string subtitle = 3;</code>
+       */
+      public Builder setSubtitleBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        subtitle_ = value;
+        onChanged();
+        return this;
+      }
+
+      private io.gomatcha.matcha.pb.Pb.Color color_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.Pb.Color, io.gomatcha.matcha.pb.Pb.Color.Builder, io.gomatcha.matcha.pb.Pb.ColorOrBuilder> colorBuilder_;
+      /**
+       * <code>.matcha.Color color = 4;</code>
+       */
+      public boolean hasColor() {
+        return colorBuilder_ != null || color_ != null;
+      }
+      /**
+       * <code>.matcha.Color color = 4;</code>
+       */
+      public io.gomatcha.matcha.pb.Pb.Color getColor() {
+        if (colorBuilder_ == null) {
+          return color_ == null ? io.gomatcha.matcha.pb.Pb.Color.getDefaultInstance() : color_;
+        } else {
+          return colorBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.matcha.Color color = 4;</code>
+       */
+      public Builder setColor(io.gomatcha.matcha.pb.Pb.Color value) {
+        if (colorBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          color_ = value;
+          onChanged();
+        } else {
+          colorBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.Color color = 4;</code>
+       */
+      public Builder setColor(
+          io.gomatcha.matcha.pb.Pb.Color.Builder builderForValue) {
+        if (colorBuilder_ == null) {
+          color_ = builderForValue.build();
+          onChanged();
+        } else {
+          colorBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.Color color = 4;</code>
+       */
+      public Builder mergeColor(io.gomatcha.matcha.pb.Pb.Color value) {
+        if (colorBuilder_ == null) {
+          if (color_ != null) {
+            color_ =
+              io.gomatcha.matcha.pb.Pb.Color.newBuilder(color_).mergeFrom(value).buildPartial();
+          } else {
+            color_ = value;
+          }
+          onChanged();
+        } else {
+          colorBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.Color color = 4;</code>
+       */
+      public Builder clearColor() {
+        if (colorBuilder_ == null) {
+          color_ = null;
+          onChanged();
+        } else {
+          color_ = null;
+          colorBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.Color color = 4;</code>
+       */
+      public io.gomatcha.matcha.pb.Pb.Color.Builder getColorBuilder() {
+        
+        onChanged();
+        return getColorFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.matcha.Color color = 4;</code>
+       */
+      public io.gomatcha.matcha.pb.Pb.ColorOrBuilder getColorOrBuilder() {
+        if (colorBuilder_ != null) {
+          return colorBuilder_.getMessageOrBuilder();
+        } else {
+          return color_ == null ?
+              io.gomatcha.matcha.pb.Pb.Color.getDefaultInstance() : color_;
+        }
+      }
+      /**
+       * <code>.matcha.Color color = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.Pb.Color, io.gomatcha.matcha.pb.Pb.Color.Builder, io.gomatcha.matcha.pb.Pb.ColorOrBuilder> 
+          getColorFieldBuilder() {
+        if (colorBuilder_ == null) {
+          colorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.gomatcha.matcha.pb.Pb.Color, io.gomatcha.matcha.pb.Pb.Color.Builder, io.gomatcha.matcha.pb.Pb.ColorOrBuilder>(
+                  getColor(),
+                  getParentForChildren(),
+                  isClean());
+          color_ = null;
+        }
+        return colorBuilder_;
+      }
+
+      private java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem> items_ =
+        java.util.Collections.emptyList();
+      private void ensureItemsIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          items_ = new java.util.ArrayList<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem>(items_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder> itemsBuilder_;
+
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem> getItemsList() {
+        if (itemsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(items_);
+        } else {
+          return itemsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public int getItemsCount() {
+        if (itemsBuilder_ == null) {
+          return items_.size();
+        } else {
+          return itemsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem getItems(int index) {
+        if (itemsBuilder_ == null) {
+          return items_.get(index);
+        } else {
+          return itemsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public Builder setItems(
+          int index, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem value) {
+        if (itemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureItemsIsMutable();
+          items_.set(index, value);
+          onChanged();
+        } else {
+          itemsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public Builder setItems(
+          int index, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder builderForValue) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          itemsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public Builder addItems(io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem value) {
+        if (itemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureItemsIsMutable();
+          items_.add(value);
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public Builder addItems(
+          int index, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem value) {
+        if (itemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureItemsIsMutable();
+          items_.add(index, value);
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public Builder addItems(
+          io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder builderForValue) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.add(builderForValue.build());
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public Builder addItems(
+          int index, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder builderForValue) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public Builder addAllItems(
+          java.lang.Iterable<? extends io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem> values) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, items_);
+          onChanged();
+        } else {
+          itemsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public Builder clearItems() {
+        if (itemsBuilder_ == null) {
+          items_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+          onChanged();
+        } else {
+          itemsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public Builder removeItems(int index) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.remove(index);
+          onChanged();
+        } else {
+          itemsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder getItemsBuilder(
+          int index) {
+        return getItemsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder getItemsOrBuilder(
+          int index) {
+        if (itemsBuilder_ == null) {
+          return items_.get(index);  } else {
+          return itemsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public java.util.List<? extends io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder> 
+           getItemsOrBuilderList() {
+        if (itemsBuilder_ != null) {
+          return itemsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(items_);
+        }
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder addItemsBuilder() {
+        return getItemsFieldBuilder().addBuilder(
+            io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder addItemsBuilder(
+          int index) {
+        return getItemsFieldBuilder().addBuilder(
+            index, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
+       */
+      public java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder> 
+           getItemsBuilderList() {
+        return getItemsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder> 
+          getItemsFieldBuilder() {
+        if (itemsBuilder_ == null) {
+          itemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder>(
+                  items_,
+                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  getParentForChildren(),
+                  isClean());
+          items_ = null;
+        }
+        return itemsBuilder_;
+      }
+
+      private boolean backButtonHidden_ ;
+      /**
+       * <code>bool backButtonHidden = 2;</code>
+       */
+      public boolean getBackButtonHidden() {
+        return backButtonHidden_;
+      }
+      /**
+       * <code>bool backButtonHidden = 2;</code>
+       */
+      public Builder setBackButtonHidden(boolean value) {
+        
+        backButtonHidden_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool backButtonHidden = 2;</code>
+       */
+      public Builder clearBackButtonHidden() {
+        
+        backButtonHidden_ = false;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:matcha.view.android.StackBar)
+    }
+
+    // @@protoc_insertion_point(class_scope:matcha.view.android.StackBar)
+    private static final io.gomatcha.matcha.pb.view.android.PbStackView.StackBar DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new io.gomatcha.matcha.pb.view.android.PbStackView.StackBar();
+    }
+
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBar getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<StackBar>
+        PARSER = new com.google.protobuf.AbstractParser<StackBar>() {
+      public StackBar parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new StackBar(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<StackBar> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<StackBar> getParserForType() {
+      return PARSER;
+    }
+
+    public io.gomatcha.matcha.pb.view.android.PbStackView.StackBar getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface StackBarItemOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:matcha.view.android.StackBarItem)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string title = 1;</code>
+     */
+    java.lang.String getTitle();
+    /**
+     * <code>string title = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getTitleBytes();
+
+    /**
+     * <code>.matcha.ImageOrResource icon = 3;</code>
+     */
+    boolean hasIcon();
+    /**
+     * <code>.matcha.ImageOrResource icon = 3;</code>
+     */
+    io.gomatcha.matcha.pb.Pb.ImageOrResource getIcon();
+    /**
+     * <code>.matcha.ImageOrResource icon = 3;</code>
+     */
+    io.gomatcha.matcha.pb.Pb.ImageOrResourceOrBuilder getIconOrBuilder();
+
+    /**
+     * <code>.matcha.Color iconTint = 2;</code>
+     */
+    boolean hasIconTint();
+    /**
+     * <code>.matcha.Color iconTint = 2;</code>
+     */
+    io.gomatcha.matcha.pb.Pb.Color getIconTint();
+    /**
+     * <code>.matcha.Color iconTint = 2;</code>
+     */
+    io.gomatcha.matcha.pb.Pb.ColorOrBuilder getIconTintOrBuilder();
+
+    /**
+     * <code>bool Disabled = 4;</code>
+     */
+    boolean getDisabled();
+  }
+  /**
+   * Protobuf type {@code matcha.view.android.StackBarItem}
+   */
+  public  static final class StackBarItem extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:matcha.view.android.StackBarItem)
+      StackBarItemOrBuilder {
+    // Use StackBarItem.newBuilder() to construct.
+    private StackBarItem(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private StackBarItem() {
+      title_ = "";
+      disabled_ = false;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private StackBarItem(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              title_ = s;
+              break;
+            }
+            case 18: {
+              io.gomatcha.matcha.pb.Pb.Color.Builder subBuilder = null;
+              if (iconTint_ != null) {
+                subBuilder = iconTint_.toBuilder();
+              }
+              iconTint_ = input.readMessage(io.gomatcha.matcha.pb.Pb.Color.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(iconTint_);
+                iconTint_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 26: {
+              io.gomatcha.matcha.pb.Pb.ImageOrResource.Builder subBuilder = null;
+              if (icon_ != null) {
+                subBuilder = icon_.toBuilder();
+              }
+              icon_ = input.readMessage(io.gomatcha.matcha.pb.Pb.ImageOrResource.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(icon_);
+                icon_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 32: {
+
+              disabled_ = input.readBool();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return io.gomatcha.matcha.pb.view.android.PbStackView.internal_static_matcha_view_android_StackBarItem_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return io.gomatcha.matcha.pb.view.android.PbStackView.internal_static_matcha_view_android_StackBarItem_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.class, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder.class);
+    }
+
+    public static final int TITLE_FIELD_NUMBER = 1;
+    private volatile java.lang.Object title_;
+    /**
+     * <code>string title = 1;</code>
+     */
+    public java.lang.String getTitle() {
+      java.lang.Object ref = title_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        title_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string title = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTitleBytes() {
+      java.lang.Object ref = title_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        title_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ICON_FIELD_NUMBER = 3;
+    private io.gomatcha.matcha.pb.Pb.ImageOrResource icon_;
+    /**
+     * <code>.matcha.ImageOrResource icon = 3;</code>
+     */
+    public boolean hasIcon() {
+      return icon_ != null;
+    }
+    /**
+     * <code>.matcha.ImageOrResource icon = 3;</code>
+     */
+    public io.gomatcha.matcha.pb.Pb.ImageOrResource getIcon() {
+      return icon_ == null ? io.gomatcha.matcha.pb.Pb.ImageOrResource.getDefaultInstance() : icon_;
+    }
+    /**
+     * <code>.matcha.ImageOrResource icon = 3;</code>
+     */
+    public io.gomatcha.matcha.pb.Pb.ImageOrResourceOrBuilder getIconOrBuilder() {
+      return getIcon();
+    }
+
+    public static final int ICONTINT_FIELD_NUMBER = 2;
+    private io.gomatcha.matcha.pb.Pb.Color iconTint_;
+    /**
+     * <code>.matcha.Color iconTint = 2;</code>
+     */
+    public boolean hasIconTint() {
+      return iconTint_ != null;
+    }
+    /**
+     * <code>.matcha.Color iconTint = 2;</code>
+     */
+    public io.gomatcha.matcha.pb.Pb.Color getIconTint() {
+      return iconTint_ == null ? io.gomatcha.matcha.pb.Pb.Color.getDefaultInstance() : iconTint_;
+    }
+    /**
+     * <code>.matcha.Color iconTint = 2;</code>
+     */
+    public io.gomatcha.matcha.pb.Pb.ColorOrBuilder getIconTintOrBuilder() {
+      return getIconTint();
+    }
+
+    public static final int DISABLED_FIELD_NUMBER = 4;
+    private boolean disabled_;
+    /**
+     * <code>bool Disabled = 4;</code>
+     */
+    public boolean getDisabled() {
+      return disabled_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getTitleBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, title_);
+      }
+      if (iconTint_ != null) {
+        output.writeMessage(2, getIconTint());
+      }
+      if (icon_ != null) {
+        output.writeMessage(3, getIcon());
+      }
+      if (disabled_ != false) {
+        output.writeBool(4, disabled_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getTitleBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, title_);
+      }
+      if (iconTint_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getIconTint());
+      }
+      if (icon_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getIcon());
+      }
+      if (disabled_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, disabled_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem)) {
+        return super.equals(obj);
+      }
+      io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem other = (io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem) obj;
+
+      boolean result = true;
+      result = result && getTitle()
+          .equals(other.getTitle());
+      result = result && (hasIcon() == other.hasIcon());
+      if (hasIcon()) {
+        result = result && getIcon()
+            .equals(other.getIcon());
+      }
+      result = result && (hasIconTint() == other.hasIconTint());
+      if (hasIconTint()) {
+        result = result && getIconTint()
+            .equals(other.getIconTint());
+      }
+      result = result && (getDisabled()
+          == other.getDisabled());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TITLE_FIELD_NUMBER;
+      hash = (53 * hash) + getTitle().hashCode();
+      if (hasIcon()) {
+        hash = (37 * hash) + ICON_FIELD_NUMBER;
+        hash = (53 * hash) + getIcon().hashCode();
+      }
+      if (hasIconTint()) {
+        hash = (37 * hash) + ICONTINT_FIELD_NUMBER;
+        hash = (53 * hash) + getIconTint().hashCode();
+      }
+      hash = (37 * hash) + DISABLED_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getDisabled());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code matcha.view.android.StackBarItem}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:matcha.view.android.StackBarItem)
+        io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return io.gomatcha.matcha.pb.view.android.PbStackView.internal_static_matcha_view_android_StackBarItem_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return io.gomatcha.matcha.pb.view.android.PbStackView.internal_static_matcha_view_android_StackBarItem_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.class, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder.class);
+      }
+
+      // Construct using io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        title_ = "";
+
+        if (iconBuilder_ == null) {
+          icon_ = null;
+        } else {
+          icon_ = null;
+          iconBuilder_ = null;
+        }
+        if (iconTintBuilder_ == null) {
+          iconTint_ = null;
+        } else {
+          iconTint_ = null;
+          iconTintBuilder_ = null;
+        }
+        disabled_ = false;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return io.gomatcha.matcha.pb.view.android.PbStackView.internal_static_matcha_view_android_StackBarItem_descriptor;
+      }
+
+      public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem getDefaultInstanceForType() {
+        return io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.getDefaultInstance();
+      }
+
+      public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem build() {
+        io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem buildPartial() {
+        io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem result = new io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem(this);
+        result.title_ = title_;
+        if (iconBuilder_ == null) {
+          result.icon_ = icon_;
+        } else {
+          result.icon_ = iconBuilder_.build();
+        }
+        if (iconTintBuilder_ == null) {
+          result.iconTint_ = iconTint_;
+        } else {
+          result.iconTint_ = iconTintBuilder_.build();
+        }
+        result.disabled_ = disabled_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem) {
+          return mergeFrom((io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem other) {
+        if (other == io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.getDefaultInstance()) return this;
+        if (!other.getTitle().isEmpty()) {
+          title_ = other.title_;
+          onChanged();
+        }
+        if (other.hasIcon()) {
+          mergeIcon(other.getIcon());
+        }
+        if (other.hasIconTint()) {
+          mergeIconTint(other.getIconTint());
+        }
+        if (other.getDisabled() != false) {
+          setDisabled(other.getDisabled());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1873,28 +3308,262 @@ public final class PbStackView {
         return this;
       }
 
-      private boolean backButtonHidden_ ;
+      private io.gomatcha.matcha.pb.Pb.ImageOrResource icon_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.Pb.ImageOrResource, io.gomatcha.matcha.pb.Pb.ImageOrResource.Builder, io.gomatcha.matcha.pb.Pb.ImageOrResourceOrBuilder> iconBuilder_;
       /**
-       * <code>bool backButtonHidden = 2;</code>
+       * <code>.matcha.ImageOrResource icon = 3;</code>
        */
-      public boolean getBackButtonHidden() {
-        return backButtonHidden_;
+      public boolean hasIcon() {
+        return iconBuilder_ != null || icon_ != null;
       }
       /**
-       * <code>bool backButtonHidden = 2;</code>
+       * <code>.matcha.ImageOrResource icon = 3;</code>
        */
-      public Builder setBackButtonHidden(boolean value) {
+      public io.gomatcha.matcha.pb.Pb.ImageOrResource getIcon() {
+        if (iconBuilder_ == null) {
+          return icon_ == null ? io.gomatcha.matcha.pb.Pb.ImageOrResource.getDefaultInstance() : icon_;
+        } else {
+          return iconBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.matcha.ImageOrResource icon = 3;</code>
+       */
+      public Builder setIcon(io.gomatcha.matcha.pb.Pb.ImageOrResource value) {
+        if (iconBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          icon_ = value;
+          onChanged();
+        } else {
+          iconBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.ImageOrResource icon = 3;</code>
+       */
+      public Builder setIcon(
+          io.gomatcha.matcha.pb.Pb.ImageOrResource.Builder builderForValue) {
+        if (iconBuilder_ == null) {
+          icon_ = builderForValue.build();
+          onChanged();
+        } else {
+          iconBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.ImageOrResource icon = 3;</code>
+       */
+      public Builder mergeIcon(io.gomatcha.matcha.pb.Pb.ImageOrResource value) {
+        if (iconBuilder_ == null) {
+          if (icon_ != null) {
+            icon_ =
+              io.gomatcha.matcha.pb.Pb.ImageOrResource.newBuilder(icon_).mergeFrom(value).buildPartial();
+          } else {
+            icon_ = value;
+          }
+          onChanged();
+        } else {
+          iconBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.ImageOrResource icon = 3;</code>
+       */
+      public Builder clearIcon() {
+        if (iconBuilder_ == null) {
+          icon_ = null;
+          onChanged();
+        } else {
+          icon_ = null;
+          iconBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.ImageOrResource icon = 3;</code>
+       */
+      public io.gomatcha.matcha.pb.Pb.ImageOrResource.Builder getIconBuilder() {
         
-        backButtonHidden_ = value;
+        onChanged();
+        return getIconFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.matcha.ImageOrResource icon = 3;</code>
+       */
+      public io.gomatcha.matcha.pb.Pb.ImageOrResourceOrBuilder getIconOrBuilder() {
+        if (iconBuilder_ != null) {
+          return iconBuilder_.getMessageOrBuilder();
+        } else {
+          return icon_ == null ?
+              io.gomatcha.matcha.pb.Pb.ImageOrResource.getDefaultInstance() : icon_;
+        }
+      }
+      /**
+       * <code>.matcha.ImageOrResource icon = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.Pb.ImageOrResource, io.gomatcha.matcha.pb.Pb.ImageOrResource.Builder, io.gomatcha.matcha.pb.Pb.ImageOrResourceOrBuilder> 
+          getIconFieldBuilder() {
+        if (iconBuilder_ == null) {
+          iconBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.gomatcha.matcha.pb.Pb.ImageOrResource, io.gomatcha.matcha.pb.Pb.ImageOrResource.Builder, io.gomatcha.matcha.pb.Pb.ImageOrResourceOrBuilder>(
+                  getIcon(),
+                  getParentForChildren(),
+                  isClean());
+          icon_ = null;
+        }
+        return iconBuilder_;
+      }
+
+      private io.gomatcha.matcha.pb.Pb.Color iconTint_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.Pb.Color, io.gomatcha.matcha.pb.Pb.Color.Builder, io.gomatcha.matcha.pb.Pb.ColorOrBuilder> iconTintBuilder_;
+      /**
+       * <code>.matcha.Color iconTint = 2;</code>
+       */
+      public boolean hasIconTint() {
+        return iconTintBuilder_ != null || iconTint_ != null;
+      }
+      /**
+       * <code>.matcha.Color iconTint = 2;</code>
+       */
+      public io.gomatcha.matcha.pb.Pb.Color getIconTint() {
+        if (iconTintBuilder_ == null) {
+          return iconTint_ == null ? io.gomatcha.matcha.pb.Pb.Color.getDefaultInstance() : iconTint_;
+        } else {
+          return iconTintBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.matcha.Color iconTint = 2;</code>
+       */
+      public Builder setIconTint(io.gomatcha.matcha.pb.Pb.Color value) {
+        if (iconTintBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          iconTint_ = value;
+          onChanged();
+        } else {
+          iconTintBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.Color iconTint = 2;</code>
+       */
+      public Builder setIconTint(
+          io.gomatcha.matcha.pb.Pb.Color.Builder builderForValue) {
+        if (iconTintBuilder_ == null) {
+          iconTint_ = builderForValue.build();
+          onChanged();
+        } else {
+          iconTintBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.Color iconTint = 2;</code>
+       */
+      public Builder mergeIconTint(io.gomatcha.matcha.pb.Pb.Color value) {
+        if (iconTintBuilder_ == null) {
+          if (iconTint_ != null) {
+            iconTint_ =
+              io.gomatcha.matcha.pb.Pb.Color.newBuilder(iconTint_).mergeFrom(value).buildPartial();
+          } else {
+            iconTint_ = value;
+          }
+          onChanged();
+        } else {
+          iconTintBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.Color iconTint = 2;</code>
+       */
+      public Builder clearIconTint() {
+        if (iconTintBuilder_ == null) {
+          iconTint_ = null;
+          onChanged();
+        } else {
+          iconTint_ = null;
+          iconTintBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.Color iconTint = 2;</code>
+       */
+      public io.gomatcha.matcha.pb.Pb.Color.Builder getIconTintBuilder() {
+        
+        onChanged();
+        return getIconTintFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.matcha.Color iconTint = 2;</code>
+       */
+      public io.gomatcha.matcha.pb.Pb.ColorOrBuilder getIconTintOrBuilder() {
+        if (iconTintBuilder_ != null) {
+          return iconTintBuilder_.getMessageOrBuilder();
+        } else {
+          return iconTint_ == null ?
+              io.gomatcha.matcha.pb.Pb.Color.getDefaultInstance() : iconTint_;
+        }
+      }
+      /**
+       * <code>.matcha.Color iconTint = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.Pb.Color, io.gomatcha.matcha.pb.Pb.Color.Builder, io.gomatcha.matcha.pb.Pb.ColorOrBuilder> 
+          getIconTintFieldBuilder() {
+        if (iconTintBuilder_ == null) {
+          iconTintBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.gomatcha.matcha.pb.Pb.Color, io.gomatcha.matcha.pb.Pb.Color.Builder, io.gomatcha.matcha.pb.Pb.ColorOrBuilder>(
+                  getIconTint(),
+                  getParentForChildren(),
+                  isClean());
+          iconTint_ = null;
+        }
+        return iconTintBuilder_;
+      }
+
+      private boolean disabled_ ;
+      /**
+       * <code>bool Disabled = 4;</code>
+       */
+      public boolean getDisabled() {
+        return disabled_;
+      }
+      /**
+       * <code>bool Disabled = 4;</code>
+       */
+      public Builder setDisabled(boolean value) {
+        
+        disabled_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool backButtonHidden = 2;</code>
+       * <code>bool Disabled = 4;</code>
        */
-      public Builder clearBackButtonHidden() {
+      public Builder clearDisabled() {
         
-        backButtonHidden_ = false;
+        disabled_ = false;
         onChanged();
         return this;
       }
@@ -1909,39 +3578,39 @@ public final class PbStackView {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:matcha.view.android.StackBar)
+      // @@protoc_insertion_point(builder_scope:matcha.view.android.StackBarItem)
     }
 
-    // @@protoc_insertion_point(class_scope:matcha.view.android.StackBar)
-    private static final io.gomatcha.matcha.pb.view.android.PbStackView.StackBar DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:matcha.view.android.StackBarItem)
+    private static final io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new io.gomatcha.matcha.pb.view.android.PbStackView.StackBar();
+      DEFAULT_INSTANCE = new io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem();
     }
 
-    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBar getDefaultInstance() {
+    public static io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<StackBar>
-        PARSER = new com.google.protobuf.AbstractParser<StackBar>() {
-      public StackBar parsePartialFrom(
+    private static final com.google.protobuf.Parser<StackBarItem>
+        PARSER = new com.google.protobuf.AbstractParser<StackBarItem>() {
+      public StackBarItem parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StackBar(input, extensionRegistry);
+          return new StackBarItem(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<StackBar> parser() {
+    public static com.google.protobuf.Parser<StackBarItem> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<StackBar> getParserForType() {
+    public com.google.protobuf.Parser<StackBarItem> getParserForType() {
       return PARSER;
     }
 
-    public io.gomatcha.matcha.pb.view.android.PbStackView.StackBar getDefaultInstanceForType() {
+    public io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -2514,6 +4183,11 @@ public final class PbStackView {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_matcha_view_android_StackBar_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_matcha_view_android_StackBarItem_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_matcha_view_android_StackBarItem_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_matcha_view_android_StackEvent_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -2528,14 +4202,20 @@ public final class PbStackView {
   static {
     java.lang.String[] descriptorData = {
       "\n2gomatcha.io/matcha/pb/view/android/sta" +
-      "ckview.proto\022\023matcha.view.android\"\"\n\016Sta" +
-      "ckChildView\022\020\n\010screenId\030\003 \001(\003\"B\n\tStackVi" +
-      "ew\0225\n\010children\030\001 \003(\0132#.matcha.view.andro" +
-      "id.StackChildView\"3\n\010StackBar\022\r\n\005title\030\001" +
-      " \001(\t\022\030\n\020backButtonHidden\030\002 \001(\010\"\030\n\nStackE" +
-      "vent\022\n\n\002id\030\001 \003(\003BL\n\"io.gomatcha.matcha.p" +
-      "b.view.androidB\013PbStackViewZ\007android\242\002\017M" +
-      "atchaAndroidPBb\006proto3"
+      "ckview.proto\022\023matcha.view.android\032!gomat" +
+      "cha.io/matcha/pb/image.proto\"\"\n\016StackChi" +
+      "ldView\022\020\n\010screenId\030\003 \001(\003\"B\n\tStackView\0225\n" +
+      "\010children\030\001 \003(\0132#.matcha.view.android.St" +
+      "ackChildView\"\225\001\n\010StackBar\022\r\n\005title\030\001 \001(\t" +
+      "\022\020\n\010subtitle\030\003 \001(\t\022\034\n\005color\030\004 \001(\0132\r.matc" +
+      "ha.Color\0220\n\005items\030\005 \003(\0132!.matcha.view.an" +
+      "droid.StackBarItem\022\030\n\020backButtonHidden\030\002" +
+      " \001(\010\"w\n\014StackBarItem\022\r\n\005title\030\001 \001(\t\022%\n\004i",
+      "con\030\003 \001(\0132\027.matcha.ImageOrResource\022\037\n\010ic" +
+      "onTint\030\002 \001(\0132\r.matcha.Color\022\020\n\010Disabled\030" +
+      "\004 \001(\010\"\030\n\nStackEvent\022\n\n\002id\030\001 \003(\003BL\n\"io.go" +
+      "matcha.matcha.pb.view.androidB\013PbStackVi" +
+      "ewZ\007android\242\002\017MatchaAndroidPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2548,6 +4228,7 @@ public final class PbStackView {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          io.gomatcha.matcha.pb.Pb.getDescriptor(),
         }, assigner);
     internal_static_matcha_view_android_StackChildView_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -2566,13 +4247,20 @@ public final class PbStackView {
     internal_static_matcha_view_android_StackBar_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_StackBar_descriptor,
-        new java.lang.String[] { "Title", "BackButtonHidden", });
-    internal_static_matcha_view_android_StackEvent_descriptor =
+        new java.lang.String[] { "Title", "Subtitle", "Color", "Items", "BackButtonHidden", });
+    internal_static_matcha_view_android_StackBarItem_descriptor =
       getDescriptor().getMessageTypes().get(3);
+    internal_static_matcha_view_android_StackBarItem_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_matcha_view_android_StackBarItem_descriptor,
+        new java.lang.String[] { "Title", "Icon", "IconTint", "Disabled", });
+    internal_static_matcha_view_android_StackEvent_descriptor =
+      getDescriptor().getMessageTypes().get(4);
     internal_static_matcha_view_android_StackEvent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_StackEvent_descriptor,
         new java.lang.String[] { "Id", });
+    io.gomatcha.matcha.pb.Pb.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

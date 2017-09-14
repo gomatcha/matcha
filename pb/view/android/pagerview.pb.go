@@ -15,6 +15,7 @@ It has these top-level messages:
 	StackChildView
 	StackView
 	StackBar
+	StackBarItem
 	StackEvent
 */
 package android

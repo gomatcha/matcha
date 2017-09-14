@@ -1,5 +1,6 @@
 syntax = "proto3";
 package matcha.view.android;
+import "gomatcha.io/matcha/pb/image.proto";
 
 option go_package = "android";
 option objc_class_prefix = "MatchaAndroidPB";
@@ -19,7 +20,17 @@ message StackView {
 
 message StackBar {
     string title = 1;
+    string subtitle = 3;
+    matcha.Color color = 4;
+    repeated StackBarItem items = 5;
     bool backButtonHidden = 2;
+}
+
+message StackBarItem {
+    string title = 1;
+    matcha.ImageOrResource icon = 3;
+    matcha.Color iconTint = 2;
+    bool Disabled = 4;
 }
 
 message StackEvent {

@@ -1,16 +1,20 @@
 package android
 
 import (
-	"fmt"
+	"image"
+	"image/color"
 	"strconv"
 
 	"github.com/gogo/protobuf/proto"
 
 	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/app"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
 	"gomatcha.io/matcha/layout/constraint"
+	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pb"
 	"gomatcha.io/matcha/pb/view/android"
 	"gomatcha.io/matcha/view"
 )
@@ -144,7 +148,7 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 			s.Top(0)
 			s.Left(0)
 			s.WidthEqual(l.MaxGuide().Width())
-			s.Height(44)
+			s.Height(56)
 		})
 
 		// Add the child.
@@ -152,7 +156,7 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 			s.Top(0)
 			s.Left(0)
 			s.WidthEqual(l.MaxGuide().Width())
-			s.HeightEqual(l.MaxGuide().Height().Add(-64)) // TODO(KD): Respect bar actual height, shorter when rotated, etc...
+			s.HeightEqual(l.MaxGuide().Height().Add(-56 - 24)) // TODO(KD): Respect bar actual height, shorter when rotated, etc...
 		})
 
 		// Add ids to protobuf.
@@ -187,69 +191,53 @@ type stackBarView struct {
 }
 
 func (v *stackBarView) Build(ctx view.Context) view.Model {
-	l := &constraint.Layouter{}
-
-	// // iOS does the layouting for us. We just need the correct sizes.
-	// hasTitleView := false
-	// if v.Bar.TitleView != nil {
-	// 	hasTitleView = true
-	// 	l.Add(v.Bar.TitleView, func(s *constraint.Solver) {
-	// 		s.Top(0)
-	// 		s.Left(0)
-	// 		s.HeightLess(l.MaxGuide().Height())
-	// 		s.WidthLess(l.MaxGuide().Width())
-	// 	})
-	// }
-
-	// rightViewCount := int64(0)
-	// for _, i := range v.Bar.RightViews {
-	// 	rightViewCount += 1
-	// 	l.Add(i, func(s *constraint.Solver) {
-	// 		s.Top(0)
-	// 		s.Left(0)
-	// 		s.HeightLess(l.MaxGuide().Height())
-	// 		s.WidthLess(l.MaxGuide().Width())
-	// 	})
-	// }
-	// leftViewCount := int64(0)
-	// for _, i := range v.Bar.LeftViews {
-	// 	leftViewCount += 1
-	// 	l.Add(i, func(s *constraint.Solver) {
-	// 		s.Top(0)
-	// 		s.Left(0)
-	// 		s.HeightLess(l.MaxGuide().Height())
-	// 		s.WidthLess(l.MaxGuide().Width())
-	// 	})
-	// }
+	funcs := map[string]interface{}{}
+	items := []*android.StackBarItem{}
+	for idx, i := range v.Bar.Items {
+		items = append(items, i.marshalProtobuf())
+		funcs[strconv.Itoa(idx)] = i.OnPress
+	}
 
 	return view.Model{
-		Layouter:       l,
-		Children:       l.Views(),
+		Painter:        &paint.Style{BackgroundColor: v.Bar.Color},
 		NativeViewName: "gomatcha.io/matcha/view/android stackBarView",
 		NativeViewState: &android.StackBar{
-			Title: v.Bar.Title,
-			// CustomBackButtonTitle: len(v.Bar.BackButtonTitle) > 0,
-			// BackButtonTitle:       v.Bar.BackButtonTitle,
+			Title:            v.Bar.Title,
+			Subtitle:         v.Bar.Subtitle,
+			Items:            items,
 			BackButtonHidden: !v.NeedsBackButton,
-			// HasTitleView:          hasTitleView,
-			// RightViewCount:        rightViewCount,
-			// LeftViewCount:         leftViewCount,
 		},
+		NativeFuncs: funcs,
 	}
 }
 
 type StackBar struct {
-	Title string
-	// BackButtonTitle  string
-	// BackButtonHidden bool
-
-	TitleView  view.View
-	RightViews []view.View
-	LeftViews  []view.View
+	Title    string
+	Subtitle string
+	Color    color.Color
+	Items    []*StackBarItem
+	Hidden   bool
 }
 
 func (t *StackBar) OptionKey() string {
 	return "gomatcha.io/view/android StackBar"
+}
+
+type StackBarItem struct {
+	Title    string
+	Icon     image.Image
+	IconTint color.Color
+	Disabled bool
+	OnPress  func()
+}
+
+func (v *StackBarItem) marshalProtobuf() *android.StackBarItem {
+	return &android.StackBarItem{
+		Title:    v.Title,
+		Icon:     app.ImageMarshalProtobuf(v.Icon),
+		IconTint: pb.ColorEncode(v.IconTint),
+		Disabled: v.Disabled,
+	}
 }
 
 var stackMiddlewareVar *stackMiddleware
