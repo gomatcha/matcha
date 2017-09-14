@@ -2,11 +2,19 @@ package settings
 
 import (
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
 )
 
+type Stack interface {
+	SetViews(...view.View)
+	Views() []view.View
+	Push(vs view.View)
+	Pop()
+}
+
 type App struct {
-	Stack     *ios.Stack
+	Stack     Stack
 	Wifi      *Wifi
 	Bluetooth *Bluetooth
 

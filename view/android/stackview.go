@@ -5,6 +5,8 @@ import (
 	"image/color"
 	"strconv"
 
+	"golang.org/x/image/colornames"
+
 	"github.com/gogo/protobuf/proto"
 
 	"gomatcha.io/bridge"
@@ -167,7 +169,6 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 		NativeViewName: "gomatcha.io/matcha/view/android StackView",
 		NativeViewState: &android.StackView{
 			Children: childrenPb,
-			// BarColor: pb.ColorEncode(v.BarColor),
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnBack": func() {
@@ -187,6 +188,11 @@ type stackBarView struct {
 }
 
 func (v *stackBarView) Build(ctx view.Context) view.Model {
+	color := v.Bar.Color
+	if color == nil {
+		color = colornames.White
+	}
+
 	funcs := map[string]interface{}{}
 	items := []*android.StackBarItem{}
 	for idx, i := range v.Bar.Buttons {
@@ -197,7 +203,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 	}
 
 	return view.Model{
-		Painter:        &paint.Style{BackgroundColor: v.Bar.Color},
+		Painter:        &paint.Style{BackgroundColor: color},
 		NativeViewName: "gomatcha.io/matcha/view/android stackBarView",
 		NativeViewState: &android.StackBar{
 			Title:            v.Bar.Title,

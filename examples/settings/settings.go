@@ -4,6 +4,7 @@ package settings
 import (
 	"fmt"
 	"image/color"
+	"runtime"
 	"strings"
 
 	"golang.org/x/image/colornames"
@@ -15,6 +16,7 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
+	"gomatcha.io/matcha/view/android"
 	"gomatcha.io/matcha/view/ios"
 )
 
@@ -31,12 +33,19 @@ var (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/settings New", func() *view.Root {
-		app := NewApp()
-
-		v := ios.NewStackView()
-		v.Stack = app.Stack
-		v.Stack.SetViews(NewRootView(app))
-		return view.NewRoot(v)
+		if runtime.GOOS == "android" {
+			v := android.NewStackView()
+			app := NewApp()
+			app.Stack = v.Stack
+			app.Stack.SetViews(NewRootView(app))
+			return view.NewRoot(v)
+		} else {
+			v := ios.NewStackView()
+			app := NewApp()
+			app.Stack = v.Stack
+			app.Stack.SetViews(NewRootView(app))
+			return view.NewRoot(v)
+		}
 	})
 }
 

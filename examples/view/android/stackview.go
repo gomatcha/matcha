@@ -124,7 +124,7 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 				Buttons: []*android.StackBarButton{
 					&android.StackBarButton{
 						Title: "item",
-						Icon:  app.MustLoadImage("airplane"),
+						Icon:  app.MustLoadImage("settings_airplane"),
 						OnPress: func() {
 							fmt.Println("OnPress")
 						},

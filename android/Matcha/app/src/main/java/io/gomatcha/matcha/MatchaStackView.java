@@ -37,7 +37,6 @@ public class MatchaStackView extends MatchaChildView {
 
         RelativeLayout.LayoutParams contentParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         stackView2 = new MatchaStackView2(context);
-        stackView2.setBackgroundColor(0xff00ffff);
         addView(stackView2, contentParams);
     }
 
