@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.google.protobuf.Duration;
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,13 +31,37 @@ public class MatchaChildView extends RelativeLayout {
 
     public MatchaChildView(Context context, MatchaViewNode node) {
         super(context);
+        final Context ctx = context;
         viewNode = node;
         this.setClipChildren(false);
         this.matchaGestureDetector = new MatchaGestureDetector();
         this.matchaGestureDetector.childView = this;
         this.matchaGestureDetector.context = context;
         this.gestureDetector = new GestureDetector(this.getContext(), this.matchaGestureDetector);
+        this.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Log.v("x", "OnClick");
+                    if (matchaGestureDetector.buttonGesture == null) {
+                        return;
+                    }
+                    PbTouch.ButtonRecognizer proto = matchaGestureDetector.buttonGesture.unpack(PbTouch.ButtonRecognizer.class);
+                    float ratio = (float)MatchaChildView.this.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
 
+                    Duration duration = Protobuf.toProtobuf(ViewConfiguration.get(ctx).getLongPressTimeout());
+                    PbTouch.ButtonEvent e = PbTouch.ButtonEvent.newBuilder()
+                            //.setDuration(duration)
+                            .setTimestamp(Protobuf.toProtobuf(new Date()))
+                            //.setPosition(Protobuf.toProtobuf(new PointF(0 / ratio, 0 / ratio)))
+                            .setKind(PbTouch.EventKind.EVENT_KIND_RECOGNIZED)
+                            .build();
+
+                    MatchaChildView.this.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", proto.getOnEvent()), MatchaChildView.this.viewNode.id, new GoValue(e.toByteArray()));
+                } catch (InvalidProtocolBufferException e) {
+                }
+            }
+        });
         this.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -59,6 +84,31 @@ public class MatchaChildView extends RelativeLayout {
 
     public RelativeLayout getLayout() {
         return this;
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        int eventAction = event.getAction();
+
+        // you may need the x/y location
+        int x = (int)event.getX();
+        int y = (int)event.getY();
+
+        // put your code in here to handle the event
+        switch (eventAction) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+        }
+
+        // tell the View to redraw the Canvas
+        invalidate();
+
+        // tell the View that we handled the event
+        return true;
+
     }
 
     class MatchaGestureDetector extends GestureDetector.SimpleOnGestureListener {

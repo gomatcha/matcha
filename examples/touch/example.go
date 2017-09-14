@@ -22,8 +22,9 @@ func init() {
 
 type TouchView struct {
 	view.Embed
-	counter      int
-	pressCounter int
+	tapCounter    int
+	pressCounter  int
+	buttonCounter int
 }
 
 func New() *TouchView {
@@ -35,11 +36,11 @@ func New() *TouchView {
 func (v *TouchView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := NewTouchChildView()
+	chl1 := NewTapChildView()
 	chl1.OnTouch = func() {
-		fmt.Println("On touch")
-		v.counter += 1
-		go v.Signal()
+		fmt.Println("On Tap")
+		v.tapCounter += 1
+		go v.Signal() // TODO(KD): Why is this on separate thread?
 	}
 	g1 := l.Add(chl1, func(s *constraint.Solver) {
 		s.TopEqual(constraint.Const(0))
@@ -49,7 +50,7 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 	})
 
 	chl2 := view.NewTextView()
-	chl2.String = fmt.Sprintf("Counter: %v", v.counter)
+	chl2.String = fmt.Sprintf("tap: %v", v.tapCounter)
 	chl2.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
 	g2 := l.Add(chl2, func(s *constraint.Solver) {
 		s.TopEqual(g1.Bottom())
@@ -57,7 +58,7 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 	})
 
 	chl3 := NewPressChildView()
-	chl3.OnPress = func() {
+	chl3.OnTouch = func() {
 		fmt.Println("On Press")
 		v.pressCounter += 1
 		go v.Signal()
@@ -79,8 +80,8 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 
 	chl5 := NewButtonChildView()
 	chl5.OnTouch = func() {
-		fmt.Println("On touch")
-		v.counter += 1
+		fmt.Println("On Button")
+		v.buttonCounter += 1
 		go v.Signal()
 	}
 	g5 := l.Add(chl5, func(s *constraint.Solver) {
@@ -89,7 +90,14 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 		s.WidthEqual(constraint.Const(100))
 		s.HeightEqual(constraint.Const(100))
 	})
-	_ = g5
+	chl6 := view.NewTextView()
+	chl6.String = fmt.Sprintf("Button: %v", v.buttonCounter)
+	chl6.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
+	g6 := l.Add(chl6, func(s *constraint.Solver) {
+		s.TopEqual(g5.Bottom())
+		s.LeftEqual(g5.Left())
+	})
+	_ = g6
 
 	return view.Model{
 		Children: l.Views(),
@@ -98,9 +106,32 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 	}
 }
 
+type TapChildView struct {
+	view.Embed
+	OnTouch func()
+}
+
+func NewTapChildView() *TapChildView {
+	return &TapChildView{}
+}
+
+func (v *TapChildView) Build(ctx view.Context) view.Model {
+	return view.Model{
+		Painter: &paint.Style{BackgroundColor: colornames.Blue},
+		Options: []view.Option{
+			touch.GestureList{&touch.TapGesture{
+				Count: 1,
+				OnTouch: func(e *touch.TapEvent) {
+					v.OnTouch()
+				},
+			}},
+		},
+	}
+}
+
 type PressChildView struct {
 	view.Embed
-	OnPress func()
+	OnTouch func()
 }
 
 func NewPressChildView() *PressChildView {
@@ -108,53 +139,15 @@ func NewPressChildView() *PressChildView {
 }
 
 func (v *PressChildView) Build(ctx view.Context) view.Model {
-	tap := &touch.PressGesture{
-		MinDuration: time.Second / 2,
-		OnTouch: func(e *touch.PressEvent) {
-			v.OnPress()
-		},
-	}
-
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
-			touch.GestureList{tap},
-		},
-		// Values: map[string]interface{}{
-		// 	touch.Key: []touch.Recognizer{tap},
-		// },
-		// Options: []view.Options{
-		// 	touch.Recognizers([]touch.Recognizer{tap}),
-		// 	app.ActivityIndicator{},
-		// 	app.StatusBar{
-		// 		Hidden: true,
-		// 		Style:StatusBarStyleLight,
-		// 	},
-		// },
-	}
-}
-
-type TouchChildView struct {
-	view.Embed
-	OnTouch func()
-}
-
-func NewTouchChildView() *TouchChildView {
-	return &TouchChildView{}
-}
-
-func (v *TouchChildView) Build(ctx view.Context) view.Model {
-	tap := &touch.TapGesture{
-		Count: 1,
-		OnTouch: func(e *touch.TapEvent) {
-			v.OnTouch()
-		},
-	}
-
-	return view.Model{
-		Painter: &paint.Style{BackgroundColor: colornames.Blue},
-		Options: []view.Option{
-			touch.GestureList{tap},
+			touch.GestureList{&touch.PressGesture{
+				MinDuration: time.Second / 2,
+				OnTouch: func(e *touch.PressEvent) {
+					v.OnTouch()
+				},
+			}},
 		},
 	}
 }
@@ -169,16 +162,14 @@ func NewButtonChildView() *ButtonChildView {
 }
 
 func (v *ButtonChildView) Build(ctx view.Context) view.Model {
-	button := &touch.ButtonGesture{
-		OnTouch: func(e *touch.ButtonEvent) {
-			fmt.Println("On Touch:s", e.Kind)
-		},
-	}
-
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
-			touch.GestureList{button},
+			touch.GestureList{&touch.ButtonGesture{
+				OnTouch: func(e *touch.ButtonEvent) {
+					v.OnTouch()
+				},
+			}},
 		},
 	}
 }

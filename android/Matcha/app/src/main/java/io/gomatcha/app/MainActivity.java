@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.getSupportActionBar().hide();
-        GoValue rootVC = GoValue.withFunc("gomatcha.io/matcha/examples/settings New").call("")[0];
+        GoValue rootVC = GoValue.withFunc("gomatcha.io/matcha/examples/touch New").call("")[0];
 
         MatchaView v = new MatchaView(this, rootVC);
         setContentView(v);

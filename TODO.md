@@ -4,6 +4,7 @@
 High:
 * Android custom view example
 * Better error logging for panics.
+* Android touch highlight?
 
 Medium:
 * Crash on "Stop"
@@ -16,8 +17,11 @@ Medium:
 * Rotation / orientation
 * StackBar height / hidden, color
 * Android image resource scale??
+* Android scroll views
 
 Low:
+* Not getting start and inprogress events for UITapGestureRecognizer.
+* UIButtonGestureRecognizer only sends a event if inside/outside changes. Its faster but less generic?
 * Delay any ui events while viewcontroller is updating??
 * Optimize middleware so they aren't called on every view.
 * Improve function call performance.
@@ -56,6 +60,7 @@ Refactors
 * Change OnPress to OnActivate, OnSelect?
 * StackBarButton or StackBarItem
 * should options be pointer or struct receiver. Should statusbar be a pointer?
+* Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize?
 
 Pro:
 * Webview

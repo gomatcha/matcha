@@ -211,6 +211,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
 		Options: []view.Option{
 			&ios.StackBar{Title: "Settings"},
+			&android.StackBar{Title: "Settings"},
 		},
 	}
 }
