@@ -16,6 +16,7 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb"
 	"gomatcha.io/matcha/pb/view/android"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )
 
@@ -194,7 +195,9 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 	funcs := map[string]interface{}{}
 	items := []*android.StackBarItem{}
 	for idx, i := range v.Bar.Buttons {
-		items = append(items, i.marshalProtobuf())
+		button := i.marshalProtobuf()
+		button.OnPressFunc = strconv.Itoa(idx)
+		items = append(items, button)
 		funcs[strconv.Itoa(idx)] = i.OnPress
 	}
 
@@ -203,7 +206,9 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 		NativeViewName: "gomatcha.io/matcha/view/android stackBarView",
 		NativeViewState: &android.StackBar{
 			Title:            v.Bar.Title,
+			StyledTitle:      v.Bar.StyledTitle.MarshalProtobuf(),
 			Subtitle:         v.Bar.Subtitle,
+			StyledSubtitle:   v.Bar.StyledSubtitle.MarshalProtobuf(),
 			Items:            items,
 			BackButtonHidden: !v.NeedsBackButton,
 		},
@@ -212,11 +217,13 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 }
 
 type StackBar struct {
-	Title    string
-	Subtitle string
-	Color    color.Color
-	Buttons  []*StackBarButton
-	Hidden   bool
+	Title          string
+	StyledTitle    *text.StyledText
+	Subtitle       string
+	StyledSubtitle *text.StyledText
+	Color          color.Color
+	Buttons        []*StackBarButton
+	Hidden         bool
 }
 
 func (t *StackBar) OptionKey() string {

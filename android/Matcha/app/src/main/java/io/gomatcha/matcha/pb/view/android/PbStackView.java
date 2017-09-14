@@ -1384,6 +1384,19 @@ public final class PbStackView {
         getTitleBytes();
 
     /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    boolean hasStyledTitle();
+    /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    io.gomatcha.matcha.pb.text.PbText.StyledText getStyledTitle();
+    /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getStyledTitleOrBuilder();
+
+    /**
      * <code>string subtitle = 3;</code>
      */
     java.lang.String getSubtitle();
@@ -1392,6 +1405,19 @@ public final class PbStackView {
      */
     com.google.protobuf.ByteString
         getSubtitleBytes();
+
+    /**
+     * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+     */
+    boolean hasStyledSubtitle();
+    /**
+     * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+     */
+    io.gomatcha.matcha.pb.text.PbText.StyledText getStyledSubtitle();
+    /**
+     * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+     */
+    io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getStyledSubtitleOrBuilder();
 
     /**
      * <code>.matcha.Color color = 4;</code>
@@ -1509,12 +1535,38 @@ public final class PbStackView {
               break;
             }
             case 42: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
                 items_ = new java.util.ArrayList<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem>();
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000020;
               }
               items_.add(
                   input.readMessage(io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.parser(), extensionRegistry));
+              break;
+            }
+            case 50: {
+              io.gomatcha.matcha.pb.text.PbText.StyledText.Builder subBuilder = null;
+              if (styledTitle_ != null) {
+                subBuilder = styledTitle_.toBuilder();
+              }
+              styledTitle_ = input.readMessage(io.gomatcha.matcha.pb.text.PbText.StyledText.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(styledTitle_);
+                styledTitle_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 58: {
+              io.gomatcha.matcha.pb.text.PbText.StyledText.Builder subBuilder = null;
+              if (styledSubtitle_ != null) {
+                subBuilder = styledSubtitle_.toBuilder();
+              }
+              styledSubtitle_ = input.readMessage(io.gomatcha.matcha.pb.text.PbText.StyledText.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(styledSubtitle_);
+                styledSubtitle_ = subBuilder.buildPartial();
+              }
+
               break;
             }
           }
@@ -1525,7 +1577,7 @@ public final class PbStackView {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
           items_ = java.util.Collections.unmodifiableList(items_);
         }
         makeExtensionsImmutable();
@@ -1578,6 +1630,27 @@ public final class PbStackView {
       }
     }
 
+    public static final int STYLEDTITLE_FIELD_NUMBER = 6;
+    private io.gomatcha.matcha.pb.text.PbText.StyledText styledTitle_;
+    /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    public boolean hasStyledTitle() {
+      return styledTitle_ != null;
+    }
+    /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    public io.gomatcha.matcha.pb.text.PbText.StyledText getStyledTitle() {
+      return styledTitle_ == null ? io.gomatcha.matcha.pb.text.PbText.StyledText.getDefaultInstance() : styledTitle_;
+    }
+    /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    public io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getStyledTitleOrBuilder() {
+      return getStyledTitle();
+    }
+
     public static final int SUBTITLE_FIELD_NUMBER = 3;
     private volatile java.lang.Object subtitle_;
     /**
@@ -1610,6 +1683,27 @@ public final class PbStackView {
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
+    }
+
+    public static final int STYLEDSUBTITLE_FIELD_NUMBER = 7;
+    private io.gomatcha.matcha.pb.text.PbText.StyledText styledSubtitle_;
+    /**
+     * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+     */
+    public boolean hasStyledSubtitle() {
+      return styledSubtitle_ != null;
+    }
+    /**
+     * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+     */
+    public io.gomatcha.matcha.pb.text.PbText.StyledText getStyledSubtitle() {
+      return styledSubtitle_ == null ? io.gomatcha.matcha.pb.text.PbText.StyledText.getDefaultInstance() : styledSubtitle_;
+    }
+    /**
+     * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+     */
+    public io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getStyledSubtitleOrBuilder() {
+      return getStyledSubtitle();
     }
 
     public static final int COLOR_FIELD_NUMBER = 4;
@@ -1704,6 +1798,12 @@ public final class PbStackView {
       for (int i = 0; i < items_.size(); i++) {
         output.writeMessage(5, items_.get(i));
       }
+      if (styledTitle_ != null) {
+        output.writeMessage(6, getStyledTitle());
+      }
+      if (styledSubtitle_ != null) {
+        output.writeMessage(7, getStyledSubtitle());
+      }
     }
 
     public int getSerializedSize() {
@@ -1729,6 +1829,14 @@ public final class PbStackView {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(5, items_.get(i));
       }
+      if (styledTitle_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getStyledTitle());
+      }
+      if (styledSubtitle_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, getStyledSubtitle());
+      }
       memoizedSize = size;
       return size;
     }
@@ -1747,8 +1855,18 @@ public final class PbStackView {
       boolean result = true;
       result = result && getTitle()
           .equals(other.getTitle());
+      result = result && (hasStyledTitle() == other.hasStyledTitle());
+      if (hasStyledTitle()) {
+        result = result && getStyledTitle()
+            .equals(other.getStyledTitle());
+      }
       result = result && getSubtitle()
           .equals(other.getSubtitle());
+      result = result && (hasStyledSubtitle() == other.hasStyledSubtitle());
+      if (hasStyledSubtitle()) {
+        result = result && getStyledSubtitle()
+            .equals(other.getStyledSubtitle());
+      }
       result = result && (hasColor() == other.hasColor());
       if (hasColor()) {
         result = result && getColor()
@@ -1770,8 +1888,16 @@ public final class PbStackView {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TITLE_FIELD_NUMBER;
       hash = (53 * hash) + getTitle().hashCode();
+      if (hasStyledTitle()) {
+        hash = (37 * hash) + STYLEDTITLE_FIELD_NUMBER;
+        hash = (53 * hash) + getStyledTitle().hashCode();
+      }
       hash = (37 * hash) + SUBTITLE_FIELD_NUMBER;
       hash = (53 * hash) + getSubtitle().hashCode();
+      if (hasStyledSubtitle()) {
+        hash = (37 * hash) + STYLEDSUBTITLE_FIELD_NUMBER;
+        hash = (53 * hash) + getStyledSubtitle().hashCode();
+      }
       if (hasColor()) {
         hash = (37 * hash) + COLOR_FIELD_NUMBER;
         hash = (53 * hash) + getColor().hashCode();
@@ -1915,8 +2041,20 @@ public final class PbStackView {
         super.clear();
         title_ = "";
 
+        if (styledTitleBuilder_ == null) {
+          styledTitle_ = null;
+        } else {
+          styledTitle_ = null;
+          styledTitleBuilder_ = null;
+        }
         subtitle_ = "";
 
+        if (styledSubtitleBuilder_ == null) {
+          styledSubtitle_ = null;
+        } else {
+          styledSubtitle_ = null;
+          styledSubtitleBuilder_ = null;
+        }
         if (colorBuilder_ == null) {
           color_ = null;
         } else {
@@ -1925,7 +2063,7 @@ public final class PbStackView {
         }
         if (itemsBuilder_ == null) {
           items_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000020);
         } else {
           itemsBuilder_.clear();
         }
@@ -1956,16 +2094,26 @@ public final class PbStackView {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.title_ = title_;
+        if (styledTitleBuilder_ == null) {
+          result.styledTitle_ = styledTitle_;
+        } else {
+          result.styledTitle_ = styledTitleBuilder_.build();
+        }
         result.subtitle_ = subtitle_;
+        if (styledSubtitleBuilder_ == null) {
+          result.styledSubtitle_ = styledSubtitle_;
+        } else {
+          result.styledSubtitle_ = styledSubtitleBuilder_.build();
+        }
         if (colorBuilder_ == null) {
           result.color_ = color_;
         } else {
           result.color_ = colorBuilder_.build();
         }
         if (itemsBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          if (((bitField0_ & 0x00000020) == 0x00000020)) {
             items_ = java.util.Collections.unmodifiableList(items_);
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000020);
           }
           result.items_ = items_;
         } else {
@@ -2018,9 +2166,15 @@ public final class PbStackView {
           title_ = other.title_;
           onChanged();
         }
+        if (other.hasStyledTitle()) {
+          mergeStyledTitle(other.getStyledTitle());
+        }
         if (!other.getSubtitle().isEmpty()) {
           subtitle_ = other.subtitle_;
           onChanged();
+        }
+        if (other.hasStyledSubtitle()) {
+          mergeStyledSubtitle(other.getStyledSubtitle());
         }
         if (other.hasColor()) {
           mergeColor(other.getColor());
@@ -2029,7 +2183,7 @@ public final class PbStackView {
           if (!other.items_.isEmpty()) {
             if (items_.isEmpty()) {
               items_ = other.items_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000020);
             } else {
               ensureItemsIsMutable();
               items_.addAll(other.items_);
@@ -2042,7 +2196,7 @@ public final class PbStackView {
               itemsBuilder_.dispose();
               itemsBuilder_ = null;
               items_ = other.items_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000020);
               itemsBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getItemsFieldBuilder() : null;
@@ -2150,6 +2304,123 @@ public final class PbStackView {
         return this;
       }
 
+      private io.gomatcha.matcha.pb.text.PbText.StyledText styledTitle_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.text.PbText.StyledText, io.gomatcha.matcha.pb.text.PbText.StyledText.Builder, io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder> styledTitleBuilder_;
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public boolean hasStyledTitle() {
+        return styledTitleBuilder_ != null || styledTitle_ != null;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.StyledText getStyledTitle() {
+        if (styledTitleBuilder_ == null) {
+          return styledTitle_ == null ? io.gomatcha.matcha.pb.text.PbText.StyledText.getDefaultInstance() : styledTitle_;
+        } else {
+          return styledTitleBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public Builder setStyledTitle(io.gomatcha.matcha.pb.text.PbText.StyledText value) {
+        if (styledTitleBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          styledTitle_ = value;
+          onChanged();
+        } else {
+          styledTitleBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public Builder setStyledTitle(
+          io.gomatcha.matcha.pb.text.PbText.StyledText.Builder builderForValue) {
+        if (styledTitleBuilder_ == null) {
+          styledTitle_ = builderForValue.build();
+          onChanged();
+        } else {
+          styledTitleBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public Builder mergeStyledTitle(io.gomatcha.matcha.pb.text.PbText.StyledText value) {
+        if (styledTitleBuilder_ == null) {
+          if (styledTitle_ != null) {
+            styledTitle_ =
+              io.gomatcha.matcha.pb.text.PbText.StyledText.newBuilder(styledTitle_).mergeFrom(value).buildPartial();
+          } else {
+            styledTitle_ = value;
+          }
+          onChanged();
+        } else {
+          styledTitleBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public Builder clearStyledTitle() {
+        if (styledTitleBuilder_ == null) {
+          styledTitle_ = null;
+          onChanged();
+        } else {
+          styledTitle_ = null;
+          styledTitleBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.StyledText.Builder getStyledTitleBuilder() {
+        
+        onChanged();
+        return getStyledTitleFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getStyledTitleOrBuilder() {
+        if (styledTitleBuilder_ != null) {
+          return styledTitleBuilder_.getMessageOrBuilder();
+        } else {
+          return styledTitle_ == null ?
+              io.gomatcha.matcha.pb.text.PbText.StyledText.getDefaultInstance() : styledTitle_;
+        }
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.text.PbText.StyledText, io.gomatcha.matcha.pb.text.PbText.StyledText.Builder, io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder> 
+          getStyledTitleFieldBuilder() {
+        if (styledTitleBuilder_ == null) {
+          styledTitleBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.gomatcha.matcha.pb.text.PbText.StyledText, io.gomatcha.matcha.pb.text.PbText.StyledText.Builder, io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder>(
+                  getStyledTitle(),
+                  getParentForChildren(),
+                  isClean());
+          styledTitle_ = null;
+        }
+        return styledTitleBuilder_;
+      }
+
       private java.lang.Object subtitle_ = "";
       /**
        * <code>string subtitle = 3;</code>
@@ -2217,6 +2488,123 @@ public final class PbStackView {
         subtitle_ = value;
         onChanged();
         return this;
+      }
+
+      private io.gomatcha.matcha.pb.text.PbText.StyledText styledSubtitle_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.text.PbText.StyledText, io.gomatcha.matcha.pb.text.PbText.StyledText.Builder, io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder> styledSubtitleBuilder_;
+      /**
+       * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+       */
+      public boolean hasStyledSubtitle() {
+        return styledSubtitleBuilder_ != null || styledSubtitle_ != null;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.StyledText getStyledSubtitle() {
+        if (styledSubtitleBuilder_ == null) {
+          return styledSubtitle_ == null ? io.gomatcha.matcha.pb.text.PbText.StyledText.getDefaultInstance() : styledSubtitle_;
+        } else {
+          return styledSubtitleBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+       */
+      public Builder setStyledSubtitle(io.gomatcha.matcha.pb.text.PbText.StyledText value) {
+        if (styledSubtitleBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          styledSubtitle_ = value;
+          onChanged();
+        } else {
+          styledSubtitleBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+       */
+      public Builder setStyledSubtitle(
+          io.gomatcha.matcha.pb.text.PbText.StyledText.Builder builderForValue) {
+        if (styledSubtitleBuilder_ == null) {
+          styledSubtitle_ = builderForValue.build();
+          onChanged();
+        } else {
+          styledSubtitleBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+       */
+      public Builder mergeStyledSubtitle(io.gomatcha.matcha.pb.text.PbText.StyledText value) {
+        if (styledSubtitleBuilder_ == null) {
+          if (styledSubtitle_ != null) {
+            styledSubtitle_ =
+              io.gomatcha.matcha.pb.text.PbText.StyledText.newBuilder(styledSubtitle_).mergeFrom(value).buildPartial();
+          } else {
+            styledSubtitle_ = value;
+          }
+          onChanged();
+        } else {
+          styledSubtitleBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+       */
+      public Builder clearStyledSubtitle() {
+        if (styledSubtitleBuilder_ == null) {
+          styledSubtitle_ = null;
+          onChanged();
+        } else {
+          styledSubtitle_ = null;
+          styledSubtitleBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.StyledText.Builder getStyledSubtitleBuilder() {
+        
+        onChanged();
+        return getStyledSubtitleFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getStyledSubtitleOrBuilder() {
+        if (styledSubtitleBuilder_ != null) {
+          return styledSubtitleBuilder_.getMessageOrBuilder();
+        } else {
+          return styledSubtitle_ == null ?
+              io.gomatcha.matcha.pb.text.PbText.StyledText.getDefaultInstance() : styledSubtitle_;
+        }
+      }
+      /**
+       * <code>.matcha.text.StyledText styledSubtitle = 7;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.text.PbText.StyledText, io.gomatcha.matcha.pb.text.PbText.StyledText.Builder, io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder> 
+          getStyledSubtitleFieldBuilder() {
+        if (styledSubtitleBuilder_ == null) {
+          styledSubtitleBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.gomatcha.matcha.pb.text.PbText.StyledText, io.gomatcha.matcha.pb.text.PbText.StyledText.Builder, io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder>(
+                  getStyledSubtitle(),
+                  getParentForChildren(),
+                  isClean());
+          styledSubtitle_ = null;
+        }
+        return styledSubtitleBuilder_;
       }
 
       private io.gomatcha.matcha.pb.Pb.Color color_ = null;
@@ -2339,9 +2727,9 @@ public final class PbStackView {
       private java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem> items_ =
         java.util.Collections.emptyList();
       private void ensureItemsIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
           items_ = new java.util.ArrayList<io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem>(items_);
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000020;
          }
       }
 
@@ -2491,7 +2879,7 @@ public final class PbStackView {
       public Builder clearItems() {
         if (itemsBuilder_ == null) {
           items_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000020);
           onChanged();
         } else {
           itemsBuilder_.clear();
@@ -2568,7 +2956,7 @@ public final class PbStackView {
           itemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItem.Builder, io.gomatcha.matcha.pb.view.android.PbStackView.StackBarItemOrBuilder>(
                   items_,
-                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  ((bitField0_ & 0x00000020) == 0x00000020),
                   getParentForChildren(),
                   isClean());
           items_ = null;
@@ -2691,9 +3079,19 @@ public final class PbStackView {
     io.gomatcha.matcha.pb.Pb.ColorOrBuilder getIconTintOrBuilder();
 
     /**
-     * <code>bool Disabled = 4;</code>
+     * <code>bool disabled = 4;</code>
      */
     boolean getDisabled();
+
+    /**
+     * <code>string onPressFunc = 5;</code>
+     */
+    java.lang.String getOnPressFunc();
+    /**
+     * <code>string onPressFunc = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getOnPressFuncBytes();
   }
   /**
    * Protobuf type {@code matcha.view.android.StackBarItem}
@@ -2709,6 +3107,7 @@ public final class PbStackView {
     private StackBarItem() {
       title_ = "";
       disabled_ = false;
+      onPressFunc_ = "";
     }
 
     @java.lang.Override
@@ -2771,6 +3170,12 @@ public final class PbStackView {
             case 32: {
 
               disabled_ = input.readBool();
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              onPressFunc_ = s;
               break;
             }
           }
@@ -2875,10 +3280,44 @@ public final class PbStackView {
     public static final int DISABLED_FIELD_NUMBER = 4;
     private boolean disabled_;
     /**
-     * <code>bool Disabled = 4;</code>
+     * <code>bool disabled = 4;</code>
      */
     public boolean getDisabled() {
       return disabled_;
+    }
+
+    public static final int ONPRESSFUNC_FIELD_NUMBER = 5;
+    private volatile java.lang.Object onPressFunc_;
+    /**
+     * <code>string onPressFunc = 5;</code>
+     */
+    public java.lang.String getOnPressFunc() {
+      java.lang.Object ref = onPressFunc_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        onPressFunc_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string onPressFunc = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getOnPressFuncBytes() {
+      java.lang.Object ref = onPressFunc_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        onPressFunc_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2905,6 +3344,9 @@ public final class PbStackView {
       if (disabled_ != false) {
         output.writeBool(4, disabled_);
       }
+      if (!getOnPressFuncBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, onPressFunc_);
+      }
     }
 
     public int getSerializedSize() {
@@ -2926,6 +3368,9 @@ public final class PbStackView {
       if (disabled_ != false) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(4, disabled_);
+      }
+      if (!getOnPressFuncBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, onPressFunc_);
       }
       memoizedSize = size;
       return size;
@@ -2957,6 +3402,8 @@ public final class PbStackView {
       }
       result = result && (getDisabled()
           == other.getDisabled());
+      result = result && getOnPressFunc()
+          .equals(other.getOnPressFunc());
       return result;
     }
 
@@ -2980,6 +3427,8 @@ public final class PbStackView {
       hash = (37 * hash) + DISABLED_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getDisabled());
+      hash = (37 * hash) + ONPRESSFUNC_FIELD_NUMBER;
+      hash = (53 * hash) + getOnPressFunc().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3125,6 +3574,8 @@ public final class PbStackView {
         }
         disabled_ = false;
 
+        onPressFunc_ = "";
+
         return this;
       }
 
@@ -3159,6 +3610,7 @@ public final class PbStackView {
           result.iconTint_ = iconTintBuilder_.build();
         }
         result.disabled_ = disabled_;
+        result.onPressFunc_ = onPressFunc_;
         onBuilt();
         return result;
       }
@@ -3212,6 +3664,10 @@ public final class PbStackView {
         }
         if (other.getDisabled() != false) {
           setDisabled(other.getDisabled());
+        }
+        if (!other.getOnPressFunc().isEmpty()) {
+          onPressFunc_ = other.onPressFunc_;
+          onChanged();
         }
         onChanged();
         return this;
@@ -3544,13 +4000,13 @@ public final class PbStackView {
 
       private boolean disabled_ ;
       /**
-       * <code>bool Disabled = 4;</code>
+       * <code>bool disabled = 4;</code>
        */
       public boolean getDisabled() {
         return disabled_;
       }
       /**
-       * <code>bool Disabled = 4;</code>
+       * <code>bool disabled = 4;</code>
        */
       public Builder setDisabled(boolean value) {
         
@@ -3559,11 +4015,80 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <code>bool Disabled = 4;</code>
+       * <code>bool disabled = 4;</code>
        */
       public Builder clearDisabled() {
         
         disabled_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object onPressFunc_ = "";
+      /**
+       * <code>string onPressFunc = 5;</code>
+       */
+      public java.lang.String getOnPressFunc() {
+        java.lang.Object ref = onPressFunc_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          onPressFunc_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string onPressFunc = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getOnPressFuncBytes() {
+        java.lang.Object ref = onPressFunc_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          onPressFunc_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string onPressFunc = 5;</code>
+       */
+      public Builder setOnPressFunc(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        onPressFunc_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string onPressFunc = 5;</code>
+       */
+      public Builder clearOnPressFunc() {
+        
+        onPressFunc_ = getDefaultInstance().getOnPressFunc();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string onPressFunc = 5;</code>
+       */
+      public Builder setOnPressFuncBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        onPressFunc_ = value;
         onChanged();
         return this;
       }
@@ -4203,19 +4728,23 @@ public final class PbStackView {
     java.lang.String[] descriptorData = {
       "\n2gomatcha.io/matcha/pb/view/android/sta" +
       "ckview.proto\022\023matcha.view.android\032!gomat" +
-      "cha.io/matcha/pb/image.proto\"\"\n\016StackChi" +
-      "ldView\022\020\n\010screenId\030\003 \001(\003\"B\n\tStackView\0225\n" +
-      "\010children\030\001 \003(\0132#.matcha.view.android.St" +
-      "ackChildView\"\225\001\n\010StackBar\022\r\n\005title\030\001 \001(\t" +
-      "\022\020\n\010subtitle\030\003 \001(\t\022\034\n\005color\030\004 \001(\0132\r.matc" +
-      "ha.Color\0220\n\005items\030\005 \003(\0132!.matcha.view.an" +
-      "droid.StackBarItem\022\030\n\020backButtonHidden\030\002" +
-      " \001(\010\"w\n\014StackBarItem\022\r\n\005title\030\001 \001(\t\022%\n\004i",
-      "con\030\003 \001(\0132\027.matcha.ImageOrResource\022\037\n\010ic" +
-      "onTint\030\002 \001(\0132\r.matcha.Color\022\020\n\010Disabled\030" +
-      "\004 \001(\010\"\030\n\nStackEvent\022\n\n\002id\030\001 \003(\003BL\n\"io.go" +
-      "matcha.matcha.pb.view.androidB\013PbStackVi" +
-      "ewZ\007android\242\002\017MatchaAndroidPBb\006proto3"
+      "cha.io/matcha/pb/image.proto\032%gomatcha.i" +
+      "o/matcha/pb/text/text.proto\"\"\n\016StackChil" +
+      "dView\022\020\n\010screenId\030\003 \001(\003\"B\n\tStackView\0225\n\010" +
+      "children\030\001 \003(\0132#.matcha.view.android.Sta" +
+      "ckChildView\"\364\001\n\010StackBar\022\r\n\005title\030\001 \001(\t\022" +
+      ",\n\013styledTitle\030\006 \001(\0132\027.matcha.text.Style" +
+      "dText\022\020\n\010subtitle\030\003 \001(\t\022/\n\016styledSubtitl" +
+      "e\030\007 \001(\0132\027.matcha.text.StyledText\022\034\n\005colo",
+      "r\030\004 \001(\0132\r.matcha.Color\0220\n\005items\030\005 \003(\0132!." +
+      "matcha.view.android.StackBarItem\022\030\n\020back" +
+      "ButtonHidden\030\002 \001(\010\"\214\001\n\014StackBarItem\022\r\n\005t" +
+      "itle\030\001 \001(\t\022%\n\004icon\030\003 \001(\0132\027.matcha.ImageO" +
+      "rResource\022\037\n\010iconTint\030\002 \001(\0132\r.matcha.Col" +
+      "or\022\020\n\010disabled\030\004 \001(\010\022\023\n\013onPressFunc\030\005 \001(" +
+      "\t\"\030\n\nStackEvent\022\n\n\002id\030\001 \003(\003BL\n\"io.gomatc" +
+      "ha.matcha.pb.view.androidB\013PbStackViewZ\007" +
+      "android\242\002\017MatchaAndroidPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4229,6 +4758,7 @@ public final class PbStackView {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           io.gomatcha.matcha.pb.Pb.getDescriptor(),
+          io.gomatcha.matcha.pb.text.PbText.getDescriptor(),
         }, assigner);
     internal_static_matcha_view_android_StackChildView_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -4247,13 +4777,13 @@ public final class PbStackView {
     internal_static_matcha_view_android_StackBar_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_StackBar_descriptor,
-        new java.lang.String[] { "Title", "Subtitle", "Color", "Items", "BackButtonHidden", });
+        new java.lang.String[] { "Title", "StyledTitle", "Subtitle", "StyledSubtitle", "Color", "Items", "BackButtonHidden", });
     internal_static_matcha_view_android_StackBarItem_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_matcha_view_android_StackBarItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_StackBarItem_descriptor,
-        new java.lang.String[] { "Title", "Icon", "IconTint", "Disabled", });
+        new java.lang.String[] { "Title", "Icon", "IconTint", "Disabled", "OnPressFunc", });
     internal_static_matcha_view_android_StackEvent_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_matcha_view_android_StackEvent_fieldAccessorTable = new
@@ -4261,6 +4791,7 @@ public final class PbStackView {
         internal_static_matcha_view_android_StackEvent_descriptor,
         new java.lang.String[] { "Id", });
     io.gomatcha.matcha.pb.Pb.getDescriptor();
+    io.gomatcha.matcha.pb.text.PbText.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

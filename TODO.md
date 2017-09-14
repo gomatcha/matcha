@@ -2,8 +2,7 @@
 * Stackview animation
 * Stackview button items
 * Crash on "Stop"
-* Change enabled to disabled.
-* Change OnPress to OnActivate, OnSelect?
+* Android resources.
 
 High:
 * Android custom view example
@@ -51,6 +50,10 @@ Very Low:
 * Rework Slider.FloatNotifier to use comm.Float64Value and give it a better name InOutValue?
 * Flexbox
 * Strikethrough doesn't work.
+
+Refactors
+* Change enabled to disabled.
+* Change OnPress to OnActivate, OnSelect?
 
 Pro:
 * Webview

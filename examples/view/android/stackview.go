@@ -1,12 +1,15 @@
 package android
 
 import (
+	"fmt"
 	"image/color"
 
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/app"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/android"
@@ -103,17 +106,28 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 	leftView.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
 	leftView.Layouter = l3
 
+	titleStyle := &text.Style{}
+	title := text.NewStyledText("Title", titleStyle)
+	subtitleStyle := &text.Style{}
+	subtitle := text.NewStyledText("Subtitle", subtitleStyle)
+
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: v.Color},
 		Options: []view.Option{
 			touch.GestureList{tap},
 			&android.StackBar{
-				Title:    "Title",
-				Subtitle: "Subtitle",
-				Color:    colornames.White,
+				StyledTitle:    title,
+				StyledSubtitle: subtitle,
+				// Title:    "Title",
+				// Subtitle: "Subtitle",
+				Color: colornames.White,
 				Buttons: []*android.StackBarButton{
 					&android.StackBarButton{
 						Title: "item",
+						Icon:  app.MustLoadImage("airplane"),
+						OnPress: func() {
+							fmt.Println("OnPress")
+						},
 					},
 				},
 			},

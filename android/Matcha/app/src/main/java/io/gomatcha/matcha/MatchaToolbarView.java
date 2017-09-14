@@ -1,6 +1,9 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -14,6 +17,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.List;
 
 import io.gomatcha.app.R;
+import io.gomatcha.matcha.pb.Pb;
 import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.android.PbStackView;
 
@@ -51,8 +55,16 @@ public class MatchaToolbarView extends MatchaChildView {
         try {
             PbStackView.StackBar proto = buildNode.getBridgeValue().unpack(PbStackView.StackBar.class);
 
-            toolbar.setTitle(proto.getTitle());
-            toolbar.setSubtitle(proto.getSubtitle());
+            if (proto.hasStyledTitle()) {
+                toolbar.setTitle(Protobuf.newAttributedString(proto.getStyledTitle()));
+            } else {
+                toolbar.setTitle(proto.getTitle());
+            }
+            if (proto.hasStyledSubtitle()) {
+                toolbar.setSubtitle(Protobuf.newAttributedString(proto.getStyledSubtitle()));
+            } else {
+                toolbar.setSubtitle(proto.getSubtitle());
+            }
             if (proto.getBackButtonHidden()) {
                 toolbar.setNavigationIcon(null);
             } else {
@@ -64,8 +76,31 @@ public class MatchaToolbarView extends MatchaChildView {
             menu.clear();
             for (int i = 0; i < itemList.size(); i++) {
                 PbStackView.StackBarItem protoItem = itemList.get(i);
+                final String onPressFunc = protoItem.getOnPressFunc();
+
                 MenuItem item = menu.add(0, Menu.FIRST + i, Menu.NONE, protoItem.getTitle());
                 item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        MatchaToolbarView.this.viewNode.rootView.call(onPressFunc, MatchaToolbarView.this.viewNode.id);
+                        return true;
+                    }
+                });
+
+                if (protoItem.hasIcon()) {
+                    Pb.ImageOrResource protoIcon = protoItem.getIcon();
+                    if (protoIcon.hasImage()) {
+                        Bitmap bitmap = Protobuf.newBitmap(protoIcon.getImage());
+                        if (bitmap != null) {
+                            item.setIcon(new BitmapDrawable(getResources(), bitmap));
+                        }
+                    } else {
+                        Resources res = this.getResources();
+                        int id = res.getIdentifier(protoIcon.getPath(), "drawable", getContext().getPackageName());
+                        item.setIcon(id);
+                    }
+                }
             }
         } catch (InvalidProtocolBufferException e) {
         }

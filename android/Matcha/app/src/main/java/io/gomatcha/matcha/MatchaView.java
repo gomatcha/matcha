@@ -120,7 +120,6 @@ public class MatchaView extends RelativeLayout {
     }
 
     long downTime = 0;
-    String TAG = "x";
     @Override
     public boolean dispatchKeyEventPreIme(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
@@ -129,16 +128,12 @@ public class MatchaView extends RelativeLayout {
                 if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {
                     GoValue[] rlt = GoValue.withFunc("gomatcha.io/view/android StackBarCanBack").call("");
                     if (!rlt[0].toBool()) {
-                        Log.v("x", "cancel: "  + state + event);
                         return super.dispatchKeyEventPreIme(event);
                     }
-
-                    Log.v("x", "start");
                     downTime = event.getDownTime();
                     state.startTracking(event, this);
                     return true;
                 } else if (event.getAction() == KeyEvent.ACTION_UP && !event.isCanceled() && state.isTracking(event) && downTime == event.getDownTime()) {
-                    Log.v("x", "stop: " + state + event);
                     GoValue.withFunc("gomatcha.io/view/android StackBarOnBack").call("");
                     return true;
                 }
