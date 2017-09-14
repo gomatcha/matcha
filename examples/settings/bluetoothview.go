@@ -4,6 +4,7 @@ import (
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
+	"gomatcha.io/matcha/view/ios"
 )
 
 type BluetoothView struct {
@@ -85,5 +86,8 @@ func (v *BluetoothView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
+		Options: []view.Option{
+			&ios.StackBar{Title: "Settings"},
+		},
 	}
 }

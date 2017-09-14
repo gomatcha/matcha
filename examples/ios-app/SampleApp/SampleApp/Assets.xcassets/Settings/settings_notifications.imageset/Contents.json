@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Info.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "settings_notifications@2x.png",
       "scale" : "2x"
     },
     {

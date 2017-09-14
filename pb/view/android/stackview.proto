@@ -14,9 +14,6 @@ message StackChildView {
 
 message StackView {
     repeated StackChildView children = 1;
-    //matcha.text.TextStyle titleTextStyle = 2;
-    //matcha.text.TextStyle backTextStyle = 3;
-    //matcha.Color barColor = 4;
 }
 
 message StackBar {

@@ -132,6 +132,11 @@ func (v *WifiView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
+		Options: []view.Option{
+			&ios.StackBar{
+				Title: "Wifi",
+			},
+		},
 	}
 }
 
@@ -349,7 +354,7 @@ func (v *InfoButton) Build(ctx view.Context) view.Model {
 	})
 
 	img := view.NewImageView()
-	img.Image = app.MustLoadImage("Info")
+	img.Image = app.MustLoadImage("info")
 	l.Add(img, func(s *constraint.Solver) {
 		s.Width(22)
 		s.Height(22)

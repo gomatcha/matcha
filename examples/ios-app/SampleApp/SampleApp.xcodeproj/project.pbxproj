@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6732FA131F6B11CA002DC2EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6732FA121F6B11CA002DC2EF /* Assets.xcassets */; };
 		67FEBB501F0A246C005AFEDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBB4F1F0A246C005AFEDA /* main.m */; };
 		67FEBB531F0A246C005AFEDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBB521F0A246C005AFEDA /* AppDelegate.m */; };
-		67FEBB5B1F0A246C005AFEDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67FEBB5A1F0A246C005AFEDA /* Assets.xcassets */; };
 		67FEBB5E1F0A246C005AFEDA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67FEBB5C1F0A246C005AFEDA /* LaunchScreen.storyboard */; };
 		67FEBBEA1F0ADFBC005AFEDA /* Matcha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67FEBBE91F0ADFBC005AFEDA /* Matcha.framework */; };
 		67FEBBEB1F0ADFBC005AFEDA /* Matcha.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 67FEBBE91F0ADFBC005AFEDA /* Matcha.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -36,12 +36,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6732FA121F6B11CA002DC2EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67783C891F1E8820001582F5 /* CustomView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CustomView.framework; path = "../../../../../../../../Library/Developer/Xcode/DerivedData/SampleApp-cmxvdedpoyclchbbrqidjpuexeyk/Build/Products/Debug-iphoneos/CustomView.framework"; sourceTree = "<group>"; };
 		67FEBB4B1F0A246C005AFEDA /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67FEBB4F1F0A246C005AFEDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		67FEBB511F0A246C005AFEDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		67FEBB521F0A246C005AFEDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		67FEBB5A1F0A246C005AFEDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67FEBB5D1F0A246C005AFEDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		67FEBB5F1F0A246C005AFEDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67FEBBE91F0ADFBC005AFEDA /* Matcha.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Matcha.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,9 +83,9 @@
 		67FEBB4D1F0A246C005AFEDA /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				6732FA121F6B11CA002DC2EF /* Assets.xcassets */,
 				67FEBB511F0A246C005AFEDA /* AppDelegate.h */,
 				67FEBB521F0A246C005AFEDA /* AppDelegate.m */,
-				67FEBB5A1F0A246C005AFEDA /* Assets.xcassets */,
 				67FEBB5C1F0A246C005AFEDA /* LaunchScreen.storyboard */,
 				67FEBB5F1F0A246C005AFEDA /* Info.plist */,
 				67FEBB4E1F0A246C005AFEDA /* Supporting Files */,
@@ -172,8 +172,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6732FA131F6B11CA002DC2EF /* Assets.xcassets in Resources */,
 				67FEBB5E1F0A246C005AFEDA /* LaunchScreen.storyboard in Resources */,
-				67FEBB5B1F0A246C005AFEDA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

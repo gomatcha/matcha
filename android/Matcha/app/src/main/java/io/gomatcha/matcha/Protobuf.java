@@ -1,10 +1,14 @@
 package io.gomatcha.matcha;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -53,6 +57,20 @@ public class Protobuf {
     public static Timestamp toProtobuf(Date d) {
         long millis = d.getTime();
         return Timestamp.newBuilder().setSeconds(millis/1000).setNanos((int)(millis % 1000 * 1000000)).build();
+    }
+
+    public static Drawable newDrawable(Pb.ImageOrResource res, Context ctx) {
+        if (res.hasImage()) {
+            Bitmap bitmap = Protobuf.newBitmap(res.getImage());
+            if (bitmap != null) {
+                return new BitmapDrawable(ctx.getResources(), bitmap);
+            }
+            return null;
+        } else {
+            Resources resources = ctx.getResources();
+            int id = resources.getIdentifier(res.getPath(), "drawable", ctx.getPackageName());
+            return resources.getDrawable(id);
+        }
     }
 
     public static Bitmap newBitmap(Pb.Image image) {

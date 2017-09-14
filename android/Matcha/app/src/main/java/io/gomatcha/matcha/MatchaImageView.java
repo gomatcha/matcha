@@ -39,18 +39,7 @@ public class MatchaImageView extends MatchaChildView {
         super.setNode(buildNode);
         try {
             PbImageView.ImageView proto = buildNode.getBridgeValue().unpack(PbImageView.ImageView.class);
-
-            Pb.ImageOrResource imageOrResource = proto.getImage();
-            if (imageOrResource.hasImage()) {
-                Bitmap bitmap = Protobuf.newBitmap(imageOrResource.getImage());
-                if (bitmap != null) {
-                    view.setImageBitmap(bitmap);
-                }
-            } else {
-                Resources res = this.getResources();
-                int id = res.getIdentifier(imageOrResource.getPath(), "drawable", getContext().getPackageName());
-                view.setImageResource(id);
-            }
+            view.setImageDrawable(Protobuf.newDrawable(proto.getImage(), getContext()));
 
             switch (proto.getResizeMode()) {
                 case FIT:

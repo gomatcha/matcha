@@ -3,7 +3,9 @@ package io.gomatcha.matcha;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -87,19 +89,14 @@ public class MatchaToolbarView extends MatchaChildView {
                         return true;
                     }
                 });
+                item.setEnabled(!protoItem.getDisabled());
 
                 if (protoItem.hasIcon()) {
-                    Pb.ImageOrResource protoIcon = protoItem.getIcon();
-                    if (protoIcon.hasImage()) {
-                        Bitmap bitmap = Protobuf.newBitmap(protoIcon.getImage());
-                        if (bitmap != null) {
-                            item.setIcon(new BitmapDrawable(getResources(), bitmap));
-                        }
-                    } else {
-                        Resources res = this.getResources();
-                        int id = res.getIdentifier(protoIcon.getPath(), "drawable", getContext().getPackageName());
-                        item.setIcon(id);
+                    Drawable icon = Protobuf.newDrawable(protoItem.getIcon(), getContext());
+                    if (protoItem.hasIconTint()) {
+                        icon.setColorFilter(Protobuf.newColor(protoItem.getIconTint()), PorterDuff.Mode.SRC_ATOP);
                     }
+                    item.setIcon(icon);
                 }
             }
         } catch (InvalidProtocolBufferException e) {

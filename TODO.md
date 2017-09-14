@@ -1,14 +1,12 @@
-* Android stackview
 * Stackview animation
 * Stackview button items
-* Crash on "Stop"
-* Android resources.
 
 High:
 * Android custom view example
-* Move matcha/view/Root into matcha/Root?
+* Better error logging for panics.
 
 Medium:
+* Crash on "Stop"
 * Android better gesture recognizers
 * Rebuild Instagram.
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation
@@ -32,6 +30,7 @@ Low:
 * Compile a list of things that should be easy to do and implement them. Button activation cancelled by vertical scrolling but not horizontal, Pinch to zoom, Highlighting a view and dragging outside of it and back in., Horizontal swipe on tableview to show delete button, Touch driven animations. AKA swipe back to navigate.
 * Guide.Insets, GUide.Transform? Layout.Insets(top, left, bottom, right)?
 * Table behaviors
+* Button disabled/highlighted state using anonymous structs?
 
 Very Low:
 * Building for iPhone 5 Simulator doesn't work.
@@ -52,8 +51,11 @@ Very Low:
 * Strikethrough doesn't work.
 
 Refactors
+* Move matcha/view/Root into matcha/Root?
 * Change enabled to disabled.
 * Change OnPress to OnActivate, OnSelect?
+* StackBarButton or StackBarItem
+* should options be pointer or struct receiver. Should statusbar be a pointer?
 
 Pro:
 * Webview

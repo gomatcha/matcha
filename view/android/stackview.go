@@ -83,11 +83,6 @@ type StackView struct {
 	view.Embed
 	Stack *Stack
 	stack *Stack
-	// TitleTextStyle *text.Style
-	// BackTextStyle  *text.Style
-	// BarColor       color.Color
-	// children map[int64]view.View
-	// ids      []int64
 }
 
 // NewStackView returns either the previous View in ctx with matching key, or a new View if none exists.
@@ -223,7 +218,6 @@ type StackBar struct {
 	StyledSubtitle *text.StyledText
 	Color          color.Color
 	Buttons        []*StackBarButton
-	Hidden         bool
 }
 
 func (t *StackBar) OptionKey() string {
@@ -231,11 +225,12 @@ func (t *StackBar) OptionKey() string {
 }
 
 type StackBarButton struct {
-	Title    string
-	Icon     image.Image
-	IconTint color.Color
-	Disabled bool
-	OnPress  func()
+	Title       string
+	StyledTitle *text.StyledText
+	Icon        image.Image
+	IconTint    color.Color
+	Disabled    bool
+	OnPress     func()
 }
 
 func (v *StackBarButton) marshalProtobuf() *android.StackBarItem {
