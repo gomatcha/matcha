@@ -66,6 +66,8 @@ type Model struct {
 //  EventKindPossible -> EventKindFailed
 //  EventKindPossible -> EventKindRecognized
 // Continuous gestures:
+//  EventKindPossible -> EventKindFailed
+//  EventKindPossible -> EventKindRecognized
 //  EventKindPossible -> EventKindChanged(optionally) -> EventKindFailed
 //  EventKindPossible -> EventKindChanged(optionally) -> EventKindRecognized
 type EventKind int
@@ -83,7 +85,7 @@ const (
 
 // TapEvent is emitted by TapGesture, representing its current state.
 type TapEvent struct {
-	// Kind      EventKind // TODO(KD):
+	Kind      EventKind
 	Timestamp time.Time
 	Position  layout.Point
 }
@@ -91,7 +93,7 @@ type TapEvent struct {
 func (e *TapEvent) unmarshalProtobuf(ev *pbtouch.TapEvent) error {
 	t, _ := ptypes.Timestamp(ev.Timestamp)
 	e.Timestamp = t
-	// e.Kind = EventKind(ev.Kind)
+	e.Kind = EventKind(ev.Kind)
 	e.Position.UnmarshalProtobuf(ev.Position)
 	return nil
 }

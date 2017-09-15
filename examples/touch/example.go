@@ -38,7 +38,6 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 
 	chl1 := NewTapChildView()
 	chl1.OnTouch = func() {
-		fmt.Println("On Tap")
 		v.tapCounter += 1
 		go v.Signal() // TODO(KD): Why is this on separate thread?
 	}
@@ -122,7 +121,16 @@ func (v *TapChildView) Build(ctx view.Context) view.Model {
 			touch.GestureList{&touch.TapGesture{
 				Count: 1,
 				OnTouch: func(e *touch.TapEvent) {
-					v.OnTouch()
+					if e.Kind == touch.EventKindPossible {
+						fmt.Println("Tap Possible")
+					} else if e.Kind == touch.EventKindChanged {
+						fmt.Println("Tap Changed")
+					} else if e.Kind == touch.EventKindFailed {
+						fmt.Println("Tap Failed")
+					} else if e.Kind == touch.EventKindRecognized {
+						fmt.Println("Tap Recognized")
+						v.OnTouch()
+					}
 				},
 			}},
 		},
@@ -145,7 +153,16 @@ func (v *PressChildView) Build(ctx view.Context) view.Model {
 			touch.GestureList{&touch.PressGesture{
 				MinDuration: time.Second / 2,
 				OnTouch: func(e *touch.PressEvent) {
-					v.OnTouch()
+					if e.Kind == touch.EventKindPossible {
+						fmt.Println("Press Possible")
+					} else if e.Kind == touch.EventKindChanged {
+						fmt.Println("Press Changed")
+					} else if e.Kind == touch.EventKindFailed {
+						fmt.Println("Press Failed")
+					} else if e.Kind == touch.EventKindRecognized {
+						fmt.Println("Press Recognized")
+						v.OnTouch()
+					}
 				},
 			}},
 		},
@@ -167,7 +184,16 @@ func (v *ButtonChildView) Build(ctx view.Context) view.Model {
 		Options: []view.Option{
 			touch.GestureList{&touch.ButtonGesture{
 				OnTouch: func(e *touch.ButtonEvent) {
-					v.OnTouch()
+					if e.Kind == touch.EventKindPossible {
+						fmt.Println("Button Possible")
+					} else if e.Kind == touch.EventKindChanged {
+						fmt.Println("Button Changed")
+					} else if e.Kind == touch.EventKindFailed {
+						fmt.Println("Button Failed")
+					} else if e.Kind == touch.EventKindRecognized {
+						fmt.Println("Button Recognized")
+						v.OnTouch()
+					}
 				},
 			}},
 		},

@@ -116,11 +116,11 @@ public class MatchaViewNode extends Object {
                     for (PbTouch.Recognizer i : proto.getRecognizersList()) {
                         String type = i.getRecognizer().getTypeUrl();
                         if (type.equals("type.googleapis.com/matcha.touch.TapRecognizer")) {
-                            this.view.matchaGestureDetector.tapGesture = i.getRecognizer();
+                            this.view.matchaGestureRecognizer.tapGesture = i.getRecognizer();
                         } else if (type.equals("type.googleapis.com/matcha.touch.PressRecognizer")) {
-                            this.view.matchaGestureDetector.pressGesture = i.getRecognizer();
+                            this.view.matchaGestureRecognizer.pressGesture = i.getRecognizer();
                         } else if (type.equals("type.googleapis.com/matcha.touch.ButtonRecognizer")) {
-                            this.view.matchaGestureDetector.buttonGesture = i.getRecognizer();
+                            this.view.matchaGestureRecognizer.buttonGesture = i.getRecognizer();
                         }
                     }
                 } catch (InvalidProtocolBufferException e) {

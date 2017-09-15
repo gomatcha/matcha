@@ -26,48 +26,17 @@ import io.gomatcha.matcha.pb.view.PbView;
 public class MatchaChildView extends RelativeLayout {
     MatchaViewNode viewNode;
     PbView.BuildNode buildNode;
-    MatchaGestureDetector matchaGestureDetector;
-    GestureDetector gestureDetector;
+    MatchaGestureRecognizer matchaGestureRecognizer;
 
     public MatchaChildView(Context context, MatchaViewNode node) {
         super(context);
         final Context ctx = context;
         viewNode = node;
         this.setClipChildren(false);
-        this.matchaGestureDetector = new MatchaGestureDetector();
-        this.matchaGestureDetector.childView = this;
-        this.matchaGestureDetector.context = context;
-        this.gestureDetector = new GestureDetector(this.getContext(), this.matchaGestureDetector);
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Log.v("x", "OnClick");
-                    if (matchaGestureDetector.buttonGesture == null) {
-                        return;
-                    }
-                    PbTouch.ButtonRecognizer proto = matchaGestureDetector.buttonGesture.unpack(PbTouch.ButtonRecognizer.class);
-                    float ratio = (float)MatchaChildView.this.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
-
-                    Duration duration = Protobuf.toProtobuf(ViewConfiguration.get(ctx).getLongPressTimeout());
-                    PbTouch.ButtonEvent e = PbTouch.ButtonEvent.newBuilder()
-                            //.setDuration(duration)
-                            .setTimestamp(Protobuf.toProtobuf(new Date()))
-                            //.setPosition(Protobuf.toProtobuf(new PointF(0 / ratio, 0 / ratio)))
-                            .setKind(PbTouch.EventKind.EVENT_KIND_RECOGNIZED)
-                            .build();
-
-                    MatchaChildView.this.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", proto.getOnEvent()), MatchaChildView.this.viewNode.id, new GoValue(e.toByteArray()));
-                } catch (InvalidProtocolBufferException e) {
-                }
-            }
-        });
-        this.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return MatchaChildView.this.gestureDetector.onTouchEvent(event);
-            }
-        });
+        this.matchaGestureRecognizer = new MatchaGestureRecognizer();
+        this.matchaGestureRecognizer.childView = this;
+        this.matchaGestureRecognizer.context = context;
+        this.setOnTouchListener(this.matchaGestureRecognizer);
     }
 
     public void setNode(PbView.BuildNode buildNode) {
