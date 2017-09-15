@@ -23,7 +23,7 @@ import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.pb.touch.PbTouch;
 import io.gomatcha.matcha.pb.view.PbView;
 
-public class MatchaChildView extends RelativeLayout {
+public class MatchaChildView extends MatchaLayout {
     MatchaViewNode viewNode;
     PbView.BuildNode buildNode;
     MatchaGestureRecognizer matchaGestureRecognizer;
@@ -51,7 +51,7 @@ public class MatchaChildView extends RelativeLayout {
         // no-op
     }
 
-    public RelativeLayout getLayout() {
+    public MatchaLayout getLayout() {
         return this;
     }
 

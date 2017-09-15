@@ -35,9 +35,8 @@ public class MatchaStackView extends MatchaChildView {
     public MatchaStackView(Context context, MatchaViewNode node) {
         super(context, node);
 
-        RelativeLayout.LayoutParams contentParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         stackView2 = new MatchaStackView2(context);
-        addView(stackView2, contentParams);
+        addView(stackView2);
     }
 
     @Override
@@ -60,7 +59,6 @@ public class MatchaStackView extends MatchaChildView {
         for (int i = 0; i < childViews.size() / 2; i++) {
             RelativeLayout layout = new RelativeLayout(getContext());
 
-            Log.v("x", childViews.toString());
             RelativeLayout.LayoutParams toolbarParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             MatchaToolbarView toolbar = (MatchaToolbarView)childViews.get(i*2);
             ViewParent toolbarParent = toolbar.getParent();

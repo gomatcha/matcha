@@ -42,11 +42,11 @@ public class MatchaViewNode extends Object {
         PbView.LayoutPaintNode layoutPaintNode = root.getLayoutPaintNodesOrDefault(id, null);
         PbView.BuildNode buildNode = root.getBuildNodesOrDefault(id, null);
 
-        // Create view
+        // Create scrollView
         if (this.view == null) {
             this.view = MatchaView.createView(buildNode.getBridgeName(), rootView.getContext(), this);
         }
-        RelativeLayout layout = this.view.getLayout();
+        MatchaLayout layout = this.view.getLayout();
 
         // Build children
         Map<Long, MatchaViewNode> children = new HashMap<Long, MatchaViewNode>();
@@ -147,21 +147,21 @@ public class MatchaViewNode extends Object {
 
             if (this.parent == null) {
             } else if (this.parent.view.isContainerView()) {
-            // } else if (this.parent.view.getClass().isInstance(MatchaScrollView.class)) {
+            // } else if (this.parent.scrollView.getClass().isInstance(MatchaScrollView.class)) {
             } else {
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)this.view.getLayoutParams();
+                MatchaLayout.LayoutParams params = (MatchaLayout.LayoutParams)this.view.getLayoutParams();
                 if (params == null) {
-                    params = new RelativeLayout.LayoutParams(0, 0);
+                    params = new MatchaLayout.LayoutParams();
                 }
-                params.width = (int)(maxX-minX);
-                params.height = (int)(maxY-minY);
-                params.leftMargin = (int)minX;
-                params.topMargin = (int)minY;
+                params.left = minX;
+                params.top = minY;
+                params.right = maxX;
+                params.bottom = maxY;
                 this.view.setLayoutParams(params);
             }
         }
 
-        // Paint view
+        // Paint scrollView
         if (layoutPaintNode != null & this.paintId != layoutPaintNode.getLayoutId()) {
             this.paintId = layoutPaintNode.getPaintId();
 

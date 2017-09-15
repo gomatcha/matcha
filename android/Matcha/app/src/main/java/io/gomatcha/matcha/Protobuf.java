@@ -66,11 +66,12 @@ public class Protobuf {
                 return new BitmapDrawable(ctx.getResources(), bitmap);
             }
             return null;
-        } else {
+        } else if (res.getPath().length() > 0) {
             Resources resources = ctx.getResources();
             int id = resources.getIdentifier(res.getPath(), "drawable", ctx.getPackageName());
             return resources.getDrawable(id);
         }
+        return null;
     }
 
     public static Bitmap newBitmap(Pb.Image image) {

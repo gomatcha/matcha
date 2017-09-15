@@ -1,8 +1,6 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
-import android.os.Build;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -14,8 +12,8 @@ import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.PbScrollView;
 
 public class MatchaScrollView extends MatchaChildView {
-    ScrollView view;
-    RelativeLayout childView;
+    ScrollView scrollView;
+    MatchaLayout childView;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/scrollview", new MatchaView.ViewFactory() {
@@ -31,13 +29,12 @@ public class MatchaScrollView extends MatchaChildView {
         this.setClipChildren(true);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        view = new ScrollView(context);
-        view.setFillViewport(true);
+        scrollView = new ScrollView(context);
+        scrollView.setFillViewport(true);
+        addView(scrollView);
 
-        addView(view, params);
-
-        childView = new RelativeLayout(context);
-        view.addView(childView);
+        childView = new MatchaLayout(context);
+        scrollView.addView(childView);
     }
 
     @Override
@@ -45,25 +42,25 @@ public class MatchaScrollView extends MatchaChildView {
         super.setNode(buildNode);
         try {
             PbScrollView.ScrollView proto = buildNode.getBridgeValue().unpack(PbScrollView.ScrollView.class);
-            view.setVerticalScrollBarEnabled(proto.getShowsVerticalScrollIndicator());
-            view.setHorizontalScrollBarEnabled(proto.getShowsHorizontalScrollIndicator());
+            scrollView.setVerticalScrollBarEnabled(proto.getShowsVerticalScrollIndicator());
+            scrollView.setHorizontalScrollBarEnabled(proto.getShowsHorizontalScrollIndicator());
 
             if (!proto.getScrollEnabled()) {
-                view.setOnTouchListener(new OnTouchListener() {
+                scrollView.setOnTouchListener(new OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
                         return false;
                     }
                 });
             } else {
-                view.setOnTouchListener(null);
+                scrollView.setOnTouchListener(null);
             }
         } catch (InvalidProtocolBufferException e) {
         }
     }
 
     @Override
-    public RelativeLayout getLayout() {
+    public MatchaLayout getLayout() {
         return childView;
     }
 }

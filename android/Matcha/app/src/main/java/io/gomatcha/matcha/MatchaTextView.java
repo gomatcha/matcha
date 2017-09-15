@@ -25,9 +25,8 @@ public class MatchaTextView extends MatchaChildView {
     public MatchaTextView(Context context, MatchaViewNode node) {
         super(context, node);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view = new TextView(context);
-        addView(view, params);
+        addView(view);
     }
 
     @Override

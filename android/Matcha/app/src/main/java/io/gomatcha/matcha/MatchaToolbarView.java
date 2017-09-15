@@ -39,7 +39,6 @@ public class MatchaToolbarView extends MatchaChildView {
     public MatchaToolbarView(Context context, MatchaViewNode node) {
         super(context, node);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         toolbar = new Toolbar(context);
         toolbar.setId(MatchaPagerView.generateViewId());
         toolbar.setNavigationOnClickListener(new OnClickListener() {
@@ -48,7 +47,7 @@ public class MatchaToolbarView extends MatchaChildView {
                 stackView.back();
             }
         });
-        addView(toolbar, params);
+        addView(toolbar);
     }
 
     @Override

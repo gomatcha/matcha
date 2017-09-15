@@ -52,7 +52,6 @@ public class MatchaTextInputView extends MatchaChildView {
         super(context, node);
         final Context ctx = context;
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view = new EditText(context);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
             view.setBackground(null);
@@ -97,7 +96,7 @@ public class MatchaTextInputView extends MatchaChildView {
                 }
             }
         });
-        addView(view, params);
+        addView(view);
     }
 
     @Override

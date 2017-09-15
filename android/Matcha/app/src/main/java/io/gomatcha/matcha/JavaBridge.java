@@ -92,13 +92,11 @@ public class JavaBridge {
             textView.setText(str);
             textView.setMaxLines(maxLines.intValue());
             textView.measure(widthMeasureSpec, heightMeasureSpec);
-            // We need this or setText throws a null pointer exception.
-            textView.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
+            textView.setLayoutParams(new RelativeLayout.LayoutParams(0, 0)); // We need this or setText throws a null pointer exception.
 
             PointF calculatedSize = new PointF();
             calculatedSize.x = (float)textView.getMeasuredWidth() / ratio + 1;
             calculatedSize.y = (float)textView.getMeasuredHeight() / ratio;
-            Log.v("what", calculatedSize.toString());
             PbLayout.Point p = Protobuf.toProtobuf(calculatedSize);
 
             return new GoValue(p.toByteArray());

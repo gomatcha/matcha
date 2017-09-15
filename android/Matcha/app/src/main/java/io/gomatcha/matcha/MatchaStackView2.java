@@ -28,9 +28,8 @@ public class MatchaStackView2 extends RelativeLayout {
         childViews = v;
 
         if (childViews.size() > 0) {
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             View top = childViews.get(childViews.size()-1);
-            this.addView(top, params);
+            this.addView(top);
         }
     }
 }

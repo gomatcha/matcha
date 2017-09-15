@@ -40,6 +40,7 @@ func (v *ImageView) Build(ctx view.Context) view.Model {
 		s.Width(200)
 		s.Height(200)
 	})
+	_ = g1
 
 	chl2 := view.NewImageView()
 	chl2.Image = app.MustLoadImage("airplane")

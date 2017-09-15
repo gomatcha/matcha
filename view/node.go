@@ -83,6 +83,7 @@ func (r *root) start() {
 		}
 
 		// fmt.Println(r.root.node.debugString())
+		fmt.Println("Update") // TODO(KD): Remove.
 		if runtime.GOOS == "android" {
 			bridge.Bridge("").Call("updateViewWithProtobuf", bridge.Int64(id), bridge.Bytes(pb))
 		} else if runtime.GOOS == "darwin" {

@@ -31,7 +31,6 @@ public class MatchaButton extends MatchaChildView {
     public MatchaButton(Context context, MatchaViewNode node) {
         super(context, node);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view = new Button(context);
         view.setOnClickListener(new OnClickListener() {
             @Override
@@ -39,7 +38,7 @@ public class MatchaButton extends MatchaChildView {
                 MatchaButton.this.viewNode.rootView.call("OnPress", MatchaButton.this.viewNode.id);
             }
         });
-        addView(view, params);
+        addView(view);
     }
 
     @Override

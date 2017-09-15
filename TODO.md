@@ -2,13 +2,13 @@
 * Stackview button items
 
 High:
+* Android touch logging.
 * Android custom view example
 * Better error logging for panics.
 * Android touch highlight?
 
 Medium:
 * Crash on "Stop"
-* Android better gesture recognizers
 * Rebuild Instagram.
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation
 * Modal presentation.
@@ -60,8 +60,7 @@ Refactors
 * Change OnPress to OnActivate, OnSelect?
 * StackBarButton or StackBarItem
 * should options be pointer or struct receiver. Should statusbar be a pointer?
-* Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize?
-* Hide root object? have init functions return a view, add to root inside of the MatchaView / MatchaViewController. 
+* Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize? 
 
 Pro:
 * Webview

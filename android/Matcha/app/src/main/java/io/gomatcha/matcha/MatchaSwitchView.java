@@ -30,7 +30,6 @@ public class MatchaSwitchView extends MatchaChildView {
     public MatchaSwitchView(Context context, MatchaViewNode node) {
         super(context, node);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view = new Switch(context);
         view.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -41,7 +40,7 @@ public class MatchaSwitchView extends MatchaChildView {
                 }
             }
         });
-        addView(view, params);
+        addView(view);
     }
 
     @Override

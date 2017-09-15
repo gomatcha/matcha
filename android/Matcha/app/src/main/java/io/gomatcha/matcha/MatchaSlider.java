@@ -29,7 +29,6 @@ public class MatchaSlider extends MatchaChildView {
     public MatchaSlider(Context context, MatchaViewNode node) {
         super(context, node);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view = new SeekBar(context);
         view.setMax(10000);
         view.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -54,7 +53,7 @@ public class MatchaSlider extends MatchaChildView {
                 MatchaSlider.this.viewNode.rootView.call("OnSubmit", MatchaSlider.this.viewNode.id, new GoValue(proto.toByteArray()));
             }
         });
-        addView(view, params);
+        addView(view);
     }
 
     @Override

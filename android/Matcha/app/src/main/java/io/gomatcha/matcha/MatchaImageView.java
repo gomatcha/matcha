@@ -29,9 +29,8 @@ public class MatchaImageView extends MatchaChildView {
     public MatchaImageView(Context context, MatchaViewNode node) {
         super(context, node);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         view = new ImageView(context);
-        addView(view, params);
+        addView(view);
     }
     
     @Override
