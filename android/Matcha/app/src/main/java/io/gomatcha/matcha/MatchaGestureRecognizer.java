@@ -22,6 +22,7 @@ public class MatchaGestureRecognizer implements View.OnTouchListener {
     TapRecognizer tapRecognizer;
     PressRecognizer pressRecognizer;
     ButtonRecognizer buttonRecognizer;
+    Result prevButtonResult;
     Context context;
 
     public enum State {
@@ -29,6 +30,27 @@ public class MatchaGestureRecognizer implements View.OnTouchListener {
         CHANGED,
         FAILED,
         RECOGNIZED,
+    }
+
+    public void reload() {
+        try {
+            if (tapGesture != null && tapRecognizer != null) {
+                PbTouch.TapRecognizer proto = tapGesture.unpack(PbTouch.TapRecognizer.class);
+                tapRecognizer.recognizerId = (int)proto.getOnEvent();
+                tapRecognizer.ratio = context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+            }
+            if (pressGesture != null && pressRecognizer != null) {
+                PbTouch.PressRecognizer proto = pressGesture.unpack(PbTouch.PressRecognizer.class);
+                pressRecognizer.recognizerId = (int)proto.getOnEvent();
+                pressRecognizer.minDurationMillis = Protobuf.newMillis(proto.getMinDuration());
+            }
+            if (buttonGesture != null && buttonRecognizer != null) {
+                PbTouch.ButtonRecognizer proto = buttonGesture.unpack(PbTouch.ButtonRecognizer.class);
+                buttonRecognizer.recognizerId = (int)proto.getOnEvent();
+            }
+        } catch (InvalidProtocolBufferException e) {
+
+        }
     }
 
     @Override
@@ -79,7 +101,6 @@ public class MatchaGestureRecognizer implements View.OnTouchListener {
                 handled = true;
                 Result rlt = pressRecognizer.onEvent(event);
                 childView.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", pressRecognizer.recognizerId), childView.viewNode.id, new GoValue(rlt.message.toByteArray()));
-                Log.v("x", "result" + rlt.state);
                 if (rlt.state == State.FAILED || rlt.state == State.RECOGNIZED) {
                     pressRecognizer = null;
                 }
@@ -87,7 +108,12 @@ public class MatchaGestureRecognizer implements View.OnTouchListener {
             if (buttonRecognizer != null) {
                 handled = true;
                 Result rlt = buttonRecognizer.onEvent(event);
-                childView.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", buttonRecognizer.recognizerId), childView.viewNode.id, new GoValue(rlt.message.toByteArray()));
+                if (rlt.state == State.POSSIBLE && prevButtonResult != null && prevButtonResult.state == State.POSSIBLE && ((PbTouch.ButtonEvent)prevButtonResult.message).getInside() == ((PbTouch.ButtonEvent)rlt.message).getInside()) {
+                    // Skip message.
+                } else {
+                    childView.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", buttonRecognizer.recognizerId), childView.viewNode.id, new GoValue(rlt.message.toByteArray()));
+                }
+                prevButtonResult = rlt;
                 if (rlt.state == State.FAILED || rlt.state == State.RECOGNIZED) {
                     buttonRecognizer = null;
                 }

@@ -33,11 +33,12 @@
     return nil;
 }
 
-- (id)initWithGoValue:(MatchaGoValue *)value {
+- (id)initWithGoValue:(MatchaGoValue *)value2 {
     if ((self = [super initWithNibName:nil bundle:nil])) {
         [MatchaObjcBridge_X configure];
         [[MatchaObjcBridge sharedBridge] setObject:[MatchaObjcBridge_X new] forKey:@""];
         
+        MatchaGoValue *value = [[[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/view NewRoot"] call:nil args:@[value2]][0];
         self.goValue = value;
         self.identifier = (int)[value call:@"Id" args:nil][0].toLongLong;
         [[MatchaViewController viewControllers] addPointer:(__bridge void *)self];

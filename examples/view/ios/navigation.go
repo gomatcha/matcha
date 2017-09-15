@@ -14,7 +14,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/screen New", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/screen New", func() view.View {
 		stackview1 := ios.NewStackView()
 		stackview2 := ios.NewStackView()
 		stackview3 := ios.NewStackView()
@@ -33,7 +33,7 @@ func init() {
 		app.stack3.SetViews(NewNavigationChild(app))
 		app.stack4.SetViews(NewNavigationChild(app))
 		app.tabs.SetViews(stackview1, stackview2, stackview3, stackview4)
-		return view.NewRoot(tabview)
+		return tabview
 	})
 }
 

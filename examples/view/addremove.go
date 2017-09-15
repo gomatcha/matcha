@@ -9,8 +9,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewAddRemoveView", func() *view.Root {
-		return view.NewRoot(NewAddRemoveView())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewAddRemoveView", func() view.View {
+		return NewAddRemoveView()
 	})
 }
 

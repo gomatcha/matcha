@@ -11,8 +11,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewProgressView", func() *view.Root {
-		return view.NewRoot(NewProgressView())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewProgressView", func() view.View {
+		return NewProgressView()
 	})
 }
 

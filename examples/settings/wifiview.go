@@ -8,6 +8,7 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
+	"gomatcha.io/matcha/view/android"
 	"gomatcha.io/matcha/view/ios"
 )
 
@@ -133,9 +134,8 @@ func (v *WifiView) Build(ctx view.Context) view.Model {
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
 		Options: []view.Option{
-			&ios.StackBar{
-				Title: "Wifi",
-			},
+			&ios.StackBar{Title: "Wifi"},
+			&android.StackBar{Title: "Wifi"},
 		},
 	}
 }
@@ -293,6 +293,7 @@ func (v *WifiNetworkView) Build(ctx view.Context) view.Model {
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
 		Options: []view.Option{
 			&ios.StackBar{Title: v.network.SSID()},
+			&android.StackBar{Title: v.network.SSID()},
 		},
 	}
 }

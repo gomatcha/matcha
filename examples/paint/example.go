@@ -11,8 +11,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/paint New", func() *view.Root {
-		return view.NewRoot(New())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/paint New", func() view.View {
+		return NewPaintView()
 	})
 }
 
@@ -20,8 +20,7 @@ type PaintView struct {
 	view.Embed
 }
 
-func New() *PaintView {
-
+func NewPaintView() *PaintView {
 	return &PaintView{}
 }
 

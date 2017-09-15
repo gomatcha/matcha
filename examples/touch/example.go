@@ -15,8 +15,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/touch New", func() *view.Root {
-		return view.NewRoot(New())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/touch NewTouchView", func() view.View {
+		return NewTouchView()
 	})
 }
 
@@ -27,7 +27,7 @@ type TouchView struct {
 	buttonCounter int
 }
 
-func New() *TouchView {
+func NewTouchView() *TouchView {
 	return &TouchView{
 		Embed: view.Embed{},
 	}

@@ -11,8 +11,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view Slider", func() *view.Root {
-		return view.NewRoot(NewSlider())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view Slider", func() view.View {
+		return NewSlider()
 	})
 }
 

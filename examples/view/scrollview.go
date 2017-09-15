@@ -10,8 +10,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewScrollView", func() *view.Root {
-		return view.NewRoot(NewScrollView())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewScrollView", func() view.View {
+		return NewScrollView()
 	})
 }
 

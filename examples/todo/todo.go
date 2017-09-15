@@ -19,7 +19,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/todo New", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/todo New", func() view.View {
 		appview := NewAppView()
 
 		v := ios.NewStackView()
@@ -29,7 +29,7 @@ func init() {
 		v.TitleTextStyle = &text.Style{}
 		v.TitleTextStyle.SetFont(text.FontWithName("HelveticaNeue-Medium", 20))
 		v.TitleTextStyle.SetTextColor(colornames.White)
-		return view.NewRoot(v)
+		return v
 	})
 }
 

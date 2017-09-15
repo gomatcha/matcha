@@ -2,7 +2,6 @@
 package settings
 
 import (
-	"fmt"
 	"image/color"
 	"runtime"
 	"strings"
@@ -32,19 +31,19 @@ var (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/settings New", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/settings New", func() view.View {
 		if runtime.GOOS == "android" {
 			v := android.NewStackView()
 			app := NewApp()
 			app.Stack = v.Stack
 			app.Stack.SetViews(NewRootView(app))
-			return view.NewRoot(v)
+			return v
 		} else {
 			v := ios.NewStackView()
 			app := NewApp()
 			app.Stack = v.Stack
 			app.Stack.SetViews(NewRootView(app))
-			return view.NewRoot(v)
+			return v
 		}
 	})
 }
@@ -84,7 +83,6 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 		switchView := view.NewSwitch()
 		switchView.Value = v.app.AirplaneMode()
 		switchView.OnValueChange = func(value bool) {
-			fmt.Println("blah")
 			v.app.SetAirplaneMode(value)
 		}
 		cell1 := NewBasicCell()
@@ -101,7 +99,6 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 		} else {
 			cell2.Subtitle = ""
 		}
-		fmt.Println("wifi", cell2.Subtitle)
 		cell2.HasIcon = true
 		cell2.Icon = app.MustLoadImage("settings_wifi")
 		cell2.Chevron = true
@@ -433,7 +430,6 @@ func (v *BasicCell) Build(ctx view.Context) view.Model {
 	}
 
 	if len(v.Subtitle) > 0 {
-		fmt.Println("subtitle", v.Subtitle)
 		subtitleView := view.NewTextView()
 		subtitleView.String = v.Subtitle
 		subtitleView.Style.SetFont(text.FontWithName("HelveticaNeue", 14))

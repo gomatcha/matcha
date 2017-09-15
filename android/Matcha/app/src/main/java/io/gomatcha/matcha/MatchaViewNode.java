@@ -123,6 +123,8 @@ public class MatchaViewNode extends Object {
                             this.view.matchaGestureRecognizer.buttonGesture = i.getRecognizer();
                         }
                     }
+                    this.view.matchaGestureRecognizer.reload();
+                    this.view.setClickable(proto.getRecognizersCount() > 0);
                 } catch (InvalidProtocolBufferException e) {
                 }
             }

@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/android NewPagerView", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/android NewPagerView", func() view.View {
 		v := android.NewPagerView()
 
 		app := &PagerApp{}
@@ -29,7 +29,7 @@ func init() {
 
 		app.Pages.SetViews(v1, v2, v3)
 
-		return view.NewRoot(v)
+		return v
 	})
 }
 

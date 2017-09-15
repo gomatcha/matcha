@@ -85,6 +85,10 @@ public class JavaBridge {
             int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(maxSize.x*ratio), View.MeasureSpec.AT_MOST);
             int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(maxSize.y*ratio), View.MeasureSpec.AT_MOST);
 
+            if (maxLines == 0) {
+                maxLines = (long)99999999;
+            }
+
             textView.setText(str);
             textView.setMaxLines(maxLines.intValue());
             textView.measure(widthMeasureSpec, heightMeasureSpec);
@@ -94,6 +98,7 @@ public class JavaBridge {
             PointF calculatedSize = new PointF();
             calculatedSize.x = (float)textView.getMeasuredWidth() / ratio + 1;
             calculatedSize.y = (float)textView.getMeasuredHeight() / ratio;
+            Log.v("what", calculatedSize.toString());
             PbLayout.Point p = Protobuf.toProtobuf(calculatedSize);
 
             return new GoValue(p.toByteArray());

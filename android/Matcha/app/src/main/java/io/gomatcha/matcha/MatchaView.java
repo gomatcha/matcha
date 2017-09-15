@@ -27,13 +27,13 @@ public class MatchaView extends RelativeLayout {
         new JavaBridge();
     }
 
-    public MatchaView(Context context, GoValue v) {
+    public MatchaView(Context context, GoValue v2) {
         super(context);
+        GoValue v = GoValue.withFunc("gomatcha.io/matcha/view NewRoot").call("", v2)[0];
         goValue = v;
         identifier = v.call("Id")[0].toLong();
         long viewid = v.call("ViewId")[0].toLong();
         node = new MatchaViewNode(null, this, viewid);
-        setBackgroundColor(Color.RED);
         setFocusable(true);
         setFocusableInTouchMode(true);
 
@@ -62,6 +62,7 @@ public class MatchaView extends RelativeLayout {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         final double width = (double)w / this.getResources().getDisplayMetrics().densityDpi * DisplayMetrics.DENSITY_DEFAULT;
         final double height = (double)h / this.getResources().getDisplayMetrics().densityDpi * DisplayMetrics.DENSITY_DEFAULT;
+        Log.v("onSizeChanged", "width" + width + "Height" + height + "." + oldw + "." + oldh);
 
         this.post( new Runnable() {
             @Override

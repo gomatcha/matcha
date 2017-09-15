@@ -16,7 +16,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/android NewStackView", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/android NewStackView", func() view.View {
 		stackview := android.NewStackView()
 		app := &StackApp{
 			stack: stackview.Stack,
@@ -38,7 +38,7 @@ func init() {
 
 		// app.stack.SetViews(v1, v2, view3, view4)
 		app.stack.SetViews(v1)
-		return view.NewRoot(stackview)
+		return stackview
 	})
 }
 

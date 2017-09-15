@@ -41,6 +41,12 @@ type Root struct {
 	ticker *internal.Ticker
 }
 
+func init() {
+	bridge.RegisterFunc("gomatcha.io/matcha/view NewRoot", func(v View) *Root {
+		return NewRoot(v)
+	})
+}
+
 // NewRoot initializes a Root with screen s.
 func NewRoot(v View) *Root {
 	r := &Root{

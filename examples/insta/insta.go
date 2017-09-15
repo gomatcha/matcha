@@ -19,13 +19,13 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/insta New", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/insta NewRootView", func() view.View {
 		app := NewApp()
 
 		v := ios.NewStackView()
 		v.Stack = app.Stack
 		v.Stack.SetViews(NewRootView(app))
-		return view.NewRoot(v)
+		return v
 	})
 }
 

@@ -17,7 +17,7 @@ Medium:
 * Rotation / orientation
 * StackBar height / hidden, color
 * Android image resource scale??
-* Android scroll views
+* Android scroll views scrollposition
 
 Low:
 * Not getting start and inprogress events for UITapGestureRecognizer.
@@ -61,6 +61,7 @@ Refactors
 * StackBarButton or StackBarItem
 * should options be pointer or struct receiver. Should statusbar be a pointer?
 * Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize?
+* Hide root object? have init functions return a view, add to root inside of the MatchaView / MatchaViewController. 
 
 Pro:
 * Webview

@@ -10,8 +10,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/ios NewActivityIndicatorView", func() *view.Root {
-		return view.NewRoot(NewActivityIndicatorView())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/ios NewActivityIndicatorView", func() view.View {
+		return NewActivityIndicatorView()
 	})
 }
 

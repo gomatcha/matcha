@@ -20,8 +20,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/complex New", func() *view.Root {
-		return view.NewRoot(New())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/complex NewNestedView", func() view.View {
+		return NewNestedView()
 	})
 }
 
@@ -33,7 +33,7 @@ type NestedView struct {
 	value        animate.Value
 }
 
-func New() *NestedView {
+func NewNestedView() *NestedView {
 	return &NestedView{}
 }
 

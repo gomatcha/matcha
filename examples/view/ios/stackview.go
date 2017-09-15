@@ -13,7 +13,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/ios NewStackView", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/ios NewStackView", func() view.View {
 		stackview := ios.NewStackView()
 		app := &StackApp{
 			stack: stackview.Stack,
@@ -34,7 +34,7 @@ func init() {
 		view4.Color = colornames.Green
 
 		app.stack.SetViews(v1, v2, view3, view4)
-		return view.NewRoot(stackview)
+		return stackview
 	})
 }
 

@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/ios NewTabView", func() *view.Root {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/ios NewTabView", func() view.View {
 		app := &TabApp{tabs: &ios.Tabs{}}
 
 		view1 := NewTabChild(app)
@@ -50,7 +50,7 @@ func init() {
 			view3,
 			view4,
 		)
-		return view.NewRoot(v)
+		return v
 	})
 }
 
