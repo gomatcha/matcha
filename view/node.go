@@ -33,23 +33,23 @@ type middleware interface {
 	Key() string
 }
 
-// Root contains your view hierarchy.
-type Root struct {
+// root contains your view hierarchy.
+type root struct {
 	id     int64
-	root   *root
+	root   *nodeRoot
 	size   layout.Point
 	ticker *internal.Ticker
 }
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/view NewRoot", func(v View) *Root {
-		return NewRoot(v)
+	bridge.RegisterFunc("gomatcha.io/matcha/view NewRoot", func(v View) *root {
+		return _newRoot(v)
 	})
 }
 
 // NewRoot initializes a Root with screen s.
-func NewRoot(v View) *Root {
-	r := &Root{
+func _newRoot(v View) *root {
+	r := &root{
 		root: newRoot(v),
 		id:   atomic.AddInt64(&maxId, 1),
 	}
@@ -57,7 +57,7 @@ func NewRoot(v View) *Root {
 	return r
 }
 
-func (r *Root) start() {
+func (r *root) start() {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -91,7 +91,7 @@ func (r *Root) start() {
 	})
 }
 
-func (r *Root) Stop() {
+func (r *root) Stop() {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -101,7 +101,7 @@ func (r *Root) Stop() {
 	r.ticker.Stop()
 }
 
-func (r *Root) Call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
+func (r *root) Call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -109,14 +109,14 @@ func (r *Root) Call(funcId string, viewId int64, args []reflect.Value) []reflect
 }
 
 // Id returns the unique identifier for r.
-func (r *Root) Id() int64 {
+func (r *root) Id() int64 {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
 	return r.id
 }
 
-func (r *Root) ViewId() Id {
+func (r *root) ViewId() Id {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -124,7 +124,7 @@ func (r *Root) ViewId() Id {
 }
 
 // Size returns the size of r.
-func (r *Root) Size() layout.Point {
+func (r *root) Size() layout.Point {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -132,7 +132,7 @@ func (r *Root) Size() layout.Point {
 }
 
 // SetSize sets the size of r.
-func (r *Root) SetSize(width, height float64) {
+func (r *root) SetSize(width, height float64) {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -182,7 +182,7 @@ func (f updateFlag) needsPaint() bool {
 	return f&buildFlag != 0 || f&layoutFlag != 0 || f&paintFlag != 0
 }
 
-type root struct {
+type nodeRoot struct {
 	node        *node
 	nodes       map[Id]*node
 	middlewares []middleware
@@ -191,9 +191,9 @@ type root struct {
 	updateFlags map[Id]updateFlag
 }
 
-func newRoot(v View) *root {
+func newRoot(v View) *nodeRoot {
 	id := newId()
-	root := &root{}
+	root := &nodeRoot{}
 	root.node = &node{
 		id:   id,
 		path: []Id{id},
@@ -207,14 +207,14 @@ func newRoot(v View) *root {
 	return root
 }
 
-func (root *root) addFlag(id Id, f updateFlag) {
+func (root *nodeRoot) addFlag(id Id, f updateFlag) {
 	root.flagMu.Lock()
 	defer root.flagMu.Unlock()
 
 	root.updateFlags[id] |= f
 }
 
-func (root *root) update(size layout.Point) bool {
+func (root *nodeRoot) update(size layout.Point) bool {
 	root.flagMu.Lock()
 	defer root.flagMu.Unlock()
 
@@ -240,11 +240,11 @@ func (root *root) update(size layout.Point) bool {
 	return updated
 }
 
-func (root *root) MarshalProtobuf2() ([]byte, error) {
+func (root *nodeRoot) MarshalProtobuf2() ([]byte, error) {
 	return proto.Marshal(root.MarshalProtobuf())
 }
 
-func (root *root) MarshalProtobuf() *pb.Root {
+func (root *nodeRoot) MarshalProtobuf() *pb.Root {
 	m := map[int64]*pb.LayoutPaintNode{}
 	root.node.marshalLayoutPaintProtobuf(m)
 
@@ -267,7 +267,7 @@ func (root *root) MarshalProtobuf() *pb.Root {
 	}
 }
 
-func (root *root) build() {
+func (root *nodeRoot) build() {
 	root.nodes = map[Id]*node{
 		root.node.id: root.node,
 	}
@@ -276,17 +276,17 @@ func (root *root) build() {
 	root.node.build()
 }
 
-func (root *root) layout(minSize layout.Point, maxSize layout.Point) {
+func (root *nodeRoot) layout(minSize layout.Point, maxSize layout.Point) {
 	g := root.node.layout(minSize, maxSize)
 	g.Frame = g.Frame.Add(layout.Pt(-g.Frame.Min.X, -g.Frame.Min.Y)) // Move Frame.Min to the origin.
 	root.node.layoutGuide = &g
 }
 
-func (root *root) paint() {
+func (root *nodeRoot) paint() {
 	root.node.paint()
 }
 
-func (root *root) call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
+func (root *nodeRoot) call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
 	node, ok := root.nodes[Id(viewId)]
 	if !ok || node.model == nil {
 		fmt.Println("root.call(): no node found", ok, node.model)
@@ -306,7 +306,7 @@ func (root *root) call(funcId string, viewId int64, args []reflect.Value) []refl
 type node struct {
 	id    Id
 	path  []Id
-	root  *root
+	root  *nodeRoot
 	view  View
 	stage Stage
 
