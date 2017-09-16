@@ -1,12 +1,3 @@
-// Package alert implements basic alerts.
-//
-//  view.Alert("Title", "Message") // Has an OK button by default.
-//  view.Alert("Title", "Message", &Button{
-//      Title:"Cancel",
-//      OnPress: func() {
-//          // Do something
-//      }
-//  })
 package view
 
 import (

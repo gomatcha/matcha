@@ -1,5 +1,5 @@
 // Package view provides the component library. See
-// https://gomatcha.io/guide/view for more details.
+// https://gomatcha.io/guide/view/ for more details.
 package view
 
 import (

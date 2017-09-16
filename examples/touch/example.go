@@ -44,8 +44,8 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 	g1 := l.Add(chl1, func(s *constraint.Solver) {
 		s.TopEqual(constraint.Const(0))
 		s.LeftEqual(constraint.Const(0))
-		s.WidthEqual(constraint.Const(100))
-		s.HeightEqual(constraint.Const(100))
+		s.Width(200)
+		s.Height(100)
 	})
 
 	chl2 := view.NewTextView()
@@ -65,8 +65,8 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 	g3 := l.Add(chl3, func(s *constraint.Solver) {
 		s.TopEqual(g2.Bottom())
 		s.LeftEqual(g2.Left())
-		s.WidthEqual(constraint.Const(100))
-		s.HeightEqual(constraint.Const(100))
+		s.Width(200)
+		s.Height(100)
 	})
 
 	chl4 := view.NewTextView()
@@ -86,8 +86,8 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 	g5 := l.Add(chl5, func(s *constraint.Solver) {
 		s.TopEqual(g4.Bottom())
 		s.LeftEqual(g4.Left())
-		s.WidthEqual(constraint.Const(100))
-		s.HeightEqual(constraint.Const(100))
+		s.Width(200)
+		s.Height(100)
 	})
 	chl6 := view.NewTextView()
 	chl6.String = fmt.Sprintf("Button: %v", v.buttonCounter)
@@ -115,8 +115,19 @@ func NewTapChildView() *TapChildView {
 }
 
 func (v *TapChildView) Build(ctx view.Context) view.Model {
+	l := &constraint.Layouter{}
+	a := view.NewBasicView()
+	a.Painter = &paint.Style{BackgroundColor: colornames.Red}
+	l.Add(a, func(s *constraint.Solver) {
+		s.Left(0)
+		s.Top(0)
+		s.Width(100)
+		s.Height(100)
+	})
 	return view.Model{
-		Painter: &paint.Style{BackgroundColor: colornames.Blue},
+		Children: l.Views(),
+		Layouter: l,
+		Painter:  &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
 			touch.GestureList{&touch.TapGesture{
 				Count: 1,

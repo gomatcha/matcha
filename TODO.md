@@ -1,11 +1,10 @@
 * Stackview animation
 * Stackview button items
+* Android touch recognizers inside of scrollviews.
 
 High:
-* Android touch logging.
 * Android custom view example
 * Better error logging for panics.
-* Android touch highlight?
 
 Medium:
 * Crash on "Stop"
@@ -46,7 +45,6 @@ Very Low:
 * Localization
 * View 3d transforms.
 * GridView
-* Add preload, and prepreload stages
 * Debug constraints.
 * Collect native resources into assets.
 * Animations: Spring, Delay, Batch, Reverse, Decay, Repeat
@@ -55,14 +53,16 @@ Very Low:
 * Strikethrough doesn't work.
 
 Refactors
-* Move matcha/view/Root into matcha/Root?
 * Change enabled to disabled.
 * Change OnPress to OnActivate, OnSelect?
 * StackBarButton or StackBarItem
 * should options be pointer or struct receiver. Should statusbar be a pointer?
 * Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize? 
+* Rename view.Model.NativeValues to NativeOptions?
+* Rename app package to a name thats less used??
 
 Pro:
+* Add preload, and prepreload stages
 * Webview
 * Debugging
 * LocalStorage / Keychain / UserDefaults
@@ -74,5 +74,6 @@ Pro:
 * MapView
 * GPS
 * Accessibility
+* Android touch highlight?
 
 Target Android 4.1 API 16 JellyBean
