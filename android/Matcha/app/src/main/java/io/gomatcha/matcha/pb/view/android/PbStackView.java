@@ -460,54 +460,24 @@ public final class PbStackView {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     *matcha.text.TextStyle titleTextStyle = 2;
-     *matcha.text.TextStyle backTextStyle = 3;
-     *matcha.Color barColor = 4;
-     * </pre>
-     *
      * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
      */
     java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView> 
         getChildrenList();
     /**
-     * <pre>
-     *matcha.text.TextStyle titleTextStyle = 2;
-     *matcha.text.TextStyle backTextStyle = 3;
-     *matcha.Color barColor = 4;
-     * </pre>
-     *
      * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
      */
     io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView getChildren(int index);
     /**
-     * <pre>
-     *matcha.text.TextStyle titleTextStyle = 2;
-     *matcha.text.TextStyle backTextStyle = 3;
-     *matcha.Color barColor = 4;
-     * </pre>
-     *
      * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
      */
     int getChildrenCount();
     /**
-     * <pre>
-     *matcha.text.TextStyle titleTextStyle = 2;
-     *matcha.text.TextStyle backTextStyle = 3;
-     *matcha.Color barColor = 4;
-     * </pre>
-     *
      * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
      */
     java.util.List<? extends io.gomatcha.matcha.pb.view.android.PbStackView.StackChildViewOrBuilder> 
         getChildrenOrBuilderList();
     /**
-     * <pre>
-     *matcha.text.TextStyle titleTextStyle = 2;
-     *matcha.text.TextStyle backTextStyle = 3;
-     *matcha.Color barColor = 4;
-     * </pre>
-     *
      * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
      */
     io.gomatcha.matcha.pb.view.android.PbStackView.StackChildViewOrBuilder getChildrenOrBuilder(
@@ -591,24 +561,12 @@ public final class PbStackView {
     public static final int CHILDREN_FIELD_NUMBER = 1;
     private java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView> children_;
     /**
-     * <pre>
-     *matcha.text.TextStyle titleTextStyle = 2;
-     *matcha.text.TextStyle backTextStyle = 3;
-     *matcha.Color barColor = 4;
-     * </pre>
-     *
      * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
      */
     public java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView> getChildrenList() {
       return children_;
     }
     /**
-     * <pre>
-     *matcha.text.TextStyle titleTextStyle = 2;
-     *matcha.text.TextStyle backTextStyle = 3;
-     *matcha.Color barColor = 4;
-     * </pre>
-     *
      * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
      */
     public java.util.List<? extends io.gomatcha.matcha.pb.view.android.PbStackView.StackChildViewOrBuilder> 
@@ -616,36 +574,18 @@ public final class PbStackView {
       return children_;
     }
     /**
-     * <pre>
-     *matcha.text.TextStyle titleTextStyle = 2;
-     *matcha.text.TextStyle backTextStyle = 3;
-     *matcha.Color barColor = 4;
-     * </pre>
-     *
      * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
      */
     public int getChildrenCount() {
       return children_.size();
     }
     /**
-     * <pre>
-     *matcha.text.TextStyle titleTextStyle = 2;
-     *matcha.text.TextStyle backTextStyle = 3;
-     *matcha.Color barColor = 4;
-     * </pre>
-     *
      * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
      */
     public io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView getChildren(int index) {
       return children_.get(index);
     }
     /**
-     * <pre>
-     *matcha.text.TextStyle titleTextStyle = 2;
-     *matcha.text.TextStyle backTextStyle = 3;
-     *matcha.Color barColor = 4;
-     * </pre>
-     *
      * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
      */
     public io.gomatcha.matcha.pb.view.android.PbStackView.StackChildViewOrBuilder getChildrenOrBuilder(
@@ -986,12 +926,6 @@ public final class PbStackView {
           io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView, io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView.Builder, io.gomatcha.matcha.pb.view.android.PbStackView.StackChildViewOrBuilder> childrenBuilder_;
 
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView> getChildrenList() {
@@ -1002,12 +936,6 @@ public final class PbStackView {
         }
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public int getChildrenCount() {
@@ -1018,12 +946,6 @@ public final class PbStackView {
         }
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView getChildren(int index) {
@@ -1034,12 +956,6 @@ public final class PbStackView {
         }
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public Builder setChildren(
@@ -1057,12 +973,6 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public Builder setChildren(
@@ -1077,12 +987,6 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public Builder addChildren(io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView value) {
@@ -1099,12 +1003,6 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public Builder addChildren(
@@ -1122,12 +1020,6 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public Builder addChildren(
@@ -1142,12 +1034,6 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public Builder addChildren(
@@ -1162,12 +1048,6 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public Builder addAllChildren(
@@ -1183,12 +1063,6 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public Builder clearChildren() {
@@ -1202,12 +1076,6 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public Builder removeChildren(int index) {
@@ -1221,12 +1089,6 @@ public final class PbStackView {
         return this;
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView.Builder getChildrenBuilder(
@@ -1234,12 +1096,6 @@ public final class PbStackView {
         return getChildrenFieldBuilder().getBuilder(index);
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public io.gomatcha.matcha.pb.view.android.PbStackView.StackChildViewOrBuilder getChildrenOrBuilder(
@@ -1250,12 +1106,6 @@ public final class PbStackView {
         }
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public java.util.List<? extends io.gomatcha.matcha.pb.view.android.PbStackView.StackChildViewOrBuilder> 
@@ -1267,12 +1117,6 @@ public final class PbStackView {
         }
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView.Builder addChildrenBuilder() {
@@ -1280,12 +1124,6 @@ public final class PbStackView {
             io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView.getDefaultInstance());
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView.Builder addChildrenBuilder(
@@ -1294,12 +1132,6 @@ public final class PbStackView {
             index, io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView.getDefaultInstance());
       }
       /**
-       * <pre>
-       *matcha.text.TextStyle titleTextStyle = 2;
-       *matcha.text.TextStyle backTextStyle = 3;
-       *matcha.Color barColor = 4;
-       * </pre>
-       *
        * <code>repeated .matcha.view.android.StackChildView children = 1;</code>
        */
       public java.util.List<io.gomatcha.matcha.pb.view.android.PbStackView.StackChildView.Builder> 

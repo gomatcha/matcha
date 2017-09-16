@@ -21,6 +21,10 @@ import (
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/todo New", func() view.View {
 		appview := NewAppView()
+		appview.Todos = []*Todo{
+			&Todo{Title: "Eat Chicken"},
+			&Todo{Title: "Kill Dog"},
+		}
 
 		v := ios.NewStackView()
 		v.Stack = &ios.Stack{}
@@ -79,6 +83,7 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
 		Options: []view.Option{
+			&ios.StackBar{Title: "Todos"},
 			ios.StatusBar{Style: ios.StatusBarStyleLight},
 		},
 	}
@@ -112,7 +117,7 @@ func (v *AddView) Build(ctx view.Context) view.Model {
 	placeholderStyle.SetTextColor(colornames.Lightgray)
 
 	input := view.NewTextInput()
-	input.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
+	input.PaintStyle = &paint.Style{BackgroundColor: colornames.Lightgray}
 	input.Text = v.text
 	input.Style = style
 	input.Placeholder = "What needs to be done?"
@@ -145,6 +150,7 @@ func (v *AddView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
+		// Painter:  &paint.Style{BackgroundColor: colornames.Red},
 	}
 }
 
@@ -187,7 +193,8 @@ func (v *TodoView) Build(ctx view.Context) view.Model {
 
 	titleView := view.NewTextView()
 	titleView.String = v.Todo.Title
-	titleView.Style = nil //...
+	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
+	titleView.PaintStyle = &paint.Style{BackgroundColor: colornames.Lightgray}
 	l.Add(titleView, func(s *constraint.Solver) {
 		s.CenterYEqual(l.CenterY())
 		s.LeftEqual(checkboxGuide.Right().Add(15))

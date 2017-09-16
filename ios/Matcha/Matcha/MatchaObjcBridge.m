@@ -36,9 +36,11 @@
     
     UIFont *font = [attrStr attributesAtIndex:0 effectiveRange:NULL][NSFontAttributeName];
     CGFloat height = rect.size.height;
-    if (maxLines > 0 && height > font.pointSize * maxLines) {
-        height = font.pointSize * maxLines;
-    }
+//    if (maxLines > 0 && height > font.pointSize * maxLines) {
+//        height = font.pointSize * maxLines;
+//    }
+    
+    NSLog(@"size:%@, %d, %@", attrStr, maxLines, NSStringFromCGSize(CGSizeMake(rect.size.width, height)));
     
     MatchaLayoutPBPoint *point = [[MatchaLayoutPBPoint alloc] initWithCGSize:CGSizeMake(ceil(rect.size.width), ceil(height))];
     return [[MatchaGoValue alloc] initWithData:point.data];

@@ -45,6 +45,19 @@ public final class PbTextInput {
     io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getPlaceholderTextOrBuilder();
 
     /**
+     * <code>.matcha.text.Font font = 10;</code>
+     */
+    boolean hasFont();
+    /**
+     * <code>.matcha.text.Font font = 10;</code>
+     */
+    io.gomatcha.matcha.pb.text.PbText.Font getFont();
+    /**
+     * <code>.matcha.text.Font font = 10;</code>
+     */
+    io.gomatcha.matcha.pb.text.PbText.FontOrBuilder getFontOrBuilder();
+
+    /**
      * <code>bool focused = 4;</code>
      */
     boolean getFocused();
@@ -190,6 +203,19 @@ public final class PbTextInput {
               secureTextEntry_ = input.readBool();
               break;
             }
+            case 82: {
+              io.gomatcha.matcha.pb.text.PbText.Font.Builder subBuilder = null;
+              if (font_ != null) {
+                subBuilder = font_.toBuilder();
+              }
+              font_ = input.readMessage(io.gomatcha.matcha.pb.text.PbText.Font.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(font_);
+                font_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -253,6 +279,27 @@ public final class PbTextInput {
      */
     public io.gomatcha.matcha.pb.text.PbText.StyledTextOrBuilder getPlaceholderTextOrBuilder() {
       return getPlaceholderText();
+    }
+
+    public static final int FONT_FIELD_NUMBER = 10;
+    private io.gomatcha.matcha.pb.text.PbText.Font font_;
+    /**
+     * <code>.matcha.text.Font font = 10;</code>
+     */
+    public boolean hasFont() {
+      return font_ != null;
+    }
+    /**
+     * <code>.matcha.text.Font font = 10;</code>
+     */
+    public io.gomatcha.matcha.pb.text.PbText.Font getFont() {
+      return font_ == null ? io.gomatcha.matcha.pb.text.PbText.Font.getDefaultInstance() : font_;
+    }
+    /**
+     * <code>.matcha.text.Font font = 10;</code>
+     */
+    public io.gomatcha.matcha.pb.text.PbText.FontOrBuilder getFontOrBuilder() {
+      return getFont();
     }
 
     public static final int FOCUSED_FIELD_NUMBER = 4;
@@ -366,6 +413,9 @@ public final class PbTextInput {
       if (secureTextEntry_ != false) {
         output.writeBool(9, secureTextEntry_);
       }
+      if (font_ != null) {
+        output.writeMessage(10, getFont());
+      }
     }
 
     public int getSerializedSize() {
@@ -405,6 +455,10 @@ public final class PbTextInput {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(9, secureTextEntry_);
       }
+      if (font_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(10, getFont());
+      }
       memoizedSize = size;
       return size;
     }
@@ -430,6 +484,11 @@ public final class PbTextInput {
       if (hasPlaceholderText()) {
         result = result && getPlaceholderText()
             .equals(other.getPlaceholderText());
+      }
+      result = result && (hasFont() == other.hasFont());
+      if (hasFont()) {
+        result = result && getFont()
+            .equals(other.getFont());
       }
       result = result && (getFocused()
           == other.getFocused());
@@ -457,6 +516,10 @@ public final class PbTextInput {
       if (hasPlaceholderText()) {
         hash = (37 * hash) + PLACEHOLDERTEXT_FIELD_NUMBER;
         hash = (53 * hash) + getPlaceholderText().hashCode();
+      }
+      if (hasFont()) {
+        hash = (37 * hash) + FONT_FIELD_NUMBER;
+        hash = (53 * hash) + getFont().hashCode();
       }
       hash = (37 * hash) + FOCUSED_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
@@ -614,6 +677,12 @@ public final class PbTextInput {
           placeholderText_ = null;
           placeholderTextBuilder_ = null;
         }
+        if (fontBuilder_ == null) {
+          font_ = null;
+        } else {
+          font_ = null;
+          fontBuilder_ = null;
+        }
         focused_ = false;
 
         keyboardType_ = 0;
@@ -657,6 +726,11 @@ public final class PbTextInput {
           result.placeholderText_ = placeholderText_;
         } else {
           result.placeholderText_ = placeholderTextBuilder_.build();
+        }
+        if (fontBuilder_ == null) {
+          result.font_ = font_;
+        } else {
+          result.font_ = fontBuilder_.build();
         }
         result.focused_ = focused_;
         result.keyboardType_ = keyboardType_;
@@ -710,6 +784,9 @@ public final class PbTextInput {
         }
         if (other.hasPlaceholderText()) {
           mergePlaceholderText(other.getPlaceholderText());
+        }
+        if (other.hasFont()) {
+          mergeFont(other.getFont());
         }
         if (other.getFocused() != false) {
           setFocused(other.getFocused());
@@ -987,6 +1064,123 @@ public final class PbTextInput {
           placeholderText_ = null;
         }
         return placeholderTextBuilder_;
+      }
+
+      private io.gomatcha.matcha.pb.text.PbText.Font font_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.text.PbText.Font, io.gomatcha.matcha.pb.text.PbText.Font.Builder, io.gomatcha.matcha.pb.text.PbText.FontOrBuilder> fontBuilder_;
+      /**
+       * <code>.matcha.text.Font font = 10;</code>
+       */
+      public boolean hasFont() {
+        return fontBuilder_ != null || font_ != null;
+      }
+      /**
+       * <code>.matcha.text.Font font = 10;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.Font getFont() {
+        if (fontBuilder_ == null) {
+          return font_ == null ? io.gomatcha.matcha.pb.text.PbText.Font.getDefaultInstance() : font_;
+        } else {
+          return fontBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.matcha.text.Font font = 10;</code>
+       */
+      public Builder setFont(io.gomatcha.matcha.pb.text.PbText.Font value) {
+        if (fontBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          font_ = value;
+          onChanged();
+        } else {
+          fontBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.Font font = 10;</code>
+       */
+      public Builder setFont(
+          io.gomatcha.matcha.pb.text.PbText.Font.Builder builderForValue) {
+        if (fontBuilder_ == null) {
+          font_ = builderForValue.build();
+          onChanged();
+        } else {
+          fontBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.Font font = 10;</code>
+       */
+      public Builder mergeFont(io.gomatcha.matcha.pb.text.PbText.Font value) {
+        if (fontBuilder_ == null) {
+          if (font_ != null) {
+            font_ =
+              io.gomatcha.matcha.pb.text.PbText.Font.newBuilder(font_).mergeFrom(value).buildPartial();
+          } else {
+            font_ = value;
+          }
+          onChanged();
+        } else {
+          fontBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.Font font = 10;</code>
+       */
+      public Builder clearFont() {
+        if (fontBuilder_ == null) {
+          font_ = null;
+          onChanged();
+        } else {
+          font_ = null;
+          fontBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.Font font = 10;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.Font.Builder getFontBuilder() {
+        
+        onChanged();
+        return getFontFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.matcha.text.Font font = 10;</code>
+       */
+      public io.gomatcha.matcha.pb.text.PbText.FontOrBuilder getFontOrBuilder() {
+        if (fontBuilder_ != null) {
+          return fontBuilder_.getMessageOrBuilder();
+        } else {
+          return font_ == null ?
+              io.gomatcha.matcha.pb.text.PbText.Font.getDefaultInstance() : font_;
+        }
+      }
+      /**
+       * <code>.matcha.text.Font font = 10;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.pb.text.PbText.Font, io.gomatcha.matcha.pb.text.PbText.Font.Builder, io.gomatcha.matcha.pb.text.PbText.FontOrBuilder> 
+          getFontFieldBuilder() {
+        if (fontBuilder_ == null) {
+          fontBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.gomatcha.matcha.pb.text.PbText.Font, io.gomatcha.matcha.pb.text.PbText.Font.Builder, io.gomatcha.matcha.pb.text.PbText.FontOrBuilder>(
+                  getFont(),
+                  getParentForChildren(),
+                  isClean());
+          font_ = null;
+        }
+        return fontBuilder_;
       }
 
       private boolean focused_ ;
@@ -2667,20 +2861,21 @@ public final class PbTextInput {
       "\n*gomatcha.io/matcha/pb/view/textinput.p" +
       "roto\022\013matcha.view\032%gomatcha.io/matcha/pb" +
       "/text/text.proto\032-gomatcha.io/matcha/pb/" +
-      "keyboard/keyboard.proto\"\305\002\n\tTextInput\022+\n" +
+      "keyboard/keyboard.proto\"\346\002\n\tTextInput\022+\n" +
       "\nstyledText\030\001 \001(\0132\027.matcha.text.StyledTe" +
       "xt\0220\n\017placeholderText\030\002 \001(\0132\027.matcha.tex" +
-      "t.StyledText\022\017\n\007focused\030\004 \001(\010\022+\n\014keyboar" +
-      "dType\030\005 \001(\0162\025.matcha.keyboard.Type\0227\n\022ke" +
-      "yboardAppearance\030\006 \001(\0162\033.matcha.keyboard" +
-      ".Appearance\0227\n\022keyboardReturnType\030\007 \001(\0162",
-      "\033.matcha.keyboard.ReturnType\022\020\n\010maxLines" +
-      "\030\010 \001(\003\022\027\n\017secureTextEntry\030\t \001(\010\"=\n\016TextI" +
-      "nputEvent\022+\n\nstyledText\030\001 \001(\0132\027.matcha.t" +
-      "ext.StyledText\"&\n\023TextInputFocusEvent\022\017\n" +
-      "\007focused\030\001 \001(\010\"\026\n\024TextInputSubmitEventB>" +
-      "\n\032io.gomatcha.matcha.pb.viewB\013PbTextInpu" +
-      "tZ\004view\242\002\014MatchaViewPBb\006proto3"
+      "t.StyledText\022\037\n\004font\030\n \001(\0132\021.matcha.text" +
+      ".Font\022\017\n\007focused\030\004 \001(\010\022+\n\014keyboardType\030\005" +
+      " \001(\0162\025.matcha.keyboard.Type\0227\n\022keyboardA" +
+      "ppearance\030\006 \001(\0162\033.matcha.keyboard.Appear",
+      "ance\0227\n\022keyboardReturnType\030\007 \001(\0162\033.match" +
+      "a.keyboard.ReturnType\022\020\n\010maxLines\030\010 \001(\003\022" +
+      "\027\n\017secureTextEntry\030\t \001(\010\"=\n\016TextInputEve" +
+      "nt\022+\n\nstyledText\030\001 \001(\0132\027.matcha.text.Sty" +
+      "ledText\"&\n\023TextInputFocusEvent\022\017\n\007focuse" +
+      "d\030\001 \001(\010\"\026\n\024TextInputSubmitEventB>\n\032io.go" +
+      "matcha.matcha.pb.viewB\013PbTextInputZ\004view" +
+      "\242\002\014MatchaViewPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2701,7 +2896,7 @@ public final class PbTextInput {
     internal_static_matcha_view_TextInput_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_TextInput_descriptor,
-        new java.lang.String[] { "StyledText", "PlaceholderText", "Focused", "KeyboardType", "KeyboardAppearance", "KeyboardReturnType", "MaxLines", "SecureTextEntry", });
+        new java.lang.String[] { "StyledText", "PlaceholderText", "Font", "Focused", "KeyboardType", "KeyboardAppearance", "KeyboardReturnType", "MaxLines", "SecureTextEntry", });
     internal_static_matcha_view_TextInputEvent_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_matcha_view_TextInputEvent_fieldAccessorTable = new

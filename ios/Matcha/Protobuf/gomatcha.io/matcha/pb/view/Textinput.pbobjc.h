@@ -27,6 +27,7 @@
 
 CF_EXTERN_C_BEGIN
 
+@class MatchaPBFont;
 @class MatchaPBStyledText;
 GPB_ENUM_FWD_DECLARE(MatchaKeyboardPBAppearance);
 GPB_ENUM_FWD_DECLARE(MatchaKeyboardPBReturnType);
@@ -60,6 +61,7 @@ typedef GPB_ENUM(MatchaViewPBTextInput_FieldNumber) {
   MatchaViewPBTextInput_FieldNumber_KeyboardReturnType = 7,
   MatchaViewPBTextInput_FieldNumber_MaxLines = 8,
   MatchaViewPBTextInput_FieldNumber_SecureTextEntry = 9,
+  MatchaViewPBTextInput_FieldNumber_Font = 10,
 };
 
 @interface MatchaViewPBTextInput : GPBMessage
@@ -71,6 +73,10 @@ typedef GPB_ENUM(MatchaViewPBTextInput_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) MatchaPBStyledText *placeholderText;
 /** Test to see if @c placeholderText has been set. */
 @property(nonatomic, readwrite) BOOL hasPlaceholderText;
+
+@property(nonatomic, readwrite, strong, null_resettable) MatchaPBFont *font;
+/** Test to see if @c font has been set. */
+@property(nonatomic, readwrite) BOOL hasFont;
 
 @property(nonatomic, readwrite) BOOL focused;
 

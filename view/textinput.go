@@ -40,6 +40,7 @@ type TextInput struct {
 // NewTextInput returns either the previous View in ctx with matching key, or a new View if none exists.
 func NewTextInput() *TextInput {
 	return &TextInput{
+		MaxLines:  1,
 		text:      text.New(""),
 		responder: &keyboard.Responder{},
 	}
@@ -104,10 +105,11 @@ func (v *TextInput) Build(ctx Context) Model {
 		painter = v.PaintStyle
 	}
 	return Model{
-		Layouter:       &textInputLayouter{styledText: st, maxLines: v.MaxLines},
+		Layouter:       &textInputLayouter{style: style, styledText: st, maxLines: v.MaxLines},
 		Painter:        painter,
 		NativeViewName: "gomatcha.io/matcha/view/textinput",
 		NativeViewState: &pbview.TextInput{
+			Font:               style.Font().MarshalProtobuf(),
 			StyledText:         st.MarshalProtobuf(),
 			PlaceholderText:    placeholderStyledText.MarshalProtobuf(),
 			KeyboardType:       v.KeyboardType.MarshalProtobuf(),
@@ -167,17 +169,15 @@ func (v *TextInput) Build(ctx Context) Model {
 }
 
 type textInputLayouter struct {
+	style      *text.Style
 	styledText *text.StyledText
 	maxLines   int
 }
 
 func (l *textInputLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	if l.maxLines == 1 {
-		size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize(), 1)
-		size.Y += 15
-		if size.Y < 30 {
-			size.Y = 30
-		}
+		st := text.NewStyledText("AAA", l.style)
+		size := st.Size(layout.Pt(0, 0), ctx.MaxSize(), 1)
 		g := layout.Guide{Frame: layout.Rt(0, 0, ctx.MinSize().X, size.Y)}
 		return g, nil
 	} else {

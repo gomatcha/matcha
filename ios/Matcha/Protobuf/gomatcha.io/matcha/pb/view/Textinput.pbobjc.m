@@ -51,6 +51,7 @@ static GPBFileDescriptor *MatchaViewPBTextinputRoot_FileDescriptor(void) {
 
 @dynamic hasStyledText, styledText;
 @dynamic hasPlaceholderText, placeholderText;
+@dynamic hasFont, font;
 @dynamic focused;
 @dynamic keyboardType;
 @dynamic keyboardAppearance;
@@ -65,6 +66,7 @@ typedef struct MatchaViewPBTextInput__storage_ {
   MatchaKeyboardPBReturnType keyboardReturnType;
   MatchaPBStyledText *styledText;
   MatchaPBStyledText *placeholderText;
+  MatchaPBFont *font;
   int64_t maxLines;
 } MatchaViewPBTextInput__storage_;
 
@@ -96,8 +98,8 @@ typedef struct MatchaViewPBTextInput__storage_ {
         .name = "focused",
         .dataTypeSpecific.className = NULL,
         .number = MatchaViewPBTextInput_FieldNumber_Focused,
-        .hasIndex = 2,
-        .offset = 3,  // Stored in _has_storage_ to save space.
+        .hasIndex = 3,
+        .offset = 4,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -105,7 +107,7 @@ typedef struct MatchaViewPBTextInput__storage_ {
         .name = "keyboardType",
         .dataTypeSpecific.enumDescFunc = MatchaKeyboardPBType_EnumDescriptor,
         .number = MatchaViewPBTextInput_FieldNumber_KeyboardType,
-        .hasIndex = 4,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(MatchaViewPBTextInput__storage_, keyboardType),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -114,7 +116,7 @@ typedef struct MatchaViewPBTextInput__storage_ {
         .name = "keyboardAppearance",
         .dataTypeSpecific.enumDescFunc = MatchaKeyboardPBAppearance_EnumDescriptor,
         .number = MatchaViewPBTextInput_FieldNumber_KeyboardAppearance,
-        .hasIndex = 5,
+        .hasIndex = 6,
         .offset = (uint32_t)offsetof(MatchaViewPBTextInput__storage_, keyboardAppearance),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -123,7 +125,7 @@ typedef struct MatchaViewPBTextInput__storage_ {
         .name = "keyboardReturnType",
         .dataTypeSpecific.enumDescFunc = MatchaKeyboardPBReturnType_EnumDescriptor,
         .number = MatchaViewPBTextInput_FieldNumber_KeyboardReturnType,
-        .hasIndex = 6,
+        .hasIndex = 7,
         .offset = (uint32_t)offsetof(MatchaViewPBTextInput__storage_, keyboardReturnType),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -132,7 +134,7 @@ typedef struct MatchaViewPBTextInput__storage_ {
         .name = "maxLines",
         .dataTypeSpecific.className = NULL,
         .number = MatchaViewPBTextInput_FieldNumber_MaxLines,
-        .hasIndex = 7,
+        .hasIndex = 8,
         .offset = (uint32_t)offsetof(MatchaViewPBTextInput__storage_, maxLines),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeInt64,
@@ -141,10 +143,19 @@ typedef struct MatchaViewPBTextInput__storage_ {
         .name = "secureTextEntry",
         .dataTypeSpecific.className = NULL,
         .number = MatchaViewPBTextInput_FieldNumber_SecureTextEntry,
-        .hasIndex = 8,
-        .offset = 9,  // Stored in _has_storage_ to save space.
+        .hasIndex = 9,
+        .offset = 10,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "font",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBFont),
+        .number = MatchaViewPBTextInput_FieldNumber_Font,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(MatchaViewPBTextInput__storage_, font),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

@@ -11,6 +11,7 @@ option java_outer_classname = "PbTextInput";
 message TextInput {
     matcha.text.StyledText styledText = 1;
     matcha.text.StyledText placeholderText = 2;
+    matcha.text.Font font = 10;
     bool focused = 4;
     matcha.keyboard.Type keyboardType = 5;
     matcha.keyboard.Appearance keyboardAppearance = 6;

@@ -16,6 +16,9 @@
         self.viewNode = viewNode;
         self.delegate = self;
         self.scrollEnabled = false;
+        self.textContainer.lineFragmentPadding = 0;
+        self.textContainerInset = UIEdgeInsetsZero;
+
     }
     return self;
 }
@@ -39,7 +42,8 @@
     if (![attrPlaceholder.string isEqual:self.attributedPlaceholder]) { // TODO(KD): Better comparison.
         self.attributedPlaceholder = attrPlaceholder;
     }
-    
+
+    self.font = [[UIFont alloc] initWithProtobuf:view.font];
     self.attrStr2 = attrString;
     self.hasFocus = view.focused;
     self.keyboardType = MatchaKeyboardTypeWithProtobuf(view.keyboardType);
@@ -54,6 +58,15 @@
         [self resignFirstResponder];
     }
 }
+
+- (CGRect)caretRectForPosition:(UITextPosition *)position {
+    CGRect originalRect = [super caretRectForPosition:position];
+    if (self.font && originalRect.size.height > 2) {
+        originalRect.size.height = self.font.pointSize - self.font.descender;
+    }
+    return originalRect;
+}
+
 
 - (void)textViewDidChange:(UITextView *)textView {
     if ([self.attributedText isEqual:self.attrStr2] || self.attributedText == self.attrStr2) {
