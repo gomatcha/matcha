@@ -36,16 +36,32 @@ func NewTouchView() *TouchView {
 func (v *TouchView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := NewTapChildView()
-	chl1.OnTouch = func() {
+	scrollLayouter := &constraint.Layouter{}
+	scrollLayouter.Solve(func(s *constraint.Solver) {
+		s.Width(200)
+		s.Height(500)
+	})
+	tap := NewTapChildView()
+	tap.OnTouch = func() {
 		v.tapCounter += 1
 		go v.Signal() // TODO(KD): Why is this on separate thread?
 	}
-	g1 := l.Add(chl1, func(s *constraint.Solver) {
+	scrollLayouter.Add(tap, func(s *constraint.Solver) {
 		s.TopEqual(constraint.Const(0))
 		s.LeftEqual(constraint.Const(0))
 		s.Width(200)
 		s.Height(100)
+	})
+
+	scrollview := view.NewScrollView()
+	scrollview.ContentChildren = scrollLayouter.Views()
+	scrollview.ContentPainter = &paint.Style{BackgroundColor: colornames.Yellow}
+	scrollview.ContentLayouter = scrollLayouter
+	g1 := l.Add(scrollview, func(s *constraint.Solver) {
+		s.Top(0)
+		s.Left(0)
+		s.Width(200)
+		s.Height(200)
 	})
 
 	chl2 := view.NewTextView()
@@ -65,7 +81,7 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 	g3 := l.Add(chl3, func(s *constraint.Solver) {
 		s.TopEqual(g2.Bottom())
 		s.LeftEqual(g2.Left())
-		s.Width(200)
+		s.Width(100)
 		s.Height(100)
 	})
 
@@ -86,7 +102,7 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 	g5 := l.Add(chl5, func(s *constraint.Solver) {
 		s.TopEqual(g4.Bottom())
 		s.LeftEqual(g4.Left())
-		s.Width(200)
+		s.Width(100)
 		s.Height(100)
 	})
 	chl6 := view.NewTextView()

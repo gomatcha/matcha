@@ -1,6 +1,6 @@
 * Stackview animation
 * Stackview button items
-* Android touch recognizers inside of scrollviews.
+* Android vertical/horizontal scrollviews?
 
 High:
 * Android custom view example
@@ -59,7 +59,7 @@ Refactors
 * should options be pointer or struct receiver. Should statusbar be a pointer?
 * Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize? 
 * Rename view.Model.NativeValues to NativeOptions?
-* Rename app package to a name thats less used??
+* Rename app package to a name thats less used?? application.LoadImage()??
 
 Pro:
 * Add preload, and prepreload stages
