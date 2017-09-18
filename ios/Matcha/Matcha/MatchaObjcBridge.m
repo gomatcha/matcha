@@ -4,6 +4,7 @@
 #import "MatchaViewController.h"
 #import "MatchaDeadlockLogger.h"
 #import "MatchaProtobuf.h"
+#import <CoreText/CoreText.h>
 
 @implementation MatchaObjcBridge_X
 
@@ -32,17 +33,33 @@
     MatchaPBSizeFunc *func = [[MatchaPBSizeFunc alloc] initWithData:protobuf error:nil];
     
     NSAttributedString *attrStr = [[NSAttributedString alloc] initWithProtobuf:func.text];
-    CGRect rect = [attrStr boundingRectWithSize:func.maxSize.toCGSize options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading context:nil];
     
-    UIFont *font = [attrStr attributesAtIndex:0 effectiveRange:NULL][NSFontAttributeName];
-    CGFloat height = rect.size.height;
-//    if (maxLines > 0 && height > font.pointSize * maxLines) {
-//        height = font.pointSize * maxLines;
-//    }
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, func.maxSize.toCGSize.width, func.maxSize.toCGSize.height)];
+    CTFramesetterRef framesetterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrStr);
+    CTFrameRef frameRef = CTFramesetterCreateFrame(framesetterRef, CFRangeMake(0, 0), path.CGPath, NULL);
+    CFArrayRef linesRef = CTFrameGetLines(frameRef);
     
-    NSLog(@"size:%@, %d, %@", attrStr, maxLines, NSStringFromCGSize(CGSizeMake(rect.size.width, height)));
+    CFIndex count = CFArrayGetCount(linesRef);
+    CGPoint origins[count];
+    CTFrameGetLineOrigins(frameRef, CFRangeMake(0, count), origins);
     
-    MatchaLayoutPBPoint *point = [[MatchaLayoutPBPoint alloc] initWithCGSize:CGSizeMake(ceil(rect.size.width), ceil(height))];
+    CGFloat maxWidth = 0;
+    CGFloat maxHeight = 0;
+    if (maxLines == 0) {
+        maxLines = (int)count;
+    }
+    for (NSInteger i = 0; i < MIN(maxLines, count); i++) {
+        CGFloat ascent, descent, leading;
+        CGFloat width = CTLineGetTypographicBounds(CFArrayGetValueAtIndex(linesRef, i), &ascent, &descent, &leading);
+        CGFloat height = ascent + descent + leading;
+        if (width > maxWidth) {
+            maxWidth = width;
+        }
+        if (height > maxHeight) {
+            maxHeight = height;
+        }
+    }
+    MatchaLayoutPBPoint *point = [[MatchaLayoutPBPoint alloc] initWithCGSize:CGSizeMake(ceil(maxWidth), ceil(maxHeight))];
     return [[MatchaGoValue alloc] initWithData:point.data];
 }
 
