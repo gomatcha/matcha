@@ -288,6 +288,10 @@ type Solver struct {
 func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
 	cr := newConstrainedRect()
 
+	if s.debug {
+		fmt.Println("constraint - Begin solving")
+	}
+
 	for _, i := range s.constraints {
 		copy := cr
 
@@ -322,17 +326,20 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
 			copy.centerY = copy.centerY.intersect(r)
 		}
 
+		if s.debug {
+			if copy.isValid() {
+				fmt.Printf("constraint - Adding constraint: %v%v%v\n", i.attribute, i.comparison, r)
+			} else {
+				fmt.Printf("constraint - Ignoring constraint: %v%v%v\n", i.attribute, i.comparison, r)
+			}
+			fmt.Printf("constraint - Rect %v\n", copy)
+		}
+
 		// Validate that the new system is well-formed. Otherwise ignore the changes.
 		if !copy.isValid() {
-			if s.debug {
-				fmt.Println("constraint: Debug 0", i, copy) // TODO(KD): Better debugging.
-			}
 			continue
 		}
 		cr = copy
-	}
-	if s.debug {
-		fmt.Println("constraint: Debug 1", cr, s.constraints)
 	}
 
 	// Get parent guide.
@@ -356,20 +363,31 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
 		_, cr = cr.solveHeight(0)
 
 		if s.debug {
-			fmt.Println("constraint: Debug 2", cr, s.constraints, layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max))
+			fmt.Printf("constraint - Solving for child size with min: %v max: %v\n", layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max))
 		}
 
 		g = ctx.LayoutChild(s.index, layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max))
 		width = g.Width()
 		height = g.Height()
 
-		// Round width and height to screen scale
-		width = math.Floor(width*device.ScreenScale+0.5) / device.ScreenScale
+		if s.debug {
+			fmt.Printf("constraint - Child size: %v\n", layout.Pt(width, height))
+		}
 
-		if width < cr.width.min || height < cr.height.min || width > cr.width.max || height > cr.height.max {
-			// fmt.Printf("constraint: child guide is outside of bounds. Min:%v Max:%v Actual:%v\n", layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max), layout.Pt(width, height))
+		// Round width and height to screen scale. // TODO(KD): Is this necessary????
+		width = math.Floor(width*device.ScreenScale+0.5) / device.ScreenScale
+		height = math.Floor(height*device.ScreenScale+0.5) / device.ScreenScale
+		if width < cr.width.min {
 			width = cr.width.min
+		}
+		if width > cr.width.max {
+			width = cr.width.max
+		}
+		if height < cr.height.min {
 			height = cr.height.min
+		}
+		if height > cr.height.max {
+			height = cr.height.max
 		}
 	}
 
@@ -378,7 +396,7 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
 	cr.height = cr.height.intersect(_range{min: height, max: height})
 	if !cr.isValid() {
 		fmt.Println("cr", cr)
-		panic("constraint: system inconsistency")
+		panic("constraint - system inconsistency")
 	}
 	var centerX, centerY float64
 	if s.index == rootId {
@@ -401,7 +419,7 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
 		sys.Guide.children2[s.index].matchaGuide = &g
 	}
 	if s.debug {
-		fmt.Println("constraint: Debug 3", g)
+		fmt.Println("constraint - Solved position", g)
 	}
 }
 

@@ -3,6 +3,7 @@ package insta
 import (
 	"fmt"
 	"image/color"
+	"runtime"
 	"time"
 
 	"golang.org/x/image/colornames"
@@ -15,6 +16,7 @@ import (
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
+	"gomatcha.io/matcha/view/android"
 	"gomatcha.io/matcha/view/ios"
 )
 
@@ -22,10 +24,17 @@ func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/insta New", func() view.View {
 		app := NewApp()
 
-		v := ios.NewStackView()
-		v.Stack = app.Stack
-		v.Stack.SetViews(NewRootView(app))
-		return v
+		if runtime.GOOS == "android" {
+			v := android.NewStackView()
+			app.Stack = v.Stack
+			app.Stack.SetViews(NewRootView(app))
+			return v
+		} else {
+			v := ios.NewStackView()
+			app.Stack = v.Stack
+			app.Stack.SetViews(NewRootView(app))
+			return v
+		}
 	})
 }
 
@@ -56,12 +65,12 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
+		Options: []view.Option{
+			&ios.StackBar{Title: "Insta"},
+			&android.StackBar{Title: "Insta"},
+		},
 	}
 }
-
-// func (v *RootView) StackBar(ctx *view.Context) *ies.Bar {
-// 	return &ies.Bar{Title: "Settings Example"}
-// }
 
 type PostView struct {
 	view.Embed
@@ -205,7 +214,7 @@ func (v *PostImageView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	image := view.NewImageView()
-	image.URL = v.ImageURL
+	// image.URL = v.ImageURL
 	l.Add(image, func(s *constraint.Solver) {
 		s.WidthEqual(l.Width())
 		s.HeightEqual(l.Height())
@@ -213,7 +222,7 @@ func (v *PostImageView) Build(ctx view.Context) view.Model {
 
 	if v.showHeart {
 		heart := view.NewImageView()
-		heart.Image = app.MustLoadImage("Heart")
+		heart.Image = app.MustLoadImage("insta_heart")
 		heart.ResizeMode = view.ImageResizeModeCenter
 		heart.PaintStyle = &paint.Style{
 			ShadowRadius: 10,
@@ -274,9 +283,9 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 
 	likeButton := view.NewImageButton()
 	if v.Liked {
-		likeButton.Image = app.MustLoadImage("LikeFilled")
+		likeButton.Image = app.MustLoadImage("insta_like_filled")
 	} else {
-		likeButton.Image = app.MustLoadImage("Like")
+		likeButton.Image = app.MustLoadImage("insta_like")
 	}
 	likeButton.OnPress = func() {
 		if v.OnTouchLike != nil {
@@ -291,7 +300,7 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 	})
 
 	commentButton := view.NewImageButton()
-	commentButton.Image = app.MustLoadImage("Comment")
+	commentButton.Image = app.MustLoadImage("insta_comment")
 	commentButton.OnPress = func() {
 		if v.OnTouchComment != nil {
 			v.OnTouchComment()
@@ -303,7 +312,7 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 	})
 
 	shareButton := view.NewImageButton()
-	shareButton.Image = app.MustLoadImage("Share")
+	shareButton.Image = app.MustLoadImage("insta_share")
 	shareButton.OnPress = func() {
 		if v.OnTouchShare != nil {
 			v.OnTouchShare()
@@ -316,9 +325,9 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 
 	bookmarkButton := view.NewImageButton()
 	if v.Bookmarked {
-		bookmarkButton.Image = app.MustLoadImage("BookmarkFilled")
+		bookmarkButton.Image = app.MustLoadImage("insta_bookmark_filled")
 	} else {
-		bookmarkButton.Image = app.MustLoadImage("Bookmark")
+		bookmarkButton.Image = app.MustLoadImage("insta_bookmark")
 	}
 
 	bookmarkButton.OnPress = func() {
@@ -400,9 +409,9 @@ func (v *CommentsView) Build(ctx view.Context) view.Model {
 }
 
 func BoldFont() *text.Font {
-	return text.FontWithName("HelveticaNeue-Bold", 13)
+	return text.DefaultFont(13)
 }
 
 func RegularFont() *text.Font {
-	return text.FontWithName("HelveticaNeue", 13)
+	return text.DefaultBoldFont(13)
 }
