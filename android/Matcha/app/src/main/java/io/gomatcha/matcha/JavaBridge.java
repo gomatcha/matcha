@@ -36,6 +36,8 @@ import io.gomatcha.matcha.pb.text.PbText;
 import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.PbAlert;
 
+import android.util.DisplayMetrics;
+
 public class JavaBridge {
     static Choreographer.FrameCallback callback;
     static Context context;
@@ -122,18 +124,50 @@ public class JavaBridge {
         Resources res = context.getResources();
         int id = res.getIdentifier(path, "drawable", context.getPackageName());
 
+        Drawable drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_MEDIUM);
+        /*
+        double ratio = 1.0;
+        if (drawable == null) {
+            drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_LOW);
+            ratio = 0.5;
+        }
+        if (drawable == null) {
+            drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_HIGH);
+            ratio = 1.5;
+        }
+        if (drawable == null) {
+            drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_XHIGH);
+            ratio = 2.0;
+        }
+        if (drawable == null) {
+            drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_XXHIGH);
+            ratio = 3.0;
+        }
+        if (drawable == null) {
+            drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_XXXHIGH);
+            ratio = 4.0;
+        }
+        */
+
+        Pb.ImageProperties.Builder builder = Pb.ImageProperties.newBuilder()
+                .setWidth(drawable.getMinimumWidth())
+                .setHeight(drawable.getMinimumHeight())
+                .setScale(1); // TODO(KD): Figure out which image density was selected. https://developer.android.com/guide/practices/screens_support.html
+
+        return new GoValue(builder.build().toByteArray());
+/*
+        return;
         BitmapFactory.Options dimensions = new BitmapFactory.Options();
         dimensions.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res, id, dimensions);
-        int height = dimensions.outHeight;
-        int width =  dimensions.outWidth;
 
-        Pb.ImageProperties.Builder builder = Pb.ImageProperties.newBuilder();
-        builder.setWidth(dimensions.outWidth);
-        builder.setHeight(dimensions.outHeight);
-        builder.setScale(1); // TODO(KD): Figure out which image density was selected. https://developer.android.com/guide/practices/screens_support.html
+        Pb.ImageProperties.Builder builder = Pb.ImageProperties.newBuilder()
+                .setWidth(dimensions.outWidth)
+                .setHeight(dimensions.outHeight)
+                .setScale(1); // TODO(KD): Figure out which image density was selected. https://developer.android.com/guide/practices/screens_support.html
 
         return new GoValue(builder.build().toByteArray());
+        */
     }
     
     void displayAlert(byte[] protobuf) {

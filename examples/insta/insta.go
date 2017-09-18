@@ -214,7 +214,7 @@ func (v *PostImageView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	image := view.NewImageView()
-	// image.URL = v.ImageURL
+	image.URL = v.ImageURL
 	l.Add(image, func(s *constraint.Solver) {
 		s.WidthEqual(l.Width())
 		s.HeightEqual(l.Height())
@@ -409,9 +409,9 @@ func (v *CommentsView) Build(ctx view.Context) view.Model {
 }
 
 func BoldFont() *text.Font {
-	return text.DefaultFont(13)
+	return text.DefaultBoldFont(13)
 }
 
 func RegularFont() *text.Font {
-	return text.DefaultBoldFont(13)
+	return text.DefaultFont(13)
 }
