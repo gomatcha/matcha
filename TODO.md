@@ -17,6 +17,7 @@ Medium:
 * StackBar height / hidden, color
 * Android image resource scale??
 * Android scroll views scrollposition
+* Better notavailable-view. lightgray with centered "Unknown".
 
 Low:
 * Not getting start and inprogress events for UITapGestureRecognizer.

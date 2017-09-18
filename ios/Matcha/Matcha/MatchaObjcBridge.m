@@ -66,11 +66,10 @@
         if (width > maxWidth) {
             maxWidth = flipped.x + width;
         }
-        if (flipped.y + height > maxHeight) {
-            maxHeight = flipped.y + height;
+        if (flipped.y + descent > maxHeight) {
+            maxHeight = flipped.y + descent;
         }
     }
-    
     MatchaLayoutPBPoint *point = [[MatchaLayoutPBPoint alloc] initWithCGSize:CGSizeMake(ceil(maxWidth), ceil(maxHeight))];
     return [[MatchaGoValue alloc] initWithData:point.data];
 }
