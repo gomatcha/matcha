@@ -34,7 +34,12 @@
     
     NSAttributedString *attrStr = [[NSAttributedString alloc] initWithProtobuf:func.text];
     
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, func.maxSize.toCGSize.width, func.maxSize.toCGSize.height)];
+    CGFloat maximumHeight = func.maxSize.toCGSize.height;
+    if (maximumHeight > 1e7) {
+        maximumHeight = 1e7;
+    }
+    
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, func.maxSize.toCGSize.width, maximumHeight)];
     CTFramesetterRef framesetterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrStr);
     CTFrameRef frameRef = CTFramesetterCreateFrame(framesetterRef, CFRangeMake(0, 0), path.CGPath, NULL);
     CFArrayRef linesRef = CTFrameGetLines(frameRef);
@@ -43,22 +48,29 @@
     CGPoint origins[count];
     CTFrameGetLineOrigins(frameRef, CFRangeMake(0, count), origins);
     
+    // transform to flip coordinate
+    CGAffineTransform transform = CGAffineTransformMakeTranslation(0, 1e7);
+    transform = CGAffineTransformScale(transform, 1, -1);
+
+    
     CGFloat maxWidth = 0;
     CGFloat maxHeight = 0;
     if (maxLines == 0) {
         maxLines = (int)count;
     }
     for (NSInteger i = 0; i < MIN(maxLines, count); i++) {
+        CGPoint flipped = CGPointApplyAffineTransform(origins[i], transform);
         CGFloat ascent, descent, leading;
         CGFloat width = CTLineGetTypographicBounds(CFArrayGetValueAtIndex(linesRef, i), &ascent, &descent, &leading);
         CGFloat height = ascent + descent + leading;
         if (width > maxWidth) {
-            maxWidth = width;
+            maxWidth = flipped.x + width;
         }
-        if (height > maxHeight) {
-            maxHeight = height;
+        if (flipped.y + height > maxHeight) {
+            maxHeight = flipped.y + height;
         }
     }
+    
     MatchaLayoutPBPoint *point = [[MatchaLayoutPBPoint alloc] initWithCGSize:CGSizeMake(ceil(maxWidth), ceil(maxHeight))];
     return [[MatchaGoValue alloc] initWithData:point.data];
 }
