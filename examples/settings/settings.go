@@ -8,7 +8,7 @@ import (
 
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
-	"gomatcha.io/matcha/app"
+	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
@@ -87,7 +87,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 		}
 		cell1 := NewBasicCell()
 		cell1.Title = "Airplane Mode"
-		cell1.Icon = app.MustLoadImage("settings_airplane")
+		cell1.Icon = application.MustLoadImage("settings_airplane")
 		cell1.AccessoryView = switchView
 		cell1.HasIcon = true
 		group = append(group, cell1)
@@ -100,7 +100,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 			cell2.Subtitle = ""
 		}
 		cell2.HasIcon = true
-		cell2.Icon = app.MustLoadImage("settings_wifi")
+		cell2.Icon = application.MustLoadImage("settings_wifi")
 		cell2.Chevron = true
 		cell2.OnTap = func() {
 			v.app.Stack.Push(NewWifiView(v.app))
@@ -109,7 +109,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 
 		cell3 := NewBasicCell()
 		cell3.HasIcon = true
-		cell3.Icon = app.MustLoadImage("settings_bluetooth")
+		cell3.Icon = application.MustLoadImage("settings_bluetooth")
 		cell3.Title = "Bluetooth"
 		if v.app.Bluetooth.Enabled() {
 			cell3.Subtitle = "On"
@@ -124,7 +124,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 
 		cell4 := NewBasicCell()
 		cell4.HasIcon = true
-		cell4.Icon = app.MustLoadImage("settings_cellular")
+		cell4.Icon = application.MustLoadImage("settings_cellular")
 		cell4.Title = "Cellular"
 		cell4.Chevron = true
 		cell4.OnTap = func() {
@@ -134,7 +134,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 
 		cell5 := NewBasicCell()
 		cell5.HasIcon = true
-		cell5.Icon = app.MustLoadImage("settings_hotspot")
+		cell5.Icon = application.MustLoadImage("settings_hotspot")
 		cell5.Title = "Personal Hotspot"
 		cell5.Subtitle = "Off"
 		cell5.Chevron = true
@@ -145,7 +145,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 
 		cell6 := NewBasicCell()
 		cell6.HasIcon = true
-		cell6.Icon = app.MustLoadImage("settings_carrier")
+		cell6.Icon = application.MustLoadImage("settings_carrier")
 		cell6.Title = "Carrier"
 		cell6.Subtitle = "T-Mobile"
 		cell6.Chevron = true
@@ -166,7 +166,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 
 		cell1 := NewBasicCell()
 		cell1.HasIcon = true
-		cell1.Icon = app.MustLoadImage("settings_notifications")
+		cell1.Icon = application.MustLoadImage("settings_notifications")
 		cell1.Title = "Notifications"
 		cell1.Chevron = true
 		cell1.OnTap = func() {
@@ -176,7 +176,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 
 		cell2 := NewBasicCell()
 		cell2.HasIcon = true
-		cell2.Icon = app.MustLoadImage("settings_control_center")
+		cell2.Icon = application.MustLoadImage("settings_control_center")
 		cell2.Title = "Control Center"
 		cell2.Chevron = true
 		cell2.OnTap = func() {
@@ -186,7 +186,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 
 		cell3 := NewBasicCell()
 		cell3.HasIcon = true
-		cell3.Icon = app.MustLoadImage("settings_do_not_disturb")
+		cell3.Icon = application.MustLoadImage("settings_do_not_disturb")
 		cell3.Title = "Do Not Disturb"
 		cell3.Chevron = true
 		cell3.OnTap = func() {
@@ -367,7 +367,7 @@ func (v *SpacerDescription) Build(ctx view.Context) view.Model {
 type BasicCell struct {
 	view.Embed
 	HasIcon       bool
-	Icon          *app.ImageResource
+	Icon          *application.ImageResource
 	Title         string
 	Subtitle      string
 	AccessoryView view.View
@@ -406,7 +406,7 @@ func (v *BasicCell) Build(ctx view.Context) view.Model {
 	rightAnchor := l.Right()
 	if v.Chevron {
 		chevronView := view.NewImageView()
-		chevronView.Image = app.MustLoadImage("table_arrow")
+		chevronView.Image = application.MustLoadImage("table_arrow")
 		chevronView.ResizeMode = view.ImageResizeModeCenter
 		chevronView.ImageTint = chevronColor
 

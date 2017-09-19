@@ -8,7 +8,7 @@ import (
 
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
-	"gomatcha.io/matcha/app"
+	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
@@ -222,7 +222,7 @@ func (v *PostImageView) Build(ctx view.Context) view.Model {
 
 	if v.showHeart {
 		heart := view.NewImageView()
-		heart.Image = app.MustLoadImage("insta_heart")
+		heart.Image = application.MustLoadImage("insta_heart")
 		heart.ResizeMode = view.ImageResizeModeCenter
 		heart.PaintStyle = &paint.Style{
 			ShadowRadius: 10,
@@ -283,9 +283,9 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 
 	likeButton := view.NewImageButton()
 	if v.Liked {
-		likeButton.Image = app.MustLoadImage("insta_like_filled")
+		likeButton.Image = application.MustLoadImage("insta_like_filled")
 	} else {
-		likeButton.Image = app.MustLoadImage("insta_like")
+		likeButton.Image = application.MustLoadImage("insta_like")
 	}
 	likeButton.OnPress = func() {
 		if v.OnTouchLike != nil {
@@ -300,7 +300,7 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 	})
 
 	commentButton := view.NewImageButton()
-	commentButton.Image = app.MustLoadImage("insta_comment")
+	commentButton.Image = application.MustLoadImage("insta_comment")
 	commentButton.OnPress = func() {
 		if v.OnTouchComment != nil {
 			v.OnTouchComment()
@@ -312,7 +312,7 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 	})
 
 	shareButton := view.NewImageButton()
-	shareButton.Image = app.MustLoadImage("insta_share")
+	shareButton.Image = application.MustLoadImage("insta_share")
 	shareButton.OnPress = func() {
 		if v.OnTouchShare != nil {
 			v.OnTouchShare()
@@ -325,9 +325,9 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 
 	bookmarkButton := view.NewImageButton()
 	if v.Bookmarked {
-		bookmarkButton.Image = app.MustLoadImage("insta_bookmark_filled")
+		bookmarkButton.Image = application.MustLoadImage("insta_bookmark_filled")
 	} else {
-		bookmarkButton.Image = app.MustLoadImage("insta_bookmark")
+		bookmarkButton.Image = application.MustLoadImage("insta_bookmark")
 	}
 
 	bookmarkButton.OnPress = func() {

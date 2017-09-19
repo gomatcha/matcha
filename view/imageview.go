@@ -9,8 +9,9 @@ import (
 	"net/http"
 
 	"gomatcha.io/matcha"
-	"gomatcha.io/matcha/app"
+	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb"
@@ -60,9 +61,9 @@ func NewImageView() *ImageView {
 func (v *ImageView) Build(ctx Context) Model {
 	if v.pbImage == nil {
 		if v.Image != nil {
-			v.pbImage = app.ImageMarshalProtobuf(v.Image)
+			v.pbImage = internal.ImageMarshalProtobuf(v.Image)
 		} else if v.urlImage != nil {
-			v.pbImage = app.ImageMarshalProtobuf(v.urlImage)
+			v.pbImage = internal.ImageMarshalProtobuf(v.urlImage)
 		}
 	}
 
@@ -74,7 +75,7 @@ func (v *ImageView) Build(ctx Context) Model {
 		bounds = v.Image.Bounds()
 		resizeMode = v.ResizeMode
 
-		if res, ok := v.Image.(*app.ImageResource); ok {
+		if res, ok := v.Image.(*application.ImageResource); ok {
 			scale = res.Scale()
 		}
 	}

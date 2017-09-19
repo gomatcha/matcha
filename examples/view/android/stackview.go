@@ -6,7 +6,7 @@ import (
 
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
-	"gomatcha.io/matcha/app"
+	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/text"
@@ -124,7 +124,7 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 				Buttons: []*android.StackBarButton{
 					&android.StackBarButton{
 						Title: "item",
-						Icon:  app.MustLoadImage("settings_airplane"),
+						Icon:  application.MustLoadImage("settings_airplane"),
 						OnPress: func() {
 							fmt.Println("OnPress")
 						},

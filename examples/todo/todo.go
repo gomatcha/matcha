@@ -7,7 +7,7 @@ import (
 	"golang.org/x/image/colornames"
 
 	"gomatcha.io/bridge"
-	"gomatcha.io/matcha/app"
+	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/keyboard"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
@@ -235,9 +235,9 @@ func (v *Checkbox) Build(ctx view.Context) view.Model {
 
 	imageView := view.NewImageView()
 	if v.Value {
-		imageView.Image = app.MustLoadImage("CheckboxChecked")
+		imageView.Image = application.MustLoadImage("CheckboxChecked")
 	} else {
-		imageView.Image = app.MustLoadImage("CheckboxUnchecked")
+		imageView.Image = application.MustLoadImage("CheckboxUnchecked")
 	}
 	l.Add(imageView, func(s *constraint.Solver) {
 		s.CenterXEqual(l.CenterX())
@@ -281,7 +281,7 @@ func (v *DeleteButton) Build(ctx view.Context) view.Model {
 	})
 
 	imageView := view.NewImageView()
-	imageView.Image = app.MustLoadImage("Delete")
+	imageView.Image = application.MustLoadImage("Delete")
 	l.Add(imageView, func(s *constraint.Solver) {
 		s.CenterXEqual(l.CenterX())
 		s.CenterYEqual(l.CenterY())

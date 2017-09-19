@@ -6,8 +6,8 @@ import (
 	"image/color"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/app"
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/pb"
 	pbtext "gomatcha.io/matcha/pb/text"
@@ -135,8 +135,8 @@ func (v *TabView) Build(ctx view.Context) view.Model {
 		// Add to protobuf.
 		childrenPb = append(childrenPb, &pbios.TabChildView{
 			Title:        button.Title,
-			Icon:         app.ImageMarshalProtobuf(button.Icon),
-			SelectedIcon: app.ImageMarshalProtobuf(button.SelectedIcon),
+			Icon:         internal.ImageMarshalProtobuf(button.Icon),
+			SelectedIcon: internal.ImageMarshalProtobuf(button.SelectedIcon),
 			Badge:        button.Badge,
 		})
 	}

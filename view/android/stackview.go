@@ -10,7 +10,6 @@ import (
 	"github.com/gogo/protobuf/proto"
 
 	"gomatcha.io/bridge"
-	"gomatcha.io/matcha/app"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
@@ -242,7 +241,7 @@ type StackBarButton struct {
 func (v *StackBarButton) marshalProtobuf() *android.StackBarItem {
 	return &android.StackBarItem{
 		Title:    v.Title,
-		Icon:     app.ImageMarshalProtobuf(v.Icon),
+		Icon:     internal.ImageMarshalProtobuf(v.Icon),
 		IconTint: pb.ColorEncode(v.IconTint),
 		Disabled: v.Disabled,
 	}

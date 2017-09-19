@@ -1,4 +1,4 @@
-package app
+package application
 
 import (
 	"bytes"
@@ -14,31 +14,30 @@ import (
 	"gomatcha.io/matcha/pb/env"
 )
 
-type Resource struct {
-	path string
-}
+// type Resource struct {
+// 	path string
+// }
 
-// Load loads a resource at path.
-func Load(path string) (*Resource, error) {
-	return &Resource{path: path}, nil
-}
+// // Load loads a resource at path.
+// func Load(path string) (*Resource, error) {
+// 	return &Resource{path: path}, nil
+// }
 
-// MustLoadImage loads the resource at path, or panics on error.
-func MustLoad(path string) *Resource {
-	res, err := Load(path)
-	if err != nil {
-		panic(err.Error())
-	}
-	return res
-}
+// // MustLoadImage loads the resource at path, or panics on error.
+// func MustLoad(path string) *Resource {
+// 	res, err := Load(path)
+// 	if err != nil {
+// 		panic(err.Error())
+// 	}
+// 	return res
+// }
 
-func (r *Resource) MarshalProtobuf() *env.Resource {
-	return &env.Resource{
-		Path: r.path,
-	}
-}
+// func (r *Resource) MarshalProtobuf() *env.Resource {
+// 	return &env.Resource{
+// 		Path: r.path,
+// 	}
+// }
 
-// Disable "Compress PNG Files" and "Remove Text Metadata from PNG Files" if loading image resources is not working.
 type ImageResource struct {
 	path  string
 	rect  image.Rectangle
@@ -103,6 +102,11 @@ func (res *ImageResource) Scale() float64 {
 	return res.scale
 }
 
+// Path returns the path to the image.
+func (res *ImageResource) Path() string {
+	return res.path
+}
+
 func (res *ImageResource) load() {
 	var data []byte
 	if runtime.GOOS == "android" {
@@ -119,26 +123,12 @@ func (res *ImageResource) load() {
 	res.image = img
 }
 
+// MarshalProtobuf encodes res into a Protobuf object.
 func (res *ImageResource) MarshalProtobuf() *env.ImageResource {
 	if res == nil {
 		return nil
 	}
 	return &env.ImageResource{
 		Path: res.path,
-	}
-}
-
-func ImageMarshalProtobuf(img image.Image) *pb.ImageOrResource {
-	if img == nil {
-		return nil
-	}
-	if res, ok := img.(*ImageResource); ok {
-		return &pb.ImageOrResource{
-			Path: res.path,
-		}
-	} else {
-		return &pb.ImageOrResource{
-			Image: pb.ImageEncode(img),
-		}
 	}
 }

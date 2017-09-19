@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
-	"gomatcha.io/matcha/app"
+	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
@@ -43,7 +43,7 @@ func (v *ImageView) Build(ctx view.Context) view.Model {
 	_ = g1
 
 	chl2 := view.NewImageView()
-	chl2.Image = app.MustLoadImage("airplane")
+	chl2.Image = application.MustLoadImage("settings_airplane")
 	chl2.ResizeMode = view.ImageResizeModeCenter
 	g2 := l.Add(chl2, func(s *constraint.Solver) {
 		s.TopEqual(g1.Bottom())
@@ -53,7 +53,7 @@ func (v *ImageView) Build(ctx view.Context) view.Model {
 	})
 
 	chl3 := view.NewImageView()
-	chl3.Image = app.MustLoadImage("table_arrow")
+	chl3.Image = application.MustLoadImage("table_arrow")
 	chl3.ResizeMode = view.ImageResizeModeStretch
 	chl3.PaintStyle = &paint.Style{BackgroundColor: colornames.Lightgray}
 	chl3.ImageTint = colornames.Blue

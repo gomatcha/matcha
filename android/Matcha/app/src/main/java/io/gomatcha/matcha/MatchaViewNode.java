@@ -1,6 +1,7 @@
 package io.gomatcha.matcha;
 
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -166,12 +167,27 @@ public class MatchaViewNode extends Object {
             this.paintId = layoutPaintNode.getPaintId();
 
             PbPaint.Style paintStyle = layoutPaintNode.getPaintStyle();
-            if (paintStyle.hasBackgroundColor()) {
-                Pb.Color c = paintStyle.getBackgroundColor();
-                this.view.setBackgroundColor(Protobuf.newColor(c));
+
+            double ratio = (float)this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+            GradientDrawable gd = new GradientDrawable();
+
+            double cornerRadius = paintStyle.getCornerRadius();
+            gd.setCornerRadius((float)(cornerRadius * ratio));
+
+            if (paintStyle.hasBorderColor()) {
+                gd.setStroke((int)(paintStyle.getBorderWidth() * ratio), Protobuf.newColor(paintStyle.getBorderColor()));
             } else {
-                this.view.setBackgroundColor(Color.alpha(0));
+                gd.setStroke(0, 0);
             }
+
+            if (paintStyle.hasBackgroundColor()) {
+                gd.setColor(Protobuf.newColor(paintStyle.getBackgroundColor()));
+            } else {
+                gd.setColor(Color.alpha(0));
+            }
+            this.view.setBackground(gd);
+
+            this.view.setAlpha((float)(1.0 - paintStyle.getTransparency()));
         }
 
         this.children = children;

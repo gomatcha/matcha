@@ -1,11 +1,10 @@
+High:
+* Android custom view example
+* Better error logging for panics.
 * Stackview animation
 * Stackview button items
 * Android vertical/horizontal scrollviews?
 * Android double tap.
-
-High:
-* Android custom view example
-* Better error logging for panics.
 
 Medium:
 * Crash on "Stop"
@@ -18,6 +17,7 @@ Medium:
 * StackBar height / hidden, color
 * Android scroll views scrollposition
 * Better notavailable-view. lightgray with centered "Unknown".
+* Non-image resources.
 
 Low:
 * Not getting start and inprogress events for UITapGestureRecognizer.
@@ -61,6 +61,7 @@ Refactors
 * Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize? 
 * Rename view.Model.NativeValues to NativeOptions?
 * Rename app package to a name thats less used?? application.LoadImage()??
+* Move ImageMarshalProtobuf into internalfolder.
 
 Pro:
 * Add preload, and prepreload stages

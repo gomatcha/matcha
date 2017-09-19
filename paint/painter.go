@@ -31,10 +31,10 @@ type Style struct {
 	BorderColor     color.Color
 	BorderWidth     float64
 	CornerRadius    float64
-	ShadowRadius    float64
-	ShadowOffset    layout.Point
-	ShadowColor     color.Color
-	// Shadows do not work with corner radius. https://stackoverflow.com/q/11437750
+	// Shadows are not supported on android and do not work with corner radius. https://stackoverflow.com/q/11437750
+	ShadowRadius float64
+	ShadowOffset layout.Point
+	ShadowColor  color.Color
 }
 
 func (s *Style) MarshalProtobuf() *paint.Style {
