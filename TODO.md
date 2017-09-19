@@ -1,10 +1,10 @@
 High:
 * Android custom app example
 * Android custom view example
-* Stackview button items
-* Android vertical/horizontal scrollviews?
 
 Medium:
+* Stackview button items
+* Android vertical/horizontal scrollviews?
 * Crash on "Stop"
 * Rebuild Instagram.
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation

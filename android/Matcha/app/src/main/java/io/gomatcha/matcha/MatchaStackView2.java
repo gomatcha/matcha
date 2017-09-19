@@ -25,14 +25,6 @@ public class MatchaStackView2 extends RelativeLayout {
     void setChildViews(List<View> v) {
         boolean enter = childViews.size() <= v.size();
 
-        /*
-        if (childViews.size() > 0) {
-            View prev = childViews.get(childViews.size()-1);
-            this.removeView(prev);
-        }
-        */
-        Log.v("x", "setChildViews"+v);
-
         childViews = v;
 
         if (childViews.size() > 0) {
