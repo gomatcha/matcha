@@ -38,6 +38,7 @@ import (
 // 	}
 // }
 
+// ImageResource represents a static image asset and implements the image.Image interface.
 type ImageResource struct {
 	path  string
 	rect  image.Rectangle

@@ -60,8 +60,21 @@ Refactors
 * should options be pointer or struct receiver. Should statusbar be a pointer?
 * Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize? 
 * Rename view.Model.NativeValues to NativeOptions?
-* Rename app package to a name thats less used?? application.LoadImage()??
-* Move ImageMarshalProtobuf into internalfolder.
+
+Documentation
+* animate
+* comm
+* layout
+* layout/absolute
+* layout/constraint
+* layout/full
+* layout/table
+* paint
+* text
+* touch
+* view
+* view/ios
+* view/android
 
 Pro:
 * Add preload, and prepreload stages

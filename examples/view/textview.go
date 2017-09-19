@@ -104,7 +104,6 @@ func (v *TextView) Build(ctx view.Context) view.Model {
 	input.Placeholder = "Placeholder"
 	input.KeyboardType = keyboard.URLType
 	input.MaxLines = 1
-	input.KeyboardReturnType = keyboard.SearchReturnType
 	input.Responder = v.responder
 	input.OnTextChange = func(t *text.Text) {
 		v.Signal()

@@ -2,8 +2,6 @@
 //  input := textinput.New(ctx, "input")
 //  input.Text = v.text
 //  input.KeyboardType = keyboard.URLType
-//  input.KeyboardAppearance = keyboard.DarkAppearance
-//  input.KeyboardReturnType = keyboard.GoogleReturnType
 //  input.Responder = v.responder
 //
 //  button := ...
@@ -33,27 +31,27 @@ func (t Type) MarshalProtobuf() keyboard.Type {
 	return keyboard.Type(t)
 }
 
-// ReturnType defines the keyboard return key style
-type ReturnType int
+// // ReturnType defines the keyboard return key style
+// type ReturnType int
 
-const (
-	DefaultReturnType ReturnType = iota
-	GoReturnType
-	GoogleReturnType
-	JoinReturnType
-	NextReturnType
-	RouteReturnType
-	SearchReturnType
-	SendReturnType
-	YahooReturnType
-	DoneReturnType
-	EmergencyCallReturnType
-	ContinueReturnType
-)
+// const (
+// 	DefaultReturnType ReturnType = iota
+// 	GoReturnType
+// 	GoogleReturnType
+// 	JoinReturnType
+// 	NextReturnType
+// 	RouteReturnType
+// 	SearchReturnType
+// 	SendReturnType
+// 	YahooReturnType
+// 	DoneReturnType
+// 	EmergencyCallReturnType
+// 	ContinueReturnType
+// )
 
-func (t ReturnType) MarshalProtobuf() keyboard.ReturnType {
-	return keyboard.ReturnType(t)
-}
+// func (t ReturnType) MarshalProtobuf() keyboard.ReturnType {
+// 	return keyboard.ReturnType(t)
+// }
 
 // Responder is a model object that represents the keyboard's state. To use Responder it must be attached to a textinput.View.
 type Responder struct {

@@ -19,22 +19,21 @@ import (
 // StyledText fields in place.
 type TextInput struct {
 	Embed
-	PaintStyle         *paint.Style
-	Text               *text.Text
-	text               *text.Text
-	Style              *text.Style
-	Placeholder        string
-	PlaceholderStyle   *text.Style
-	Password           bool
-	KeyboardType       keyboard.Type
-	KeyboardReturnType keyboard.ReturnType
-	Responder          *keyboard.Responder
-	prevResponder      *keyboard.Responder
-	responder          *keyboard.Responder
-	MaxLines           int // This is used only for sizing.
-	OnTextChange       func(*text.Text)
-	OnSubmit           func()
-	OnFocus            func(*keyboard.Responder)
+	PaintStyle       *paint.Style
+	Text             *text.Text
+	text             *text.Text
+	Style            *text.Style
+	Placeholder      string
+	PlaceholderStyle *text.Style
+	Password         bool
+	KeyboardType     keyboard.Type
+	Responder        *keyboard.Responder
+	prevResponder    *keyboard.Responder
+	responder        *keyboard.Responder
+	MaxLines         int // This is used only for sizing.
+	OnTextChange     func(*text.Text)
+	OnSubmit         func()
+	OnFocus          func(*keyboard.Responder)
 }
 
 // NewTextInput returns either the previous View in ctx with matching key, or a new View if none exists.
@@ -109,14 +108,13 @@ func (v *TextInput) Build(ctx Context) Model {
 		Painter:        painter,
 		NativeViewName: "gomatcha.io/matcha/view/textinput",
 		NativeViewState: &pbview.TextInput{
-			Font:               style.Font().MarshalProtobuf(),
-			StyledText:         st.MarshalProtobuf(),
-			PlaceholderText:    placeholderStyledText.MarshalProtobuf(),
-			KeyboardType:       v.KeyboardType.MarshalProtobuf(),
-			KeyboardReturnType: v.KeyboardReturnType.MarshalProtobuf(),
-			Focused:            responder.Visible(),
-			MaxLines:           int64(v.MaxLines),
-			SecureTextEntry:    v.Password,
+			Font:            style.Font().MarshalProtobuf(),
+			StyledText:      st.MarshalProtobuf(),
+			PlaceholderText: placeholderStyledText.MarshalProtobuf(),
+			KeyboardType:    v.KeyboardType.MarshalProtobuf(),
+			Focused:         responder.Visible(),
+			MaxLines:        int64(v.MaxLines),
+			SecureTextEntry: v.Password,
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnTextChange": func(data []byte) {
