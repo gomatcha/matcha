@@ -63,7 +63,7 @@ public class JavaBridge {
         Choreographer.getInstance().postFrameCallback(callback);
     }
 
-    void updateViewWithProtobuf(Long id, byte[] protobuf) {
+    public void updateViewWithProtobuf(Long id, byte[] protobuf) {
         for (WeakReference<MatchaView> i : MatchaView.views) {
             if (i.get().identifier == id) {
                 try {
@@ -76,7 +76,7 @@ public class JavaBridge {
         }
     }
 
-    GoValue sizeForStyledText(byte[] protobuf, Long maxLines) {
+    public GoValue sizeForStyledText(byte[] protobuf, Long maxLines) {
         try {
             PbText.SizeFunc sizeFunc = PbText.SizeFunc.parseFrom(protobuf);
             SpannableString str = Protobuf.newAttributedString(sizeFunc.getText());
@@ -109,7 +109,7 @@ public class JavaBridge {
         }
     }
 
-    GoValue getImageForResource(String path) {
+    public GoValue getImageForResource(String path) {
         Resources res = context.getResources();
         int id = res.getIdentifier(path, "drawable", context.getPackageName());
         Bitmap bitmap = BitmapFactory.decodeResource(res, id);
@@ -120,7 +120,7 @@ public class JavaBridge {
         return new GoValue(byteBuffer.array());
     }
 
-    GoValue getPropertiesForResource(String path) {
+    public GoValue getPropertiesForResource(String path) {
         Resources res = context.getResources();
         int id = res.getIdentifier(path, "drawable", context.getPackageName());
 
@@ -170,7 +170,7 @@ public class JavaBridge {
         */
     }
     
-    void displayAlert(byte[] protobuf) {
+    public void displayAlert(byte[] protobuf) {
         try {
             final PbAlert.Alert alert = PbAlert.Alert.parseFrom(protobuf);
         
