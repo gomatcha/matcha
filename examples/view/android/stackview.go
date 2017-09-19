@@ -50,7 +50,7 @@ type StackChild struct {
 	view.Embed
 	app   *StackApp
 	Color color.Color
-	bar   *android.StackBar
+	Index int
 }
 
 func NewStackChild(app *StackApp) *StackChild {
@@ -70,6 +70,7 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 			// v.Signal()
 
 			child := NewStackChild(v.app)
+			child.Index = v.Index + 1
 			child.Color = colornames.White
 			v.app.stack.Push(child)
 		},
@@ -110,7 +111,7 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 	leftView.Layouter = l3
 
 	titleStyle := &text.Style{}
-	title := text.NewStyledText("Title", titleStyle)
+	title := text.NewStyledText(fmt.Sprintf("Title %v", v.Index), titleStyle)
 	subtitleStyle := &text.Style{}
 	subtitle := text.NewStyledText("Subtitle", subtitleStyle)
 
@@ -126,7 +127,7 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 				Color: colornames.White,
 				Buttons: []*android.StackBarButton{
 					&android.StackBarButton{
-						Title: "item",
+						Title: "index",
 						Icon:  application.MustLoadImage("settings_airplane"),
 						OnPress: func() {
 							fmt.Println("OnPress")

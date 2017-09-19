@@ -1,7 +1,6 @@
 High:
 * Android custom app example
 * Android custom view example
-* Stackview animation
 * Stackview button items
 * Android vertical/horizontal scrollviews?
 

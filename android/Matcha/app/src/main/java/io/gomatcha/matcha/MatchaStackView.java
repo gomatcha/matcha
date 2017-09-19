@@ -53,32 +53,30 @@ public class MatchaStackView extends MatchaChildView {
         return true;
     }
 
+    ArrayList<MatchaToolbarWrapper> wrappers = new ArrayList<MatchaToolbarWrapper>();
+
     @Override
     public void setChildViews(List<View> childViews) {
+        while (wrappers.size() < childViews.size()/2) {
+            wrappers.add(new MatchaToolbarWrapper(this.getContext()));
+        }
+        while (wrappers.size() > childViews.size()/2) {
+            wrappers.remove(wrappers.size()-1);
+        }
+
         ArrayList<View> toolbarViews = new ArrayList<View>();
         for (int i = 0; i < childViews.size() / 2; i++) {
-            RelativeLayout layout = new RelativeLayout(getContext());
+            MatchaToolbarWrapper wrapper = wrappers.get(i);
 
-            RelativeLayout.LayoutParams toolbarParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             MatchaToolbarView toolbar = (MatchaToolbarView)childViews.get(i*2);
-            ViewParent toolbarParent = toolbar.getParent();
-            if (toolbarParent != null) {
-                ((RelativeLayout)toolbarParent).removeView(toolbar);
-            }
             toolbar.setId(MatchaPagerView.generateViewId());
             toolbar.stackView = this;
-            layout.addView(toolbar, toolbarParams);
+            wrapper.setToolbarView(toolbar);
 
-            RelativeLayout.LayoutParams childViewParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            childViewParams.addRule(RelativeLayout.BELOW, toolbar.getId());
             View childView = childViews.get(i * 2 + 1);
-            ViewParent childParent = childView.getParent();
-            if (childParent != null) {
-                ((RelativeLayout)childParent).removeView(childView);
-            }
-            layout.addView(childView, childViewParams);
+            wrapper.setContentView(childView);
 
-            toolbarViews.add(layout);
+            toolbarViews.add(wrapper);
         }
         stackView2.setChildViews(toolbarViews);
     }
