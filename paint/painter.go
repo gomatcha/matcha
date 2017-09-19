@@ -30,8 +30,9 @@ type Style struct {
 	BackgroundColor color.Color
 	BorderColor     color.Color
 	BorderWidth     float64
-	CornerRadius    float64
-	// Shadows are not supported on android and do not work with corner radius. https://stackoverflow.com/q/11437750
+	// CornerRadius is only supported for imageview on android.
+	CornerRadius float64
+	// Shadows are not supported on android. And do not work with corner radius on iOS (https://stackoverflow.com/q/11437750).
 	ShadowRadius float64
 	ShadowOffset layout.Point
 	ShadowColor  color.Color

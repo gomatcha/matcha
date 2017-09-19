@@ -10,6 +10,7 @@ image names or folders and this restriction carries over to Matcha as well.
     if err != nil {
         imageview.Image = img
     }
+
     // or
     imageview.Image = application.MustLoadImage("example")
 */

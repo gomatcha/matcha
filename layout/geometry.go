@@ -7,6 +7,7 @@ import (
 	pblayout "gomatcha.io/matcha/pb/layout"
 )
 
+// Axis represents a direction along the coordinate plane.
 type Axis int
 
 const (
@@ -14,6 +15,7 @@ const (
 	AxisX
 )
 
+// Edge represents a side of a rectangle.
 type Edge int
 
 const (

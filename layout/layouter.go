@@ -15,11 +15,13 @@ func init() {
 	bridge.RegisterType("layout.Rect", reflect.TypeOf(Rect{}))
 }
 
+// Layouter ... TODO(KD):...
 type Layouter interface {
 	Layout(ctx Context) (Guide, []Guide)
 	comm.Notifier
 }
 
+// Context provides properties and hooks for Layouter.Layout().
 type Context interface {
 	MaxSize() Point
 	MinSize() Point

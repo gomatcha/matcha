@@ -13,9 +13,10 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.gomatcha.matcha.pb.Pb;
 import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.PbImageView;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 public class MatchaImageView extends MatchaChildView {
-    ImageView view;
+    RoundedImageView view;
     
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/imageview", new MatchaView.ViewFactory() {
@@ -29,7 +30,7 @@ public class MatchaImageView extends MatchaChildView {
     public MatchaImageView(Context context, MatchaViewNode node) {
         super(context, node);
 
-        view = new ImageView(context);
+        view = new RoundedImageView(context);
         addView(view);
     }
     

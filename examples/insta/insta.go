@@ -152,7 +152,7 @@ func (v *PostView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
-		Painter:  &paint.Style{BackgroundColor: colornames.Blue},
+		Painter:  &paint.Style{BackgroundColor: colornames.White},
 	}
 }
 
@@ -238,6 +238,9 @@ func (v *PostImageView) Build(ctx view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 2,
 		OnTouch: func(e *touch.TapEvent) {
+			if e.Kind != touch.EventKindRecognized {
+				return
+			}
 			v.showHeart = true
 			v.Signal()
 			time.AfterFunc(time.Second, func() {

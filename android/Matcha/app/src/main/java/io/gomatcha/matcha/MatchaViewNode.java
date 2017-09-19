@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.gomatcha.matcha.pb.Pb;
 import io.gomatcha.matcha.pb.paint.PbPaint;
 import io.gomatcha.matcha.pb.touch.PbTouch;
 import io.gomatcha.matcha.pb.view.PbView;
@@ -178,6 +177,12 @@ public class MatchaViewNode extends Object {
                 gd.setStroke((int)(paintStyle.getBorderWidth() * ratio), Protobuf.newColor(paintStyle.getBorderColor()));
             } else {
                 gd.setStroke(0, 0);
+            }
+
+            if (this.view instanceof MatchaImageView) {
+                ((MatchaImageView)this.view).view.setCornerRadius((float)(cornerRadius*ratio));
+                ((MatchaImageView)this.view).view.setBorderColor(Protobuf.newColor(paintStyle.getBorderColor()));
+                ((MatchaImageView)this.view).view.setBorderWidth((float)(paintStyle.getBorderWidth()*ratio));
             }
 
             if (paintStyle.hasBackgroundColor()) {

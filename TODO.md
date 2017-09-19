@@ -1,6 +1,5 @@
 High:
 * Android custom view example
-* Better error logging for panics.
 * Stackview animation
 * Stackview button items
 * Android vertical/horizontal scrollviews?
@@ -20,6 +19,7 @@ Medium:
 * Non-image resources.
 
 Low:
+* Better error logging for panics.
 * Not getting start and inprogress events for UITapGestureRecognizer.
 * UIButtonGestureRecognizer only sends a event if inside/outside changes. Its faster but less generic?
 * Delay any ui events while viewcontroller is updating??
@@ -32,7 +32,7 @@ Low:
 * Table ScrollBehaviors, Table Direction
 * Custom painters.
 * Compile a list of things that should be easy to do and implement them. Button activation cancelled by vertical scrolling but not horizontal, Pinch to zoom, Highlighting a view and dragging outside of it and back in., Horizontal swipe on tableview to show delete button, Touch driven animations. AKA swipe back to navigate.
-* Guide.Insets, GUide.Transform? Layout.Insets(top, left, bottom, right)?
+* Guide.Insets, Guide.Transform? Layout.Insets(top, left, bottom, right)?
 * Table behaviors
 * Button disabled/highlighted state using anonymous structs?
 
@@ -77,18 +77,18 @@ Documentation
 * view/android
 
 Pro:
-* Add preload, and prepreload stages
-* Webview
-* Debugging
-* LocalStorage / Keychain / UserDefaults
-* Cliboard
-* Notifications
-* Video / Sound / Microphone / Accelerometer
+* Add preload, and prepreload stages :
+* Webview : 
+* Debugging : 
+* LocalStorage / Keychain / UserDefaults : pref, iospref, osxpref, andpref, securepref?
+* Cliboard : clipboard
+* Notifications : notification, iosnotification, andnotification
+* Video / Sound / Microphone / Accelerometer : zview, zios, zandroid
 * ActionSheet
 * CameraView
 * MapView
 * GPS
-* Accessibility
+* Accessibility : access, 
 * Android touch highlight?
 
 Target Android 4.1 API 16 JellyBean
