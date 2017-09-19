@@ -23,7 +23,7 @@ func init() {
 		}
 
 		view1 := NewStackChild(app)
-		view1.Color = colornames.Blue
+		view1.Color = colornames.White
 		v1 := view.WithOptions(view1, &android.StackBar{Title: "Title 1"})
 
 		// view2 := NewStackChild(app)
@@ -63,11 +63,14 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {
+			if e.Kind != touch.EventKindRecognized {
+				return
+			}
 			// v.bar.Title = "Updated"
 			// v.Signal()
 
 			child := NewStackChild(v.app)
-			child.Color = colornames.Purple
+			child.Color = colornames.White
 			v.app.stack.Push(child)
 		},
 	}

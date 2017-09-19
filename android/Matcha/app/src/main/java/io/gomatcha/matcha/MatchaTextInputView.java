@@ -53,9 +53,7 @@ public class MatchaTextInputView extends MatchaChildView {
         final Context ctx = context;
 
         view = new EditText(context);
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
-            view.setBackground(null);
-        }
+        view.setBackground(null);
         view.setGravity(Gravity.TOP);
         view.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

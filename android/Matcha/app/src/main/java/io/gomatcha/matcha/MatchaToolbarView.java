@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -47,6 +48,10 @@ public class MatchaToolbarView extends MatchaChildView {
                 stackView.back();
             }
         });
+        if (android.os.Build.VERSION.SDK_INT >= 21){
+            float ratio = (float)context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+            this.setElevation(4*ratio);
+        }
         addView(toolbar);
     }
 

@@ -1,14 +1,15 @@
 High:
+* Android custom app example
 * Android custom view example
 * Stackview animation
 * Stackview button items
 * Android vertical/horizontal scrollviews?
-* Android double tap.
 
 Medium:
 * Crash on "Stop"
 * Rebuild Instagram.
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation
+* Android double tap.
 * Modal presentation.
 * Picker
 * TextField
