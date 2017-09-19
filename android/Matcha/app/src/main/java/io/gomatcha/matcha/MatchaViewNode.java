@@ -42,7 +42,7 @@ public class MatchaViewNode extends Object {
         PbView.LayoutPaintNode layoutPaintNode = root.getLayoutPaintNodesOrDefault(id, null);
         PbView.BuildNode buildNode = root.getBuildNodesOrDefault(id, null);
 
-        // Create scrollView
+        // Create view
         if (this.view == null) {
             this.view = MatchaView.createView(buildNode.getBridgeName(), rootView.getContext(), this);
         }

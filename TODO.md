@@ -1,6 +1,7 @@
 * Stackview animation
 * Stackview button items
 * Android vertical/horizontal scrollviews?
+* Android double tap.
 
 High:
 * Android custom view example
@@ -15,7 +16,6 @@ Medium:
 * TextField
 * Rotation / orientation
 * StackBar height / hidden, color
-* Android image resource scale??
 * Android scroll views scrollposition
 * Better notavailable-view. lightgray with centered "Unknown".
 

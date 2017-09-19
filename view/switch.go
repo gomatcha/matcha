@@ -2,6 +2,7 @@ package view
 
 import (
 	"fmt"
+	"runtime"
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/layout"
@@ -26,11 +27,14 @@ func NewSwitch() *Switch {
 
 // Build implements view.View.
 func (v *Switch) Build(ctx Context) Model {
-	l := &absoluteLayouter{
-		Guide: layout.Guide{
-			Frame: layout.Rt(0, 0, 51, 31),
-		},
+	var rect layout.Rect
+	if runtime.GOOS == "android" {
+		rect = layout.Rt(0, 0, 61, 40)
+	} else {
+		rect = layout.Rt(0, 0, 51, 31)
 	}
+
+	l := &absoluteLayouter{Guide: layout.Guide{Frame: rect}}
 
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {

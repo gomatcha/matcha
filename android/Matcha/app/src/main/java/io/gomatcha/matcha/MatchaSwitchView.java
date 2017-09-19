@@ -2,11 +2,13 @@ package io.gomatcha.matcha;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.support.v7.widget.SwitchCompat;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -15,7 +17,7 @@ import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.PbSwitchView;
 
 public class MatchaSwitchView extends MatchaChildView {
-    Switch view;
+    SwitchCompat view;
     boolean checked;
 
     static {
@@ -30,7 +32,9 @@ public class MatchaSwitchView extends MatchaChildView {
     public MatchaSwitchView(Context context, MatchaViewNode node) {
         super(context, node);
 
-        view = new Switch(context);
+        float ratio = (float)context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+        view = new SwitchCompat(context);
+        view.setPadding(0, 0, (int)(7*ratio), 0);
         view.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked != checked) {

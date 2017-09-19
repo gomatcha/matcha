@@ -17,6 +17,7 @@ public class MatchaChildView extends MatchaLayout {
         final Context ctx = context;
         viewNode = node;
         this.setClipChildren(false);
+        this.setClipToPadding(false);
         this.matchaGestureRecognizer = new MatchaGestureRecognizer();
         this.matchaGestureRecognizer.childView = this;
         this.matchaGestureRecognizer.context = context;
