@@ -59,11 +59,9 @@ Very Low:
 * Strikethrough doesn't work.
 
 Refactors
-* Change enabled to disabled.
 * Change OnPress to OnActivate, OnSelect?
 * Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize? 
 * Touch package to Pointer?
-* Rename view.Model.NativeValues to NativeOptions?
 
 Documentation
 * animate

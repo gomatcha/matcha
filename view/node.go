@@ -403,7 +403,7 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 	}
 
 	nativeValues := map[string]*google_protobuf.Any{}
-	for k, v := range n.model.NativeValues {
+	for k, v := range n.model.NativeOptions {
 		a, err := ptypes.MarshalAny(v)
 		if err != nil {
 			fmt.Println("Error enocding native value: ", err)

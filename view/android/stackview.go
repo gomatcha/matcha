@@ -234,8 +234,14 @@ type StackBarItem struct {
 	StyledTitle *text.StyledText
 	Icon        image.Image
 	IconTint    color.Color
-	Disabled    bool
+	Enabled     bool
 	OnPress     func()
+}
+
+func NewStackBarItem() *StackBarItem {
+	return &StackBarItem{
+		Enabled: true,
+	}
 }
 
 func (v *StackBarItem) marshalProtobuf() *android.StackBarItem {
@@ -243,7 +249,7 @@ func (v *StackBarItem) marshalProtobuf() *android.StackBarItem {
 		Title:    v.Title,
 		Icon:     internal.ImageMarshalProtobuf(v.Icon),
 		IconTint: pb.ColorEncode(v.IconTint),
-		Disabled: v.Disabled,
+		Disabled: !v.Enabled,
 	}
 }
 

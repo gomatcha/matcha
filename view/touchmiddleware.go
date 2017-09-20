@@ -96,10 +96,10 @@ func (r *touchMiddleware) Build(ctx Context, next *Model) {
 		}
 	}
 
-	if next.NativeValues == nil {
-		next.NativeValues = map[string]proto.Message{}
+	if next.NativeOptions == nil {
+		next.NativeOptions = map[string]proto.Message{}
 	}
-	next.NativeValues["gomatcha.io/matcha/touch"] = pbRecognizers
+	next.NativeOptions["gomatcha.io/matcha/touch"] = pbRecognizers
 
 	if next.NativeFuncs == nil {
 		next.NativeFuncs = map[string]interface{}{}

@@ -60,6 +60,20 @@ func NewStackChild(app *StackApp) *StackChild {
 }
 
 func (v *StackChild) Build(ctx view.Context) view.Model {
+	// tap := &touch.NewTapGesture()
+	// tap.OnTouch = func(e *touch.TapEvent) {
+	// 	if e.Kind != touch.EventKindRecognized {
+	// 		return
+	// 	}
+	// 	// v.bar.Title = "Updated"
+	// 	// v.Signal()
+
+	// 	child := NewStackChild(v.app)
+	// 	child.Index = v.Index + 1
+	// 	child.Color = colornames.White
+	// 	v.app.stack.Push(child)
+	// }
+
 	tap := &touch.TapGesture{
 		Count: 1,
 		OnTouch: func(e *touch.TapEvent) {
@@ -76,44 +90,17 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 		},
 	}
 
-	l := &constraint.Layouter{}
-	l.Solve(func(s *constraint.Solver) {
-		s.TopEqual(constraint.Const(0))
-		s.LeftEqual(constraint.Const(0))
-		s.HeightEqual(constraint.Const(100))
-		s.WidthEqual(constraint.Const(100))
-	})
-
-	titleView := view.NewBasicView()
-	titleView.Painter = &paint.Style{BackgroundColor: colornames.Red}
-	titleView.Layouter = l
-
-	l2 := &constraint.Layouter{}
-	l2.Solve(func(s *constraint.Solver) {
-		s.TopEqual(constraint.Const(0))
-		s.LeftEqual(constraint.Const(0))
-		s.HeightEqual(constraint.Const(50))
-		s.WidthEqual(constraint.Const(50))
-	})
-	rightView := view.NewBasicView()
-	rightView.Painter = &paint.Style{BackgroundColor: colornames.Blue}
-	rightView.Layouter = l2
-
-	l3 := &constraint.Layouter{}
-	l3.Solve(func(s *constraint.Solver) {
-		s.TopEqual(constraint.Const(0))
-		s.LeftEqual(constraint.Const(0))
-		s.HeightEqual(constraint.Const(50))
-		s.WidthEqual(constraint.Const(50))
-	})
-	leftView := view.NewBasicView()
-	leftView.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
-	leftView.Layouter = l3
-
 	titleStyle := &text.Style{}
 	title := text.NewStyledText(fmt.Sprintf("Title %v", v.Index), titleStyle)
 	subtitleStyle := &text.Style{}
 	subtitle := text.NewStyledText("Subtitle", subtitleStyle)
+
+	item := android.NewStackBarItem()
+	item.Title = "index"
+	item.Icon = application.MustLoadImage("settings_airplane")
+	item.OnPress = func() {
+		fmt.Println("OnPress")
+	}
 
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: v.Color},
@@ -122,18 +109,8 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 			&android.StackBar{
 				StyledTitle:    title,
 				StyledSubtitle: subtitle,
-				// Title:    "Title",
-				// Subtitle: "Subtitle",
-				Color: colornames.White,
-				Items: []*android.StackBarItem{
-					&android.StackBarItem{
-						Title: "index",
-						Icon:  application.MustLoadImage("settings_airplane"),
-						OnPress: func() {
-							fmt.Println("OnPress")
-						},
-					},
-				},
+				Color:          colornames.White,
+				Items:          []*android.StackBarItem{item},
 			},
 		},
 	}
