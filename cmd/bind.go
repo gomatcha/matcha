@@ -459,7 +459,7 @@ func Bind(flags *Flags, args []string) error {
 		}
 
 		// Copy binary into place.
-		if err := CopyFile(flags, filepath.Join(outputDir, "android", "MatchaBridge", "matchabridge.aar"), aarPath); err != nil {
+		if err := CopyFile(flags, filepath.Join(outputDir, "android", "matchabridge.aar"), aarPath); err != nil {
 			return err
 		}
 	}

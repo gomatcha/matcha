@@ -1,6 +1,7 @@
 High:
-* Android custom app example
 * Android custom view example
+* Non-image resources.
+* Better notavailable-view. lightgray with centered "Unknown".
 
 Medium:
 * Stackview button items
@@ -15,8 +16,6 @@ Medium:
 * Rotation / orientation
 * StackBar height / hidden, color
 * Android scroll views scrollposition
-* Better notavailable-view. lightgray with centered "Unknown".
-* Non-image resources.
 
 Low:
 * Better error logging for panics.
