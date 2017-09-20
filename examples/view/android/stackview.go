@@ -125,8 +125,8 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 				// Title:    "Title",
 				// Subtitle: "Subtitle",
 				Color: colornames.White,
-				Buttons: []*android.StackBarButton{
-					&android.StackBarButton{
+				Items: []*android.StackBarItem{
+					&android.StackBarItem{
 						Title: "index",
 						Icon:  application.MustLoadImage("settings_airplane"),
 						OnPress: func() {

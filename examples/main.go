@@ -4,7 +4,7 @@ package examples
 import (
 	_ "gomatcha.io/matcha/examples/animate"
 	_ "gomatcha.io/matcha/examples/complex"
-	_ "gomatcha.io/matcha/examples/custom"
+	_ "gomatcha.io/matcha/examples/customview"
 	_ "gomatcha.io/matcha/examples/insta"
 	_ "gomatcha.io/matcha/examples/layout"
 	_ "gomatcha.io/matcha/examples/paint"

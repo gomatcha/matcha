@@ -4,7 +4,6 @@ package customview
 import (
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
-	"gomatcha.io/matcha/examples/custom/customview"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
@@ -27,7 +26,7 @@ func NewView() *View {
 func (v *View) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := customview.NewCustomView()
+	chl1 := NewCustomView()
 	chl1.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
 	l.Add(chl1, func(s *constraint.Solver) {
 		s.Top(0)

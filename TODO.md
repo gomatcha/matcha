@@ -61,9 +61,8 @@ Very Low:
 Refactors
 * Change enabled to disabled.
 * Change OnPress to OnActivate, OnSelect?
-* StackBarButton or StackBarItem
-* should options be pointer or struct receiver. Should statusbar be a pointer?
 * Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize? 
+* Touch package to Pointer?
 * Rename view.Model.NativeValues to NativeOptions?
 
 Documentation
@@ -81,7 +80,7 @@ Documentation
 * view/ios
 * view/android
 
-Pro:
+Upgrade:
 * Add preload, and prepreload stages :
 * Webview : 
 * Debugging : 
