@@ -12,7 +12,7 @@ type CustomView struct {
 }
 
 // New returns an initialized CustomView instance.
-func NewCustomView() *CustomView {
+func NewCustomView() *View {
 	return &CustomView{}
 }
 

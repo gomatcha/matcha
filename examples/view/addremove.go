@@ -27,6 +27,7 @@ func (v *AddRemoveView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewButton()
+	chl1.Enabled = true
 	if !v.showView {
 		chl1.String = "Add"
 	} else {

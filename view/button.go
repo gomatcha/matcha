@@ -21,14 +21,14 @@ type Button struct {
 	String     string
 	Color      color.Color
 	OnPress    func()
-	Disabled   bool
+	Enabled    bool
 	PaintStyle *paint.Style
 }
 
 // NewButton returns either the previous View in ctx with matching key, or a new View if none exists.
 func NewButton() *Button {
 	return &Button{
-		Disabled: true,
+		Enabled: true,
 	}
 }
 
@@ -44,7 +44,7 @@ func (v *Button) Build(ctx Context) Model {
 		NativeViewName: "gomatcha.io/matcha/view/button",
 		NativeViewState: &pbview.Button{
 			Str:     v.String,
-			Enabled: !v.Disabled,
+			Enabled: v.Enabled,
 			Color:   pb.ColorEncode(v.Color),
 		},
 		NativeFuncs: map[string]interface{}{
