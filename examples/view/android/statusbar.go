@@ -1,23 +1,25 @@
-package ios
+package android
 
 import (
+	"image/color"
+
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/ios"
+	"gomatcha.io/matcha/view/android"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/ios NewStatusBarView", func() view.View {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/android NewStatusBarView", func() view.View {
 		return NewStatusBarView()
 	})
 }
 
 type StatusBarView struct {
 	view.Embed
-	style  ios.StatusBarStyle
+	color  color.Color
 	hidden bool
 }
 
@@ -31,10 +33,10 @@ func (v *StatusBarView) Build(ctx view.Context) view.Model {
 	chl1 := view.NewButton()
 	chl1.String = "Toggle Style"
 	chl1.OnPress = func() {
-		if v.style == ios.StatusBarStyleLight {
-			v.style = ios.StatusBarStyleDark
+		if v.color == colornames.Red {
+			v.color = colornames.White
 		} else {
-			v.style = ios.StatusBarStyleLight
+			v.color = colornames.Red
 		}
 		v.Signal()
 	}
@@ -61,8 +63,8 @@ func (v *StatusBarView) Build(ctx view.Context) view.Model {
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.Lightgray},
 		Options: []view.Option{
-			&ios.StatusBar{
-				Style:  v.style,
+			&android.StatusBar{
+				Color:  v.color,
 				Hidden: v.hidden,
 			},
 		},

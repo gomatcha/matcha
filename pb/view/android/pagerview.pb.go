@@ -7,6 +7,7 @@ Package android is a generated protocol buffer package.
 It is generated from these files:
 	gomatcha.io/matcha/pb/view/android/pagerview.proto
 	gomatcha.io/matcha/pb/view/android/stackview.proto
+	gomatcha.io/matcha/pb/view/android/statusbar.proto
 
 It has these top-level messages:
 	PagerChildView
@@ -17,6 +18,7 @@ It has these top-level messages:
 	StackBar
 	StackBarItem
 	StackEvent
+	StatusBar
 */
 package android
 

@@ -1,10 +1,14 @@
-package ios
+package android
 
 import (
+	"image/color"
+
 	"github.com/gogo/protobuf/proto"
+	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
-	pbapp "gomatcha.io/matcha/pb/app"
+	"gomatcha.io/matcha/pb"
+	pbapp "gomatcha.io/matcha/pb/view/android"
 	"gomatcha.io/matcha/view"
 )
 
@@ -20,16 +24,16 @@ const (
 // to use this component.
 //  return view.Model{
 //      Options: []view.Option{
-//          &ios.StatusBar{ Style: ios.StatusBarStyleLight },
+//          &android.StatusBar{ Color: colornames.Red },
 //      },
 //  }
 type StatusBar struct {
 	Hidden bool
-	Style  StatusBarStyle
+	Color  color.Color
 }
 
 func (s *StatusBar) OptionKey() string {
-	return "gomatcha.io/matcha/app statusbar"
+	return "gomatcha.io/matcha/view/android statusbar"
 }
 
 func init() {
@@ -64,7 +68,7 @@ func (m *statusBarMiddleware) Build(ctx view.Context, model *view.Model) {
 }
 
 func (m *statusBarMiddleware) MarshalProtobuf() proto.Message {
-	var statusBar StatusBar = StatusBar{Style: StatusBarStyleDark}
+	var statusBar StatusBar = StatusBar{Color: colornames.Black}
 	maxId := int64(-1)
 	m.radix.Range(func(path []int64, node *radix.Node) {
 		if len(path) > 0 && path[len(path)-1] > maxId {
@@ -74,10 +78,10 @@ func (m *statusBarMiddleware) MarshalProtobuf() proto.Message {
 	})
 	return &pbapp.StatusBar{
 		Hidden: statusBar.Hidden,
-		Style:  pbapp.StatusBarStyle(statusBar.Style + 1),
+		Color:  pb.ColorEncode(statusBar.Color),
 	}
 }
 
 func (m *statusBarMiddleware) Key() string {
-	return "gomatcha.io/matcha/app statusbar"
+	return "gomatcha.io/matcha/view/android statusbar"
 }

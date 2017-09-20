@@ -16,7 +16,7 @@ type ActivityIndicator struct {
 	// ActivityIndicator has no fields.
 }
 
-func (a ActivityIndicator) OptionKey() string {
+func (a *ActivityIndicator) OptionKey() string {
 	return "gomatcha.io/matcha/app activity"
 }
 
@@ -37,7 +37,7 @@ func (m *activityIndicatorMiddleware) Build(ctx view.Context, model *view.Model)
 
 	add := false
 	for _, i := range model.Options {
-		if _, ok := i.(ActivityIndicator); ok {
+		if _, ok := i.(*ActivityIndicator); ok {
 			add = true
 		}
 	}

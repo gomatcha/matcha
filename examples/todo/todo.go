@@ -84,7 +84,7 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
 		Options: []view.Option{
 			&ios.StackBar{Title: "Todos"},
-			ios.StatusBar{Style: ios.StatusBarStyleLight},
+			&ios.StatusBar{Style: ios.StatusBarStyleLight},
 		},
 	}
 }

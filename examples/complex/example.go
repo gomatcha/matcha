@@ -239,8 +239,8 @@ func (v *NestedView) Build(ctx view.Context) view.Model {
 
 	options := []view.Option{}
 	if v.counter%2 == 0 {
-		options = append(options, ios.ActivityIndicator{})
-		options = append(options, ios.StatusBar{
+		options = append(options, &ios.ActivityIndicator{})
+		options = append(options, &ios.StatusBar{
 			Hidden: true,
 			Style:  ios.StatusBarStyleDark,
 		})

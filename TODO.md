@@ -2,6 +2,10 @@ High:
 * Android custom view example
 * Non-image resources.
 * Better notavailable-view. lightgray with centered "Unknown".
+* Move images loading to native side.
+* Android double tap.
+* Android scroll views scrollposition
+* Rebuild android studio project in Matcha build.
 
 Medium:
 * Stackview button items
@@ -9,13 +13,10 @@ Medium:
 * Crash on "Stop"
 * Rebuild Instagram.
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation
-* Android double tap.
 * Modal presentation.
 * Picker
-* TextField
 * Rotation / orientation
 * StackBar height / hidden, color
-* Android scroll views scrollposition
 
 Low:
 * Better error logging for panics.

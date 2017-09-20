@@ -41,7 +41,7 @@ func (v *ActivityIndicatorView) Build(ctx view.Context) view.Model {
 
 	options := []view.Option{}
 	if !v.hidden {
-		options = append(options, ios.ActivityIndicator{})
+		options = append(options, &ios.ActivityIndicator{})
 	}
 
 	return view.Model{
