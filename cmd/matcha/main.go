@@ -100,6 +100,7 @@ var BuildCmd = &cobra.Command{
 	},
 }
 
+/*
 func init() {
 	flags := InstallCmd.Flags()
 	flags.BoolVar(&buildN, "n", false, "print the commands but do not run them.")
@@ -136,3 +137,4 @@ var InstallCmd = &cobra.Command{
 		}
 	},
 }
+*/

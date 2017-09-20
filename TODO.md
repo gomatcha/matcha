@@ -2,12 +2,12 @@ High:
 * Android custom view example
 * Non-image resources.
 * Better notavailable-view. lightgray with centered "Unknown".
-* Move images loading to native side.
 * Android double tap.
-* Android scroll views scrollposition
-* Rebuild android studio project in Matcha build.
+* Rotation / orientation
 
 Medium:
+* Android scroll views scrollposition
+* Move images loading to native side.
 * Webview
 * Stackview button items
 * Android vertical/horizontal scrollviews?
@@ -16,7 +16,6 @@ Medium:
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation
 * Modal presentation.
 * Picker
-* Rotation / orientation
 * StackBar height / hidden, color
 
 Low:

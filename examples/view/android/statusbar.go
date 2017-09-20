@@ -1,7 +1,6 @@
 package android
 
 import (
-	"fmt"
 	"image/color"
 
 	"golang.org/x/image/colornames"

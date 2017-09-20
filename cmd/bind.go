@@ -462,6 +462,15 @@ func Bind(flags *Flags, args []string) error {
 		if err := CopyFile(flags, filepath.Join(outputDir, "android", "matchabridge.aar"), aarPath); err != nil {
 			return err
 		}
+
+		// Build MatchaLib project.
+		if err := os.Chdir(filepath.Join(outputDir, "android", "MatchaLib")); err != nil {
+			return err
+		}
+		cmd := exec.Command(filepath.Join(outputDir, "android", "MatchaLib", "gradlew"), "assembleRelease")
+		if err := RunCmd(flags, tempdir, cmd); err != nil {
+			return err
+		}
 	}
 	return nil
 }
