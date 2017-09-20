@@ -2,6 +2,7 @@ package io.gomatcha.matcha;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -66,7 +67,6 @@ public class MatchaView extends RelativeLayout {
             try {
                 PbStatusBar.StatusBar proto = any.unpack(PbStatusBar.StatusBar.class);
                 int color = Protobuf.newColor(proto.getColor());
-
                 Window window = ((Activity)getContext()).getWindow();
                 window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -77,7 +77,7 @@ public class MatchaView extends RelativeLayout {
                         this.setSystemUiVisibility(flags);
                     } else {
                         int flags = this.getSystemUiVisibility();
-                        flags ^= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                        flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
                         this.setSystemUiVisibility(flags);
                     }
                     window.setStatusBarColor(color);

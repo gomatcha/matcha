@@ -1,11 +1,12 @@
 High:
 * Android custom view example
 * Non-image resources.
-* Better notavailable-view. lightgray with centered "Unknown".
+    * Assets directory that gets merged from any folder containing /assets and importing "gomatcha.io/matcha". What to do about images? _1x.png _2x.png
 * Android double tap.
 * Rotation / orientation
 
 Medium:
+* Better notavailable-view. lightgray with centered "Unknown".
 * Android scroll views scrollposition
 * Move images loading to native side.
 * Webview
