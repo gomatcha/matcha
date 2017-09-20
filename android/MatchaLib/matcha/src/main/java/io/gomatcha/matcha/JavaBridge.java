@@ -6,15 +6,9 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Paint;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.os.Looper;
-import android.text.Layout;
 import android.text.SpannableString;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Choreographer;
@@ -28,14 +22,13 @@ import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-import io.gomatcha.bridge.*;
+import io.gomatcha.bridge.Bridge;
+import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.pb.Pb;
 import io.gomatcha.matcha.pb.layout.PbLayout;
 import io.gomatcha.matcha.pb.text.PbText;
-import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.PbAlert;
-
-import android.util.DisplayMetrics;
+import io.gomatcha.matcha.pb.view.PbView;
 
 public class JavaBridge {
     static Choreographer.FrameCallback callback;

@@ -3,7 +3,6 @@ package io.gomatcha.matcha;
 import android.content.Context;
 import android.graphics.PointF;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 

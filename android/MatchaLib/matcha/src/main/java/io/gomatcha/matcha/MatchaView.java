@@ -2,12 +2,11 @@ package io.gomatcha.matcha;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -17,10 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.gomatcha.bridge.Bridge;
 import io.gomatcha.bridge.GoValue;
-import io.gomatcha.matcha.JavaBridge;
-import io.gomatcha.matcha.pb.app.PbApp;
 import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.android.PbStatusBar;
 
@@ -72,11 +68,18 @@ public class MatchaView extends RelativeLayout {
                 int color = Protobuf.newColor(proto.getColor());
 
                 Window window = ((Activity)getContext()).getWindow();
-                // clear FLAG_TRANSLUCENT_STATUS flag:
                 window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 if (Build.VERSION.SDK_INT >= 21) {
+                    if (!proto.getStyle()) {
+                        int flags = this.getSystemUiVisibility();
+                        flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                        this.setSystemUiVisibility(flags);
+                    } else {
+                        int flags = this.getSystemUiVisibility();
+                        flags ^= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                        this.setSystemUiVisibility(flags);
+                    }
                     window.setStatusBarColor(color);
                 }
             } catch (com.google.protobuf.InvalidProtocolBufferException e) {

@@ -1,15 +1,13 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.bridge.GoValue;
-import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.PbSlider;
+import io.gomatcha.matcha.pb.view.PbView;
 
 public class MatchaSlider extends MatchaChildView {
     SeekBar view;

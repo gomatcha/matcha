@@ -1,20 +1,15 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.support.v7.widget.SwitchCompat;
+import android.util.DisplayMetrics;
+import android.widget.CompoundButton;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.bridge.GoValue;
-import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.PbSwitchView;
+import io.gomatcha.matcha.pb.view.PbView;
 
 public class MatchaSwitchView extends MatchaChildView {
     SwitchCompat view;

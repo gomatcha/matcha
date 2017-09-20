@@ -2,7 +2,6 @@ package io.gomatcha.matcha;
 
 import android.content.Context;
 import android.text.SpannableString;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;

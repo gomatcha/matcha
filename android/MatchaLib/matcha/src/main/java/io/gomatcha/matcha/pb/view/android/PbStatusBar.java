@@ -19,9 +19,9 @@ public final class PbStatusBar {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>bool hidden = 1;</code>
+     * <code>bool style = 1;</code>
      */
-    boolean getHidden();
+    boolean getStyle();
 
     /**
      * <code>.matcha.Color color = 2;</code>
@@ -48,7 +48,7 @@ public final class PbStatusBar {
       super(builder);
     }
     private StatusBar() {
-      hidden_ = false;
+      style_ = false;
     }
 
     @java.lang.Override
@@ -78,7 +78,7 @@ public final class PbStatusBar {
             }
             case 8: {
 
-              hidden_ = input.readBool();
+              style_ = input.readBool();
               break;
             }
             case 18: {
@@ -117,13 +117,13 @@ public final class PbStatusBar {
               io.gomatcha.matcha.pb.view.android.PbStatusBar.StatusBar.class, io.gomatcha.matcha.pb.view.android.PbStatusBar.StatusBar.Builder.class);
     }
 
-    public static final int HIDDEN_FIELD_NUMBER = 1;
-    private boolean hidden_;
+    public static final int STYLE_FIELD_NUMBER = 1;
+    private boolean style_;
     /**
-     * <code>bool hidden = 1;</code>
+     * <code>bool style = 1;</code>
      */
-    public boolean getHidden() {
-      return hidden_;
+    public boolean getStyle() {
+      return style_;
     }
 
     public static final int COLOR_FIELD_NUMBER = 2;
@@ -159,8 +159,8 @@ public final class PbStatusBar {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (hidden_ != false) {
-        output.writeBool(1, hidden_);
+      if (style_ != false) {
+        output.writeBool(1, style_);
       }
       if (color_ != null) {
         output.writeMessage(2, getColor());
@@ -172,9 +172,9 @@ public final class PbStatusBar {
       if (size != -1) return size;
 
       size = 0;
-      if (hidden_ != false) {
+      if (style_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(1, hidden_);
+          .computeBoolSize(1, style_);
       }
       if (color_ != null) {
         size += com.google.protobuf.CodedOutputStream
@@ -196,8 +196,8 @@ public final class PbStatusBar {
       io.gomatcha.matcha.pb.view.android.PbStatusBar.StatusBar other = (io.gomatcha.matcha.pb.view.android.PbStatusBar.StatusBar) obj;
 
       boolean result = true;
-      result = result && (getHidden()
-          == other.getHidden());
+      result = result && (getStyle()
+          == other.getStyle());
       result = result && (hasColor() == other.hasColor());
       if (hasColor()) {
         result = result && getColor()
@@ -213,9 +213,9 @@ public final class PbStatusBar {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + HIDDEN_FIELD_NUMBER;
+      hash = (37 * hash) + STYLE_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getHidden());
+          getStyle());
       if (hasColor()) {
         hash = (37 * hash) + COLOR_FIELD_NUMBER;
         hash = (53 * hash) + getColor().hashCode();
@@ -349,7 +349,7 @@ public final class PbStatusBar {
       }
       public Builder clear() {
         super.clear();
-        hidden_ = false;
+        style_ = false;
 
         if (colorBuilder_ == null) {
           color_ = null;
@@ -379,7 +379,7 @@ public final class PbStatusBar {
 
       public io.gomatcha.matcha.pb.view.android.PbStatusBar.StatusBar buildPartial() {
         io.gomatcha.matcha.pb.view.android.PbStatusBar.StatusBar result = new io.gomatcha.matcha.pb.view.android.PbStatusBar.StatusBar(this);
-        result.hidden_ = hidden_;
+        result.style_ = style_;
         if (colorBuilder_ == null) {
           result.color_ = color_;
         } else {
@@ -426,8 +426,8 @@ public final class PbStatusBar {
 
       public Builder mergeFrom(io.gomatcha.matcha.pb.view.android.PbStatusBar.StatusBar other) {
         if (other == io.gomatcha.matcha.pb.view.android.PbStatusBar.StatusBar.getDefaultInstance()) return this;
-        if (other.getHidden() != false) {
-          setHidden(other.getHidden());
+        if (other.getStyle() != false) {
+          setStyle(other.getStyle());
         }
         if (other.hasColor()) {
           mergeColor(other.getColor());
@@ -458,28 +458,28 @@ public final class PbStatusBar {
         return this;
       }
 
-      private boolean hidden_ ;
+      private boolean style_ ;
       /**
-       * <code>bool hidden = 1;</code>
+       * <code>bool style = 1;</code>
        */
-      public boolean getHidden() {
-        return hidden_;
+      public boolean getStyle() {
+        return style_;
       }
       /**
-       * <code>bool hidden = 1;</code>
+       * <code>bool style = 1;</code>
        */
-      public Builder setHidden(boolean value) {
+      public Builder setStyle(boolean value) {
         
-        hidden_ = value;
+        style_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool hidden = 1;</code>
+       * <code>bool style = 1;</code>
        */
-      public Builder clearHidden() {
+      public Builder clearStyle() {
         
-        hidden_ = false;
+        style_ = false;
         onChanged();
         return this;
       }
@@ -665,11 +665,11 @@ public final class PbStatusBar {
     java.lang.String[] descriptorData = {
       "\n2gomatcha.io/matcha/pb/view/android/sta" +
       "tusbar.proto\022\023matcha.view.android\032!gomat" +
-      "cha.io/matcha/pb/image.proto\"9\n\tStatusBa" +
-      "r\022\016\n\006hidden\030\001 \001(\010\022\034\n\005color\030\002 \001(\0132\r.match" +
-      "a.ColorBL\n\"io.gomatcha.matcha.pb.view.an" +
-      "droidB\013PbStatusBarZ\007android\242\002\017MatchaAndr" +
-      "oidPBb\006proto3"
+      "cha.io/matcha/pb/image.proto\"8\n\tStatusBa" +
+      "r\022\r\n\005style\030\001 \001(\010\022\034\n\005color\030\002 \001(\0132\r.matcha" +
+      ".ColorBL\n\"io.gomatcha.matcha.pb.view.and" +
+      "roidB\013PbStatusBarZ\007android\242\002\017MatchaAndro" +
+      "idPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -689,7 +689,7 @@ public final class PbStatusBar {
     internal_static_matcha_view_android_StatusBar_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_StatusBar_descriptor,
-        new java.lang.String[] { "Hidden", "Color", });
+        new java.lang.String[] { "Style", "Color", });
     io.gomatcha.matcha.pb.Pb.getDescriptor();
   }
 

@@ -1,12 +1,8 @@
 package io.gomatcha.matcha;
 
-import android.accessibilityservice.AccessibilityService;
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.SpannableString;
@@ -15,24 +11,18 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.pb.text.PbText;
-import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.PbTextInput;
-
-import static android.widget.TextView.BufferType.EDITABLE;
+import io.gomatcha.matcha.pb.view.PbView;
 
 public class MatchaTextInputView extends MatchaChildView {
     EditText view;

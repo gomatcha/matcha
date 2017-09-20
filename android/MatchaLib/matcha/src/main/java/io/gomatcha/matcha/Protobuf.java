@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,12 +14,10 @@ import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.LineHeightSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 
 import com.google.protobuf.Duration;
 import com.google.protobuf.Timestamp;
@@ -31,11 +28,9 @@ import java.util.Date;
 import java.util.List;
 
 import io.gomatcha.matcha.pb.Pb;
-import io.gomatcha.matcha.pb.keyboard.PbKeyboard;
 import io.gomatcha.matcha.pb.layout.PbLayout;
 import io.gomatcha.matcha.pb.text.PbText;
 
-import static android.text.Spanned.SPAN_INCLUSIVE_EXCLUSIVE;
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 
 public class Protobuf {

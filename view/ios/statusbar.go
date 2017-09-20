@@ -11,7 +11,9 @@ import (
 type StatusBarStyle int
 
 const (
+	// Statusbar with light icons
 	StatusBarStyleLight StatusBarStyle = iota
+	// Statusbar with dark icons
 	StatusBarStyleDark
 )
 
@@ -64,12 +66,12 @@ func (m *statusBarMiddleware) Build(ctx view.Context, model *view.Model) {
 }
 
 func (m *statusBarMiddleware) MarshalProtobuf() proto.Message {
-	var statusBar StatusBar = StatusBar{Style: StatusBarStyleDark}
+	statusBar := &StatusBar{Style: StatusBarStyleDark}
 	maxId := int64(-1)
 	m.radix.Range(func(path []int64, node *radix.Node) {
 		if len(path) > 0 && path[len(path)-1] > maxId {
 			maxId = path[len(path)-1]
-			statusBar, _ = node.Value.(StatusBar)
+			statusBar = node.Value.(*StatusBar)
 		}
 	})
 	return &pbapp.StatusBar{

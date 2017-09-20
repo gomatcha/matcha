@@ -3,23 +3,17 @@ package io.gomatcha.matcha;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-import android.widget.AbsoluteLayout;
-import android.widget.RelativeLayout;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.gomatcha.matcha.pb.paint.PbPaint;
 import io.gomatcha.matcha.pb.touch.PbTouch;
 import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.PbScrollView;
 
 public class MatchaViewNode extends Object {
     MatchaViewNode parent;

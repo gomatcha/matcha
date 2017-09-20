@@ -16,7 +16,6 @@
 
 void MatchaConfigureChildViewController(UIViewController *vc);
 
-
 typedef struct MatchaColor {
     uint32_t red;
     uint32_t blue;

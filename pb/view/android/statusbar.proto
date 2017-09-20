@@ -8,6 +8,6 @@ option java_package = "io.gomatcha.matcha.pb.view.android";
 option java_outer_classname = "PbStatusBar";
 
 message StatusBar {
-    bool hidden = 1;
+    bool style = 1;
     matcha.Color color = 2;
 }

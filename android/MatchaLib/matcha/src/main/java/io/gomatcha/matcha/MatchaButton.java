@@ -3,12 +3,8 @@ package io.gomatcha.matcha;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.text.SpannableString;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 

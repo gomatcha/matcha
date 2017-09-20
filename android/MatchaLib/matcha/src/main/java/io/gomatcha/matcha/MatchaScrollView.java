@@ -8,8 +8,8 @@ import android.widget.ScrollView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.PbScrollView;
+import io.gomatcha.matcha.pb.view.PbView;
 
 public class MatchaScrollView extends MatchaChildView {
     ScrollView scrollView;

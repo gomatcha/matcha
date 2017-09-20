@@ -11,6 +11,8 @@
 @property (nonatomic, strong) MatchaGoValue *goValue;
 @property (nonatomic, assign) CGRect lastFrame;
 @property (nonatomic, assign) BOOL loaded;
+@property (nonatomic, assign) BOOL statusbarhidden;
+@property (nonatomic, assign) UIStatusBarStyle statusbarstyle;
 @end
 
 @implementation MatchaViewController
@@ -92,11 +94,9 @@
         } else if (statusBar.style == MatchaAppPBStatusBarStyle_StatusBarStyleDark) {
             style = UIStatusBarStyleDefault;
         }
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-        [UIApplication.sharedApplication setStatusBarStyle:style animated:YES];
-        [UIApplication.sharedApplication setStatusBarHidden:statusBar.hidden withAnimation:YES];
-#pragma GCC diagnostic pop
+        self.statusbarstyle = style;
+        self.statusbarhidden = statusBar.hidden;
+        [self setNeedsStatusBarAppearanceUpdate];
     }
     
     if (!self.loaded) {
@@ -109,6 +109,13 @@
     self.updating = false;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.statusbarstyle;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return self.statusbarhidden;
+}
 @end
 
 void MatchaConfigureChildViewController(UIViewController *vc) {

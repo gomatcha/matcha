@@ -1,6 +1,7 @@
 package android
 
 import (
+	"fmt"
 	"image/color"
 
 	"golang.org/x/image/colornames"
@@ -19,8 +20,8 @@ func init() {
 
 type StatusBarView struct {
 	view.Embed
-	color  color.Color
-	hidden bool
+	color color.Color
+	style android.StatusBarStyle
 }
 
 func NewStatusBarView() *StatusBarView {
@@ -31,7 +32,7 @@ func (v *StatusBarView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewButton()
-	chl1.String = "Toggle Style"
+	chl1.String = "Toggle Color"
 	chl1.OnPress = func() {
 		if v.color == colornames.Red {
 			v.color = colornames.White
@@ -47,9 +48,13 @@ func (v *StatusBarView) Build(ctx view.Context) view.Model {
 	})
 
 	chl2 := view.NewButton()
-	chl2.String = "Toggle Hidden"
+	chl2.String = "Toggle Style"
 	chl2.OnPress = func() {
-		v.hidden = !v.hidden
+		if v.style == android.StatusBarStyleLight {
+			v.style = android.StatusBarStyleDark
+		} else {
+			v.style = android.StatusBarStyleLight
+		}
 		v.Signal()
 	}
 	l.Add(chl2, func(s *constraint.Solver) {
@@ -61,11 +66,11 @@ func (v *StatusBarView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
-		Painter:  &paint.Style{BackgroundColor: colornames.Lightgray},
+		Painter:  &paint.Style{BackgroundColor: colornames.White},
 		Options: []view.Option{
 			&android.StatusBar{
-				Color:  v.color,
-				Hidden: v.hidden,
+				Color: v.color,
+				Style: v.style,
 			},
 		},
 	}

@@ -62,7 +62,6 @@
         CGPoint flipped = CGPointApplyAffineTransform(origins[i], transform);
         CGFloat ascent, descent, leading;
         CGFloat width = CTLineGetTypographicBounds(CFArrayGetValueAtIndex(linesRef, i), &ascent, &descent, &leading);
-        CGFloat height = ascent + descent + leading;
         if (width > maxWidth) {
             maxWidth = flipped.x + width;
         }

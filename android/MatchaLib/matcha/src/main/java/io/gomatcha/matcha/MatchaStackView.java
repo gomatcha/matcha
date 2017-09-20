@@ -2,19 +2,13 @@ package io.gomatcha.matcha;
 
 import android.content.Context;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.RelativeLayout;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.gomatcha.bridge.GoValue;
-import io.gomatcha.matcha.pb.view.PbSwitchView;
 import io.gomatcha.matcha.pb.view.PbView;
 import io.gomatcha.matcha.pb.view.android.PbStackView;
 

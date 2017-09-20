@@ -1,9 +1,6 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
-import android.text.Layout;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
