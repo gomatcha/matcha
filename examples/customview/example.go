@@ -1,5 +1,5 @@
 // Package custom provides examples of how to import custom components.
-package custom
+package customview
 
 import (
 	"golang.org/x/image/colornames"

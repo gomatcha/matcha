@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6732FA131F6B11CA002DC2EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6732FA121F6B11CA002DC2EF /* Assets.xcassets */; };
+		6732FA251F730E9F002DC2EF /* CustomView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6732FA241F730E9F002DC2EF /* CustomView.framework */; };
+		6732FA261F730ED1002DC2EF /* CustomView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 67783C891F1E8820001582F5 /* CustomView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		67FEBB501F0A246C005AFEDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBB4F1F0A246C005AFEDA /* main.m */; };
 		67FEBB531F0A246C005AFEDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBB521F0A246C005AFEDA /* AppDelegate.m */; };
 		67FEBB5E1F0A246C005AFEDA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67FEBB5C1F0A246C005AFEDA /* LaunchScreen.storyboard */; };
@@ -26,6 +28,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				6732FA261F730ED1002DC2EF /* CustomView.framework in Embed Frameworks */,
 				67FEBBEB1F0ADFBC005AFEDA /* Matcha.framework in Embed Frameworks */,
 				67FEBBEE1F0ADFBC005AFEDA /* MatchaBridge.framework in Embed Frameworks */,
 				67FEBBF11F0ADFBC005AFEDA /* Protobuf.framework in Embed Frameworks */,
@@ -37,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		6732FA121F6B11CA002DC2EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6732FA241F730E9F002DC2EF /* CustomView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CustomView.framework; path = "../../customview/ios/build/Debug-iphoneos/CustomView.framework"; sourceTree = "<group>"; };
 		67783C891F1E8820001582F5 /* CustomView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CustomView.framework; path = "../../../../../../../../Library/Developer/Xcode/DerivedData/SampleApp-cmxvdedpoyclchbbrqidjpuexeyk/Build/Products/Debug-iphoneos/CustomView.framework"; sourceTree = "<group>"; };
 		67FEBB4B1F0A246C005AFEDA /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67FEBB4F1F0A246C005AFEDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -54,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6732FA251F730E9F002DC2EF /* CustomView.framework in Frameworks */,
 				67FEBBEA1F0ADFBC005AFEDA /* Matcha.framework in Frameworks */,
 				67FEBBED1F0ADFBC005AFEDA /* MatchaBridge.framework in Frameworks */,
 				67FEBBF01F0ADFBC005AFEDA /* Protobuf.framework in Frameworks */,
@@ -104,6 +109,7 @@
 		67FEBB6B1F0A280D005AFEDA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6732FA241F730E9F002DC2EF /* CustomView.framework */,
 				67783C891F1E8820001582F5 /* CustomView.framework */,
 				67FEBBEF1F0ADFBC005AFEDA /* Protobuf.framework */,
 				67FEBBEC1F0ADFBC005AFEDA /* MatchaBridge.framework */,

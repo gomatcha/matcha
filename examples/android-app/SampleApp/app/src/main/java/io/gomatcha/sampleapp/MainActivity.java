@@ -7,13 +7,20 @@ import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.MatchaView;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
 
-        GoValue rootView = GoValue.withFunc("gomatcha.io/matcha/examples/android NewStatusBarView").call("")[0];
+        GoValue rootView = GoValue.withFunc("gomatcha.io/matcha/examples/customview NewView").call("")[0];
         setContentView(new MatchaView(this, rootView));
+    }
+
+    static {
+        try {
+            Class.forName("io.gomatcha.customview.CustomView");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
