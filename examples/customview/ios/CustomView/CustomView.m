@@ -1,11 +1,3 @@
-//
-//  CustomView.m
-//  CustomView
-//
-//  Created by Kevin Dang on 7/18/17.
-//  Copyright © 2017 Matcha. All rights reserved.
-//
-
 #import "CustomView.h"
 
 @implementation CustomView

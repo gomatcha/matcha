@@ -1,6 +1,5 @@
 include ':app'
 include ':matcha'
 project(':matcha').projectDir = new File("${System.env.GOPATH}/src/gomatcha.io/matcha/android/MatchaLib/matcha")
-
 include ':customview'
 project(':customview').projectDir = new File("${System.env.GOPATH}/src/gomatcha.io/matcha/examples/customview/android/CustomViewLib/customview")

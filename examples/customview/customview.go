@@ -6,18 +6,18 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
-type View struct {
+type CustomView struct {
 	view.Embed
 	PaintStyle paint.Painter
 }
 
-// New returns either the previous View in ctx with matching key, or a new View if none exists.
-func New() *View {
-	return &View{}
+// New returns an initialized CustomView instance.
+func NewCustomView() *View {
+	return &CustomView{}
 }
 
 // Build implements view.View.
-func (v *View) Build(ctx view.Context) view.Model {
+func (v *CustomView) Build(ctx view.Context) view.Model {
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle

@@ -1,5 +1,10 @@
-High:
+* MailChimp thing.
+* BLog thing.
+* Better images, readme docs.
 * Android custom view example
+* Consulting.
+
+High:
 * Non-image resources.
     * Assets directory that gets merged from any folder containing /assets and importing "gomatcha.io/matcha". What to do about images? _1x.png _2x.png
 * Android double tap.
@@ -41,7 +46,6 @@ Very Low:
 * Building for iPhone 5 Simulator doesn't work.
 * Add tests around core functionality. Store, etc.
 * Button should fade when disabled.
-* Statusbar color
 * Automatically insert copyright notice.
 * Text selection.
 * Localization
