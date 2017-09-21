@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-#import <Matcha/MatchaNode.h>
+#import <Matcha/MatchaBuildNode.h>
 #import <Matcha/MatchaViewController.h>
 @class MatchaViewConfig;
 @class MatchaViewController;
@@ -16,13 +16,6 @@
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs;
 - (void)setMatchaChildLayout:(NSMutableArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
 @end
-
-UIGestureRecognizer *MatchaGestureRecognizerWithPB(int64_t viewId, GPBAny *any, MatchaViewNode *viewNode);
-UIView<MatchaChildView> *MatchaViewWithNode(MatchaBuildNode *node, MatchaViewNode *viewNode);
-UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(MatchaBuildNode *node, MatchaViewNode *viewNode);
-
-void MatchaRegisterView(NSString *string, MatchaViewRegistrationBlock block);
-void MatchaRegisterViewController(NSString *string, MatchaViewControllerRegistrationBlock block);
 
 @interface MatchaViewNode : NSObject
 - (id)initWithParent:(MatchaViewNode *)node rootVC:(MatchaViewController *)rootVC identifier:(NSNumber *)identifier;

@@ -9,6 +9,7 @@
 #import "MatchaUnknownView.h"
 #import "MatchaView_Private.h"
 
+UIView<MatchaChildView> *MatchaViewWithNode(MatchaBuildNode *node, MatchaViewNode *viewNode);
 static NSLock *sLock = nil;
 static NSMutableDictionary *sViewDict = nil;
 static NSMutableDictionary *sViewControllerDict = nil;
@@ -326,3 +327,9 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
 }
 
 @end
+
+void MatchaConfigureChildViewController(UIViewController *vc) {
+    vc.edgesForExtendedLayout=UIRectEdgeNone;
+    vc.extendedLayoutIncludesOpaqueBars=NO;
+    vc.automaticallyAdjustsScrollViewInsets=NO;
+}

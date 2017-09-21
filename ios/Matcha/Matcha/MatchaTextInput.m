@@ -6,9 +6,9 @@
 @implementation MatchaTextInput
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/textinput", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/textinput" block:^(MatchaViewNode *node){
         return [[MatchaTextInput alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {

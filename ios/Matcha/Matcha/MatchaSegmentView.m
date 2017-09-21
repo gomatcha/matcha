@@ -3,9 +3,9 @@
 @implementation MatchaSegmentView
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/segmentview", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/segmentview" block:^(MatchaViewNode *node){
         return [[MatchaSegmentView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {

@@ -1,11 +1,12 @@
 #import "MatchaTextView.h"
+#import "MatchaViewController.h"
 
 @implementation MatchaTextView
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/textview", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/textview" block:^(MatchaViewNode *node){
         return [[MatchaTextView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {

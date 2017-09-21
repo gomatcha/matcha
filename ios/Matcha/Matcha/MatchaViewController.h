@@ -5,16 +5,12 @@
 @protocol MatchaChildView;
 @protocol MatchaChildViewController;
 
-@interface MatchaViewController : UIViewController // view.Root
-+ (NSPointerArray *)viewControllers;
-+ (MatchaViewController *)viewControllerWithIdentifier:(NSInteger)identifier;
-
-- (id)initWithGoValue:(MatchaGoValue *)value;
-- (void)update:(MatchaViewPBRoot *)node;
-- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args:(NSArray<MatchaGoValue *> *)args;
-@property (nonatomic, readonly) NSInteger identifier;
-@property (nonatomic, assign) BOOL updating;
-@end
-
 typedef UIView<MatchaChildView> *(^MatchaViewRegistrationBlock)(MatchaViewNode *);
 typedef UIViewController<MatchaChildViewController> *(^MatchaViewControllerRegistrationBlock)(MatchaViewNode *);
+
+@interface MatchaViewController : UIViewController // view.Root
+- (id)initWithGoValue:(MatchaGoValue *)value;
+- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args:(NSArray<MatchaGoValue *> *)args;
++ (void)registerView:(NSString *)viewName block:(MatchaViewRegistrationBlock)block;
++ (void)registerViewController:(NSString *)viewName block:(MatchaViewControllerRegistrationBlock)block;
+@end

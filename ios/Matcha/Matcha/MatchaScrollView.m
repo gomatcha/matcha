@@ -1,13 +1,13 @@
 #import "MatchaScrollView.h"
 #import "MatchaProtobuf.h"
-#import "MatchaViewController.h"
+#import "MatchaViewController_Private.h"
 
 @implementation MatchaScrollView
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/scrollview", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/scrollview" block:^(MatchaViewNode *node){
         return [[MatchaScrollView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {

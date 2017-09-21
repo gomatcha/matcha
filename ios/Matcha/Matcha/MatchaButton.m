@@ -5,9 +5,9 @@
 @implementation MatchaButton
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/button", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/button" block:^(MatchaViewNode *node){
         return [[MatchaButton alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {

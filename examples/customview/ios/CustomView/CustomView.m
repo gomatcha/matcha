@@ -4,9 +4,9 @@
 @implementation CustomView
 
 + (void)load {
-    MatchaRegisterView(@"github.com/overcyn/customview", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"github.com/overcyn/customview" block:^(MatchaViewNode *node){
         return [[CustomView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {

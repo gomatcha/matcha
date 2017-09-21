@@ -4,9 +4,9 @@
 @implementation MatchaSlider
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/slider", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/slider" block:^(MatchaViewNode *node){
         return [[MatchaSlider alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {

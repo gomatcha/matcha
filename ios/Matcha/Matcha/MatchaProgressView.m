@@ -4,9 +4,9 @@
 @implementation MatchaProgressView
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/progressview", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/progressview" block:^(MatchaViewNode *node){
         return [[MatchaProgressView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {

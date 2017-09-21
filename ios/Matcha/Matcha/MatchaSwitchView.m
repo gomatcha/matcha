@@ -5,9 +5,9 @@
 @implementation MatchaSwitchView
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/switch", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/switch" block:^(MatchaViewNode *node){
         return [[MatchaSwitchView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {

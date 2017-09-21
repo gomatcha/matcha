@@ -56,7 +56,7 @@
 		6732FA841F734628002DC2EF /* Pointer.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732FA821F734628002DC2EF /* Pointer.pbobjc.h */; };
 		6732FA851F734628002DC2EF /* Pointer.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732FA831F734628002DC2EF /* Pointer.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6732FA9D1F744239002DC2EF /* MatchaView_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732FA9B1F744239002DC2EF /* MatchaView_Private.h */; };
-		6732FA9E1F744239002DC2EF /* MatchaView_Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732FA9C1F744239002DC2EF /* MatchaView_Private.m */; };
+		6732FAA01F7445F2002DC2EF /* MatchaViewController_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732FA9F1F7445C0002DC2EF /* MatchaViewController_Private.h */; };
 		6759EE521F2E632C00B8E0A9 /* MatchaMiddleware.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */; };
 		6759EE531F2E632C00B8E0A9 /* MatchaMiddleware.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */; };
 		67FEBA701F099EDF005AFEDA /* Matcha.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA6E1F099EDF005AFEDA /* Matcha.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -85,8 +85,8 @@
 		67FEBB0F1F09A18F005AFEDA /* MatchaPressGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAE91F09A18F005AFEDA /* MatchaPressGestureRecognizer.h */; };
 		67FEBB101F09A18F005AFEDA /* MatchaObjcBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAEA1F09A18F005AFEDA /* MatchaObjcBridge.m */; };
 		67FEBB111F09A18F005AFEDA /* MatchaObjcBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAEB1F09A18F005AFEDA /* MatchaObjcBridge.h */; };
-		67FEBB121F09A18F005AFEDA /* MatchaNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAEC1F09A18F005AFEDA /* MatchaNode.m */; };
-		67FEBB131F09A18F005AFEDA /* MatchaNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAED1F09A18F005AFEDA /* MatchaNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67FEBB121F09A18F005AFEDA /* MatchaBuildNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAEC1F09A18F005AFEDA /* MatchaBuildNode.m */; };
+		67FEBB131F09A18F005AFEDA /* MatchaBuildNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAED1F09A18F005AFEDA /* MatchaBuildNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67FEBB161F09A18F005AFEDA /* MatchaDeadlockLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAF01F09A18F005AFEDA /* MatchaDeadlockLogger.m */; };
 		67FEBB171F09A18F005AFEDA /* MatchaDeadlockLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAF11F09A18F005AFEDA /* MatchaDeadlockLogger.h */; };
 		67FEBB181F09A18F005AFEDA /* MatchaButtonGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAF21F09A18F005AFEDA /* MatchaButtonGestureRecognizer.m */; };
@@ -154,7 +154,7 @@
 		6732FA821F734628002DC2EF /* Pointer.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pointer.pbobjc.h; sourceTree = "<group>"; };
 		6732FA831F734628002DC2EF /* Pointer.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pointer.pbobjc.m; sourceTree = "<group>"; };
 		6732FA9B1F744239002DC2EF /* MatchaView_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaView_Private.h; sourceTree = "<group>"; };
-		6732FA9C1F744239002DC2EF /* MatchaView_Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaView_Private.m; sourceTree = "<group>"; };
+		6732FA9F1F7445C0002DC2EF /* MatchaViewController_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchaViewController_Private.h; sourceTree = "<group>"; };
 		6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaMiddleware.h; sourceTree = "<group>"; };
 		6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaMiddleware.m; sourceTree = "<group>"; };
 		67FEBA6B1F099EDF005AFEDA /* Matcha.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Matcha.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,8 +185,8 @@
 		67FEBAE91F09A18F005AFEDA /* MatchaPressGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaPressGestureRecognizer.h; sourceTree = "<group>"; };
 		67FEBAEA1F09A18F005AFEDA /* MatchaObjcBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaObjcBridge.m; sourceTree = "<group>"; };
 		67FEBAEB1F09A18F005AFEDA /* MatchaObjcBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaObjcBridge.h; sourceTree = "<group>"; };
-		67FEBAEC1F09A18F005AFEDA /* MatchaNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaNode.m; sourceTree = "<group>"; };
-		67FEBAED1F09A18F005AFEDA /* MatchaNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaNode.h; sourceTree = "<group>"; };
+		67FEBAEC1F09A18F005AFEDA /* MatchaBuildNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaBuildNode.m; sourceTree = "<group>"; };
+		67FEBAED1F09A18F005AFEDA /* MatchaBuildNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaBuildNode.h; sourceTree = "<group>"; };
 		67FEBAF01F09A18F005AFEDA /* MatchaDeadlockLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaDeadlockLogger.m; sourceTree = "<group>"; };
 		67FEBAF11F09A18F005AFEDA /* MatchaDeadlockLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaDeadlockLogger.h; sourceTree = "<group>"; };
 		67FEBAF21F09A18F005AFEDA /* MatchaButtonGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaButtonGestureRecognizer.m; sourceTree = "<group>"; };
@@ -366,8 +366,6 @@
 		6732FA9A1F744068002DC2EF /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				6732FA9B1F744239002DC2EF /* MatchaView_Private.h */,
-				6732FA9C1F744239002DC2EF /* MatchaView_Private.m */,
 				67FEBAE71F09A18F005AFEDA /* MatchaProtobuf.h */,
 				67FEBAE61F09A18F005AFEDA /* MatchaProtobuf.m */,
 				67FEBAEB1F09A18F005AFEDA /* MatchaObjcBridge.h */,
@@ -412,10 +410,12 @@
 			children = (
 				67FEBA6E1F099EDF005AFEDA /* Matcha.h */,
 				67FEBAD31F09A18F005AFEDA /* MatchaViewController.h */,
+				6732FA9F1F7445C0002DC2EF /* MatchaViewController_Private.h */,
 				67FEBAD21F09A18F005AFEDA /* MatchaViewController.m */,
-				67FEBAED1F09A18F005AFEDA /* MatchaNode.h */,
-				67FEBAEC1F09A18F005AFEDA /* MatchaNode.m */,
+				67FEBAED1F09A18F005AFEDA /* MatchaBuildNode.h */,
+				67FEBAEC1F09A18F005AFEDA /* MatchaBuildNode.m */,
 				67FEBAD51F09A18F005AFEDA /* MatchaView.h */,
+				6732FA9B1F744239002DC2EF /* MatchaView_Private.h */,
 				67FEBAD41F09A18F005AFEDA /* MatchaView.m */,
 				6732FA9A1F744068002DC2EF /* Project */,
 				67FEBB291F09AD17005AFEDA /* Touch */,
@@ -621,7 +621,7 @@
 				6732FA791F734305002DC2EF /* Slider.pbobjc.h in Headers */,
 				67FEBB351F0A1FF6005AFEDA /* MatchaBasicView.h in Headers */,
 				67FEBB171F09A18F005AFEDA /* MatchaDeadlockLogger.h in Headers */,
-				67FEBB131F09A18F005AFEDA /* MatchaNode.h in Headers */,
+				67FEBB131F09A18F005AFEDA /* MatchaBuildNode.h in Headers */,
 				6732FA5D1F734305002DC2EF /* Image.pbobjc.h in Headers */,
 				67FEBB111F09A18F005AFEDA /* MatchaObjcBridge.h in Headers */,
 				6732FA6D1F734305002DC2EF /* Imageview.pbobjc.h in Headers */,
@@ -634,6 +634,7 @@
 				6732FA651F734305002DC2EF /* Text.pbobjc.h in Headers */,
 				6732FA691F734305002DC2EF /* Alert.pbobjc.h in Headers */,
 				67FEBB011F09A18F005AFEDA /* MatchaTapGestureRecognizer.h in Headers */,
+				6732FAA01F7445F2002DC2EF /* MatchaViewController_Private.h in Headers */,
 				6732FA9D1F744239002DC2EF /* MatchaView_Private.h in Headers */,
 				67FEBB091F09A18F005AFEDA /* MatchaSlider.h in Headers */,
 				6732FA7B1F734305002DC2EF /* Switchview.pbobjc.h in Headers */,
@@ -729,7 +730,6 @@
 				6732FA6C1F734305002DC2EF /* Button.pbobjc.m in Sources */,
 				67FEBAF81F09A18F005AFEDA /* MatchaViewController.m in Sources */,
 				6732FA5A1F734305002DC2EF /* Statusbar.pbobjc.m in Sources */,
-				6732FA9E1F744239002DC2EF /* MatchaView_Private.m in Sources */,
 				6732FA801F734305002DC2EF /* View.pbobjc.m in Sources */,
 				6732FA661F734305002DC2EF /* Text.pbobjc.m in Sources */,
 				67FEBAFA1F09A18F005AFEDA /* MatchaView.m in Sources */,
@@ -742,7 +742,7 @@
 				6732FA601F734305002DC2EF /* Keyboard.pbobjc.m in Sources */,
 				6732FA7E1F734305002DC2EF /* Textinput.pbobjc.m in Sources */,
 				67FEBAFE1F09A18F005AFEDA /* MatchaTextInput.m in Sources */,
-				67FEBB121F09A18F005AFEDA /* MatchaNode.m in Sources */,
+				67FEBB121F09A18F005AFEDA /* MatchaBuildNode.m in Sources */,
 				67FEBB161F09A18F005AFEDA /* MatchaDeadlockLogger.m in Sources */,
 				6732FA7A1F734305002DC2EF /* Slider.pbobjc.m in Sources */,
 				67FEBB361F0A1FF6005AFEDA /* MatchaBasicView.m in Sources */,

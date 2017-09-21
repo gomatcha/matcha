@@ -3,9 +3,9 @@
 @implementation MatchaBasicView
 
 + (void)load {
-    MatchaRegisterView(@"", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"" block:^(MatchaViewNode *node){
         return [[MatchaBasicView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {

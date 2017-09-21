@@ -1,7 +1,7 @@
 #import "MatchaObjcBridge.h"
 #import "MatchaBridge.h"
-#import "MatchaNode.h"
-#import "MatchaViewController.h"
+#import "MatchaBuildNode.h"
+#import "MatchaViewController_Private.h"
 #import "MatchaDeadlockLogger.h"
 #import "MatchaProtobuf.h"
 #import <CoreText/CoreText.h>

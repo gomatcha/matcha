@@ -1,9 +1,11 @@
 #import "MatchaViewController.h"
+#import "MatchaViewController_Private.h"
 #import "MatchaView.h"
 #import "MatchaBridge.h"
-#import "MatchaNode.h"
+#import "MatchaBuildNode.h"
 #import "MatchaObjcBridge.h"
 #import "MatchaProtobuf.h"
+#import "MatchaView_Private.h"
 
 @interface MatchaViewController ()
 @property (nonatomic, assign) NSInteger identifier;
@@ -13,6 +15,7 @@
 @property (nonatomic, assign) BOOL loaded;
 @property (nonatomic, assign) BOOL statusbarhidden;
 @property (nonatomic, assign) UIStatusBarStyle statusbarstyle;
+@property (nonatomic, assign) BOOL updating;
 @end
 
 @implementation MatchaViewController
@@ -116,4 +119,13 @@
 - (BOOL)prefersStatusBarHidden {
     return self.statusbarhidden;
 }
+
++ (void)registerView:(NSString *)viewName block:(MatchaViewRegistrationBlock)block {
+    MatchaRegisterView(viewName, block);
+}
+
++ (void)registerViewController:(NSString *)viewName block:(MatchaViewControllerRegistrationBlock)block {
+    MatchaRegisterViewController(viewName, block);
+}
+
 @end
