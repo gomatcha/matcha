@@ -30,13 +30,10 @@
 - (void)onChange:(id)sender forEvent:(UIEvent *)e {
     MatchaViewPbSliderEvent *event = [[MatchaViewPbSliderEvent alloc] init];
     event.value = self.value;
-    
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-    [self.viewNode.rootVC call:@"OnValueChange" viewId:self.node.identifier.longLongValue args:@[value]];
-    
-    UITouch *touchEvent = [[e allTouches] anyObject];
-    if (touchEvent.phase == UITouchPhaseEnded) {
-        [self.viewNode.rootVC call:@"OnSubmit" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnValueChange" args:value, nil];
+    if (e.allTouches.anyObject.phase == UITouchPhaseEnded) {
+        [self.viewNode call:@"OnSubmit" args:value, nil];
     }
 }
 

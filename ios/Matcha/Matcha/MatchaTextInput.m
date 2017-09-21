@@ -72,18 +72,15 @@
         return;
     }
     self.attrStr2 = self.attributedText;
+    
     MatchaViewPBTextInputEvent *event = [[MatchaViewPBTextInputEvent alloc] init];
     event.styledText = self.attributedText.protobuf;
-    
-    NSData *data = [event data];
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
-    
-    [self.viewNode.rootVC call:@"OnTextChange" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnTextChange" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
-        [self.viewNode.rootVC call:@"OnSubmit" viewId:self.node.identifier.longLongValue args:nil];
+        [self.viewNode call:@"OnSubmit" args:nil];
         return NO;
     }
     return YES;
@@ -101,9 +98,7 @@
     if ((self.hasFocus && !self.isFirstResponder) || (!self.hasFocus && self.isFirstResponder)) {
         MatchaViewPBTextInputFocusEvent *event = [[MatchaViewPBTextInputFocusEvent alloc] init];
         event.focused = self.isFirstResponder;
-        
-        MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-        [self.viewNode.rootVC call:@"OnFocus" viewId:self.node.identifier.longLongValue args:@[value]];
+        [self.viewNode call:@"OnFocus" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
     }
 }
 

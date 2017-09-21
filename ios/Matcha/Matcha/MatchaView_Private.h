@@ -7,3 +7,10 @@ UIGestureRecognizer *MatchaGestureRecognizerWithPB(int64_t viewId, GPBAny *any, 
 UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(MatchaBuildNode *node, MatchaViewNode *viewNode);
 void MatchaRegisterView(NSString *string, MatchaViewRegistrationBlock block);
 void MatchaRegisterViewController(NSString *string, MatchaViewControllerRegistrationBlock block);
+
+@interface MatchaViewNode (Private)
+- (id)initWithParent:(MatchaViewNode *)node rootVC:(MatchaViewController *)rootVC identifier:(NSNumber *)identifier;
+- (void)setRoot:(MatchaViewPBRoot *)root;
+- (UIViewController<MatchaChildViewController> *)viewController;
+- (UIView<MatchaChildView> *)view;
+@end

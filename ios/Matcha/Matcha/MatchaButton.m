@@ -39,7 +39,7 @@
 }
 
 - (void)onPress {
-    [self.viewNode.rootVC call:@"OnPress" viewId:self.node.identifier.longLongValue args:@[]];
+    [self.viewNode call:@"OnPress" args:nil];
 }
 
 @end

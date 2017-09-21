@@ -49,6 +49,9 @@ func (v *Switch) Build(ctx Context) Model {
 			Enabled: v.Enabled,
 		},
 		NativeFuncs: map[string]interface{}{
+			// "test": func(a, b string) {
+			// 	fmt.Println("test", a, b)
+			// },
 			"OnChange": func(data []byte) {
 				event := &protoview.SwitchEvent{}
 				err := proto.Unmarshal(data, event)

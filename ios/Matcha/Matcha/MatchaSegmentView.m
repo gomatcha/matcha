@@ -32,9 +32,7 @@
 - (void)onChange:(id)sender {
     MatchaiOSPBSegmentViewEvent *event = [[MatchaiOSPBSegmentViewEvent alloc] init];
     event.value = self.selectedSegmentIndex;
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-    
-    [self.viewNode.rootVC call:@"OnChange" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnChange" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 @end

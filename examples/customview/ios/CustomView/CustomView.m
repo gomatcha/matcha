@@ -19,21 +19,15 @@
 
 - (void)setNode:(MatchaBuildNode *)value {
     _node = value;
-    GPBAny *state = value.nativeViewState;
-    NSError *error = nil;
-    CustomViewProtoView *view = (id)[state unpackMessageClass:[CustomViewProtoView class] error:&error];
-    if (view != nil) {
-        [self setOn:view.value animated:true];
-        self.enabled = view.enabled;
-    }
+    CustomViewProtoView *view = (id)[value.nativeViewState unpackMessageClass:[CustomViewProtoView class] error:nil];
+    [self setOn:view.value animated:true];
+    self.enabled = view.enabled;
 }
 
 - (void)onChange:(id)sender {
     CustomViewProtoEvent *event = [[CustomViewProtoEvent alloc] init];
     event.value = self.on;
-    
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-    [self.viewNode.rootVC call:@"OnChange" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnChange" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 @end

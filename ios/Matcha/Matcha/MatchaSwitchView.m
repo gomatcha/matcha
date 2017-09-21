@@ -32,11 +32,7 @@
 - (void)onChange:(id)sender {
     MatchaViewPbSwitchEvent *event = [[MatchaViewPbSwitchEvent alloc] init];
     event.value = self.on;
-    
-    NSData *data = [event data];
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
-    
-    [self.viewNode.rootVC call:@"OnChange" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnChange" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 @end

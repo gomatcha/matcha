@@ -76,7 +76,46 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     return child;
 }
 
+@interface MatchaViewNode ()
+- (id)initWithParent:(MatchaViewNode *)node rootVC:(MatchaViewController *)rootVC identifier:(NSNumber *)identifier;
+@property (nonatomic, strong) UIView<MatchaChildView> *view;
+@property (nonatomic, strong) NSDictionary<NSNumber *, UIGestureRecognizer *> *touchRecognizers;
+
+- (void)setRoot:(MatchaViewPBRoot *)root;
+@property (nonatomic, strong) UIViewController<MatchaChildViewController> *viewController;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, MatchaViewNode *> *children;
+@property (nonatomic, strong) MatchaViewPBLayoutPaintNode *layoutPaintNode;
+@property (nonatomic, strong) MatchaBuildNode *buildNode;
+@property (nonatomic, strong) NSNumber *identifier;
+@property (nonatomic, weak) MatchaViewNode *parent;
+@property (nonatomic, weak) MatchaViewController *rootVC;
+
+@property (nonatomic, strong) UIViewController *wrappedViewController;
+- (UIViewController *)materializedViewController;
+- (UIViewController *)wrappedViewController;
+- (UIView *)materializedView;
+
+@property (nonatomic, assign) CGRect frame;
+@end
+
 @implementation MatchaViewNode
+
+- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId args:(MatchaGoValue *)a, ... NS_REQUIRES_NIL_TERMINATION {
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    if (a != nil) {
+        va_list args;
+        va_start(args, a);
+        [array addObject:a];
+        
+        id arg = nil;
+        while ((arg = va_arg(args, id))) {
+            [array addObject:arg];
+        }
+        va_end(args);
+    }
+    
+    return [self.rootVC call:funcId viewId:self.identifier.longLongValue args:array];
+}
 
 - (id)initWithParent:(MatchaViewNode *)node rootVC:(MatchaViewController *)rootVC identifier:(NSNumber *)identifier {
     if ((self = [super init])) {

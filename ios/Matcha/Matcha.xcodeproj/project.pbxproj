@@ -366,6 +366,11 @@
 		6732FA9A1F744068002DC2EF /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				6732FA9F1F7445C0002DC2EF /* MatchaViewController_Private.h */,
+				67FEBAD21F09A18F005AFEDA /* MatchaViewController.m */,
+				67FEBAEC1F09A18F005AFEDA /* MatchaBuildNode.m */,
+				6732FA9B1F744239002DC2EF /* MatchaView_Private.h */,
+				67FEBAD41F09A18F005AFEDA /* MatchaView.m */,
 				67FEBAE71F09A18F005AFEDA /* MatchaProtobuf.h */,
 				67FEBAE61F09A18F005AFEDA /* MatchaProtobuf.m */,
 				67FEBAEB1F09A18F005AFEDA /* MatchaObjcBridge.h */,
@@ -410,13 +415,8 @@
 			children = (
 				67FEBA6E1F099EDF005AFEDA /* Matcha.h */,
 				67FEBAD31F09A18F005AFEDA /* MatchaViewController.h */,
-				6732FA9F1F7445C0002DC2EF /* MatchaViewController_Private.h */,
-				67FEBAD21F09A18F005AFEDA /* MatchaViewController.m */,
 				67FEBAED1F09A18F005AFEDA /* MatchaBuildNode.h */,
-				67FEBAEC1F09A18F005AFEDA /* MatchaBuildNode.m */,
 				67FEBAD51F09A18F005AFEDA /* MatchaView.h */,
-				6732FA9B1F744239002DC2EF /* MatchaView_Private.h */,
-				67FEBAD41F09A18F005AFEDA /* MatchaView.m */,
 				6732FA9A1F744068002DC2EF /* Project */,
 				67FEBB291F09AD17005AFEDA /* Touch */,
 				67FEBB2A1F09AD3C005AFEDA /* View */,
