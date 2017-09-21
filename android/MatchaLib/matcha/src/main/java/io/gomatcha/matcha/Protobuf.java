@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import io.gomatcha.matcha.proto.Pb;
+import io.gomatcha.matcha.proto.Proto;
 import io.gomatcha.matcha.proto.layout.PbLayout;
 import io.gomatcha.matcha.proto.text.PbText;
 

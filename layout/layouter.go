@@ -7,7 +7,7 @@ import (
 
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/comm"
-	pblayout "gomatcha.io/matcha/pb/layout"
+	pblayout "gomatcha.io/matcha/proto/layout"
 )
 
 func init() {

@@ -4,7 +4,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
-	pbapp "gomatcha.io/matcha/pb/app"
+	pbapp "gomatcha.io/matcha/proto/app"
 	"gomatcha.io/matcha/view"
 )
 

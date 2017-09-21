@@ -11,7 +11,7 @@ import (
 	"gomatcha.io/matcha/keyboard"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
-	pbview "gomatcha.io/matcha/pb/view"
+	pbview "gomatcha.io/matcha/proto/view"
 	"gomatcha.io/matcha/text"
 )
 

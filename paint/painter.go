@@ -14,8 +14,8 @@ import (
 
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/pb"
-	"gomatcha.io/matcha/pb/paint"
+	pb "gomatcha.io/matcha/proto"
+	"gomatcha.io/matcha/proto/paint"
 )
 
 // Painter is the interface that describes how a view should be drawn on screen.

@@ -5,7 +5,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/bridge"
-	pbview "gomatcha.io/matcha/pb/view"
+	pbview "gomatcha.io/matcha/proto/view"
 )
 
 var alertMaxId int64

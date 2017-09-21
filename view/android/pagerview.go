@@ -3,7 +3,7 @@ package android
 import (
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout/constraint"
-	pbandroid "gomatcha.io/matcha/pb/view/android"
+	pbandroid "gomatcha.io/matcha/proto/view/android"
 	"gomatcha.io/matcha/view"
 )
 

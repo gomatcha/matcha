@@ -17,8 +17,8 @@ import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaViewNode extends Object {
     MatchaViewNode parent;
-    MatchaView rootView;
-    long id;
+    public MatchaView rootView;
+    public long id;
     long buildId;
     long layoutId;
     long paintId;

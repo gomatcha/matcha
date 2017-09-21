@@ -8,7 +8,7 @@ import (
 
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/application"
-	"gomatcha.io/matcha/pb"
+	pb "gomatcha.io/matcha/proto"
 )
 
 func init() {

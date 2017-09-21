@@ -7,7 +7,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
-	pbview "gomatcha.io/matcha/pb/view"
+	protoview "gomatcha.io/matcha/proto/view"
 )
 
 type Switch struct {
@@ -44,13 +44,13 @@ func (v *Switch) Build(ctx Context) Model {
 		Painter:        painter,
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/switch",
-		NativeViewState: &pbview.SwitchView{
+		NativeViewState: &protoview.SwitchView{
 			Value:   v.Value,
 			Enabled: v.Enabled,
 		},
 		NativeFuncs: map[string]interface{}{
 			"OnChange": func(data []byte) {
-				event := &pbview.SwitchEvent{}
+				event := &protoview.SwitchEvent{}
 				err := proto.Unmarshal(data, event)
 				if err != nil {
 					fmt.Println("error", err)

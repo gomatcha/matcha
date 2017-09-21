@@ -24,7 +24,7 @@ import java.util.List;
 
 import io.gomatcha.bridge.Bridge;
 import io.gomatcha.bridge.GoValue;
-import io.gomatcha.matcha.proto.Pb;
+import io.gomatcha.matcha.proto.Proto;
 import io.gomatcha.matcha.proto.layout.PbLayout;
 import io.gomatcha.matcha.proto.text.PbText;
 import io.gomatcha.matcha.proto.view.PbAlert;

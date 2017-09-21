@@ -12,7 +12,7 @@ package keyboard
 
 import (
 	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/pb/keyboard"
+	"gomatcha.io/matcha/proto/keyboard"
 )
 
 // Type defines the kind of keyboard.

@@ -21,7 +21,7 @@ import (
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/full"
 	"gomatcha.io/matcha/paint"
-	pb "gomatcha.io/matcha/pb/view"
+	pb "gomatcha.io/matcha/proto/view"
 )
 
 var maxId int64

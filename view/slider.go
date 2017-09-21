@@ -7,7 +7,7 @@ import (
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
-	pbview "gomatcha.io/matcha/pb/view"
+	pbview "gomatcha.io/matcha/proto/view"
 )
 
 type sliderLayouter struct {

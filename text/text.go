@@ -3,7 +3,7 @@ package text
 
 import (
 	"gomatcha.io/matcha/comm"
-	pb "gomatcha.io/matcha/pb/text"
+	pb "gomatcha.io/matcha/proto/text"
 )
 
 // type Position struct {

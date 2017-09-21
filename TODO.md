@@ -1,8 +1,8 @@
 * MailChimp thing.
 * BLog thing.
 * Better images, readme docs.
-* Android custom view example
 * Consulting.
+* Cleanup native code.
 
 High:
 * Non-image resources.
@@ -72,7 +72,7 @@ Documentation
 * layout/table
 * paint
 * text
-* touch
+* pointer
 * view
 * view/ios
 * view/android

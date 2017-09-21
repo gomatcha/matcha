@@ -10,8 +10,8 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/bridge"
-	"gomatcha.io/matcha/pb"
-	"gomatcha.io/matcha/pb/env"
+	pb "gomatcha.io/matcha/proto"
+	"gomatcha.io/matcha/proto/env"
 )
 
 // type Resource struct {

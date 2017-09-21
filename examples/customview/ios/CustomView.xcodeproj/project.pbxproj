@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6732FA981F743B48002DC2EF /* Customview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732FA961F743B48002DC2EF /* Customview.pbobjc.h */; };
+		6732FA991F743B48002DC2EF /* Customview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732FA971F743B48002DC2EF /* Customview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		67783C771F1E8436001582F5 /* CustomView.h in Headers */ = {isa = PBXBuildFile; fileRef = 67783C751F1E8436001582F5 /* CustomView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67783C811F1E847A001582F5 /* Matcha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67783C7E1F1E847A001582F5 /* Matcha.framework */; };
 		67783C821F1E847A001582F5 /* MatchaBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67783C7F1F1E847A001582F5 /* MatchaBridge.framework */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6732FA961F743B48002DC2EF /* Customview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customview.pbobjc.h; sourceTree = "<group>"; };
+		6732FA971F743B48002DC2EF /* Customview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customview.pbobjc.m; sourceTree = "<group>"; };
 		67783C721F1E8436001582F5 /* CustomView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CustomView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67783C751F1E8436001582F5 /* CustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomView.h; sourceTree = "<group>"; };
 		67783C761F1E8436001582F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -38,10 +42,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6732FA901F743B48002DC2EF /* Protobuf */ = {
+			isa = PBXGroup;
+			children = (
+				6732FA911F743B48002DC2EF /* gomatcha.io */,
+			);
+			path = Protobuf;
+			sourceTree = "<group>";
+		};
+		6732FA911F743B48002DC2EF /* gomatcha.io */ = {
+			isa = PBXGroup;
+			children = (
+				6732FA921F743B48002DC2EF /* matcha */,
+			);
+			path = gomatcha.io;
+			sourceTree = "<group>";
+		};
+		6732FA921F743B48002DC2EF /* matcha */ = {
+			isa = PBXGroup;
+			children = (
+				6732FA931F743B48002DC2EF /* examples */,
+			);
+			path = matcha;
+			sourceTree = "<group>";
+		};
+		6732FA931F743B48002DC2EF /* examples */ = {
+			isa = PBXGroup;
+			children = (
+				6732FA941F743B48002DC2EF /* customview */,
+			);
+			path = examples;
+			sourceTree = "<group>";
+		};
+		6732FA941F743B48002DC2EF /* customview */ = {
+			isa = PBXGroup;
+			children = (
+				6732FA951F743B48002DC2EF /* proto */,
+			);
+			path = customview;
+			sourceTree = "<group>";
+		};
+		6732FA951F743B48002DC2EF /* proto */ = {
+			isa = PBXGroup;
+			children = (
+				6732FA961F743B48002DC2EF /* Customview.pbobjc.h */,
+				6732FA971F743B48002DC2EF /* Customview.pbobjc.m */,
+			);
+			path = proto;
+			sourceTree = "<group>";
+		};
 		67783C681F1E8436001582F5 = {
 			isa = PBXGroup;
 			children = (
 				67783C741F1E8436001582F5 /* CustomView */,
+				6732FA901F743B48002DC2EF /* Protobuf */,
 				67783C731F1E8436001582F5 /* Products */,
 				67783C7D1F1E847A001582F5 /* Frameworks */,
 			);
@@ -83,6 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				67783C771F1E8436001582F5 /* CustomView.h in Headers */,
+				6732FA981F743B48002DC2EF /* Customview.pbobjc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6732FA991F743B48002DC2EF /* Customview.pbobjc.m in Sources */,
 				67783C851F1E84B6001582F5 /* CustomView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,6 +324,11 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1",
+				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Protobuf";
 				INFOPLIST_FILE = CustomView/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -286,6 +347,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = "GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Protobuf";
 				INFOPLIST_FILE = CustomView/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

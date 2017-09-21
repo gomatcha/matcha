@@ -8,8 +8,8 @@ import java.util.List;
 import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaChildView extends MatchaLayout {
-    MatchaViewNode viewNode;
-    PbView.BuildNode buildNode;
+    public MatchaViewNode viewNode;
+    public PbView.BuildNode buildNode;
     MatchaGestureRecognizer matchaGestureRecognizer;
 
     public MatchaChildView(Context context, MatchaViewNode node) {

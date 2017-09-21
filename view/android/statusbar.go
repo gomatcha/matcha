@@ -7,8 +7,8 @@ import (
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
-	"gomatcha.io/matcha/pb"
-	pbapp "gomatcha.io/matcha/pb/view/android"
+	pb "gomatcha.io/matcha/proto"
+	pbapp "gomatcha.io/matcha/proto/view/android"
 	"gomatcha.io/matcha/view"
 )
 

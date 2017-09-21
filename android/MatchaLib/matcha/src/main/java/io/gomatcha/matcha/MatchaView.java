@@ -106,7 +106,7 @@ public class MatchaView extends RelativeLayout {
         goValue.call("Stop");
     }
 
-    GoValue[] call(String func, long viewId, GoValue... args) {
+    public GoValue[] call(String func, long viewId, GoValue... args) {
         GoValue[] args2 = new GoValue[]{new GoValue(func), new GoValue(viewId), new GoValue(args)};
         return this.goValue.call("Call", args2);
     }

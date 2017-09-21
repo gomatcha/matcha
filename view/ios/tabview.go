@@ -9,9 +9,9 @@ import (
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout/constraint"
-	"gomatcha.io/matcha/pb"
-	pbtext "gomatcha.io/matcha/pb/text"
-	pbios "gomatcha.io/matcha/pb/view/ios"
+	pb "gomatcha.io/matcha/proto"
+	pbtext "gomatcha.io/matcha/proto/text"
+	pbios "gomatcha.io/matcha/proto/view/ios"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )

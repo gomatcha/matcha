@@ -1,0 +1,16 @@
+syntax = "proto3";
+package matcha.examples.customview;
+
+option go_package = "proto";
+option objc_class_prefix = "CustomViewProto";
+option java_package = "io.gomatcha.customview.proto";
+option java_outer_classname = "CustomViewProto";
+
+message View {
+    bool value = 1;
+    bool enabled = 2;
+}
+
+message Event {
+    bool value = 1;
+}

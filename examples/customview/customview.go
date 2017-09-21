@@ -1,29 +1,61 @@
 package customview
 
 import (
-	_ "gomatcha.io/bridge"
-	"gomatcha.io/matcha/paint"
+	"fmt"
+	"runtime"
+
+	"github.com/gogo/protobuf/proto"
+	protoview "gomatcha.io/matcha/examples/customview/proto"
+	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/view"
 )
 
 type CustomView struct {
 	view.Embed
-	PaintStyle paint.Painter
+	Enabled  bool
+	Value    bool
+	OnSubmit func(value bool)
 }
 
-// New returns an initialized CustomView instance.
+// NewCustomView returns an initialized CustomView instance.
 func NewCustomView() *CustomView {
-	return &CustomView{}
+	return &CustomView{
+		Enabled: true,
+	}
 }
 
 // Build implements view.View.
 func (v *CustomView) Build(ctx view.Context) view.Model {
-	painter := paint.Painter(nil)
-	if v.PaintStyle != nil {
-		painter = v.PaintStyle
-	}
+	l := &constraint.Layouter{}
+	l.Solve(func(s *constraint.Solver) {
+		if runtime.GOOS == "android" {
+			s.Width(61)
+			s.Height(40)
+		} else {
+			s.Width(51)
+			s.Height(31)
+		}
+	})
 	return view.Model{
-		NativeViewName: "github.com/overcyn/customview",
-		Painter:        painter,
+		Layouter:       l,
+		NativeViewName: "gomatcha.io/matcha/view/switch",
+		NativeViewState: &protoview.View{
+			Value:   v.Value,
+			Enabled: v.Enabled,
+		},
+		NativeFuncs: map[string]interface{}{
+			"OnChange": func(data []byte) {
+				event := &protoview.Event{}
+				err := proto.Unmarshal(data, event)
+				if err != nil {
+					fmt.Println("error", err)
+					return
+				}
+				v.Value = event.Value
+				if v.OnSubmit != nil {
+					v.OnSubmit(v.Value)
+				}
+			},
+		},
 	}
 }

@@ -14,8 +14,8 @@ import (
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pb"
-	pbview "gomatcha.io/matcha/pb/view"
+	pb "gomatcha.io/matcha/proto"
+	pbview "gomatcha.io/matcha/proto/view"
 )
 
 type ImageResizeMode int

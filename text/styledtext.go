@@ -7,8 +7,8 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/layout"
-	pb "gomatcha.io/matcha/pb/layout"
-	pbtext "gomatcha.io/matcha/pb/text"
+	pb "gomatcha.io/matcha/proto/layout"
+	pbtext "gomatcha.io/matcha/proto/text"
 )
 
 type styleRange struct {

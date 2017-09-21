@@ -15,8 +15,8 @@ import (
 	"gomatcha.io/matcha/internal/radix"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pb"
-	"gomatcha.io/matcha/pb/view/android"
+	pb "gomatcha.io/matcha/proto"
+	"gomatcha.io/matcha/proto/view/android"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )

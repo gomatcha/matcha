@@ -6,7 +6,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
-	pbios "gomatcha.io/matcha/pb/view/ios"
+	pbios "gomatcha.io/matcha/proto/view/ios"
 	"gomatcha.io/matcha/view"
 )
 

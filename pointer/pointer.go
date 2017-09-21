@@ -35,7 +35,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
 	"gomatcha.io/matcha/layout"
-	pbtouch "gomatcha.io/matcha/pb/touch"
+	pbtouch "gomatcha.io/matcha/proto/pointer"
 )
 
 var maxFuncId int64 = 0

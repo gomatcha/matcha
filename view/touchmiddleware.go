@@ -5,8 +5,8 @@ import (
 	"github.com/golang/protobuf/ptypes"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
-	pbtouch "gomatcha.io/matcha/pb/touch"
 	"gomatcha.io/matcha/pointer"
+	pbtouch "gomatcha.io/matcha/proto/pointer"
 )
 
 func init() {

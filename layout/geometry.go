@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"gomatcha.io/matcha/comm"
-	pblayout "gomatcha.io/matcha/pb/layout"
+	pblayout "gomatcha.io/matcha/proto/layout"
 )
 
 // Axis represents a direction along the coordinate plane.

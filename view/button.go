@@ -9,9 +9,9 @@ import (
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pb"
-	pbview "gomatcha.io/matcha/pb/view"
 	"gomatcha.io/matcha/pointer"
+	pb "gomatcha.io/matcha/proto"
+	pbview "gomatcha.io/matcha/proto/view"
 	"gomatcha.io/matcha/text"
 )
 

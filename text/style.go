@@ -4,8 +4,8 @@ import (
 	"image/color"
 	"runtime"
 
-	"gomatcha.io/matcha/pb"
-	pbtext "gomatcha.io/matcha/pb/text"
+	pb "gomatcha.io/matcha/proto"
+	pbtext "gomatcha.io/matcha/proto/text"
 )
 
 // Alignment represents a text alignment.
