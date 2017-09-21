@@ -13,8 +13,8 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/android"
 	"gomatcha.io/matcha/view/ios"
@@ -235,10 +235,10 @@ func (v *PostImageView) Build(ctx view.Context) view.Model {
 		})
 	}
 
-	tap := &touch.TapGesture{
+	tap := &pointer.TapGesture{
 		Count: 2,
-		OnEvent: func(e *touch.TapEvent) {
-			if e.Kind != touch.EventKindRecognized {
+		OnEvent: func(e *pointer.TapEvent) {
+			if e.Kind != pointer.EventKindRecognized {
 				return
 			}
 			v.showHeart = true
@@ -258,7 +258,7 @@ func (v *PostImageView) Build(ctx view.Context) view.Model {
 		Children: l.Views(),
 		Layouter: l,
 		Options: []view.Option{
-			touch.GestureList{tap},
+			pointer.GestureList{tap},
 		},
 	}
 }

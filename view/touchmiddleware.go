@@ -6,7 +6,7 @@ import (
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/internal/radix"
 	pbtouch "gomatcha.io/matcha/pb/touch"
-	"gomatcha.io/matcha/touch"
+	"gomatcha.io/matcha/pointer"
 )
 
 func init() {
@@ -25,16 +25,16 @@ func (r *touchMiddleware) MarshalProtobuf() proto.Message {
 func (r *touchMiddleware) Build(ctx Context, next *Model) {
 	path := idSliceToIntSlice(ctx.Path())
 	node := r.radix.At(path)
-	var prevIds map[int64]touch.Gesture
+	var prevIds map[int64]pointer.Gesture
 	if node != nil {
-		prevIds, _ = node.Value.(map[int64]touch.Gesture)
+		prevIds, _ = node.Value.(map[int64]pointer.Gesture)
 	}
 
-	ids := map[int64]touch.Gesture{}
+	ids := map[int64]pointer.Gesture{}
 
-	var rs touch.GestureList
+	var rs pointer.GestureList
 	for _, i := range next.Options {
-		rs, _ = i.(touch.GestureList)
+		rs, _ = i.(pointer.GestureList)
 		if rs != nil {
 			break
 		}

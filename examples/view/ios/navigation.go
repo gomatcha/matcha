@@ -8,7 +8,7 @@ import (
 
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/touch"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
 )
@@ -73,9 +73,9 @@ func NewNavigationChild(app *NavigationApp) *NavigationChild {
 }
 
 func (v *NavigationChild) Build(ctx view.Context) view.Model {
-	tap := &touch.TapGesture{
+	tap := &pointer.TapGesture{
 		Count: 1,
-		OnEvent: func(e *touch.TapEvent) {
+		OnEvent: func(e *pointer.TapEvent) {
 			child := NewNavigationChild(v.app)
 			child.Color = colornames.Red
 			v.app.CurrentStackView().Push(child)
@@ -86,7 +86,7 @@ func (v *NavigationChild) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: v.Color},
 		Options: []view.Option{
-			touch.GestureList{tap},
+			pointer.GestureList{tap},
 		},
 	}
 }

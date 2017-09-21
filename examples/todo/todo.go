@@ -12,8 +12,8 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
 )
@@ -245,9 +245,9 @@ func (v *Checkbox) Build(ctx view.Context) view.Model {
 		s.HeightEqual(l.Height())
 	})
 
-	button := &touch.ButtonGesture{
-		OnEvent: func(e *touch.ButtonEvent) {
-			if e.Kind == touch.EventKindRecognized {
+	button := &pointer.ButtonGesture{
+		OnEvent: func(e *pointer.ButtonEvent) {
+			if e.Kind == pointer.EventKindRecognized {
 				v.OnValueChange(!v.Value)
 			}
 		},
@@ -258,7 +258,7 @@ func (v *Checkbox) Build(ctx view.Context) view.Model {
 		// Painter:  painter,
 		Layouter: l,
 		Options: []view.Option{
-			touch.GestureList{button},
+			pointer.GestureList{button},
 		},
 	}
 }
@@ -288,9 +288,9 @@ func (v *DeleteButton) Build(ctx view.Context) view.Model {
 		s.HeightEqual(l.Height())
 	})
 
-	button := &touch.ButtonGesture{
-		OnEvent: func(e *touch.ButtonEvent) {
-			if e.Kind == touch.EventKindRecognized {
+	button := &pointer.ButtonGesture{
+		OnEvent: func(e *pointer.ButtonEvent) {
+			if e.Kind == pointer.EventKindRecognized {
 				v.OnPress()
 			}
 		},
@@ -300,7 +300,7 @@ func (v *DeleteButton) Build(ctx view.Context) view.Model {
 		Children: l.Views(),
 		Layouter: l,
 		Options: []view.Option{
-			touch.GestureList{button},
+			pointer.GestureList{button},
 		},
 	}
 }

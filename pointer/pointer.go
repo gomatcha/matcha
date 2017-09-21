@@ -1,14 +1,14 @@
 /*
-Package touch implements gesture recognizers.
+Package pointer implements gesture recognizers.
 
-Create the touch recognizer in the Build function.
+Create the pointer recognizer in the Build function.
 
  func (v *MyView) Build(ctx view.Context2) view.Model {
- 	tap := &touch.TapGesture{
+ 	tap := &pointer.TapGesture{
  		Count: 1,
- 		OnEvent: func(e *touch.TapEvent) {
+ 		OnEvent: func(e *pointer.TapEvent) {
  			if e.Kind == EventKindRecognized {
- 				// Respond to touch events. This callback occurs on main thread.
+ 				// Respond to pointer events. This callback occurs on main thread.
  				fmt.Println("view tapped")
 			}
  		},
@@ -20,12 +20,12 @@ Attach the recognizer to the view.
 	...
  	return view.Model{
  		Options: []view.Option{
- 			touch.RecognizerList{tap},
+ 			pointer.GestureList{tap},
  		},
  	}
  }
 */
-package touch
+package pointer
 
 import (
 	"fmt"

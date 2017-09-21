@@ -12,8 +12,8 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/android"
 	"gomatcha.io/matcha/view/ios"
@@ -457,21 +457,21 @@ func (v *BasicCell) Build(ctx view.Context) view.Model {
 
 	var options []view.Option
 	if v.OnTap != nil {
-		tap := &touch.ButtonGesture{
-			OnEvent: func(e *touch.ButtonEvent) {
+		tap := &pointer.ButtonGesture{
+			OnEvent: func(e *pointer.ButtonEvent) {
 				switch e.Kind {
-				case touch.EventKindPossible:
+				case pointer.EventKindPossible:
 					v.highlighted = e.Inside
-				case touch.EventKindFailed:
+				case pointer.EventKindFailed:
 					v.highlighted = false
-				case touch.EventKindRecognized:
+				case pointer.EventKindRecognized:
 					v.highlighted = false
 					v.OnTap()
 				}
 				v.Signal()
 			},
 		}
-		options = append(options, touch.GestureList{tap})
+		options = append(options, pointer.GestureList{tap})
 	}
 
 	var color color.Color

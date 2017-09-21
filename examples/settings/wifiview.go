@@ -6,7 +6,7 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/touch"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/android"
 	"gomatcha.io/matcha/view/ios"
@@ -362,9 +362,9 @@ func (v *InfoButton) Build(ctx view.Context) view.Model {
 		s.RightEqual(l.Right())
 	})
 
-	button := &touch.ButtonGesture{
-		OnEvent: func(e *touch.ButtonEvent) {
-			if e.Kind == touch.EventKindRecognized && v.OnPress != nil {
+	button := &pointer.ButtonGesture{
+		OnEvent: func(e *pointer.ButtonEvent) {
+			if e.Kind == pointer.EventKindRecognized && v.OnPress != nil {
 				v.OnPress()
 			}
 		},
@@ -375,7 +375,7 @@ func (v *InfoButton) Build(ctx view.Context) view.Model {
 		Layouter: l,
 		Painter:  v.PaintStyle,
 		Options: []view.Option{
-			touch.GestureList{button},
+			pointer.GestureList{button},
 		},
 	}
 }

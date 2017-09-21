@@ -6,7 +6,7 @@ import (
 	"golang.org/x/image/colornames"
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/touch"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
 )
@@ -77,9 +77,9 @@ func NewTabChild(app *TabApp) *TabChild {
 }
 
 func (v *TabChild) Build(ctx view.Context) view.Model {
-	tap := &touch.TapGesture{
+	tap := &pointer.TapGesture{
 		Count: 1,
-		OnEvent: func(e *touch.TapEvent) {
+		OnEvent: func(e *pointer.TapEvent) {
 			v.app.tabs.SetSelectedIndex(0)
 			v.button.Title = "Updated"
 			v.Signal()
@@ -89,7 +89,7 @@ func (v *TabChild) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: v.Color},
 		Options: []view.Option{
-			touch.GestureList{tap},
+			pointer.GestureList{tap},
 			v.button,
 		},
 	}

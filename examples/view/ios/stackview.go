@@ -7,7 +7,7 @@ import (
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/touch"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
 )
@@ -56,9 +56,9 @@ func NewStackChild(app *StackApp) *StackChild {
 }
 
 func (v *StackChild) Build(ctx view.Context) view.Model {
-	tap := &touch.TapGesture{
+	tap := &pointer.TapGesture{
 		Count: 1,
-		OnEvent: func(e *touch.TapEvent) {
+		OnEvent: func(e *pointer.TapEvent) {
 			// v.bar.Title = "Updated"
 			// v.Signal()
 
@@ -105,7 +105,7 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: v.Color},
 		Options: []view.Option{
-			touch.GestureList{tap},
+			pointer.GestureList{tap},
 			&ios.StackBar{
 				Title:      "Title",
 				TitleView:  titleView,

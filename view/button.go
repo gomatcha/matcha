@@ -11,8 +11,8 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pb"
 	pbview "gomatcha.io/matcha/pb/view"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/touch"
 )
 
 // Button implements a native button view.
@@ -113,9 +113,9 @@ func (v *ImageButton) Build(ctx Context) Model {
 		painter = v.PaintStyle
 	}
 
-	t := &touch.ButtonGesture{
-		OnEvent: func(e *touch.ButtonEvent) {
-			if e.Kind == touch.EventKindRecognized && v.OnPress != nil {
+	t := &pointer.ButtonGesture{
+		OnEvent: func(e *pointer.ButtonEvent) {
+			if e.Kind == pointer.EventKindRecognized && v.OnPress != nil {
 				v.OnPress()
 			}
 		},
@@ -125,7 +125,7 @@ func (v *ImageButton) Build(ctx Context) Model {
 		Layouter: &imageButtonLayouter{},
 		Painter:  painter,
 		Options: []Option{
-			touch.GestureList{t},
+			pointer.GestureList{t},
 		},
 	}
 }

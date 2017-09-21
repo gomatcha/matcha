@@ -1,5 +1,5 @@
-// Package touch provides examples of how to use the matcha/touch package.
-package touch
+// Package pointer provides examples of how to use the matcha/pointer package.
+package pointer
 
 import (
 	"fmt"
@@ -9,8 +9,8 @@ import (
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 )
 
@@ -145,16 +145,16 @@ func (v *TapChildView) Build(ctx view.Context) view.Model {
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
-			touch.GestureList{&touch.TapGesture{
+			pointer.GestureList{&pointer.TapGesture{
 				Count: 1,
-				OnEvent: func(e *touch.TapEvent) {
-					if e.Kind == touch.EventKindPossible {
+				OnEvent: func(e *pointer.TapEvent) {
+					if e.Kind == pointer.EventKindPossible {
 						fmt.Println("Tap Possible")
-					} else if e.Kind == touch.EventKindChanged {
+					} else if e.Kind == pointer.EventKindChanged {
 						fmt.Println("Tap Changed")
-					} else if e.Kind == touch.EventKindFailed {
+					} else if e.Kind == pointer.EventKindFailed {
 						fmt.Println("Tap Failed")
-					} else if e.Kind == touch.EventKindRecognized {
+					} else if e.Kind == pointer.EventKindRecognized {
 						fmt.Println("Tap Recognized")
 						v.OnTouch()
 					}
@@ -177,16 +177,16 @@ func (v *PressChildView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
-			touch.GestureList{&touch.PressGesture{
+			pointer.GestureList{&pointer.PressGesture{
 				MinDuration: time.Second / 2,
-				OnEvent: func(e *touch.PressEvent) {
-					if e.Kind == touch.EventKindPossible {
+				OnEvent: func(e *pointer.PressEvent) {
+					if e.Kind == pointer.EventKindPossible {
 						fmt.Println("Press Possible")
-					} else if e.Kind == touch.EventKindChanged {
+					} else if e.Kind == pointer.EventKindChanged {
 						fmt.Println("Press Changed")
-					} else if e.Kind == touch.EventKindFailed {
+					} else if e.Kind == pointer.EventKindFailed {
 						fmt.Println("Press Failed")
-					} else if e.Kind == touch.EventKindRecognized {
+					} else if e.Kind == pointer.EventKindRecognized {
 						fmt.Println("Press Recognized")
 						v.OnTouch()
 					}
@@ -209,15 +209,15 @@ func (v *ButtonChildView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
-			touch.GestureList{&touch.ButtonGesture{
-				OnEvent: func(e *touch.ButtonEvent) {
-					if e.Kind == touch.EventKindPossible {
+			pointer.GestureList{&pointer.ButtonGesture{
+				OnEvent: func(e *pointer.ButtonEvent) {
+					if e.Kind == pointer.EventKindPossible {
 						fmt.Println("Button Possible")
-					} else if e.Kind == touch.EventKindChanged {
+					} else if e.Kind == pointer.EventKindChanged {
 						fmt.Println("Button Changed")
-					} else if e.Kind == touch.EventKindFailed {
+					} else if e.Kind == pointer.EventKindFailed {
 						fmt.Println("Button Failed")
-					} else if e.Kind == touch.EventKindRecognized {
+					} else if e.Kind == pointer.EventKindRecognized {
 						fmt.Println("Button Recognized")
 						v.OnTouch()
 					}

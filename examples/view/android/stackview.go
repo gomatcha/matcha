@@ -8,8 +8,8 @@ import (
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/android"
 )
@@ -73,10 +73,10 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 	// 	v.app.stack.Push(child)
 	// }
 
-	tap := &touch.TapGesture{
+	tap := &pointer.TapGesture{
 		Count: 1,
-		OnEvent: func(e *touch.TapEvent) {
-			if e.Kind != touch.EventKindRecognized {
+		OnEvent: func(e *pointer.TapEvent) {
+			if e.Kind != pointer.EventKindRecognized {
 				return
 			}
 			// v.bar.Title = "Updated"
@@ -104,7 +104,7 @@ func (v *StackChild) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Painter: &paint.Style{BackgroundColor: v.Color},
 		Options: []view.Option{
-			touch.GestureList{tap},
+			pointer.GestureList{tap},
 			&android.StackBar{
 				StyledTitle:    title,
 				StyledSubtitle: subtitle,

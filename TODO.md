@@ -41,6 +41,7 @@ Low:
 * Guide.Insets, Guide.Transform? Layout.Insets(top, left, bottom, right)?
 * Table behaviors
 * Button disabled/highlighted state using anonymous structs?
+* Add OnRecognize to Gesture recognizers.
 
 Very Low:
 * Building for iPhone 5 Simulator doesn't work.
@@ -58,9 +59,8 @@ Very Low:
 * Flexbox
 * Strikethrough doesn't work.
 
-Refactors
-* Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize? 
-* Touch package to Pointer?
+Refactors:
+* 
 
 Documentation
 * animate
