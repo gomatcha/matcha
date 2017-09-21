@@ -33,7 +33,7 @@ func (v *SwitchView) Build(ctx view.Context) view.Model {
 	chl1 := view.NewSwitch()
 	chl1.Value = v.value
 	chl1.PaintStyle = &paint.Style{BackgroundColor: colornames.Green}
-	chl1.OnValueChange = func(value bool) {
+	chl1.OnSubmit = func(value bool) {
 		v.value = value
 		v.Signal()
 		fmt.Println("onValueChange", value)
@@ -46,7 +46,7 @@ func (v *SwitchView) Build(ctx view.Context) view.Model {
 	chl2 := view.NewSwitch()
 	chl2.Value = v.value
 	chl2.Enabled = false
-	chl2.OnValueChange = func(value bool) {
+	chl2.OnSubmit = func(value bool) {
 		fmt.Println("onValueChange2", value)
 	}
 	l.Add(chl2, func(s *constraint.Solver) {

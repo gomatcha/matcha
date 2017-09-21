@@ -82,7 +82,7 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 
 		switchView := view.NewSwitch()
 		switchView.Value = v.app.AirplaneMode()
-		switchView.OnValueChange = func(value bool) {
+		switchView.OnSubmit = func(value bool) {
 			v.app.SetAirplaneMode(value)
 		}
 		cell1 := NewBasicCell()

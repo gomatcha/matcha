@@ -38,7 +38,7 @@ func (v *BluetoothView) Build(ctx view.Context) view.Model {
 
 		switchView := view.NewSwitch()
 		switchView.Value = v.app.Bluetooth.Enabled()
-		switchView.OnValueChange = func(value bool) {
+		switchView.OnSubmit = func(value bool) {
 			v.app.Bluetooth.SetEnabled(!v.app.Bluetooth.Enabled())
 		}
 

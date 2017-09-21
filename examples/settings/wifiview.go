@@ -42,7 +42,7 @@ func (v *WifiView) Build(ctx view.Context) view.Model {
 
 		switchView := view.NewSwitch()
 		switchView.Value = v.app.Wifi.Enabled()
-		switchView.OnValueChange = func(value bool) {
+		switchView.OnSubmit = func(value bool) {
 			v.app.Wifi.SetEnabled(!v.app.Wifi.Enabled())
 		}
 
@@ -108,7 +108,7 @@ func (v *WifiView) Build(ctx view.Context) view.Model {
 
 			switchView := view.NewSwitch()
 			switchView.Value = v.app.Wifi.AskToJoin()
-			switchView.OnValueChange = func(a bool) {
+			switchView.OnSubmit = func(a bool) {
 				v.app.Wifi.SetAskToJoin(a)
 			}
 			cell1 := NewBasicCell()

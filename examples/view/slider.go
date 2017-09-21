@@ -35,7 +35,7 @@ func (v *Slider) Build(ctx view.Context) view.Model {
 	chl1.MaxValue = 5
 	chl1.Value = v.value
 	chl1.PaintStyle = &paint.Style{BackgroundColor: colornames.Green}
-	chl1.OnValueChange = func(value float64) {
+	chl1.OnChange = func(value float64) {
 		v.value = value
 		v.Signal()
 		fmt.Println("onValueChange", value)
@@ -54,7 +54,7 @@ func (v *Slider) Build(ctx view.Context) view.Model {
 	chl2.MinValue = -10
 	chl2.MaxValue = 10
 	chl2.Enabled = false
-	chl2.OnValueChange = func(value float64) {
+	chl2.OnChange = func(value float64) {
 		fmt.Println("onValueChange2", value)
 	}
 	l.Add(chl2, func(s *constraint.Solver) {

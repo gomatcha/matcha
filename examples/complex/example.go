@@ -156,7 +156,7 @@ func (v *NestedView) Build(ctx view.Context) view.Model {
 		})
 	}
 	chl11 := view.NewSwitch()
-	chl11.OnValueChange = func(value bool) {
+	chl11.OnSubmit = func(value bool) {
 		a := 0.0
 		if value {
 			a = 1.0
@@ -203,7 +203,7 @@ func (v *NestedView) Build(ctx view.Context) view.Model {
 	chl12.ValueNotifier = &v.sliderValue
 	chl12.MaxValue = 1
 	chl12.MinValue = 0
-	chl12.OnValueChange = func(value float64) {
+	chl12.OnChange = func(value float64) {
 		v.sliderValue.SetValue(value)
 		fmt.Println("slider", value, v.sliderValue.Value())
 	}

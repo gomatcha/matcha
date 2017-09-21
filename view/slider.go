@@ -34,7 +34,7 @@ type Slider struct {
 	valueNotifier comm.Float64Notifier
 	MaxValue      float64
 	MinValue      float64
-	OnValueChange func(value float64)
+	OnChange      func(value float64)
 	OnSubmit      func(value float64)
 	Enabled       bool
 }
@@ -96,8 +96,8 @@ func (v *Slider) Build(ctx Context) Model {
 					return
 				}
 
-				if v.OnValueChange != nil {
-					v.OnValueChange(event.Value)
+				if v.OnChange != nil {
+					v.OnChange(event.Value)
 				}
 			},
 			"OnSubmit": func(data []byte) {

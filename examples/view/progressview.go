@@ -42,7 +42,7 @@ func (v *ProgressView) Build(ctx view.Context) view.Model {
 	sliderv := view.NewSlider()
 	sliderv.MaxValue = 1
 	sliderv.MinValue = 0
-	sliderv.OnValueChange = func(value float64) {
+	sliderv.OnChange = func(value float64) {
 		v.value.SetValue(value)
 	}
 	l.Add(sliderv, func(s *constraint.Solver) {

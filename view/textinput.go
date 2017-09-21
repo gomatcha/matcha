@@ -31,7 +31,7 @@ type TextInput struct {
 	prevResponder    *keyboard.Responder
 	responder        *keyboard.Responder
 	MaxLines         int // This is used only for sizing.
-	OnTextChange     func(*text.Text)
+	OnChange         func(*text.Text)
 	OnSubmit         func()
 	OnFocus          func(*keyboard.Responder)
 }
@@ -131,8 +131,8 @@ func (v *TextInput) Build(ctx Context) Model {
 				}
 
 				_text.UnmarshalProtobuf(pbevent.StyledText.Text)
-				if v.OnTextChange != nil {
-					v.OnTextChange(_text)
+				if v.OnChange != nil {
+					v.OnChange(_text)
 				}
 			},
 			"OnSubmit": func() {

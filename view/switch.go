@@ -12,10 +12,10 @@ import (
 
 type Switch struct {
 	Embed
-	Enabled       bool
-	Value         bool
-	OnValueChange func(value bool)
-	PaintStyle    *paint.Style
+	Enabled    bool
+	Value      bool
+	OnSubmit   func(value bool)
+	PaintStyle *paint.Style
 }
 
 // NewSwitch returns either the previous View in ctx with matching key, or a new View if none exists.
@@ -58,8 +58,8 @@ func (v *Switch) Build(ctx Context) Model {
 				}
 
 				v.Value = event.Value
-				if v.OnValueChange != nil {
-					v.OnValueChange(v.Value)
+				if v.OnSubmit != nil {
+					v.OnSubmit(v.Value)
 				}
 			},
 		},
