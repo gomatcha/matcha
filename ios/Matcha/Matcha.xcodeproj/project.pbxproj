@@ -86,7 +86,7 @@
 		67FEBB101F09A18F005AFEDA /* MatchaObjcBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAEA1F09A18F005AFEDA /* MatchaObjcBridge.m */; };
 		67FEBB111F09A18F005AFEDA /* MatchaObjcBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAEB1F09A18F005AFEDA /* MatchaObjcBridge.h */; };
 		67FEBB121F09A18F005AFEDA /* MatchaBuildNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAEC1F09A18F005AFEDA /* MatchaBuildNode.m */; };
-		67FEBB131F09A18F005AFEDA /* MatchaBuildNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAED1F09A18F005AFEDA /* MatchaBuildNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67FEBB131F09A18F005AFEDA /* MatchaBuildNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAED1F09A18F005AFEDA /* MatchaBuildNode.h */; };
 		67FEBB161F09A18F005AFEDA /* MatchaDeadlockLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAF01F09A18F005AFEDA /* MatchaDeadlockLogger.m */; };
 		67FEBB171F09A18F005AFEDA /* MatchaDeadlockLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBAF11F09A18F005AFEDA /* MatchaDeadlockLogger.h */; };
 		67FEBB181F09A18F005AFEDA /* MatchaButtonGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAF21F09A18F005AFEDA /* MatchaButtonGestureRecognizer.m */; };
@@ -368,6 +368,7 @@
 			children = (
 				6732FA9F1F7445C0002DC2EF /* MatchaViewController_Private.h */,
 				67FEBAD21F09A18F005AFEDA /* MatchaViewController.m */,
+				67FEBAED1F09A18F005AFEDA /* MatchaBuildNode.h */,
 				67FEBAEC1F09A18F005AFEDA /* MatchaBuildNode.m */,
 				6732FA9B1F744239002DC2EF /* MatchaView_Private.h */,
 				67FEBAD41F09A18F005AFEDA /* MatchaView.m */,
@@ -415,7 +416,6 @@
 			children = (
 				67FEBA6E1F099EDF005AFEDA /* Matcha.h */,
 				67FEBAD31F09A18F005AFEDA /* MatchaViewController.h */,
-				67FEBAED1F09A18F005AFEDA /* MatchaBuildNode.h */,
 				67FEBAD51F09A18F005AFEDA /* MatchaView.h */,
 				6732FA9A1F744068002DC2EF /* Project */,
 				67FEBB291F09AD17005AFEDA /* Touch */,

@@ -8,7 +8,7 @@
 typedef UIView<MatchaChildView> *(^MatchaViewRegistrationBlock)(MatchaViewNode *);
 typedef UIViewController<MatchaChildViewController> *(^MatchaViewControllerRegistrationBlock)(MatchaViewNode *);
 
-@interface MatchaViewController : UIViewController // view.Root
+@interface MatchaViewController : UIViewController
 - (id)initWithGoValue:(MatchaGoValue *)value;
 - (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args:(NSArray<MatchaGoValue *> *)args;
 + (void)registerView:(NSString *)viewName block:(MatchaViewRegistrationBlock)block;

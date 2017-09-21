@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #import "MatchaView.h"
+@class MatchaBuildNode;
 
 void MatchaConfigureChildViewController(UIViewController *vc);
 UIView<MatchaChildView> *MatchaViewWithNode(MatchaBuildNode *node, MatchaViewNode *viewNode);

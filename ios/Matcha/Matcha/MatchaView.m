@@ -8,6 +8,7 @@
 #import "MatchaScrollView.h"
 #import "MatchaUnknownView.h"
 #import "MatchaView_Private.h"
+#import "MatchaBuildNode.h"
 
 UIView<MatchaChildView> *MatchaViewWithNode(MatchaBuildNode *node, MatchaViewNode *viewNode);
 static NSLock *sLock = nil;

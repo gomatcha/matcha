@@ -1,20 +1,21 @@
 #import <UIKit/UIKit.h>
-#import <Matcha/MatchaBuildNode.h>
 #import <Matcha/MatchaViewController.h>
+@class GPBAny;
+@class MatchaViewPBLayoutPaintNode;
 @class MatchaViewConfig;
 @class MatchaViewController;
 @class MatchaViewNode;
 
 @protocol MatchaChildView <NSObject>
-- (id)initWithViewNode:(MatchaViewNode *)viewNode;
+- (id)initWithViewNode:(MatchaViewNode *)viewNode; // viewNode should be weakly retained
 - (void)setNativeState:(GPBAny *)nativeState;
 @end
 
 @protocol MatchaChildViewController <NSObject>
-- (id)initWithViewNode:(MatchaViewNode *)viewNode;
+- (id)initWithViewNode:(MatchaViewNode *)viewNode; // viewNode should be weakly retained
 - (void)setNativeState:(GPBAny *)nativeState;
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs;
-- (void)setMatchaChildLayout:(NSMutableArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
+- (void)setMatchaChildLayout:(NSArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
 @end
 
 @interface MatchaViewNode : NSObject
