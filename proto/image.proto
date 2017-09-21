@@ -4,7 +4,7 @@ package matcha;
 option go_package = "proto";
 option objc_class_prefix = "MatchaPB";
 option java_package = "io.gomatcha.matcha.proto";
-option java_outer_classname = "Pb";
+option java_outer_classname = "Proto";
 
 message Image {
     int64 width = 1;

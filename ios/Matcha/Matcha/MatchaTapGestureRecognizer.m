@@ -16,7 +16,7 @@
 
 - (id)initWithMatchaVC:(MatchaViewController *)viewController viewId:(int64_t)viewId protobuf:(GPBAny *)pb {
     NSError *error = nil;
-    MatchaPBTouchTapRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPBTouchTapRecognizer class] error:&error];
+    MatchaPointerPBTapRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPointerPBTapRecognizer class] error:&error];
     if (pbTapRecognizer == nil) {
         return nil;
     }
@@ -35,7 +35,7 @@
 
 - (void)updateWithProtobuf:(GPBAny *)pb {
     NSError *error = nil;
-    MatchaPBTouchTapRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPBTouchTapRecognizer class] error:&error];
+    MatchaPointerPBTapRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPointerPBTapRecognizer class] error:&error];
     if (pbTapRecognizer == nil) {
         return;
     }
@@ -49,7 +49,7 @@
     
     CGPoint point = [self locationInView:self.view];
     
-    MatchaPBTouchTapEvent *event = [[MatchaPBTouchTapEvent alloc] init];
+    MatchaPointerPBTapEvent *event = [[MatchaPointerPBTapEvent alloc] init];
     event.position = [[MatchaLayoutPBPoint alloc] initWithCGPoint:point];
     event.timestamp = [[GPBTimestamp alloc] initWithDate:[NSDate date]];
     

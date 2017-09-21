@@ -24,10 +24,10 @@
         
         GPBAny *any = self.nativeValues[@"gomatcha.io/matcha/touch"];
         NSError *error = nil;
-        MatchaPBTouchRecognizerList *recognizerList = (id)[any unpackMessageClass:[MatchaPBTouchRecognizerList class] error:&error];
+        MatchaPointerPBRecognizerList *recognizerList = (id)[any unpackMessageClass:[MatchaPointerPBRecognizerList class] error:&error];
         if (error == nil) {
             NSMutableDictionary *touchRecognizers = [NSMutableDictionary dictionary];
-            for (MatchaPBTouchRecognizer *i in recognizerList.recognizersArray) {
+            for (MatchaPointerPBRecognizer *i in recognizerList.recognizersArray) {
                 touchRecognizers[@(i.id_p)] = i.recognizer;
             }
             self.touchRecognizers = touchRecognizers;

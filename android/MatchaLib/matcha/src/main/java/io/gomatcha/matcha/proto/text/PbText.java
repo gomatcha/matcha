@@ -3792,11 +3792,11 @@ public final class PbText {
     /**
      * <code>.matcha.Color strikethroughColor = 6;</code>
      */
-    io.gomatcha.matcha.proto.Pb.Color getStrikethroughColor();
+    io.gomatcha.matcha.proto.Proto.Color getStrikethroughColor();
     /**
      * <code>.matcha.Color strikethroughColor = 6;</code>
      */
-    io.gomatcha.matcha.proto.Pb.ColorOrBuilder getStrikethroughColorOrBuilder();
+    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getStrikethroughColorOrBuilder();
 
     /**
      * <code>.matcha.text.UnderlineStyle underlineStyle = 8;</code>
@@ -3814,11 +3814,11 @@ public final class PbText {
     /**
      * <code>.matcha.Color underlineColor = 10;</code>
      */
-    io.gomatcha.matcha.proto.Pb.Color getUnderlineColor();
+    io.gomatcha.matcha.proto.Proto.Color getUnderlineColor();
     /**
      * <code>.matcha.Color underlineColor = 10;</code>
      */
-    io.gomatcha.matcha.proto.Pb.ColorOrBuilder getUnderlineColorOrBuilder();
+    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getUnderlineColorOrBuilder();
 
     /**
      * <code>.matcha.text.Font font = 12;</code>
@@ -3855,11 +3855,11 @@ public final class PbText {
     /**
      * <code>.matcha.Color textColor = 20;</code>
      */
-    io.gomatcha.matcha.proto.Pb.Color getTextColor();
+    io.gomatcha.matcha.proto.Proto.Color getTextColor();
     /**
      * <code>.matcha.Color textColor = 20;</code>
      */
-    io.gomatcha.matcha.proto.Pb.ColorOrBuilder getTextColorOrBuilder();
+    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getTextColorOrBuilder();
 
     /**
      * <code>.matcha.text.TextWrap wrap = 22;</code>
@@ -3956,11 +3956,11 @@ public final class PbText {
               break;
             }
             case 50: {
-              io.gomatcha.matcha.proto.Pb.Color.Builder subBuilder = null;
+              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
               if (strikethroughColor_ != null) {
                 subBuilder = strikethroughColor_.toBuilder();
               }
-              strikethroughColor_ = input.readMessage(io.gomatcha.matcha.proto.Pb.Color.parser(), extensionRegistry);
+              strikethroughColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(strikethroughColor_);
                 strikethroughColor_ = subBuilder.buildPartial();
@@ -3975,11 +3975,11 @@ public final class PbText {
               break;
             }
             case 82: {
-              io.gomatcha.matcha.proto.Pb.Color.Builder subBuilder = null;
+              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
               if (underlineColor_ != null) {
                 subBuilder = underlineColor_.toBuilder();
               }
-              underlineColor_ = input.readMessage(io.gomatcha.matcha.proto.Pb.Color.parser(), extensionRegistry);
+              underlineColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(underlineColor_);
                 underlineColor_ = subBuilder.buildPartial();
@@ -4016,11 +4016,11 @@ public final class PbText {
               break;
             }
             case 162: {
-              io.gomatcha.matcha.proto.Pb.Color.Builder subBuilder = null;
+              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
               if (textColor_ != null) {
                 subBuilder = textColor_.toBuilder();
               }
-              textColor_ = input.readMessage(io.gomatcha.matcha.proto.Pb.Color.parser(), extensionRegistry);
+              textColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(textColor_);
                 textColor_ = subBuilder.buildPartial();
@@ -4115,7 +4115,7 @@ public final class PbText {
     }
 
     public static final int STRIKETHROUGHCOLOR_FIELD_NUMBER = 6;
-    private io.gomatcha.matcha.proto.Pb.Color strikethroughColor_;
+    private io.gomatcha.matcha.proto.Proto.Color strikethroughColor_;
     /**
      * <code>.matcha.Color strikethroughColor = 6;</code>
      */
@@ -4125,13 +4125,13 @@ public final class PbText {
     /**
      * <code>.matcha.Color strikethroughColor = 6;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.Color getStrikethroughColor() {
-      return strikethroughColor_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : strikethroughColor_;
+    public io.gomatcha.matcha.proto.Proto.Color getStrikethroughColor() {
+      return strikethroughColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : strikethroughColor_;
     }
     /**
      * <code>.matcha.Color strikethroughColor = 6;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getStrikethroughColorOrBuilder() {
+    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getStrikethroughColorOrBuilder() {
       return getStrikethroughColor();
     }
 
@@ -4152,7 +4152,7 @@ public final class PbText {
     }
 
     public static final int UNDERLINECOLOR_FIELD_NUMBER = 10;
-    private io.gomatcha.matcha.proto.Pb.Color underlineColor_;
+    private io.gomatcha.matcha.proto.Proto.Color underlineColor_;
     /**
      * <code>.matcha.Color underlineColor = 10;</code>
      */
@@ -4162,13 +4162,13 @@ public final class PbText {
     /**
      * <code>.matcha.Color underlineColor = 10;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.Color getUnderlineColor() {
-      return underlineColor_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : underlineColor_;
+    public io.gomatcha.matcha.proto.Proto.Color getUnderlineColor() {
+      return underlineColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : underlineColor_;
     }
     /**
      * <code>.matcha.Color underlineColor = 10;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getUnderlineColorOrBuilder() {
+    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getUnderlineColorOrBuilder() {
       return getUnderlineColor();
     }
 
@@ -4221,7 +4221,7 @@ public final class PbText {
     }
 
     public static final int TEXTCOLOR_FIELD_NUMBER = 20;
-    private io.gomatcha.matcha.proto.Pb.Color textColor_;
+    private io.gomatcha.matcha.proto.Proto.Color textColor_;
     /**
      * <code>.matcha.Color textColor = 20;</code>
      */
@@ -4231,13 +4231,13 @@ public final class PbText {
     /**
      * <code>.matcha.Color textColor = 20;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.Color getTextColor() {
-      return textColor_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : textColor_;
+    public io.gomatcha.matcha.proto.Proto.Color getTextColor() {
+      return textColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : textColor_;
     }
     /**
      * <code>.matcha.Color textColor = 20;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getTextColorOrBuilder() {
+    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getTextColorOrBuilder() {
       return getTextColor();
     }
 
@@ -4989,9 +4989,9 @@ public final class PbText {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.Pb.Color strikethroughColor_ = null;
+      private io.gomatcha.matcha.proto.Proto.Color strikethroughColor_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> strikethroughColorBuilder_;
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> strikethroughColorBuilder_;
       /**
        * <code>.matcha.Color strikethroughColor = 6;</code>
        */
@@ -5001,9 +5001,9 @@ public final class PbText {
       /**
        * <code>.matcha.Color strikethroughColor = 6;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color getStrikethroughColor() {
+      public io.gomatcha.matcha.proto.Proto.Color getStrikethroughColor() {
         if (strikethroughColorBuilder_ == null) {
-          return strikethroughColor_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : strikethroughColor_;
+          return strikethroughColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : strikethroughColor_;
         } else {
           return strikethroughColorBuilder_.getMessage();
         }
@@ -5011,7 +5011,7 @@ public final class PbText {
       /**
        * <code>.matcha.Color strikethroughColor = 6;</code>
        */
-      public Builder setStrikethroughColor(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder setStrikethroughColor(io.gomatcha.matcha.proto.Proto.Color value) {
         if (strikethroughColorBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5028,7 +5028,7 @@ public final class PbText {
        * <code>.matcha.Color strikethroughColor = 6;</code>
        */
       public Builder setStrikethroughColor(
-          io.gomatcha.matcha.proto.Pb.Color.Builder builderForValue) {
+          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
         if (strikethroughColorBuilder_ == null) {
           strikethroughColor_ = builderForValue.build();
           onChanged();
@@ -5041,11 +5041,11 @@ public final class PbText {
       /**
        * <code>.matcha.Color strikethroughColor = 6;</code>
        */
-      public Builder mergeStrikethroughColor(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder mergeStrikethroughColor(io.gomatcha.matcha.proto.Proto.Color value) {
         if (strikethroughColorBuilder_ == null) {
           if (strikethroughColor_ != null) {
             strikethroughColor_ =
-              io.gomatcha.matcha.proto.Pb.Color.newBuilder(strikethroughColor_).mergeFrom(value).buildPartial();
+              io.gomatcha.matcha.proto.Proto.Color.newBuilder(strikethroughColor_).mergeFrom(value).buildPartial();
           } else {
             strikethroughColor_ = value;
           }
@@ -5073,7 +5073,7 @@ public final class PbText {
       /**
        * <code>.matcha.Color strikethroughColor = 6;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color.Builder getStrikethroughColorBuilder() {
+      public io.gomatcha.matcha.proto.Proto.Color.Builder getStrikethroughColorBuilder() {
         
         onChanged();
         return getStrikethroughColorFieldBuilder().getBuilder();
@@ -5081,23 +5081,23 @@ public final class PbText {
       /**
        * <code>.matcha.Color strikethroughColor = 6;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getStrikethroughColorOrBuilder() {
+      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getStrikethroughColorOrBuilder() {
         if (strikethroughColorBuilder_ != null) {
           return strikethroughColorBuilder_.getMessageOrBuilder();
         } else {
           return strikethroughColor_ == null ?
-              io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : strikethroughColor_;
+              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : strikethroughColor_;
         }
       }
       /**
        * <code>.matcha.Color strikethroughColor = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> 
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
           getStrikethroughColorFieldBuilder() {
         if (strikethroughColorBuilder_ == null) {
           strikethroughColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder>(
+              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
                   getStrikethroughColor(),
                   getParentForChildren(),
                   isClean());
@@ -5150,9 +5150,9 @@ public final class PbText {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.Pb.Color underlineColor_ = null;
+      private io.gomatcha.matcha.proto.Proto.Color underlineColor_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> underlineColorBuilder_;
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> underlineColorBuilder_;
       /**
        * <code>.matcha.Color underlineColor = 10;</code>
        */
@@ -5162,9 +5162,9 @@ public final class PbText {
       /**
        * <code>.matcha.Color underlineColor = 10;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color getUnderlineColor() {
+      public io.gomatcha.matcha.proto.Proto.Color getUnderlineColor() {
         if (underlineColorBuilder_ == null) {
-          return underlineColor_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : underlineColor_;
+          return underlineColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : underlineColor_;
         } else {
           return underlineColorBuilder_.getMessage();
         }
@@ -5172,7 +5172,7 @@ public final class PbText {
       /**
        * <code>.matcha.Color underlineColor = 10;</code>
        */
-      public Builder setUnderlineColor(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder setUnderlineColor(io.gomatcha.matcha.proto.Proto.Color value) {
         if (underlineColorBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5189,7 +5189,7 @@ public final class PbText {
        * <code>.matcha.Color underlineColor = 10;</code>
        */
       public Builder setUnderlineColor(
-          io.gomatcha.matcha.proto.Pb.Color.Builder builderForValue) {
+          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
         if (underlineColorBuilder_ == null) {
           underlineColor_ = builderForValue.build();
           onChanged();
@@ -5202,11 +5202,11 @@ public final class PbText {
       /**
        * <code>.matcha.Color underlineColor = 10;</code>
        */
-      public Builder mergeUnderlineColor(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder mergeUnderlineColor(io.gomatcha.matcha.proto.Proto.Color value) {
         if (underlineColorBuilder_ == null) {
           if (underlineColor_ != null) {
             underlineColor_ =
-              io.gomatcha.matcha.proto.Pb.Color.newBuilder(underlineColor_).mergeFrom(value).buildPartial();
+              io.gomatcha.matcha.proto.Proto.Color.newBuilder(underlineColor_).mergeFrom(value).buildPartial();
           } else {
             underlineColor_ = value;
           }
@@ -5234,7 +5234,7 @@ public final class PbText {
       /**
        * <code>.matcha.Color underlineColor = 10;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color.Builder getUnderlineColorBuilder() {
+      public io.gomatcha.matcha.proto.Proto.Color.Builder getUnderlineColorBuilder() {
         
         onChanged();
         return getUnderlineColorFieldBuilder().getBuilder();
@@ -5242,23 +5242,23 @@ public final class PbText {
       /**
        * <code>.matcha.Color underlineColor = 10;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getUnderlineColorOrBuilder() {
+      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getUnderlineColorOrBuilder() {
         if (underlineColorBuilder_ != null) {
           return underlineColorBuilder_.getMessageOrBuilder();
         } else {
           return underlineColor_ == null ?
-              io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : underlineColor_;
+              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : underlineColor_;
         }
       }
       /**
        * <code>.matcha.Color underlineColor = 10;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> 
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
           getUnderlineColorFieldBuilder() {
         if (underlineColorBuilder_ == null) {
           underlineColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder>(
+              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
                   getUnderlineColor(),
                   getParentForChildren(),
                   isClean());
@@ -5462,9 +5462,9 @@ public final class PbText {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.Pb.Color textColor_ = null;
+      private io.gomatcha.matcha.proto.Proto.Color textColor_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> textColorBuilder_;
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> textColorBuilder_;
       /**
        * <code>.matcha.Color textColor = 20;</code>
        */
@@ -5474,9 +5474,9 @@ public final class PbText {
       /**
        * <code>.matcha.Color textColor = 20;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color getTextColor() {
+      public io.gomatcha.matcha.proto.Proto.Color getTextColor() {
         if (textColorBuilder_ == null) {
-          return textColor_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : textColor_;
+          return textColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : textColor_;
         } else {
           return textColorBuilder_.getMessage();
         }
@@ -5484,7 +5484,7 @@ public final class PbText {
       /**
        * <code>.matcha.Color textColor = 20;</code>
        */
-      public Builder setTextColor(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder setTextColor(io.gomatcha.matcha.proto.Proto.Color value) {
         if (textColorBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5501,7 +5501,7 @@ public final class PbText {
        * <code>.matcha.Color textColor = 20;</code>
        */
       public Builder setTextColor(
-          io.gomatcha.matcha.proto.Pb.Color.Builder builderForValue) {
+          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
         if (textColorBuilder_ == null) {
           textColor_ = builderForValue.build();
           onChanged();
@@ -5514,11 +5514,11 @@ public final class PbText {
       /**
        * <code>.matcha.Color textColor = 20;</code>
        */
-      public Builder mergeTextColor(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder mergeTextColor(io.gomatcha.matcha.proto.Proto.Color value) {
         if (textColorBuilder_ == null) {
           if (textColor_ != null) {
             textColor_ =
-              io.gomatcha.matcha.proto.Pb.Color.newBuilder(textColor_).mergeFrom(value).buildPartial();
+              io.gomatcha.matcha.proto.Proto.Color.newBuilder(textColor_).mergeFrom(value).buildPartial();
           } else {
             textColor_ = value;
           }
@@ -5546,7 +5546,7 @@ public final class PbText {
       /**
        * <code>.matcha.Color textColor = 20;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color.Builder getTextColorBuilder() {
+      public io.gomatcha.matcha.proto.Proto.Color.Builder getTextColorBuilder() {
         
         onChanged();
         return getTextColorFieldBuilder().getBuilder();
@@ -5554,23 +5554,23 @@ public final class PbText {
       /**
        * <code>.matcha.Color textColor = 20;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getTextColorOrBuilder() {
+      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getTextColorOrBuilder() {
         if (textColorBuilder_ != null) {
           return textColorBuilder_.getMessageOrBuilder();
         } else {
           return textColor_ == null ?
-              io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : textColor_;
+              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : textColor_;
         }
       }
       /**
        * <code>.matcha.Color textColor = 20;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> 
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
           getTextColorFieldBuilder() {
         if (textColorBuilder_ == null) {
           textColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder>(
+              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
                   getTextColor(),
                   getParentForChildren(),
                   isClean());
@@ -5874,7 +5874,7 @@ public final class PbText {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           io.gomatcha.matcha.proto.layout.PbLayout.getDescriptor(),
-          io.gomatcha.matcha.proto.Pb.getDescriptor(),
+          io.gomatcha.matcha.proto.Proto.getDescriptor(),
         }, assigner);
     internal_static_matcha_text_SizeFunc_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -5907,7 +5907,7 @@ public final class PbText {
         internal_static_matcha_text_TextStyle_descriptor,
         new java.lang.String[] { "Index", "TextAlignment", "StrikethroughStyle", "StrikethroughColor", "UnderlineStyle", "UnderlineColor", "Font", "Hyphenation", "LineHeightMultiple", "MaxLines", "TextColor", "Wrap", "Truncation", "TruncationString", });
     io.gomatcha.matcha.proto.layout.PbLayout.getDescriptor();
-    io.gomatcha.matcha.proto.Pb.getDescriptor();
+    io.gomatcha.matcha.proto.Proto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -18,7 +18,7 @@
 
 - (id)initWithMatchaVC:(MatchaViewController *)viewController viewId:(int64_t)viewId protobuf:(GPBAny *)pbany {
     NSError *error = nil;
-    MatchaPBTouchButtonRecognizer *pb = (id)[pbany unpackMessageClass:[MatchaPBTouchButtonRecognizer class] error:&error];
+    MatchaPointerPBButtonRecognizer *pb = (id)[pbany unpackMessageClass:[MatchaPointerPBButtonRecognizer class] error:&error];
     if (pb == nil) {
         return nil;
     }
@@ -33,7 +33,7 @@
 
 - (void)updateWithProtobuf:(GPBAny *)pbany {
     NSError *error = nil;
-    MatchaPBTouchButtonRecognizer *pb = (id)[pbany unpackMessageClass:[MatchaPBTouchButtonRecognizer class] error:&error];
+    MatchaPointerPBButtonRecognizer *pb = (id)[pbany unpackMessageClass:[MatchaPointerPBButtonRecognizer class] error:&error];
     if (pb == nil) {
         return;
     }
@@ -58,15 +58,15 @@
     self.inside = inside;
     self.lastState = self.state;
     
-    MatchaPBTouchButtonEvent *event = [[MatchaPBTouchButtonEvent alloc] init];
+    MatchaPointerPBButtonEvent *event = [[MatchaPointerPBButtonEvent alloc] init];
     event.timestamp = [[GPBTimestamp alloc] initWithDate:[NSDate date]];
     event.inside = self.inside;
     if (self.state == UIGestureRecognizerStatePossible && self.inside != prevInside) { // Only update if inside has changed
-        event.kind = MatchaPBTouchEventKind_EventKindPossible;
+        event.kind = MatchaPointerPBEventKind_EventKindPossible;
     } else if (self.state == UIGestureRecognizerStateRecognized) {
-        event.kind = MatchaPBTouchEventKind_EventKindRecognized;
+        event.kind = MatchaPointerPBEventKind_EventKindRecognized;
     } else if (self.state == UIGestureRecognizerStateFailed) {
-        event.kind = MatchaPBTouchEventKind_EventKindFailed;
+        event.kind = MatchaPointerPBEventKind_EventKindFailed;
     } else {
         return;
     }

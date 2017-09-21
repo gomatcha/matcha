@@ -40,11 +40,11 @@ public final class PbButton {
     /**
      * <code>.matcha.Color color = 3;</code>
      */
-    io.gomatcha.matcha.proto.Pb.Color getColor();
+    io.gomatcha.matcha.proto.Proto.Color getColor();
     /**
      * <code>.matcha.Color color = 3;</code>
      */
-    io.gomatcha.matcha.proto.Pb.ColorOrBuilder getColorOrBuilder();
+    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getColorOrBuilder();
   }
   /**
    * Protobuf type {@code matcha.view.Button}
@@ -99,11 +99,11 @@ public final class PbButton {
               break;
             }
             case 26: {
-              io.gomatcha.matcha.proto.Pb.Color.Builder subBuilder = null;
+              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
               if (color_ != null) {
                 subBuilder = color_.toBuilder();
               }
-              color_ = input.readMessage(io.gomatcha.matcha.proto.Pb.Color.parser(), extensionRegistry);
+              color_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(color_);
                 color_ = subBuilder.buildPartial();
@@ -178,7 +178,7 @@ public final class PbButton {
     }
 
     public static final int COLOR_FIELD_NUMBER = 3;
-    private io.gomatcha.matcha.proto.Pb.Color color_;
+    private io.gomatcha.matcha.proto.Proto.Color color_;
     /**
      * <code>.matcha.Color color = 3;</code>
      */
@@ -188,13 +188,13 @@ public final class PbButton {
     /**
      * <code>.matcha.Color color = 3;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.Color getColor() {
-      return color_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : color_;
+    public io.gomatcha.matcha.proto.Proto.Color getColor() {
+      return color_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : color_;
     }
     /**
      * <code>.matcha.Color color = 3;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getColorOrBuilder() {
+    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getColorOrBuilder() {
       return getColor();
     }
 
@@ -621,9 +621,9 @@ public final class PbButton {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.Pb.Color color_ = null;
+      private io.gomatcha.matcha.proto.Proto.Color color_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> colorBuilder_;
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> colorBuilder_;
       /**
        * <code>.matcha.Color color = 3;</code>
        */
@@ -633,9 +633,9 @@ public final class PbButton {
       /**
        * <code>.matcha.Color color = 3;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color getColor() {
+      public io.gomatcha.matcha.proto.Proto.Color getColor() {
         if (colorBuilder_ == null) {
-          return color_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : color_;
+          return color_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : color_;
         } else {
           return colorBuilder_.getMessage();
         }
@@ -643,7 +643,7 @@ public final class PbButton {
       /**
        * <code>.matcha.Color color = 3;</code>
        */
-      public Builder setColor(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder setColor(io.gomatcha.matcha.proto.Proto.Color value) {
         if (colorBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -660,7 +660,7 @@ public final class PbButton {
        * <code>.matcha.Color color = 3;</code>
        */
       public Builder setColor(
-          io.gomatcha.matcha.proto.Pb.Color.Builder builderForValue) {
+          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
         if (colorBuilder_ == null) {
           color_ = builderForValue.build();
           onChanged();
@@ -673,11 +673,11 @@ public final class PbButton {
       /**
        * <code>.matcha.Color color = 3;</code>
        */
-      public Builder mergeColor(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder mergeColor(io.gomatcha.matcha.proto.Proto.Color value) {
         if (colorBuilder_ == null) {
           if (color_ != null) {
             color_ =
-              io.gomatcha.matcha.proto.Pb.Color.newBuilder(color_).mergeFrom(value).buildPartial();
+              io.gomatcha.matcha.proto.Proto.Color.newBuilder(color_).mergeFrom(value).buildPartial();
           } else {
             color_ = value;
           }
@@ -705,7 +705,7 @@ public final class PbButton {
       /**
        * <code>.matcha.Color color = 3;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color.Builder getColorBuilder() {
+      public io.gomatcha.matcha.proto.Proto.Color.Builder getColorBuilder() {
         
         onChanged();
         return getColorFieldBuilder().getBuilder();
@@ -713,23 +713,23 @@ public final class PbButton {
       /**
        * <code>.matcha.Color color = 3;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getColorOrBuilder() {
+      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getColorOrBuilder() {
         if (colorBuilder_ != null) {
           return colorBuilder_.getMessageOrBuilder();
         } else {
           return color_ == null ?
-              io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : color_;
+              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : color_;
         }
       }
       /**
        * <code>.matcha.Color color = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> 
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
           getColorFieldBuilder() {
         if (colorBuilder_ == null) {
           colorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder>(
+              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
                   getColor(),
                   getParentForChildren(),
                   isClean());
@@ -818,7 +818,7 @@ public final class PbButton {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          io.gomatcha.matcha.proto.Pb.getDescriptor(),
+          io.gomatcha.matcha.proto.Proto.getDescriptor(),
         }, assigner);
     internal_static_matcha_view_Button_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -826,7 +826,7 @@ public final class PbButton {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_Button_descriptor,
         new java.lang.String[] { "Str", "Enabled", "Color", });
-    io.gomatcha.matcha.proto.Pb.getDescriptor();
+    io.gomatcha.matcha.proto.Proto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

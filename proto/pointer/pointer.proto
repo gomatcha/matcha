@@ -1,14 +1,14 @@
 syntax = "proto3";
-package matcha.touch;
+package matcha.pointer;
 import "google/protobuf/any.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "gomatcha.io/matcha/proto/layout/layout.proto";
 
-option go_package = "touch";
-option objc_class_prefix = "MatchaPBTouch";
-option java_package = "io.gomatcha.matcha.proto.touch";
-option java_outer_classname = "PbTouch";
+option go_package = "pointer";
+option objc_class_prefix = "MatchaPointerPB";
+option java_package = "io.gomatcha.matcha.proto.pointer";
+option java_outer_classname = "PbPointer";
 
 enum EventKind {
     EVENT_KIND_POSSIBLE = 0;
@@ -34,7 +34,7 @@ message ButtonRecognizer {
 message ButtonEvent {
     google.protobuf.Timestamp timestamp = 1;
     bool inside = 3;
-    matcha.touch.EventKind kind = 4;
+    EventKind kind = 4;
 }
 
 message TapRecognizer {

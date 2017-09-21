@@ -15,7 +15,7 @@
 
 - (id)initWithMatchaVC:(MatchaViewController *)viewController viewId:(int64_t)viewId protobuf:(GPBAny *)pb {
     NSError *error = nil;
-    MatchaPBTouchPressRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPBTouchPressRecognizer class] error:&error];
+    MatchaPointerPBPressRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPointerPBPressRecognizer class] error:&error];
     if ((self = [super initWithTarget:self action:@selector(action:)])) {
         self.minimumPressDuration = pbTapRecognizer.minDuration.timeInterval;
         self.viewController = viewController;
@@ -27,7 +27,7 @@
 
 - (void)updateWithProtobuf:(GPBAny *)pb {
     NSError *error = nil;
-    MatchaPBTouchPressRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPBTouchPressRecognizer class] error:&error];
+    MatchaPointerPBPressRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPointerPBPressRecognizer class] error:&error];
     if (pbTapRecognizer == nil) {
         return;
     }
@@ -45,18 +45,18 @@
     
     CGPoint point = [self locationInView:self.view];
     
-    MatchaPBTouchPressEvent *event = [[MatchaPBTouchPressEvent alloc] init];
+    MatchaPointerPBPressEvent *event = [[MatchaPointerPBPressEvent alloc] init];
     event.position = [[MatchaLayoutPBPoint alloc] initWithCGPoint:point];
     event.timestamp = [[GPBTimestamp alloc] initWithDate:[NSDate date]];
     if (self.state == UIGestureRecognizerStateBegan) {
-        event.kind = MatchaPBTouchEventKind_EventKindChanged;
+        event.kind = MatchaPointerPBEventKind_EventKindChanged;
         self.startTime = [NSDate date];
     } else if (self.state == UIGestureRecognizerStateChanged) {
-        event.kind = MatchaPBTouchEventKind_EventKindChanged;
+        event.kind = MatchaPointerPBEventKind_EventKindChanged;
     } else if (self.state == UIGestureRecognizerStateEnded) {
-        event.kind = MatchaPBTouchEventKind_EventKindRecognized;
+        event.kind = MatchaPointerPBEventKind_EventKindRecognized;
     } else if (self.state == UIGestureRecognizerStateCancelled) {
-        event.kind = MatchaPBTouchEventKind_EventKindFailed;
+        event.kind = MatchaPointerPBEventKind_EventKindFailed;
     } else {
         return;
     }

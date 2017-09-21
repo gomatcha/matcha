@@ -1258,11 +1258,11 @@ public final class PbStackView {
     /**
      * <code>.matcha.Color color = 4;</code>
      */
-    io.gomatcha.matcha.proto.Pb.Color getColor();
+    io.gomatcha.matcha.proto.Proto.Color getColor();
     /**
      * <code>.matcha.Color color = 4;</code>
      */
-    io.gomatcha.matcha.proto.Pb.ColorOrBuilder getColorOrBuilder();
+    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getColorOrBuilder();
 
     /**
      * <code>repeated .matcha.view.android.StackBarItem items = 5;</code>
@@ -1354,11 +1354,11 @@ public final class PbStackView {
               break;
             }
             case 34: {
-              io.gomatcha.matcha.proto.Pb.Color.Builder subBuilder = null;
+              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
               if (color_ != null) {
                 subBuilder = color_.toBuilder();
               }
-              color_ = input.readMessage(io.gomatcha.matcha.proto.Pb.Color.parser(), extensionRegistry);
+              color_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(color_);
                 color_ = subBuilder.buildPartial();
@@ -1539,7 +1539,7 @@ public final class PbStackView {
     }
 
     public static final int COLOR_FIELD_NUMBER = 4;
-    private io.gomatcha.matcha.proto.Pb.Color color_;
+    private io.gomatcha.matcha.proto.Proto.Color color_;
     /**
      * <code>.matcha.Color color = 4;</code>
      */
@@ -1549,13 +1549,13 @@ public final class PbStackView {
     /**
      * <code>.matcha.Color color = 4;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.Color getColor() {
-      return color_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : color_;
+    public io.gomatcha.matcha.proto.Proto.Color getColor() {
+      return color_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : color_;
     }
     /**
      * <code>.matcha.Color color = 4;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getColorOrBuilder() {
+    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getColorOrBuilder() {
       return getColor();
     }
 
@@ -2439,9 +2439,9 @@ public final class PbStackView {
         return styledSubtitleBuilder_;
       }
 
-      private io.gomatcha.matcha.proto.Pb.Color color_ = null;
+      private io.gomatcha.matcha.proto.Proto.Color color_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> colorBuilder_;
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> colorBuilder_;
       /**
        * <code>.matcha.Color color = 4;</code>
        */
@@ -2451,9 +2451,9 @@ public final class PbStackView {
       /**
        * <code>.matcha.Color color = 4;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color getColor() {
+      public io.gomatcha.matcha.proto.Proto.Color getColor() {
         if (colorBuilder_ == null) {
-          return color_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : color_;
+          return color_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : color_;
         } else {
           return colorBuilder_.getMessage();
         }
@@ -2461,7 +2461,7 @@ public final class PbStackView {
       /**
        * <code>.matcha.Color color = 4;</code>
        */
-      public Builder setColor(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder setColor(io.gomatcha.matcha.proto.Proto.Color value) {
         if (colorBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2478,7 +2478,7 @@ public final class PbStackView {
        * <code>.matcha.Color color = 4;</code>
        */
       public Builder setColor(
-          io.gomatcha.matcha.proto.Pb.Color.Builder builderForValue) {
+          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
         if (colorBuilder_ == null) {
           color_ = builderForValue.build();
           onChanged();
@@ -2491,11 +2491,11 @@ public final class PbStackView {
       /**
        * <code>.matcha.Color color = 4;</code>
        */
-      public Builder mergeColor(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder mergeColor(io.gomatcha.matcha.proto.Proto.Color value) {
         if (colorBuilder_ == null) {
           if (color_ != null) {
             color_ =
-              io.gomatcha.matcha.proto.Pb.Color.newBuilder(color_).mergeFrom(value).buildPartial();
+              io.gomatcha.matcha.proto.Proto.Color.newBuilder(color_).mergeFrom(value).buildPartial();
           } else {
             color_ = value;
           }
@@ -2523,7 +2523,7 @@ public final class PbStackView {
       /**
        * <code>.matcha.Color color = 4;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color.Builder getColorBuilder() {
+      public io.gomatcha.matcha.proto.Proto.Color.Builder getColorBuilder() {
         
         onChanged();
         return getColorFieldBuilder().getBuilder();
@@ -2531,23 +2531,23 @@ public final class PbStackView {
       /**
        * <code>.matcha.Color color = 4;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getColorOrBuilder() {
+      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getColorOrBuilder() {
         if (colorBuilder_ != null) {
           return colorBuilder_.getMessageOrBuilder();
         } else {
           return color_ == null ?
-              io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : color_;
+              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : color_;
         }
       }
       /**
        * <code>.matcha.Color color = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> 
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
           getColorFieldBuilder() {
         if (colorBuilder_ == null) {
           colorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder>(
+              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
                   getColor(),
                   getParentForChildren(),
                   isClean());
@@ -2891,11 +2891,11 @@ public final class PbStackView {
     /**
      * <code>.matcha.ImageOrResource icon = 3;</code>
      */
-    io.gomatcha.matcha.proto.Pb.ImageOrResource getIcon();
+    io.gomatcha.matcha.proto.Proto.ImageOrResource getIcon();
     /**
      * <code>.matcha.ImageOrResource icon = 3;</code>
      */
-    io.gomatcha.matcha.proto.Pb.ImageOrResourceOrBuilder getIconOrBuilder();
+    io.gomatcha.matcha.proto.Proto.ImageOrResourceOrBuilder getIconOrBuilder();
 
     /**
      * <code>.matcha.Color iconTint = 2;</code>
@@ -2904,11 +2904,11 @@ public final class PbStackView {
     /**
      * <code>.matcha.Color iconTint = 2;</code>
      */
-    io.gomatcha.matcha.proto.Pb.Color getIconTint();
+    io.gomatcha.matcha.proto.Proto.Color getIconTint();
     /**
      * <code>.matcha.Color iconTint = 2;</code>
      */
-    io.gomatcha.matcha.proto.Pb.ColorOrBuilder getIconTintOrBuilder();
+    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getIconTintOrBuilder();
 
     /**
      * <code>bool disabled = 4;</code>
@@ -2974,11 +2974,11 @@ public final class PbStackView {
               break;
             }
             case 18: {
-              io.gomatcha.matcha.proto.Pb.Color.Builder subBuilder = null;
+              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
               if (iconTint_ != null) {
                 subBuilder = iconTint_.toBuilder();
               }
-              iconTint_ = input.readMessage(io.gomatcha.matcha.proto.Pb.Color.parser(), extensionRegistry);
+              iconTint_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(iconTint_);
                 iconTint_ = subBuilder.buildPartial();
@@ -2987,11 +2987,11 @@ public final class PbStackView {
               break;
             }
             case 26: {
-              io.gomatcha.matcha.proto.Pb.ImageOrResource.Builder subBuilder = null;
+              io.gomatcha.matcha.proto.Proto.ImageOrResource.Builder subBuilder = null;
               if (icon_ != null) {
                 subBuilder = icon_.toBuilder();
               }
-              icon_ = input.readMessage(io.gomatcha.matcha.proto.Pb.ImageOrResource.parser(), extensionRegistry);
+              icon_ = input.readMessage(io.gomatcha.matcha.proto.Proto.ImageOrResource.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(icon_);
                 icon_ = subBuilder.buildPartial();
@@ -3068,7 +3068,7 @@ public final class PbStackView {
     }
 
     public static final int ICON_FIELD_NUMBER = 3;
-    private io.gomatcha.matcha.proto.Pb.ImageOrResource icon_;
+    private io.gomatcha.matcha.proto.Proto.ImageOrResource icon_;
     /**
      * <code>.matcha.ImageOrResource icon = 3;</code>
      */
@@ -3078,18 +3078,18 @@ public final class PbStackView {
     /**
      * <code>.matcha.ImageOrResource icon = 3;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.ImageOrResource getIcon() {
-      return icon_ == null ? io.gomatcha.matcha.proto.Pb.ImageOrResource.getDefaultInstance() : icon_;
+    public io.gomatcha.matcha.proto.Proto.ImageOrResource getIcon() {
+      return icon_ == null ? io.gomatcha.matcha.proto.Proto.ImageOrResource.getDefaultInstance() : icon_;
     }
     /**
      * <code>.matcha.ImageOrResource icon = 3;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.ImageOrResourceOrBuilder getIconOrBuilder() {
+    public io.gomatcha.matcha.proto.Proto.ImageOrResourceOrBuilder getIconOrBuilder() {
       return getIcon();
     }
 
     public static final int ICONTINT_FIELD_NUMBER = 2;
-    private io.gomatcha.matcha.proto.Pb.Color iconTint_;
+    private io.gomatcha.matcha.proto.Proto.Color iconTint_;
     /**
      * <code>.matcha.Color iconTint = 2;</code>
      */
@@ -3099,13 +3099,13 @@ public final class PbStackView {
     /**
      * <code>.matcha.Color iconTint = 2;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.Color getIconTint() {
-      return iconTint_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : iconTint_;
+    public io.gomatcha.matcha.proto.Proto.Color getIconTint() {
+      return iconTint_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : iconTint_;
     }
     /**
      * <code>.matcha.Color iconTint = 2;</code>
      */
-    public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getIconTintOrBuilder() {
+    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getIconTintOrBuilder() {
       return getIconTint();
     }
 
@@ -3596,9 +3596,9 @@ public final class PbStackView {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.Pb.ImageOrResource icon_ = null;
+      private io.gomatcha.matcha.proto.Proto.ImageOrResource icon_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.ImageOrResource, io.gomatcha.matcha.proto.Pb.ImageOrResource.Builder, io.gomatcha.matcha.proto.Pb.ImageOrResourceOrBuilder> iconBuilder_;
+          io.gomatcha.matcha.proto.Proto.ImageOrResource, io.gomatcha.matcha.proto.Proto.ImageOrResource.Builder, io.gomatcha.matcha.proto.Proto.ImageOrResourceOrBuilder> iconBuilder_;
       /**
        * <code>.matcha.ImageOrResource icon = 3;</code>
        */
@@ -3608,9 +3608,9 @@ public final class PbStackView {
       /**
        * <code>.matcha.ImageOrResource icon = 3;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.ImageOrResource getIcon() {
+      public io.gomatcha.matcha.proto.Proto.ImageOrResource getIcon() {
         if (iconBuilder_ == null) {
-          return icon_ == null ? io.gomatcha.matcha.proto.Pb.ImageOrResource.getDefaultInstance() : icon_;
+          return icon_ == null ? io.gomatcha.matcha.proto.Proto.ImageOrResource.getDefaultInstance() : icon_;
         } else {
           return iconBuilder_.getMessage();
         }
@@ -3618,7 +3618,7 @@ public final class PbStackView {
       /**
        * <code>.matcha.ImageOrResource icon = 3;</code>
        */
-      public Builder setIcon(io.gomatcha.matcha.proto.Pb.ImageOrResource value) {
+      public Builder setIcon(io.gomatcha.matcha.proto.Proto.ImageOrResource value) {
         if (iconBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3635,7 +3635,7 @@ public final class PbStackView {
        * <code>.matcha.ImageOrResource icon = 3;</code>
        */
       public Builder setIcon(
-          io.gomatcha.matcha.proto.Pb.ImageOrResource.Builder builderForValue) {
+          io.gomatcha.matcha.proto.Proto.ImageOrResource.Builder builderForValue) {
         if (iconBuilder_ == null) {
           icon_ = builderForValue.build();
           onChanged();
@@ -3648,11 +3648,11 @@ public final class PbStackView {
       /**
        * <code>.matcha.ImageOrResource icon = 3;</code>
        */
-      public Builder mergeIcon(io.gomatcha.matcha.proto.Pb.ImageOrResource value) {
+      public Builder mergeIcon(io.gomatcha.matcha.proto.Proto.ImageOrResource value) {
         if (iconBuilder_ == null) {
           if (icon_ != null) {
             icon_ =
-              io.gomatcha.matcha.proto.Pb.ImageOrResource.newBuilder(icon_).mergeFrom(value).buildPartial();
+              io.gomatcha.matcha.proto.Proto.ImageOrResource.newBuilder(icon_).mergeFrom(value).buildPartial();
           } else {
             icon_ = value;
           }
@@ -3680,7 +3680,7 @@ public final class PbStackView {
       /**
        * <code>.matcha.ImageOrResource icon = 3;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.ImageOrResource.Builder getIconBuilder() {
+      public io.gomatcha.matcha.proto.Proto.ImageOrResource.Builder getIconBuilder() {
         
         onChanged();
         return getIconFieldBuilder().getBuilder();
@@ -3688,23 +3688,23 @@ public final class PbStackView {
       /**
        * <code>.matcha.ImageOrResource icon = 3;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.ImageOrResourceOrBuilder getIconOrBuilder() {
+      public io.gomatcha.matcha.proto.Proto.ImageOrResourceOrBuilder getIconOrBuilder() {
         if (iconBuilder_ != null) {
           return iconBuilder_.getMessageOrBuilder();
         } else {
           return icon_ == null ?
-              io.gomatcha.matcha.proto.Pb.ImageOrResource.getDefaultInstance() : icon_;
+              io.gomatcha.matcha.proto.Proto.ImageOrResource.getDefaultInstance() : icon_;
         }
       }
       /**
        * <code>.matcha.ImageOrResource icon = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.ImageOrResource, io.gomatcha.matcha.proto.Pb.ImageOrResource.Builder, io.gomatcha.matcha.proto.Pb.ImageOrResourceOrBuilder> 
+          io.gomatcha.matcha.proto.Proto.ImageOrResource, io.gomatcha.matcha.proto.Proto.ImageOrResource.Builder, io.gomatcha.matcha.proto.Proto.ImageOrResourceOrBuilder> 
           getIconFieldBuilder() {
         if (iconBuilder_ == null) {
           iconBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Pb.ImageOrResource, io.gomatcha.matcha.proto.Pb.ImageOrResource.Builder, io.gomatcha.matcha.proto.Pb.ImageOrResourceOrBuilder>(
+              io.gomatcha.matcha.proto.Proto.ImageOrResource, io.gomatcha.matcha.proto.Proto.ImageOrResource.Builder, io.gomatcha.matcha.proto.Proto.ImageOrResourceOrBuilder>(
                   getIcon(),
                   getParentForChildren(),
                   isClean());
@@ -3713,9 +3713,9 @@ public final class PbStackView {
         return iconBuilder_;
       }
 
-      private io.gomatcha.matcha.proto.Pb.Color iconTint_ = null;
+      private io.gomatcha.matcha.proto.Proto.Color iconTint_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> iconTintBuilder_;
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> iconTintBuilder_;
       /**
        * <code>.matcha.Color iconTint = 2;</code>
        */
@@ -3725,9 +3725,9 @@ public final class PbStackView {
       /**
        * <code>.matcha.Color iconTint = 2;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color getIconTint() {
+      public io.gomatcha.matcha.proto.Proto.Color getIconTint() {
         if (iconTintBuilder_ == null) {
-          return iconTint_ == null ? io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : iconTint_;
+          return iconTint_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : iconTint_;
         } else {
           return iconTintBuilder_.getMessage();
         }
@@ -3735,7 +3735,7 @@ public final class PbStackView {
       /**
        * <code>.matcha.Color iconTint = 2;</code>
        */
-      public Builder setIconTint(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder setIconTint(io.gomatcha.matcha.proto.Proto.Color value) {
         if (iconTintBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3752,7 +3752,7 @@ public final class PbStackView {
        * <code>.matcha.Color iconTint = 2;</code>
        */
       public Builder setIconTint(
-          io.gomatcha.matcha.proto.Pb.Color.Builder builderForValue) {
+          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
         if (iconTintBuilder_ == null) {
           iconTint_ = builderForValue.build();
           onChanged();
@@ -3765,11 +3765,11 @@ public final class PbStackView {
       /**
        * <code>.matcha.Color iconTint = 2;</code>
        */
-      public Builder mergeIconTint(io.gomatcha.matcha.proto.Pb.Color value) {
+      public Builder mergeIconTint(io.gomatcha.matcha.proto.Proto.Color value) {
         if (iconTintBuilder_ == null) {
           if (iconTint_ != null) {
             iconTint_ =
-              io.gomatcha.matcha.proto.Pb.Color.newBuilder(iconTint_).mergeFrom(value).buildPartial();
+              io.gomatcha.matcha.proto.Proto.Color.newBuilder(iconTint_).mergeFrom(value).buildPartial();
           } else {
             iconTint_ = value;
           }
@@ -3797,7 +3797,7 @@ public final class PbStackView {
       /**
        * <code>.matcha.Color iconTint = 2;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.Color.Builder getIconTintBuilder() {
+      public io.gomatcha.matcha.proto.Proto.Color.Builder getIconTintBuilder() {
         
         onChanged();
         return getIconTintFieldBuilder().getBuilder();
@@ -3805,23 +3805,23 @@ public final class PbStackView {
       /**
        * <code>.matcha.Color iconTint = 2;</code>
        */
-      public io.gomatcha.matcha.proto.Pb.ColorOrBuilder getIconTintOrBuilder() {
+      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getIconTintOrBuilder() {
         if (iconTintBuilder_ != null) {
           return iconTintBuilder_.getMessageOrBuilder();
         } else {
           return iconTint_ == null ?
-              io.gomatcha.matcha.proto.Pb.Color.getDefaultInstance() : iconTint_;
+              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : iconTint_;
         }
       }
       /**
        * <code>.matcha.Color iconTint = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder> 
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
           getIconTintFieldBuilder() {
         if (iconTintBuilder_ == null) {
           iconTintBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Pb.Color, io.gomatcha.matcha.proto.Pb.Color.Builder, io.gomatcha.matcha.proto.Pb.ColorOrBuilder>(
+              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
                   getIconTint(),
                   getParentForChildren(),
                   isClean());
@@ -4590,7 +4590,7 @@ public final class PbStackView {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          io.gomatcha.matcha.proto.Pb.getDescriptor(),
+          io.gomatcha.matcha.proto.Proto.getDescriptor(),
           io.gomatcha.matcha.proto.text.PbText.getDescriptor(),
         }, assigner);
     internal_static_matcha_view_android_StackChildView_descriptor =
@@ -4623,7 +4623,7 @@ public final class PbStackView {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_StackEvent_descriptor,
         new java.lang.String[] { "Id", });
-    io.gomatcha.matcha.proto.Pb.getDescriptor();
+    io.gomatcha.matcha.proto.Proto.getDescriptor();
     io.gomatcha.matcha.proto.text.PbText.getDescriptor();
   }
 

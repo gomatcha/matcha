@@ -12,7 +12,7 @@
 #import "Tabview.pbobjc.h"
 #import "Stackview.pbobjc.h"
 #import "Switchview.pbobjc.h"
-#import "Touch2.pbobjc.h"
+#import "Pointer.pbobjc.h"
 #import "Resource.pbobjc.h"
 #import "Image.pbobjc.h"
 #import "Textinput.pbobjc.h"

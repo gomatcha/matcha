@@ -54,7 +54,7 @@ public class Protobuf {
         return Timestamp.newBuilder().setSeconds(millis/1000).setNanos((int)(millis % 1000 * 1000000)).build();
     }
 
-    public static Drawable newDrawable(Pb.ImageOrResource res, Context ctx) {
+    public static Drawable newDrawable(Proto.ImageOrResource res, Context ctx) {
         if (res.hasImage()) {
             Bitmap bitmap = Protobuf.newBitmap(res.getImage());
             if (bitmap != null) {
@@ -69,7 +69,7 @@ public class Protobuf {
         return null;
     }
 
-    public static Bitmap newBitmap(Pb.Image image) {
+    public static Bitmap newBitmap(Proto.Image image) {
         byte[] buf2 = new byte[(int)image.getWidth()*(int)image.getHeight()*4];
         image.getData().copyTo(buf2, 0);
         ByteBuffer buf = ByteBuffer.wrap(buf2);
@@ -81,14 +81,14 @@ public class Protobuf {
         return bitmap;
     }
     
-    public static Bitmap newBitmap(Pb.ImageOrResource image) {
+    public static Bitmap newBitmap(Proto.ImageOrResource image) {
         if (!image.hasImage()) {
             return null;
         }
         return newBitmap(image.getImage());
     }
 
-    public static int newColor(Pb.Color c) {
+    public static int newColor(Proto.Color c) {
         return Color.argb(c.getAlpha()*255/65535, c.getRed()*255/65535, c.getGreen()*255/65535, c.getBlue()*255/65535);
     }
     

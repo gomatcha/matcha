@@ -141,7 +141,7 @@ public class JavaBridge {
         }
         */
 
-        Pb.ImageProperties.Builder builder = Pb.ImageProperties.newBuilder()
+        Proto.ImageProperties.Builder builder = Proto.ImageProperties.newBuilder()
                 .setWidth(drawable.getMinimumWidth())
                 .setHeight(drawable.getMinimumHeight())
                 .setScale(1); // TODO(KD): Figure out which image density was selected. https://developer.android.com/guide/practices/screens_support.html
@@ -153,7 +153,7 @@ public class JavaBridge {
         dimensions.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res, id, dimensions);
 
-        Pb.ImageProperties.Builder builder = Pb.ImageProperties.newBuilder()
+        Proto.ImageProperties.Builder builder = Proto.ImageProperties.newBuilder()
                 .setWidth(dimensions.outWidth)
                 .setHeight(dimensions.outHeight)
                 .setScale(1); // TODO(KD): Figure out which image density was selected. https://developer.android.com/guide/practices/screens_support.html
