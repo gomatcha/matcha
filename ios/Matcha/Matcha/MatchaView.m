@@ -7,6 +7,7 @@
 #import "MatchaButtonGestureRecognizer.h"
 #import "MatchaScrollView.h"
 #import "MatchaUnknownView.h"
+#import "MatchaView_Private.h"
 
 static NSLock *sLock = nil;
 static NSMutableDictionary *sViewDict = nil;

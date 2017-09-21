@@ -2,6 +2,7 @@
 #import "MatchaView.h"
 #import "MatchaProtobuf.h"
 #import "MatchaViewController.h"
+#import "MatchaView_Private.h"
 
 @implementation MatchaTabView
 

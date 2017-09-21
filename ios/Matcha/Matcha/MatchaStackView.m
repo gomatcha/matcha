@@ -3,6 +3,7 @@
 #import "MatchaProtobuf.h"
 #import "MatchaViewController.h"
 #import <objc/runtime.h>
+#import "MatchaView_Private.h"
 
 #define VIEW_ID_KEY @"matchaViewId"
 

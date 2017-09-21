@@ -23,6 +23,13 @@
 #import "Alert.pbobjc.h"
 #import "Statusbar.pbobjc.h"
 
+typedef struct MatchaColor {
+    uint32_t red;
+    uint32_t blue;
+    uint32_t green;
+    uint32_t alpha;
+} MatchaColor;
+
 @interface UIColor (Matcha)
 - (id)initWithProtobuf:(MatchaPBColor *)value;
 - (MatchaPBColor *)protobuf;
