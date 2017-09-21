@@ -6,8 +6,8 @@ import android.widget.ImageView;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import io.gomatcha.matcha.pb.view.PbImageView;
-import io.gomatcha.matcha.pb.view.PbView;
+import io.gomatcha.matcha.proto.view.PbImageView;
+import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaImageView extends MatchaChildView {
     RoundedImageView view;

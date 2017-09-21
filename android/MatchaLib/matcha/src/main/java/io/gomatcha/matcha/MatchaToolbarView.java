@@ -13,8 +13,8 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.List;
 
-import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.android.PbStackView;
+import io.gomatcha.matcha.proto.view.PbView;
+import io.gomatcha.matcha.proto.view.android.PbStackView;
 
 public class MatchaToolbarView extends MatchaChildView {
     Toolbar toolbar;

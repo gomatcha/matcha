@@ -11,7 +11,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.Date;
 
 import io.gomatcha.bridge.GoValue;
-import io.gomatcha.matcha.pb.touch.PbTouch;
+import io.gomatcha.matcha.proto.touch.PbTouch;
 
 public class MatchaGestureRecognizer implements View.OnTouchListener {
     MatchaChildView childView;

@@ -18,8 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.gomatcha.bridge.GoValue;
-import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.android.PbStatusBar;
+import io.gomatcha.matcha.proto.view.PbView;
+import io.gomatcha.matcha.proto.view.android.PbStatusBar;
 
 public class MatchaView extends RelativeLayout {
     static ArrayList<WeakReference<MatchaView>> views = new ArrayList<WeakReference<MatchaView>>();

@@ -8,8 +8,8 @@ import android.widget.Button;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import io.gomatcha.matcha.pb.view.PbButton;
-import io.gomatcha.matcha.pb.view.PbView;
+import io.gomatcha.matcha.proto.view.PbButton;
+import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaButton extends MatchaChildView {
     Button view;

@@ -24,11 +24,11 @@ import java.util.List;
 
 import io.gomatcha.bridge.Bridge;
 import io.gomatcha.bridge.GoValue;
-import io.gomatcha.matcha.pb.Pb;
-import io.gomatcha.matcha.pb.layout.PbLayout;
-import io.gomatcha.matcha.pb.text.PbText;
-import io.gomatcha.matcha.pb.view.PbAlert;
-import io.gomatcha.matcha.pb.view.PbView;
+import io.gomatcha.matcha.proto.Pb;
+import io.gomatcha.matcha.proto.layout.PbLayout;
+import io.gomatcha.matcha.proto.text.PbText;
+import io.gomatcha.matcha.proto.view.PbAlert;
+import io.gomatcha.matcha.proto.view.PbView;
 
 public class JavaBridge {
     static Choreographer.FrameCallback callback;

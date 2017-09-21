@@ -5,7 +5,7 @@ import android.view.View;
 
 import java.util.List;
 
-import io.gomatcha.matcha.pb.view.PbView;
+import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaChildView extends MatchaLayout {
     MatchaViewNode viewNode;

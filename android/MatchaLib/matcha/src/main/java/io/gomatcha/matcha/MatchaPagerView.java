@@ -12,8 +12,8 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import io.gomatcha.matcha.pb.view.PbView;
-import io.gomatcha.matcha.pb.view.android.PbPagerView;
+import io.gomatcha.matcha.proto.view.PbView;
+import io.gomatcha.matcha.proto.view.android.PbPagerView;
 
 public class MatchaPagerView extends MatchaChildView {
     SlidingTabLayout tabStrip;

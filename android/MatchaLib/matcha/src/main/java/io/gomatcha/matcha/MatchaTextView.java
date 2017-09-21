@@ -6,8 +6,8 @@ import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import io.gomatcha.matcha.pb.text.PbText;
-import io.gomatcha.matcha.pb.view.PbView;
+import io.gomatcha.matcha.proto.text.PbText;
+import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaTextView extends MatchaChildView {
     TextView view;

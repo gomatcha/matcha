@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.gomatcha.matcha.pb.paint.PbPaint;
-import io.gomatcha.matcha.pb.touch.PbTouch;
-import io.gomatcha.matcha.pb.view.PbView;
+import io.gomatcha.matcha.proto.paint.PbPaint;
+import io.gomatcha.matcha.proto.touch.PbTouch;
+import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaViewNode extends Object {
     MatchaViewNode parent;

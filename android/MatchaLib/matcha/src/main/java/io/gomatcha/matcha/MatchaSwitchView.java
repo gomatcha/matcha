@@ -8,8 +8,8 @@ import android.widget.CompoundButton;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.bridge.GoValue;
-import io.gomatcha.matcha.pb.view.PbSwitchView;
-import io.gomatcha.matcha.pb.view.PbView;
+import io.gomatcha.matcha.proto.view.PbSwitchView;
+import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaSwitchView extends MatchaChildView {
     SwitchCompat view;

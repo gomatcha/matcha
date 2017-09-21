@@ -1,0 +1,61 @@
+syntax = "proto3";
+package matcha.touch;
+import "google/protobuf/any.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "gomatcha.io/matcha/proto/layout/layout.proto";
+
+option go_package = "touch";
+option objc_class_prefix = "MatchaPBTouch";
+option java_package = "io.gomatcha.matcha.proto.touch";
+option java_outer_classname = "PbTouch";
+
+enum EventKind {
+    EVENT_KIND_POSSIBLE = 0;
+    EVENT_KIND_CHANGED = 1;
+    EVENT_KIND_FAILED = 2;
+    EVENT_KIND_RECOGNIZED = 3;
+}
+
+message Recognizer {
+    int64 id = 1;
+    google.protobuf.Any recognizer = 3;
+}
+
+message RecognizerList {
+    repeated Recognizer recognizers = 1;
+}
+
+message ButtonRecognizer {
+    int64 onEvent = 1;
+    bool ignoresScroll = 2;
+}
+
+message ButtonEvent {
+    google.protobuf.Timestamp timestamp = 1;
+    bool inside = 3;
+    matcha.touch.EventKind kind = 4;
+}
+
+message TapRecognizer {
+    int64 count = 1;
+    int64 onEvent = 2;
+}
+
+message TapEvent {
+    google.protobuf.Timestamp timestamp = 1;
+    matcha.layout.Point position = 2;
+    EventKind kind = 3;
+}
+
+message PressRecognizer {
+    google.protobuf.Duration minDuration = 1;
+    int64 onEvent = 2;
+}
+
+message PressEvent {
+    google.protobuf.Timestamp timestamp = 1;
+    matcha.layout.Point position = 2;
+    EventKind kind = 3;
+    google.protobuf.Duration duration = 4;
+}

@@ -1,0 +1,14 @@
+syntax = "proto3";
+package matcha.view;
+import "gomatcha.io/matcha/proto/image.proto";
+
+option go_package = "view";
+option objc_class_prefix = "MatchaViewPb";
+option java_package = "io.gomatcha.matcha.proto.view";
+option java_outer_classname = "PbButton";
+
+message Button {
+    string str = 1;
+    bool enabled = 2;
+    matcha.Color color = 3;
+}

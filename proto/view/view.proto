@@ -1,0 +1,51 @@
+syntax = "proto3";
+package matcha.view;
+import "gomatcha.io/matcha/proto/paint/paint.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "view";
+option objc_class_prefix = "MatchaViewPB";
+option java_package = "io.gomatcha.matcha.proto.view";
+option java_outer_classname = "PbView";
+
+message BuildNode {
+  int64 id = 1;
+  int64 buildId = 2;
+  string bridgeName = 3;
+  google.protobuf.Any bridgeValue = 4;
+  map<string, google.protobuf.Any> values = 5;
+  repeated int64 children = 6;
+  map<int64, int64> altIds = 7;
+}
+
+message LayoutPaintNode {
+  int64 id = 1;
+  int64 layoutId = 2;
+  int64 paintId = 3;
+  
+  // matcha.layout.Guide layoutGuide = 4;
+  // Guide
+  double minx = 4;
+  double miny = 5;
+  double maxx = 6;
+  double maxy = 7;
+  int64 zIndex = 8;
+  repeated int64 childOrder = 9;
+  
+  matcha.paint.Style paintStyle = 10;
+  // PaintStyle
+  // double transparency = 1;
+  // matcha.Color backgroundColor = 2;
+  // matcha.Color borderColor = 3;
+  // double borderWidth = 4;
+  // double cornerRadius = 5;
+  // double shadowRadius = 7;
+  // matcha.layout.Point shadowOffset = 8;
+  // matcha.Color shadowColor = 9;
+}
+
+message Root {
+  map<int64, LayoutPaintNode> layoutPaintNodes = 2;
+  map<int64, BuildNode> buildNodes = 3;
+  map<string, google.protobuf.Any> middleware = 4;
+}

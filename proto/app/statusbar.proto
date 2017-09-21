@@ -1,0 +1,22 @@
+syntax = "proto3";
+package app;
+
+option go_package = "app";
+option objc_class_prefix = "MatchaAppPB";
+option java_package = "io.gomatcha.matcha.proto.app";
+option java_outer_classname = "PbApp";
+
+message ActivityIndicator {
+    bool visible = 1;
+}
+
+message StatusBar {
+    bool hidden = 1;
+    StatusBarStyle style = 2;
+}
+
+enum StatusBarStyle {
+    STATUS_BAR_STYLE_DEFAULT = 0;
+    STATUS_BAR_STYLE_LIGHT = 1;
+    STATUS_BAR_STYLE_DARK = 2;
+}
