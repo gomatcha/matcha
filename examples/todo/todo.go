@@ -123,7 +123,7 @@ func (v *AddView) Build(ctx view.Context) view.Model {
 	input.Placeholder = "What needs to be done?"
 	input.PlaceholderStyle = placeholderStyle
 	input.Responder = &v.responder
-	input.OnSubmit = func() {
+	input.OnSubmit = func(t *text.Text) {
 		str := v.text.String()
 		v.responder.Dismiss()
 		v.text.SetString("")

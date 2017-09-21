@@ -32,7 +32,7 @@ type TextInput struct {
 	responder        *keyboard.Responder
 	MaxLines         int // This is used only for sizing.
 	OnChange         func(*text.Text)
-	OnSubmit         func()
+	OnSubmit         func(*text.Text)
 	OnFocus          func(*keyboard.Responder)
 }
 
@@ -136,8 +136,13 @@ func (v *TextInput) Build(ctx Context) Model {
 				}
 			},
 			"OnSubmit": func() {
+				_text := v.Text
+				if _text == nil {
+					_text = v.text
+				}
+
 				if v.OnSubmit != nil {
-					v.OnSubmit()
+					v.OnSubmit(_text)
 				}
 			},
 			"OnFocus": func(data []byte) {
