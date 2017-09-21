@@ -23,11 +23,9 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    GPBAny *state = value.nativeViewState;
-    NSError *error = nil;
-    MatchaViewPBTextInput *view = (id)[state unpackMessageClass:[MatchaViewPBTextInput class] error:&error];
+
+- (void)setNativeState:(GPBAny *)nativeState {
+    MatchaViewPBTextInput *view = (id)[nativeState unpackMessageClass:[MatchaViewPBTextInput class] error:nil];
     
     NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:view.styledText.stylesArray[0]];
     self.font = attributes[NSFontAttributeName];

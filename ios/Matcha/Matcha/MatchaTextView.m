@@ -16,16 +16,11 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    GPBAny *state = value.nativeViewState;
-    NSError *error = nil;
-    MatchaPBStyledText *text = (id)[state unpackMessageClass:[MatchaPBStyledText class] error:&error];
-    if (text != nil) {
-        NSAttributedString *attrString = [[NSAttributedString alloc] initWithProtobuf:text];
-        self.attributedText = attrString;
-        self.numberOfLines = 0;
-    }
+- (void)setNativeState:(GPBAny *)nativeState {
+    MatchaPBStyledText *text = (id)[nativeState unpackMessageClass:[MatchaPBStyledText class] error:nil];
+    NSAttributedString *attrString = [[NSAttributedString alloc] initWithProtobuf:text];
+    self.attributedText = attrString;
+    self.numberOfLines = 0;
 }
 
 @end

@@ -18,15 +18,10 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    GPBAny *state = value.nativeViewState;
-    NSError *error = nil;
-    MatchaViewPbSwitchView *view = (id)[state unpackMessageClass:[MatchaViewPbSwitchView class] error:&error];
-    if (view != nil) {
-        [self setOn:view.value animated:true];
-        self.enabled = view.enabled;
-    }
+- (void)setNativeState:(GPBAny *)nativeState {
+    MatchaViewPbSwitchView *view = (id)[nativeState unpackMessageClass:[MatchaViewPbSwitchView class] error:nil];
+    [self setOn:view.value animated:true];
+    self.enabled = view.enabled;
 }
 
 - (void)onChange:(id)sender {

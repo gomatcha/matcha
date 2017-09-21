@@ -9,5 +9,4 @@ FOUNDATION_EXPORT const unsigned char CustomViewVersionString[];
 
 @interface CustomView : UISwitch <MatchaChildView>
 @property (nonatomic, strong) MatchaViewNode *viewNode;
-@property (nonatomic, strong) MatchaBuildNode *node;
 @end

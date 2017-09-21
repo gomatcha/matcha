@@ -17,9 +17,8 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    CustomViewProtoView *view = (id)[value.nativeViewState unpackMessageClass:[CustomViewProtoView class] error:nil];
+- (void)setNativeState:(GPBAny *)nativeState {
+    CustomViewProtoView *view = (id)[nativeState unpackMessageClass:[CustomViewProtoView class] error:nil];
     [self setOn:view.value animated:true];
     self.enabled = view.enabled;
 }

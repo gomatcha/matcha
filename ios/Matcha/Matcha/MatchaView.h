@@ -7,12 +7,12 @@
 
 @protocol MatchaChildView <NSObject>
 - (id)initWithViewNode:(MatchaViewNode *)viewNode;
-- (void)setNode:(MatchaBuildNode *)node;
+- (void)setNativeState:(GPBAny *)nativeState;
 @end
 
 @protocol MatchaChildViewController <NSObject>
 - (id)initWithViewNode:(MatchaViewNode *)viewNode;
-- (void)setNode:(MatchaBuildNode *)node;
+- (void)setNativeState:(GPBAny *)nativeState;
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs;
 - (void)setMatchaChildLayout:(NSMutableArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
 @end

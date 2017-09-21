@@ -17,9 +17,8 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    MatchaViewPbSlider *view = (id)[value.nativeViewState unpackMessageClass:[MatchaViewPbSlider class] error:nil];
+- (void)setNativeState:(GPBAny *)nativeState {
+    MatchaViewPbSlider *view = (id)[nativeState unpackMessageClass:[MatchaViewPbSlider class] error:nil];
     
     self.enabled = view.enabled;
     self.value = view.value;

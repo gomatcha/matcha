@@ -19,19 +19,13 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    
-    GPBAny *state = value.nativeViewState;
-    NSError *error = nil;
-    MatchaViewPBScrollView *pbscrollview = (id)[state unpackMessageClass:[MatchaViewPBScrollView class] error:&error];
-    if (pbscrollview != nil) {
-        self.scrollEnabled = pbscrollview.scrollEnabled;
-        self.showsVerticalScrollIndicator = pbscrollview.showsVerticalScrollIndicator;
-        self.showsHorizontalScrollIndicator = pbscrollview.showsHorizontalScrollIndicator;
-        self.alwaysBounceVertical = pbscrollview.vertical;
-        self.alwaysBounceHorizontal = pbscrollview.horizontal;
-    }
+- (void)setNativeState:(GPBAny *)nativeState {
+    MatchaViewPBScrollView *pbscrollview = (id)[nativeState unpackMessageClass:[MatchaViewPBScrollView class] error:nil];
+    self.scrollEnabled = pbscrollview.scrollEnabled;
+    self.showsVerticalScrollIndicator = pbscrollview.showsVerticalScrollIndicator;
+    self.showsHorizontalScrollIndicator = pbscrollview.showsHorizontalScrollIndicator;
+    self.alwaysBounceVertical = pbscrollview.vertical;
+    self.alwaysBounceHorizontal = pbscrollview.horizontal;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

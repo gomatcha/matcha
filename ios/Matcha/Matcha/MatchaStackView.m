@@ -50,7 +50,7 @@
 }
 
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
-    MatchaiOSPBStackView *view = (id)[self.node.nativeViewState unpackMessageClass:[MatchaiOSPBStackView class] error:nil];
+    MatchaiOSPBStackView *view = (id)[self.nativeState unpackMessageClass:[MatchaiOSPBStackView class] error:nil];
     
     NSMutableArray *prevIds = [NSMutableArray array];
     for (MatchaiOSPBStackChildView *i in view.childrenArray) {
@@ -135,7 +135,7 @@
 }
 
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
-    MatchaiOSPBStackBar *bar = (id)[self.node.nativeViewState unpackMessageClass:[MatchaiOSPBStackBar class] error:nil];
+    MatchaiOSPBStackBar *bar = (id)[self.nativeState unpackMessageClass:[MatchaiOSPBStackBar class] error:nil];
     NSInteger idx = 0;
     
     self.titleString = bar.title;

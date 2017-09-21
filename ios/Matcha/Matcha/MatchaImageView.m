@@ -16,12 +16,10 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    MatchaViewPBImageView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaViewPBImageView class] error:nil];
+- (void)setNativeState:(GPBAny *)nativeState {
+    MatchaViewPBImageView *view = (id)[nativeState unpackMessageClass:[MatchaViewPBImageView class] error:nil];
     
     UIImage *image = [[UIImage alloc] initWithImageOrResourceProtobuf:view.image];
-    
     switch (view.resizeMode) {
         case MatchaViewPBImageResizeMode_GPBUnrecognizedEnumeratorValue:
         case MatchaViewPBImageResizeMode_Fit:

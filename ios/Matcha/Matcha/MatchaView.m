@@ -39,11 +39,11 @@ void MatchaRegisterViewController(NSString *string, MatchaViewControllerRegistra
 }
 
 UIGestureRecognizer *MatchaGestureRecognizerWithPB(int64_t viewId, GPBAny *any, MatchaViewNode *viewNode) {
-    if ([any.typeURL isEqual:@"type.googleapis.com/matcha.touch.TapRecognizer"]) {
+    if ([any.typeURL isEqual:@"type.googleapis.com/matcha.pointer.TapRecognizer"]) {
         return [[MatchaTapGestureRecognizer alloc] initWithMatchaVC:viewNode.rootVC viewId:viewId protobuf:any];
-    } else if ([any.typeURL isEqual:@"type.googleapis.com/matcha.touch.PressRecognizer"]) {
+    } else if ([any.typeURL isEqual:@"type.googleapis.com/matcha.pointer.PressRecognizer"]) {
         return [[MatchaPressGestureRecognizer alloc] initWithMatchaVC:viewNode.rootVC viewId:viewId protobuf:any];
-    } else if ([any.typeURL isEqual:@"type.googleapis.com/matcha.touch.ButtonRecognizer"]) {
+    } else if ([any.typeURL isEqual:@"type.googleapis.com/matcha.pointer.ButtonRecognizer"]) {
         return [[MatchaButtonGestureRecognizer alloc] initWithMatchaVC:viewNode.rootVC viewId:viewId protobuf:any];
     }
     return nil;
@@ -187,9 +187,9 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     if (buildNode != nil && ![buildNode.buildId isEqual:self.buildNode.buildId]) {
         // Update the views with native values
         if (self.view) {
-            self.view.node = buildNode;
+            self.view.nativeState = buildNode.nativeViewState;
         } else if (self.viewController) {
-            self.viewController.node = buildNode;
+            self.viewController.nativeState = buildNode.nativeViewState;
             
             NSMutableArray<UIViewController *> *childVCs = [NSMutableArray array];
             for (MatchaViewNode *i in childrenArray) {

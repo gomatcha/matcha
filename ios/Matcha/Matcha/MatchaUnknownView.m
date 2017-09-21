@@ -17,8 +17,8 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
+- (void)setNativeState:(GPBAny *)any {
+    // no-op
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {

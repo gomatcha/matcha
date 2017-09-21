@@ -15,8 +15,8 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
+- (void)setNativeState:(GPBAny *)nativeState {
+    // no-op
 }
 
 @end
