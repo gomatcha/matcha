@@ -246,7 +246,7 @@ func (v *Checkbox) Build(ctx view.Context) view.Model {
 	})
 
 	button := &touch.ButtonGesture{
-		OnTouch: func(e *touch.ButtonEvent) {
+		OnEvent: func(e *touch.ButtonEvent) {
 			if e.Kind == touch.EventKindRecognized {
 				v.OnValueChange(!v.Value)
 			}
@@ -289,7 +289,7 @@ func (v *DeleteButton) Build(ctx view.Context) view.Model {
 	})
 
 	button := &touch.ButtonGesture{
-		OnTouch: func(e *touch.ButtonEvent) {
+		OnEvent: func(e *touch.ButtonEvent) {
 			if e.Kind == touch.EventKindRecognized {
 				v.OnPress()
 			}

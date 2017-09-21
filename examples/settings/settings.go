@@ -458,7 +458,7 @@ func (v *BasicCell) Build(ctx view.Context) view.Model {
 	var options []view.Option
 	if v.OnTap != nil {
 		tap := &touch.ButtonGesture{
-			OnTouch: func(e *touch.ButtonEvent) {
+			OnEvent: func(e *touch.ButtonEvent) {
 				switch e.Kind {
 				case touch.EventKindPossible:
 					v.highlighted = e.Inside

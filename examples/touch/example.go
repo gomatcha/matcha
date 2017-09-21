@@ -147,7 +147,7 @@ func (v *TapChildView) Build(ctx view.Context) view.Model {
 		Options: []view.Option{
 			touch.GestureList{&touch.TapGesture{
 				Count: 1,
-				OnTouch: func(e *touch.TapEvent) {
+				OnEvent: func(e *touch.TapEvent) {
 					if e.Kind == touch.EventKindPossible {
 						fmt.Println("Tap Possible")
 					} else if e.Kind == touch.EventKindChanged {
@@ -179,7 +179,7 @@ func (v *PressChildView) Build(ctx view.Context) view.Model {
 		Options: []view.Option{
 			touch.GestureList{&touch.PressGesture{
 				MinDuration: time.Second / 2,
-				OnTouch: func(e *touch.PressEvent) {
+				OnEvent: func(e *touch.PressEvent) {
 					if e.Kind == touch.EventKindPossible {
 						fmt.Println("Press Possible")
 					} else if e.Kind == touch.EventKindChanged {
@@ -210,7 +210,7 @@ func (v *ButtonChildView) Build(ctx view.Context) view.Model {
 		Painter: &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
 			touch.GestureList{&touch.ButtonGesture{
-				OnTouch: func(e *touch.ButtonEvent) {
+				OnEvent: func(e *touch.ButtonEvent) {
 					if e.Kind == touch.EventKindPossible {
 						fmt.Println("Button Possible")
 					} else if e.Kind == touch.EventKindChanged {

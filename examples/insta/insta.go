@@ -237,7 +237,7 @@ func (v *PostImageView) Build(ctx view.Context) view.Model {
 
 	tap := &touch.TapGesture{
 		Count: 2,
-		OnTouch: func(e *touch.TapEvent) {
+		OnEvent: func(e *touch.TapEvent) {
 			if e.Kind != touch.EventKindRecognized {
 				return
 			}

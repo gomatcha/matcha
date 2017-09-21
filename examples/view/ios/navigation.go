@@ -75,7 +75,7 @@ func NewNavigationChild(app *NavigationApp) *NavigationChild {
 func (v *NavigationChild) Build(ctx view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 1,
-		OnTouch: func(e *touch.TapEvent) {
+		OnEvent: func(e *touch.TapEvent) {
 			child := NewNavigationChild(v.app)
 			child.Color = colornames.Red
 			v.app.CurrentStackView().Push(child)

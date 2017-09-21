@@ -59,7 +59,6 @@ Very Low:
 * Strikethrough doesn't work.
 
 Refactors
-* Change OnPress to OnActivate, OnSelect?
 * Touch.OnTouch rename to OnEvent? OnMajorEvent? OnRecognize? 
 * Touch package to Pointer?
 

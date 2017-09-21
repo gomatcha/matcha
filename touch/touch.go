@@ -6,9 +6,11 @@ Create the touch recognizer in the Build function.
  func (v *MyView) Build(ctx view.Context2) view.Model {
  	tap := &touch.TapGesture{
  		Count: 1,
- 		OnTouch: func(e *touch.TapEvent) {
- 			// Respond to touch events. This callback occurs on main thread.
- 			fmt.Println("view touched")
+ 		OnEvent: func(e *touch.TapEvent) {
+ 			if e.Kind == EventKindRecognized {
+ 				// Respond to touch events. This callback occurs on main thread.
+ 				fmt.Println("view tapped")
+			}
  		},
  	}
  	...
@@ -102,7 +104,7 @@ func (e *TapEvent) unmarshalProtobuf(ev *pbtouch.TapEvent) error {
 type TapGesture struct {
 	Key     int64
 	Count   int
-	OnTouch func(*TapEvent)
+	OnEvent func(*TapEvent)
 }
 
 func (r *TapGesture) TouchKey() int64 {
@@ -125,8 +127,8 @@ func (r *TapGesture) Build() Model {
 			return
 		}
 
-		if r.OnTouch != nil {
-			r.OnTouch(event)
+		if r.OnEvent != nil {
+			r.OnEvent(event)
 		}
 	}
 
@@ -170,7 +172,7 @@ func (e *PressEvent) unmarshalProtobuf(ev *pbtouch.PressEvent) error {
 type PressGesture struct {
 	Key         int64
 	MinDuration time.Duration
-	OnTouch     func(e *PressEvent)
+	OnEvent     func(e *PressEvent)
 }
 
 func (r *PressGesture) TouchKey() int64 {
@@ -192,8 +194,8 @@ func (r *PressGesture) Build() Model {
 			fmt.Println("error", err)
 			return
 		}
-		if r.OnTouch != nil {
-			r.OnTouch(event)
+		if r.OnEvent != nil {
+			r.OnEvent(event)
 		}
 	}
 
@@ -230,7 +232,7 @@ func (e *ButtonEvent) unmarshalProtobuf(ev *pbtouch.ButtonEvent) error {
 // ButtonGesture is a discrete recognizer that mimics the behavior of a button. The recognizer will fail if the touch ends outside of the view's bounds.
 type ButtonGesture struct {
 	Key           int64
-	OnTouch       func(e *ButtonEvent)
+	OnEvent       func(e *ButtonEvent)
 	IgnoresScroll bool
 }
 
@@ -254,8 +256,8 @@ func (r *ButtonGesture) Build() Model {
 			return
 		}
 
-		if r.OnTouch != nil {
-			r.OnTouch(event)
+		if r.OnEvent != nil {
+			r.OnEvent(event)
 		}
 	}
 

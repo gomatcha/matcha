@@ -114,7 +114,7 @@ func (v *ImageButton) Build(ctx Context) Model {
 	}
 
 	t := &touch.ButtonGesture{
-		OnTouch: func(e *touch.ButtonEvent) {
+		OnEvent: func(e *touch.ButtonEvent) {
 			if e.Kind == touch.EventKindRecognized && v.OnPress != nil {
 				v.OnPress()
 			}

@@ -79,7 +79,7 @@ func NewTabChild(app *TabApp) *TabChild {
 func (v *TabChild) Build(ctx view.Context) view.Model {
 	tap := &touch.TapGesture{
 		Count: 1,
-		OnTouch: func(e *touch.TapEvent) {
+		OnEvent: func(e *touch.TapEvent) {
 			v.app.tabs.SetSelectedIndex(0)
 			v.button.Title = "Updated"
 			v.Signal()
