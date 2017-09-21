@@ -1,6 +1,7 @@
 #import "MatchaScrollView.h"
 #import "MatchaProtobuf.h"
 #import "MatchaViewController_Private.h"
+#import "MatchaView_Private.h"
 
 @implementation MatchaScrollView
 

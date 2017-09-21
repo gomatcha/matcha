@@ -18,6 +18,5 @@
 @end
 
 @interface MatchaViewNode : NSObject
-- (MatchaViewController *)rootVC;
 - (NSArray<MatchaGoValue *> *)call:(NSString *)funcId args:(MatchaGoValue *)args, ... NS_REQUIRES_NIL_TERMINATION;
 @end

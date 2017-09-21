@@ -13,4 +13,5 @@ void MatchaRegisterViewController(NSString *string, MatchaViewControllerRegistra
 - (void)setRoot:(MatchaViewPBRoot *)root;
 - (UIViewController<MatchaChildViewController> *)viewController;
 - (UIView<MatchaChildView> *)view;
+- (MatchaViewController *)rootVC;
 @end
