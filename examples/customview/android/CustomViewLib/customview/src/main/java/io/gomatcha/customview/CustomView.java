@@ -37,7 +37,7 @@ public class CustomView extends MatchaChildView {
                 if (isChecked != checked) {
                     checked = isChecked;
                     PbSwitchView.SwitchEvent event = PbSwitchView.SwitchEvent.newBuilder().setValue(isChecked).build();
-                    CustomView.this.viewNode.rootView.call("OnChange", CustomView.this.viewNode.id, new GoValue(event.toByteArray()));
+                    CustomView.this.viewNode.call("OnChange", new GoValue(event.toByteArray()));
                 }
             }
         });

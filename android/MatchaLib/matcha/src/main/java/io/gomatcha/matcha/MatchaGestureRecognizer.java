@@ -15,7 +15,7 @@ import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.proto.pointer.PbPointer;
 
 class MatchaGestureRecognizer implements View.OnTouchListener {
-    MatchaChildView childView;
+    MatchaViewNode viewNode;
     com.google.protobuf.Any tapGesture;
     com.google.protobuf.Any pressGesture;
     com.google.protobuf.Any buttonGesture;
@@ -91,7 +91,7 @@ class MatchaGestureRecognizer implements View.OnTouchListener {
             if (tapRecognizer != null) {
                 handled = true;
                 Result rlt = tapRecognizer.onEvent(event);
-                childView.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", tapRecognizer.recognizerId), childView.viewNode.id, new GoValue(rlt.message.toByteArray()));
+                viewNode.call(String.format("gomatcha.io/matcha/touch %d", tapRecognizer.recognizerId), new GoValue(rlt.message.toByteArray()));
                 if (rlt.state == State.FAILED || rlt.state == State.RECOGNIZED) {
                     tapRecognizer = null;
                 }
@@ -99,7 +99,7 @@ class MatchaGestureRecognizer implements View.OnTouchListener {
             if (pressRecognizer != null) {
                 handled = true;
                 Result rlt = pressRecognizer.onEvent(event);
-                childView.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", pressRecognizer.recognizerId), childView.viewNode.id, new GoValue(rlt.message.toByteArray()));
+                viewNode.call(String.format("gomatcha.io/matcha/touch %d", pressRecognizer.recognizerId), new GoValue(rlt.message.toByteArray()));
                 if (rlt.state == State.FAILED || rlt.state == State.RECOGNIZED) {
                     pressRecognizer = null;
                 }
@@ -110,7 +110,7 @@ class MatchaGestureRecognizer implements View.OnTouchListener {
                 if (rlt.state == State.POSSIBLE && prevButtonResult != null && prevButtonResult.state == State.POSSIBLE && ((PbPointer.ButtonEvent)prevButtonResult.message).getInside() == ((PbPointer.ButtonEvent)rlt.message).getInside()) {
                     // Skip message.
                 } else {
-                    childView.viewNode.rootView.call(String.format("gomatcha.io/matcha/touch %d", buttonRecognizer.recognizerId), childView.viewNode.id, new GoValue(rlt.message.toByteArray()));
+                    viewNode.call(String.format("gomatcha.io/matcha/touch %d", buttonRecognizer.recognizerId), new GoValue(rlt.message.toByteArray()));
                 }
                 prevButtonResult = rlt;
                 if (rlt.state == State.FAILED || rlt.state == State.RECOGNIZED) {

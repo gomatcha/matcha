@@ -12,14 +12,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.proto.paint.PbPaint;
 import io.gomatcha.matcha.proto.pointer.PbPointer;
 import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaViewNode extends Object {
     MatchaViewNode parent;
-    public MatchaView rootView;
-    public long id;
+    MatchaView rootView;
+    private long id;
     long buildId;
     long layoutId;
     long paintId;
@@ -33,6 +34,10 @@ public class MatchaViewNode extends Object {
         this.id = id;
     }
 
+    public GoValue[] call(String func, GoValue... args) {
+        return this.rootView.call(func, this.id, args);
+    }
+
     void setRoot(PbView.Root root) {
         PbView.LayoutPaintNode layoutPaintNode = root.getLayoutPaintNodesOrDefault(id, null);
         PbView.BuildNode buildNode = root.getBuildNodesOrDefault(id, null);
@@ -40,6 +45,7 @@ public class MatchaViewNode extends Object {
         // Create view
         if (this.view == null) {
             this.view = MatchaView.createView(buildNode.getBridgeName(), rootView.getContext(), this);
+            this.view.matchaGestureRecognizer.viewNode = this;
         }
         MatchaLayout layout = this.view.getLayout();
 

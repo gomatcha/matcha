@@ -74,6 +74,6 @@ class MatchaStackView extends MatchaChildView {
     }
 
     public void back() {
-        viewNode.rootView.call("OnBack", viewNode.id);
+        viewNode.call("OnBack");
     }
 }

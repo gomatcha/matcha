@@ -5,8 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class MatchaLayout extends ViewGroup {
+    MatchaGestureRecognizer matchaGestureRecognizer;
+    
     public MatchaLayout(Context context) {
         super(context);
+        this.setClipChildren(false);
+        this.setClipToPadding(false);
+        this.matchaGestureRecognizer = new MatchaGestureRecognizer();
+        this.matchaGestureRecognizer.context = context;
+        this.setOnTouchListener(this.matchaGestureRecognizer);
     }
 
     @Override

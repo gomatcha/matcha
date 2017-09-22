@@ -34,7 +34,7 @@ class MatchaSwitchView extends MatchaChildView {
                 if (isChecked != checked) {
                     checked = isChecked;
                     PbSwitchView.SwitchEvent event = PbSwitchView.SwitchEvent.newBuilder().setValue(isChecked).build();
-                    MatchaSwitchView.this.viewNode.rootView.call("OnChange", MatchaSwitchView.this.viewNode.id, new GoValue(event.toByteArray()));
+                    MatchaSwitchView.this.viewNode.call("OnChange", new GoValue(event.toByteArray()));
                 }
             }
         });

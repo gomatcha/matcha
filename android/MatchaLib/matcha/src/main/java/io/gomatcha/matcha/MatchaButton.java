@@ -29,7 +29,7 @@ class MatchaButton extends MatchaChildView {
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                MatchaButton.this.viewNode.rootView.call("OnPress", MatchaButton.this.viewNode.id);
+                MatchaButton.this.viewNode.call("OnPress");
             }
         });
         addView(view);

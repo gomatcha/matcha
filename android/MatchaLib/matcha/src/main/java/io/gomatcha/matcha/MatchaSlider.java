@@ -35,7 +35,7 @@ class MatchaSlider extends MatchaChildView {
                     double maxValue = MatchaSlider.this.maxValue;
                     double minValue = MatchaSlider.this.minValue;
                     PbSlider.SliderEvent proto = PbSlider.SliderEvent.newBuilder().setValue((double) i / 10000.0 * (maxValue - minValue) + minValue).build();
-                    MatchaSlider.this.viewNode.rootView.call("OnValueChange", MatchaSlider.this.viewNode.id, new GoValue(proto.toByteArray()));
+                    MatchaSlider.this.viewNode.call("OnValueChange", new GoValue(proto.toByteArray()));
                 }
             }
             @Override
@@ -47,7 +47,7 @@ class MatchaSlider extends MatchaChildView {
                 double maxValue = MatchaSlider.this.maxValue;
                 double minValue = MatchaSlider.this.minValue;
                 PbSlider.SliderEvent proto = PbSlider.SliderEvent.newBuilder().setValue((double)MatchaSlider.this.view.getProgress()/10000.0 * (maxValue - minValue) + minValue).build();
-                MatchaSlider.this.viewNode.rootView.call("OnSubmit", MatchaSlider.this.viewNode.id, new GoValue(proto.toByteArray()));
+                MatchaSlider.this.viewNode.call("OnSubmit", new GoValue(proto.toByteArray()));
             }
         });
         addView(view);

@@ -50,7 +50,7 @@ class MatchaTextInputView extends MatchaChildView {
                 boolean handled = false;
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     Log.v("x", "submit");
-                    MatchaTextInputView.this.viewNode.rootView.call("OnSubmit", MatchaTextInputView.this.viewNode.id);
+                    MatchaTextInputView.this.viewNode.call("OnSubmit");
                     handled = true;
                 }
                 return handled;
@@ -66,7 +66,7 @@ class MatchaTextInputView extends MatchaChildView {
                 if (!editing) {
                     PbText.StyledText styledText = Protobuf.toProtobuf((SpannableStringBuilder) charSequence);
                     PbTextInput.TextInputEvent proto = PbTextInput.TextInputEvent.newBuilder().setStyledText(styledText).build();
-                    MatchaTextInputView.this.viewNode.rootView.call("OnTextChange", MatchaTextInputView.this.viewNode.id, new GoValue(proto.toByteArray()));
+                    MatchaTextInputView.this.viewNode.call("OnTextChange", new GoValue(proto.toByteArray()));
                 }
             }
             @Override
@@ -79,7 +79,7 @@ class MatchaTextInputView extends MatchaChildView {
             public void onFocusChange(View view, boolean b) {
                 if (!editing) {
                     PbTextInput.TextInputFocusEvent proto = PbTextInput.TextInputFocusEvent.newBuilder().setFocused(b).build();
-                    MatchaTextInputView.this.viewNode.rootView.call("OnFocus", MatchaTextInputView.this.viewNode.id, new GoValue(proto.toByteArray()));
+                    MatchaTextInputView.this.viewNode.call("OnFocus", new GoValue(proto.toByteArray()));
                 }
             }
         });

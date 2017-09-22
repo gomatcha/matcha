@@ -80,7 +80,7 @@ class MatchaToolbarView extends MatchaChildView {
                 item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        MatchaToolbarView.this.viewNode.rootView.call(onPressFunc, MatchaToolbarView.this.viewNode.id);
+                        MatchaToolbarView.this.viewNode.call(onPressFunc);
                         return true;
                     }
                 });
