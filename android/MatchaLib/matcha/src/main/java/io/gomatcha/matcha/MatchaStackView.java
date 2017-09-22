@@ -12,7 +12,7 @@ import java.util.List;
 import io.gomatcha.matcha.proto.view.PbView;
 import io.gomatcha.matcha.proto.view.android.PbStackView;
 
-public class MatchaStackView extends MatchaChildView {
+class MatchaStackView extends MatchaChildView {
     Toolbar toolbar;
     MatchaStackView2 stackView2;
 

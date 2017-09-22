@@ -24,7 +24,7 @@ import io.gomatcha.matcha.proto.text.PbText;
 import io.gomatcha.matcha.proto.view.PbTextInput;
 import io.gomatcha.matcha.proto.view.PbView;
 
-public class MatchaTextInputView extends MatchaChildView {
+class MatchaTextInputView extends MatchaChildView {
     EditText view;
     boolean editing;
     boolean focused;

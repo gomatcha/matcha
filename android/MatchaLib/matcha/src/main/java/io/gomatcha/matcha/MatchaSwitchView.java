@@ -11,7 +11,7 @@ import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.proto.view.PbSwitchView;
 import io.gomatcha.matcha.proto.view.PbView;
 
-public class MatchaSwitchView extends MatchaChildView {
+class MatchaSwitchView extends MatchaChildView {
     SwitchCompat view;
     boolean checked;
 

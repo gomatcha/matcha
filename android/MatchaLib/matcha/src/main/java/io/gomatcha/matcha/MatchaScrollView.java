@@ -11,7 +11,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.gomatcha.matcha.proto.view.PbScrollView;
 import io.gomatcha.matcha.proto.view.PbView;
 
-public class MatchaScrollView extends MatchaChildView {
+class MatchaScrollView extends MatchaChildView {
     ScrollView scrollView;
     MatchaLayout childView;
 

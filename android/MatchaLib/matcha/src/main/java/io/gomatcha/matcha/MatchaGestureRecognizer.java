@@ -13,7 +13,7 @@ import java.util.Date;
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.proto.touch.PbTouch;
 
-public class MatchaGestureRecognizer implements View.OnTouchListener {
+class MatchaGestureRecognizer implements View.OnTouchListener {
     MatchaChildView childView;
     com.google.protobuf.Any tapGesture;
     com.google.protobuf.Any pressGesture;

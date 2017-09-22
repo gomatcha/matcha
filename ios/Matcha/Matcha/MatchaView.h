@@ -2,8 +2,6 @@
 #import <Matcha/MatchaViewController.h>
 @class GPBAny;
 @class MatchaViewPBLayoutPaintNode;
-@class MatchaViewConfig;
-@class MatchaViewController;
 @class MatchaViewNode;
 
 @protocol MatchaChildView <NSObject>

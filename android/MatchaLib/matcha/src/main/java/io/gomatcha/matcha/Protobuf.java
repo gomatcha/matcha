@@ -33,7 +33,7 @@ import io.gomatcha.matcha.proto.text.PbText;
 
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 
-public class Protobuf {
+class Protobuf {
     public static long newMillis(Duration d) {
         return d.getSeconds() * 1000 + d.getNanos() / 1000000;
     }

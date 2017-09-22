@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchaStackView2 extends RelativeLayout {
+class MatchaStackView2 extends RelativeLayout {
     public MatchaStackView2(Context context) {
         super(context);
     }

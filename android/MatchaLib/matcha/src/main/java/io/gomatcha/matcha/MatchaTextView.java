@@ -9,7 +9,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.gomatcha.matcha.proto.text.PbText;
 import io.gomatcha.matcha.proto.view.PbView;
 
-public class MatchaTextView extends MatchaChildView {
+class MatchaTextView extends MatchaChildView {
     TextView view;
 
     static {

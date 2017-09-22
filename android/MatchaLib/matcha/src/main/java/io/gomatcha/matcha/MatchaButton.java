@@ -11,7 +11,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.gomatcha.matcha.proto.view.PbButton;
 import io.gomatcha.matcha.proto.view.PbView;
 
-public class MatchaButton extends MatchaChildView {
+class MatchaButton extends MatchaChildView {
     Button view;
 
     static {

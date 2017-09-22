@@ -147,19 +147,6 @@ public class JavaBridge {
                 .setScale(1); // TODO(KD): Figure out which image density was selected. https://developer.android.com/guide/practices/screens_support.html
 
         return new GoValue(builder.build().toByteArray());
-/*
-        return;
-        BitmapFactory.Options dimensions = new BitmapFactory.Options();
-        dimensions.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, id, dimensions);
-
-        Proto.ImageProperties.Builder builder = Proto.ImageProperties.newBuilder()
-                .setWidth(dimensions.outWidth)
-                .setHeight(dimensions.outHeight)
-                .setScale(1); // TODO(KD): Figure out which image density was selected. https://developer.android.com/guide/practices/screens_support.html
-
-        return new GoValue(builder.build().toByteArray());
-        */
     }
     
     public void displayAlert(byte[] protobuf) {

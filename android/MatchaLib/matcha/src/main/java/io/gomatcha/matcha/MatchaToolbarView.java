@@ -16,7 +16,7 @@ import java.util.List;
 import io.gomatcha.matcha.proto.view.PbView;
 import io.gomatcha.matcha.proto.view.android.PbStackView;
 
-public class MatchaToolbarView extends MatchaChildView {
+class MatchaToolbarView extends MatchaChildView {
     Toolbar toolbar;
     MatchaStackView stackView;
 

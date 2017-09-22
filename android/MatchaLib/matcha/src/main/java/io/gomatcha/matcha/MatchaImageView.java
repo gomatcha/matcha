@@ -9,7 +9,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import io.gomatcha.matcha.proto.view.PbImageView;
 import io.gomatcha.matcha.proto.view.PbView;
 
-public class MatchaImageView extends MatchaChildView {
+class MatchaImageView extends MatchaChildView {
     RoundedImageView view;
     
     static {

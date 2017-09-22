@@ -26,13 +26,13 @@ public class MatchaViewNode extends Object {
     ArrayList<MatchaViewNode> childList = new ArrayList<MatchaViewNode>();
     MatchaChildView view;
 
-    public MatchaViewNode(MatchaViewNode parent, MatchaView rootView, long id) {
+    MatchaViewNode(MatchaViewNode parent, MatchaView rootView, long id) {
         this.parent = parent;
         this.rootView = rootView;
         this.id = id;
     }
 
-    public void setRoot(PbView.Root root) {
+    void setRoot(PbView.Root root) {
         PbView.LayoutPaintNode layoutPaintNode = root.getLayoutPaintNodesOrDefault(id, null);
         PbView.BuildNode buildNode = root.getBuildNodesOrDefault(id, null);
 

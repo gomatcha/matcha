@@ -9,7 +9,7 @@ import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.proto.view.PbSlider;
 import io.gomatcha.matcha.proto.view.PbView;
 
-public class MatchaSlider extends MatchaChildView {
+class MatchaSlider extends MatchaChildView {
     SeekBar view;
     double value;
     double maxValue;

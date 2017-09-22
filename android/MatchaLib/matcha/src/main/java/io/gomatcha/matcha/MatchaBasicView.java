@@ -2,7 +2,7 @@ package io.gomatcha.matcha;
 
 import android.content.Context;
 
-public class MatchaBasicView extends MatchaChildView {
+class MatchaBasicView extends MatchaChildView {
     static {
         MatchaView.registerView("", new MatchaView.ViewFactory() {
             @Override

@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import io.gomatcha.matcha.proto.view.PbView;
 import io.gomatcha.matcha.proto.view.android.PbPagerView;
 
-public class MatchaPagerView extends MatchaChildView {
+class MatchaPagerView extends MatchaChildView {
     SlidingTabLayout tabStrip;
     ViewPager viewPager;
     MatchaPagerAdapter pagerAdapter;
