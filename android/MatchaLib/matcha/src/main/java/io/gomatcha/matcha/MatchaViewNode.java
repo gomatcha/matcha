@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.gomatcha.matcha.proto.paint.PbPaint;
-import io.gomatcha.matcha.proto.touch.PbTouch;
+import io.gomatcha.matcha.proto.pointer.PbPointer;
 import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaViewNode extends Object {
@@ -84,7 +84,6 @@ public class MatchaViewNode extends Object {
 
             // Update the views with native values
             this.view.setNativeState(buildNode.getBridgeValue().toByteArray());
-            Log.v("x", "wtf" + this.view.toString());
 
             // Add/remove subviews
             if (this.view.isContainerView()) {
@@ -108,14 +107,14 @@ public class MatchaViewNode extends Object {
             com.google.protobuf.ByteString gestures = buildNode.getValuesMap().get("gomatcha.io/matcha/touch");
             if (gestures != null) {
                 try {
-                    PbTouch.RecognizerList proto = PbTouch.RecognizerList.parseFrom(gestures);
-                    for (PbTouch.Recognizer i : proto.getRecognizersList()) {
+                    PbPointer.RecognizerList proto = PbPointer.RecognizerList.parseFrom(gestures);
+                    for (PbPointer.Recognizer i : proto.getRecognizersList()) {
                         String type = i.getRecognizer().getTypeUrl();
-                        if (type.equals("type.googleapis.com/matcha.touch.TapRecognizer")) {
+                        if (type.equals("type.googleapis.com/matcha.pointer.TapRecognizer")) {
                             this.view.matchaGestureRecognizer.tapGesture = i.getRecognizer();
-                        } else if (type.equals("type.googleapis.com/matcha.touch.PressRecognizer")) {
+                        } else if (type.equals("type.googleapis.com/matcha.pointer.PressRecognizer")) {
                             this.view.matchaGestureRecognizer.pressGesture = i.getRecognizer();
-                        } else if (type.equals("type.googleapis.com/matcha.touch.ButtonRecognizer")) {
+                        } else if (type.equals("type.googleapis.com/matcha.pointer.ButtonRecognizer")) {
                             this.view.matchaGestureRecognizer.buttonGesture = i.getRecognizer();
                         }
                     }
