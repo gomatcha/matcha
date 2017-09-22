@@ -117,12 +117,12 @@ typedef struct MatchaViewPBBuildNode__storage_ {
       },
       {
         .name = "values",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBAny),
+        .dataTypeSpecific.className = NULL,
         .number = MatchaViewPBBuildNode_FieldNumber_Values,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(MatchaViewPBBuildNode__storage_, values),
         .flags = GPBFieldMapKeyString,
-        .dataType = GPBDataTypeMessage,
+        .dataType = GPBDataTypeBytes,
       },
       {
         .name = "childrenArray",

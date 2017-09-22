@@ -1,6 +1,8 @@
 package view
 
 import (
+	"fmt"
+
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
 	"gomatcha.io/matcha/internal"
@@ -96,10 +98,16 @@ func (r *touchMiddleware) Build(ctx Context, next *Model) {
 		}
 	}
 
-	if next.NativeOptions == nil {
-		next.NativeOptions = map[string]proto.Message{}
+	pbBytes, err := proto.Marshal(pbRecognizers)
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
-	next.NativeOptions["gomatcha.io/matcha/touch"] = pbRecognizers
+
+	if next.NativeOptions == nil {
+		next.NativeOptions = map[string][]byte{}
+	}
+	next.NativeOptions["gomatcha.io/matcha/touch"] = pbBytes
 
 	if next.NativeFuncs == nil {
 		next.NativeFuncs = map[string]interface{}{}

@@ -132,7 +132,7 @@ type Model struct {
 
 	NativeViewName  string
 	NativeViewState proto.Message
-	NativeOptions   map[string]proto.Message
+	NativeOptions   map[string][]byte
 	NativeFuncs     map[string]interface{}
 }
 

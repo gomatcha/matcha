@@ -13,7 +13,6 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/any"
-	google_protobuf "github.com/golang/protobuf/ptypes/any"
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha"
 	"gomatcha.io/matcha/comm"
@@ -402,14 +401,9 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 		nativeViewState = a
 	}
 
-	nativeValues := map[string]*google_protobuf.Any{}
+	nativeValues := map[string][]byte{}
 	for k, v := range n.model.NativeOptions {
-		a, err := ptypes.MarshalAny(v)
-		if err != nil {
-			fmt.Println("Error enocding native value: ", err)
-			continue
-		}
-		nativeValues[k] = a
+		nativeValues[k] = v
 	}
 
 	m[int64(n.id)] = &pb.BuildNode{

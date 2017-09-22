@@ -103,10 +103,10 @@ public class MatchaViewNode extends Object {
             }
 
             // Update gesture recognizers... TODO(KD):
-            com.google.protobuf.Any gestures = buildNode.getValuesMap().get("gomatcha.io/matcha/touch");
+            com.google.protobuf.ByteString gestures = buildNode.getValuesMap().get("gomatcha.io/matcha/touch");
             if (gestures != null) {
                 try {
-                    PbTouch.RecognizerList proto = gestures.unpack(PbTouch.RecognizerList.class);
+                    PbTouch.RecognizerList proto = PbTouch.RecognizerList.parseFrom(gestures);
                     for (PbTouch.Recognizer i : proto.getRecognizersList()) {
                         String type = i.getRecognizer().getTypeUrl();
                         if (type.equals("type.googleapis.com/matcha.touch.TapRecognizer")) {

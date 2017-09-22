@@ -17,7 +17,7 @@
 @interface MatchaBuildNode : NSObject
 - (id)initWithProtobuf:(MatchaViewPBBuildNode *)node;
 @property (nonatomic, readonly) GPBInt64Array *childIds;
-@property (nonatomic, readonly) NSMutableDictionary<NSString*, GPBAny*> *nativeValues;
+@property (nonatomic, readonly) NSMutableDictionary<NSString*, NSData *> *nativeValues;
 @property (nonatomic, readonly) NSString *nativeViewName;
 @property (nonatomic, readonly) GPBAny *nativeViewState;
 @property (nonatomic, readonly) NSNumber *identifier;

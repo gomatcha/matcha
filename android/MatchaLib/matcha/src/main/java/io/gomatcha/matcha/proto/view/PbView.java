@@ -52,11 +52,11 @@ public final class PbView {
     com.google.protobuf.AnyOrBuilder getBridgeValueOrBuilder();
 
     /**
-     * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+     * <code>map&lt;string, bytes&gt; values = 5;</code>
      */
     int getValuesCount();
     /**
-     * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+     * <code>map&lt;string, bytes&gt; values = 5;</code>
      */
     boolean containsValues(
         java.lang.String key);
@@ -64,25 +64,25 @@ public final class PbView {
      * Use {@link #getValuesMap()} instead.
      */
     @java.lang.Deprecated
-    java.util.Map<java.lang.String, com.google.protobuf.Any>
+    java.util.Map<java.lang.String, com.google.protobuf.ByteString>
     getValues();
     /**
-     * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+     * <code>map&lt;string, bytes&gt; values = 5;</code>
      */
-    java.util.Map<java.lang.String, com.google.protobuf.Any>
+    java.util.Map<java.lang.String, com.google.protobuf.ByteString>
     getValuesMap();
     /**
-     * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+     * <code>map&lt;string, bytes&gt; values = 5;</code>
      */
 
-    com.google.protobuf.Any getValuesOrDefault(
+    com.google.protobuf.ByteString getValuesOrDefault(
         java.lang.String key,
-        com.google.protobuf.Any defaultValue);
+        com.google.protobuf.ByteString defaultValue);
     /**
-     * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+     * <code>map&lt;string, bytes&gt; values = 5;</code>
      */
 
-    com.google.protobuf.Any getValuesOrThrow(
+    com.google.protobuf.ByteString getValuesOrThrow(
         java.lang.String key);
 
     /**
@@ -210,7 +210,7 @@ public final class PbView {
                     ValuesDefaultEntryHolder.defaultEntry);
                 mutable_bitField0_ |= 0x00000010;
               }
-              com.google.protobuf.MapEntry<java.lang.String, com.google.protobuf.Any>
+              com.google.protobuf.MapEntry<java.lang.String, com.google.protobuf.ByteString>
               values__ = input.readMessage(
                   ValuesDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
               values_.getMutableMap().put(
@@ -367,18 +367,18 @@ public final class PbView {
     public static final int VALUES_FIELD_NUMBER = 5;
     private static final class ValuesDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
-          java.lang.String, com.google.protobuf.Any> defaultEntry =
+          java.lang.String, com.google.protobuf.ByteString> defaultEntry =
               com.google.protobuf.MapEntry
-              .<java.lang.String, com.google.protobuf.Any>newDefaultInstance(
+              .<java.lang.String, com.google.protobuf.ByteString>newDefaultInstance(
                   io.gomatcha.matcha.proto.view.PbView.internal_static_matcha_view_BuildNode_ValuesEntry_descriptor, 
                   com.google.protobuf.WireFormat.FieldType.STRING,
                   "",
-                  com.google.protobuf.WireFormat.FieldType.MESSAGE,
-                  com.google.protobuf.Any.getDefaultInstance());
+                  com.google.protobuf.WireFormat.FieldType.BYTES,
+                  com.google.protobuf.ByteString.EMPTY);
     }
     private com.google.protobuf.MapField<
-        java.lang.String, com.google.protobuf.Any> values_;
-    private com.google.protobuf.MapField<java.lang.String, com.google.protobuf.Any>
+        java.lang.String, com.google.protobuf.ByteString> values_;
+    private com.google.protobuf.MapField<java.lang.String, com.google.protobuf.ByteString>
     internalGetValues() {
       if (values_ == null) {
         return com.google.protobuf.MapField.emptyMapField(
@@ -391,7 +391,7 @@ public final class PbView {
       return internalGetValues().getMap().size();
     }
     /**
-     * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+     * <code>map&lt;string, bytes&gt; values = 5;</code>
      */
 
     public boolean containsValues(
@@ -403,36 +403,36 @@ public final class PbView {
      * Use {@link #getValuesMap()} instead.
      */
     @java.lang.Deprecated
-    public java.util.Map<java.lang.String, com.google.protobuf.Any> getValues() {
+    public java.util.Map<java.lang.String, com.google.protobuf.ByteString> getValues() {
       return getValuesMap();
     }
     /**
-     * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+     * <code>map&lt;string, bytes&gt; values = 5;</code>
      */
 
-    public java.util.Map<java.lang.String, com.google.protobuf.Any> getValuesMap() {
+    public java.util.Map<java.lang.String, com.google.protobuf.ByteString> getValuesMap() {
       return internalGetValues().getMap();
     }
     /**
-     * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+     * <code>map&lt;string, bytes&gt; values = 5;</code>
      */
 
-    public com.google.protobuf.Any getValuesOrDefault(
+    public com.google.protobuf.ByteString getValuesOrDefault(
         java.lang.String key,
-        com.google.protobuf.Any defaultValue) {
+        com.google.protobuf.ByteString defaultValue) {
       if (key == null) { throw new java.lang.NullPointerException(); }
-      java.util.Map<java.lang.String, com.google.protobuf.Any> map =
+      java.util.Map<java.lang.String, com.google.protobuf.ByteString> map =
           internalGetValues().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
-     * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+     * <code>map&lt;string, bytes&gt; values = 5;</code>
      */
 
-    public com.google.protobuf.Any getValuesOrThrow(
+    public com.google.protobuf.ByteString getValuesOrThrow(
         java.lang.String key) {
       if (key == null) { throw new java.lang.NullPointerException(); }
-      java.util.Map<java.lang.String, com.google.protobuf.Any> map =
+      java.util.Map<java.lang.String, com.google.protobuf.ByteString> map =
           internalGetValues().getMap();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
@@ -605,9 +605,9 @@ public final class PbView {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, getBridgeValue());
       }
-      for (java.util.Map.Entry<java.lang.String, com.google.protobuf.Any> entry
+      for (java.util.Map.Entry<java.lang.String, com.google.protobuf.ByteString> entry
            : internalGetValues().getMap().entrySet()) {
-        com.google.protobuf.MapEntry<java.lang.String, com.google.protobuf.Any>
+        com.google.protobuf.MapEntry<java.lang.String, com.google.protobuf.ByteString>
         values__ = ValuesDefaultEntryHolder.defaultEntry.newBuilderForType()
             .setKey(entry.getKey())
             .setValue(entry.getValue())
@@ -1253,8 +1253,8 @@ public final class PbView {
       }
 
       private com.google.protobuf.MapField<
-          java.lang.String, com.google.protobuf.Any> values_;
-      private com.google.protobuf.MapField<java.lang.String, com.google.protobuf.Any>
+          java.lang.String, com.google.protobuf.ByteString> values_;
+      private com.google.protobuf.MapField<java.lang.String, com.google.protobuf.ByteString>
       internalGetValues() {
         if (values_ == null) {
           return com.google.protobuf.MapField.emptyMapField(
@@ -1262,7 +1262,7 @@ public final class PbView {
         }
         return values_;
       }
-      private com.google.protobuf.MapField<java.lang.String, com.google.protobuf.Any>
+      private com.google.protobuf.MapField<java.lang.String, com.google.protobuf.ByteString>
       internalGetMutableValues() {
         onChanged();;
         if (values_ == null) {
@@ -1279,7 +1279,7 @@ public final class PbView {
         return internalGetValues().getMap().size();
       }
       /**
-       * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+       * <code>map&lt;string, bytes&gt; values = 5;</code>
        */
 
       public boolean containsValues(
@@ -1291,36 +1291,36 @@ public final class PbView {
        * Use {@link #getValuesMap()} instead.
        */
       @java.lang.Deprecated
-      public java.util.Map<java.lang.String, com.google.protobuf.Any> getValues() {
+      public java.util.Map<java.lang.String, com.google.protobuf.ByteString> getValues() {
         return getValuesMap();
       }
       /**
-       * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+       * <code>map&lt;string, bytes&gt; values = 5;</code>
        */
 
-      public java.util.Map<java.lang.String, com.google.protobuf.Any> getValuesMap() {
+      public java.util.Map<java.lang.String, com.google.protobuf.ByteString> getValuesMap() {
         return internalGetValues().getMap();
       }
       /**
-       * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+       * <code>map&lt;string, bytes&gt; values = 5;</code>
        */
 
-      public com.google.protobuf.Any getValuesOrDefault(
+      public com.google.protobuf.ByteString getValuesOrDefault(
           java.lang.String key,
-          com.google.protobuf.Any defaultValue) {
+          com.google.protobuf.ByteString defaultValue) {
         if (key == null) { throw new java.lang.NullPointerException(); }
-        java.util.Map<java.lang.String, com.google.protobuf.Any> map =
+        java.util.Map<java.lang.String, com.google.protobuf.ByteString> map =
             internalGetValues().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
       /**
-       * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+       * <code>map&lt;string, bytes&gt; values = 5;</code>
        */
 
-      public com.google.protobuf.Any getValuesOrThrow(
+      public com.google.protobuf.ByteString getValuesOrThrow(
           java.lang.String key) {
         if (key == null) { throw new java.lang.NullPointerException(); }
-        java.util.Map<java.lang.String, com.google.protobuf.Any> map =
+        java.util.Map<java.lang.String, com.google.protobuf.ByteString> map =
             internalGetValues().getMap();
         if (!map.containsKey(key)) {
           throw new java.lang.IllegalArgumentException();
@@ -1334,7 +1334,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+       * <code>map&lt;string, bytes&gt; values = 5;</code>
        */
 
       public Builder removeValues(
@@ -1348,16 +1348,16 @@ public final class PbView {
        * Use alternate mutation accessors instead.
        */
       @java.lang.Deprecated
-      public java.util.Map<java.lang.String, com.google.protobuf.Any>
+      public java.util.Map<java.lang.String, com.google.protobuf.ByteString>
       getMutableValues() {
         return internalGetMutableValues().getMutableMap();
       }
       /**
-       * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+       * <code>map&lt;string, bytes&gt; values = 5;</code>
        */
       public Builder putValues(
           java.lang.String key,
-          com.google.protobuf.Any value) {
+          com.google.protobuf.ByteString value) {
         if (key == null) { throw new java.lang.NullPointerException(); }
         if (value == null) { throw new java.lang.NullPointerException(); }
         internalGetMutableValues().getMutableMap()
@@ -1365,11 +1365,11 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>map&lt;string, .google.protobuf.Any&gt; values = 5;</code>
+       * <code>map&lt;string, bytes&gt; values = 5;</code>
        */
 
       public Builder putAllValues(
-          java.util.Map<java.lang.String, com.google.protobuf.Any> values) {
+          java.util.Map<java.lang.String, com.google.protobuf.ByteString> values) {
         internalGetMutableValues().getMutableMap()
             .putAll(values);
         return this;
@@ -4380,33 +4380,32 @@ public final class PbView {
       "\n(gomatcha.io/matcha/proto/view/view.pro" +
       "to\022\013matcha.view\032*gomatcha.io/matcha/prot" +
       "o/paint/paint.proto\032\031google/protobuf/any" +
-      ".proto\"\325\002\n\tBuildNode\022\n\n\002id\030\001 \001(\003\022\017\n\007buil" +
+      ".proto\"\277\002\n\tBuildNode\022\n\n\002id\030\001 \001(\003\022\017\n\007buil" +
       "dId\030\002 \001(\003\022\022\n\nbridgeName\030\003 \001(\t\022)\n\013bridgeV" +
       "alue\030\004 \001(\0132\024.google.protobuf.Any\0222\n\006valu" +
       "es\030\005 \003(\0132\".matcha.view.BuildNode.ValuesE" +
       "ntry\022\020\n\010children\030\006 \003(\003\0222\n\006altIds\030\007 \003(\0132\"" +
-      ".matcha.view.BuildNode.AltIdsEntry\032C\n\013Va" +
-      "luesEntry\022\013\n\003key\030\001 \001(\t\022#\n\005value\030\002 \001(\0132\024.",
-      "google.protobuf.Any:\0028\001\032-\n\013AltIdsEntry\022\013" +
-      "\n\003key\030\001 \001(\003\022\r\n\005value\030\002 \001(\003:\0028\001\"\305\001\n\017Layou" +
-      "tPaintNode\022\n\n\002id\030\001 \001(\003\022\020\n\010layoutId\030\002 \001(\003" +
-      "\022\017\n\007paintId\030\003 \001(\003\022\014\n\004minx\030\004 \001(\001\022\014\n\004miny\030" +
-      "\005 \001(\001\022\014\n\004maxx\030\006 \001(\001\022\014\n\004maxy\030\007 \001(\001\022\016\n\006zIn" +
-      "dex\030\010 \001(\003\022\022\n\nchildOrder\030\t \003(\003\022\'\n\npaintSt" +
-      "yle\030\n \001(\0132\023.matcha.paint.Style\"\242\003\n\004Root\022" +
-      "A\n\020layoutPaintNodes\030\002 \003(\0132\'.matcha.view." +
-      "Root.LayoutPaintNodesEntry\0225\n\nbuildNodes" +
-      "\030\003 \003(\0132!.matcha.view.Root.BuildNodesEntr",
-      "y\0225\n\nmiddleware\030\004 \003(\0132!.matcha.view.Root" +
-      ".MiddlewareEntry\032U\n\025LayoutPaintNodesEntr" +
-      "y\022\013\n\003key\030\001 \001(\003\022+\n\005value\030\002 \001(\0132\034.matcha.v" +
-      "iew.LayoutPaintNode:\0028\001\032I\n\017BuildNodesEnt" +
-      "ry\022\013\n\003key\030\001 \001(\003\022%\n\005value\030\002 \001(\0132\026.matcha." +
-      "view.BuildNode:\0028\001\032G\n\017MiddlewareEntry\022\013\n" +
-      "\003key\030\001 \001(\t\022#\n\005value\030\002 \001(\0132\024.google.proto" +
-      "buf.Any:\0028\001B<\n\035io.gomatcha.matcha.proto." +
-      "viewB\006PbViewZ\004view\242\002\014MatchaViewPBb\006proto" +
-      "3"
+      ".matcha.view.BuildNode.AltIdsEntry\032-\n\013Va" +
+      "luesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028",
+      "\001\032-\n\013AltIdsEntry\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030\002" +
+      " \001(\003:\0028\001\"\305\001\n\017LayoutPaintNode\022\n\n\002id\030\001 \001(\003" +
+      "\022\020\n\010layoutId\030\002 \001(\003\022\017\n\007paintId\030\003 \001(\003\022\014\n\004m" +
+      "inx\030\004 \001(\001\022\014\n\004miny\030\005 \001(\001\022\014\n\004maxx\030\006 \001(\001\022\014\n" +
+      "\004maxy\030\007 \001(\001\022\016\n\006zIndex\030\010 \001(\003\022\022\n\nchildOrde" +
+      "r\030\t \003(\003\022\'\n\npaintStyle\030\n \001(\0132\023.matcha.pai" +
+      "nt.Style\"\242\003\n\004Root\022A\n\020layoutPaintNodes\030\002 " +
+      "\003(\0132\'.matcha.view.Root.LayoutPaintNodesE" +
+      "ntry\0225\n\nbuildNodes\030\003 \003(\0132!.matcha.view.R" +
+      "oot.BuildNodesEntry\0225\n\nmiddleware\030\004 \003(\0132",
+      "!.matcha.view.Root.MiddlewareEntry\032U\n\025La" +
+      "youtPaintNodesEntry\022\013\n\003key\030\001 \001(\003\022+\n\005valu" +
+      "e\030\002 \001(\0132\034.matcha.view.LayoutPaintNode:\0028" +
+      "\001\032I\n\017BuildNodesEntry\022\013\n\003key\030\001 \001(\003\022%\n\005val" +
+      "ue\030\002 \001(\0132\026.matcha.view.BuildNode:\0028\001\032G\n\017" +
+      "MiddlewareEntry\022\013\n\003key\030\001 \001(\t\022#\n\005value\030\002 " +
+      "\001(\0132\024.google.protobuf.Any:\0028\001B<\n\035io.goma" +
+      "tcha.matcha.proto.viewB\006PbViewZ\004view\242\002\014M" +
+      "atchaViewPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

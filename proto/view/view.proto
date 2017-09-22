@@ -13,7 +13,7 @@ message BuildNode {
   int64 buildId = 2;
   string bridgeName = 3;
   google.protobuf.Any bridgeValue = 4;
-  map<string, google.protobuf.Any> values = 5;
+  map<string, bytes> values = 5;
   repeated int64 children = 6;
   map<int64, int64> altIds = 7;
 }

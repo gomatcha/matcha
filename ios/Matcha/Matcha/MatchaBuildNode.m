@@ -3,7 +3,7 @@
 
 @interface MatchaBuildNode ()
 @property (nonatomic, strong) GPBInt64Array *childIds;
-@property (nonatomic, strong) NSMutableDictionary<NSString*, GPBAny*> *nativeValues;
+@property (nonatomic, strong) NSMutableDictionary<NSString*, NSData *> *nativeValues;
 @property (nonatomic, strong) NSString *nativeViewName;
 @property (nonatomic, strong) GPBAny *nativeViewState;
 @property (nonatomic, strong) NSNumber *identifier;
@@ -22,9 +22,9 @@
         self.nativeValues = node.values;
         self.childIds = node.childrenArray;
         
-        GPBAny *any = self.nativeValues[@"gomatcha.io/matcha/touch"];
+        NSData *data = self.nativeValues[@"gomatcha.io/matcha/touch"];
         NSError *error = nil;
-        MatchaPointerPBRecognizerList *recognizerList = (id)[any unpackMessageClass:[MatchaPointerPBRecognizerList class] error:&error];
+        MatchaPointerPBRecognizerList *recognizerList = [MatchaPointerPBRecognizerList parseFromData:data error:&error];
         if (error == nil) {
             NSMutableDictionary *touchRecognizers = [NSMutableDictionary dictionary];
             for (MatchaPointerPBRecognizer *i in recognizerList.recognizersArray) {
