@@ -12,7 +12,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import io.gomatcha.matcha.proto.view.PbView;
 import io.gomatcha.matcha.proto.view.android.PbPagerView;
 
 class MatchaPagerView extends MatchaChildView {
@@ -53,10 +52,10 @@ class MatchaPagerView extends MatchaChildView {
     }
 
     @Override
-    public void setNode(PbView.BuildNode buildNode) {
-        super.setNode(buildNode);
+    public void setNativeState(byte[] nativeState) {
+        super.setNativeState(nativeState);
         try {
-            PbPagerView.PagerView proto = buildNode.getBridgeValue().unpack(PbPagerView.PagerView.class);
+            PbPagerView.PagerView proto  = PbPagerView.PagerView.parseFrom(nativeState);
             pagerAdapter.protoChildViews = proto.getChildViewsList();
             pagerAdapter.notifyDataSetChanged();
             tabStrip.setViewPager(viewPager);

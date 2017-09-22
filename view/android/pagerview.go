@@ -2,6 +2,7 @@ package android
 
 import (
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout/constraint"
 	pbandroid "gomatcha.io/matcha/proto/view/android"
 	"gomatcha.io/matcha/view"
@@ -142,7 +143,7 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 		Children:       l.Views(),
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/android PagerView",
-		NativeViewState: &pbandroid.PagerView{
+		NativeViewState: internal.MarshalProtobuf(&pbandroid.PagerView{
 			ChildViews:    childrenPb,
 			SelectedIndex: int64(v.Pages.SelectedIndex()),
 			// BarColor:            pb.ColorEncode(v.BarColor),
@@ -150,7 +151,7 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 			// UnselectedColor:     pb.ColorEncode(v.UnselectedColor),
 			// SelectedTextStyle:   selectedTextStyle,
 			// UnselectedTextStyle: unselectedTextStyle,
-		},
+		}),
 		// NativeFuncs: map[string]interface{}{
 		// 	"OnSelect": func(data []byte) {
 		// 		pbevent := &pbandroid.Event{}

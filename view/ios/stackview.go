@@ -7,6 +7,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout/constraint"
 	pb "gomatcha.io/matcha/proto"
 	pbtext "gomatcha.io/matcha/proto/text"
@@ -205,12 +206,12 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 		Children:       l.Views(),
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/stacknav",
-		NativeViewState: &pbios.StackView{
+		NativeViewState: internal.MarshalProtobuf(&pbios.StackView{
 			Children:       childrenPb,
 			TitleTextStyle: titleTextStyle,
 			BackTextStyle:  backTextStyle,
 			BarColor:       pb.ColorEncode(v.BarColor),
-		},
+		}),
 		NativeFuncs: map[string]interface{}{
 			"OnChange": func(data []byte) {
 				pbevent := &pbios.StackEvent{}
@@ -271,7 +272,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 		Layouter:       l,
 		Children:       l.Views(),
 		NativeViewName: "gomatcha.io/matcha/view/stacknav Bar",
-		NativeViewState: &pbios.StackBar{
+		NativeViewState: internal.MarshalProtobuf(&pbios.StackBar{
 			Title: v.Bar.Title,
 			CustomBackButtonTitle: len(v.Bar.BackButtonTitle) > 0,
 			BackButtonTitle:       v.Bar.BackButtonTitle,
@@ -279,7 +280,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 			HasTitleView:          hasTitleView,
 			RightViewCount:        rightViewCount,
 			LeftViewCount:         leftViewCount,
-		},
+		}),
 	}
 }
 

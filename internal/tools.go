@@ -1,14 +1,16 @@
 package internal
 
 import (
+	"fmt"
 	"os"
 	"runtime/pprof"
 
 	"image"
 
+	gogoproto "github.com/gogo/protobuf/proto"
 	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/application"
-	pb "gomatcha.io/matcha/proto"
+	"gomatcha.io/matcha/proto"
 )
 
 func init() {
@@ -19,17 +21,25 @@ func printStack() {
 	pprof.Lookup("goroutine").WriteTo(os.Stdout, 1)
 }
 
-func ImageMarshalProtobuf(img image.Image) *pb.ImageOrResource {
+func ImageMarshalProtobuf(img image.Image) *proto.ImageOrResource {
 	if img == nil {
 		return nil
 	}
 	if res, ok := img.(*application.ImageResource); ok {
-		return &pb.ImageOrResource{
+		return &proto.ImageOrResource{
 			Path: res.Path(),
 		}
 	} else {
-		return &pb.ImageOrResource{
-			Image: pb.ImageEncode(img),
+		return &proto.ImageOrResource{
+			Image: proto.ImageEncode(img),
 		}
 	}
+}
+
+func MarshalProtobuf(pb gogoproto.Message) []byte {
+	data, err := gogoproto.Marshal(pb)
+	if err != nil {
+		fmt.Println("Error marshalling protobuf", pb, err)
+	}
+	return data
 }

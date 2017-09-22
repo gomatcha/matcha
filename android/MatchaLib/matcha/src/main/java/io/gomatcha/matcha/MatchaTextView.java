@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.matcha.proto.text.PbText;
-import io.gomatcha.matcha.proto.view.PbView;
 
 class MatchaTextView extends MatchaChildView {
     TextView view;
@@ -29,10 +28,10 @@ class MatchaTextView extends MatchaChildView {
     }
 
     @Override
-    public void setNode(PbView.BuildNode buildNode) {
-        super.setNode(buildNode);
+    public void setNativeState(byte[] nativeState) {
+        super.setNativeState(nativeState);
         try {
-            PbText.StyledText proto = buildNode.getBridgeValue().unpack(PbText.StyledText.class);
+            PbText.StyledText proto  = PbText.StyledText.parseFrom(nativeState);
             SpannableString str = Protobuf.newAttributedString(proto);
             view.setText(str);
         } catch (InvalidProtocolBufferException e) {

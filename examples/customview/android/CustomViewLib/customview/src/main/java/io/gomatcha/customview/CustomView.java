@@ -3,6 +3,7 @@ package io.gomatcha.customview;
 import android.content.Context;
 import android.support.v7.widget.SwitchCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.CompoundButton;
 
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -12,7 +13,6 @@ import io.gomatcha.matcha.MatchaChildView;
 import io.gomatcha.matcha.MatchaView;
 import io.gomatcha.matcha.MatchaViewNode;
 import io.gomatcha.matcha.proto.view.PbSwitchView;
-import io.gomatcha.matcha.proto.view.PbView;
 
 public class CustomView extends MatchaChildView {
     SwitchCompat view;
@@ -46,14 +46,17 @@ public class CustomView extends MatchaChildView {
     }
 
     @Override
-    public void setNode(PbView.BuildNode buildNode) {
-        super.setNode(buildNode);
+    public void setNativeState(byte[] nativeState) {
+        Log.v("x", "!!!!!!!!!!!!!!!!!" + nativeState);
+        super.setNativeState(nativeState);
         try {
-            PbSwitchView.SwitchView proto = buildNode.getBridgeValue().unpack(PbSwitchView.SwitchView.class);
+            PbSwitchView.SwitchView proto = PbSwitchView.SwitchView.parseFrom(nativeState);
             checked = proto.getValue();
             view.setChecked(proto.getValue());
             view.setEnabled(proto.getEnabled());
+            Log.v("x", "enabled" + proto.getEnabled());
         } catch (InvalidProtocolBufferException e) {
+            Log.v("x", "error" + e);
         }
     }
 }

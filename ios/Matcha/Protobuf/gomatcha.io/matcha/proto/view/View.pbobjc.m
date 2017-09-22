@@ -57,7 +57,7 @@ static GPBFileDescriptor *MatchaViewPBViewRoot_FileDescriptor(void) {
 @dynamic id_p;
 @dynamic buildId;
 @dynamic bridgeName;
-@dynamic hasBridgeValue, bridgeValue;
+@dynamic bridgeValue;
 @dynamic values, values_Count;
 @dynamic childrenArray, childrenArray_Count;
 @dynamic altIds, altIds_Count;
@@ -65,7 +65,7 @@ static GPBFileDescriptor *MatchaViewPBViewRoot_FileDescriptor(void) {
 typedef struct MatchaViewPBBuildNode__storage_ {
   uint32_t _has_storage_[1];
   NSString *bridgeName;
-  GPBAny *bridgeValue;
+  NSData *bridgeValue;
   NSMutableDictionary *values;
   GPBInt64Array *childrenArray;
   GPBInt64Int64Dictionary *altIds;
@@ -108,12 +108,12 @@ typedef struct MatchaViewPBBuildNode__storage_ {
       },
       {
         .name = "bridgeValue",
-        .dataTypeSpecific.className = GPBStringifySymbol(GPBAny),
+        .dataTypeSpecific.className = NULL,
         .number = MatchaViewPBBuildNode_FieldNumber_BridgeValue,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(MatchaViewPBBuildNode__storage_, bridgeValue),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
+        .dataType = GPBDataTypeBytes,
       },
       {
         .name = "values",

@@ -3,6 +3,7 @@ package io.gomatcha.matcha;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -82,7 +83,8 @@ public class MatchaViewNode extends Object {
             this.buildId = buildNode.getBuildId();
 
             // Update the views with native values
-            this.view.setNode(buildNode);
+            this.view.setNativeState(buildNode.getBridgeValue().toByteArray());
+            Log.v("x", "wtf" + this.view.toString());
 
             // Add/remove subviews
             if (this.view.isContainerView()) {

@@ -6,6 +6,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	protoview "gomatcha.io/matcha/examples/customview/proto"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/view"
 )
@@ -39,10 +40,10 @@ func (v *CustomView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/switch",
-		NativeViewState: &protoview.View{
+		NativeViewState: internal.MarshalProtobuf(&protoview.View{
 			Value:   v.Value,
 			Enabled: v.Enabled,
-		},
+		}),
 		NativeFuncs: map[string]interface{}{
 			"OnChange": func(data []byte) {
 				event := &protoview.Event{}

@@ -39,17 +39,9 @@ public final class PbView {
         getBridgeNameBytes();
 
     /**
-     * <code>.google.protobuf.Any bridgeValue = 4;</code>
+     * <code>bytes bridgeValue = 4;</code>
      */
-    boolean hasBridgeValue();
-    /**
-     * <code>.google.protobuf.Any bridgeValue = 4;</code>
-     */
-    com.google.protobuf.Any getBridgeValue();
-    /**
-     * <code>.google.protobuf.Any bridgeValue = 4;</code>
-     */
-    com.google.protobuf.AnyOrBuilder getBridgeValueOrBuilder();
+    com.google.protobuf.ByteString getBridgeValue();
 
     /**
      * <code>map&lt;string, bytes&gt; values = 5;</code>
@@ -147,6 +139,7 @@ public final class PbView {
       id_ = 0L;
       buildId_ = 0L;
       bridgeName_ = "";
+      bridgeValue_ = com.google.protobuf.ByteString.EMPTY;
       children_ = java.util.Collections.emptyList();
     }
 
@@ -192,16 +185,8 @@ public final class PbView {
               break;
             }
             case 34: {
-              com.google.protobuf.Any.Builder subBuilder = null;
-              if (bridgeValue_ != null) {
-                subBuilder = bridgeValue_.toBuilder();
-              }
-              bridgeValue_ = input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(bridgeValue_);
-                bridgeValue_ = subBuilder.buildPartial();
-              }
 
+              bridgeValue_ = input.readBytes();
               break;
             }
             case 42: {
@@ -344,24 +329,12 @@ public final class PbView {
     }
 
     public static final int BRIDGEVALUE_FIELD_NUMBER = 4;
-    private com.google.protobuf.Any bridgeValue_;
+    private com.google.protobuf.ByteString bridgeValue_;
     /**
-     * <code>.google.protobuf.Any bridgeValue = 4;</code>
+     * <code>bytes bridgeValue = 4;</code>
      */
-    public boolean hasBridgeValue() {
-      return bridgeValue_ != null;
-    }
-    /**
-     * <code>.google.protobuf.Any bridgeValue = 4;</code>
-     */
-    public com.google.protobuf.Any getBridgeValue() {
-      return bridgeValue_ == null ? com.google.protobuf.Any.getDefaultInstance() : bridgeValue_;
-    }
-    /**
-     * <code>.google.protobuf.Any bridgeValue = 4;</code>
-     */
-    public com.google.protobuf.AnyOrBuilder getBridgeValueOrBuilder() {
-      return getBridgeValue();
+    public com.google.protobuf.ByteString getBridgeValue() {
+      return bridgeValue_;
     }
 
     public static final int VALUES_FIELD_NUMBER = 5;
@@ -561,8 +534,8 @@ public final class PbView {
       if (!getBridgeNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, bridgeName_);
       }
-      if (bridgeValue_ != null) {
-        output.writeMessage(4, getBridgeValue());
+      if (!bridgeValue_.isEmpty()) {
+        output.writeBytes(4, bridgeValue_);
       }
       com.google.protobuf.GeneratedMessageV3
         .serializeStringMapTo(
@@ -601,9 +574,9 @@ public final class PbView {
       if (!getBridgeNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, bridgeName_);
       }
-      if (bridgeValue_ != null) {
+      if (!bridgeValue_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getBridgeValue());
+          .computeBytesSize(4, bridgeValue_);
       }
       for (java.util.Map.Entry<java.lang.String, com.google.protobuf.ByteString> entry
            : internalGetValues().getMap().entrySet()) {
@@ -661,11 +634,8 @@ public final class PbView {
           == other.getBuildId());
       result = result && getBridgeName()
           .equals(other.getBridgeName());
-      result = result && (hasBridgeValue() == other.hasBridgeValue());
-      if (hasBridgeValue()) {
-        result = result && getBridgeValue()
-            .equals(other.getBridgeValue());
-      }
+      result = result && getBridgeValue()
+          .equals(other.getBridgeValue());
       result = result && internalGetValues().equals(
           other.internalGetValues());
       result = result && getChildrenList()
@@ -690,10 +660,8 @@ public final class PbView {
           getBuildId());
       hash = (37 * hash) + BRIDGENAME_FIELD_NUMBER;
       hash = (53 * hash) + getBridgeName().hashCode();
-      if (hasBridgeValue()) {
-        hash = (37 * hash) + BRIDGEVALUE_FIELD_NUMBER;
-        hash = (53 * hash) + getBridgeValue().hashCode();
-      }
+      hash = (37 * hash) + BRIDGEVALUE_FIELD_NUMBER;
+      hash = (53 * hash) + getBridgeValue().hashCode();
       if (!internalGetValues().getMap().isEmpty()) {
         hash = (37 * hash) + VALUES_FIELD_NUMBER;
         hash = (53 * hash) + internalGetValues().hashCode();
@@ -867,12 +835,8 @@ public final class PbView {
 
         bridgeName_ = "";
 
-        if (bridgeValueBuilder_ == null) {
-          bridgeValue_ = null;
-        } else {
-          bridgeValue_ = null;
-          bridgeValueBuilder_ = null;
-        }
+        bridgeValue_ = com.google.protobuf.ByteString.EMPTY;
+
         internalGetMutableValues().clear();
         children_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -904,11 +868,7 @@ public final class PbView {
         result.id_ = id_;
         result.buildId_ = buildId_;
         result.bridgeName_ = bridgeName_;
-        if (bridgeValueBuilder_ == null) {
-          result.bridgeValue_ = bridgeValue_;
-        } else {
-          result.bridgeValue_ = bridgeValueBuilder_.build();
-        }
+        result.bridgeValue_ = bridgeValue_;
         result.values_ = internalGetValues();
         result.values_.makeImmutable();
         if (((bitField0_ & 0x00000020) == 0x00000020)) {
@@ -970,8 +930,8 @@ public final class PbView {
           bridgeName_ = other.bridgeName_;
           onChanged();
         }
-        if (other.hasBridgeValue()) {
-          mergeBridgeValue(other.getBridgeValue());
+        if (other.getBridgeValue() != com.google.protobuf.ByteString.EMPTY) {
+          setBridgeValue(other.getBridgeValue());
         }
         internalGetMutableValues().mergeFrom(
             other.internalGetValues());
@@ -1135,121 +1095,33 @@ public final class PbView {
         return this;
       }
 
-      private com.google.protobuf.Any bridgeValue_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> bridgeValueBuilder_;
+      private com.google.protobuf.ByteString bridgeValue_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>.google.protobuf.Any bridgeValue = 4;</code>
+       * <code>bytes bridgeValue = 4;</code>
        */
-      public boolean hasBridgeValue() {
-        return bridgeValueBuilder_ != null || bridgeValue_ != null;
+      public com.google.protobuf.ByteString getBridgeValue() {
+        return bridgeValue_;
       }
       /**
-       * <code>.google.protobuf.Any bridgeValue = 4;</code>
+       * <code>bytes bridgeValue = 4;</code>
        */
-      public com.google.protobuf.Any getBridgeValue() {
-        if (bridgeValueBuilder_ == null) {
-          return bridgeValue_ == null ? com.google.protobuf.Any.getDefaultInstance() : bridgeValue_;
-        } else {
-          return bridgeValueBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.google.protobuf.Any bridgeValue = 4;</code>
-       */
-      public Builder setBridgeValue(com.google.protobuf.Any value) {
-        if (bridgeValueBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          bridgeValue_ = value;
-          onChanged();
-        } else {
-          bridgeValueBuilder_.setMessage(value);
-        }
-
+      public Builder setBridgeValue(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        bridgeValue_ = value;
+        onChanged();
         return this;
       }
       /**
-       * <code>.google.protobuf.Any bridgeValue = 4;</code>
-       */
-      public Builder setBridgeValue(
-          com.google.protobuf.Any.Builder builderForValue) {
-        if (bridgeValueBuilder_ == null) {
-          bridgeValue_ = builderForValue.build();
-          onChanged();
-        } else {
-          bridgeValueBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.Any bridgeValue = 4;</code>
-       */
-      public Builder mergeBridgeValue(com.google.protobuf.Any value) {
-        if (bridgeValueBuilder_ == null) {
-          if (bridgeValue_ != null) {
-            bridgeValue_ =
-              com.google.protobuf.Any.newBuilder(bridgeValue_).mergeFrom(value).buildPartial();
-          } else {
-            bridgeValue_ = value;
-          }
-          onChanged();
-        } else {
-          bridgeValueBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.Any bridgeValue = 4;</code>
+       * <code>bytes bridgeValue = 4;</code>
        */
       public Builder clearBridgeValue() {
-        if (bridgeValueBuilder_ == null) {
-          bridgeValue_ = null;
-          onChanged();
-        } else {
-          bridgeValue_ = null;
-          bridgeValueBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.google.protobuf.Any bridgeValue = 4;</code>
-       */
-      public com.google.protobuf.Any.Builder getBridgeValueBuilder() {
         
+        bridgeValue_ = getDefaultInstance().getBridgeValue();
         onChanged();
-        return getBridgeValueFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.google.protobuf.Any bridgeValue = 4;</code>
-       */
-      public com.google.protobuf.AnyOrBuilder getBridgeValueOrBuilder() {
-        if (bridgeValueBuilder_ != null) {
-          return bridgeValueBuilder_.getMessageOrBuilder();
-        } else {
-          return bridgeValue_ == null ?
-              com.google.protobuf.Any.getDefaultInstance() : bridgeValue_;
-        }
-      }
-      /**
-       * <code>.google.protobuf.Any bridgeValue = 4;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
-          getBridgeValueFieldBuilder() {
-        if (bridgeValueBuilder_ == null) {
-          bridgeValueBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
-                  getBridgeValue(),
-                  getParentForChildren(),
-                  isClean());
-          bridgeValue_ = null;
-        }
-        return bridgeValueBuilder_;
+        return this;
       }
 
       private com.google.protobuf.MapField<
@@ -4380,32 +4252,31 @@ public final class PbView {
       "\n(gomatcha.io/matcha/proto/view/view.pro" +
       "to\022\013matcha.view\032*gomatcha.io/matcha/prot" +
       "o/paint/paint.proto\032\031google/protobuf/any" +
-      ".proto\"\277\002\n\tBuildNode\022\n\n\002id\030\001 \001(\003\022\017\n\007buil" +
-      "dId\030\002 \001(\003\022\022\n\nbridgeName\030\003 \001(\t\022)\n\013bridgeV" +
-      "alue\030\004 \001(\0132\024.google.protobuf.Any\0222\n\006valu" +
-      "es\030\005 \003(\0132\".matcha.view.BuildNode.ValuesE" +
-      "ntry\022\020\n\010children\030\006 \003(\003\0222\n\006altIds\030\007 \003(\0132\"" +
-      ".matcha.view.BuildNode.AltIdsEntry\032-\n\013Va" +
-      "luesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028",
-      "\001\032-\n\013AltIdsEntry\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030\002" +
-      " \001(\003:\0028\001\"\305\001\n\017LayoutPaintNode\022\n\n\002id\030\001 \001(\003" +
-      "\022\020\n\010layoutId\030\002 \001(\003\022\017\n\007paintId\030\003 \001(\003\022\014\n\004m" +
-      "inx\030\004 \001(\001\022\014\n\004miny\030\005 \001(\001\022\014\n\004maxx\030\006 \001(\001\022\014\n" +
-      "\004maxy\030\007 \001(\001\022\016\n\006zIndex\030\010 \001(\003\022\022\n\nchildOrde" +
-      "r\030\t \003(\003\022\'\n\npaintStyle\030\n \001(\0132\023.matcha.pai" +
-      "nt.Style\"\242\003\n\004Root\022A\n\020layoutPaintNodes\030\002 " +
-      "\003(\0132\'.matcha.view.Root.LayoutPaintNodesE" +
-      "ntry\0225\n\nbuildNodes\030\003 \003(\0132!.matcha.view.R" +
-      "oot.BuildNodesEntry\0225\n\nmiddleware\030\004 \003(\0132",
-      "!.matcha.view.Root.MiddlewareEntry\032U\n\025La" +
-      "youtPaintNodesEntry\022\013\n\003key\030\001 \001(\003\022+\n\005valu" +
-      "e\030\002 \001(\0132\034.matcha.view.LayoutPaintNode:\0028" +
-      "\001\032I\n\017BuildNodesEntry\022\013\n\003key\030\001 \001(\003\022%\n\005val" +
-      "ue\030\002 \001(\0132\026.matcha.view.BuildNode:\0028\001\032G\n\017" +
-      "MiddlewareEntry\022\013\n\003key\030\001 \001(\t\022#\n\005value\030\002 " +
-      "\001(\0132\024.google.protobuf.Any:\0028\001B<\n\035io.goma" +
-      "tcha.matcha.proto.viewB\006PbViewZ\004view\242\002\014M" +
-      "atchaViewPBb\006proto3"
+      ".proto\"\251\002\n\tBuildNode\022\n\n\002id\030\001 \001(\003\022\017\n\007buil" +
+      "dId\030\002 \001(\003\022\022\n\nbridgeName\030\003 \001(\t\022\023\n\013bridgeV" +
+      "alue\030\004 \001(\014\0222\n\006values\030\005 \003(\0132\".matcha.view" +
+      ".BuildNode.ValuesEntry\022\020\n\010children\030\006 \003(\003" +
+      "\0222\n\006altIds\030\007 \003(\0132\".matcha.view.BuildNode" +
+      ".AltIdsEntry\032-\n\013ValuesEntry\022\013\n\003key\030\001 \001(\t" +
+      "\022\r\n\005value\030\002 \001(\014:\0028\001\032-\n\013AltIdsEntry\022\013\n\003ke",
+      "y\030\001 \001(\003\022\r\n\005value\030\002 \001(\003:\0028\001\"\305\001\n\017LayoutPai" +
+      "ntNode\022\n\n\002id\030\001 \001(\003\022\020\n\010layoutId\030\002 \001(\003\022\017\n\007" +
+      "paintId\030\003 \001(\003\022\014\n\004minx\030\004 \001(\001\022\014\n\004miny\030\005 \001(" +
+      "\001\022\014\n\004maxx\030\006 \001(\001\022\014\n\004maxy\030\007 \001(\001\022\016\n\006zIndex\030" +
+      "\010 \001(\003\022\022\n\nchildOrder\030\t \003(\003\022\'\n\npaintStyle\030" +
+      "\n \001(\0132\023.matcha.paint.Style\"\242\003\n\004Root\022A\n\020l" +
+      "ayoutPaintNodes\030\002 \003(\0132\'.matcha.view.Root" +
+      ".LayoutPaintNodesEntry\0225\n\nbuildNodes\030\003 \003" +
+      "(\0132!.matcha.view.Root.BuildNodesEntry\0225\n" +
+      "\nmiddleware\030\004 \003(\0132!.matcha.view.Root.Mid",
+      "dlewareEntry\032U\n\025LayoutPaintNodesEntry\022\013\n" +
+      "\003key\030\001 \001(\003\022+\n\005value\030\002 \001(\0132\034.matcha.view." +
+      "LayoutPaintNode:\0028\001\032I\n\017BuildNodesEntry\022\013" +
+      "\n\003key\030\001 \001(\003\022%\n\005value\030\002 \001(\0132\026.matcha.view" +
+      ".BuildNode:\0028\001\032G\n\017MiddlewareEntry\022\013\n\003key" +
+      "\030\001 \001(\t\022#\n\005value\030\002 \001(\0132\024.google.protobuf." +
+      "Any:\0028\001B<\n\035io.gomatcha.matcha.proto.view" +
+      "B\006PbViewZ\004view\242\002\014MatchaViewPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

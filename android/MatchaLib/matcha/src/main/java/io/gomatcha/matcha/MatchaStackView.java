@@ -9,7 +9,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.gomatcha.matcha.proto.view.PbView;
 import io.gomatcha.matcha.proto.view.android.PbStackView;
 
 class MatchaStackView extends MatchaChildView {
@@ -33,10 +32,10 @@ class MatchaStackView extends MatchaChildView {
     }
 
     @Override
-    public void setNode(PbView.BuildNode buildNode) {
-        super.setNode(buildNode);
+    public void setNativeState(byte[] nativeState) {
+        super.setNativeState(nativeState);
         try {
-            PbStackView.StackView proto = buildNode.getBridgeValue().unpack(PbStackView.StackView.class);
+            PbStackView.StackView proto  = PbStackView.StackView.parseFrom(nativeState);
         } catch (InvalidProtocolBufferException e) {
         }
     }

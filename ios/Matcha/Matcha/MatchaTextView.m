@@ -16,8 +16,8 @@
     return self;
 }
 
-- (void)setNativeState:(GPBAny *)nativeState {
-    MatchaPBStyledText *text = (id)[nativeState unpackMessageClass:[MatchaPBStyledText class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaPBStyledText *text = [MatchaPBStyledText parseFromData:nativeState error:nil];
     NSAttributedString *attrString = [[NSAttributedString alloc] initWithProtobuf:text];
     self.attributedText = attrString;
     self.numberOfLines = 0;

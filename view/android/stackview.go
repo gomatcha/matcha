@@ -166,9 +166,9 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 		Children:       l.Views(),
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/android StackView",
-		NativeViewState: &android.StackView{
+		NativeViewState: internal.MarshalProtobuf(&android.StackView{
 			Children: childrenPb,
-		},
+		}),
 		NativeFuncs: map[string]interface{}{
 			"OnBack": func() {
 				v.Stack.Pop()
@@ -204,14 +204,14 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Painter:        &paint.Style{BackgroundColor: color},
 		NativeViewName: "gomatcha.io/matcha/view/android stackBarView",
-		NativeViewState: &android.StackBar{
+		NativeViewState: internal.MarshalProtobuf(&android.StackBar{
 			Title:            v.Bar.Title,
 			StyledTitle:      v.Bar.StyledTitle.MarshalProtobuf(),
 			Subtitle:         v.Bar.Subtitle,
 			StyledSubtitle:   v.Bar.StyledSubtitle.MarshalProtobuf(),
 			Items:            items,
 			BackButtonHidden: !v.NeedsBackButton,
-		},
+		}),
 		NativeFuncs: funcs,
 	}
 }

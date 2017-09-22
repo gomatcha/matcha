@@ -16,8 +16,8 @@
     return self;
 }
 
-- (void)setNativeState:(GPBAny *)nativeState {
-    MatchaViewPBImageView *view = (id)[nativeState unpackMessageClass:[MatchaViewPBImageView class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPBImageView *view = [MatchaViewPBImageView parseFromData:nativeState error:nil];
     
     UIImage *image = [[UIImage alloc] initWithImageOrResourceProtobuf:view.image];
     switch (view.resizeMode) {

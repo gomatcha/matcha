@@ -9,7 +9,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.proto.view.PbSwitchView;
-import io.gomatcha.matcha.proto.view.PbView;
 
 class MatchaSwitchView extends MatchaChildView {
     SwitchCompat view;
@@ -43,10 +42,10 @@ class MatchaSwitchView extends MatchaChildView {
     }
 
     @Override
-    public void setNode(PbView.BuildNode buildNode) {
-        super.setNode(buildNode);
+    public void setNativeState(byte[] nativeState) {
+        super.setNativeState(nativeState);
         try {
-            PbSwitchView.SwitchView proto = buildNode.getBridgeValue().unpack(PbSwitchView.SwitchView.class);
+            PbSwitchView.SwitchView proto  = PbSwitchView.SwitchView.parseFrom(nativeState);
             checked = proto.getValue();
             view.setChecked(proto.getValue());
             view.setEnabled(proto.getEnabled());

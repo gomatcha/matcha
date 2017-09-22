@@ -20,8 +20,8 @@
     return self;
 }
 
-- (void)setNativeState:(GPBAny *)nativeState {
-    MatchaViewPbButton *pbbutton = (id)[nativeState unpackMessageClass:[MatchaViewPbButton class] error:NULL];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPbButton *pbbutton = [MatchaViewPbButton parseFromData:nativeState error:nil];
     if (pbbutton.hasColor) {
         self.button.tintColor = [[UIColor alloc] initWithProtobuf:pbbutton.color];
     } else {

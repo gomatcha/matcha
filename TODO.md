@@ -3,6 +3,7 @@
 * Better images, readme docs.
 * Consulting.
 * Cleanup native code.
+* Why aren't taps working iOS?
 
 High:
 * Non-image resources.

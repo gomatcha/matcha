@@ -13,7 +13,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.List;
 
-import io.gomatcha.matcha.proto.view.PbView;
 import io.gomatcha.matcha.proto.view.android.PbStackView;
 
 class MatchaToolbarView extends MatchaChildView {
@@ -48,10 +47,10 @@ class MatchaToolbarView extends MatchaChildView {
     }
 
     @Override
-    public void setNode(PbView.BuildNode buildNode) {
-        super.setNode(buildNode);
+    public void setNativeState(byte[] nativeState) {
+        super.setNativeState(nativeState);
         try {
-            PbStackView.StackBar proto = buildNode.getBridgeValue().unpack(PbStackView.StackBar.class);
+            PbStackView.StackBar proto  = PbStackView.StackBar.parseFrom(nativeState);
 
             if (proto.hasStyledTitle()) {
                 toolbar.setTitle(Protobuf.newAttributedString(proto.getStyledTitle()));

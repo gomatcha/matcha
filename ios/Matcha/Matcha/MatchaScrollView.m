@@ -19,8 +19,8 @@
     return self;
 }
 
-- (void)setNativeState:(GPBAny *)nativeState {
-    MatchaViewPBScrollView *pbscrollview = (id)[nativeState unpackMessageClass:[MatchaViewPBScrollView class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPBScrollView *pbscrollview = [MatchaViewPBScrollView parseFromData:nativeState error:nil];
     self.scrollEnabled = pbscrollview.scrollEnabled;
     self.showsVerticalScrollIndicator = pbscrollview.showsVerticalScrollIndicator;
     self.showsHorizontalScrollIndicator = pbscrollview.showsHorizontalScrollIndicator;

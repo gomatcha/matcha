@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gogo/protobuf/proto"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	pbios "gomatcha.io/matcha/proto/view/ios"
@@ -45,12 +46,12 @@ func (v *SegmentView) Build(ctx view.Context) view.Model {
 		Painter:        painter,
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/segmentview",
-		NativeViewState: &pbios.SegmentView{
+		NativeViewState: internal.MarshalProtobuf(&pbios.SegmentView{
 			Value:     int64(v.Value),
 			Titles:    v.Titles,
 			Enabled:   v.Enabled,
 			Momentary: v.Momentary,
-		},
+		}),
 		NativeFuncs: map[string]interface{}{
 			"OnChange": func(data []byte) {
 				event := &pbios.SegmentViewEvent{}

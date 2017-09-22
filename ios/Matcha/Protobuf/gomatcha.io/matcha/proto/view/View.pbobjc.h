@@ -69,9 +69,7 @@ typedef GPB_ENUM(MatchaViewPBBuildNode_FieldNumber) {
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *bridgeName;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBAny *bridgeValue;
-/** Test to see if @c bridgeValue has been set. */
-@property(nonatomic, readwrite) BOOL hasBridgeValue;
+@property(nonatomic, readwrite, copy, null_resettable) NSData *bridgeValue;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSData*> *values;
 /** The number of items in @c values without causing the array to be created. */

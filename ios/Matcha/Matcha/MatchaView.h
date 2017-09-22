@@ -6,12 +6,12 @@
 
 @protocol MatchaChildView <NSObject>
 - (id)initWithViewNode:(MatchaViewNode *)viewNode; // viewNode should be weakly retained
-- (void)setNativeState:(GPBAny *)nativeState;
+- (void)setNativeState:(NSData *)nativeState;
 @end
 
 @protocol MatchaChildViewController <NSObject>
 - (id)initWithViewNode:(MatchaViewNode *)viewNode; // viewNode should be weakly retained
-- (void)setNativeState:(GPBAny *)nativeState;
+- (void)setNativeState:(NSData *)nativeState;
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs;
 - (void)setMatchaChildLayout:(NSArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
 @end

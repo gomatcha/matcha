@@ -7,7 +7,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import io.gomatcha.matcha.proto.view.PbImageView;
-import io.gomatcha.matcha.proto.view.PbView;
 
 class MatchaImageView extends MatchaChildView {
     RoundedImageView view;
@@ -27,12 +26,12 @@ class MatchaImageView extends MatchaChildView {
         view = new RoundedImageView(context);
         addView(view);
     }
-    
+
     @Override
-    public void setNode(PbView.BuildNode buildNode) {
-        super.setNode(buildNode);
+    public void setNativeState(byte[] nativeState) {
+        super.setNativeState(nativeState);
         try {
-            PbImageView.ImageView proto = buildNode.getBridgeValue().unpack(PbImageView.ImageView.class);
+            PbImageView.ImageView proto  = PbImageView.ImageView.parseFrom(nativeState);
             view.setImageDrawable(Protobuf.newDrawable(proto.getImage(), getContext()));
 
             switch (proto.getResizeMode()) {

@@ -8,6 +8,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/keyboard"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
@@ -107,7 +108,7 @@ func (v *TextInput) Build(ctx Context) Model {
 		Layouter:       &textInputLayouter{style: style, styledText: st, maxLines: v.MaxLines},
 		Painter:        painter,
 		NativeViewName: "gomatcha.io/matcha/view/textinput",
-		NativeViewState: &pbview.TextInput{
+		NativeViewState: internal.MarshalProtobuf(&pbview.TextInput{
 			Font:            style.Font().MarshalProtobuf(),
 			StyledText:      st.MarshalProtobuf(),
 			PlaceholderText: placeholderStyledText.MarshalProtobuf(),
@@ -115,7 +116,7 @@ func (v *TextInput) Build(ctx Context) Model {
 			Focused:         responder.Visible(),
 			MaxLines:        int64(v.MaxLines),
 			SecureTextEntry: v.Password,
-		},
+		}),
 		NativeFuncs: map[string]interface{}{
 			"OnTextChange": func(data []byte) {
 				pbevent := &pbview.TextInputEvent{}

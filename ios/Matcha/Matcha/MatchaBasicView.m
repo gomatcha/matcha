@@ -15,7 +15,7 @@
     return self;
 }
 
-- (void)setNativeState:(GPBAny *)nativeState {
+- (void)setNativeState:(NSData *)nativeState {
     // no-op
 }
 

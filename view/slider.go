@@ -5,6 +5,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	pbview "gomatcha.io/matcha/proto/view"
@@ -81,12 +82,12 @@ func (v *Slider) Build(ctx Context) Model {
 		Painter:        painter,
 		Layouter:       &sliderLayouter{},
 		NativeViewName: "gomatcha.io/matcha/view/slider",
-		NativeViewState: &pbview.Slider{
+		NativeViewState: internal.MarshalProtobuf(&pbview.Slider{
 			Value:    val,
 			MaxValue: v.MaxValue,
 			MinValue: v.MinValue,
 			Enabled:  v.Enabled,
-		},
+		}),
 		NativeFuncs: map[string]interface{}{
 			"OnValueChange": func(data []byte) {
 				event := &pbview.SliderEvent{}

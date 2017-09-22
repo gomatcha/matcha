@@ -17,8 +17,8 @@
     return self;
 }
 
-- (void)setNativeState:(GPBAny *)nativeState {
-    CustomViewProtoView *view = (id)[nativeState unpackMessageClass:[CustomViewProtoView class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    CustomViewProtoView *view = [CustomViewProtoView parseFromData:nativeState error:nil];
     [self setOn:view.value animated:true];
     self.enabled = view.enabled;
 }

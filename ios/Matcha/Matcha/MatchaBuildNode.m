@@ -5,7 +5,7 @@
 @property (nonatomic, strong) GPBInt64Array *childIds;
 @property (nonatomic, strong) NSMutableDictionary<NSString*, NSData *> *nativeValues;
 @property (nonatomic, strong) NSString *nativeViewName;
-@property (nonatomic, strong) GPBAny *nativeViewState;
+@property (nonatomic, strong) NSData *nativeViewState;
 @property (nonatomic, strong) NSNumber *identifier;
 @property (nonatomic, strong) NSNumber *buildId;
 @property (nonatomic, strong) NSDictionary<NSNumber *, GPBAny *> *touchRecognizers;

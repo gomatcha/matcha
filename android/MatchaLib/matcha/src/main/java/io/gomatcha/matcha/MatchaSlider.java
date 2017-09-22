@@ -7,7 +7,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.proto.view.PbSlider;
-import io.gomatcha.matcha.proto.view.PbView;
 
 class MatchaSlider extends MatchaChildView {
     SeekBar view;
@@ -55,10 +54,10 @@ class MatchaSlider extends MatchaChildView {
     }
 
     @Override
-    public void setNode(PbView.BuildNode buildNode) {
-        super.setNode(buildNode);
+    public void setNativeState(byte[] nativeState) {
+        super.setNativeState(nativeState);
         try {
-            PbSlider.Slider proto = buildNode.getBridgeValue().unpack(PbSlider.Slider.class);
+            PbSlider.Slider proto = PbSlider.Slider.parseFrom(nativeState);
             view.setEnabled(proto.getEnabled());
             view.setProgress((int)((proto.getValue()- proto.getMinValue())*10000.0/(proto.getMaxValue() - proto.getMinValue())));
             this.value = view.getProgress();

@@ -8,6 +8,7 @@ import (
 
 	"gomatcha.io/matcha/animate"
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	pbview "gomatcha.io/matcha/proto/view"
@@ -59,13 +60,13 @@ func (v *ScrollView) Build(ctx Context) Model {
 			offset:         v.offset,
 		},
 		NativeViewName: "gomatcha.io/matcha/view/scrollview",
-		NativeViewState: &pbview.ScrollView{
+		NativeViewState: internal.MarshalProtobuf(&pbview.ScrollView{
 			ScrollEnabled:                  v.ScrollEnabled,
 			Horizontal:                     v.ScrollAxes|layout.AxisX == layout.AxisX,
 			Vertical:                       v.ScrollAxes|layout.AxisY == layout.AxisY,
 			ShowsHorizontalScrollIndicator: v.IndicatorAxes&layout.AxisY == layout.AxisY,
 			ShowsVerticalScrollIndicator:   v.IndicatorAxes&layout.AxisX == layout.AxisX,
-		},
+		}),
 		NativeFuncs: map[string]interface{}{
 			"OnScroll": func(data []byte) {
 				event := &pbview.ScrollEvent{}

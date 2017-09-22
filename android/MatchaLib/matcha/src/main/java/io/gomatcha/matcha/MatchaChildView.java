@@ -24,8 +24,8 @@ public class MatchaChildView extends MatchaLayout {
         this.setOnTouchListener(this.matchaGestureRecognizer);
     }
 
-    public void setNode(PbView.BuildNode buildNode) {
-        this.buildNode = buildNode;
+    public void setNativeState(byte[] nativeState) {
+        //no-op
     }
 
     public boolean isContainerView() {

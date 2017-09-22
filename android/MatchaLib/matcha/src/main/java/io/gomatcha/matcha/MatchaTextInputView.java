@@ -22,7 +22,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.proto.text.PbText;
 import io.gomatcha.matcha.proto.view.PbTextInput;
-import io.gomatcha.matcha.proto.view.PbView;
 
 class MatchaTextInputView extends MatchaChildView {
     EditText view;
@@ -88,11 +87,11 @@ class MatchaTextInputView extends MatchaChildView {
     }
 
     @Override
-    public void setNode(PbView.BuildNode buildNode) {
-        super.setNode(buildNode);
+    public void setNativeState(byte[] nativeState) {
+        super.setNativeState(nativeState);
         try {
+            PbTextInput.TextInput proto = PbTextInput.TextInput.parseFrom(nativeState);
             editing = true;
-            PbTextInput.TextInput proto = buildNode.getBridgeValue().unpack(PbTextInput.TextInput.class);
             SpannableString str = Protobuf.newAttributedString(proto.getStyledText());
             if (!str.toString().equals(view.getText().toString())) {
                 view.setText(str, TextView.BufferType.SPANNABLE);

@@ -88,12 +88,12 @@ func (v *ImageView) Build(ctx Context) Model {
 		Painter:        painter,
 		Layouter:       &imageViewLayouter{bounds: bounds, resizeMode: resizeMode, scale: scale},
 		NativeViewName: "gomatcha.io/matcha/view/imageview",
-		NativeViewState: &pbview.ImageView{
+		NativeViewState: internal.MarshalProtobuf(&pbview.ImageView{
 			Image:      v.pbImage,
 			Scale:      scale,
 			ResizeMode: v.ResizeMode.MarshalProtobuf(),
 			Tint:       pb.ColorEncode(v.ImageTint),
-		},
+		}),
 	}
 }
 

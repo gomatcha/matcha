@@ -5,6 +5,7 @@ import (
 	"image/color"
 
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	pb "gomatcha.io/matcha/proto"
@@ -69,9 +70,9 @@ func (v *ProgressView) Build(ctx view.Context) view.Model {
 		Painter:        painter,
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/progressview",
-		NativeViewState: &pbios.ProgressView{
+		NativeViewState: internal.MarshalProtobuf(&pbios.ProgressView{
 			Progress:      val,
 			ProgressColor: pb.ColorEncode(v.ProgressColor),
-		},
+		}),
 	}
 }

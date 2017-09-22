@@ -9,7 +9,6 @@ import android.widget.Button;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.matcha.proto.view.PbButton;
-import io.gomatcha.matcha.proto.view.PbView;
 
 class MatchaButton extends MatchaChildView {
     Button view;
@@ -37,10 +36,10 @@ class MatchaButton extends MatchaChildView {
     }
 
     @Override
-    public void setNode(PbView.BuildNode buildNode) {
-        super.setNode(buildNode);
+    public void setNativeState(byte[] nativeState) {
+        super.setNativeState(nativeState);
         try {
-            PbButton.Button proto = buildNode.getBridgeValue().unpack(PbButton.Button.class);
+            PbButton.Button proto = PbButton.Button.parseFrom(nativeState);
             view.setEnabled(proto.getEnabled());
             view.setText(proto.getStr());
 
@@ -51,7 +50,6 @@ class MatchaButton extends MatchaChildView {
             } else {
                 // TODO(KD): reset background and text color
             }
-
         } catch (InvalidProtocolBufferException e) {
         }
     }

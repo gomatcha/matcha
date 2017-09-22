@@ -16,8 +16,8 @@
     return self;
 }
 
-- (void)setNativeState:(GPBAny *)nativeState {
-    MatchaiOSPBProgressView *view = (id)[nativeState unpackMessageClass:[MatchaiOSPBProgressView class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaiOSPBProgressView *view = [MatchaiOSPBProgressView parseFromData:nativeState error:nil];
     self.progress = view.progress;
     self.tintColor = [[UIColor alloc] initWithProtobuf:view.progressColor];
 }

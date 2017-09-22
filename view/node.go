@@ -396,11 +396,6 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 		children = append(children, int64(v.id))
 	}
 
-	var nativeViewState *any.Any
-	if a, err := ptypes.MarshalAny(n.model.NativeViewState); err == nil {
-		nativeViewState = a
-	}
-
 	nativeValues := map[string][]byte{}
 	for k, v := range n.model.NativeOptions {
 		nativeValues[k] = v
@@ -411,7 +406,7 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 		BuildId:     n.buildId,
 		Children:    children,
 		BridgeName:  n.model.NativeViewName,
-		BridgeValue: nativeViewState,
+		BridgeValue: n.model.NativeViewState,
 		Values:      nativeValues,
 	}
 }

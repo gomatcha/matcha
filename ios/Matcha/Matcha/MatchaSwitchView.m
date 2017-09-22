@@ -18,8 +18,8 @@
     return self;
 }
 
-- (void)setNativeState:(GPBAny *)nativeState {
-    MatchaViewPbSwitchView *view = (id)[nativeState unpackMessageClass:[MatchaViewPbSwitchView class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPbSwitchView *view = [MatchaViewPbSwitchView parseFromData:nativeState error:nil];
     [self setOn:view.value animated:true];
     self.enabled = view.enabled;
 }

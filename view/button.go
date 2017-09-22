@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pointer"
@@ -42,11 +43,11 @@ func (v *Button) Build(ctx Context) Model {
 		Painter:        painter,
 		Layouter:       &buttonLayouter{str: v.String},
 		NativeViewName: "gomatcha.io/matcha/view/button",
-		NativeViewState: &pbview.Button{
+		NativeViewState: internal.MarshalProtobuf(&pbview.Button{
 			Str:     v.String,
 			Enabled: v.Enabled,
 			Color:   pb.ColorEncode(v.Color),
-		},
+		}),
 		NativeFuncs: map[string]interface{}{
 			"OnPress": func() {
 				if v.OnPress != nil {

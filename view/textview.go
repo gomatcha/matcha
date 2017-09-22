@@ -2,6 +2,7 @@ package view
 
 import (
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/text"
@@ -44,7 +45,7 @@ func (v *TextView) Build(ctx Context) Model {
 		Painter:         painter,
 		Layouter:        &textViewLayouter{styledText: st, maxLines: v.MaxLines},
 		NativeViewName:  "gomatcha.io/matcha/view/textview",
-		NativeViewState: st.MarshalProtobuf(),
+		NativeViewState: internal.MarshalProtobuf(st.MarshalProtobuf()),
 	}
 }
 

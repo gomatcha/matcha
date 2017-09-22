@@ -24,8 +24,8 @@
 }
 
 
-- (void)setNativeState:(GPBAny *)nativeState {
-    MatchaViewPBTextInput *view = (id)[nativeState unpackMessageClass:[MatchaViewPBTextInput class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPBTextInput *view = [MatchaViewPBTextInput parseFromData:nativeState error:nil];
     
     NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:view.styledText.stylesArray[0]];
     self.font = attributes[NSFontAttributeName];

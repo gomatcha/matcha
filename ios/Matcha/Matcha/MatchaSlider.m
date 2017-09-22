@@ -17,8 +17,8 @@
     return self;
 }
 
-- (void)setNativeState:(GPBAny *)nativeState {
-    MatchaViewPbSlider *view = (id)[nativeState unpackMessageClass:[MatchaViewPbSlider class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPbSlider *view = [MatchaViewPbSlider parseFromData:nativeState error:nil];
     
     self.enabled = view.enabled;
     self.value = view.value;

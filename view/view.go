@@ -6,7 +6,6 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
@@ -131,7 +130,7 @@ type Model struct {
 	Options  []Option
 
 	NativeViewName  string
-	NativeViewState proto.Message
+	NativeViewState []byte
 	NativeOptions   map[string][]byte
 	NativeFuncs     map[string]interface{}
 }

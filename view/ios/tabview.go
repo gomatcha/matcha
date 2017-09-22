@@ -155,7 +155,7 @@ func (v *TabView) Build(ctx view.Context) view.Model {
 		Children:       l.Views(),
 		Layouter:       l,
 		NativeViewName: "gomatcha.io/matcha/view/tabscreen",
-		NativeViewState: &pbios.TabView{
+		NativeViewState: internal.MarshalProtobuf(&pbios.TabView{
 			Screens:             childrenPb,
 			SelectedIndex:       int64(v.Tabs.SelectedIndex()),
 			BarColor:            pb.ColorEncode(v.BarColor),
@@ -163,7 +163,7 @@ func (v *TabView) Build(ctx view.Context) view.Model {
 			UnselectedColor:     pb.ColorEncode(v.UnselectedColor),
 			SelectedTextStyle:   selectedTextStyle,
 			UnselectedTextStyle: unselectedTextStyle,
-		},
+		}),
 		NativeFuncs: map[string]interface{}{
 			"OnSelect": func(data []byte) {
 				pbevent := &pbios.TabEvent{}

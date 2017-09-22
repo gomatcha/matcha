@@ -16,8 +16,8 @@
     return self;
 }
 
-- (void)setNativeState:(GPBAny *)nativeState {
-    MatchaiOSPBSegmentView *view = (id)[nativeState unpackMessageClass:[MatchaiOSPBSegmentView class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaiOSPBSegmentView *view = [MatchaiOSPBSegmentView parseFromData:nativeState error:nil];
     
     [self removeAllSegments];
     for (NSInteger i = 0; i < view.titlesArray.count; i++) {
