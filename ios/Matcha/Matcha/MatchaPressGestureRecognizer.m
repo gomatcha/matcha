@@ -1,7 +1,7 @@
 #import "MatchaPressGestureRecognizer.h"
 #import "MatchaProtobuf.h"
 #import "MatchaBuildNode.h"
-#import "MatchaViewController.h"
+#import "MatchaViewController_Private.h"
 
 @interface MatchaPressGestureRecognizer ()
 @property (nonatomic, assign) int64_t funcId;
@@ -65,7 +65,7 @@
     NSData *data = [event data];
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
     
-    [self.viewController call:[NSString stringWithFormat:@"gomatcha.io/matcha/touch %@",@(self.funcId)] viewId:self.viewId args:@[value]];
+    [self.viewController call:[NSString stringWithFormat:@"gomatcha.io/matcha/touch %@", @(self.funcId)] viewId:self.viewId args2:@[value]];
 }
 
 @end

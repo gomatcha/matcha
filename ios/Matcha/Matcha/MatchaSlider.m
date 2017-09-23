@@ -30,9 +30,9 @@
     MatchaViewPbSliderEvent *event = [[MatchaViewPbSliderEvent alloc] init];
     event.value = self.value;
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-    [self.viewNode call:@"OnValueChange" args:value, nil];
+    [self.viewNode call:@"OnValueChange", value, nil];
     if (e.allTouches.anyObject.phase == UITouchPhaseEnded) {
-        [self.viewNode call:@"OnSubmit" args:value, nil];
+        [self.viewNode call:@"OnSubmit", value, nil];
     }
 }
 

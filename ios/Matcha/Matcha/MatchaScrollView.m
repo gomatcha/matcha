@@ -35,7 +35,7 @@
     
     MatchaViewPBScrollEvent *event = [[MatchaViewPBScrollEvent alloc] init];
     event.contentOffset = [[MatchaLayoutPBPoint alloc] initWithCGPoint:scrollView.contentOffset];
-    [self.viewNode call:@"OnScroll" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
+    [self.viewNode call:@"OnScroll", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 @end

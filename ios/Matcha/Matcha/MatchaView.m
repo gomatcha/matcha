@@ -2,7 +2,7 @@
 #import "MatchaProtobuf.h"
 #import "MatchaTapGestureRecognizer.h"
 #import "MatchaPressGestureRecognizer.h"
-#import "MatchaViewController.h"
+#import "MatchaViewController_Private.h"
 #import "MatchaSwitchView.h"
 #import "MatchaButtonGestureRecognizer.h"
 #import "MatchaScrollView.h"
@@ -101,21 +101,12 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
 
 @implementation MatchaViewNode
 
-- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId args:(MatchaGoValue *)a, ... NS_REQUIRES_NIL_TERMINATION {
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    if (a != nil) {
-        va_list args;
-        va_start(args, a);
-        [array addObject:a];
-        
-        id arg = nil;
-        while ((arg = va_arg(args, id))) {
-            [array addObject:arg];
-        }
-        va_end(args);
-    }
-    
-    return [self.rootVC call:funcId viewId:self.identifier.longLongValue args:array];
+- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId, ... NS_REQUIRES_NIL_TERMINATION {
+    va_list args;
+    va_start(args, funcId);
+    NSArray *rlt = [self.rootVC call:funcId viewId:self.identifier.longLongValue args:args];
+    va_end(args);
+    return rlt;
 }
 
 - (id)initWithParent:(MatchaViewNode *)node rootVC:(MatchaViewController *)rootVC identifier:(NSNumber *)identifier {

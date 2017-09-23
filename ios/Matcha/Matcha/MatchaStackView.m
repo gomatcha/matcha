@@ -116,7 +116,7 @@
     }
     MatchaiOSPBStackEvent *event = [[MatchaiOSPBStackEvent alloc] init];
     event.idArray = array;
-    [self.viewNode call:@"OnChange" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
+    [self.viewNode call:@"OnChange", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 - (void)setMatchaChildLayout:(GPBInt64ObjectDictionary *)layoutPaintNodes {

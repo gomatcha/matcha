@@ -73,12 +73,12 @@
     
     MatchaViewPBTextInputEvent *event = [[MatchaViewPBTextInputEvent alloc] init];
     event.styledText = self.attributedText.protobuf;
-    [self.viewNode call:@"OnTextChange" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
+    [self.viewNode call:@"OnTextChange", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
-        [self.viewNode call:@"OnSubmit" args:nil];
+        [self.viewNode call:@"OnSubmit", nil];
         return NO;
     }
     return YES;
@@ -96,7 +96,7 @@
     if ((self.hasFocus && !self.isFirstResponder) || (!self.hasFocus && self.isFirstResponder)) {
         MatchaViewPBTextInputFocusEvent *event = [[MatchaViewPBTextInputFocusEvent alloc] init];
         event.focused = self.isFirstResponder;
-        [self.viewNode call:@"OnFocus" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
+        [self.viewNode call:@"OnFocus", [[MatchaGoValue alloc] initWithData:event.data], nil];
     }
 }
 

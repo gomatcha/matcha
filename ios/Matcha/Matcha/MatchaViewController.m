@@ -43,11 +43,11 @@
         [MatchaObjcBridge_X configure];
         [[MatchaObjcBridge sharedBridge] setObject:[MatchaObjcBridge_X new] forKey:@""];
         
-        MatchaGoValue *value = [[[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/view NewRoot"] call:nil args:@[value2]][0];
+        MatchaGoValue *value = [[[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/view NewRoot"] call:nil, value2, nil][0];
         self.goValue = value;
-        self.identifier = (int)[value call:@"Id" args:nil][0].toLongLong;
+        self.identifier = (int)[value call:@"Id", nil][0].toLongLong;
         [[MatchaViewController viewControllers] addPointer:(__bridge void *)self];
-        self.viewNode = [[MatchaViewNode alloc] initWithParent:nil rootVC:self identifier:@([value call:@"ViewId" args:nil][0].toLongLong)];
+        self.viewNode = [[MatchaViewNode alloc] initWithParent:nil rootVC:self identifier:@([value call:@"ViewId", nil][0].toLongLong)];
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.extendedLayoutIncludesOpaqueBars=NO;
         self.automaticallyAdjustsScrollViewInsets=NO;
@@ -56,7 +56,7 @@
 }
 
 - (void)dealloc {
-    [self.goValue call:@"Stop" args:nil];
+    [self.goValue call:@"Stop", nil];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -65,15 +65,27 @@
         
         MatchaGoValue *width = [[MatchaGoValue alloc] initWithDouble:self.view.frame.size.width];
         MatchaGoValue *height = [[MatchaGoValue alloc] initWithDouble:self.view.frame.size.height];
-        [self.goValue call:@"SetSize" args:@[width, height]];
+        [self.goValue call:@"SetSize", width, height, nil];
     }
 }
 
-- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args:(NSArray<MatchaGoValue *> *)args {
+- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args2:(NSArray *)args {
     MatchaGoValue *goValue = [[MatchaGoValue alloc] initWithString:funcId];
     MatchaGoValue *goViewId = [[MatchaGoValue alloc] initWithLongLong:viewId];
     MatchaGoValue *goArgs = [[MatchaGoValue alloc] initWithArray:args];
-    return [self.goValue call:@"Call" args:@[goValue, goViewId, goArgs]];
+    return [self.goValue call:@"Call", goValue, goViewId, goArgs, nil];
+}
+
+
+- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args:(va_list)args {
+    MatchaGoValue *goValue = [[MatchaGoValue alloc] initWithString:funcId];
+    MatchaGoValue *goViewId = [[MatchaGoValue alloc] initWithLongLong:viewId];
+    NSMutableArray *array = [NSMutableArray array];
+    id arg = nil;
+    while ((arg = va_arg(args, id))) {
+        [array addObject:arg];
+    }
+    return [self.goValue call:@"Call", goValue, goViewId, [[MatchaGoValue alloc] initWithArray:array], nil];
 }
 
 - (void)update:(MatchaViewPBRoot *)root {

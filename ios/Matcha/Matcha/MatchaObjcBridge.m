@@ -23,7 +23,7 @@
         }
         
         MatchaGoValue *screenScaleFunc = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/internal/device setScreenScale"];
-        [screenScaleFunc call:nil args:@[[[MatchaGoValue alloc] initWithDouble:UIScreen.mainScreen.scale]]];
+        [screenScaleFunc call:nil, [[MatchaGoValue alloc] initWithDouble:UIScreen.mainScreen.scale], nil];
         
         [[MatchaObjcBridge sharedBridge] setObject:x forKey:@""];
     });
@@ -78,7 +78,7 @@
     if (updateFunc == nil) {
         updateFunc = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/animate screenUpdate"];
     }
-    [updateFunc call:nil args:nil];
+    [updateFunc call:nil, nil];
 }
 
 - (void)updateId:(NSInteger)identifier withProtobuf:(NSData *)protobuf {
@@ -120,7 +120,7 @@
         MatchaViewPBAlertButton *button = pbalert.buttonsArray[i];
         UIAlertAction *action = [UIAlertAction actionWithTitle:button.title style:UIAlertActionStyleDefault handler:^(UIAlertAction *a){
             MatchaGoValue *onPress = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/view/alert onPress"];
-            [onPress call:nil args:@[[[MatchaGoValue alloc] initWithLongLong:pbalert.id_p], [[MatchaGoValue alloc] initWithLongLong:i]]];
+            [onPress call:nil, [[MatchaGoValue alloc] initWithLongLong:pbalert.id_p], [[MatchaGoValue alloc] initWithLongLong:i], nil];
         }];
         [alert addAction:action];
     }

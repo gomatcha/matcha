@@ -41,7 +41,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), self.queue, ^{
         if (!flag) {
             NSLog(@"Deadlock detected!");
-            [self.printStackFunc call:nil args:nil];
+            [self.printStackFunc call:nil, nil];
         }
     });
 }

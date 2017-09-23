@@ -37,7 +37,7 @@
 }
 
 - (void)onPress {
-    [self.viewNode call:@"OnPress" args:nil];
+    [self.viewNode call:@"OnPress", nil];
 }
 
 @end

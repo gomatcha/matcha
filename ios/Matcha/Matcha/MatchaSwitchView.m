@@ -27,7 +27,7 @@
 - (void)onChange:(id)sender {
     MatchaViewPbSwitchEvent *event = [[MatchaViewPbSwitchEvent alloc] init];
     event.value = self.on;
-    [self.viewNode call:@"OnChange" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
+    [self.viewNode call:@"OnChange", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 @end

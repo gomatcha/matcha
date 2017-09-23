@@ -141,8 +141,23 @@
     return [[MatchaGoValue alloc] initWithGoRef:matchaGoElem(_ref)];
 }
 
-- (NSArray<MatchaGoValue *> *)call:(NSString *)method args:(NSArray<MatchaGoValue *> *)args {
-    MatchaGoValue *argsArray = [[MatchaGoValue alloc] initWithArray:args];
+- (NSArray<MatchaGoValue *> *)call:(NSString *)method, ... {
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    va_list args;
+    va_start(args, method);
+    NSArray *rlt = [self call:method args:args];
+    va_end(args);
+    
+    return rlt;
+}
+
+- (NSArray<MatchaGoValue *> *)call:(NSString *)method args:(va_list)args {
+    NSMutableArray *array = [NSMutableArray array];
+    id arg = nil;
+    while ((arg = va_arg(args, id))) {
+        [array addObject:arg];
+    }
+    MatchaGoValue *argsArray = [[MatchaGoValue alloc] initWithArray:array];
     GoRef rlt = matchaGoCall(_ref, MatchaNSStringToCGoBuffer(method), argsArray.ref);
     return [[MatchaGoValue alloc] initWithGoRef:rlt].toArray;
 }

@@ -1,6 +1,6 @@
 #import "MatchaButtonGestureRecognizer.h"
 #import <UIKit/UIGestureRecognizerSubclass.h>
-#import "MatchaViewController.h"
+#import "MatchaViewController_Private.h"
 #import "MatchaProtobuf.h"
 
 @interface MatchaButtonGestureRecognizer () <UIGestureRecognizerDelegate>
@@ -74,7 +74,7 @@
     NSData *data = [event data];
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
     
-    [self.viewController call:[NSString stringWithFormat:@"gomatcha.io/matcha/touch %@", @(self.funcId)] viewId:self.viewId args:@[value]];
+    [self.viewController call:[NSString stringWithFormat:@"gomatcha.io/matcha/touch %@", @(self.funcId)] viewId:self.viewId args2:@[value]];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {

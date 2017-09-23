@@ -55,7 +55,7 @@
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     MatchaiOSPBTabEvent *event = [[MatchaiOSPBTabEvent alloc] init];
     event.selectedIndex = tabBarController.selectedIndex;
-    [self.viewNode call:@"OnSelect" args:[[MatchaGoValue alloc] initWithData:event.data], nil];
+    [self.viewNode call:@"OnSelect", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 - (void)setMatchaChildLayout:(GPBInt64ObjectDictionary *)layoutPaintNodes {

@@ -10,7 +10,6 @@ typedef UIViewController<MatchaChildViewController> *(^MatchaViewControllerRegis
 
 @interface MatchaViewController : UIViewController
 - (id)initWithGoValue:(MatchaGoValue *)value;
-- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args:(NSArray<MatchaGoValue *> *)args;
 + (void)registerView:(NSString *)viewName block:(MatchaViewRegistrationBlock)block;
 + (void)registerViewController:(NSString *)viewName block:(MatchaViewControllerRegistrationBlock)block;
 @end

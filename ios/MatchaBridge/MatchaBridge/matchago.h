@@ -69,7 +69,8 @@ void matchaGoUntrack(GoRef);
 - (BOOL)isNil;
 - (BOOL)isEqual:(MatchaGoValue *)value;
 - (MatchaGoValue *)elem;
-- (NSArray<MatchaGoValue *> *)call:(NSString *)method args:(NSArray<MatchaGoValue *> *)args; // pass in nil for the method to call a closure.
+- (NSArray<MatchaGoValue *> *)call:(NSString *)method, ... NS_REQUIRES_NIL_TERMINATION; // pass in nil for the method to call a closure.
+- (NSArray<MatchaGoValue *> *)call:(NSString *)method args:(va_list)args;
 - (MatchaGoValue *)field:(NSString *)name;
 - (void)setField:(NSString *)name value:(MatchaGoValue *)value;
 - (MatchaGoValue *)objectForKeyedSubscript:(NSString *)key;
