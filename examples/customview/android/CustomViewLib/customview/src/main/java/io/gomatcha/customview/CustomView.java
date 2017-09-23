@@ -8,10 +8,10 @@ import android.widget.CompoundButton;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import io.gomatcha.bridge.GoValue;
+import io.gomatcha.customview.proto.CustomViewProto;
 import io.gomatcha.matcha.MatchaChildView;
 import io.gomatcha.matcha.MatchaView;
 import io.gomatcha.matcha.MatchaViewNode;
-import io.gomatcha.matcha.proto.view.PbSwitchView;
 
 public class CustomView extends MatchaChildView {
     MatchaViewNode viewNode;
@@ -38,7 +38,7 @@ public class CustomView extends MatchaChildView {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked != checked) {
                     checked = isChecked;
-                    PbSwitchView.SwitchEvent event = PbSwitchView.SwitchEvent.newBuilder().setValue(isChecked).build();
+                    CustomViewProto.Event event = CustomViewProto.Event.newBuilder().setValue(isChecked).build();
                     CustomView.this.viewNode.call("OnChange", new GoValue(event.toByteArray()));
                 }
             }
@@ -50,7 +50,7 @@ public class CustomView extends MatchaChildView {
     public void setNativeState(byte[] nativeState) {
         super.setNativeState(nativeState);
         try {
-            PbSwitchView.SwitchView proto = PbSwitchView.SwitchView.parseFrom(nativeState);
+            CustomViewProto.View proto = CustomViewProto.View.parseFrom(nativeState);
             checked = proto.getValue();
             view.setChecked(proto.getValue());
             view.setEnabled(proto.getEnabled());
