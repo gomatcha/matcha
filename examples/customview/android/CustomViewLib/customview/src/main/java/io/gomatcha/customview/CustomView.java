@@ -14,6 +14,7 @@ import io.gomatcha.matcha.MatchaViewNode;
 import io.gomatcha.matcha.proto.view.PbSwitchView;
 
 public class CustomView extends MatchaChildView {
+    MatchaViewNode viewNode;
     SwitchCompat view;
     boolean checked;
 
@@ -27,7 +28,8 @@ public class CustomView extends MatchaChildView {
     }
 
     public CustomView(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
+        viewNode = node;
 
         float ratio = (float)context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
         view = new SwitchCompat(context);

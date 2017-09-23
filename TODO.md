@@ -4,6 +4,8 @@
 * Consulting.
 * Cleanup native code.
 * Why aren't taps working iOS?
+* MatchaPager should send events back to android.
+* Android press should trigger once time has been reached?
 
 High:
 * Non-image resources.

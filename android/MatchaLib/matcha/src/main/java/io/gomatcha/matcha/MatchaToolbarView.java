@@ -18,6 +18,7 @@ import io.gomatcha.matcha.proto.view.android.PbStackView;
 class MatchaToolbarView extends MatchaChildView {
     Toolbar toolbar;
     MatchaStackView stackView;
+    MatchaViewNode viewNode;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/android stackBarView", new MatchaView.ViewFactory() {
@@ -29,7 +30,8 @@ class MatchaToolbarView extends MatchaChildView {
     }
 
     public MatchaToolbarView(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
+        viewNode = node;
 
         toolbar = new Toolbar(context);
         toolbar.setId(MatchaPagerView.generateViewId());

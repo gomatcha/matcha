@@ -19,7 +19,7 @@ import io.gomatcha.matcha.proto.view.PbView;
 
 public class MatchaViewNode extends Object {
     MatchaViewNode parent;
-    MatchaView rootView;
+    public MatchaView rootView;
     private long id;
     long buildId;
     long layoutId;
@@ -47,7 +47,10 @@ public class MatchaViewNode extends Object {
             this.view = MatchaView.createView(buildNode.getBridgeName(), rootView.getContext(), this);
             this.view.matchaGestureRecognizer.viewNode = this;
         }
-        MatchaLayout layout = this.view.getLayout();
+        MatchaLayout layout = this.view;
+        if (this.view instanceof MatchaScrollView) {
+            layout = ((MatchaScrollView)this.view).childView;
+        }
 
         // Build children
         Map<Long, MatchaViewNode> children = new HashMap<Long, MatchaViewNode>();

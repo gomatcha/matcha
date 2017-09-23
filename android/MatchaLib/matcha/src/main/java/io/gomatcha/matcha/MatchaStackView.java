@@ -12,7 +12,7 @@ import java.util.List;
 import io.gomatcha.matcha.proto.view.android.PbStackView;
 
 class MatchaStackView extends MatchaChildView {
-    Toolbar toolbar;
+    MatchaViewNode viewNode;
     MatchaStackView2 stackView2;
 
     static {
@@ -25,7 +25,8 @@ class MatchaStackView extends MatchaChildView {
     }
 
     public MatchaStackView(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
+        viewNode = node;
 
         stackView2 = new MatchaStackView2(context);
         addView(stackView2);

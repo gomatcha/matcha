@@ -13,6 +13,7 @@ import io.gomatcha.matcha.proto.view.PbSwitchView;
 class MatchaSwitchView extends MatchaChildView {
     SwitchCompat view;
     boolean checked;
+    MatchaViewNode viewNode;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/switch", new MatchaView.ViewFactory() {
@@ -24,7 +25,8 @@ class MatchaSwitchView extends MatchaChildView {
     }
 
     public MatchaSwitchView(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
+        viewNode = node;
 
         float ratio = (float)context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
         view = new SwitchCompat(context);

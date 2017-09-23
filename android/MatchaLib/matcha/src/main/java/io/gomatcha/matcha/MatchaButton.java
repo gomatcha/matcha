@@ -11,6 +11,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.gomatcha.matcha.proto.view.PbButton;
 
 class MatchaButton extends MatchaChildView {
+    MatchaViewNode viewNode;
     Button view;
 
     static {
@@ -23,8 +24,8 @@ class MatchaButton extends MatchaChildView {
     }
 
     public MatchaButton(Context context, MatchaViewNode node) {
-        super(context, node);
-
+        super(context);
+        viewNode = node;
         view = new Button(context);
         view.setOnClickListener(new OnClickListener() {
             @Override

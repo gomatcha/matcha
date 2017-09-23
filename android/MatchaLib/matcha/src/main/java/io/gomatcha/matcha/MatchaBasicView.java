@@ -13,6 +13,6 @@ class MatchaBasicView extends MatchaChildView {
     }
 
     public MatchaBasicView(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
     }
 }

@@ -27,6 +27,7 @@ class MatchaTextInputView extends MatchaChildView {
     EditText view;
     boolean editing;
     boolean focused;
+    MatchaViewNode viewNode;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/textinput", new MatchaView.ViewFactory() {
@@ -38,8 +39,8 @@ class MatchaTextInputView extends MatchaChildView {
     }
 
     public MatchaTextInputView(Context context, MatchaViewNode node) {
-        super(context, node);
-        final Context ctx = context;
+        super(context);
+        viewNode = node;
 
         view = new EditText(context);
         view.setBackground(null);

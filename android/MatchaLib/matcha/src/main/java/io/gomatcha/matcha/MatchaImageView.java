@@ -10,6 +10,7 @@ import io.gomatcha.matcha.proto.view.PbImageView;
 
 class MatchaImageView extends MatchaChildView {
     RoundedImageView view;
+    MatchaViewNode viewNode;
     
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/imageview", new MatchaView.ViewFactory() {
@@ -21,7 +22,8 @@ class MatchaImageView extends MatchaChildView {
     }
     
     public MatchaImageView(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
+        viewNode = node;
 
         view = new RoundedImageView(context);
         addView(view);

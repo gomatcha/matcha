@@ -13,6 +13,7 @@ import io.gomatcha.matcha.proto.view.PbScrollView;
 class MatchaScrollView extends MatchaChildView {
     ScrollView scrollView;
     MatchaLayout childView;
+    MatchaViewNode viewNode;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/scrollview", new MatchaView.ViewFactory() {
@@ -24,7 +25,8 @@ class MatchaScrollView extends MatchaChildView {
     }
 
     public MatchaScrollView(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
+        viewNode = node;
         this.setClipChildren(true);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -56,10 +58,5 @@ class MatchaScrollView extends MatchaChildView {
             }
         } catch (InvalidProtocolBufferException e) {
         }
-    }
-
-    @Override
-    public MatchaLayout getLayout() {
-        return childView;
     }
 }

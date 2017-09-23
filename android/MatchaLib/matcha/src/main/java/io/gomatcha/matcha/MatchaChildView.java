@@ -6,11 +6,8 @@ import android.view.View;
 import java.util.List;
 
 public class MatchaChildView extends MatchaLayout {
-    public MatchaViewNode viewNode;
-
-    public MatchaChildView(Context context, MatchaViewNode node) {
+    public MatchaChildView(Context context) {
         super(context);
-        viewNode = node;
     }
 
     public void setNativeState(byte[] nativeState) {
@@ -23,9 +20,5 @@ public class MatchaChildView extends MatchaLayout {
 
     public void setChildViews(List<View> childViews) {
         // no-op
-    }
-
-    public MatchaLayout getLayout() {
-        return this;
     }
 }

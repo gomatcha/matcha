@@ -13,6 +13,7 @@ class MatchaSlider extends MatchaChildView {
     double value;
     double maxValue;
     double minValue;
+    MatchaViewNode viewNode;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/slider", new MatchaView.ViewFactory() {
@@ -24,7 +25,8 @@ class MatchaSlider extends MatchaChildView {
     }
 
     public MatchaSlider(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
+        viewNode = node;
 
         view = new SeekBar(context);
         view.setMax(10000);

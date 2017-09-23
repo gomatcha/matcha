@@ -5,7 +5,7 @@ import android.graphics.Color;
 
 class MatchaUnknownView extends MatchaChildView {
     public MatchaUnknownView(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
     }
 
     @Override

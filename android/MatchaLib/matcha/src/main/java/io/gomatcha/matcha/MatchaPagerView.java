@@ -18,6 +18,7 @@ class MatchaPagerView extends MatchaChildView {
     SlidingTabLayout tabStrip;
     ViewPager viewPager;
     MatchaPagerAdapter pagerAdapter;
+    MatchaViewNode viewNode;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/android PagerView", new MatchaView.ViewFactory() {
@@ -29,7 +30,8 @@ class MatchaPagerView extends MatchaChildView {
     }
 
     public MatchaPagerView(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
+        viewNode = node;
 
         pagerAdapter = new MatchaPagerAdapter();
 

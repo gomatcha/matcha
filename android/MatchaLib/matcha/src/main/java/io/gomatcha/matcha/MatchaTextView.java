@@ -10,6 +10,7 @@ import io.gomatcha.matcha.proto.text.PbText;
 
 class MatchaTextView extends MatchaChildView {
     TextView view;
+    MatchaViewNode viewNode;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/textview", new MatchaView.ViewFactory() {
@@ -21,7 +22,8 @@ class MatchaTextView extends MatchaChildView {
     }
 
     public MatchaTextView(Context context, MatchaViewNode node) {
-        super(context, node);
+        super(context);
+        viewNode = node;
 
         view = new TextView(context);
         addView(view);
