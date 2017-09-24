@@ -4,7 +4,7 @@ import (
 	"image/color"
 
 	"golang.org/x/image/colornames"
-	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"

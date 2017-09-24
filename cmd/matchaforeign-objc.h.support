@@ -1,3 +1,5 @@
+// +build matcha,darwin
+
 #ifndef MOCHIFOREIGN_OBJC_H
 #define MOCHIFOREIGN_OBJC_H
 

@@ -5,7 +5,7 @@ package layout
 import (
 	"reflect"
 
-	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
 	pblayout "gomatcha.io/matcha/proto/layout"
 )

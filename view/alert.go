@@ -4,7 +4,7 @@ import (
 	"runtime"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/bridge"
 	pbview "gomatcha.io/matcha/proto/view"
 )
 

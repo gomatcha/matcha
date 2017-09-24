@@ -7,8 +7,8 @@ import (
 
 	"golang.org/x/image/colornames"
 
-	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/animate"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/constraint"

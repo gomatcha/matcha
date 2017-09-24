@@ -8,8 +8,8 @@ import (
 	"image"
 
 	gogoproto "github.com/gogo/protobuf/proto"
-	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/application"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/proto"
 )
 

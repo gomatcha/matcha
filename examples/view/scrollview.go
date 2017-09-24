@@ -2,7 +2,7 @@ package view
 
 import (
 	"golang.org/x/image/colornames"
-	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"

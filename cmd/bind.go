@@ -143,7 +143,7 @@ func Bind(flags *Flags, args []string) error {
 	if _, ok := targets["ios"]; ok {
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "IOS-GOPATH")
-		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "bridge")
+		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "matcha", "bridge")
 		if err := Mkdir(flags, bridgeDir); err != nil {
 			return err
 		}
@@ -326,7 +326,7 @@ func Bind(flags *Flags, args []string) error {
 	if _, ok := targets["android"]; ok {
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "ANDROID-GOPATH")
-		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "bridge")
+		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "matcha", "bridge")
 		if err := Mkdir(flags, bridgeDir); err != nil {
 			return err
 		}
@@ -471,7 +471,7 @@ package main
 
 import (
 	_ "golang.org/x/mobile/bind/java"
-    _ "gomatcha.io/bridge"
+    _ "gomatcha.io/matcha/bridge"
     _ "%s"
 )
 

@@ -1,3 +1,5 @@
+// +build matcha
+
 #ifndef MOCHIGO_H
 #define MOCHIGO_H
 

@@ -1,3 +1,5 @@
+// +build matcha,android
+
 #include "matchaforeign.h"
 #include "matchaforeign-java.h"
 #include <jni.h>
