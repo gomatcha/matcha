@@ -1,7 +1,9 @@
+// +build matcha,android
+
 package bridge
 
 /*
-#cgo CFLAGS: 
+#cgo CFLAGS:
 #cgo LDFLAGS: -landroid -llog
 
 #include "matchaforeign.h"

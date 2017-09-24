@@ -105,6 +105,7 @@ func Bind(flags *Flags, args []string) error {
 	ctx.GOARCH = "arm"
 	ctx.GOOS = "darwin"
 	ctx.BuildTags = append(ctx.BuildTags, "ios")
+	ctx.BuildTags = append(ctx.BuildTags, "matcha")
 
 	// Get import paths to be built.
 	importPaths := []string{}
@@ -143,10 +144,6 @@ func Bind(flags *Flags, args []string) error {
 	if _, ok := targets["ios"]; ok {
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "IOS-GOPATH")
-		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "matcha", "bridge")
-		if err := Mkdir(flags, bridgeDir); err != nil {
-			return err
-		}
 
 		// Make $WORK/matcha-ios
 		workOutputDir := filepath.Join(tempdir, "matcha-ios")
@@ -169,34 +166,6 @@ func Bind(flags *Flags, args []string) error {
 		})
 		if err != nil {
 			return fmt.Errorf("failed to create the binding package for iOS: %v", err)
-		}
-
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matcha.go"), filepath.Join(cmdPath, "matcha-objc.go.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.h"), filepath.Join(cmdPath, "matchaforeign.h.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign-objc.h"), filepath.Join(cmdPath, "matchaforeign-objc.h.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign-objc.m"), filepath.Join(cmdPath, "matchaforeign-objc.m.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.go"), filepath.Join(cmdPath, "matchaforeign.go.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago.h"), filepath.Join(cmdPath, "matchago.h.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago-objc.h"), filepath.Join(cmdPath, "matchago-objc.h.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago-objc.m"), filepath.Join(cmdPath, "matchago-objc.m.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago.go"), filepath.Join(cmdPath, "matchago.go.support")); err != nil {
-			return err
 		}
 
 		if !flags.BuildBinary {
@@ -326,10 +295,6 @@ func Bind(flags *Flags, args []string) error {
 	if _, ok := targets["android"]; ok {
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "ANDROID-GOPATH")
-		bridgeDir := filepath.Join(gopathDir, "src", "gomatcha.io", "matcha", "bridge")
-		if err := Mkdir(flags, bridgeDir); err != nil {
-			return err
-		}
 
 		pkgs2 := []*build.Package{}
 		for _, i := range pkgs {
@@ -358,6 +323,7 @@ func Bind(flags *Flags, args []string) error {
 		ctx := build.Default
 		ctx.GOARCH = "arm"
 		ctx.GOOS = "android"
+		ctx.BuildTags = append(ctx.BuildTags, "matcha")
 
 		androidDir := filepath.Join(tempdir, "android")
 		mainPath := filepath.Join(tempdir, "androidlib/main.go")
@@ -369,35 +335,6 @@ func Bind(flags *Flags, args []string) error {
 		})
 		if err != nil {
 			return fmt.Errorf("failed to create the main package for android: %v", err)
-		}
-
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matcha.go"), filepath.Join(cmdPath, "matcha-java.go.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.h"), filepath.Join(cmdPath, "matchaforeign.h.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign.go"), filepath.Join(cmdPath, "matchaforeign.go.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign-java.h"), filepath.Join(cmdPath, "matchaforeign-java.h.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchaforeign-java.c"), filepath.Join(cmdPath, "matchaforeign-java.c.support")); err != nil {
-			return err
-		}
-
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago.h"), filepath.Join(cmdPath, "matchago.h.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago.go"), filepath.Join(cmdPath, "matchago.go.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago-java.h"), filepath.Join(cmdPath, "matchago-java.h.support")); err != nil {
-			return err
-		}
-		if err := CopyFile(flags, filepath.Join(bridgeDir, "matchago-java.c"), filepath.Join(cmdPath, "matchago-java.c.support")); err != nil {
-			return err
 		}
 
 		javaDir2 := filepath.Join(androidDir, "src", "main", "java", "io", "gomatcha", "bridge")
