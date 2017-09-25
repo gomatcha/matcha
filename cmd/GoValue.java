@@ -14,6 +14,10 @@ public class GoValue {
    protected GoValue(long goref, boolean empty) {
       this.goRef = goref;
    }
+   public GoValue(Object v) {
+      this(matchaGoForeign(Tracker.singleton().track(v)), false);
+   }
+   
    public GoValue(boolean v) {
       this(matchaGoBool(v), false);
    }
@@ -46,6 +50,7 @@ public class GoValue {
       return matchaGoArray(array);
    }
    
+   private static native long matchaGoForeign(long a);
    private static native long matchaGoBool(boolean a);
    private static native long matchaGoLong(long a);
    private static native long matchaGoDouble(double a);
@@ -55,6 +60,10 @@ public class GoValue {
    private static native long matchaGoFunc(String a);
    private static native long matchaGoType(String a);
    
+   public Object toObject() {
+      long foreignRef = matchaGoToForeign(this.goRef);
+      return Tracker.singleton().get(foreignRef);
+   }
    public boolean toBool() {
       return matchaGoToBool(this.goRef);
    }
@@ -80,6 +89,7 @@ public class GoValue {
       return array2;
    }
    
+   private static native long matchaGoToForeign(long a);
    private static native boolean matchaGoToBool(long a);
    private static native long matchaGoToLong(long a);
    private static native double matchaGoToDouble(long a);

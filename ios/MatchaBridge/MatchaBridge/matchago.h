@@ -47,7 +47,8 @@ void matchaGoUntrack(GoRef);
 @end
 
 @interface MatchaGoValue : NSObject
-- (id)initWithGoRef:(GoRef)ref;
+//- (id)initWithGoRef:(GoRef)ref;
+- (id)initWithObject:(id)v;
 - (id)initWithBool:(BOOL)v;
 - (id)initWithInt:(int)v;
 - (id)initWithLongLong:(long long)v;
@@ -59,6 +60,7 @@ void matchaGoUntrack(GoRef);
 - (id)initWithType:(NSString *)typeName;
 - (id)initWithFunc:(NSString *)funcName;
 @property (nonatomic, readonly) GoRef ref;
+- (id)toObject;
 - (BOOL)toBool;
 - (long long)toLongLong;
 - (unsigned long long)toUnsignedLongLong;

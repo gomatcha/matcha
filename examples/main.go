@@ -3,6 +3,7 @@ package examples
 
 import (
 	_ "gomatcha.io/matcha/examples/animate"
+	_ "gomatcha.io/matcha/examples/bridge"
 	_ "gomatcha.io/matcha/examples/complex"
 	_ "gomatcha.io/matcha/examples/customview"
 	_ "gomatcha.io/matcha/examples/insta"

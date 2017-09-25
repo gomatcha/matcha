@@ -37,6 +37,10 @@
     return self;
 }
 
+- (id)initWithObject:(id)v {
+    return [self initWithGoRef:matchaGoForeign(MatchaTrackObjc(v))];
+}
+
 - (id)initWithBool:(BOOL)v {
     return [self initWithGoRef:matchaGoBool(v)];
 }
@@ -85,6 +89,10 @@
 - (id)initWithFunc:(NSString *)v {
     CGoBuffer buf = MatchaNSStringToCGoBuffer(v);
     return [self initWithGoRef:matchaGoFunc(buf)];
+}
+
+- (id)toObject {
+    return MatchaGetObjc(matchaGoToForeign(_ref));
 }
 
 - (BOOL)toBool {

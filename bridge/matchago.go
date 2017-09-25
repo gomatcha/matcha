@@ -17,6 +17,7 @@ import "C"
 import (
 	"fmt"
 	"reflect"
+	"runtime"
 	"sync"
 )
 
@@ -36,6 +37,19 @@ func RegisterType(str string, t reflect.Type) {
 
 func RegisterFunc(str string, f interface{}) {
 	goRoot.funcs[str] = reflect.ValueOf(f)
+}
+
+//export matchaGoForeign
+func matchaGoForeign(v C.ObjcRef) C.GoRef {
+	rv := reflect.ValueOf(newValue(v))
+	return matchaGoTrack(rv)
+}
+
+//export matchaGoToForeign
+func matchaGoToForeign(v C.GoRef) C.ObjcRef {
+	val := matchaGoGet(v).Interface().(*Value)
+	defer runtime.KeepAlive(val)
+	return val._ref()
 }
 
 //export matchaGoBool

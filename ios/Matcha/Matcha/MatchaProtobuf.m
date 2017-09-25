@@ -42,7 +42,7 @@ CGColorRef MatchaCGColorWithProtobuf(MatchaPBColor *value) {
     
     NSArray<MatchaPBTextStyle *> *stylesArray = value.stylesArray;
     for (NSInteger i = 0; i < stylesArray.count; i++) {
-        NSInteger start = stylesArray[i].index;
+        NSInteger start = (NSInteger)stylesArray[i].index;
         NSInteger end = 0;
         if (i != stylesArray.count - 1) {
             end = stylesArray[i+1].index - 1;

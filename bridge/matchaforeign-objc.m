@@ -14,6 +14,7 @@
 @end
 
 @implementation MatchaObjcBridge
+
 + (id)sharedBridge {
     static MatchaObjcBridge *sBridge = nil;
     static dispatch_once_t sOnce;

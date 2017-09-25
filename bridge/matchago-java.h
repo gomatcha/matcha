@@ -11,6 +11,14 @@ extern "C" {
 #endif
 /*
  * Class:     io_gomatcha_bridge_GoValue
+ * Method:    matchaGoForeign
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoForeign
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     io_gomatcha_bridge_GoValue
  * Method:    matchaInit
  * Signature: (Ljava/lang/Object;)V
  */
@@ -80,6 +88,14 @@ JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoFunc
  */
 JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoType
   (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     io_gomatcha_bridge_GoValue
+ * Method:    matchaGoToForeign
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoToForeign
+  (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     io_gomatcha_bridge_GoValue

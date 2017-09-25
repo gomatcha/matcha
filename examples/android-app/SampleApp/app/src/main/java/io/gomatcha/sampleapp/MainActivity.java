@@ -12,13 +12,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
 
-        GoValue rootView = GoValue.withFunc("gomatcha.io/matcha/examples/touch NewTouchView").call("")[0];
+        GoValue rootView = GoValue.withFunc("gomatcha.io/matcha/examples/bridge NewBridgeView").call("")[0];
         setContentView(new MatchaView(this, rootView));
     }
 
     static {
         try {
             Class.forName("io.gomatcha.customview.CustomView");
+            Class.forName("io.gomatcha.sampleapp.ExampleJavaBridge");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

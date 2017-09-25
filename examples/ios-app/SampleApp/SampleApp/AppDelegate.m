@@ -8,7 +8,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    MatchaGoValue *rootVC = [[[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/examples/touch NewTouchView"] call:nil, nil][0];
+    MatchaGoValue *rootVC = [[[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/examples/bridge NewBridgeView"] call:nil, nil][0];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [[MatchaViewController alloc] initWithGoValue:rootVC];
     [self.window makeKeyAndVisible];

@@ -13,7 +13,8 @@
 @end
 
 @interface MatchaGoValue : NSObject
-- (id)initWithGoRef:(GoRef)ref;
+- (id)initWithGoRef:(GoRef)ref; // not for external use.
+- (id)initWithObject:(id)v;
 - (id)initWithBool:(BOOL)v;
 - (id)initWithInt:(int)v;
 - (id)initWithLongLong:(long long)v;
@@ -24,7 +25,8 @@
 - (id)initWithArray:(NSArray<MatchaGoValue *> *)v;
 - (id)initWithType:(NSString *)typeName;
 - (id)initWithFunc:(NSString *)funcName;
-@property (nonatomic, readonly) GoRef ref;
+@property (nonatomic, readonly) GoRef ref; // not for external use.
+- (id)toObject;
 - (BOOL)toBool;
 - (long long)toLongLong;
 - (unsigned long long)toUnsignedLongLong;

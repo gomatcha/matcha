@@ -1,9 +1,7 @@
 // +build !matcha
 
-// Package bridge implements the interface between Go and Objective-C. Implementers can call
-// Objc functions and create Objc objects. As well as register functions and objects to
-// be called by ObjC. There is an overhead to switching between runtimes, so it is recommended to minimize
-// the number of calls across the barrier.
+// Package bridge implements the interface between Go and Objective-C. See
+// https://gomatcha.io/guide/native-bridge/ for more details.
 package bridge
 
 // Value wraps an ObjectiveC object.

@@ -6,6 +6,9 @@
 #include "matchaforeign.h"
 #include <stdbool.h>
 
+GoRef matchaGoForeign(ObjcRef);
+ObjcRef matchaGoToForeign(GoRef);
+
 GoRef matchaGoBool(bool);
 bool matchaGoToBool(GoRef);
 GoRef matchaGoInt(int);
