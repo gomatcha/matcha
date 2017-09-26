@@ -32,7 +32,10 @@ To start, fetch the project and install the matcha command.
 
     go get gomatcha.io/matcha/...
 
-We build the Go standard library for iOS and Android with the following command. The output is installed at `$GOPATH/pkg/matcha`. If your path doesn't contain $GOPATH/bin, you may need to replace these calls with `$GOPATH/bin/matcha`.
+We build the Go standard library for iOS and Android with the following command.
+This may take awhile. The output is installed at `$GOPATH/pkg/matcha`. If your
+path doesn't contain $GOPATH/bin, you may need to replace these calls with
+`$GOPATH/bin/matcha`.
 
     matcha init
 
@@ -40,12 +43,22 @@ Now build the example project. The output is installed at `$GOPATH/src/gomatcha.
 
     matcha build gomatcha.io/matcha/examples
 
-Thats it!
-
-We can now open the sample iOS and Android projects and run the app. You may need to set the Development Team in Xcode under General > Signing.
+We can now open the sample iOS project.
 
     open $GOPATH/src/gomatcha.io/matcha/examples/ios-app/SampleApp.xcworkspace
+    
+Set the Development Team in Xcode under General > Signing and select `SampleApp` in
+the target dropdown in the upper right. Then run the App! 
+
+Android is a similar setup. Open the sample Android Studio project and hit run!
+
     open -a /Applications/Android\ Studio.app $GOPATH/src/gomatcha.io/matcha/examples/android-app/SampleApp
+
+You can try out other
+[examples](https://github.com/gomatcha/matcha/tree/master/examples) by replacing
+`"gomatcha.io/matcha/examples/settings New"` in AppDelegate.m and MainActivity.java
+with the name of the example.
+
 
 <h3>Try it out!</h3>
 <ul>

@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
 
-    GoValue rootView = GoValue.withFunc("gomatcha.io/matcha/examples/insta New").call("")[0];
+    GoValue rootView = GoValue.withFunc("gomatcha.io/matcha/examples/settings New").call("")[0];
         setContentView(new MatchaView(this, rootView));
     }
 
