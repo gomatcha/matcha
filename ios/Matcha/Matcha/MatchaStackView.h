@@ -6,7 +6,7 @@
 @interface MatchaStackView : UINavigationController <MatchaChildViewController, UINavigationControllerDelegate>
 - (id)initWithViewNode:(MatchaViewNode *)viewNode;
 @property (nonatomic, weak) MatchaViewNode *viewNode;
-@property (nonatomic, strong) GPBAny *nativeState;
+@property (nonatomic, strong) NSData *nativeState;
 
 //Internal
 @property (nonatomic, strong) NSArray<NSNumber *> *prevIds;
@@ -16,7 +16,7 @@
 @interface MatchaStackBar : UIViewController <MatchaChildViewController>
 - (id)initWithViewNode:(MatchaViewNode *)viewNode;
 @property (nonatomic, weak) MatchaViewNode *viewNode;
-@property (nonatomic, strong) GPBAny *nativeState;
+@property (nonatomic, strong) NSData *nativeState;
 
 //Internal
 @property (nonatomic, strong) NSString *titleString;

@@ -3,7 +3,7 @@ Package pointer implements gesture recognizers.
 
 Create the pointer recognizer in the Build function.
 
- func (v *MyView) Build(ctx view.Context2) view.Model {
+ func (v *MyView) Build(ctx view.Context) view.Model {
  	tap := &pointer.TapGesture{
  		Count: 1,
  		OnEvent: func(e *pointer.TapEvent) {

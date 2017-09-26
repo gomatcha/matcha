@@ -59,8 +59,7 @@ Refactors:
 * 
 
 Website
-* Main Page
-* mobile devices
+* Main Page on Mobile
 * Copyright notice / trademark?
 * Better images, readme docs.
 * MailChimp?

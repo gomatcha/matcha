@@ -91,7 +91,7 @@ Building a simple StackView:
 		appview.stack.SetViews(child)
 		return appview
 	}
-	func (v *AppView) Build(ctx view.Context2) view.Model {
+	func (v *AppView) Build(ctx view.Context) view.Model {
 		child := ios.New()
 		child.Stack = v.stack
 		return view.Model{
