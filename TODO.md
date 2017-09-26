@@ -60,9 +60,7 @@ Refactors:
 
 Website
 * Main Page on Mobile
-* Copyright notice / trademark?
 * Github docs.
-* Better images
 * MailChimp?
 * Install Discourse
 

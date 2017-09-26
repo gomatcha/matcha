@@ -194,6 +194,6 @@ func loadImageURL(url string) (image.Image, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	img, _, err := image.Decode(resp.Bod
+	img, _, err := image.Decode(resp.Body)
 	return img, err
 }
