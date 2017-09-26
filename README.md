@@ -52,7 +52,7 @@ We can now open the sample iOS and Android projects and run the app. You may nee
     <li><a href="https://gomatcha.io/guide/installation/">Install</a> the project</li>
     <li>Read the <a href="https://gomatcha.io/guide/getting-started/">Getting Started</a> guide</li>
     <li>Go through some <a href="https://github.com/gomatcha/matcha/tree/master/examples">examples</a></li>
-    <li>Learn the <a href="https://gomatcha.io/guide/concepts">basic concepts</a></li>
+    <li>Learn the <a href="https://gomatcha.io/guide/concepts/">basic concepts</a></li>
 </ul>
 <h3>Contact us</h3>
 <ul>

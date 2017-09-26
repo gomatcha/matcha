@@ -59,8 +59,6 @@ Refactors:
 * 
 
 Website
-* Main Page on Mobile
-* Github docs.
 * MailChimp?
 * Install Discourse
 
