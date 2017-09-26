@@ -14,7 +14,9 @@ provides Go APIs for common app tasks.
 
 ### Examples
 
-[![settings-example](docs/settings.gif)](https://github.com/gomatcha/matcha/tree/master/examples/settings) [![todo-example](docs/todo.gif)](https://github.com/gomatcha/matcha/tree/master/examples/todo)
+[![settings-example](docs/settings.gif)](https://github.com/gomatcha/matcha/tree/master/examples/settings)
+[![insta-example](docs/insta.gif)](https://github.com/gomatcha/matcha/tree/master/examples/insta)
+[![todo-example](docs/todo.gif)](https://github.com/gomatcha/matcha/tree/master/examples/todo)
 
 ### Installation
 
