@@ -2,25 +2,21 @@
 package settings
 
 import (
-	"fmt"
 	"image/color"
+	"runtime"
 	"strings"
 
 	"golang.org/x/image/colornames"
-	"gomatcha.io/bridge"
-	"gomatcha.io/matcha/app"
+	"gomatcha.io/matcha/application"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/touch"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/basicview"
-	"gomatcha.io/matcha/view/imageview"
-	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/stackview"
-	"gomatcha.io/matcha/view/switchview"
-	"gomatcha.io/matcha/view/textview"
+	"gomatcha.io/matcha/view/android"
+	"gomatcha.io/matcha/view/ios"
 )
 
 var (
@@ -35,13 +31,20 @@ var (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/settings New", func() *view.Root {
-		app := NewApp()
-
-		v := stackview.New()
-		v.Stack = app.Stack
-		v.Stack.SetViews(NewRootView(app))
-		return view.NewRoot(v)
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/settings New", func() view.View {
+		if runtime.GOOS == "android" {
+			v := android.NewStackView()
+			app := NewApp()
+			app.Stack = v.Stack
+			app.Stack.SetViews(NewRootView(app))
+			return v
+		} else {
+			v := ios.NewStackView()
+			app := NewApp()
+			app.Stack = v.Stack
+			app.Stack.SetViews(NewRootView(app))
+			return v
+		}
 	})
 }
 
@@ -69,7 +72,7 @@ func (v *RootView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *RootView) Build(ctx *view.Context) view.Model {
+func (v *RootView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 	{
 		group := []view.View{}
@@ -77,15 +80,14 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New()
+		switchView := view.NewSwitch()
 		switchView.Value = v.app.AirplaneMode()
-		switchView.OnValueChange = func(value bool) {
-			fmt.Println("blah")
+		switchView.OnSubmit = func(value bool) {
 			v.app.SetAirplaneMode(value)
 		}
 		cell1 := NewBasicCell()
 		cell1.Title = "Airplane Mode"
-		cell1.Icon = app.MustLoadImage("Airplane")
+		cell1.Icon = application.MustLoadImage("settings_airplane")
 		cell1.AccessoryView = switchView
 		cell1.HasIcon = true
 		group = append(group, cell1)
@@ -97,9 +99,8 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		} else {
 			cell2.Subtitle = ""
 		}
-		fmt.Println("wifi", cell2.Subtitle)
 		cell2.HasIcon = true
-		cell2.Icon = app.MustLoadImage("Wifi")
+		cell2.Icon = application.MustLoadImage("settings_wifi")
 		cell2.Chevron = true
 		cell2.OnTap = func() {
 			v.app.Stack.Push(NewWifiView(v.app))
@@ -108,7 +109,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 
 		cell3 := NewBasicCell()
 		cell3.HasIcon = true
-		cell3.Icon = app.MustLoadImage("Bluetooth")
+		cell3.Icon = application.MustLoadImage("settings_bluetooth")
 		cell3.Title = "Bluetooth"
 		if v.app.Bluetooth.Enabled() {
 			cell3.Subtitle = "On"
@@ -123,7 +124,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 
 		cell4 := NewBasicCell()
 		cell4.HasIcon = true
-		cell4.Icon = app.MustLoadImage("Cellular")
+		cell4.Icon = application.MustLoadImage("settings_cellular")
 		cell4.Title = "Cellular"
 		cell4.Chevron = true
 		cell4.OnTap = func() {
@@ -133,7 +134,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 
 		cell5 := NewBasicCell()
 		cell5.HasIcon = true
-		cell5.Icon = app.MustLoadImage("Hotspot")
+		cell5.Icon = application.MustLoadImage("settings_hotspot")
 		cell5.Title = "Personal Hotspot"
 		cell5.Subtitle = "Off"
 		cell5.Chevron = true
@@ -144,7 +145,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 
 		cell6 := NewBasicCell()
 		cell6.HasIcon = true
-		cell6.Icon = app.MustLoadImage("Carrier")
+		cell6.Icon = application.MustLoadImage("settings_carrier")
 		cell6.Title = "Carrier"
 		cell6.Subtitle = "T-Mobile"
 		cell6.Chevron = true
@@ -165,7 +166,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 
 		cell1 := NewBasicCell()
 		cell1.HasIcon = true
-		cell1.Icon = app.MustLoadImage("Notifications")
+		cell1.Icon = application.MustLoadImage("settings_notifications")
 		cell1.Title = "Notifications"
 		cell1.Chevron = true
 		cell1.OnTap = func() {
@@ -175,7 +176,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 
 		cell2 := NewBasicCell()
 		cell2.HasIcon = true
-		cell2.Icon = app.MustLoadImage("ControlCenter")
+		cell2.Icon = application.MustLoadImage("settings_control_center")
 		cell2.Title = "Control Center"
 		cell2.Chevron = true
 		cell2.OnTap = func() {
@@ -185,7 +186,7 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 
 		cell3 := NewBasicCell()
 		cell3.HasIcon = true
-		cell3.Icon = app.MustLoadImage("DoNotDisturb")
+		cell3.Icon = application.MustLoadImage("settings_do_not_disturb")
 		cell3.Title = "Do Not Disturb"
 		cell3.Chevron = true
 		cell3.OnTap = func() {
@@ -198,18 +199,18 @@ func (v *RootView) Build(ctx *view.Context) view.Model {
 		}
 	}
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
+		Options: []view.Option{
+			&ios.StackBar{Title: "Settings"},
+			&android.StackBar{Title: "Settings"},
+		},
 	}
-}
-
-func (v *RootView) StackBar(ctx *view.Context) *stackview.Bar {
-	return &stackview.Bar{Title: "Settings Example"}
 }
 
 func AddSeparators(vs []view.View) []view.View {
@@ -242,14 +243,14 @@ func NewSeparator() *Separator {
 	return &Separator{}
 }
 
-func (v *Separator) Build(ctx *view.Context) view.Model {
+func (v *Separator) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(0.5)
 		s.WidthEqual(l.MaxGuide().Width())
 	})
 
-	chl := basicview.New()
+	chl := view.NewBasicView()
 	chl.Painter = &paint.Style{BackgroundColor: separatorColor}
 	l.Add(chl, func(s *constraint.Solver) {
 		s.HeightEqual(l.Height())
@@ -275,7 +276,7 @@ func NewSpacer() *Spacer {
 	}
 }
 
-func (v *Spacer) Build(ctx *view.Context) view.Model {
+func (v *Spacer) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(v.Height)
@@ -300,19 +301,16 @@ func NewSpacerHeader() *SpacerHeader {
 	}
 }
 
-func (v *SpacerHeader) Build(ctx *view.Context) view.Model {
+func (v *SpacerHeader) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(v.Height)
 		s.WidthEqual(l.MaxGuide().Width())
 	})
 
-	titleView := textview.New()
+	titleView := view.NewTextView()
 	titleView.String = strings.ToTitle(v.Title)
-	titleView.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   13,
-	})
+	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 13))
 	titleView.Style.SetTextColor(spacerTitleColor)
 	// titleView.Painter = &paint.Style{BackgroundColor: colornames.Red}
 
@@ -340,15 +338,12 @@ func NewSpacerDescription() *SpacerDescription {
 	return &SpacerDescription{}
 }
 
-func (v *SpacerDescription) Build(ctx *view.Context) view.Model {
+func (v *SpacerDescription) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	titleView := textview.New()
+	titleView := view.NewTextView()
 	titleView.String = v.Description
-	titleView.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   13,
-	})
+	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 13))
 	titleView.Style.SetTextColor(spacerTitleColor)
 
 	titleGuide := l.Add(titleView, func(s *constraint.Solver) {
@@ -372,7 +367,7 @@ func (v *SpacerDescription) Build(ctx *view.Context) view.Model {
 type BasicCell struct {
 	view.Embed
 	HasIcon       bool
-	Icon          *app.ImageResource
+	Icon          *application.ImageResource
 	Title         string
 	Subtitle      string
 	AccessoryView view.View
@@ -385,7 +380,7 @@ func NewBasicCell() *BasicCell {
 	return &BasicCell{}
 }
 
-func (v *BasicCell) Build(ctx *view.Context) view.Model {
+func (v *BasicCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(44)
@@ -394,9 +389,9 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	leftAnchor := l.Left()
 	if v.HasIcon {
-		iconView := imageview.New()
+		iconView := view.NewImageView()
 		iconView.Image = v.Icon
-		iconView.ResizeMode = imageview.ResizeModeFill
+		iconView.ResizeMode = view.ImageResizeModeFill
 		pIconView := view.WithPainter(iconView, &paint.Style{BackgroundColor: colornames.Lightgray, CornerRadius: 5})
 
 		iconGuide := l.Add(pIconView, func(s *constraint.Solver) {
@@ -410,10 +405,10 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	rightAnchor := l.Right()
 	if v.Chevron {
-		chevronView := imageview.New()
-		chevronView.Image = app.MustLoadImage("TableArrow")
-		chevronView.ResizeMode = imageview.ResizeModeCenter
-		chevronView.ImageTemplateColor = chevronColor
+		chevronView := view.NewImageView()
+		chevronView.Image = application.MustLoadImage("table_arrow")
+		chevronView.ResizeMode = view.ImageResizeModeCenter
+		chevronView.ImageTint = chevronColor
 
 		chevronGuide := l.Add(chevronView, func(s *constraint.Solver) {
 			s.RightEqual(rightAnchor.Add(-15))
@@ -435,13 +430,9 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 	}
 
 	if len(v.Subtitle) > 0 {
-		fmt.Println("subtitle", v.Subtitle)
-		subtitleView := textview.New()
+		subtitleView := view.NewTextView()
 		subtitleView.String = v.Subtitle
-		subtitleView.Style.SetFont(text.Font{
-			Family: "Helvetica Neue",
-			Size:   14,
-		})
+		subtitleView.Style.SetFont(text.FontWithName("HelveticaNeue", 14))
 		subtitleView.Style.SetTextColor(subtitleColor)
 
 		subtitleGuide := l.Add(subtitleView, func(s *constraint.Solver) {
@@ -452,12 +443,9 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 		rightAnchor = subtitleGuide.Left()
 	}
 
-	titleView := textview.New()
+	titleView := view.NewTextView()
 	titleView.String = v.Title
-	titleView.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   14,
-	})
+	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 14))
 	titleView.Style.SetTextColor(titleColor)
 
 	titleGuide := l.Add(titleView, func(s *constraint.Solver) {
@@ -469,21 +457,21 @@ func (v *BasicCell) Build(ctx *view.Context) view.Model {
 
 	var options []view.Option
 	if v.OnTap != nil {
-		tap := &touch.ButtonRecognizer{
-			OnTouch: func(e *touch.ButtonEvent) {
+		tap := &pointer.ButtonGesture{
+			OnEvent: func(e *pointer.ButtonEvent) {
 				switch e.Kind {
-				case touch.EventKindPossible:
+				case pointer.EventKindPossible:
 					v.highlighted = e.Inside
-				case touch.EventKindFailed:
+				case pointer.EventKindFailed:
 					v.highlighted = false
-				case touch.EventKindRecognized:
+				case pointer.EventKindRecognized:
 					v.highlighted = false
 					v.OnTap()
 				}
 				v.Signal()
 			},
 		}
-		options = append(options, touch.RecognizerList{tap})
+		options = append(options, pointer.GestureList{tap})
 	}
 
 	var color color.Color

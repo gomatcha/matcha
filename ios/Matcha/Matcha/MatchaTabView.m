@@ -2,6 +2,7 @@
 #import "MatchaView.h"
 #import "MatchaProtobuf.h"
 #import "MatchaViewController.h"
+#import "MatchaView_Private.h"
 
 @implementation MatchaTabView
 
@@ -21,8 +22,7 @@
 }
 
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
-    GPBAny *state = self.node.nativeViewState;
-    MatchaTabScreenPBView *pbTabNavigator = (id)[state unpackMessageClass:[MatchaTabScreenPBView class] error:nil];
+    MatchaiOSPBTabView *pbTabNavigator = (id)[self.nativeState unpackMessageClass:[MatchaiOSPBTabView class] error:nil];
     
     self.tabBar.barTintColor = pbTabNavigator.hasBarColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.barColor] : nil;
     self.tabBar.tintColor = pbTabNavigator.hasBarColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.selectedColor] : nil;
@@ -39,7 +39,7 @@
     
     NSMutableArray *viewControllers = [NSMutableArray array];
     for (NSInteger idx = 0; idx < pbTabNavigator.screensArray.count; idx++) {
-        MatchaTabScreenPBChildView *i = pbTabNavigator.screensArray[idx];
+        MatchaiOSPBTabChildView *i = pbTabNavigator.screensArray[idx];
         UIViewController *vc = childVCs[idx];
         vc.tabBarItem.title = i.title;
         vc.tabBarItem.badgeValue = i.badge.length == 0 ? nil : i.badge;
@@ -53,13 +53,9 @@
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    MatchaTabScreenPBEvent *event = [[MatchaTabScreenPBEvent alloc] init];
+    MatchaiOSPBTabEvent *event = [[MatchaiOSPBTabEvent alloc] init];
     event.selectedIndex = tabBarController.selectedIndex;
-    
-    NSData *data = [event data];
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
-    
-    [self.viewNode.rootVC call:@"OnSelect" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnSelect", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 - (void)setMatchaChildLayout:(GPBInt64ObjectDictionary *)layoutPaintNodes {

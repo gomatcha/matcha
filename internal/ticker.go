@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
 )
 

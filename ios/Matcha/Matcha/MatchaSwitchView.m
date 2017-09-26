@@ -5,9 +5,9 @@
 @implementation MatchaSwitchView
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/switch", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/switch" block:^(MatchaViewNode *node){
         return [[MatchaSwitchView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
@@ -18,24 +18,16 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    GPBAny *state = value.nativeViewState;
-    NSError *error = nil;
-    MatchaPBSwitchViewView *view = (id)[state unpackMessageClass:[MatchaPBSwitchViewView class] error:&error];
-    if (view != nil) {
-        self.on = view.value;
-    }
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPbSwitchView *view = [MatchaViewPbSwitchView parseFromData:nativeState error:nil];
+    [self setOn:view.value animated:true];
+    self.enabled = view.enabled;
 }
 
 - (void)onChange:(id)sender {
-    MatchaPBSwitchViewEvent *event = [[MatchaPBSwitchViewEvent alloc] init];
+    MatchaViewPbSwitchEvent *event = [[MatchaViewPbSwitchEvent alloc] init];
     event.value = self.on;
-    
-    NSData *data = [event data];
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
-    
-    [self.viewNode.rootVC call:@"OnChange" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnChange", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 @end

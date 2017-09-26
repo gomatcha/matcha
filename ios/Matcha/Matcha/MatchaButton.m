@@ -5,9 +5,9 @@
 @implementation MatchaButton
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/button", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/button" block:^(MatchaViewNode *node){
         return [[MatchaButton alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
@@ -20,12 +20,15 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    MatchaButtonPBView *pbbutton = (id)[value.nativeViewState unpackMessageClass:[MatchaButtonPBView class] error:NULL];
-    
-    NSAttributedString *string = [[NSAttributedString alloc] initWithProtobuf:pbbutton.styledText];
-    [self.button setAttributedTitle:string forState:UIControlStateNormal];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPbButton *pbbutton = [MatchaViewPbButton parseFromData:nativeState error:nil];
+    if (pbbutton.hasColor) {
+        self.button.tintColor = [[UIColor alloc] initWithProtobuf:pbbutton.color];
+    } else {
+        self.button.tintColor = nil;
+    }
+    self.button.titleLabel.font = [UIFont systemFontOfSize:20];
+    [self.button setTitle:pbbutton.str forState:UIControlStateNormal];
     self.button.enabled = pbbutton.enabled;
 }
 
@@ -34,7 +37,7 @@
 }
 
 - (void)onPress {
-    [self.viewNode.rootVC call:@"OnPress" viewId:self.node.identifier.longLongValue args:@[]];
+    [self.viewNode call:@"OnPress", nil];
 }
 
 @end

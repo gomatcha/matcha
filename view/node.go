@@ -3,6 +3,7 @@ package view
 import (
 	"fmt"
 	"reflect"
+	"runtime"
 	"sort"
 	"strings"
 	"sync"
@@ -12,37 +13,42 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/any"
-	google_protobuf "github.com/golang/protobuf/ptypes/any"
-	"gomatcha.io/bridge"
 	"gomatcha.io/matcha"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/full"
 	"gomatcha.io/matcha/paint"
-	pb "gomatcha.io/matcha/pb/view"
+	pb "gomatcha.io/matcha/proto/view"
 )
 
 var maxId int64
 
 // Middleware is called on the result of View.Build(*context).
 type middleware interface {
-	Build(*Context, *Model)
+	Build(Context, *Model)
 	MarshalProtobuf() proto.Message
 	Key() string
 }
 
-// Root contains your view hierarchy.
-type Root struct {
+// root contains your view hierarchy.
+type root struct {
 	id     int64
-	root   *root
+	root   *nodeRoot
 	size   layout.Point
 	ticker *internal.Ticker
 }
 
+func init() {
+	bridge.RegisterFunc("gomatcha.io/matcha/view NewRoot", func(v View) *root {
+		return _newRoot(v)
+	})
+}
+
 // NewRoot initializes a Root with screen s.
-func NewRoot(v View) *Root {
-	r := &Root{
+func _newRoot(v View) *root {
+	r := &root{
 		root: newRoot(v),
 		id:   atomic.AddInt64(&maxId, 1),
 	}
@@ -50,7 +56,7 @@ func NewRoot(v View) *Root {
 	return r
 }
 
-func (r *Root) start() {
+func (r *root) start() {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -76,11 +82,16 @@ func (r *Root) start() {
 		}
 
 		// fmt.Println(r.root.node.debugString())
-		bridge.Bridge().Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
+		fmt.Println("Update") // TODO(KD): Remove.
+		if runtime.GOOS == "android" {
+			bridge.Bridge("").Call("updateViewWithProtobuf", bridge.Int64(id), bridge.Bytes(pb))
+		} else if runtime.GOOS == "darwin" {
+			bridge.Bridge("").Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
+		}
 	})
 }
 
-func (r *Root) Stop() {
+func (r *root) Stop() {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -90,7 +101,7 @@ func (r *Root) Stop() {
 	r.ticker.Stop()
 }
 
-func (r *Root) Call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
+func (r *root) Call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -98,14 +109,14 @@ func (r *Root) Call(funcId string, viewId int64, args []reflect.Value) []reflect
 }
 
 // Id returns the unique identifier for r.
-func (r *Root) Id() int64 {
+func (r *root) Id() int64 {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
 	return r.id
 }
 
-func (r *Root) ViewId() Id {
+func (r *root) ViewId() Id {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -113,7 +124,7 @@ func (r *Root) ViewId() Id {
 }
 
 // Size returns the size of r.
-func (r *Root) Size() layout.Point {
+func (r *root) Size() layout.Point {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
@@ -121,37 +132,30 @@ func (r *Root) Size() layout.Point {
 }
 
 // SetSize sets the size of r.
-func (r *Root) SetSize(p layout.Point) {
+func (r *root) SetSize(width, height float64) {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
-	r.size = p
+	r.size = layout.Pt(width, height)
 	r.root.addFlag(r.root.node.id, layoutFlag)
-}
-
-// Context specifies the supporting context for building a View.
-type Context struct {
-	valid     bool
-	node      *node
-	skipBuild map[int]struct{}
 }
 
 func newId() Id {
 	return Id(atomic.AddInt64(&maxId, 1))
 }
 
-// SkipBuild marks the child ids as not needing to be rebuilt.
-func (ctx *Context) SkipBuild(ids ...int) {
-	if ctx.skipBuild == nil {
-		ctx.skipBuild = map[int]struct{}{}
-	}
-	for _, i := range ids {
-		ctx.skipBuild[i] = struct{}{}
-	}
+type Context interface {
+	Path() []Id
+}
+
+// viewContext specifies the supporting context for building a View.
+type viewContext struct {
+	valid bool
+	node  *node
 }
 
 // Path returns the path of Ids from the root to the view.
-func (ctx *Context) Path() []Id {
+func (ctx *viewContext) Path() []Id {
 	if ctx.node == nil {
 		return []Id{0}
 	}
@@ -178,7 +182,7 @@ func (f updateFlag) needsPaint() bool {
 	return f&buildFlag != 0 || f&layoutFlag != 0 || f&paintFlag != 0
 }
 
-type root struct {
+type nodeRoot struct {
 	node        *node
 	nodes       map[Id]*node
 	middlewares []middleware
@@ -187,9 +191,9 @@ type root struct {
 	updateFlags map[Id]updateFlag
 }
 
-func newRoot(v View) *root {
+func newRoot(v View) *nodeRoot {
 	id := newId()
-	root := &root{}
+	root := &nodeRoot{}
 	root.node = &node{
 		id:   id,
 		path: []Id{id},
@@ -203,14 +207,14 @@ func newRoot(v View) *root {
 	return root
 }
 
-func (root *root) addFlag(id Id, f updateFlag) {
+func (root *nodeRoot) addFlag(id Id, f updateFlag) {
 	root.flagMu.Lock()
 	defer root.flagMu.Unlock()
 
 	root.updateFlags[id] |= f
 }
 
-func (root *root) update(size layout.Point) bool {
+func (root *nodeRoot) update(size layout.Point) bool {
 	root.flagMu.Lock()
 	defer root.flagMu.Unlock()
 
@@ -236,11 +240,11 @@ func (root *root) update(size layout.Point) bool {
 	return updated
 }
 
-func (root *root) MarshalProtobuf2() ([]byte, error) {
+func (root *nodeRoot) MarshalProtobuf2() ([]byte, error) {
 	return proto.Marshal(root.MarshalProtobuf())
 }
 
-func (root *root) MarshalProtobuf() *pb.Root {
+func (root *nodeRoot) MarshalProtobuf() *pb.Root {
 	m := map[int64]*pb.LayoutPaintNode{}
 	root.node.marshalLayoutPaintProtobuf(m)
 
@@ -263,7 +267,7 @@ func (root *root) MarshalProtobuf() *pb.Root {
 	}
 }
 
-func (root *root) build() {
+func (root *nodeRoot) build() {
 	root.nodes = map[Id]*node{
 		root.node.id: root.node,
 	}
@@ -272,17 +276,17 @@ func (root *root) build() {
 	root.node.build()
 }
 
-func (root *root) layout(minSize layout.Point, maxSize layout.Point) {
+func (root *nodeRoot) layout(minSize layout.Point, maxSize layout.Point) {
 	g := root.node.layout(minSize, maxSize)
 	g.Frame = g.Frame.Add(layout.Pt(-g.Frame.Min.X, -g.Frame.Min.Y)) // Move Frame.Min to the origin.
 	root.node.layoutGuide = &g
 }
 
-func (root *root) paint() {
+func (root *nodeRoot) paint() {
 	root.node.paint()
 }
 
-func (root *root) call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
+func (root *nodeRoot) call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {
 	node, ok := root.nodes[Id(viewId)]
 	if !ok || node.model == nil {
 		fmt.Println("root.call(): no node found", ok, node.model)
@@ -302,7 +306,7 @@ func (root *root) call(funcId string, viewId int64, args []reflect.Value) []refl
 type node struct {
 	id    Id
 	path  []Id
-	root  *root
+	root  *nodeRoot
 	view  View
 	stage Stage
 
@@ -392,19 +396,9 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 		children = append(children, int64(v.id))
 	}
 
-	var nativeViewState *any.Any
-	if a, err := ptypes.MarshalAny(n.model.NativeViewState); err == nil {
-		nativeViewState = a
-	}
-
-	nativeValues := map[string]*google_protobuf.Any{}
-	for k, v := range n.model.NativeValues {
-		a, err := ptypes.MarshalAny(v)
-		if err != nil {
-			fmt.Println("Error enocding native value: ", err)
-			continue
-		}
-		nativeValues[k] = a
+	nativeValues := map[string][]byte{}
+	for k, v := range n.model.NativeOptions {
+		nativeValues[k] = v
 	}
 
 	m[int64(n.id)] = &pb.BuildNode{
@@ -412,7 +406,7 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 		BuildId:     n.buildId,
 		Children:    children,
 		BridgeName:  n.model.NativeViewName,
-		BridgeValue: nativeViewState,
+		BridgeValue: n.model.NativeViewState,
 		Values:      nativeValues,
 	}
 }
@@ -428,7 +422,7 @@ func (n *node) build() {
 		}
 
 		// Generate the new viewModel.
-		ctx := &Context{valid: true, node: n}
+		ctx := &viewContext{valid: true, node: n}
 		temp := n.view.Build(ctx)
 		viewModel := &temp
 
@@ -441,21 +435,19 @@ func (n *node) build() {
 		//
 		prevChildren := make([]*node, len(n.children))
 		copy(prevChildren, n.children)
-		// fmt.Println("keys", n.root.keys, n.root.ids)
 
 		children := []*node{}
-		for idx, i := range viewModel.Children {
+		for _, i := range viewModel.Children {
 			// Find the corresponding previous node.
 			var prevNode *node
 
 			iKey := i.ViewKey()
-			iType := reflect.TypeOf(i).Elem()
-			iName := iType.Name() + iType.PkgPath()
+			iName := internal.ReflectName(i)
 			for jIdx, j := range prevChildren {
-				jType := reflect.TypeOf(j.view).Elem()
-				jName := jType.Name() + jType.PkgPath()
-				if jKey := j.view.ViewKey(); iKey == jKey && iName == jName {
-					// fmt.Println("found")
+				jName := internal.ReflectName(j.view)
+				jKey := j.view.ViewKey()
+
+				if iKey == jKey && iName == jName {
 					prevNode = j
 
 					// delete from prevchildren
@@ -471,19 +463,12 @@ func (n *node) build() {
 				prevView := prevNode.view
 				newView := i
 
+				// Copy all public fields from new to old, if embed.Update is called.
 				if prevView != newView {
-					// iType := reflect.TypeOf(i).Elem()
-					// iName := iType.PkgPath() + "." + iType.Name()
-
-					// Copy all public fields from new to old that aren't Embed
-					va := reflect.ValueOf(prevView).Elem()
-					vb := reflect.ValueOf(newView).Elem()
-					for i := 0; i < va.NumField(); i++ {
-						fa := va.Field(i)
-						if fa.CanSet() && va.Type().Field(i).Name != "Embed" {
-							fa.Set(vb.Field(i))
-							// fmt.Println("set", va.Type().Field(i).Name)
-						}
+					embedUpdate = false
+					prevView.Update(newView)
+					if embedUpdate {
+						CopyFields(prevView, newView)
 					}
 				}
 
@@ -491,9 +476,7 @@ func (n *node) build() {
 				children = append(children, prevNode)
 
 				// Mark as needing rebuild
-				if _, ok := ctx.skipBuild[idx]; !ok {
-					n.root.updateFlags[prevNode.id] |= buildFlag
-				}
+				n.root.updateFlags[prevNode.id] |= buildFlag
 			} else {
 				// If view was added for the first time...
 				newView := i
@@ -577,11 +560,11 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 	n.layoutMaxSize = maxSize
 
 	// Create the LayoutContext
-	ctx := &layout.Context{
-		MinSize:    minSize,
-		MaxSize:    maxSize,
-		ChildCount: len(n.children),
-		LayoutFunc: func(idx int, minSize, maxSize layout.Point) layout.Guide {
+	ctx := &layoutContext{
+		minSize:    minSize,
+		maxnSize:   maxSize,
+		childCount: len(n.children),
+		layoutFunc: func(idx int, minSize, maxSize layout.Point) layout.Guide {
 			if idx >= len(n.children) {
 				fmt.Println("Attempting to layout unknown child: ", idx)
 				return layout.Guide{}
@@ -597,7 +580,7 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 		layouter = &full.Layouter{}
 	}
 	g, gs := layouter.Layout(ctx)
-	g = g.Fit(ctx)
+	g = ctx.fitGuide(g)
 
 	//
 	for idx, i := range n.children {
@@ -658,4 +641,45 @@ func (n *node) debugString() string {
 		str += "\n" + strings.Join(all, "\n")
 	}
 	return str
+}
+
+type layoutContext struct {
+	minSize    layout.Point
+	maxnSize   layout.Point
+	childCount int
+	layoutFunc func(int, layout.Point, layout.Point) layout.Guide // TODO(KD): this should be private...
+}
+
+func (l *layoutContext) MinSize() layout.Point {
+	return l.minSize
+}
+
+func (l *layoutContext) MaxSize() layout.Point {
+	return l.maxnSize
+}
+
+func (l *layoutContext) ChildCount() int {
+	return l.childCount
+}
+
+func (l *layoutContext) LayoutChild(idx int, minSize, maxSize layout.Point) layout.Guide {
+	g := l.layoutFunc(idx, minSize, maxSize)
+	g.Frame = g.Frame.Add(layout.Pt(-g.Frame.Min.X, -g.Frame.Min.Y))
+	return g
+}
+
+func (l *layoutContext) fitGuide(g layout.Guide) layout.Guide {
+	if g.Width() < l.MinSize().X {
+		g.Frame.Max.X = l.MinSize().X - g.Frame.Min.X
+	}
+	if g.Height() < l.MinSize().Y {
+		g.Frame.Max.Y = l.MinSize().Y - g.Frame.Min.Y
+	}
+	if g.Width() > l.MaxSize().X {
+		g.Frame.Max.X = l.MaxSize().X - g.Frame.Min.X
+	}
+	if g.Height() > l.MaxSize().Y {
+		g.Frame.Max.Y = l.MaxSize().Y - g.Frame.Min.Y
+	}
+	return g
 }

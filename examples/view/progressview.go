@@ -2,18 +2,17 @@ package view
 
 import (
 	"golang.org/x/image/colornames"
-	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/progressview"
-	"gomatcha.io/matcha/view/slider"
+	"gomatcha.io/matcha/view/ios"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewProgressView", func() *view.Root {
-		return view.NewRoot(NewProgressView())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewProgressView", func() view.View {
+		return NewProgressView()
 	})
 }
 
@@ -28,10 +27,10 @@ func NewProgressView() *ProgressView {
 	}
 }
 
-func (v *ProgressView) Build(ctx *view.Context) view.Model {
+func (v *ProgressView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	progressv := progressview.New()
+	progressv := ios.NewProgressView()
 	progressv.ProgressNotifier = v.value
 	progressv.ProgressColor = colornames.Red
 	l.Add(progressv, func(s *constraint.Solver) {
@@ -40,10 +39,10 @@ func (v *ProgressView) Build(ctx *view.Context) view.Model {
 		s.Width(200)
 	})
 
-	sliderv := slider.New()
+	sliderv := view.NewSlider()
 	sliderv.MaxValue = 1
 	sliderv.MinValue = 0
-	sliderv.OnValueChange = func(value float64) {
+	sliderv.OnChange = func(value float64) {
 		v.value.SetValue(value)
 	}
 	l.Add(sliderv, func(s *constraint.Solver) {

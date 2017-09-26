@@ -3,9 +3,9 @@
 @implementation MatchaSegmentView
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/segmentview", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/segmentview" block:^(MatchaViewNode *node){
         return [[MatchaSegmentView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
@@ -16,9 +16,8 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    MatchaSegmentViewPbView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaSegmentViewPbView class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaiOSPBSegmentView *view = [MatchaiOSPBSegmentView parseFromData:nativeState error:nil];
     
     [self removeAllSegments];
     for (NSInteger i = 0; i < view.titlesArray.count; i++) {
@@ -30,11 +29,9 @@
 }
 
 - (void)onChange:(id)sender {
-    MatchaSegmentViewPbEvent *event = [[MatchaSegmentViewPbEvent alloc] init];
+    MatchaiOSPBSegmentViewEvent *event = [[MatchaiOSPBSegmentViewEvent alloc] init];
     event.value = self.selectedSegmentIndex;
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-    
-    [self.viewNode.rootVC call:@"OnChange" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnChange", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 @end

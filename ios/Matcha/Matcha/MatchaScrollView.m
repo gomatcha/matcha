@@ -1,39 +1,31 @@
 #import "MatchaScrollView.h"
 #import "MatchaProtobuf.h"
-#import "MatchaViewController.h"
+#import "MatchaViewController_Private.h"
+#import "MatchaView_Private.h"
 
 @implementation MatchaScrollView
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/scrollview", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/scrollview" block:^(MatchaViewNode *node){
         return [[MatchaScrollView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
     if ((self = [super initWithFrame:CGRectZero])) {
         self.viewNode = viewNode;
         self.delegate = self;
-        self.alwaysBounceVertical = true; // TODO(KD):
     }
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    
-    if (self.subviews.count > 0) {
-        self.contentSize = ((UIView *)self.subviews[0]).frame.size;
-    }
-    
-    GPBAny *state = value.nativeViewState;
-    NSError *error = nil;
-    MatchaScrollViewPBView *pbscrollview = (id)[state unpackMessageClass:[MatchaScrollViewPBView class] error:&error];
-    if (pbscrollview != nil) {
-        self.scrollEnabled = pbscrollview.scrollEnabled;
-        self.showsVerticalScrollIndicator = pbscrollview.showsVerticalScrollIndicator;
-        self.showsHorizontalScrollIndicator = pbscrollview.showsHorizontalScrollIndicator;
-    }
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPBScrollView *pbscrollview = [MatchaViewPBScrollView parseFromData:nativeState error:nil];
+    self.scrollEnabled = pbscrollview.scrollEnabled;
+    self.showsVerticalScrollIndicator = pbscrollview.showsVerticalScrollIndicator;
+    self.showsHorizontalScrollIndicator = pbscrollview.showsHorizontalScrollIndicator;
+    self.alwaysBounceVertical = pbscrollview.vertical;
+    self.alwaysBounceHorizontal = pbscrollview.horizontal;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -41,10 +33,9 @@
         return;
     }
     
-    MatchaScrollViewPBScrollEvent *event = [[MatchaScrollViewPBScrollEvent alloc] init];
+    MatchaViewPBScrollEvent *event = [[MatchaViewPBScrollEvent alloc] init];
     event.contentOffset = [[MatchaLayoutPBPoint alloc] initWithCGPoint:scrollView.contentOffset];
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-    [self.viewNode.rootVC call:@"OnScroll" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnScroll", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 @end

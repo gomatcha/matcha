@@ -2,11 +2,15 @@
 #import "MatchaProtobuf.h"
 #import "MatchaTapGestureRecognizer.h"
 #import "MatchaPressGestureRecognizer.h"
-#import "MatchaViewController.h"
+#import "MatchaViewController_Private.h"
 #import "MatchaSwitchView.h"
 #import "MatchaButtonGestureRecognizer.h"
 #import "MatchaScrollView.h"
+#import "MatchaUnknownView.h"
+#import "MatchaView_Private.h"
+#import "MatchaBuildNode.h"
 
+UIView<MatchaChildView> *MatchaViewWithNode(MatchaBuildNode *node, MatchaViewNode *viewNode);
 static NSLock *sLock = nil;
 static NSMutableDictionary *sViewDict = nil;
 static NSMutableDictionary *sViewControllerDict = nil;
@@ -36,11 +40,11 @@ void MatchaRegisterViewController(NSString *string, MatchaViewControllerRegistra
 }
 
 UIGestureRecognizer *MatchaGestureRecognizerWithPB(int64_t viewId, GPBAny *any, MatchaViewNode *viewNode) {
-    if ([any.typeURL isEqual:@"type.googleapis.com/matcha.touch.TapRecognizer"]) {
+    if ([any.typeURL isEqual:@"type.googleapis.com/matcha.pointer.TapRecognizer"]) {
         return [[MatchaTapGestureRecognizer alloc] initWithMatchaVC:viewNode.rootVC viewId:viewId protobuf:any];
-    } else if ([any.typeURL isEqual:@"type.googleapis.com/matcha.touch.PressRecognizer"]) {
+    } else if ([any.typeURL isEqual:@"type.googleapis.com/matcha.pointer.PressRecognizer"]) {
         return [[MatchaPressGestureRecognizer alloc] initWithMatchaVC:viewNode.rootVC viewId:viewId protobuf:any];
-    } else if ([any.typeURL isEqual:@"type.googleapis.com/matcha.touch.ButtonRecognizer"]) {
+    } else if ([any.typeURL isEqual:@"type.googleapis.com/matcha.pointer.ButtonRecognizer"]) {
         return [[MatchaButtonGestureRecognizer alloc] initWithMatchaVC:viewNode.rootVC viewId:viewId protobuf:any];
     }
     return nil;
@@ -56,7 +60,6 @@ UIView<MatchaChildView> *MatchaViewWithNode(MatchaBuildNode *node, MatchaViewNod
         child = block(viewNode);
     }
     [sLock unlock];
-
     return child;
 }
 
@@ -74,7 +77,37 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     return child;
 }
 
+@interface MatchaViewNode ()
+- (id)initWithParent:(MatchaViewNode *)node rootVC:(MatchaViewController *)rootVC identifier:(NSNumber *)identifier;
+@property (nonatomic, strong) UIView<MatchaChildView> *view;
+@property (nonatomic, strong) NSDictionary<NSNumber *, UIGestureRecognizer *> *touchRecognizers;
+
+- (void)setRoot:(MatchaViewPBRoot *)root;
+@property (nonatomic, strong) UIViewController<MatchaChildViewController> *viewController;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, MatchaViewNode *> *children;
+@property (nonatomic, strong) MatchaViewPBLayoutPaintNode *layoutPaintNode;
+@property (nonatomic, strong) MatchaBuildNode *buildNode;
+@property (nonatomic, strong) NSNumber *identifier;
+@property (nonatomic, weak) MatchaViewNode *parent;
+@property (nonatomic, weak) MatchaViewController *rootVC;
+
+@property (nonatomic, strong) UIViewController *wrappedViewController;
+- (UIViewController *)materializedViewController;
+- (UIViewController *)wrappedViewController;
+- (UIView *)materializedView;
+
+@property (nonatomic, assign) CGRect frame;
+@end
+
 @implementation MatchaViewNode
+
+- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId, ... NS_REQUIRES_NIL_TERMINATION {
+    va_list args;
+    va_start(args, funcId);
+    NSArray *rlt = [self.rootVC call:funcId viewId:self.identifier.longLongValue args:args];
+    va_end(args);
+    return rlt;
+}
 
 - (id)initWithParent:(MatchaViewNode *)node rootVC:(MatchaViewController *)rootVC identifier:(NSNumber *)identifier {
     if ((self = [super init])) {
@@ -85,7 +118,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     return self;
 }
 
-- (void)setRoot:(MatchaNodeRoot *)root {
+- (void)setRoot:(MatchaViewPBRoot *)root {
     MatchaViewPBLayoutPaintNode *pbLayoutPaintNode = [root.layoutPaintNodes objectForKey:self.identifier.longLongValue];
     
     MatchaViewPBBuildNode *pbBuildNode = [root.buildNodes objectForKey:self.identifier.longLongValue];
@@ -93,12 +126,13 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     if (pbBuildNode != nil) {
         buildNode = [[MatchaBuildNode alloc] initWithProtobuf:pbBuildNode];
     }
-//    NSAssert(self.buildNode == nil || [self.buildNode.nativeViewName isEqual:buildNode.nativeViewName], @"Node with different name");
     
+    // Create view
     if (self.view == nil && self.viewController == nil) {
         self.view = MatchaViewWithNode(buildNode, self);
         self.viewController = MatchaViewControllerWithNode(buildNode, self);
         if (self.view == nil && self.viewController == nil) {
+            self.view = [[MatchaUnknownView alloc] initWithViewNode:self];
             NSLog(@"Cannot find corresponding view or view controller for node: %@", buildNode.nativeViewName);
         }
         self.materializedView.autoresizingMask = UIViewAutoresizingNone;
@@ -113,7 +147,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     NSMutableArray *unmodifiedKeys = [NSMutableArray array];
     if (buildNode != nil && ![buildNode.buildId isEqual:self.buildNode.buildId]) {        
         for (NSNumber *i in self.children) {
-            MatchaBuildNode *child = [root.buildNodes objectForKey:i.longLongValue];
+            MatchaViewPBBuildNode *child = [root.buildNodes objectForKey:i.longLongValue];
             if (child == nil) {
                 [removedKeys addObject:i];
             }
@@ -145,9 +179,9 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     if (buildNode != nil && ![buildNode.buildId isEqual:self.buildNode.buildId]) {
         // Update the views with native values
         if (self.view) {
-            self.view.node = buildNode;
+            self.view.nativeState = buildNode.nativeViewState;
         } else if (self.viewController) {
-            self.viewController.node = buildNode;
+            self.viewController.nativeState = buildNode.nativeViewState;
             
             NSMutableArray<UIViewController *> *childVCs = [NSMutableArray array];
             for (MatchaViewNode *i in childrenArray) {
@@ -159,7 +193,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
         // Add/remove subviews
         for (NSNumber *i in addedKeys) {
             MatchaViewNode *child = children[i];
-            child.view.node = [[MatchaBuildNode alloc] initWithProtobuf:[root.buildNodes objectForKey:i.longLongValue]];
+            // child.view.node = [[MatchaBuildNode alloc] initWithProtobuf:[root.buildNodes objectForKey:i.longLongValue]];
             
             if (self.viewController) {
                 // no-op. The view controller will handle this itself.
@@ -245,9 +279,9 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
             self.materializedView.frame = f;
             scrollView.matchaContentOffset = origin;
             scrollView.contentOffset = origin;
+            scrollView.contentSize = f.size;
             
-        } else if (self.parent.viewController == nil) {
-            // let view controllers do their own layout
+        } else if (self.parent.viewController == nil) { // let view controllers do their own layout
             if (!CGRectEqualToRect(f, self.frame)) {
                 self.materializedView.frame = f;
                 self.frame = f;
@@ -276,7 +310,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
         self.view.layer.shadowRadius = pbLayoutPaintNode.paintStyle.shadowRadius;
         self.view.layer.shadowOffset = pbLayoutPaintNode.paintStyle.shadowOffset.toCGSize;
         self.view.layer.shadowColor = MatchaCGColorWithProtobuf(pbLayoutPaintNode.paintStyle.shadowColor);
-        self.view.layer.shadowOpacity = pbLayoutPaintNode.paintStyle.hasShadowColor ? 0 : 1;
+        self.view.layer.shadowOpacity = pbLayoutPaintNode.paintStyle.hasShadowColor ? 1 : 0;
         if (pbLayoutPaintNode.paintStyle.cornerRadius != 0) {
             self.view.clipsToBounds = YES; // TODO(KD): Be better about this...
         }
@@ -324,3 +358,9 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
 }
 
 @end
+
+void MatchaConfigureChildViewController(UIViewController *vc) {
+    vc.edgesForExtendedLayout=UIRectEdgeNone;
+    vc.extendedLayoutIncludesOpaqueBars=NO;
+    vc.automaticallyAdjustsScrollViewInsets=NO;
+}

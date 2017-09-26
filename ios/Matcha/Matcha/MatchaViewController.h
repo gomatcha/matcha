@@ -1,27 +1,15 @@
 #import <UIKit/UIKit.h>
 #import <MatchaBridge/MatchaBridge.h>
-@class MatchaNodeRoot;
+@class MatchaViewPBRoot;
+@class MatchaViewNode;
+@protocol MatchaChildView;
+@protocol MatchaChildViewController;
 
-@interface MatchaViewController : UIViewController // view.Root
-+ (NSPointerArray *)viewControllers;
-+ (MatchaViewController *)viewControllerWithIdentifier:(NSInteger)identifier;
+typedef UIView<MatchaChildView> *(^MatchaViewRegistrationBlock)(MatchaViewNode *);
+typedef UIViewController<MatchaChildViewController> *(^MatchaViewControllerRegistrationBlock)(MatchaViewNode *);
 
+@interface MatchaViewController : UIViewController
 - (id)initWithGoValue:(MatchaGoValue *)value;
-- (void)update:(MatchaNodeRoot *)node;
-- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args:(NSArray<MatchaGoValue *> *)args;
-@property (nonatomic, readonly) NSInteger identifier;
-@property (nonatomic, assign) BOOL updating;
++ (void)registerView:(NSString *)viewName block:(MatchaViewRegistrationBlock)block;
++ (void)registerViewController:(NSString *)viewName block:(MatchaViewControllerRegistrationBlock)block;
 @end
-
-
-void MatchaConfigureChildViewController(UIViewController *vc);
-
-
-typedef struct MatchaColor {
-    uint32_t red;
-    uint32_t blue;
-    uint32_t green;
-    uint32_t alpha;
-} MatchaColor;
-
-bool MatchaColorEqualToColor(MatchaColor a, MatchaColor b);

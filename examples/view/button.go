@@ -2,18 +2,16 @@ package view
 
 import (
 	"golang.org/x/image/colornames"
-	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/alert"
-	"gomatcha.io/matcha/view/button"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewButtonView", func() *view.Root {
-		return view.NewRoot(NewButtonView())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewButtonView", func() view.View {
+		return NewButtonView()
 	})
 }
 
@@ -28,13 +26,14 @@ func NewButtonView() *ButtonView {
 	}
 }
 
-func (v *ButtonView) Build(ctx *view.Context) view.Model {
+func (v *ButtonView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := button.New()
-	chl1.Text = "Press Me"
+	chl1 := view.NewButton()
+	chl1.Enabled = true
+	chl1.String = "Press Me"
 	chl1.OnPress = func() {
-		alert.Alert("Button Pressed", "")
+		view.Alert("Button Pressed", "")
 	}
 	g1 := l.Add(chl1, func(s *constraint.Solver) {
 		s.Top(100)
@@ -42,12 +41,12 @@ func (v *ButtonView) Build(ctx *view.Context) view.Model {
 		s.Width(200)
 	})
 
-	chl2 := button.New()
-	chl2.Text = "Press Me"
+	chl2 := view.NewButton()
+	chl2.String = "Press Me"
 	chl2.Color = colornames.Red
 	chl2.Enabled = false
 	chl2.OnPress = func() {
-		alert.Alert("Button2 Pressed", "")
+		view.Alert("Button2 Pressed", "")
 	}
 	l.Add(chl2, func(s *constraint.Solver) {
 		s.TopEqual(g1.Bottom().Add(50))

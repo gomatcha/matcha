@@ -4,7 +4,6 @@ import (
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/scrollview"
 )
 
 type CellularView struct {
@@ -19,11 +18,11 @@ func NewCellularView(app *App) *CellularView {
 	}
 }
 
-func (v *CellularView) Build(ctx *view.Context) view.Model {
+func (v *CellularView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 	chlds := []view.View{}
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.ContentLayouter = l
 	scrollView.ContentChildren = chlds
 

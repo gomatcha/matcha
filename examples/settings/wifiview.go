@@ -2,18 +2,14 @@ package settings
 
 import (
 	"golang.org/x/image/colornames"
-	"gomatcha.io/matcha/app"
+	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/touch"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/alert"
-	"gomatcha.io/matcha/view/imageview"
-	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/segmentview"
-	"gomatcha.io/matcha/view/stackview"
-	"gomatcha.io/matcha/view/switchview"
+	"gomatcha.io/matcha/view/android"
+	"gomatcha.io/matcha/view/ios"
 )
 
 type WifiView struct {
@@ -36,7 +32,7 @@ func (v *WifiView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *WifiView) Build(ctx *view.Context) view.Model {
+func (v *WifiView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 	{
 		group := []view.View{}
@@ -44,9 +40,9 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New()
+		switchView := view.NewSwitch()
 		switchView.Value = v.app.Wifi.Enabled()
-		switchView.OnValueChange = func(value bool) {
+		switchView.OnSubmit = func(value bool) {
 			v.app.Wifi.SetEnabled(!v.app.Wifi.Enabled())
 		}
 
@@ -110,9 +106,9 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 			spacer := NewSpacer()
 			l.Add(spacer, nil)
 
-			switchView := switchview.New()
+			switchView := view.NewSwitch()
 			switchView.Value = v.app.Wifi.AskToJoin()
-			switchView.OnValueChange = func(a bool) {
+			switchView.OnSubmit = func(a bool) {
 				v.app.Wifi.SetAskToJoin(a)
 			}
 			cell1 := NewBasicCell()
@@ -130,18 +126,18 @@ func (v *WifiView) Build(ctx *view.Context) view.Model {
 		}
 	}
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
+		Options: []view.Option{
+			&ios.StackBar{Title: "Wifi"},
+			&android.StackBar{Title: "Wifi"},
+		},
 	}
-}
-
-func (v *WifiView) StackBar(ctx *view.Context) *stackview.Bar {
-	return &stackview.Bar{Title: "Wi-Fi"}
 }
 
 type WifiNetworkView struct {
@@ -171,7 +167,7 @@ func (v *WifiNetworkView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
+func (v *WifiNetworkView) Build(ctx view.Context) view.Model {
 	props := v.network.Properties()
 
 	l := &table.Layouter{}
@@ -183,12 +179,11 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 		cell1 := NewBasicCell()
 		cell1.Title = "Forget This Network"
 		cell1.OnTap = func() {
-			alert.Alert("Forget Wi-Fi Network?", "Your iPhone will no longer join this Wi-Fi network.",
-				&alert.Button{
+			view.Alert("Forget Wi-Fi Network?", "Your iPhone will no longer join this Wi-Fi network.",
+				&view.AlertButton{
 					Title: "Cancel",
-					Style: alert.ButtonStyleCancel,
 				},
-				&alert.Button{
+				&view.AlertButton{
 					Title: "Forget",
 					OnPress: func() {
 						v.app.Stack.Pop()
@@ -248,7 +243,7 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 		cell1 := NewBasicCell()
 		cell1.Title = "Renew Lease"
 		cell1.OnTap = func() {
-			alert.Alert("Renewing Lease...", "")
+			view.Alert("Renewing Lease...", "")
 		}
 
 		for _, i := range AddSeparators([]view.View{cell1}) {
@@ -289,19 +284,17 @@ func (v *WifiNetworkView) Build(ctx *view.Context) view.Model {
 	spacer := NewSpacer()
 	l.Add(spacer, nil)
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
-	}
-}
-
-func (v *WifiNetworkView) StackBar(*view.Context) *stackview.Bar {
-	return &stackview.Bar{
-		Title: v.network.SSID(),
+		Options: []view.Option{
+			&ios.StackBar{Title: v.network.SSID()},
+			&android.StackBar{Title: v.network.SSID()},
+		},
 	}
 }
 
@@ -316,14 +309,14 @@ func NewSegmentCell() *SegmentCell {
 	return &SegmentCell{}
 }
 
-func (v *SegmentCell) Build(ctx *view.Context) view.Model {
+func (v *SegmentCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(44)
 		s.WidthEqual(l.MinGuide().Width())
 	})
 
-	segment := segmentview.New()
+	segment := ios.NewSegmentView()
 	segment.Titles = v.Titles
 	segment.Value = v.Value
 	segment.OnValueChange = func(a int) {
@@ -354,24 +347,24 @@ func NewInfoButton() *InfoButton {
 	return &InfoButton{}
 }
 
-func (v *InfoButton) Build(ctx *view.Context) view.Model {
+func (v *InfoButton) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
 		s.Width(44)
 		s.Height(44)
 	})
 
-	img := imageview.New()
-	img.Image = app.MustLoadImage("Info")
+	img := view.NewImageView()
+	img.Image = application.MustLoadImage("info")
 	l.Add(img, func(s *constraint.Solver) {
 		s.Width(22)
 		s.Height(22)
 		s.RightEqual(l.Right())
 	})
 
-	button := &touch.ButtonRecognizer{
-		OnTouch: func(e *touch.ButtonEvent) {
-			if e.Kind == touch.EventKindRecognized && v.OnPress != nil {
+	button := &pointer.ButtonGesture{
+		OnEvent: func(e *pointer.ButtonEvent) {
+			if e.Kind == pointer.EventKindRecognized && v.OnPress != nil {
 				v.OnPress()
 			}
 		},
@@ -382,7 +375,7 @@ func (v *InfoButton) Build(ctx *view.Context) view.Model {
 		Layouter: l,
 		Painter:  v.PaintStyle,
 		Options: []view.Option{
-			touch.RecognizerList{button},
+			pointer.GestureList{button},
 		},
 	}
 }

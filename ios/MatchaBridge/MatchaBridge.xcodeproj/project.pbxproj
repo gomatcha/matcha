@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		67FEBA551F099B4E005AFEDA /* MatchaBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA531F099B4E005AFEDA /* MatchaBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		67FEBA5E1F099C1E005AFEDA /* matchaobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA5B1F099C1D005AFEDA /* matchaobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67FEBA5E1F099C1E005AFEDA /* matchaforeign.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA5B1F099C1D005AFEDA /* matchaforeign.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67FEBA5F1F099C1E005AFEDA /* matchago.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA5C1F099C1E005AFEDA /* matchago.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67FEBA601F099C1E005AFEDA /* MatchaBridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67FEBA5D1F099C1E005AFEDA /* MatchaBridge.a */; };
 		67FEBB281F09A73E005AFEDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67FEBB271F09A73E005AFEDA /* Foundation.framework */; };
@@ -18,7 +18,7 @@
 		67FEBA501F099B4E005AFEDA /* MatchaBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MatchaBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67FEBA531F099B4E005AFEDA /* MatchaBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchaBridge.h; sourceTree = "<group>"; };
 		67FEBA541F099B4E005AFEDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		67FEBA5B1F099C1D005AFEDA /* matchaobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matchaobjc.h; sourceTree = "<group>"; };
+		67FEBA5B1F099C1D005AFEDA /* matchaforeign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matchaforeign.h; sourceTree = "<group>"; };
 		67FEBA5C1F099C1E005AFEDA /* matchago.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matchago.h; sourceTree = "<group>"; };
 		67FEBA5D1F099C1E005AFEDA /* MatchaBridge.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = MatchaBridge.a; sourceTree = "<group>"; };
 		67FEBB271F09A73E005AFEDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -57,7 +57,7 @@
 		67FEBA521F099B4E005AFEDA /* MatchaBridge */ = {
 			isa = PBXGroup;
 			children = (
-				67FEBA5B1F099C1D005AFEDA /* matchaobjc.h */,
+				67FEBA5B1F099C1D005AFEDA /* matchaforeign.h */,
 				67FEBA5C1F099C1E005AFEDA /* matchago.h */,
 				67FEBA5D1F099C1E005AFEDA /* MatchaBridge.a */,
 				67FEBA531F099B4E005AFEDA /* MatchaBridge.h */,
@@ -81,7 +81,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67FEBA5E1F099C1E005AFEDA /* matchaobjc.h in Headers */,
+				67FEBA5E1F099C1E005AFEDA /* matchaforeign.h in Headers */,
 				67FEBA551F099B4E005AFEDA /* MatchaBridge.h in Headers */,
 				67FEBA5F1F099C1E005AFEDA /* matchago.h in Headers */,
 			);

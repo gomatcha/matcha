@@ -1,11 +1,12 @@
 #import "MatchaImageView.h"
+#import "MatchaViewController.h"
 
 @implementation MatchaImageView
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/imageview", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/imageview" block:^(MatchaViewNode *node){
         return [[MatchaImageView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
@@ -15,24 +16,22 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    MatchaImageViewPBView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaImageViewPBView class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPBImageView *view = [MatchaViewPBImageView parseFromData:nativeState error:nil];
     
     UIImage *image = [[UIImage alloc] initWithImageOrResourceProtobuf:view.image];
-    
     switch (view.resizeMode) {
-        case MatchaImageViewPBResizeMode_GPBUnrecognizedEnumeratorValue:
-        case MatchaImageViewPBResizeMode_Fit:
+        case MatchaViewPBImageResizeMode_GPBUnrecognizedEnumeratorValue:
+        case MatchaViewPBImageResizeMode_Fit:
             self.contentMode = UIViewContentModeScaleAspectFit;
             break;
-        case MatchaImageViewPBResizeMode_Fill:
+        case MatchaViewPBImageResizeMode_Fill:
             self.contentMode = UIViewContentModeScaleAspectFill;
             break;
-        case MatchaImageViewPBResizeMode_Stretch:
+        case MatchaViewPBImageResizeMode_Stretch:
             self.contentMode = UIViewContentModeScaleToFill;
             break;
-        case MatchaImageViewPBResizeMode_Center:
+        case MatchaViewPBImageResizeMode_Center:
             self.contentMode = UIViewContentModeCenter;
             break;
     }

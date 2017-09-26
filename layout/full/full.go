@@ -22,11 +22,11 @@ type Layouter struct {
 }
 
 // Layout implements the view.Layouter interface.
-func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
-	g := layout.Guide{Frame: layout.Rect{Max: ctx.MinSize}}
+func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
+	g := layout.Guide{Frame: layout.Rect{Max: ctx.MinSize()}}
 	gs := []layout.Guide{}
-	for i := 0; i < ctx.ChildCount; i++ {
-		gs = append(gs, ctx.LayoutChild(i, ctx.MinSize, ctx.MinSize))
+	for i := 0; i < ctx.ChildCount(); i++ {
+		gs = append(gs, ctx.LayoutChild(i, ctx.MinSize(), ctx.MinSize()))
 	}
 	return g, gs
 }

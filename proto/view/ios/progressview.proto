@@ -1,0 +1,13 @@
+syntax = "proto3";
+package matcha.view.ios;
+import "gomatcha.io/matcha/proto/image.proto";
+
+option go_package = "ios";
+option objc_class_prefix = "MatchaiOSPB";
+option java_package = "io.gomatcha.matcha.proto.view.ios";
+option java_outer_classname = "PbProgressView";
+
+message ProgressView {
+    double progress = 1;
+    matcha.Color progressColor = 2;
+}

@@ -3,9 +3,9 @@
 @implementation MatchaBasicView
 
 + (void)load {
-    MatchaRegisterView(@"", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"" block:^(MatchaViewNode *node){
         return [[MatchaBasicView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
@@ -15,8 +15,8 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
+- (void)setNativeState:(NSData *)nativeState {
+    // no-op
 }
 
 @end

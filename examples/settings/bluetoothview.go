@@ -4,8 +4,7 @@ import (
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/switchview"
+	"gomatcha.io/matcha/view/ios"
 )
 
 type BluetoothView struct {
@@ -29,7 +28,7 @@ func (v *BluetoothView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *BluetoothView) Build(ctx *view.Context) view.Model {
+func (v *BluetoothView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 	{
 		group := []view.View{}
@@ -37,9 +36,9 @@ func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 		spacer := NewSpacer()
 		l.Add(spacer, nil)
 
-		switchView := switchview.New()
+		switchView := view.NewSwitch()
 		switchView.Value = v.app.Bluetooth.Enabled()
-		switchView.OnValueChange = func(value bool) {
+		switchView.OnSubmit = func(value bool) {
 			v.app.Bluetooth.SetEnabled(!v.app.Bluetooth.Enabled())
 		}
 
@@ -80,12 +79,15 @@ func (v *BluetoothView) Build(ctx *view.Context) view.Model {
 		}
 	}
 
-	scrollView := scrollview.New()
+	scrollView := view.NewScrollView()
 	scrollView.ContentLayouter = l
 	scrollView.ContentChildren = l.Views()
 
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
+		Options: []view.Option{
+			&ios.StackBar{Title: "Settings"},
+		},
 	}
 }

@@ -1,9 +1,11 @@
 #import "MatchaViewController.h"
+#import "MatchaViewController_Private.h"
 #import "MatchaView.h"
 #import "MatchaBridge.h"
-#import "MatchaNode.h"
+#import "MatchaBuildNode.h"
 #import "MatchaObjcBridge.h"
 #import "MatchaProtobuf.h"
+#import "MatchaView_Private.h"
 
 @interface MatchaViewController ()
 @property (nonatomic, assign) NSInteger identifier;
@@ -11,6 +13,9 @@
 @property (nonatomic, strong) MatchaGoValue *goValue;
 @property (nonatomic, assign) CGRect lastFrame;
 @property (nonatomic, assign) BOOL loaded;
+@property (nonatomic, assign) BOOL statusbarhidden;
+@property (nonatomic, assign) UIStatusBarStyle statusbarstyle;
+@property (nonatomic, assign) BOOL updating;
 @end
 
 @implementation MatchaViewController
@@ -33,14 +38,16 @@
     return nil;
 }
 
-- (id)initWithGoValue:(MatchaGoValue *)value {
+- (id)initWithGoValue:(MatchaGoValue *)value2 {
     if ((self = [super initWithNibName:nil bundle:nil])) {
-        [[MatchaObjcBridge sharedBridge] configure];
+        [MatchaObjcBridge_X configure];
+        [[MatchaObjcBridge sharedBridge] setObject:[MatchaObjcBridge_X new] forKey:@""];
         
+        MatchaGoValue *value = [[[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/view NewRoot"] call:nil, value2, nil][0];
         self.goValue = value;
-        self.identifier = (int)[value call:@"Id" args:nil][0].toLongLong;
+        self.identifier = (int)[value call:@"Id", nil][0].toLongLong;
         [[MatchaViewController viewControllers] addPointer:(__bridge void *)self];
-        self.viewNode = [[MatchaViewNode alloc] initWithParent:nil rootVC:self identifier:@([value call:@"ViewId" args:nil][0].toLongLong)];
+        self.viewNode = [[MatchaViewNode alloc] initWithParent:nil rootVC:self identifier:@([value call:@"ViewId", nil][0].toLongLong)];
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.extendedLayoutIncludesOpaqueBars=NO;
         self.automaticallyAdjustsScrollViewInsets=NO;
@@ -49,25 +56,39 @@
 }
 
 - (void)dealloc {
-    [self.goValue call:@"Stop" args:nil];
+    [self.goValue call:@"Stop", nil];
 }
 
 - (void)viewDidLayoutSubviews {
     if (!CGRectEqualToRect(self.lastFrame, self.view.frame)) {
         self.lastFrame = self.view.frame;
         
-        [self.goValue call:@"SetSize" args:@[[[MatchaGoValue alloc] initWithCGPoint:CGPointMake(self.view.frame.size.width, self.view.frame.size.height)]]];
+        MatchaGoValue *width = [[MatchaGoValue alloc] initWithDouble:self.view.frame.size.width];
+        MatchaGoValue *height = [[MatchaGoValue alloc] initWithDouble:self.view.frame.size.height];
+        [self.goValue call:@"SetSize", width, height, nil];
     }
 }
 
-- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args:(NSArray<MatchaGoValue *> *)args {
+- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args2:(NSArray *)args {
     MatchaGoValue *goValue = [[MatchaGoValue alloc] initWithString:funcId];
     MatchaGoValue *goViewId = [[MatchaGoValue alloc] initWithLongLong:viewId];
     MatchaGoValue *goArgs = [[MatchaGoValue alloc] initWithArray:args];
-    return [self.goValue call:@"Call" args:@[goValue, goViewId, goArgs]];
+    return [self.goValue call:@"Call", goValue, goViewId, goArgs, nil];
 }
 
-- (void)update:(MatchaNodeRoot *)root {
+
+- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args:(va_list)args {
+    MatchaGoValue *goValue = [[MatchaGoValue alloc] initWithString:funcId];
+    MatchaGoValue *goViewId = [[MatchaGoValue alloc] initWithLongLong:viewId];
+    NSMutableArray *array = [NSMutableArray array];
+    id arg = nil;
+    while ((arg = va_arg(args, id))) {
+        [array addObject:arg];
+    }
+    return [self.goValue call:@"Call", goValue, goViewId, [[MatchaGoValue alloc] initWithArray:array], nil];
+}
+
+- (void)update:(MatchaViewPBRoot *)root {
     self.updating = true;
     [self.viewNode setRoot:root];
     
@@ -88,11 +109,9 @@
         } else if (statusBar.style == MatchaAppPBStatusBarStyle_StatusBarStyleDark) {
             style = UIStatusBarStyleDefault;
         }
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-        [UIApplication.sharedApplication setStatusBarStyle:style animated:YES];
-        [UIApplication.sharedApplication setStatusBarHidden:statusBar.hidden withAnimation:YES];
-#pragma GCC diagnostic pop
+        self.statusbarstyle = style;
+        self.statusbarhidden = statusBar.hidden;
+        [self setNeedsStatusBarAppearanceUpdate];
     }
     
     if (!self.loaded) {
@@ -105,14 +124,20 @@
     self.updating = false;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.statusbarstyle;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return self.statusbarhidden;
+}
+
++ (void)registerView:(NSString *)viewName block:(MatchaViewRegistrationBlock)block {
+    MatchaRegisterView(viewName, block);
+}
+
++ (void)registerViewController:(NSString *)viewName block:(MatchaViewControllerRegistrationBlock)block {
+    MatchaRegisterViewController(viewName, block);
+}
+
 @end
-
-void MatchaConfigureChildViewController(UIViewController *vc) {
-    vc.edgesForExtendedLayout=UIRectEdgeNone;
-    vc.extendedLayoutIncludesOpaqueBars=NO;
-    vc.automaticallyAdjustsScrollViewInsets=NO;
-}
-
-bool MatchaColorEqualToColor(MatchaColor a, MatchaColor b) {
-    return a.red == b.red && a.blue == b.blue && a.green == b.green && a.alpha == b.alpha;
-}

@@ -16,5 +16,5 @@ FOUNDATION_EXPORT const unsigned char MatchaBridgeVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <MatchaBridge/PublicHeader.h>
 
+#import <MatchaBridge/matchaforeign.h>
 #import <MatchaBridge/matchago.h>
-#import <MatchaBridge/matchaobjc.h>

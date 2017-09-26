@@ -7,9 +7,8 @@ import (
 
 	"golang.org/x/image/colornames"
 
-	"gomatcha.io/bridge"
 	"gomatcha.io/matcha/animate"
-	"gomatcha.io/matcha/app"
+	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/constraint"
@@ -17,22 +16,12 @@ import (
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/alert"
-	"gomatcha.io/matcha/view/basicview"
-	"gomatcha.io/matcha/view/button"
-	"gomatcha.io/matcha/view/imageview"
-	"gomatcha.io/matcha/view/progressview"
-	"gomatcha.io/matcha/view/scrollview"
-	"gomatcha.io/matcha/view/segmentview"
-	"gomatcha.io/matcha/view/slider"
-	"gomatcha.io/matcha/view/switchview"
-	"gomatcha.io/matcha/view/textview"
-	"gomatcha.io/matcha/view/urlimageview"
+	"gomatcha.io/matcha/view/ios"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/complex New", func() *view.Root {
-		return view.NewRoot(New())
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/complex NewNestedView", func() view.View {
+		return NewNestedView()
 	})
 }
 
@@ -44,7 +33,7 @@ type NestedView struct {
 	value        animate.Value
 }
 
-func New() *NestedView {
+func NewNestedView() *NestedView {
 	return &NestedView{}
 }
 
@@ -59,13 +48,13 @@ func (v *NestedView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *NestedView) Build(ctx *view.Context) view.Model {
+func (v *NestedView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	value := animate.FloatLerp{Start: 0, End: 150}.Notifier(&v.value)
 	// value := animate.FloatInterpolate(animate.FloatLerp{Start: 0, End: 150}, &v.value)
 
-	chl1 := basicview.New()
+	chl1 := view.NewBasicView()
 	chl1.Painter = &paint.AnimatedStyle{
 		BackgroundColor: animate.RGBALerp{Start: colornames.Red, End: colornames.Yellow}.Notifier(&v.value),
 	}
@@ -76,7 +65,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.HeightEqual(constraint.Notifier(value))
 	})
 
-	chl2 := basicview.New()
+	chl2 := view.NewBasicView()
 	chl2.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
 	g2 := l.Add(chl2, func(s *constraint.Solver) {
 		s.TopEqual(g1.Bottom())
@@ -85,7 +74,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(300)
 	})
 
-	chl3 := basicview.New()
+	chl3 := view.NewBasicView()
 	chl3.Painter = &paint.Style{BackgroundColor: colornames.Blue}
 	g3 := l.Add(chl3, func(s *constraint.Solver) {
 		s.TopEqual(g2.Bottom())
@@ -94,7 +83,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(100)
 	})
 
-	chl4 := basicview.New()
+	chl4 := view.NewBasicView()
 	chl4.Painter = &paint.Style{BackgroundColor: colornames.Magenta}
 	g4 := l.Add(chl4, func(s *constraint.Solver) {
 		s.TopEqual(g2.Bottom())
@@ -103,18 +92,14 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(50)
 	})
 
-	chl5 := textview.New()
+	chl5 := view.NewTextView()
 	chl5.String = "Subtitle"
 	chl5.Style.SetAlignment(text.AlignmentCenter)
 	chl5.Style.SetStrikethroughStyle(text.StrikethroughStyleSingle)
 	chl5.Style.SetStrikethroughColor(colornames.Magenta)
 	chl5.Style.SetUnderlineStyle(text.UnderlineStyleDouble)
 	chl5.Style.SetUnderlineColor(colornames.Green)
-	chl5.Style.SetFont(text.Font{
-		Family: "American Typewriter",
-		Face:   "Bold",
-		Size:   20,
-	})
+	chl5.Style.SetFont(text.FontWithName("AmericanTypewriter-Bold", 20))
 	chl5p := view.WithPainter(chl5, &paint.Style{BackgroundColor: colornames.Cyan})
 
 	g5 := l.Add(chl5p, func(s *constraint.Solver) {
@@ -122,32 +107,29 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.RightEqual(g2.Right().Add(-15))
 	})
 
-	chl6 := textview.New()
+	chl6 := view.NewTextView()
 	chl6.String = fmt.Sprintf("Counter: %v", v.counter)
-	chl6.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   20,
-	})
+	chl6.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
 	chl6p := view.WithPainter(chl6, &paint.Style{BackgroundColor: colornames.Red})
 	g6 := l.Add(chl6p, func(s *constraint.Solver) {
 		s.BottomEqual(g5.Top())
 		s.RightEqual(g2.Right().Add(-15))
 	})
 
-	chl8 := button.New()
-	chl8.Text = "Button"
+	chl8 := view.NewButton()
+	chl8.String = "Button"
 	chl8.OnPress = func() {
 		v.counter += 1
 		v.Signal()
 
-		alert.Alert("Alert", "Message",
-			&alert.Button{
+		view.Alert("Alert", "Message",
+			&view.AlertButton{
 				Title: "OK",
 				OnPress: func() {
 					fmt.Println("OK")
 				},
 			},
-			&alert.Button{
+			&view.AlertButton{
 				Title: "Cancel",
 				OnPress: func() {
 					fmt.Println("Cancel")
@@ -161,9 +143,9 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 	})
 
 	if v.counter%2 == 0 {
-		chl9 := urlimageview.New()
+		chl9 := view.NewImageView()
 		chl9.URL = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
-		chl9.ResizeMode = imageview.ResizeModeFit
+		chl9.ResizeMode = view.ImageResizeModeFit
 		pChl9 := view.WithPainter(chl9, &paint.Style{BackgroundColor: colornames.Cyan})
 
 		_ = l.Add(pChl9, func(s *constraint.Solver) {
@@ -173,8 +155,8 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 			s.Height(200)
 		})
 	}
-	chl11 := switchview.New()
-	chl11.OnValueChange = func(value bool) {
+	chl11 := view.NewSwitch()
+	chl11.OnSubmit = func(value bool) {
 		a := 0.0
 		if value {
 			a = 1.0
@@ -194,6 +176,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 	})
 
 	childLayouter := &table.Layouter{}
+	childLayouter.StartEdge = layout.EdgeTop
 	for i := 0; i < 20; i++ {
 		childView := NewTableCell()
 		childView.String = "TEST TEST"
@@ -201,7 +184,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		childLayouter.Add(childView, nil)
 	}
 
-	chl10 := scrollview.New()
+	chl10 := view.NewScrollView()
 	chl10.PaintStyle = &paint.Style{BackgroundColor: colornames.Cyan}
 	chl10.ContentPainter = &paint.Style{BackgroundColor: colornames.White}
 	chl10.ContentLayouter = childLayouter
@@ -216,11 +199,11 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Height(200)
 	})
 
-	chl12 := slider.New()
+	chl12 := view.NewSlider()
 	chl12.ValueNotifier = &v.sliderValue
 	chl12.MaxValue = 1
 	chl12.MinValue = 0
-	chl12.OnValueChange = func(value float64) {
+	chl12.OnChange = func(value float64) {
 		v.sliderValue.SetValue(value)
 		fmt.Println("slider", value, v.sliderValue.Value())
 	}
@@ -231,7 +214,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Width(150)
 	})
 
-	chl13 := progressview.New()
+	chl13 := ios.NewProgressView()
 	chl13.ProgressNotifier = &v.sliderValue
 	chl13.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
 	_ = l.Add(chl13, func(s *constraint.Solver) {
@@ -240,7 +223,7 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 		s.Width(150)
 	})
 
-	chl14 := segmentview.New()
+	chl14 := ios.NewSegmentView()
 	chl14.Value = v.segmentValue
 	chl14.Titles = []string{"Title1", "Title2", "Title3"}
 	chl14.OnValueChange = func(a int) {
@@ -256,10 +239,10 @@ func (v *NestedView) Build(ctx *view.Context) view.Model {
 
 	options := []view.Option{}
 	if v.counter%2 == 0 {
-		options = append(options, app.ActivityIndicator{})
-		options = append(options, app.StatusBar{
+		options = append(options, &ios.ActivityIndicator{})
+		options = append(options, &ios.StatusBar{
 			Hidden: true,
-			Style:  app.StatusBarStyleDark,
+			Style:  ios.StatusBarStyleDark,
 		})
 	}
 
@@ -281,19 +264,16 @@ func NewTableCell() *TableCell {
 	return &TableCell{}
 }
 
-func (v *TableCell) Build(ctx *view.Context) view.Model {
+func (v *TableCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(50)
 	})
 
-	textView := textview.New()
+	textView := view.NewTextView()
 	textView.String = v.String
-	textView.Style.SetFont(text.Font{
-		Family: "Helvetica Neue",
-		Size:   20,
-	})
+	textView.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
 	l.Add(textView, func(s *constraint.Solver) {
 		s.LeftEqual(l.Left().Add(10))
 		s.RightEqual(l.Right().Add(-10))

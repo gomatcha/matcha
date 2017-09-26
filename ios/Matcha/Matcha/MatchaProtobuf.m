@@ -38,8 +38,22 @@ CGColorRef MatchaCGColorWithProtobuf(MatchaPBColor *value) {
 
 - (id)initWithProtobuf:(MatchaPBStyledText *)value {
     NSString *string = value.text.text;
-    NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:value.style];
-    return [[NSAttributedString alloc] initWithString:string attributes:attributes];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string];
+    
+    NSArray<MatchaPBTextStyle *> *stylesArray = value.stylesArray;
+    for (NSInteger i = 0; i < stylesArray.count; i++) {
+        NSInteger start = (NSInteger)stylesArray[i].index;
+        NSInteger end = 0;
+        if (i != stylesArray.count - 1) {
+            end = stylesArray[i+1].index - 1;
+        } else {
+            end = string.length - 1;
+        }
+        
+        NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:stylesArray[i]];
+        [attributedString setAttributes:attributes range:NSMakeRange(start, end-start+1)];
+    }
+    return attributedString;
 }
 
 - (MatchaPBStyledText *)protobuf {
@@ -53,7 +67,7 @@ CGColorRef MatchaCGColorWithProtobuf(MatchaPBColor *value) {
     
     MatchaPBStyledText *styledText = [[MatchaPBStyledText alloc] init];
     styledText.text = text;
-    styledText.style = [NSAttributedString protobufWithAttributes:attributes];
+//    styledText.style = [NSAttributedString protobufWithAttributes:attributes];
     return styledText;
 }
 
@@ -295,23 +309,26 @@ CGColorRef MatchaCGColorWithProtobuf(MatchaPBColor *value) {
 @implementation UIFont (Matcha)
 
 - (id)initWithProtobuf:(MatchaPBFont *)value {
-    NSMutableDictionary *attr = [NSMutableDictionary dictionary];
-    attr[UIFontDescriptorFamilyAttribute] = value.family;
-    attr[UIFontDescriptorFaceAttribute] = value.face;
-    attr[UIFontDescriptorSizeAttribute] = @(value.size);
-    
-    UIFontDescriptor *desc = [[UIFontDescriptor alloc] initWithFontAttributes:attr];
-    UIFont *font = [UIFont fontWithDescriptor:desc size:0];
-    return font;
+    return [UIFont fontWithName:value.family size:value.size];
+//    NSMutableDictionary *attr = [NSMutableDictionary dictionary];
+//    attr[UIFontDescriptorFamilyAttribute] = value.family;
+//    attr[UIFontDescriptorFaceAttribute] = value.face;
+//    attr[UIFontDescriptorSizeAttribute] = @(value.size);
+//    
+//    UIFontDescriptor *desc = [[UIFontDescriptor alloc] initWithFontAttributes:attr];
+//    UIFont *font = [UIFont fontWithDescriptor:desc size:0];
+//    return font;
 }
 
 - (MatchaPBFont *)protobuf {
     NSDictionary *attr = self.fontDescriptor.fontAttributes;
     
     MatchaPBFont *font = [[MatchaPBFont alloc] init];
-    font.family = attr[UIFontDescriptorFamilyAttribute];
-    font.face = attr[UIFontDescriptorFaceAttribute];
+    font.family = self.fontName;
     font.size = ((NSNumber *)attr[UIFontDescriptorSizeAttribute]).doubleValue;
+//    font.family = attr[UIFontDescriptorFamilyAttribute];
+//    font.face = attr[UIFontDescriptorFaceAttribute];
+//    font.size = ((NSNumber *)attr[UIFontDescriptorSizeAttribute]).doubleValue;
     return font;
 }
 
@@ -391,28 +408,13 @@ UIKeyboardType MatchaKeyboardTypeWithProtobuf(MatchaKeyboardPBType a) {
     UIKeyboardType t = UIKeyboardTypeDefault;
     switch (a) {
     case MatchaKeyboardPBType_GPBUnrecognizedEnumeratorValue:
-    case MatchaKeyboardPBType_DefaultType: {
+    case MatchaKeyboardPBType_DateTimeType:
+    case MatchaKeyboardPBType_TextType: {
         t = UIKeyboardTypeDefault;
         break;
     }
     case MatchaKeyboardPBType_NumberType: {
         t = UIKeyboardTypeNumberPad;
-        break;
-    }
-    case MatchaKeyboardPBType_NumberPunctuationType: {
-        t = UIKeyboardTypeNumbersAndPunctuation;
-        break;
-    }
-    case MatchaKeyboardPBType_DecimalType: {
-        t = UIKeyboardTypeDecimalPad;
-        break;
-    }
-    case MatchaKeyboardPBType_PhoneType: {
-        t = UIKeyboardTypePhonePad;
-        break;
-    }
-    case MatchaKeyboardPBType_AsciiType: {
-        t = UIKeyboardTypeASCIICapable;
         break;
     }
     case MatchaKeyboardPBType_EmailType: {
@@ -423,12 +425,8 @@ UIKeyboardType MatchaKeyboardTypeWithProtobuf(MatchaKeyboardPBType a) {
         t = UIKeyboardTypeURL;
         break;
     }
-    case MatchaKeyboardPBType_WebSearchType: {
-        t = UIKeyboardTypeWebSearch;
-        break;
-    }
-    case MatchaKeyboardPBType_NamePhoneType: {
-        t = UIKeyboardTypeNamePhonePad;
+    case MatchaKeyboardPBType_PhoneType: {
+        t = UIKeyboardTypePhonePad;
         break;
     }
     }

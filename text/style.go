@@ -2,9 +2,10 @@ package text
 
 import (
 	"image/color"
+	"runtime"
 
-	"gomatcha.io/matcha/pb"
-	pbtext "gomatcha.io/matcha/pb/text"
+	pb "gomatcha.io/matcha/proto"
+	pbtext "gomatcha.io/matcha/proto/text"
 )
 
 // Alignment represents a text alignment.
@@ -53,18 +54,50 @@ func (a UnderlineStyle) MarshalProtobuf() pbtext.UnderlineStyle {
 	return pbtext.UnderlineStyle(a)
 }
 
-// StrikethroughStyle represents a text font.
-type Font struct {
-	Family string
-	Face   string
-	Size   float64
+func DefaultFont(size float64) *Font {
+	if runtime.GOOS == "android" {
+		return FontWithName("sans-serif", size)
+	} else if runtime.GOOS == "darwin" {
+		return FontWithName("HelveticaNeue", size)
+	}
+	return &Font{}
 }
 
-func (f Font) MarshalProtobuf() *pbtext.Font {
+func DefaultBoldFont(size float64) *Font {
+	if runtime.GOOS == "android" {
+		return FontWithName("sans-serif-bold", size)
+	} else if runtime.GOOS == "darwin" {
+		return FontWithName("HelveticaNeue-Bold", size)
+	}
+	return &Font{}
+}
+
+func DefaultItalicFont(size float64) *Font {
+	if runtime.GOOS == "android" {
+		return FontWithName("sans-serif-italic", size)
+	} else if runtime.GOOS == "darwin" {
+		return FontWithName("HelveticaNeue-Italic", size)
+	}
+	return &Font{}
+}
+
+func FontWithName(name string, size float64) *Font {
+	return &Font{
+		name: name,
+		size: size,
+	}
+}
+
+// StrikethroughStyle represents a text font.
+type Font struct {
+	name string // Postscript name
+	size float64
+}
+
+func (f *Font) MarshalProtobuf() *pbtext.Font {
 	return &pbtext.Font{
-		Family: f.Family,
-		Face:   f.Face,
-		Size:   f.Size,
+		Family: f.name,
+		Size:   f.size,
 	}
 }
 
@@ -150,10 +183,7 @@ func (f *Style) get(k styleKey) interface{} {
 	case styleKeyUnderlineColor:
 		return color.Gray{0}
 	case styleKeyFont:
-		return Font{
-			Family: "Helvetica Neue",
-			Size:   14,
-		}
+		return DefaultFont(14)
 	case styleKeyHyphenation:
 		return float64(0.0)
 	case styleKeyLineHeightMultiple:
@@ -217,7 +247,7 @@ func (f *Style) MarshalProtobuf() *pbtext.TextStyle {
 		StrikethroughColor: pb.ColorEncode(f.get(styleKeyStrikethroughColor).(color.Color)),
 		UnderlineStyle:     f.get(styleKeyUnderlineStyle).(UnderlineStyle).MarshalProtobuf(),
 		UnderlineColor:     pb.ColorEncode(f.get(styleKeyUnderlineColor).(color.Color)),
-		Font:               f.get(styleKeyFont).(Font).MarshalProtobuf(),
+		Font:               f.get(styleKeyFont).(*Font).MarshalProtobuf(),
 		Hyphenation:        f.get(styleKeyHyphenation).(float64),
 		LineHeightMultiple: f.get(styleKeyLineHeightMultiple).(float64),
 		TextColor:          pb.ColorEncode(f.get(styleKeyTextColor).(color.Color)),
@@ -287,11 +317,11 @@ func (f *Style) ClearUnderlineColor() {
 	f.clear(styleKeyUnderlineColor)
 }
 
-func (f *Style) Font() Font {
-	return f.get(styleKeyFont).(Font)
+func (f *Style) Font() *Font {
+	return f.get(styleKeyFont).(*Font)
 }
 
-func (f *Style) SetFont(v Font) {
+func (f *Style) SetFont(v *Font) {
 	f.set(styleKeyFont, v)
 }
 

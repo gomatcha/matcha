@@ -3,6 +3,7 @@
 #import "MatchaProtobuf.h"
 #import "MatchaViewController.h"
 #import <objc/runtime.h>
+#import "MatchaView_Private.h"
 
 #define VIEW_ID_KEY @"matchaViewId"
 
@@ -49,10 +50,10 @@
 }
 
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
-    MatchaStackScreenPBView *view = (id)[self.node.nativeViewState unpackMessageClass:[MatchaStackScreenPBView class] error:nil];
+    MatchaiOSPBStackView *view = (id)[MatchaiOSPBStackView parseFromData:self.nativeState error:nil];
     
     NSMutableArray *prevIds = [NSMutableArray array];
-    for (MatchaStackScreenPBChildView *i in view.childrenArray) {
+    for (MatchaiOSPBStackChildView *i in view.childrenArray) {
         [prevIds addObject:@(i.screenId)];
     }
     if ([self.prevIds isEqual:prevIds]) {
@@ -67,7 +68,7 @@
 
     NSMutableArray *viewControllers = [NSMutableArray array];
     for (NSInteger i = 0; i < view.childrenArray.count; i++) {
-        MatchaStackScreenPBChildView *childView = view.childrenArray[i];
+        MatchaiOSPBStackChildView *childView = view.childrenArray[i];
         MatchaStackBar *bar = (id)childVCs[i * 2];
         UIViewController *vc = childVCs[i * 2 + 1];
         vc.navigationItem.title = bar.titleString;
@@ -113,11 +114,9 @@
     for (NSNumber *i in prevIds) {
         [array addValue:i.longLongValue];
     }
-    MatchaStackScreenPBStackEvent *event = [[MatchaStackScreenPBStackEvent alloc] init];
+    MatchaiOSPBStackEvent *event = [[MatchaiOSPBStackEvent alloc] init];
     event.idArray = array;
-    
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-    [self.viewNode.rootVC call:@"OnChange" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnChange", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 - (void)setMatchaChildLayout:(GPBInt64ObjectDictionary *)layoutPaintNodes {
@@ -136,7 +135,7 @@
 }
 
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
-    MatchaStackScreenPBBar *bar = (id)[self.node.nativeViewState unpackMessageClass:[MatchaStackScreenPBBar class] error:nil];
+    MatchaiOSPBStackBar *bar = [MatchaiOSPBStackBar parseFromData:self.nativeState error:nil];
     NSInteger idx = 0;
     
     self.titleString = bar.title;

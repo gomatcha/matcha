@@ -4,9 +4,9 @@
 @implementation MatchaProgressView
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/progressview", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/progressview" block:^(MatchaViewNode *node){
         return [[MatchaProgressView alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
@@ -16,9 +16,8 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    MatchaProgressViewPBView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaProgressViewPBView class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaiOSPBProgressView *view = [MatchaiOSPBProgressView parseFromData:nativeState error:nil];
     self.progress = view.progress;
     self.tintColor = [[UIColor alloc] initWithProtobuf:view.progressColor];
 }

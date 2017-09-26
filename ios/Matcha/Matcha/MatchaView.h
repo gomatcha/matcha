@@ -1,49 +1,21 @@
 #import <UIKit/UIKit.h>
-#import <Matcha/MatchaNode.h>
 #import <Matcha/MatchaViewController.h>
-@class MatchaViewConfig;
-@class MatchaViewController;
+@class GPBAny;
+@class MatchaViewPBLayoutPaintNode;
 @class MatchaViewNode;
 
 @protocol MatchaChildView <NSObject>
-- (id)initWithViewNode:(MatchaViewNode *)viewNode;
-- (void)setNode:(MatchaBuildNode *)node;
+- (id)initWithViewNode:(MatchaViewNode *)viewNode; // viewNode should be weakly retained
+- (void)setNativeState:(NSData *)nativeState;
 @end
 
 @protocol MatchaChildViewController <NSObject>
-- (id)initWithViewNode:(MatchaViewNode *)viewNode;
-- (void)setNode:(MatchaBuildNode *)node;
+- (id)initWithViewNode:(MatchaViewNode *)viewNode; // viewNode should be weakly retained
+- (void)setNativeState:(NSData *)nativeState;
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs;
-- (void)setMatchaChildLayout:(NSMutableArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
+- (void)setMatchaChildLayout:(NSArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
 @end
 
-typedef UIView<MatchaChildView> *(^MatchaViewRegistrationBlock)(MatchaViewNode *);
-typedef UIViewController<MatchaChildViewController> *(^MatchaViewControllerRegistrationBlock)(MatchaViewNode *);
-
-UIGestureRecognizer *MatchaGestureRecognizerWithPB(int64_t viewId, GPBAny *any, MatchaViewNode *viewNode);
-UIView<MatchaChildView> *MatchaViewWithNode(MatchaBuildNode *node, MatchaViewNode *viewNode);
-UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(MatchaBuildNode *node, MatchaViewNode *viewNode);
-void MatchaRegisterView(NSString *string, MatchaViewRegistrationBlock block);
-void MatchaRegisterViewController(NSString *string, MatchaViewControllerRegistrationBlock block);
-
 @interface MatchaViewNode : NSObject
-- (id)initWithParent:(MatchaViewNode *)node rootVC:(MatchaViewController *)rootVC identifier:(NSNumber *)identifier;
-@property (nonatomic, strong) UIView<MatchaChildView> *view;
-@property (nonatomic, strong) NSDictionary<NSNumber *, UIGestureRecognizer *> *touchRecognizers;
-
-@property (nonatomic, strong) UIViewController<MatchaChildViewController> *viewController;
-@property (nonatomic, strong) NSMutableDictionary<NSNumber *, MatchaViewNode *> *children;
-- (void)setRoot:(MatchaNodeRoot *)root;
-@property (nonatomic, strong) MatchaViewPBLayoutPaintNode *layoutPaintNode;
-@property (nonatomic, strong) MatchaBuildNode *buildNode;
-@property (nonatomic, strong) NSNumber *identifier;
-@property (nonatomic, weak) MatchaViewNode *parent;
-@property (nonatomic, weak) MatchaViewController *rootVC;
-
-@property (nonatomic, strong) UIViewController *wrappedViewController;
-- (UIViewController *)materializedViewController;
-- (UIViewController *)wrappedViewController;
-- (UIView *)materializedView;
-
-@property (nonatomic, assign) CGRect frame;
+- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId, ... NS_REQUIRES_NIL_TERMINATION; // varargs should be of MatchaGoValue *
 @end

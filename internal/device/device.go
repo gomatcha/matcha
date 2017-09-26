@@ -1,7 +1,7 @@
 package device
 
 import (
-	"gomatcha.io/bridge"
+	"gomatcha.io/matcha/bridge"
 )
 
 func init() {

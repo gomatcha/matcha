@@ -9,12 +9,11 @@
 #import "Imageview.pbobjc.h"
 #import "Button.pbobjc.h"
 #import "Paint.pbobjc.h"
-#import "Tabscreen.pbobjc.h"
-#import "Stacknavigator.pbobjc.h"
+#import "Tabview.pbobjc.h"
+#import "Stackview.pbobjc.h"
 #import "Switchview.pbobjc.h"
-#import "Touch2.pbobjc.h"
+#import "Pointer.pbobjc.h"
 #import "Resource.pbobjc.h"
-#import "Color.pbobjc.h"
 #import "Image.pbobjc.h"
 #import "Textinput.pbobjc.h"
 #import "Keyboard.pbobjc.h"
@@ -23,6 +22,13 @@
 #import "SegmentView.pbobjc.h"
 #import "Alert.pbobjc.h"
 #import "Statusbar.pbobjc.h"
+
+typedef struct MatchaColor {
+    uint32_t red;
+    uint32_t blue;
+    uint32_t green;
+    uint32_t alpha;
+} MatchaColor;
 
 @interface UIColor (Matcha)
 - (id)initWithProtobuf:(MatchaPBColor *)value;

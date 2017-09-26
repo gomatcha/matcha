@@ -1,9 +1,7 @@
 #ifndef MOCHIGO_H
 #define MOCHIGO_H
 
-#import <Foundation/Foundation.h>
-#include "matchaobjc.h"
-@class MatchaGoValue;
+#include <stdbool.h>
 
 GoRef matchaGoBool(bool);
 bool matchaGoToBool(GoRef);
@@ -41,12 +39,16 @@ void matchaGoFieldSet(GoRef, CGoBuffer, GoRef);
 
 void matchaGoUntrack(GoRef);
 
+#import <Foundation/Foundation.h>
+@class MatchaGoValue;
+
 @interface MatchaGoBridge : NSObject
 + (MatchaGoBridge *)sharedBridge;
 @end
 
 @interface MatchaGoValue : NSObject
-- (id)initWithGoRef:(GoRef)ref;
+//- (id)initWithGoRef:(GoRef)ref;
+- (id)initWithObject:(id)v;
 - (id)initWithBool:(BOOL)v;
 - (id)initWithInt:(int)v;
 - (id)initWithLongLong:(long long)v;
@@ -58,6 +60,7 @@ void matchaGoUntrack(GoRef);
 - (id)initWithType:(NSString *)typeName;
 - (id)initWithFunc:(NSString *)funcName;
 @property (nonatomic, readonly) GoRef ref;
+- (id)toObject;
 - (BOOL)toBool;
 - (long long)toLongLong;
 - (unsigned long long)toUnsignedLongLong;
@@ -65,12 +68,11 @@ void matchaGoUntrack(GoRef);
 - (NSString *)toString;
 - (NSData *)toData;
 - (NSArray *)toArray;
-- (NSMapTable *)toMapTable;
-// - (NSDictionary *)toDictionary;
 - (BOOL)isNil;
 - (BOOL)isEqual:(MatchaGoValue *)value;
 - (MatchaGoValue *)elem;
-- (NSArray<MatchaGoValue *> *)call:(NSString *)method args:(NSArray<MatchaGoValue *> *)args; // pass in nil for the method to call a closure.
+- (NSArray<MatchaGoValue *> *)call:(NSString *)method, ... NS_REQUIRES_NIL_TERMINATION; // pass in nil for the method to call a closure.
+- (NSArray<MatchaGoValue *> *)call:(NSString *)method args:(va_list)args;
 - (MatchaGoValue *)field:(NSString *)name;
 - (void)setField:(NSString *)name value:(MatchaGoValue *)value;
 - (MatchaGoValue *)objectForKeyedSubscript:(NSString *)key;

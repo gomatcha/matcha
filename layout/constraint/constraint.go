@@ -1,57 +1,5 @@
-/*
-Package constraint implements a constraint-based layout system.
-
-	func (v *View) Build(ctx *view.Context) view.Model {
-		// Create a new constraint system.
-		l := &constraint.Layouter{}
-
-		// Solves for the position of v, given the constraints on s. The result is a 400x100 frame.
-		l.Solve(func(s *constraint.Solver) {
-			s.Width(400)
-			s.Width(200) // If two constraints conflict, the later one is ignored.
-			s.Height(100)
-		})
-
-		// Adds a child view and solves for its position relative to v. The result is a 5x10 frame pinned to the lower right corner of v.
-		child1 := basicview.New()
-		guide1 := l.Add(child1, func(s *constraint.Solver) {
-			s.Width(5) // Left(), Top(), CenterX()... methods support constraining to floats.
-			s.Height(10)
-			s.TopEqual(l.Bottom()) // LeftEqual(), TopLess(), CenterXGreater()... methods support constraining to anchors.
-			s.LeftEqual(l.Right())
-		})
-
-		// Anchors can be manipulated outside of the solver function.
-		verticalCenter := l.CenterX().Add(10)
-
-		// Adds a child view that is twice as large as child1 and 10 points above the center v.
-		child2 := basicview.New()
-		_ = l.Add(child1, func(s *constraint.Solver) {
-			s.WidthEqual(guide1.Width().Mul(2)) // Anchors can be added to and multiplied by constants.
-			s.HeightEqual(guide1.Height().Mul(2))
-			s.CenterXEqual(l.CenterX())
-			s.CenterYEqual(verticalCenter.Add(10))
-		})
-
-		// Recalulates the constraints for child1.
-		guide1.Solve(func(s *constraint.Solver) {
-			s.Width(40)
-			s.Height(30)
-			s.TopEqual(l.Bottom()) // The top and left position must be respecified, even though only the width and height have been updated.
-			s.LeftEqual(l.Right())
-		})
-
-		// Solvers do not run simultaneously! Child2 is still 10x20 since at the time it was added Child1 was 5x10.
-
-		return view.Model{
-			Views:    l.Views(),
-			Layouter: l,
-		}
-	}
-
-If a child view is unconstrained in x or y, it will try to move as close to the center of the parent as possible.
-If the view is unconstrained in width or height, it will try to match the minGuide as close as possible.
-*/
+// Package constraint implements a constraint-based layout system. See
+// http://gomatcha.io/guide/layout for more details.
 package constraint
 
 import (
@@ -337,8 +285,12 @@ type Solver struct {
 	constraints []constraint
 }
 
-func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
+func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
 	cr := newConstrainedRect()
+
+	if s.debug {
+		fmt.Println("constraint - Begin solving")
+	}
 
 	for _, i := range s.constraints {
 		copy := cr
@@ -374,17 +326,20 @@ func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
 			copy.centerY = copy.centerY.intersect(r)
 		}
 
+		if s.debug {
+			if copy.isValid() {
+				fmt.Printf("constraint - Adding constraint: %v%v%v\n", i.attribute, i.comparison, r)
+			} else {
+				fmt.Printf("constraint - Ignoring constraint: %v%v%v\n", i.attribute, i.comparison, r)
+			}
+			fmt.Printf("constraint - Rect %v\n", copy)
+		}
+
 		// Validate that the new system is well-formed. Otherwise ignore the changes.
 		if !copy.isValid() {
-			if s.debug {
-				fmt.Println("constraint: Debug 0", i, copy) // TODO(KD): Better debugging.
-			}
 			continue
 		}
 		cr = copy
-	}
-	if s.debug {
-		fmt.Println("constraint: Debug 1", cr, s.constraints)
 	}
 
 	// Get parent guide.
@@ -407,17 +362,32 @@ func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
 		_, cr = cr.solveWidth(0)
 		_, cr = cr.solveHeight(0)
 
+		if s.debug {
+			fmt.Printf("constraint - Solving for child size with min: %v max: %v\n", layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max))
+		}
+
 		g = ctx.LayoutChild(s.index, layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max))
 		width = g.Width()
 		height = g.Height()
 
-		// Round width and height to screen scale
-		width = math.Floor(width*device.ScreenScale+0.5) / device.ScreenScale
+		if s.debug {
+			fmt.Printf("constraint - Child size: %v\n", layout.Pt(width, height))
+		}
 
-		if width < cr.width.min || height < cr.height.min || width > cr.width.max || height > cr.height.max {
-			// fmt.Printf("constraint: child guide is outside of bounds. Min:%v Max:%v Actual:%v\n", layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max), layout.Pt(width, height))
+		// Round width and height to screen scale. // TODO(KD): Is this necessary????
+		width = math.Floor(width*device.ScreenScale+0.5) / device.ScreenScale
+		height = math.Floor(height*device.ScreenScale+0.5) / device.ScreenScale
+		if width < cr.width.min {
 			width = cr.width.min
+		}
+		if width > cr.width.max {
+			width = cr.width.max
+		}
+		if height < cr.height.min {
 			height = cr.height.min
+		}
+		if height > cr.height.max {
+			height = cr.height.max
 		}
 	}
 
@@ -425,7 +395,8 @@ func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
 	cr.width = cr.width.intersect(_range{min: width, max: width})
 	cr.height = cr.height.intersect(_range{min: height, max: height})
 	if !cr.isValid() {
-		panic("constraint: system inconsistency")
+		fmt.Println("cr", cr)
+		panic("constraint - system inconsistency")
 	}
 	var centerX, centerY float64
 	if s.index == rootId {
@@ -448,7 +419,7 @@ func (s *Solver) solve(sys *Layouter, ctx *layout.Context) {
 		sys.Guide.children2[s.index].matchaGuide = &g
 	}
 	if s.debug {
-		fmt.Println("constraint: Debug 2", g)
+		fmt.Println("constraint - Solved position", g)
 	}
 }
 
@@ -637,16 +608,16 @@ func (l *Layouter) MaxGuide() *Guide {
 }
 
 // Layout evaluates the constraints and returns the calculated guide and child guides.
-func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	l.initialize()
 	l.min.matchaGuide = &layout.Guide{
-		Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),
+		Frame: layout.Rt(0, 0, ctx.MinSize().X, ctx.MinSize().Y),
 	}
 	l.max.matchaGuide = &layout.Guide{
-		Frame: layout.Rt(0, 0, ctx.MaxSize.X, ctx.MaxSize.Y),
+		Frame: layout.Rt(0, 0, ctx.MaxSize().X, ctx.MaxSize().Y),
 	}
 	l.Guide.matchaGuide = &layout.Guide{
-		Frame: layout.Rt(0, 0, ctx.MinSize.X, ctx.MinSize.Y),
+		Frame: layout.Rt(0, 0, ctx.MinSize().X, ctx.MinSize().Y),
 	}
 	// TODO(KD): reset all guides
 
@@ -729,7 +700,7 @@ func (r _range) intersect(r2 _range) _range {
 
 func (r _range) isValid() bool {
 	if r.max < r.min {
-		fmt.Println("invalid2", r.max-r.min)
+		fmt.Println("constraints invalid", r.max, r.min)
 	}
 	return r.max >= r.min
 }

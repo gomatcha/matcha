@@ -4,9 +4,9 @@
 @implementation MatchaSlider
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/slider", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/slider" block:^(MatchaViewNode *node){
         return [[MatchaSlider alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
@@ -17,9 +17,8 @@
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    MatchaSliderPbView *view = (id)[value.nativeViewState unpackMessageClass:[MatchaSliderPbView class] error:nil];
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPbSlider *view = [MatchaViewPbSlider parseFromData:nativeState error:nil];
     
     self.enabled = view.enabled;
     self.value = view.value;
@@ -28,15 +27,12 @@
 }
 
 - (void)onChange:(id)sender forEvent:(UIEvent *)e {
-    MatchaSliderPbEvent *event = [[MatchaSliderPbEvent alloc] init];
+    MatchaViewPbSliderEvent *event = [[MatchaViewPbSliderEvent alloc] init];
     event.value = self.value;
-    
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-    [self.viewNode.rootVC call:@"OnValueChange" viewId:self.node.identifier.longLongValue args:@[value]];
-    
-    UITouch *touchEvent = [[e allTouches] anyObject];
-    if (touchEvent.phase == UITouchPhaseEnded) {
-        [self.viewNode.rootVC call:@"OnSubmit" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnValueChange", value, nil];
+    if (e.allTouches.anyObject.phase == UITouchPhaseEnded) {
+        [self.viewNode call:@"OnSubmit", value, nil];
     }
 }
 

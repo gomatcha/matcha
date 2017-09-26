@@ -1,9 +1,9 @@
 #import "MatchaTapGestureRecognizer.h"
 #import <MatchaBridge/MatchaBridge.h>
-#import "MatchaNode.h"
+#import "MatchaBuildNode.h"
 #import "MatchaProtobuf.h"
 #import "MatchaBridge.h"
-#import "MatchaViewController.h"
+#import "MatchaViewController_Private.h"
 
 @interface MatchaTapGestureRecognizer ()
 @property (nonatomic, assign) int64_t funcId;
@@ -16,14 +16,14 @@
 
 - (id)initWithMatchaVC:(MatchaViewController *)viewController viewId:(int64_t)viewId protobuf:(GPBAny *)pb {
     NSError *error = nil;
-    MatchaPBTouchTapRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPBTouchTapRecognizer class] error:&error];
+    MatchaPointerPBTapRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPointerPBTapRecognizer class] error:&error];
     if (pbTapRecognizer == nil) {
         return nil;
     }
     if ((self = [super initWithTarget:self action:@selector(action:)])) {
         self.numberOfTapsRequired = (int)pbTapRecognizer.count;
         self.viewController = viewController;
-        self.funcId = pbTapRecognizer.recognizedFunc;
+        self.funcId = pbTapRecognizer.onEvent;
         self.viewId = viewId;
     }
     return self;
@@ -35,11 +35,11 @@
 
 - (void)updateWithProtobuf:(GPBAny *)pb {
     NSError *error = nil;
-    MatchaPBTouchTapRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPBTouchTapRecognizer class] error:&error];
+    MatchaPointerPBTapRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPointerPBTapRecognizer class] error:&error];
     if (pbTapRecognizer == nil) {
         return;
     }
-    self.funcId = pbTapRecognizer.recognizedFunc;
+    self.funcId = pbTapRecognizer.onEvent;
 }
 
 - (void)action:(id)sender {
@@ -49,14 +49,15 @@
     
     CGPoint point = [self locationInView:self.view];
     
-    MatchaPBTouchTapEvent *event = [[MatchaPBTouchTapEvent alloc] init];
+    MatchaPointerPBTapEvent *event = [[MatchaPointerPBTapEvent alloc] init];
     event.position = [[MatchaLayoutPBPoint alloc] initWithCGPoint:point];
     event.timestamp = [[GPBTimestamp alloc] initWithDate:[NSDate date]];
+    event.kind = MatchaPointerPBEventKind_EventKindRecognized;
     
-    NSData *data = [event data];
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
     
-    [self.viewController call:[NSString stringWithFormat:@"%@",@(self.funcId)] viewId:self.viewId args:@[value]];
+    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
+    
+    [self.viewController call:[NSString stringWithFormat:@"gomatcha.io/matcha/touch %@",@(self.funcId)] viewId:self.viewId args2:@[value]];
 }
 
 @end

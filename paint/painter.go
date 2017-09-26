@@ -1,12 +1,15 @@
-// Package paint implements view display properties.
-//  func (v *View) Build(ctx *view.Context) view.Model {
-//  	return view.Model{
-//  		Painter: &paint.Style{
-//  			BackgroundColor: colornames.Green,
-//  			CornerRadius: 3,
-//  		},
-//  	}
-//  }
+/*
+Package paint implements view display properties.
+
+	func (v *View) Build(ctx view.Context) view.Model {
+		return view.Model{
+			Painter: &paint.Style{
+				BackgroundColor: colornames.Green,
+				CornerRadius: 3,
+			},
+		}
+	}
+*/
 package paint
 
 import (
@@ -14,8 +17,8 @@ import (
 
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/pb"
-	"gomatcha.io/matcha/pb/paint"
+	pb "gomatcha.io/matcha/proto"
+	"gomatcha.io/matcha/proto/paint"
 )
 
 // Painter is the interface that describes how a view should be drawn on screen.
@@ -30,10 +33,12 @@ type Style struct {
 	BackgroundColor color.Color
 	BorderColor     color.Color
 	BorderWidth     float64
-	CornerRadius    float64
-	ShadowRadius    float64
-	ShadowOffset    layout.Point
-	ShadowColor     color.Color
+	// CornerRadius is only supported for imageview on android.
+	CornerRadius float64
+	// Shadows are not supported on android. And do not work with corner radius on iOS (https://stackoverflow.com/q/11437750).
+	ShadowRadius float64
+	ShadowOffset layout.Point
+	ShadowColor  color.Color
 }
 
 func (s *Style) MarshalProtobuf() *paint.Style {

@@ -3,7 +3,7 @@ package text
 
 import (
 	"gomatcha.io/matcha/comm"
-	pb "gomatcha.io/matcha/pb/text"
+	pb "gomatcha.io/matcha/proto/text"
 )
 
 // type Position struct {
@@ -28,7 +28,7 @@ type Text struct {
 	bytes []byte
 	// isRune        []bool
 	// isGlyph       []bool
-	// runeCount     int
+	runeCount int
 	// glyphCount    int
 	// positions     map[int64]int
 	// positionMaxId int64
@@ -39,6 +39,7 @@ type Text struct {
 func New(b string) *Text {
 	t := &Text{}
 	t.bytes = []byte(b)
+	t.runeCount = len(b)
 	// t.positions = map[int64]int{}
 	// t.normalize()
 	return t
@@ -269,6 +270,7 @@ func (t *Text) Unnotify(id comm.Id) {
 // }
 
 func (t *Text) SetString(str string) {
+	t.runeCount = len(str)
 	t.bytes = []byte(str)
 	// t.normalize()
 	t.group.Signal()

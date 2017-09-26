@@ -21,11 +21,13 @@ import (
 	"gomatcha.io/matcha/view"
 )
 
-type ScrollBehavior interface {
+// TODO(KD): Behavior does nothing at the moment.
+type Behavior interface {
 }
 
 type Layouter struct {
-	views []view.View
+	StartEdge layout.Edge // If no edges or more than one edge is specified layout.EdgeTop will be used.
+	views     []view.View
 }
 
 // Views returns all views that have been added to l.
@@ -33,25 +35,61 @@ func (l *Layouter) Views() []view.View {
 	return l.views
 }
 
-// Add adds v to the layouter and positions it with g.
-func (l *Layouter) Add(v view.View, b ScrollBehavior) {
+// Add adds v to the layouter and positions it with g. Pass nil for the behavior.
+func (l *Layouter) Add(v view.View, b Behavior) {
 	l.views = append(l.views, v)
 }
 
 // Layout implements the view.Layouter interface.
-func (l *Layouter) Layout(ctx *layout.Context) (layout.Guide, []layout.Guide) {
+func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	g := layout.Guide{}
 	gs := []layout.Guide{}
-	y := 0.0
-	x := ctx.MinSize.X
-	for i := range l.views {
-		g := ctx.LayoutChild(i, layout.Pt(x, 0), layout.Pt(x, math.Inf(1)))
-		g.Frame = layout.Rt(0, y, g.Width(), y+g.Height())
-		g.ZIndex = i
-		gs = append(gs, g)
-		y += g.Height()
+
+	startEdge := l.StartEdge
+	switch startEdge {
+	case layout.EdgeTop, layout.EdgeBottom, layout.EdgeRight, layout.EdgeLeft:
+		// no-op
+	default:
+		startEdge = layout.EdgeTop
 	}
-	g.Frame = layout.Rt(0, 0, x, y)
+
+	if startEdge == layout.EdgeBottom || startEdge == layout.EdgeTop {
+		y := 0.0
+		x := ctx.MinSize().X
+		for i := range l.views {
+			if startEdge == layout.EdgeBottom {
+				i = len(l.views) - i - 1
+			}
+			g := ctx.LayoutChild(i, layout.Pt(x, 0), layout.Pt(x, math.Inf(1)))
+			g.Frame = layout.Rt(0, y, g.Width(), y+g.Height())
+			g.ZIndex = i
+			gs = append(gs, g)
+			y += g.Height()
+		}
+		g.Frame = layout.Rt(0, 0, x, y)
+	} else {
+		y := ctx.MinSize().Y
+		x := 0.0
+		for i := range l.views {
+			if startEdge == layout.EdgeLeft {
+				i = len(l.views) - i - 1
+			}
+			g := ctx.LayoutChild(i, layout.Pt(0, y), layout.Pt(math.Inf(1), y))
+			g.Frame = layout.Rt(x, 0, x+g.Width(), g.Height())
+			g.ZIndex = i
+			gs = append(gs, g)
+			x += g.Width()
+		}
+		g.Frame = layout.Rt(0, 0, x, y)
+	}
+
+	// reverse slice
+	if startEdge == layout.EdgeBottom || startEdge == layout.EdgeLeft {
+		for i := len(gs)/2 - 1; i >= 0; i-- {
+			opp := len(gs) - 1 - i
+			gs[i], gs[opp] = gs[opp], gs[i]
+		}
+	}
 	return g, gs
 }
 

@@ -1,7 +1,7 @@
 #import "MatchaPressGestureRecognizer.h"
 #import "MatchaProtobuf.h"
-#import "MatchaNode.h"
-#import "MatchaViewController.h"
+#import "MatchaBuildNode.h"
+#import "MatchaViewController_Private.h"
 
 @interface MatchaPressGestureRecognizer ()
 @property (nonatomic, assign) int64_t funcId;
@@ -15,11 +15,11 @@
 
 - (id)initWithMatchaVC:(MatchaViewController *)viewController viewId:(int64_t)viewId protobuf:(GPBAny *)pb {
     NSError *error = nil;
-    MatchaPBTouchPressRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPBTouchPressRecognizer class] error:&error];
+    MatchaPointerPBPressRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPointerPBPressRecognizer class] error:&error];
     if ((self = [super initWithTarget:self action:@selector(action:)])) {
         self.minimumPressDuration = pbTapRecognizer.minDuration.timeInterval;
         self.viewController = viewController;
-        self.funcId = pbTapRecognizer.funcId;
+        self.funcId = pbTapRecognizer.onEvent;
         self.viewId = viewId;
     }
     return self;
@@ -27,11 +27,11 @@
 
 - (void)updateWithProtobuf:(GPBAny *)pb {
     NSError *error = nil;
-    MatchaPBTouchPressRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPBTouchPressRecognizer class] error:&error];
+    MatchaPointerPBPressRecognizer *pbTapRecognizer = (id)[pb unpackMessageClass:[MatchaPointerPBPressRecognizer class] error:&error];
     if (pbTapRecognizer == nil) {
         return;
     }
-    self.funcId = pbTapRecognizer.funcId;
+    self.funcId = pbTapRecognizer.onEvent;
 }
 
 - (void)disable {
@@ -45,18 +45,18 @@
     
     CGPoint point = [self locationInView:self.view];
     
-    MatchaPBTouchPressEvent *event = [[MatchaPBTouchPressEvent alloc] init];
+    MatchaPointerPBPressEvent *event = [[MatchaPointerPBPressEvent alloc] init];
     event.position = [[MatchaLayoutPBPoint alloc] initWithCGPoint:point];
     event.timestamp = [[GPBTimestamp alloc] initWithDate:[NSDate date]];
     if (self.state == UIGestureRecognizerStateBegan) {
-        event.kind = MatchaPBTouchEventKind_EventKindChanged;
+        event.kind = MatchaPointerPBEventKind_EventKindChanged;
         self.startTime = [NSDate date];
     } else if (self.state == UIGestureRecognizerStateChanged) {
-        event.kind = MatchaPBTouchEventKind_EventKindChanged;
+        event.kind = MatchaPointerPBEventKind_EventKindChanged;
     } else if (self.state == UIGestureRecognizerStateEnded) {
-        event.kind = MatchaPBTouchEventKind_EventKindRecognized;
+        event.kind = MatchaPointerPBEventKind_EventKindRecognized;
     } else if (self.state == UIGestureRecognizerStateCancelled) {
-        event.kind = MatchaPBTouchEventKind_EventKindFailed;
+        event.kind = MatchaPointerPBEventKind_EventKindFailed;
     } else {
         return;
     }
@@ -65,7 +65,7 @@
     NSData *data = [event data];
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
     
-    [self.viewController call:[NSString stringWithFormat:@"%@",@(self.funcId)] viewId:self.viewId args:@[value]];
+    [self.viewController call:[NSString stringWithFormat:@"gomatcha.io/matcha/touch %@", @(self.funcId)] viewId:self.viewId args2:@[value]];
 }
 
 @end

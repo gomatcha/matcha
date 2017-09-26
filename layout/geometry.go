@@ -4,7 +4,25 @@ import (
 	"fmt"
 
 	"gomatcha.io/matcha/comm"
-	pblayout "gomatcha.io/matcha/pb/layout"
+	pblayout "gomatcha.io/matcha/proto/layout"
+)
+
+// Axis represents a direction along the coordinate plane.
+type Axis int
+
+const (
+	AxisY Axis = 1 << iota
+	AxisX
+)
+
+// Edge represents a side of a rectangle.
+type Edge int
+
+const (
+	EdgeTop Edge = 1 << iota
+	EdgeBottom
+	EdgeLeft
+	EdgeRight
 )
 
 // Rect represents a 2D rectangle with the top left corner at Min and the bottom

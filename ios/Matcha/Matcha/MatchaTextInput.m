@@ -6,9 +6,9 @@
 @implementation MatchaTextInput
 
 + (void)load {
-    MatchaRegisterView(@"gomatcha.io/matcha/view/textinput", ^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/view/textinput" block:^(MatchaViewNode *node){
         return [[MatchaTextInput alloc] initWithViewNode:node];
-    });
+    }];
 }
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
@@ -16,17 +16,18 @@
         self.viewNode = viewNode;
         self.delegate = self;
         self.scrollEnabled = false;
+        self.textContainer.lineFragmentPadding = 0;
+        self.textContainerInset = UIEdgeInsetsZero;
+
     }
     return self;
 }
 
-- (void)setNode:(MatchaBuildNode *)value {
-    _node = value;
-    GPBAny *state = value.nativeViewState;
-    NSError *error = nil;
-    MatchaTextInputPBView *view = (id)[state unpackMessageClass:[MatchaTextInputPBView class] error:&error];
+
+- (void)setNativeState:(NSData *)nativeState {
+    MatchaViewPBTextInput *view = [MatchaViewPBTextInput parseFromData:nativeState error:nil];
     
-    NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:view.styledText.style];
+    NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:view.styledText.stylesArray[0]];
     self.font = attributes[NSFontAttributeName];
     self.textColor = attributes[NSForegroundColorAttributeName];
     
@@ -39,13 +40,13 @@
     if (![attrPlaceholder.string isEqual:self.attributedPlaceholder]) { // TODO(KD): Better comparison.
         self.attributedPlaceholder = attrPlaceholder;
     }
-    
+
+    self.font = [[UIFont alloc] initWithProtobuf:view.font];
     self.attrStr2 = attrString;
     self.hasFocus = view.focused;
     self.keyboardType = MatchaKeyboardTypeWithProtobuf(view.keyboardType);
     self.keyboardAppearance = MatchaKeyboardAppearanceWithProtobuf(view.keyboardAppearance);
-    self.returnKeyType = MatchaReturnTypeWithProtobuf(view.keyboardReturnType);
-    self.multiline = view.multiline;
+    self.multiline = view.maxLines != 1;
     self.secureTextEntry = view.secureTextEntry;
     
     if (self.hasFocus && !self.isFirstResponder) {
@@ -55,23 +56,29 @@
     }
 }
 
+- (CGRect)caretRectForPosition:(UITextPosition *)position {
+    CGRect originalRect = [super caretRectForPosition:position];
+    if (self.font && originalRect.size.height > 2) {
+        originalRect.size.height = self.font.pointSize - self.font.descender;
+    }
+    return originalRect;
+}
+
+
 - (void)textViewDidChange:(UITextView *)textView {
     if ([self.attributedText isEqual:self.attrStr2] || self.attributedText == self.attrStr2) {
         return;
     }
     self.attrStr2 = self.attributedText;
-    MatchaTextInputPBEvent *event = [[MatchaTextInputPBEvent alloc] init];
+    
+    MatchaViewPBTextInputEvent *event = [[MatchaViewPBTextInputEvent alloc] init];
     event.styledText = self.attributedText.protobuf;
-    
-    NSData *data = [event data];
-    MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:data];
-    
-    [self.viewNode.rootVC call:@"OnTextChange" viewId:self.node.identifier.longLongValue args:@[value]];
+    [self.viewNode call:@"OnTextChange", [[MatchaGoValue alloc] initWithData:event.data], nil];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
-        [self.viewNode.rootVC call:@"OnSubmit" viewId:self.node.identifier.longLongValue args:nil];
+        [self.viewNode call:@"OnSubmit", nil];
         return NO;
     }
     return YES;
@@ -87,11 +94,9 @@
 
 - (void)focusDidChange {
     if ((self.hasFocus && !self.isFirstResponder) || (!self.hasFocus && self.isFirstResponder)) {
-        MatchaTextInputPBFocusEvent *event = [[MatchaTextInputPBFocusEvent alloc] init];
+        MatchaViewPBTextInputFocusEvent *event = [[MatchaViewPBTextInputFocusEvent alloc] init];
         event.focused = self.isFirstResponder;
-        
-        MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-        [self.viewNode.rootVC call:@"OnFocus" viewId:self.node.identifier.longLongValue args:@[value]];
+        [self.viewNode call:@"OnFocus", [[MatchaGoValue alloc] initWithData:event.data], nil];
     }
 }
 

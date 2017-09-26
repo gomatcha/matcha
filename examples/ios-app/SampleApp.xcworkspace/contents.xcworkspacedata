@@ -13,4 +13,7 @@
    <FileRef
       location = "group:../../ios/Protobuf/Protobuf.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:../customview/ios/CustomView.xcodeproj">
+   </FileRef>
 </Workspace>
