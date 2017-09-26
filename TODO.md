@@ -14,13 +14,13 @@ Medium:
 * Stackview button items
 * Android vertical/horizontal scrollviews?
 * Crash on "Stop"
-* Rebuild Instagram.
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation
 * Modal presentation.
 * Picker
 * StackBar height / hidden, color
 
 Low:
+* Android imageview example is stretching airplane icon.
 * Better error logging for panics.
 * Not getting start and inprogress events for UITapGestureRecognizer.
 * UIButtonGestureRecognizer only sends a event if inside/outside changes. Its faster but less generic?
@@ -61,7 +61,8 @@ Refactors:
 Website
 * Main Page on Mobile
 * Copyright notice / trademark?
-* Better images, readme docs.
+* Github docs.
+* Better images
 * MailChimp?
 * Install Discourse
 

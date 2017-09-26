@@ -207,7 +207,7 @@ ObjcRef MatchaTrackObjc(jobject v) {
 
 void MatchaUntrackObjc(ObjcRef key) {
     JNIEnv *env = NULL;
-    jint success = (*sJavaVM)->GetEnv(sJavaVM, &env, sJavaVersion);
+    jint success = (*sJavaVM)->GetEnv(sJavaVM, (void **)&env, sJavaVersion);
     if (success == JNI_EDETACHED) {
         (*sJavaVM)->AttachCurrentThread(sJavaVM, &env, NULL);
     }

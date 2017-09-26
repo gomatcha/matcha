@@ -2,6 +2,7 @@ package view
 
 import (
 	"context"
+	"fmt"
 	"image"
 	"image/color"
 	_ "image/jpeg"
@@ -189,9 +190,10 @@ func (l *imageViewLayouter) Unnotify(id comm.Id) {
 func loadImageURL(url string) (image.Image, error) {
 	resp, err := http.Get(url)
 	if err != nil {
+		fmt.Println("loadImageURL error", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
-	img, _, err := image.Decode(resp.Body)
+	img, _, err := image.Decode(resp.Bod
 	return img, err
 }

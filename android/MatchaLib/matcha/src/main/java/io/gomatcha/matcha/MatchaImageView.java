@@ -1,6 +1,7 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
