@@ -3,6 +3,7 @@ package todo
 
 import (
 	"image/color"
+	"runtime"
 
 	"golang.org/x/image/colornames"
 
@@ -15,6 +16,7 @@ import (
 	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
+	"gomatcha.io/matcha/view/android"
 	"gomatcha.io/matcha/view/ios"
 )
 
@@ -26,14 +28,23 @@ func init() {
 			&Todo{Title: "Kill Dog"},
 		}
 
-		v := ios.NewStackView()
-		v.Stack = &ios.Stack{}
-		v.Stack.SetViews(appview)
-		v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 1}
-		v.TitleTextStyle = &text.Style{}
-		v.TitleTextStyle.SetFont(text.FontWithName("HelveticaNeue-Medium", 20))
-		v.TitleTextStyle.SetTextColor(colornames.White)
-		return v
+		if runtime.GOOS == "ios" {
+			v := ios.NewStackView()
+			v.Stack.SetViews(appview)
+			v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 1}
+			v.TitleTextStyle = &text.Style{}
+			v.TitleTextStyle.SetFont(text.FontWithName("HelveticaNeue-Medium", 20))
+			v.TitleTextStyle.SetTextColor(colornames.White)
+			return v
+		} else {
+			v := android.NewStackView()
+			v.Stack.SetViews(appview)
+			// v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 1}
+			// v.TitleTextStyle = &text.Style{}
+			// v.TitleTextStyle.SetFont(text.FontWithName("HelveticaNeue-Medium", 20))
+			// v.TitleTextStyle.SetTextColor(colornames.White)
+			return v
+		}
 	})
 }
 
@@ -85,6 +96,7 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 		Options: []view.Option{
 			&ios.StackBar{Title: "Todos"},
 			&ios.StatusBar{Style: ios.StatusBarStyleLight},
+			&android.StackBar{Title: "Todos"},
 		},
 	}
 }
@@ -193,7 +205,6 @@ func (v *TodoView) Build(ctx view.Context) view.Model {
 	titleView := view.NewTextView()
 	titleView.String = v.Todo.Title
 	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
-	titleView.PaintStyle = &paint.Style{BackgroundColor: colornames.Lightgray}
 	l.Add(titleView, func(s *constraint.Solver) {
 		s.CenterYEqual(l.CenterY())
 		s.LeftEqual(checkboxGuide.Right().Add(15))
@@ -234,9 +245,9 @@ func (v *Checkbox) Build(ctx view.Context) view.Model {
 
 	imageView := view.NewImageView()
 	if v.Value {
-		imageView.Image = application.MustLoadImage("CheckboxChecked")
+		imageView.Image = application.MustLoadImage("checkbox_checked")
 	} else {
-		imageView.Image = application.MustLoadImage("CheckboxUnchecked")
+		imageView.Image = application.MustLoadImage("checkbox_unchecked")
 	}
 	l.Add(imageView, func(s *constraint.Solver) {
 		s.CenterXEqual(l.CenterX())
@@ -280,7 +291,7 @@ func (v *DeleteButton) Build(ctx view.Context) view.Model {
 	})
 
 	imageView := view.NewImageView()
-	imageView.Image = application.MustLoadImage("Delete")
+	imageView.Image = application.MustLoadImage("delete")
 	l.Add(imageView, func(s *constraint.Solver) {
 		s.CenterXEqual(l.CenterX())
 		s.CenterYEqual(l.CenterY())
