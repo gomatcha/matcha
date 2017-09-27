@@ -82,8 +82,9 @@ func (s *Stack) Unnotify(id comm.Id) {
 
 type StackView struct {
 	view.Embed
-	Stack *Stack
-	stack *Stack
+	Stack    *Stack
+	stack    *Stack
+	BarColor color.Color
 }
 
 // NewStackView returns a new view.
@@ -139,6 +140,7 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 		barV := &stackBarView{
 			Embed:           view.Embed{Key: strconv.Itoa(int(id))},
 			Bar:             bar,
+			BarColor:        v.BarColor,
 			NeedsBackButton: idx != 0,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
@@ -182,14 +184,18 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 
 type stackBarView struct {
 	view.Embed
+	BarColor        color.Color
 	Bar             *StackBar
 	NeedsBackButton bool
 }
 
 func (v *stackBarView) Build(ctx view.Context) view.Model {
-	color := v.Bar.Color
-	if color == nil {
-		color = colornames.White
+	col := v.Bar.Color
+	if col == nil {
+		col = v.BarColor
+	}
+	if col == nil {
+		col = colornames.White
 	}
 
 	funcs := map[string]interface{}{}
@@ -202,7 +208,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 	}
 
 	return view.Model{
-		Painter:        &paint.Style{BackgroundColor: color},
+		Painter:        &paint.Style{BackgroundColor: col},
 		NativeViewName: "gomatcha.io/matcha/view/android stackBarView",
 		NativeViewState: internal.MarshalProtobuf(&android.StackBar{
 			Title:            v.Bar.Title,
