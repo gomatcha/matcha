@@ -2,6 +2,7 @@ package io.gomatcha.matcha;
 
 import android.content.Context;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -62,7 +63,9 @@ class MatchaStackView extends MatchaChildView {
             MatchaToolbarWrapper wrapper = wrappers.get(i);
 
             MatchaToolbarView toolbar = (MatchaToolbarView)childViews.get(i*2);
-            toolbar.setId(MatchaPagerView.generateViewId());
+            if (toolbar.getId() < 0) {
+                toolbar.setId(MatchaPagerView.generateViewId());
+            }
             toolbar.stackView = this;
             wrapper.setToolbarView(toolbar);
 

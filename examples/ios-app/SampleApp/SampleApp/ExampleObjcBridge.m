@@ -14,6 +14,9 @@
         
         MatchaGoValue *func2 = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/examples/bridge callWithForeignValues"];
         NSString *str2 = (NSString *)[func2 call:@"", [[MatchaGoValue alloc] initWithObject:@456], nil][0].toObject;
+        
+        str1 = nil;
+        str2 = nil;
     });
 }
 
