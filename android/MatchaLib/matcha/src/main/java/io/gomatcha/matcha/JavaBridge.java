@@ -3,11 +3,13 @@ package io.gomatcha.matcha;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -148,7 +150,13 @@ public class JavaBridge {
 
         return new GoValue(builder.build().toByteArray());
     }
-    
+
+    public boolean openURL(String url) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+        context.startActivity(browserIntent);
+        return true;
+    }
+
     public void displayAlert(byte[] protobuf) {
         try {
             final PbAlert.Alert alert = PbAlert.Alert.parseFrom(protobuf);

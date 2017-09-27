@@ -220,79 +220,185 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer cstr, ObjcRef arguments) {
         NSNumber *num = (NSNumber *)argObj;
         const char *type = [sig getArgumentTypeAtIndex:i+2];
         
-        if (strcmp(type, "c") == 0) {
+        switch (type[0]) {
+        case 'c': {
             char arg = num.charValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "i") == 0) {
+            break;
+        }
+        case 'i': {
             int arg = num.intValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "s") == 0) {
+            break;
+        }
+        case 's': {
             short arg = num.shortValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "l") == 0) {
+            break;
+        }
+        case 'l': {
             long arg = num.longValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "q") == 0) {
+            break;
+        }
+        case 'q': {
             long long arg = num.longLongValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "C") == 0) {
+            break;
+        }
+        case 'C': {
             unsigned char arg = num.unsignedCharValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "I") == 0) {
+            break;
+        }
+        case 'I': {
             unsigned int arg = num.unsignedIntValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "S") == 0) {
+            break;
+        }
+        case 'S': {
             unsigned short arg = num.unsignedShortValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "L") == 0) {
+            break;
+        }
+        case 'L': {
             unsigned long arg = num.unsignedLongValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "Q") == 0) {
+            break;
+        }
+        case 'Q': {
             unsigned long long arg = num.unsignedLongLongValue;
             [inv setArgument:&arg atIndex:i+2];
-        }  else if (strcmp(type, "f") == 0) {
+            break;
+        }
+        case 'f': {
             float arg = num.floatValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "d") == 0) {
+            break;
+        }
+        case 'd': {
             double arg = num.doubleValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "B") == 0) {
+            break;
+        }
+        case 'B': {
             bool arg = num.boolValue;
             [inv setArgument:&arg atIndex:i+2];
-        } else if (strcmp(type, "@") == 0) {
+            break;
+        }
+        case '@': {
             if ([argObj isKindOfClass:[_MatchaObjcCallSentinel class]]) {
                 id nilObject = nil;
                 [inv setArgument:&nilObject atIndex:i+2];
             } else {
                 [inv setArgument:&argObj atIndex:i+2];
             }
-        } else {
+            break;
+        }
+        default: {
             @throw @"MatchaObjcCall: Unsupported argument type";
+        }
         }
     }
     
     // Invoke.
     [inv invoke];
-        
+
     // Get return value.
     const char *type = [sig methodReturnType];
     id ret = nil;
-    if (strcmp(type, "c") == 0 || strcmp(type, "i") == 0 || strcmp(type, "s") == 0 || strcmp(type, "l") == 0 || strcmp(type, "q") == 0
-        || strcmp(type, "C") == 0 || strcmp(type, "I") == 0 || strcmp(type, "S") == 0 || strcmp(type, "L") == 0 || strcmp(type, "Q") == 0
-        || strcmp(type, "f") == 0 || strcmp(type, "d") == 0 || strcmp(type, "B") == 0) {
-        
-        void *buf = malloc(sig.methodReturnLength);
-        [inv getReturnValue:&buf];
-        ret = [[NSNumber alloc] initWithBytes:buf objCType:type];
-        free(buf);
-    } else if (strcmp(type, "v") == 0) {
+    switch (type[0]) {
+    case 'c': {
+        char v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 'C': {
+        unsigned char v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 'i': {
+        int v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 'I': {
+        unsigned int v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 's': {
+        short v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 'S': {
+        unsigned short v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 'l': {
+        long v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 'L': {
+        unsigned long v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 'q': {
+        long long v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 'Q': {
+        unsigned long long v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 'f': {
+        float v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+    case 'd': {
+        double v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }
+     case 'B': {
+        bool v;
+        [inv getReturnValue:&v];
+        ret = @(v);
+        break;
+    }   
+    case 'v': {
         ret = nil;
-    } else if (strcmp(type, "@") == 0) {
-        void *retValue = nil;
-        [inv getReturnValue:&retValue];
-        ret = (__bridge id)retValue;
-    } else {
+        break;
+    }
+    case '@': {
+        void *v = nil;
+        [inv getReturnValue:&v];
+        ret = (__bridge id)v;
+        break;
+    }
+    default: {
         @throw @"MatchaObjcCall: Unsupported return type";
+    }
     }
     return MatchaTrackObjc(ret);
 }

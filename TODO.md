@@ -1,8 +1,6 @@
 * MatchaPager should send events back to android.
-* Verify segmentedview works.
 
 High:
-* Add openURL function.
 * Non-image resources.
     * Assets directory that gets merged from any folder containing /assets and importing "gomatcha.io/matcha". What to do about images? _1x.png _2x.png
 * Android double tap.

@@ -127,4 +127,11 @@
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
 }
 
+- (BOOL)openURL:(NSString *)url {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+#pragma GCC diagnostic pop
+}
+
 @end
