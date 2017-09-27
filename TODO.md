@@ -1,5 +1,3 @@
-* MatchaPager should send events back to android.
-
 High:
 * Non-image resources.
     * Assets directory that gets merged from any folder containing /assets and importing "gomatcha.io/matcha". What to do about images? _1x.png _2x.png
@@ -34,12 +32,12 @@ Low:
 * Table ScrollBehaviors, Table Direction
 * Custom painters.
 * Compile a list of things that should be easy to do and implement them. Button activation cancelled by vertical scrolling but not horizontal, Pinch to zoom, Highlighting a view and dragging outside of it and back in., Horizontal swipe on tableview to show delete button, Touch driven animations. AKA swipe back to navigate.
-* Guide.Insets, Guide.Transform? Layout.Insets(top, left, bottom, right)?
 * Table behaviors
 * Button disabled/highlighted state using anonymous structs?
 * Add OnRecognize to Gesture recognizers.
 
 Very Low:
+* Guide.Insets, Guide.Transform? Layout.Insets(top, left, bottom, right)?
 * Building for iPhone 5 Simulator doesn't work.
 * Button should fade when disabled.
 * Automatically insert copyright notice.

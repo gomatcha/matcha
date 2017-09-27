@@ -152,18 +152,11 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 			// SelectedTextStyle:   selectedTextStyle,
 			// UnselectedTextStyle: unselectedTextStyle,
 		}),
-		// NativeFuncs: map[string]interface{}{
-		// 	"OnSelect": func(data []byte) {
-		// 		pbevent := &pbandroid.Event{}
-		// 		err := proto.Unmarshal(data, pbevent)
-		// 		if err != nil {
-		// 			fmt.Println("error", err)
-		// 			return
-		// 		}
-
-		// 		v.Tabs.SetSelectedIndex(int(pbevent.SelectedIndex))
-		// 	},
-		// },
+		NativeFuncs: map[string]interface{}{
+			"OnSelect": func(index int64) {
+				v.Pages.SetSelectedIndex(int(index))
+			},
+		},
 	}
 }
 

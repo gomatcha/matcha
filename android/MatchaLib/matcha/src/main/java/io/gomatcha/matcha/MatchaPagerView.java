@@ -1,9 +1,11 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -13,6 +15,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.proto.view.android.PbPagerView;
 
 class MatchaPagerView extends MatchaChildView {
@@ -21,6 +24,7 @@ class MatchaPagerView extends MatchaChildView {
     MatchaPagerAdapter pagerAdapter;
     MatchaViewNode viewNode;
     RelativeLayout relativeLayout;
+    int selectedIndex;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/android PagerView", new MatchaView.ViewFactory() {
@@ -55,6 +59,21 @@ class MatchaPagerView extends MatchaChildView {
         viewPager.setId(generateViewId());
         viewPager.setBackgroundColor(0xff0000ff);
         viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                if (position != selectedIndex) {
+                    selectedIndex = position;
+                    viewNode.call("OnSelect", new GoValue(position));
+                }
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
         relativeLayout.addView(viewPager, contentParams);
 
         tabStrip.setDistributeEvenly(true);
@@ -66,9 +85,21 @@ class MatchaPagerView extends MatchaChildView {
         super.setNativeState(nativeState);
         try {
             PbPagerView.PagerView proto  = PbPagerView.PagerView.parseFrom(nativeState);
-            pagerAdapter.protoChildViews = proto.getChildViewsList();
-            pagerAdapter.notifyDataSetChanged();
-            tabStrip.setViewPager(viewPager);
+            if (pagerAdapter.protoChildViews == null || proto.getChildViewsCount() != pagerAdapter.protoChildViews.size()) { // TODO(KD): Hack for better scrollperformance
+                pagerAdapter.protoChildViews = proto.getChildViewsList();
+                pagerAdapter.notifyDataSetChanged();
+                tabStrip.setViewPager(viewPager);
+            }
+            Log.v("x", "selectedIndex" + proto.getSelectedIndex());
+            if (selectedIndex != (int)proto.getSelectedIndex()) {
+                selectedIndex = (int) proto.getSelectedIndex();
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        viewPager.setCurrentItem(selectedIndex);
+                    }
+                });
+            }
         } catch (InvalidProtocolBufferException e) {
         }
     }
@@ -80,9 +111,11 @@ class MatchaPagerView extends MatchaChildView {
 
     @Override
     public void setChildViews(List<View> childViews) {
-        pagerAdapter.childViews = childViews;
-        pagerAdapter.notifyDataSetChanged();
-        tabStrip.setViewPager(viewPager);
+        if (pagerAdapter.childViews == null || childViews.size() != pagerAdapter.childViews.size()) { // TODO(KD): Hack for better scrollperformance
+            pagerAdapter.childViews = childViews;
+            pagerAdapter.notifyDataSetChanged();
+            tabStrip.setViewPager(viewPager);
+        }
     }
 
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);

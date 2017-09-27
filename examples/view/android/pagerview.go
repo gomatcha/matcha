@@ -1,6 +1,8 @@
 package android
 
 import (
+	"fmt"
+
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/paint"
@@ -14,6 +16,9 @@ func init() {
 
 		app := &PagerApp{}
 		app.Pages = v.Pages
+		app.Pages.Notify(func() {
+			fmt.Println("CurrentPage", v.Pages.SelectedIndex())
+		})
 
 		v1 := NewPagerChildView()
 		v1.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
@@ -28,6 +33,7 @@ func init() {
 		v3.PagerButton = &android.PagerButton{Title: "Title 3"}
 
 		app.Pages.SetViews(v1, v2, v3)
+		app.Pages.SetSelectedIndex(2)
 
 		return v
 	})
