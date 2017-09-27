@@ -19,7 +19,7 @@ type TextView struct {
 	MaxLines   int
 }
 
-// NewTextView returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewTextView returns a new view.
 func NewTextView() *TextView {
 	return &TextView{
 		Style: &text.Style{},

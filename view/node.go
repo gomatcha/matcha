@@ -25,7 +25,7 @@ import (
 
 var maxId int64
 
-// Middleware is called on the result of View.Build(*context).
+// Middleware is called on the result of View.Build(Context).
 type middleware interface {
 	Build(Context, *Model)
 	MarshalProtobuf() proto.Message

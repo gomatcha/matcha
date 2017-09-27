@@ -19,7 +19,7 @@ type Switch struct {
 	PaintStyle *paint.Style
 }
 
-// NewSwitch returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewSwitch returns a new view.
 func NewSwitch() *Switch {
 	return &Switch{
 		Enabled: true,

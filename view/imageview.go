@@ -53,7 +53,7 @@ type ImageView struct {
 	pbImage    *pb.ImageOrResource
 }
 
-// NewImageView returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewImageView returns a new view.
 func NewImageView() *ImageView {
 	return &ImageView{}
 }

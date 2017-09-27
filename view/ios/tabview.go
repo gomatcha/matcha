@@ -75,7 +75,7 @@ type TabView struct {
 	tabs                *Tabs
 }
 
-// NewTabView returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewTabView returns a new view.
 func NewTabView() *TabView {
 	return &TabView{
 		Tabs: &Tabs{},

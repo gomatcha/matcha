@@ -26,7 +26,7 @@ type Button struct {
 	PaintStyle *paint.Style
 }
 
-// NewButton returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewButton returns a new view.
 func NewButton() *Button {
 	return &Button{
 		Enabled: true,

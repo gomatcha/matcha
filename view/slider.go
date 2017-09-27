@@ -40,7 +40,7 @@ type Slider struct {
 	Enabled       bool
 }
 
-// New returns either the previous View in ctx with matching key, or a new View if none exists.
+// New returns a new view.
 func NewSlider() *Slider {
 	return &Slider{
 		MaxValue: 1,

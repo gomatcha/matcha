@@ -50,7 +50,7 @@ We can now open the sample iOS project.
 Set the Development Team in Xcode under General > Signing and select `SampleApp` in
 the target dropdown in the upper right. Then run the App! 
 
-Android is a similar setup. Open the sample Android Studio project and hit run!
+For Android simply open the sample Android Studio project and hit run!
 
     open -a /Applications/Android\ Studio.app $GOPATH/src/gomatcha.io/matcha/examples/android-app/SampleApp
 

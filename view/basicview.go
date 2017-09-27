@@ -12,7 +12,7 @@ type BasicView struct {
 	Children []View
 }
 
-// NewBasicView returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewBasicView returns a new view.
 func NewBasicView() *BasicView {
 	return &BasicView{}
 }

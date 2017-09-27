@@ -37,7 +37,7 @@ type TextInput struct {
 	OnFocus          func(*keyboard.Responder)
 }
 
-// NewTextInput returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewTextInput returns a new view.
 func NewTextInput() *TextInput {
 	return &TextInput{
 		MaxLines:  1,

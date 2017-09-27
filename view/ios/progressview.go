@@ -23,7 +23,7 @@ type ProgressView struct {
 	progressNotifier comm.Float64Notifier
 }
 
-// NewProgressView returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewProgressView returns a new view.
 func NewProgressView() *ProgressView {
 	return &ProgressView{}
 }

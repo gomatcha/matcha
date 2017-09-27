@@ -30,7 +30,7 @@ type ScrollView struct {
 	PaintStyle      *paint.Style
 }
 
-// NewScrollView returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewScrollView returns a new view.
 func NewScrollView() *ScrollView {
 	return &ScrollView{
 		ScrollAxes:    layout.AxisY,

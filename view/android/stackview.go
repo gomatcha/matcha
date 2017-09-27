@@ -86,7 +86,7 @@ type StackView struct {
 	stack *Stack
 }
 
-// NewStackView returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewStackView returns a new view.
 func NewStackView() *StackView {
 	return &StackView{
 		Stack: &Stack{},

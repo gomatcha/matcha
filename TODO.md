@@ -1,6 +1,8 @@
 * MatchaPager should send events back to android.
+* Verify segmentedview works.
 
 High:
+* Add openURL function.
 * Non-image resources.
     * Assets directory that gets merged from any folder containing /assets and importing "gomatcha.io/matcha". What to do about images? _1x.png _2x.png
 * Android double tap.
@@ -41,7 +43,6 @@ Low:
 
 Very Low:
 * Building for iPhone 5 Simulator doesn't work.
-* Add tests around core functionality. Store, etc.
 * Button should fade when disabled.
 * Automatically insert copyright notice.
 * Text selection.
@@ -51,14 +52,14 @@ Very Low:
 * Debug constraints.
 * Collect native resources into assets.
 * Animations: Spring, Delay, Batch, Reverse, Decay, Repeat
-* Rework Slider.FloatNotifier to use comm.Float64Value and give it a better name InOutValue?
 * Flexbox
 * Strikethrough doesn't work.
 
 Refactors:
-* 
+* Rework Slider.FloatNotifier to use comm.Float64Value and give it a better name InOutValue?
 
 Website
+* License agreement?
 * MailChimp?
 * Install Discourse
 

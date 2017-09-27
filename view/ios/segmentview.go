@@ -21,7 +21,7 @@ type SegmentView struct {
 	PaintStyle    *paint.Style
 }
 
-// NewSegmentView returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewSegmentView returns a new view.
 func NewSegmentView() *SegmentView {
 	return &SegmentView{
 		Enabled: true,

@@ -62,7 +62,7 @@ type PagerView struct {
 	pages *Pages
 }
 
-// NewPagerView returns either the previous View in ctx with matching key, or a new View if none exists.
+// NewPagerView returns a new view.
 // ViewPager and PagerTabStrip.
 func NewPagerView() *PagerView {
 	return &PagerView{
