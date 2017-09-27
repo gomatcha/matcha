@@ -108,13 +108,11 @@ Modifying the stack:
 */
 type StackView struct {
 	view.Embed
-	Stack          *Stack
-	stack          *Stack
-	TitleTextStyle *text.Style
-	BackTextStyle  *text.Style
-	BarColor       color.Color
-	// children map[int64]view.View
-	// ids      []int64
+	Stack      *Stack
+	stack      *Stack
+	TitleStyle *text.Style
+	BackStyle  *text.Style
+	BarColor   color.Color
 }
 
 // NewStackView returns a new view.
@@ -193,13 +191,13 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 	}
 
 	var titleTextStyle *pbtext.TextStyle
-	if v.TitleTextStyle != nil {
-		titleTextStyle = v.TitleTextStyle.MarshalProtobuf()
+	if v.TitleStyle != nil {
+		titleTextStyle = v.TitleStyle.MarshalProtobuf()
 	}
 
 	var backTextStyle *pbtext.TextStyle
-	if v.BackTextStyle != nil {
-		backTextStyle = v.BackTextStyle.MarshalProtobuf()
+	if v.BackStyle != nil {
+		backTextStyle = v.BackStyle.MarshalProtobuf()
 	}
 
 	return view.Model{

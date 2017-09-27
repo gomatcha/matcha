@@ -82,9 +82,11 @@ func (s *Stack) Unnotify(id comm.Id) {
 
 type StackView struct {
 	view.Embed
-	Stack    *Stack
-	stack    *Stack
-	BarColor color.Color
+	Stack         *Stack
+	stack         *Stack
+	BarColor      color.Color
+	TitleStyle    *text.Style
+	SubtitleStyle *text.Style
 }
 
 // NewStackView returns a new view.
@@ -141,6 +143,8 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 			Embed:           view.Embed{Key: strconv.Itoa(int(id))},
 			Bar:             bar,
 			BarColor:        v.BarColor,
+			TitleStyle:      v.TitleStyle,
+			SubtitleStyle:   v.SubtitleStyle,
 			NeedsBackButton: idx != 0,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
@@ -184,6 +188,8 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 
 type stackBarView struct {
 	view.Embed
+	TitleStyle      *text.Style
+	SubtitleStyle   *text.Style
 	BarColor        color.Color
 	Bar             *StackBar
 	NeedsBackButton bool
@@ -196,6 +202,16 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 	}
 	if col == nil {
 		col = colornames.White
+	}
+
+	styledTitle := v.Bar.StyledTitle
+	if v.TitleStyle != nil && styledTitle == nil {
+		styledTitle = text.NewStyledText(v.Bar.Title, v.TitleStyle)
+	}
+
+	styledSubtitle := v.Bar.StyledSubtitle
+	if v.SubtitleStyle != nil && styledSubtitle == nil {
+		styledSubtitle = text.NewStyledText(v.Bar.Subtitle, v.SubtitleStyle)
 	}
 
 	funcs := map[string]interface{}{}
@@ -212,9 +228,9 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 		NativeViewName: "gomatcha.io/matcha/view/android stackBarView",
 		NativeViewState: internal.MarshalProtobuf(&android.StackBar{
 			Title:            v.Bar.Title,
-			StyledTitle:      v.Bar.StyledTitle.MarshalProtobuf(),
+			StyledTitle:      styledTitle.MarshalProtobuf(),
 			Subtitle:         v.Bar.Subtitle,
-			StyledSubtitle:   v.Bar.StyledSubtitle.MarshalProtobuf(),
+			StyledSubtitle:   styledSubtitle.MarshalProtobuf(),
 			Items:            items,
 			BackButtonHidden: !v.NeedsBackButton,
 		}),

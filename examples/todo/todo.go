@@ -32,17 +32,17 @@ func init() {
 			v := ios.NewStackView()
 			v.Stack.SetViews(appview)
 			v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 255}
-			v.TitleTextStyle = &text.Style{}
-			v.TitleTextStyle.SetFont(text.FontWithName("HelveticaNeue-Medium", 20))
-			v.TitleTextStyle.SetTextColor(colornames.White)
+			v.TitleStyle = &text.Style{}
+			v.TitleStyle.SetFont(text.DefaultFont(20))
+			v.TitleStyle.SetTextColor(colornames.White)
 			return v
 		} else {
 			v := android.NewStackView()
 			v.Stack.SetViews(appview)
 			v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 255}
-			// v.TitleTextStyle = &text.Style{}
-			// v.TitleTextStyle.SetFont(text.FontWithName("HelveticaNeue-Medium", 20))
-			// v.TitleTextStyle.SetTextColor(colornames.White)
+			v.TitleStyle = &text.Style{}
+			v.TitleStyle.SetFont(text.DefaultFont(20))
+			v.TitleStyle.SetTextColor(colornames.White)
 			return v
 		}
 	})
