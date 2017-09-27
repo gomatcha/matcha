@@ -319,7 +319,7 @@ func (v *SegmentCell) Build(ctx view.Context) view.Model {
 	segment := ios.NewSegmentView()
 	segment.Titles = v.Titles
 	segment.Value = v.Value
-	segment.OnValueChange = func(a int) {
+	segment.OnChange = func(a int) {
 		if v.OnValueChange != nil {
 			v.OnValueChange(a)
 		}

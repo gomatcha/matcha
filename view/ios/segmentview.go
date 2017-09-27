@@ -13,12 +13,12 @@ import (
 
 type SegmentView struct {
 	view.Embed
-	Enabled       bool
-	Momentary     bool
-	Titles        []string
-	Value         int
-	OnValueChange func(value int)
-	PaintStyle    *paint.Style
+	Enabled    bool
+	Momentary  bool
+	Titles     []string
+	Value      int
+	OnChange   func(value int)
+	PaintStyle *paint.Style
 }
 
 // NewSegmentView returns a new view.
@@ -62,8 +62,8 @@ func (v *SegmentView) Build(ctx view.Context) view.Model {
 				}
 
 				v.Value = int(event.Value)
-				if v.OnValueChange != nil {
-					v.OnValueChange(v.Value)
+				if v.OnChange != nil {
+					v.OnChange(v.Value)
 				}
 			},
 		},

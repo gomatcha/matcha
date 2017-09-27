@@ -226,7 +226,7 @@ func (v *NestedView) Build(ctx view.Context) view.Model {
 	chl14 := ios.NewSegmentView()
 	chl14.Value = v.segmentValue
 	chl14.Titles = []string{"Title1", "Title2", "Title3"}
-	chl14.OnValueChange = func(a int) {
+	chl14.OnChange = func(a int) {
 		v.segmentValue = a
 		fmt.Println("on value change", a)
 	}

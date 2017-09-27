@@ -19,11 +19,19 @@
 - (void)setNativeState:(NSData *)nativeState {
     MatchaiOSPBSegmentView *view = [MatchaiOSPBSegmentView parseFromData:nativeState error:nil];
     
-    [self removeAllSegments];
-    for (NSInteger i = 0; i < view.titlesArray.count; i++) {
-        [self insertSegmentWithTitle:view.titlesArray[i] atIndex:i animated:NO];
+    if (self.numberOfSegments != view.titlesArray.count) {
+        [self removeAllSegments];
+        for (NSInteger i = 0; i < view.titlesArray.count; i++) {
+            [self insertSegmentWithTitle:view.titlesArray[i] atIndex:i animated:NO];
+        }
+    } else {
+        for (NSInteger i = 0; i < view.titlesArray.count; i++) {
+            [self setTitle:view.titlesArray[i] forSegmentAtIndex:i];
+        }
     }
-    self.selectedSegmentIndex = (int)view.value;
+    if (!view.momentary) {
+        self.selectedSegmentIndex = (int)view.value;
+    }
     self.enabled = view.enabled;
     self.momentary = view.momentary;
 }
