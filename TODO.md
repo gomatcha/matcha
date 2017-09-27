@@ -59,7 +59,6 @@ Refactors:
 * Rework Slider.FloatNotifier to use comm.Float64Value and give it a better name InOutValue?
 
 Website
-* License agreement?
 * MailChimp?
 * Install Discourse
 
