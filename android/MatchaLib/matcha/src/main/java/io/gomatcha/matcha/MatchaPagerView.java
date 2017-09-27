@@ -3,6 +3,7 @@ package io.gomatcha.matcha;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -19,6 +20,7 @@ class MatchaPagerView extends MatchaChildView {
     ViewPager viewPager;
     MatchaPagerAdapter pagerAdapter;
     MatchaViewNode viewNode;
+    RelativeLayout relativeLayout;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/view/android PagerView", new MatchaView.ViewFactory() {
@@ -34,12 +36,18 @@ class MatchaPagerView extends MatchaChildView {
         viewNode = node;
 
         pagerAdapter = new MatchaPagerAdapter();
+        relativeLayout = new RelativeLayout(context);
+        addView(relativeLayout);
 
         RelativeLayout.LayoutParams tabParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         tabStrip = new SlidingTabLayout(context);
         tabStrip.setId(generateViewId());
         tabStrip.setBackgroundColor(0xff00ffff);
-        addView(tabStrip, tabParams);
+        relativeLayout.addView(tabStrip, tabParams);
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            float ratio = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+            tabStrip.setElevation(4 * ratio);
+        }
 
         RelativeLayout.LayoutParams contentParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         contentParams.addRule(RelativeLayout.BELOW, tabStrip.getId());
@@ -47,7 +55,7 @@ class MatchaPagerView extends MatchaChildView {
         viewPager.setId(generateViewId());
         viewPager.setBackgroundColor(0xff0000ff);
         viewPager.setAdapter(pagerAdapter);
-        addView(viewPager, contentParams);
+        relativeLayout.addView(viewPager, contentParams);
 
         tabStrip.setDistributeEvenly(true);
         tabStrip.setViewPager(viewPager);
