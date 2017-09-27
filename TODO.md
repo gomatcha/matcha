@@ -2,7 +2,7 @@ High:
 * Non-image resources.
     * Assets directory that gets merged from any folder containing /assets and importing "gomatcha.io/matcha". What to do about images? _1x.png _2x.png
 * Android double tap.
-* Rotation / orientation
+* Orientation listener?
 
 Medium:
 * Better notavailable-view. lightgray with centered "Unknown".

@@ -14,7 +14,9 @@ import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Choreographer;
+import android.view.Surface;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -155,6 +157,22 @@ public class JavaBridge {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
         context.startActivity(browserIntent);
         return true;
+    }
+
+    public int orientation() {
+        int rotation = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+        switch (rotation) {
+        case Surface.ROTATION_0:
+            return 0;
+        case Surface.ROTATION_90:
+            return 3;
+        case Surface.ROTATION_180:
+            return 1;
+        case Surface.ROTATION_270:
+            return 2;
+        default:
+            return 0;
+        }
     }
 
     public void displayAlert(byte[] protobuf) {

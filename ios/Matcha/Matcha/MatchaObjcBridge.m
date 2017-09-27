@@ -134,4 +134,18 @@
 #pragma GCC diagnostic pop
 }
 
+- (int)orientation {
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (orientation == UIInterfaceOrientationPortrait) {
+        return 0;
+    } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        return 1;
+    } else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        return 2;
+    } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+        return 3;
+    }
+    return 0;
+}
+
 @end

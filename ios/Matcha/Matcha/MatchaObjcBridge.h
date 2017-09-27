@@ -10,4 +10,5 @@
 - (MatchaGoValue *)propertiesForResource:(NSString *)path;
 - (void)displayAlert:(NSData *)protobuf;
 - (BOOL)openURL:(NSString *)url;
+- (int)orientation;
 @end
