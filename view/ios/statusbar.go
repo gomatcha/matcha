@@ -74,6 +74,9 @@ func (m *statusBarMiddleware) MarshalProtobuf() proto.Message {
 			statusBar = node.Value.(*StatusBar)
 		}
 	})
+	if statusBar == nil {
+		statusBar = &StatusBar{Style: StatusBarStyleDark}
+	}
 	return &pbapp.StatusBar{
 		Hidden: statusBar.Hidden,
 		Style:  pbapp.StatusBarStyle(statusBar.Style + 1),

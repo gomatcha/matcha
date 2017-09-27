@@ -129,7 +129,6 @@ func (v *AddView) Build(ctx view.Context) view.Model {
 	placeholderStyle.SetTextColor(colornames.Lightgray)
 
 	input := view.NewTextInput()
-	input.PaintStyle = &paint.Style{BackgroundColor: colornames.Lightgray}
 	input.Text = v.text
 	input.Style = style
 	input.Placeholder = "What needs to be done?"

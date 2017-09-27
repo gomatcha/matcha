@@ -43,6 +43,7 @@ class MatchaTextInputView extends MatchaChildView {
         viewNode = node;
 
         view = new EditText(context);
+        view.setPadding(0, 0, 0, 0);
         view.setBackground(null);
         view.setGravity(Gravity.TOP);
         view.setOnEditorActionListener(new TextView.OnEditorActionListener() {
