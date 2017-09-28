@@ -1,18 +1,20 @@
 High:
 * Non-image resources.
     * Assets directory that gets merged from any folder containing /assets and importing "gomatcha.io/matcha". What to do about images? _1x.png _2x.png
-* Android double tap.
 * Orientation listener?
+* When exactly does the lifecycle events occur. What is best practice with subscribing/unsubscribing.
+* Print java callstack on panic?
+* Android memory usage is slowly increasing.
 
 Medium:
-* Better notavailable-view. lightgray with centered "Unknown".
 * Android scroll views scrollposition
+* Android vertical/horizontal scrollviews?
+* Better notavailable-view. lightgray with centered "Unknown".
 * Move images loading to native side.
 * Webview
 * Stackview button items
-* Android vertical/horizontal scrollviews?
 * Crash on "Stop"
-* More Touch Recognizers: Pan, Swipe, Pinch, Rotation
+* More Touch Recognizers: Pan, Swipe, Pinch, Rotation. Android double tap.
 * Modal presentation.
 * Picker
 * StackBar height / hidden, color
@@ -42,13 +44,11 @@ Very Low:
 * Button should fade when disabled.
 * Automatically insert copyright notice.
 * Text selection.
-* Localization
 * View 3d transforms.
 * GridView
 * Debug constraints.
 * Collect native resources into assets.
 * Animations: Spring, Delay, Batch, Reverse, Decay, Repeat
-* Flexbox
 * Strikethrough doesn't work.
 
 Refactors:
@@ -85,6 +85,7 @@ Upgrade:
 * CameraView
 * MapView
 * GPS
+* Localization
 * Accessibility : access, 
 * Android touch highlight?
 
