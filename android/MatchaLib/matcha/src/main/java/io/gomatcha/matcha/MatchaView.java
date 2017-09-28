@@ -2,6 +2,7 @@ package io.gomatcha.matcha;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -141,6 +142,8 @@ public class MatchaView extends RelativeLayout {
         return factory.createView(context, node);
     }
 
+    // Back Button
+
     long downTime = 0;
     @Override
     public boolean dispatchKeyEventPreIme(KeyEvent event) {
@@ -163,4 +166,14 @@ public class MatchaView extends RelativeLayout {
         }
         return super.dispatchKeyEventPreIme(event);
     }
+
+    // Orientation
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.v("x", "OnConfigurationChanged");
+        super.onConfigurationChanged(newConfig);
+        JavaBridge.javaBridge.didChangeOrientation();
+    }
+
 }

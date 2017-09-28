@@ -36,6 +36,7 @@ import io.gomatcha.matcha.proto.view.PbAlert;
 import io.gomatcha.matcha.proto.view.PbView;
 
 public class JavaBridge {
+    static JavaBridge javaBridge;
     static Choreographer.FrameCallback callback;
     static Context context;
     static TextView textView;
@@ -47,10 +48,6 @@ public class JavaBridge {
         }
         context = ctx;
         textView = new TextView(context);
-
-        Bridge bridge = Bridge.singleton();
-        bridge.put("", new JavaBridge());
-
         callback = new Choreographer.FrameCallback() {
             @Override
             public void doFrame(long frameTimeNanos) {
@@ -59,6 +56,8 @@ public class JavaBridge {
             }
         };
         Choreographer.getInstance().postFrameCallback(callback);
+        javaBridge = new JavaBridge();
+        Bridge.singleton().put("", javaBridge);
     }
 
     public boolean updateViewWithProtobuf(Long id, byte[] protobuf) {
@@ -151,6 +150,11 @@ public class JavaBridge {
         default:
             return 0;
         }
+    }
+
+    void didChangeOrientation() {
+        Log.v("x", "DidChangeOrientation");
+        GoValue.withFunc("gomatcha.io/matcha/application SetOrientation").call("", new GoValue(orientation()));
     }
 
     public void displayAlert(byte[] protobuf) {
