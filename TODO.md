@@ -12,7 +12,6 @@ Medium:
 * Move images loading to native side.
 * Webview
 * Stackview button items
-* Crash on "Stop"
 * More Touch Recognizers: Pan, Swipe, Pinch, Rotation. Android double tap.
 * Modal presentation.
 * Picker

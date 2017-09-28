@@ -29,10 +29,12 @@ func (v *Float64Value) Value() float64 {
 // SetValue updates v.Value() and notifies any observers.
 func (v *Float64Value) SetValue(val float64) {
 	v.mutex.Lock()
-	defer v.mutex.Unlock()
 	if val != v.value {
 		v.value = val
+		v.mutex.Unlock()
 		v.relay.Signal()
+	} else {
+		v.mutex.Unlock()
 	}
 }
 
@@ -63,9 +65,11 @@ func (v *IntValue) Value() int {
 // SetValue updates v.Value() and notifies any observers.
 func (v *IntValue) SetValue(val int) {
 	v.mutex.Lock()
-	defer v.mutex.Unlock()
 	if val != v.value {
 		v.value = val
+		v.mutex.Unlock()
 		v.relay.Signal()
+	} else {
+		v.mutex.Unlock()
 	}
 }
