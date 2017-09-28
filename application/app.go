@@ -21,6 +21,7 @@ import (
 	"runtime"
 
 	"gomatcha.io/matcha/bridge"
+	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
 )
 
@@ -62,4 +63,16 @@ func Orientation() layout.Edge {
 		return layout.EdgeLeft
 	}
 	return layout.EdgeTop
+}
+
+var orientationNotifier comm.IntValue
+
+func OrientationNotifier() comm.IntNotifier {
+	return &orientationNotifier
+}
+
+func init() {
+	bridge.RegisterFunc("gomatcha.io/matcha/application SetOrientation", func(edge int) {
+		orientationNotifier.SetValue(edge)
+	})
 }

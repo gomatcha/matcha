@@ -24,8 +24,11 @@
         
         MatchaGoValue *screenScaleFunc = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/internal/device setScreenScale"];
         [screenScaleFunc call:nil, [[MatchaGoValue alloc] initWithDouble:UIScreen.mainScreen.scale], nil];
-        
+
         [[MatchaObjcBridge sharedBridge] setObject:x forKey:@""];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:x selector:@selector(didChangeOrientation:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+        [x didChangeOrientation:nil];
     });
 }
 
@@ -146,6 +149,14 @@
         return 3;
     }
     return 0;
+}
+
+- (void)didChangeOrientation:(NSNotification *)note {
+    static MatchaGoValue *orientationFunc = nil;
+    if (orientationFunc == nil) {
+        orientationFunc = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/application SetOrientation"];
+    }
+    [orientationFunc call:nil, [[MatchaGoValue alloc] initWithInt:self.orientation], nil];
 }
 
 @end
