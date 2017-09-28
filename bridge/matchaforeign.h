@@ -41,6 +41,10 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args);
 // Tracker
 void MatchaUntrackObjc(ObjcRef key);
 
+// Other
+
+void MatchaForeignPanic();
+
 // ObjcRef MatchaObjcWithGo(GoRef v);
 // GoRef MatchaObjcToGo(ObjcRef v);
 

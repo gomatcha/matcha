@@ -403,6 +403,7 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer cstr, ObjcRef arguments) {
     return MatchaTrackObjc(ret);
 }
 
+
 // Tracker
 
 ObjcRef MatchaTrackObjc(id value) {
@@ -415,6 +416,12 @@ id MatchaGetObjc(ObjcRef key) {
 
 void MatchaUntrackObjc(ObjcRef key) {
     [[MatchaTracker sharedTracker] untrack:key];
+}
+
+// Other
+
+void MatchaForeignPanic() {
+    @throw [NSException exceptionWithName:@"Golang Panic" reason:@"" userInfo:nil];
 }
 
 // Utilities

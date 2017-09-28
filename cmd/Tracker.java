@@ -64,7 +64,6 @@ public class Tracker {
         long test = 0;
         try {
             Object a = this.get(v);
-            // Log.v("Bridge", String.format("foreignCall, %s, %s", a.getClass().getName(), Arrays.toString(vc)));
             Method m = a.getClass().getMethod(method, vc);
             Object rlt = m.invoke(a, vb);
             test = track(rlt);
@@ -140,5 +139,8 @@ public class Tracker {
     public synchronized long foreignArrayLen(long v) {
         Object[] a = (Object[])this.get(v);
         return a.length;
+    }
+    public synchronized void foreignPanic() {
+        throw new RuntimeException("Golang Panic");
     }
 }

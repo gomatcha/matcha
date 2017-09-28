@@ -3,8 +3,7 @@ High:
     * Assets directory that gets merged from any folder containing /assets and importing "gomatcha.io/matcha". What to do about images? _1x.png _2x.png
 * Orientation listener?
 * When exactly does the lifecycle events occur. What is best practice with subscribing/unsubscribing.
-* Print java callstack on panic?
-* Android memory usage is slowly increasing.
+* Android memory usage is slowly increasing.... and random crashes...
 
 Medium:
 * Android scroll views scrollposition

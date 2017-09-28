@@ -195,6 +195,12 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args) {
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v, method, args);
 }
 
+void MatchaForeignPanic() {
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignPanic", "()V");
+    return (*sEnv)->CallVoidMethod(sEnv, sTracker, mid);
+}
+
 // Tracker
 ObjcRef MatchaTrackObjc(jobject v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
