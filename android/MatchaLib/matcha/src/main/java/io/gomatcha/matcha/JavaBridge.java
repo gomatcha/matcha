@@ -57,6 +57,7 @@ public class JavaBridge {
         };
         Choreographer.getInstance().postFrameCallback(callback);
         javaBridge = new JavaBridge();
+        javaBridge.didChangeOrientation();
         Bridge.singleton().put("", javaBridge);
     }
 
@@ -153,7 +154,6 @@ public class JavaBridge {
     }
 
     void didChangeOrientation() {
-        Log.v("x", "DidChangeOrientation");
         GoValue.withFunc("gomatcha.io/matcha/application SetOrientation").call("", new GoValue(orientation()));
     }
 
@@ -178,21 +178,21 @@ public class JavaBridge {
             if (buttons.size() > 0) {
                 builder.setPositiveButton(buttons.get(0).getTitle(), new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                       GoValue.withFunc("gomatcha.io/matcha/view/alert onPress").call("", new GoValue(alert.getId()), new GoValue(0));
+                       GoValue.withFunc("gomatcha.io/matcha/view/alert onPress").call("", new GoValue(alert.getId()), new GoValue(0L));
                    }
                 });
             }
             if (buttons.size() > 1) {
                 builder.setNegativeButton(buttons.get(1).getTitle(), new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                       GoValue.withFunc("gomatcha.io/matcha/view/alert onPress").call("", new GoValue(alert.getId()), new GoValue(1));
+                       GoValue.withFunc("gomatcha.io/matcha/view/alert onPress").call("", new GoValue(alert.getId()), new GoValue(1L));
                    }
                 });
             }
             if (buttons.size() > 2) {
                 builder.setNeutralButton(buttons.get(2).getTitle(), new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                       GoValue.withFunc("gomatcha.io/matcha/view/alert onPress").call("", new GoValue(alert.getId()), new GoValue(2));
+                       GoValue.withFunc("gomatcha.io/matcha/view/alert onPress").call("", new GoValue(alert.getId()), new GoValue(2L));
                    }
                 });
             }

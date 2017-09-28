@@ -27,6 +27,10 @@ JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoBool(JNIEnv *env
     return matchaGoBool(v);
 }
 
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoInt(JNIEnv *env, jclass c, jint v) {
+    return matchaGoInt(v);
+}
+
 JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoLong(JNIEnv *env, jclass c, jlong v) {
     return matchaGoInt64(v);
 }

@@ -171,7 +171,6 @@ public class MatchaView extends RelativeLayout {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.v("x", "OnConfigurationChanged");
         super.onConfigurationChanged(newConfig);
         JavaBridge.javaBridge.didChangeOrientation();
     }

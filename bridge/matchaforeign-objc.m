@@ -208,8 +208,12 @@ ObjcRef MatchaObjcCallSentinel() {
 ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer cstr, ObjcRef arguments) {
     id obj = MatchaGetObjc(v);
     NSArray *args = MatchaGetObjc(arguments);
-    SEL sel = NSSelectorFromString(MatchaCGoBufferToNSString(cstr));
+    NSString *str = MatchaCGoBufferToNSString(cstr);
+    SEL sel = NSSelectorFromString(str);
     NSMethodSignature *sig = [[obj class] instanceMethodSignatureForSelector:sel];
+    if (sig == nil) {
+        NSLog(@"MatchaObjcCall with nil signature: %@, %@, %@", obj, str, args);
+    }
     
     // Build invocation.
     NSInvocation *inv = [NSInvocation invocationWithMethodSignature:sig];

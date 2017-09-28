@@ -21,6 +21,9 @@ public class GoValue {
    public GoValue(boolean v) {
       this(matchaGoBool(v), false);
    }
+   public GoValue(int v) {
+      this(matchaGoInt(v), false);
+   }
    public GoValue(long v) {
       this(matchaGoLong(v), false);
    }
@@ -52,6 +55,7 @@ public class GoValue {
    
    private static native long matchaGoForeign(long a);
    private static native long matchaGoBool(boolean a);
+   private static native long matchaGoInt(int a);
    private static native long matchaGoLong(long a);
    private static native long matchaGoDouble(double a);
    private static native long matchaGoString(String a);

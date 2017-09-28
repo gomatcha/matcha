@@ -43,16 +43,8 @@ func OpenURL(url string) error {
 	return nil
 }
 
-// layout.EdgeTop is portrait. EdgeRight and EdgeLeft are landscape and
-// EdgeBottom is upside down.
-func Orientation() layout.Edge {
-	var o int64
-	if runtime.GOOS == "android" {
-		o = bridge.Bridge("").Call("orientation").ToInt64()
-	} else {
-		o = bridge.Bridge("").Call("orientation").ToInt64()
-	}
-	switch o {
+func orientation(v int) layout.Edge {
+	switch v {
 	case 0:
 		return layout.EdgeTop
 	case 1:
@@ -65,6 +57,18 @@ func Orientation() layout.Edge {
 	return layout.EdgeTop
 }
 
+// layout.EdgeTop is portrait. EdgeRight and EdgeLeft are landscape and
+// EdgeBottom is upside down.
+func Orientation() layout.Edge {
+	var o int64
+	if runtime.GOOS == "android" {
+		o = bridge.Bridge("").Call("orientation").ToInt64()
+	} else {
+		o = bridge.Bridge("").Call("orientation").ToInt64()
+	}
+	return orientation(int(o))
+}
+
 var orientationNotifier comm.IntValue
 
 // In order to receive orientation notification on android you may need to set
@@ -75,7 +79,7 @@ func OrientationNotifier() comm.IntNotifier {
 }
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/application SetOrientation", func(edge int64) {
-		orientationNotifier.SetValue(int(edge))
+	bridge.RegisterFunc("gomatcha.io/matcha/application SetOrientation", func(v int) {
+		orientationNotifier.SetValue(int(orientation(v)))
 	})
 }

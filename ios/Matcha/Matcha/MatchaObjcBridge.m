@@ -169,7 +169,7 @@
     if (orientationFunc == nil) {
         orientationFunc = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/application SetOrientation"];
     }
-    [orientationFunc call:nil, [[MatchaGoValue alloc] initWithLongLong:self.orientation], nil];
+    [orientationFunc call:nil, [[MatchaGoValue alloc] initWithInt:self.orientation], nil];
 }
 
 @end

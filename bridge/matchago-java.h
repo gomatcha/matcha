@@ -35,6 +35,14 @@ JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoBool
 
 /*
  * Class:     io_gomatcha_bridge_GoValue
+ * Method:    matchaGoInt
+ * Signature: (I)J
+ */
+JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoInt
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     io_gomatcha_bridge_GoValue
  * Method:    matchaGoLong
  * Signature: (J)J
  */

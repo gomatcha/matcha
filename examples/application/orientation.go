@@ -45,8 +45,6 @@ func (v *OrientationView) Build(ctx view.Context) view.Model {
 	chl1.OnPress = func() {
 		o := application.Orientation()
 		view.Alert("Orientation"+strconv.Itoa(int(o)), "")
-
-		bridge.Bridge("").Call("printCallStack")
 	}
 	g1 := l.Add(chl1, func(s *constraint.Solver) {
 		s.Top(100)
