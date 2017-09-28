@@ -2,9 +2,10 @@
 #import <MatchaBridge/MatchaBridge.h>
 
 @interface MatchaObjcBridge_X : NSObject
++ (NSMapTable *)viewControllers;
 + (void)configure;
 - (MatchaGoValue *)sizeForAttributedString:(NSData *)data maxLines:(int)maxLines;
-- (void)updateId:(NSInteger)identifier withProtobuf:(NSData *)protobuf;
+- (bool)updateId:(NSInteger)identifier withProtobuf:(NSData *)protobuf;
 - (NSString *)assetsDir;
 - (MatchaGoValue *)imageForResource:(NSString *)path;
 - (MatchaGoValue *)propertiesForResource:(NSString *)path;

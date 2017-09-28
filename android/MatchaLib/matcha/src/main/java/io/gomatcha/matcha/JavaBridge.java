@@ -24,6 +24,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
+import java.util.HashMap;
 import java.util.List;
 
 import io.gomatcha.bridge.Bridge;
@@ -38,6 +39,7 @@ public class JavaBridge {
     static Choreographer.FrameCallback callback;
     static Context context;
     static TextView textView;
+    static HashMap<Long, WeakReference<MatchaView>> viewMap = new HashMap<Long, WeakReference<MatchaView>>();
 
     static synchronized void init(Context ctx) {
         if (context != null) {
@@ -59,17 +61,17 @@ public class JavaBridge {
         Choreographer.getInstance().postFrameCallback(callback);
     }
 
-    public void updateViewWithProtobuf(Long id, byte[] protobuf) {
-        for (WeakReference<MatchaView> i : MatchaView.views) {
-            if (i.get().identifier == id) {
-                try {
-                    PbView.Root root = PbView.Root.parseFrom(protobuf);
-                    i.get().update(root);
-                } catch (InvalidProtocolBufferException e) {
-
-                }
-            }
+    public boolean updateViewWithProtobuf(Long id, byte[] protobuf) {
+        WeakReference<MatchaView> v = viewMap.get(id);
+        if (v == null || v.get() == null) {
+            viewMap.remove(id);
+            return false;
         }
+        try {
+            v.get().update(PbView.Root.parseFrom(protobuf));
+        } catch (InvalidProtocolBufferException e) {
+        }
+        return true;
     }
 
     public GoValue sizeForStyledText(byte[] protobuf, Long maxLines) {
@@ -121,30 +123,6 @@ public class JavaBridge {
         int id = res.getIdentifier(path, "drawable", context.getPackageName());
 
         Drawable drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_MEDIUM);
-        /*
-        double ratio = 1.0;
-        if (drawable == null) {
-            drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_LOW);
-            ratio = 0.5;
-        }
-        if (drawable == null) {
-            drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_HIGH);
-            ratio = 1.5;
-        }
-        if (drawable == null) {
-            drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_XHIGH);
-            ratio = 2.0;
-        }
-        if (drawable == null) {
-            drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_XXHIGH);
-            ratio = 3.0;
-        }
-        if (drawable == null) {
-            drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_XXXHIGH);
-            ratio = 4.0;
-        }
-        */
-
         Proto.ImageProperties.Builder builder = Proto.ImageProperties.newBuilder()
                 .setWidth(drawable.getMinimumWidth())
                 .setHeight(drawable.getMinimumHeight())

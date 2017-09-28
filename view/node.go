@@ -60,10 +60,6 @@ func (r *root) start() {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
-	if r.ticker != nil {
-		return
-	}
-
 	id := r.id
 	r.ticker = internal.NewTicker(time.Hour * 99999)
 	_ = r.ticker.Notify(func() {
@@ -83,22 +79,17 @@ func (r *root) start() {
 
 		// fmt.Println(r.root.node.debugString())
 		fmt.Println("Update") // TODO(KD): Remove.
+
+		success := false
 		if runtime.GOOS == "android" {
-			bridge.Bridge("").Call("updateViewWithProtobuf", bridge.Int64(id), bridge.Bytes(pb))
+			success = bridge.Bridge("").Call("updateViewWithProtobuf", bridge.Int64(id), bridge.Bytes(pb)).ToBool()
 		} else if runtime.GOOS == "darwin" {
-			bridge.Bridge("").Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb))
+			success = bridge.Bridge("").Call("updateId:withProtobuf:", bridge.Int64(id), bridge.Bytes(pb)).ToBool()
+		}
+		if !success {
+			r.ticker.Stop()
 		}
 	})
-}
-
-func (r *root) Stop() {
-	matcha.MainLocker.Lock()
-	defer matcha.MainLocker.Unlock()
-
-	if r.ticker == nil {
-		return
-	}
-	r.ticker.Stop()
 }
 
 func (r *root) Call(funcId string, viewId int64, args []reflect.Value) []reflect.Value {

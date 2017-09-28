@@ -8,12 +8,22 @@
 
 @implementation MatchaObjcBridge_X
 
++ (NSMapTable *)viewControllers {
+    static NSMapTable *sMapTable;
+    static dispatch_once_t sOnce;
+    dispatch_once(&sOnce, ^{
+        sMapTable = [NSMapTable strongToWeakObjectsMapTable];
+    });
+    return sMapTable;
+}
+
 + (void)configure {
     static dispatch_once_t sOnce = 0;
     dispatch_once(&sOnce, ^{
         [MatchaDeadlockLogger sharedLogger]; // Initialize
         
         MatchaObjcBridge_X *x = [[MatchaObjcBridge_X alloc] init];
+        [[MatchaObjcBridge sharedBridge] setObject:x forKey:@""];
     
         static CADisplayLink *displayLink = nil;
         if (displayLink == nil) {
@@ -25,8 +35,6 @@
         MatchaGoValue *screenScaleFunc = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/internal/device setScreenScale"];
         [screenScaleFunc call:nil, [[MatchaGoValue alloc] initWithDouble:UIScreen.mainScreen.scale], nil];
 
-        [[MatchaObjcBridge sharedBridge] setObject:x forKey:@""];
-        
         [[NSNotificationCenter defaultCenter] addObserver:x selector:@selector(didChangeOrientation:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
         [x didChangeOrientation:nil];
     });
@@ -84,11 +92,16 @@
     [updateFunc call:nil, nil];
 }
 
-- (void)updateId:(NSInteger)identifier withProtobuf:(NSData *)protobuf {
-    MatchaViewPBRoot *pbroot = [[MatchaViewPBRoot alloc] initWithData:protobuf error:nil];
+- (bool)updateId:(NSInteger)identifier withProtobuf:(NSData *)protobuf {
+    NSMapTable *mapTable = [MatchaObjcBridge_X viewControllers];
+    MatchaViewController *vc = [mapTable objectForKey:@(identifier)];
+    if (vc == nil) {
+        return false;
+    }
     
-    MatchaViewController *vc = [MatchaViewController viewControllerWithIdentifier:identifier];
+    MatchaViewPBRoot *pbroot = [[MatchaViewPBRoot alloc] initWithData:protobuf error:nil];
     [vc update:pbroot];
+    return true;
 }
 
 - (NSString *)assetsDir {

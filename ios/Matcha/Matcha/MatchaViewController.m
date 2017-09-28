@@ -20,37 +20,18 @@
 
 @implementation MatchaViewController
 
-+ (NSPointerArray *)viewControllers {
-    static NSPointerArray *sPointerArray;
-    static dispatch_once_t sOnce;
-    dispatch_once(&sOnce, ^{
-        sPointerArray = [NSPointerArray weakObjectsPointerArray];
-    });
-    return sPointerArray;
-}
-
-+ (MatchaViewController *)viewControllerWithIdentifier:(NSInteger)identifier {
-    for (MatchaViewController *i in [self viewControllers]) {
-        if (i.identifier == identifier) {
-            return i;
-        }
-    }
-    return nil;
-}
-
 - (id)initWithGoValue:(MatchaGoValue *)value2 {
     if ((self = [super initWithNibName:nil bundle:nil])) {
-        [MatchaObjcBridge_X configure];
-        [[MatchaObjcBridge sharedBridge] setObject:[MatchaObjcBridge_X new] forKey:@""];
-        
         MatchaGoValue *value = [[[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/view NewRoot"] call:nil, value2, nil][0];
         self.goValue = value;
         self.identifier = (int)[value call:@"Id", nil][0].toLongLong;
-        [[MatchaViewController viewControllers] addPointer:(__bridge void *)self];
         self.viewNode = [[MatchaViewNode alloc] initWithParent:nil rootVC:self identifier:@([value call:@"ViewId", nil][0].toLongLong)];
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.extendedLayoutIncludesOpaqueBars=NO;
         self.automaticallyAdjustsScrollViewInsets=NO;
+        
+        [MatchaObjcBridge_X configure];
+        [[MatchaObjcBridge_X viewControllers] setObject:self forKey:@(self.identifier)];
     }
     return self;
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -20,17 +21,13 @@ import io.gomatcha.matcha.proto.view.PbView;
 import io.gomatcha.matcha.proto.view.android.PbStatusBar;
 
 public class MatchaView extends RelativeLayout {
-    static ArrayList<WeakReference<MatchaView>> views = new ArrayList<WeakReference<MatchaView>>();
     GoValue goValue;
     long identifier;
     MatchaViewNode node;
 
-    static {
-        new JavaBridge();
-    }
-
     public MatchaView(Context context, GoValue v2) {
         super(context);
+
         GoValue v = GoValue.withFunc("gomatcha.io/matcha/view NewRoot").call("", v2)[0];
         goValue = v;
         identifier = v.call("Id")[0].toLong();
@@ -39,10 +36,13 @@ public class MatchaView extends RelativeLayout {
         setFocusable(true);
         setFocusableInTouchMode(true);
 
-        views.add(new WeakReference<MatchaView>(this));
-
         // Initialize JavaBridge
         JavaBridge.init(context);
+        JavaBridge.viewMap.put(identifier, new WeakReference<MatchaView>(this));
+    }
+
+    public void stop() {
+        JavaBridge.viewMap.remove(identifier);
     }
 
     boolean loaded = false;
@@ -97,11 +97,6 @@ public class MatchaView extends RelativeLayout {
                 GoValue.withFunc("gomatcha.io/matcha/animate screenUpdate").call("");
             }
         });
-    }
-
-    @Override
-    protected void finalize() {
-        goValue.call("Stop");
     }
 
     public GoValue[] call(String func, long viewId, GoValue... args) {
@@ -168,5 +163,4 @@ public class MatchaView extends RelativeLayout {
         }
         return super.dispatchKeyEventPreIme(event);
     }
-
 }
