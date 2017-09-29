@@ -180,7 +180,7 @@ public class MatchaViewNode extends Object {
         }
 
         // Paint scrollView
-        if (layoutPaintNode != null & this.paintId != layoutPaintNode.getLayoutId()) {
+        if (layoutPaintNode != null & this.paintId != layoutPaintNode.getPaintId()) {
             this.paintId = layoutPaintNode.getPaintId();
 
             PbPaint.Style paintStyle = layoutPaintNode.getPaintStyle();
