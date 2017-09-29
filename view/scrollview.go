@@ -20,7 +20,7 @@ type ScrollView struct {
 	IndicatorAxes  layout.Axis
 	ScrollEnabled  bool
 	ScrollPosition *ScrollPosition
-	offset         *layout.Point
+	scrollPosition *ScrollPosition
 	OnScroll       func(position layout.Point)
 
 	ContentChildren []View
@@ -32,10 +32,10 @@ type ScrollView struct {
 // NewScrollView returns a new view.
 func NewScrollView() *ScrollView {
 	return &ScrollView{
-		ScrollAxes:    layout.AxisY,
-		IndicatorAxes: layout.AxisY | layout.AxisX,
-		ScrollEnabled: true,
-		offset:        &layout.Point{},
+		ScrollAxes:     layout.AxisY,
+		IndicatorAxes:  layout.AxisY | layout.AxisX,
+		ScrollEnabled:  true,
+		scrollPosition: &ScrollPosition{},
 	}
 }
 
@@ -46,6 +46,11 @@ func (v *ScrollView) Build(ctx Context) Model {
 	child.Layouter = v.ContentLayouter
 	child.Painter = v.ContentPainter
 
+	position := v.ScrollPosition
+	if position == nil {
+		position = v.scrollPosition
+	}
+
 	var painter paint.Painter
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
@@ -55,8 +60,7 @@ func (v *ScrollView) Build(ctx Context) Model {
 		Painter:  painter,
 		Layouter: &scrollViewLayouter{
 			axes:           v.ScrollAxes,
-			scrollPosition: v.ScrollPosition,
-			offset:         v.offset,
+			scrollPosition: position,
 		},
 		NativeViewName: "gomatcha.io/matcha/view/scrollview",
 		NativeViewState: internal.MarshalProtobuf(&pbview.ScrollView{
@@ -78,10 +82,12 @@ func (v *ScrollView) Build(ctx Context) Model {
 				var offset layout.Point
 				(&offset).UnmarshalProtobuf(event.ContentOffset)
 
-				*v.offset = offset
-				if v.ScrollPosition != nil {
-					v.ScrollPosition.SetValue(offset)
+				position := v.ScrollPosition
+				if position == nil {
+					position = v.scrollPosition
 				}
+				position.setValue(offset, true)
+
 				if v.OnScroll != nil {
 					v.OnScroll(offset)
 				}
@@ -93,7 +99,6 @@ func (v *ScrollView) Build(ctx Context) Model {
 type scrollViewLayouter struct {
 	axes           layout.Axis
 	scrollPosition *ScrollPosition
-	offset         *layout.Point
 }
 
 func (l *scrollViewLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
@@ -108,8 +113,9 @@ func (l *scrollViewLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.
 		maxSize.X = math.Inf(1)
 	}
 
+	offset := l.scrollPosition.Value()
 	g := ctx.LayoutChild(0, minSize, maxSize)
-	g.Frame = layout.Rt(-l.offset.X, -l.offset.Y, g.Width()-l.offset.X, g.Height()-l.offset.Y)
+	g.Frame = layout.Rt(-offset.X, -offset.Y, g.Width()-offset.X, g.Height()-offset.Y)
 	gs := []layout.Guide{g}
 
 	return layout.Guide{
@@ -118,21 +124,10 @@ func (l *scrollViewLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.
 }
 
 func (l *scrollViewLayouter) Notify(f func()) comm.Id {
-	if l.scrollPosition == nil {
-		return 0
-	}
-	return l.scrollPosition.Notify(func() {
-		if *l.offset != l.scrollPosition.Value() {
-			*l.offset = l.scrollPosition.Value()
-			f()
-		}
-	})
+	return l.scrollPosition.notify(f, false)
 }
 
 func (l *scrollViewLayouter) Unnotify(id comm.Id) {
-	if l.scrollPosition == nil {
-		return
-	}
 	l.scrollPosition.Unnotify(id)
 }
 
@@ -141,6 +136,7 @@ type ScrollPosition struct {
 	Y           animate.Value
 	group       comm.Relay
 	initialized bool
+	userEvent   bool
 }
 
 func (p *ScrollPosition) initialize() {
@@ -153,8 +149,21 @@ func (p *ScrollPosition) initialize() {
 }
 
 func (p *ScrollPosition) Notify(f func()) comm.Id {
+	return p.notify(f, true)
+}
+
+// Allow ignoring user triggered scroll events.
+func (p *ScrollPosition) notify(f func(), userEvents bool) comm.Id {
 	p.initialize()
-	return p.group.Notify(f)
+	if userEvents {
+		return p.group.Notify(f)
+	} else {
+		return p.group.Notify(func() {
+			if !p.userEvent {
+				f()
+			}
+		})
+	}
 }
 
 func (p *ScrollPosition) Unnotify(id comm.Id) {
@@ -167,11 +176,16 @@ func (p *ScrollPosition) Value() layout.Point {
 }
 
 func (p *ScrollPosition) SetValue(val layout.Point) {
-	if val == p.Value() {
-		return
+	p.setValue(val, false)
+}
+
+func (p *ScrollPosition) setValue(val layout.Point, userEvent bool) {
+	p.userEvent = userEvent
+	if val != p.Value() {
+		p.X.SetValue(val.X)
+		p.Y.SetValue(val.Y)
 	}
-	p.X.SetValue(val.X)
-	p.Y.SetValue(val.Y)
+	p.userEvent = false
 }
 
 // TODO(KD):

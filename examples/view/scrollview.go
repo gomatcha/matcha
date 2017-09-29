@@ -1,8 +1,6 @@
 package view
 
 import (
-	"fmt"
-
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
@@ -60,10 +58,28 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 	textView := view.NewTextView()
 	textView.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
 	textView.String = fmt.Sprintln("Position:", v.scrollPosition.X.Value(), v.scrollPosition.Y.Value())
-	_ = l.Add(textView, func(s *constraint.Solver) {
+	textView.MaxLines = 2
+	g2 := l.Add(textView, func(s *constraint.Solver) {
 		s.Top(50)
 		s.LeftEqual(g1.Right())
 		s.RightEqual(l.Right())
+		s.Height(100)
+	})
+
+	button := view.NewButton()
+	button.String = "Scroll"
+	button.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
+	button.OnPress = func() {
+		a := &animate.Basic{
+			Start: v.scrollPosition.Y.Value(),
+			End:   200,
+			Dur:   time.Second / 5,
+		}
+		v.scrollPosition.Y.Run(a)
+	}
+	_ = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g2.Bottom())
+		s.LeftEqual(g1.Right())
 	})
 
 	return view.Model{

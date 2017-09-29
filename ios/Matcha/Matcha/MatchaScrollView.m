@@ -20,15 +20,26 @@
 }
 
 - (void)setNativeState:(NSData *)nativeState {
-    MatchaViewPBScrollView *pbscrollview = [MatchaViewPBScrollView parseFromData:nativeState error:nil];
-    self.scrollEnabled = pbscrollview.scrollEnabled;
-    self.showsVerticalScrollIndicator = pbscrollview.showsVerticalScrollIndicator;
-    self.showsHorizontalScrollIndicator = pbscrollview.showsHorizontalScrollIndicator;
-    self.alwaysBounceVertical = pbscrollview.vertical;
-    self.alwaysBounceHorizontal = pbscrollview.horizontal;
+    MatchaViewPBScrollView *state = [MatchaViewPBScrollView parseFromData:nativeState error:nil];
+    if (self.scrollEnabled != state.scrollEnabled) {
+        self.scrollEnabled = state.scrollEnabled;
+    }
+    if (self.showsVerticalScrollIndicator != state.showsVerticalScrollIndicator) {
+        self.showsVerticalScrollIndicator = state.showsVerticalScrollIndicator;
+    }
+    if (self.showsHorizontalScrollIndicator != state.showsHorizontalScrollIndicator) {
+        self.showsHorizontalScrollIndicator = state.showsHorizontalScrollIndicator;
+    }
+    if (self.alwaysBounceVertical != state.vertical) {
+        self.alwaysBounceVertical = state.vertical;
+    }
+    if (self.alwaysBounceHorizontal != state.horizontal) {
+        self.alwaysBounceHorizontal = state.horizontal;
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // MatchaViewNode changes the scrollOffset. Don't trigger an event back to Go.
     if (self.viewNode.rootVC.updating || CGPointEqualToPoint(self.contentOffset, self.matchaContentOffset)) {
         return;
     }
