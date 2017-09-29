@@ -20,7 +20,6 @@ type ScrollView struct {
 	IndicatorAxes  layout.Axis
 	ScrollEnabled  bool
 	ScrollPosition *ScrollPosition
-	scrollPosition *ScrollPosition
 	offset         *layout.Point
 	OnScroll       func(position layout.Point)
 

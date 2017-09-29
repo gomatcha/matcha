@@ -6,6 +6,7 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/view"
 )
 
@@ -27,7 +28,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	childLayouter := &table.Layouter{}
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 5; i++ {
 		childLayouter.Add(NewTableCell(), nil)
 	}
 
@@ -39,7 +40,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 		s.Top(0)
 		s.Left(0)
 		s.Width(300)
-		s.Height(500)
+		s.HeightEqual(l.Height())
 	})
 
 	return view.Model{
@@ -60,21 +61,43 @@ func NewTableCell() *TableCell {
 func (v *TableCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
-		s.Height(50)
+		s.Height(200)
 	})
 
-	chl := view.NewBasicView()
-	chl.Painter = &paint.Style{BackgroundColor: colornames.Blue}
+	chl := NewTableButton()
 	l.Add(chl, func(s *constraint.Solver) {
 		s.LeftEqual(l.Left().Add(10))
 		s.RightEqual(l.Right().Add(-10))
-		s.TopEqual(l.Top().Add(10))
-		s.BottomEqual(l.Bottom().Add(-10))
+		s.TopEqual(l.Top().Add(50))
+		s.BottomEqual(l.Bottom().Add(-50))
 	})
 
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
+	}
+}
+
+type TableButton struct {
+	view.Embed
+}
+
+func NewTableButton() *TableButton {
+	return &TableButton{}
+}
+
+func (v *TableButton) Build(ctx view.Context) view.Model {
+	return view.Model{
+		Painter: &paint.Style{BackgroundColor: colornames.Blue},
+		Options: []view.Option{
+			pointer.GestureList{
+				&pointer.ButtonGesture{
+					OnEvent: func(e *pointer.ButtonEvent) {
+						v.Signal()
+					},
+				},
+			},
+		},
 	}
 }
