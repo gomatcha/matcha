@@ -1,6 +1,8 @@
 package view
 
 import (
+	"fmt"
+
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
@@ -18,10 +20,21 @@ func init() {
 
 type ScrollView struct {
 	view.Embed
+	scrollPosition *view.ScrollPosition
 }
 
 func NewScrollView() *ScrollView {
-	return &ScrollView{}
+	return &ScrollView{
+		scrollPosition: &view.ScrollPosition{},
+	}
+}
+
+func (v *ScrollView) Lifecycle(from, to view.Stage) {
+	if view.EntersStage(from, to, view.StageMounted) {
+		v.Subscribe(v.scrollPosition)
+	} else if view.ExitsStage(from, to, view.StageMounted) {
+		v.Unsubscribe(v.scrollPosition)
+	}
 }
 
 func (v *ScrollView) Build(ctx view.Context) view.Model {
@@ -33,14 +46,24 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 	}
 
 	scrollview := view.NewScrollView()
+	scrollview.ScrollPosition = v.scrollPosition
 	scrollview.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
 	scrollview.ContentLayouter = childLayouter
 	scrollview.ContentChildren = childLayouter.Views()
-	_ = l.Add(scrollview, func(s *constraint.Solver) {
+	g1 := l.Add(scrollview, func(s *constraint.Solver) {
 		s.Top(0)
 		s.Left(0)
-		s.Width(300)
+		s.Width(200)
 		s.HeightEqual(l.Height())
+	})
+
+	textView := view.NewTextView()
+	textView.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
+	textView.String = fmt.Sprintln("Position:", v.scrollPosition.X.Value(), v.scrollPosition.Y.Value())
+	_ = l.Add(textView, func(s *constraint.Solver) {
+		s.Top(50)
+		s.LeftEqual(g1.Right())
+		s.RightEqual(l.Right())
 	})
 
 	return view.Model{
