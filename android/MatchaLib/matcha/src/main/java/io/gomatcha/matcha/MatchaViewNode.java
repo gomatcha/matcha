@@ -1,10 +1,12 @@
 package io.gomatcha.matcha;
 
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.ScrollView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -47,6 +49,7 @@ public class MatchaViewNode extends Object {
             this.view = MatchaView.createView(buildNode.getBridgeName(), rootView.getContext(), this);
             this.view.matchaGestureRecognizer.viewNode = this;
         }
+        
         MatchaLayout layout = this.view;
         if (this.view instanceof MatchaScrollView) {
             layout = ((MatchaScrollView)this.view).childView;
@@ -149,6 +152,17 @@ public class MatchaViewNode extends Object {
             double minX = layoutPaintNode.getMinx() * ratio;
             double minY = layoutPaintNode.getMiny() * ratio;
 
+            // Offset for scrollviews.
+            if (this.view.getParent() != null && this.view.getParent().getParent() instanceof ScrollView) {
+                ScrollView scrollView = (ScrollView)this.view.getParent().getParent();
+                float offsetX = scrollView.getScrollX();
+                float offsetY = scrollView.getScrollY();
+                minX += offsetX;
+                minY += offsetY;
+                maxX += offsetX;
+                maxY += offsetY;
+            }
+
             if (this.parent == null) {
             } else if (this.parent.view.isContainerView()) {
             // } else if (this.parent.scrollView.getClass().isInstance(MatchaScrollView.class)) {
@@ -166,7 +180,7 @@ public class MatchaViewNode extends Object {
         }
 
         // Paint scrollView
-        if (layoutPaintNode != null & this.paintId != layoutPaintNode.getLayoutId()) {
+        if (layoutPaintNode != null & this.paintId != layoutPaintNode.getPaintId()) {
             this.paintId = layoutPaintNode.getPaintId();
 
             PbPaint.Style paintStyle = layoutPaintNode.getPaintStyle();
