@@ -4,5 +4,5 @@
 
 @interface MatchaTabView : UITabBarController <MatchaChildViewController, UITabBarControllerDelegate>
 @property (nonatomic, weak) MatchaViewNode *viewNode;
-@property (nonatomic, strong) GPBAny *nativeState;
+@property (nonatomic, strong) NSData *nativeState;
 @end
