@@ -8,7 +8,7 @@ change. Please file issues for any bugs you find.
 ### What is Matcha?
 
 Matcha is a package for building iOS and Android applications and frameworks in
-Go. Matcha provides a UI compenent library similar to ReactNative and exposes
+Go. Matcha provides a UI component library similar to ReactNative and exposes
 bindings to Objective-C and Java code through reflection. The library also
 provides Go APIs for common app tasks.
 

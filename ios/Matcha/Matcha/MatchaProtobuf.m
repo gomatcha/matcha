@@ -25,12 +25,15 @@
 @end
 
 
-CGColorRef MatchaCGColorWithProtobuf(MatchaPBColor *value) {
+CGColorRef MatchaCGColorCreateWithProtobuf(MatchaPBColor *value) {
     if (value == nil) {
         return nil;
     }
     CGFloat colors[4] = {((double)value.red)/0xffff, ((double)value.green)/0xffff, ((double)value.blue)/0xffff, ((double)value.alpha)/0xffff};
-    return CGColorCreate(CGColorSpaceCreateDeviceRGB(), colors);
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef color = CGColorCreate(colorspace, colors);
+    CFRelease(colorspace);
+    return color;
 }
 
 
@@ -269,7 +272,9 @@ CGColorRef MatchaCGColorWithProtobuf(MatchaPBColor *value) {
 @implementation UIImage (Matcha)
 
 - (id)initWithProtobuf:(MatchaPBImage *)value {
-    CIImage *image = [CIImage imageWithBitmapData:value.data_p bytesPerRow:(size_t)value.stride size:CGSizeMake(value.width, value.height) format:kCIFormatRGBA8 colorSpace:CGColorSpaceCreateDeviceRGB()];
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    CIImage *image = [CIImage imageWithBitmapData:value.data_p bytesPerRow:(size_t)value.stride size:CGSizeMake(value.width, value.height) format:kCIFormatRGBA8 colorSpace:colorspace];
+    CFRelease(colorspace);
     return [self initWithCIImage:image];
 }
 

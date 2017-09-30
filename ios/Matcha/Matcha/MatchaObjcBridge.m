@@ -62,7 +62,6 @@
     // transform to flip coordinate
     CGAffineTransform transform = CGAffineTransformMakeTranslation(0, 1e7);
     transform = CGAffineTransformScale(transform, 1, -1);
-
     
     CGFloat maxWidth = 0;
     CGFloat maxHeight = 0;
@@ -80,6 +79,10 @@
             maxHeight = flipped.y + descent;
         }
     }
+    
+    CFRelease(framesetterRef);
+    CFRelease(frameRef);
+    
     MatchaLayoutPBPoint *point = [[MatchaLayoutPBPoint alloc] initWithCGSize:CGSizeMake(ceil(maxWidth), ceil(maxHeight))];
     return [[MatchaGoValue alloc] initWithData:point.data];
 }
