@@ -5,12 +5,11 @@
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
     if ((self = [super initWithFrame:CGRectZero])) {
         self.viewNode = viewNode;
-        super.backgroundColor = [UIColor redColor];
         
         self.label = [[UILabel alloc] init];
-        self.label.text = @"Unknown";
+        self.label.text = @"Unknown View";
+        self.label.font = [UIFont boldSystemFontOfSize:13];
         self.label.textColor = [UIColor whiteColor];
-        self.label.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.label];
         
     }
@@ -21,13 +20,19 @@
     // no-op
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
-    // no-op
-}
-
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.label.frame = self.bounds;
+    CGRect b = self.bounds;
+    
+    [self.label sizeToFit];
+    CGRect f = self.label.frame;
+    f.origin.y = 0;
+    f.origin.x = b.origin.x;
+    f.size.width = b.size.width;
+    self.label.frame = f;
+    
+    // LayoutSubview happens after painting
+    self.layer.backgroundColor = [UIColor redColor].CGColor;
 }
 
 @end
