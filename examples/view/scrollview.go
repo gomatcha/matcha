@@ -1,7 +1,11 @@
 package view
 
 import (
+	"fmt"
+	"time"
+
 	"golang.org/x/image/colornames"
+	"gomatcha.io/matcha/animate"
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"

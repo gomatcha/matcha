@@ -25,6 +25,7 @@ public class MatchaView extends RelativeLayout {
     GoValue goValue;
     long identifier;
     MatchaViewNode node;
+    boolean updating;
 
     public MatchaView(Context context, GoValue v2) {
         super(context);
@@ -49,6 +50,7 @@ public class MatchaView extends RelativeLayout {
     boolean loaded = false;
 
     void update(PbView.Root root) {
+        updating = true;
         node.setRoot(root);
 
         if (!loaded) {
@@ -84,6 +86,7 @@ public class MatchaView extends RelativeLayout {
             } catch (com.google.protobuf.InvalidProtocolBufferException e) {
             }
         }
+        updating = false;
     }
 
     @Override
