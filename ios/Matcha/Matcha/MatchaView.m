@@ -15,7 +15,7 @@ static NSLock *sLock = nil;
 static NSMutableDictionary *sViewDict = nil;
 static NSMutableDictionary *sViewControllerDict = nil;
 
-void MatchaRegisterInit();
+void MatchaRegisterInit(void);
 void MatchaRegisterInit() {
     static dispatch_once_t sOnce = 0;
     dispatch_once(&sOnce, ^{
