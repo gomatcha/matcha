@@ -78,7 +78,7 @@ typedef struct MatchaColor {
 @property (nonatomic, readonly) NSDate *toDate;
 @end
 
-CGColorRef MatchaCGColorWithProtobuf(MatchaPBColor *value);
+CGColorRef MatchaCGColorCreateWithProtobuf(MatchaPBColor *value);
 UIKeyboardType MatchaKeyboardTypeWithProtobuf(MatchaKeyboardPBType t);
 UIKeyboardAppearance MatchaKeyboardAppearanceWithProtobuf(MatchaKeyboardPBAppearance t);
 UIReturnKeyType MatchaReturnTypeWithProtobuf(MatchaKeyboardPBReturnType t);

@@ -271,7 +271,6 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
         CGRect f = pbLayoutPaintNode.frame;
         if ([self.parent.view isKindOfClass:[MatchaScrollView class]]) {
             MatchaScrollView *scrollView = (MatchaScrollView *)self.parent.view;
-            
             CGPoint origin = f.origin;
             origin.x *= -1;
             origin.y *= -1;
@@ -280,7 +279,6 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
             scrollView.matchaContentOffset = origin;
             scrollView.contentOffset = origin;
             scrollView.contentSize = f.size;
-            
         } else if (self.parent.viewController == nil) { // let view controllers do their own layout
             if (!CGRectEqualToRect(f, self.frame)) {
                 self.materializedView.frame = f;
@@ -298,21 +296,33 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     // Paint view
     if (pbLayoutPaintNode != nil && pbLayoutPaintNode.paintId != self.layoutPaintNode.paintId) {
         if (pbLayoutPaintNode.paintStyle.hasBackgroundColor) {
-            self.view.layer.backgroundColor = MatchaCGColorWithProtobuf(pbLayoutPaintNode.paintStyle.backgroundColor);
+            CGColorRef color = MatchaCGColorCreateWithProtobuf(pbLayoutPaintNode.paintStyle.backgroundColor);
+            self.view.layer.backgroundColor = color;
+            if (color) {
+                CFRelease(color);
+            }
         } else {
             self.view.backgroundColor = [UIColor clearColor];
         }
         
+        CGColorRef borderColor = MatchaCGColorCreateWithProtobuf(pbLayoutPaintNode.paintStyle.borderColor);
+        CGColorRef shadowColor = MatchaCGColorCreateWithProtobuf(pbLayoutPaintNode.paintStyle.shadowColor);
         self.view.alpha = 1 - pbLayoutPaintNode.paintStyle.transparency;
-        self.view.layer.borderColor = MatchaCGColorWithProtobuf(pbLayoutPaintNode.paintStyle.borderColor);
+        self.view.layer.borderColor = borderColor;
         self.view.layer.borderWidth = pbLayoutPaintNode.paintStyle.borderWidth;
         self.view.layer.cornerRadius = pbLayoutPaintNode.paintStyle.cornerRadius;
         self.view.layer.shadowRadius = pbLayoutPaintNode.paintStyle.shadowRadius;
         self.view.layer.shadowOffset = pbLayoutPaintNode.paintStyle.shadowOffset.toCGSize;
-        self.view.layer.shadowColor = MatchaCGColorWithProtobuf(pbLayoutPaintNode.paintStyle.shadowColor);
+        self.view.layer.shadowColor = shadowColor;
         self.view.layer.shadowOpacity = pbLayoutPaintNode.paintStyle.hasShadowColor ? 1 : 0;
         if (pbLayoutPaintNode.paintStyle.cornerRadius != 0) {
             self.view.clipsToBounds = YES; // TODO(KD): Be better about this...
+        }
+        if (borderColor) {
+            CFRelease(borderColor);
+        }
+        if (shadowColor) {
+            CFRelease(shadowColor);
         }
     }
     
