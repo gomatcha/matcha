@@ -7,7 +7,7 @@ Create the pointer recognizer in the Build function.
  	tap := &pointer.TapGesture{
  		Count: 1,
  		OnEvent: func(e *pointer.TapEvent) {
- 			if e.Kind == EventKindRecognized {
+ 			if e.Kind == pointer.EventKindRecognized {
  				// Respond to pointer events. This callback occurs on main thread.
  				fmt.Println("view tapped")
 			}

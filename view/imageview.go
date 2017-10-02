@@ -2,6 +2,7 @@ package view
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"image"
 	"image/color"
@@ -41,16 +42,14 @@ func (m ImageResizeMode) MarshalProtobuf() pbview.ImageResizeMode {
 type ImageView struct {
 	Embed
 	Image      image.Image
+	URL        string
 	ResizeMode ImageResizeMode
 	ImageTint  color.Color
 	PaintStyle *paint.Style
-	stage      Stage
 
-	URL        string
 	cancelFunc context.CancelFunc
-	urlImage   image.Image
 	err        error
-	pbImage    *pb.ImageOrResource
+	image      *pb.ImageOrResource
 }
 
 // NewImageView returns a new view.
@@ -58,16 +57,28 @@ func NewImageView() *ImageView {
 	return &ImageView{}
 }
 
+// Lifecycle implements view.View.
+func (v *ImageView) Lifecycle(from, to Stage) {
+	if EntersStage(from, to, StageMounted) {
+		v.begin()
+	} else if ExitsStage(from, to, StageMounted) {
+		v.end()
+	}
+}
+
+func (v *ImageView) Update(v2 View) {
+	prev := v2.(*ImageView)
+	if prev.Image != v.Image || prev.URL != v.URL {
+		v.end()
+		CopyFields(v, v2)
+		v.begin()
+	} else {
+		CopyFields(v, v2)
+	}
+}
+
 // Build implements view.View.
 func (v *ImageView) Build(ctx Context) Model {
-	if v.pbImage == nil {
-		if v.Image != nil {
-			v.pbImage = internal.ImageMarshalProtobuf(v.Image)
-		} else if v.urlImage != nil {
-			v.pbImage = internal.ImageMarshalProtobuf(v.urlImage)
-		}
-	}
-
 	// Default to Center if we don't have an image
 	bounds := image.Rect(0, 0, 0, 0)
 	resizeMode := ImageResizeModeCenter
@@ -90,7 +101,7 @@ func (v *ImageView) Build(ctx Context) Model {
 		Layouter:       &imageViewLayouter{bounds: bounds, resizeMode: resizeMode, scale: scale},
 		NativeViewName: "gomatcha.io/matcha/view/imageview",
 		NativeViewState: internal.MarshalProtobuf(&pbview.ImageView{
-			Image:      v.pbImage,
+			Image:      v.image,
 			Scale:      scale,
 			ResizeMode: v.ResizeMode.MarshalProtobuf(),
 			Tint:       pb.ColorEncode(v.ImageTint),
@@ -98,58 +109,40 @@ func (v *ImageView) Build(ctx Context) Model {
 	}
 }
 
-// Lifecycle implements view.View.
-func (v *ImageView) Lifecycle(from, to Stage) {
-	v.stage = to
-	v.reload()
+func (v *ImageView) begin() {
+	if v.Image != nil {
+		v.image = internal.ImageMarshalProtobuf(v.Image)
+	} else if v.URL != "" {
+		c, cancelFunc := context.WithCancel(context.Background())
+		v.cancelFunc = cancelFunc
+		go func(url string) {
+			image, err := loadImageURL(url)
+
+			matcha.MainLocker.Lock()
+			defer matcha.MainLocker.Unlock()
+
+			select {
+			case <-c.Done():
+			default:
+				v.cancelFunc()
+				v.cancelFunc = nil
+				v.image = image
+				v.err = err
+				v.Signal()
+			}
+		}(v.URL)
+	} else {
+		v.err = errors.New("ImageView No Image or URL")
+	}
 }
 
-func (v *ImageView) Update(v2 View) {
-	if v2.(*ImageView).Image != v.Image {
-		v.pbImage = nil
-	}
-	if v2.(*ImageView).URL != v.URL {
-		v.cancel()
-		v.urlImage = nil
-		v.err = nil
-	}
-	CopyFields(v, v2)
-}
-
-func (v *ImageView) reload() {
-	if v.stage < StageMounted {
-		v.cancel()
-		return
-	}
-	if v.URL == "" || v.Image != nil || v.cancelFunc != nil || v.urlImage != nil || v.err != nil {
-		return
-	}
-
-	c, cancelFunc := context.WithCancel(context.Background())
-	v.cancelFunc = cancelFunc
-	go func(url string) {
-		image, err := loadImageURL(url)
-
-		matcha.MainLocker.Lock()
-		defer matcha.MainLocker.Unlock()
-
-		select {
-		case <-c.Done():
-		default:
-			v.cancelFunc()
-			v.cancelFunc = nil
-			v.urlImage = image
-			v.err = err
-			v.Signal()
-		}
-	}(v.URL)
-}
-
-func (v *ImageView) cancel() {
+func (v *ImageView) end() {
 	if v.cancelFunc != nil {
 		v.cancelFunc()
 		v.cancelFunc = nil
 	}
+	v.image = nil
+	v.err = nil
 }
 
 type imageViewLayouter struct {
@@ -187,13 +180,17 @@ func (l *imageViewLayouter) Unnotify(id comm.Id) {
 	// no-op
 }
 
-func loadImageURL(url string) (image.Image, error) {
+func loadImageURL(url string) (*pb.ImageOrResource, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		fmt.Println("loadImageURL error", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
+
 	img, _, err := image.Decode(resp.Body)
-	return img, err
+	if err != nil {
+		fmt.Println("decodeImage error", err)
+	}
+	return internal.ImageMarshalProtobuf(img), nil
 }
