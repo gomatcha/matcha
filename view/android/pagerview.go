@@ -155,8 +155,8 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 			// UnselectedTextStyle: unselectedTextStyle,
 		}),
 		NativeFuncs: map[string]interface{}{
-			"OnSelect": func(index int64) {
-				v.Pages.SetSelectedIndex(int(index))
+			"OnSelect": func(index int) {
+				v.Pages.SetSelectedIndex(index)
 			},
 		},
 	}
