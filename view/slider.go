@@ -32,7 +32,6 @@ type Slider struct {
 	PaintStyle    *paint.Style
 	Value         float64
 	ValueNotifier comm.Float64Notifier
-	valueNotifier comm.Float64Notifier
 	MaxValue      float64
 	MinValue      float64
 	OnChange      func(value float64)
@@ -50,10 +49,26 @@ func NewSlider() *Slider {
 }
 
 func (v *Slider) Lifecycle(from, to Stage) {
-	if ExitsStage(from, to, StageMounted) {
-		if v.valueNotifier != nil {
-			v.Unsubscribe(v.valueNotifier)
+	if EntersStage(from, to, StageMounted) {
+		if v.ValueNotifier != nil {
+			v.Subscribe(v.ValueNotifier)
 		}
+	} else if ExitsStage(from, to, StageMounted) {
+		if v.ValueNotifier != nil {
+			v.Unsubscribe(v.ValueNotifier)
+		}
+	}
+}
+
+func (v *Slider) Update(v2 View) {
+	if v.ValueNotifier != nil {
+		v.Unsubscribe(v.ValueNotifier)
+	}
+
+	CopyFields(v, v2)
+
+	if v.ValueNotifier != nil {
+		v.Subscribe(v.ValueNotifier)
 	}
 }
 
@@ -62,16 +77,6 @@ func (v *Slider) Build(ctx Context) Model {
 	val := v.Value
 	if v.ValueNotifier != nil {
 		val = v.ValueNotifier.Value()
-	}
-
-	if v.ValueNotifier != v.valueNotifier {
-		if v.valueNotifier != nil {
-			v.Unsubscribe(v.valueNotifier)
-		}
-		if v.ValueNotifier != nil {
-			v.Subscribe(v.ValueNotifier)
-		}
-		v.valueNotifier = v.ValueNotifier
 	}
 
 	painter := paint.Painter(nil)

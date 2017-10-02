@@ -124,27 +124,30 @@ func NewStackView() *StackView {
 
 // Lifecyle implements the view.View interface.
 func (v *StackView) Lifecycle(from, to view.Stage) {
-	if view.ExitsStage(from, to, view.StageMounted) {
-		if v.stack != nil {
-			v.Unsubscribe(v.stack)
+	if view.EntersStage(from, to, view.StageMounted) {
+		if v.Stack == nil {
+			v.Stack = &Stack{}
 		}
+		v.Subscribe(v.Stack)
+	} else if view.ExitsStage(from, to, view.StageMounted) {
+		v.Unsubscribe(v.Stack)
 	}
+}
+
+func (v *StackView) Update(v2 view.View) {
+	v.Unsubscribe(v.Stack)
+
+	view.CopyFields(v, v2)
+
+	if v.Stack == nil {
+		v.Stack = &Stack{}
+	}
+	v.Subscribe(v.Stack)
 }
 
 // Build implements the view.View interface.
 func (v *StackView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
-
-	// Subscribe to the stack
-	if v.Stack != v.stack {
-		if v.stack != nil {
-			v.Unsubscribe(v.stack)
-		}
-		if v.Stack != nil {
-			v.Subscribe(v.Stack)
-		}
-		v.stack = v.Stack
-	}
 
 	childrenPb := []*pbios.StackChildView{}
 	for _, id := range v.Stack.childIds {

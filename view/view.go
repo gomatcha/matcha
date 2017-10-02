@@ -104,11 +104,12 @@ func CopyFields(dst, src View) {
 type Stage int
 
 const (
-	// StageDead marks views that are not attached to the view hierarchy.
+	// Views start in StageDead.
 	StageDead Stage = iota
-	// StageMounted marks views that are in the view hierarchy but not visible.
+	// Views enter StageMounted before the first Build() call and exit it after the last one.
 	StageMounted
 	// StageVisible marks views that are in the view hierarchy and visible.
+	// TODO(KD): StageVisible is not used.
 	StageVisible
 )
 

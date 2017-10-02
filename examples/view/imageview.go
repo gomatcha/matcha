@@ -10,6 +10,7 @@ import (
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/view"
 )
 
@@ -21,6 +22,7 @@ func init() {
 
 type ImageView struct {
 	view.Embed
+	toggle bool
 }
 
 func NewImageView() *ImageView {
@@ -31,7 +33,11 @@ func (v *ImageView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl := view.NewImageView()
-	chl.URL = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+	if v.toggle {
+		chl.URL = "https://avatars0.githubusercontent.com/u/758035?v=4&s=460"
+	} else {
+		chl.URL = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+	}
 	chl.ResizeMode = view.ImageResizeModeFit
 	chl.PaintStyle = &paint.Style{BackgroundColor: colornames.Pink}
 	g1 := l.Add(chl, func(s *constraint.Solver) {
@@ -64,9 +70,22 @@ func (v *ImageView) Build(ctx view.Context) view.Model {
 		s.HeightEqual(g2.Height())
 	})
 
+	tap := &pointer.TapGesture{
+		Count: 1,
+		OnEvent: func(e *pointer.TapEvent) {
+			if e.Kind == pointer.EventKindRecognized {
+				v.toggle = !v.toggle
+				v.Signal()
+			}
+		},
+	}
+
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
+		Options: []view.Option{
+			pointer.GestureList{tap},
+		},
 	}
 }

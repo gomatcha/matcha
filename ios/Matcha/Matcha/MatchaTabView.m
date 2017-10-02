@@ -22,7 +22,7 @@
 }
 
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
-    MatchaiOSPBTabView *pbTabNavigator = (id)[self.nativeState unpackMessageClass:[MatchaiOSPBTabView class] error:nil];
+    MatchaiOSPBTabView *pbTabNavigator = (id)[MatchaiOSPBTabView parseFromData:self.nativeState error:nil];
     
     self.tabBar.barTintColor = pbTabNavigator.hasBarColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.barColor] : nil;
     self.tabBar.tintColor = pbTabNavigator.hasBarColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.selectedColor] : nil;

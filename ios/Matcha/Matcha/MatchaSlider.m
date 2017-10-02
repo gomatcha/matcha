@@ -19,11 +19,28 @@
 
 - (void)setNativeState:(NSData *)nativeState {
     MatchaViewPbSlider *view = [MatchaViewPbSlider parseFromData:nativeState error:nil];
-    
-    self.enabled = view.enabled;
-    self.value = view.value;
-    self.maximumValue = view.maxValue;
-    self.minimumValue = view.minValue;
+    self.updating = true;
+    if (self.enabled != view.enabled) {
+        self.enabled = view.enabled;
+    }
+    if (self.value != view.value) {
+        self.value = view.value;
+    }
+    if (self.maximumValue != view.maxValue) {
+        self.maximumValue = view.maxValue;
+    }
+    if (self.minimumValue != view.minValue) {
+        self.minimumValue = view.minValue;
+    }
+    self.updating = false;
+}
+
+- (void)setAlpha:(CGFloat)alpha {
+    // UISlider.enabled sets the alpha don't allow MatchaViewNode to reset it back to 1.
+    if (self.enabled == false && alpha > 0.99) {
+        return;
+    }
+    [super setAlpha:alpha];
 }
 
 - (void)onChange:(id)sender forEvent:(UIEvent *)e {

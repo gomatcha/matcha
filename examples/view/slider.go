@@ -1,8 +1,6 @@
 package view
 
 import (
-	"fmt"
-
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
@@ -11,7 +9,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view Slider", func() view.View {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewSlider", func() view.View {
 		return NewSlider()
 	})
 }

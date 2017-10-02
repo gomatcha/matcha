@@ -72,7 +72,6 @@ type TabView struct {
 	UnselectedTextStyle *text.Style
 	SelectedColor       color.Color
 	UnselectedColor     color.Color
-	tabs                *Tabs
 }
 
 // NewTabView returns a new view.
@@ -84,27 +83,31 @@ func NewTabView() *TabView {
 
 // Lifecyle implements the view.View interface.
 func (v *TabView) Lifecycle(from, to view.Stage) {
-	if view.ExitsStage(from, to, view.StageMounted) {
-		if v.tabs != nil {
-			v.Unsubscribe(v.tabs)
+	if view.EntersStage(from, to, view.StageMounted) {
+		if v.Tabs == nil {
+			v.Tabs = &Tabs{}
 		}
+		v.Subscribe(v.Tabs)
+	} else if view.ExitsStage(from, to, view.StageMounted) {
+		v.Unsubscribe(v.Tabs)
 	}
+}
+
+// Update implements the view.View interface.
+func (v *TabView) Update(v2 view.View) {
+	v.Unsubscribe(v.Tabs)
+
+	view.CopyFields(v, v2)
+
+	if v.Tabs == nil {
+		v.Tabs = &Tabs{}
+	}
+	v.Subscribe(v.Tabs)
 }
 
 // Build implements the view.View interface.
 func (v *TabView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
-
-	// Subscribe to the group
-	if v.Tabs != v.tabs {
-		if v.tabs != nil {
-			v.Unsubscribe(v.tabs)
-		}
-		if v.Tabs != nil {
-			v.Subscribe(v.Tabs)
-		}
-		v.tabs = v.Tabs
-	}
 
 	childrenPb := []*pbios.TabChildView{}
 	for _, chld := range v.Tabs.Views() {
