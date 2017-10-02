@@ -83,7 +83,6 @@ func NewTabView() *TabView {
 
 // Lifecyle implements the view.View interface.
 func (v *TabView) Lifecycle(from, to view.Stage) {
-	// Subscribe to the tabs
 	if view.EntersStage(from, to, view.StageMounted) {
 		if v.Tabs == nil {
 			v.Tabs = &Tabs{}
