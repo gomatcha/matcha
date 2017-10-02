@@ -480,7 +480,8 @@ NSArray<MatchaGoValue *> *MatchaCGoBufferToNSArray(CGoBuffer buf) {
     NSMutableArray *array = [NSMutableArray array];
     char *data = buf.ptr;
     for (NSInteger i = 0; i < buf.len/8; i++) {
-        GoRef ref = (((int64_t)data[0])<<0) | (((int64_t)data[1])<<8) | (((int64_t)data[2])<<16) | (((int64_t)data[3])<<24) | (((int64_t)data[4])<<32) | (((int64_t)data[5])<<40) | (((int64_t)data[6])<<48) | (((int64_t)data[7])<<56);
+        GoRef ref = 0;
+        memcpy(&ref, data, 8);
         [array addObject:[[MatchaGoValue alloc] initWithGoRef:ref]];
         data += 8;
     }

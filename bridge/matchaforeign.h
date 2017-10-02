@@ -37,6 +37,7 @@ ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t index);
 // Call
 ObjcRef MatchaObjcCallSentinel();
 ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args);
+CGoBuffer MatchaObjcCall2(ObjcRef v, CGoBuffer str, ObjcRef args);
 
 // Tracker
 void MatchaUntrackObjc(ObjcRef key);
