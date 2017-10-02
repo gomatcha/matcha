@@ -286,7 +286,7 @@ func matchaGoCall(v C.GoRef, name C.CGoBuffer, args C.GoRef) C.GoRef {
 }
 
 //export matchaGoCall2
-func matchaGoCall2(v C.GoRef, name C.CGoBuffer, args C.GoRef) C.CGoBuffer {
+func matchaGoCall2(v C.GoRef, name C.CGoBuffer, args C.CGoBuffer) C.CGoBuffer {
 	defer goRecover()
 	str := goString(name)
 	rv := matchaGoGet(v)
@@ -297,8 +297,7 @@ func matchaGoCall2(v C.GoRef, name C.CGoBuffer, args C.GoRef) C.CGoBuffer {
 	} else {
 		function = rv.MethodByName(str)
 	}
-	argsRv := matchaGoGet(args).Interface().([]reflect.Value)
-
+	argsRv := goArray(args)
 	rlt := function.Call(argsRv)
 	return cArray(rlt)
 }

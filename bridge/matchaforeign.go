@@ -234,6 +234,23 @@ func cString(v string) C.CGoBuffer {
 	return cstr
 }
 
+func goArray(buf C.CGoBuffer) []reflect.Value {
+	defer C.free(buf.ptr)
+
+	gorefs := make([]int64, buf.len/8)
+	err := binary.Read(bytes.NewBuffer(C.GoBytes(buf.ptr, C.int(buf.len))), binary.LittleEndian, gorefs)
+	if err != nil {
+		panic(err)
+	}
+
+	rvs := []reflect.Value{}
+	for _, i := range gorefs {
+		rv := matchaGoGet(C.GoRef(i))
+		rvs = append(rvs, rv)
+	}
+	return rvs
+}
+
 func goString(buf C.CGoBuffer) string {
 	defer C.free(buf.ptr)
 	str := C.GoBytes(buf.ptr, C.int(buf.len))

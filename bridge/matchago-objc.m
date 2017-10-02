@@ -161,9 +161,10 @@
     while ((arg = va_arg(args, id))) {
         [array addObject:arg];
     }
-    MatchaGoValue *argsArray = [[MatchaGoValue alloc] initWithArray:array];
-    GoRef rlt = matchaGoCall(_ref, MatchaNSStringToCGoBuffer(method), argsArray.ref);
-    return [[MatchaGoValue alloc] initWithGoRef:rlt].toArray;
+
+    CGoBuffer argsBuffer = MatchaNSArrayToCGoBuffer(array);
+    CGoBuffer rlt = matchaGoCall2(_ref, MatchaNSStringToCGoBuffer(method), argsBuffer);
+    return MatchaCGoBufferToNSArray(rlt);
 }
 
 - (MatchaGoValue *)field:(NSString *)name {

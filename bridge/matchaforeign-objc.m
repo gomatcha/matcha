@@ -490,6 +490,21 @@ NSArray<MatchaGoValue *> *MatchaCGoBufferToNSArray(CGoBuffer buf) {
 }
 
 CGoBuffer MatchaNSArrayToCGoBuffer(NSArray<MatchaGoValue *> *array) {
-    CGoBuffer buf;
-    return buf;
+    if (array.count == 0) {
+        return (CGoBuffer){0};
+    }
+    
+    char *buf = (char *)malloc(array.count * 8);
+    char *data = buf;
+    assert(buf != NULL);
+    for (int i = 0; i < array.count; i++) {
+        int64_t ref = array[i].ref;
+        memcpy(data, &ref, 8);
+        data += 8;
+    }
+    
+    CGoBuffer cstr;
+    cstr.ptr = buf;
+    cstr.len = array.count * 8;
+    return cstr;
 }
