@@ -59,7 +59,6 @@ func (s *Pages) Unnotify(id comm.Id) {
 type PagerView struct {
 	view.Embed
 	Pages *Pages
-	pages *Pages
 }
 
 // NewPagerView returns a new view.
@@ -72,27 +71,30 @@ func NewPagerView() *PagerView {
 
 // Lifecyle implements the view.View interface.
 func (v *PagerView) Lifecycle(from, to view.Stage) {
-	if view.ExitsStage(from, to, view.StageMounted) {
-		if v.pages != nil {
-			v.Unsubscribe(v.pages)
+	if view.EntersStage(from, to, view.StageMounted) {
+		if v.Pages == nil {
+			v.Pages = &Pages{}
 		}
+		v.Subscribe(v.Pages)
+	} else if view.ExitsStage(from, to, view.StageMounted) {
+		v.Unsubscribe(v.Pages)
 	}
+}
+
+func (v *PagerView) Update(v2 view.View) {
+	v.Unsubscribe(v.Pages)
+
+	view.CopyFields(v, v2)
+
+	if v.Pages == nil {
+		v.Pages = &Pages{}
+	}
+	v.Subscribe(v.Pages)
 }
 
 // Build implements the view.View interface.
 func (v *PagerView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
-
-	// Subscribe to the group
-	if v.Pages != v.pages {
-		if v.pages != nil {
-			v.Unsubscribe(v.pages)
-		}
-		if v.Pages != nil {
-			v.Subscribe(v.Pages)
-		}
-		v.pages = v.Pages
-	}
 
 	childrenPb := []*pbandroid.PagerChildView{}
 	for _, chld := range v.Pages.Views() {
