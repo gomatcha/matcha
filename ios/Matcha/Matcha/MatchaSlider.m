@@ -19,7 +19,6 @@
 
 - (void)setNativeState:(NSData *)nativeState {
     MatchaViewPbSlider *view = [MatchaViewPbSlider parseFromData:nativeState error:nil];
-    self.updating = true;
     if (self.enabled != view.enabled) {
         self.enabled = view.enabled;
     }
@@ -32,7 +31,6 @@
     if (self.minimumValue != view.minValue) {
         self.minimumValue = view.minValue;
     }
-    self.updating = false;
 }
 
 - (void)setAlpha:(CGFloat)alpha {

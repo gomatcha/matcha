@@ -4,5 +4,4 @@
 
 @interface MatchaSlider : UISlider <MatchaChildView>
 @property (nonatomic, weak) MatchaViewNode *viewNode;
-@property (nonatomic, assign) BOOL updating;
 @end
