@@ -1,6 +1,8 @@
 package view
 
 import (
+	"fmt"
+
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
