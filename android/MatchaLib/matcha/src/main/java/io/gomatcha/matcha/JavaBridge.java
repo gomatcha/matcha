@@ -46,12 +46,13 @@ public class JavaBridge {
         if (context != null) {
             return;
         }
+        final GoValue f = GoValue.withFunc("gomatcha.io/matcha/animate screenUpdate");
         context = ctx;
         textView = new TextView(context);
         callback = new Choreographer.FrameCallback() {
             @Override
             public void doFrame(long frameTimeNanos) {
-                GoValue.withFunc("gomatcha.io/matcha/animate screenUpdate").call("");
+                f.call("");
                 Choreographer.getInstance().postFrameCallback(callback);
             }
         };

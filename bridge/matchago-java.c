@@ -99,11 +99,15 @@ JNIEXPORT jbyteArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoToByteArray
 }
 
 JNIEXPORT jlongArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoToArray(JNIEnv *env, jclass c, jlong v) {
-    int len = matchaGoArrayLen(v);
+    CGoBuffer buf = matchaGoArrayBuffer(v);
+    int len = buf.len/8;
     jlongArray array = (*env)->NewLongArray(env, len);
     jlong *arr = (*env)->GetLongArrayElements(env, array, NULL);
+    char *data = buf.ptr;
     for (int i = 0; i < len; i++) {
-        arr[i] = matchaGoArrayAt(v, i);
+        GoRef ref = (((int64_t)data[0])<<0) | (((int64_t)data[1])<<8) | (((int64_t)data[2])<<16) | (((int64_t)data[3])<<24) | (((int64_t)data[4])<<32) | (((int64_t)data[5])<<40) | (((int64_t)data[6])<<48) | (((int64_t)data[7])<<56);
+        arr[i] = ref;
+        data += 8;
     }
     
     (*env)->ReleaseLongArrayElements(env, array, arr, 0);

@@ -192,6 +192,13 @@ func matchaGoArrayAt(v C.GoRef, idx C.int64_t) C.GoRef {
 	return matchaGoTrack(array[idx])
 }
 
+//export matchaGoArrayBuffer
+func matchaGoArrayBuffer(v C.GoRef) C.CGoBuffer {
+	defer goRecover()
+	array := matchaGoGet(v).Interface().([]reflect.Value)
+	return cArray(array)
+}
+
 //export matchaGoMap
 func matchaGoMap() C.GoRef {
 	defer goRecover()
@@ -324,6 +331,9 @@ func init() {
 func matchaGoTrack(v reflect.Value) C.GoRef {
 	tracker.Lock()
 	defer tracker.Unlock()
+	if len(tracker.refs)%100 == 0 {
+		fmt.Println("track count:", len(tracker.refs))
+	}
 
 	tracker.minRef -= 1
 	tracker.refs[tracker.minRef] = v

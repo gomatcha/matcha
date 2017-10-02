@@ -120,13 +120,7 @@
 }
 
 - (NSArray *)toArray {
-    NSInteger len = matchaGoArrayLen(_ref);
-    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:len];
-    for (NSInteger i = 0; i < len; i++) {
-        MatchaGoValue *value = [[MatchaGoValue alloc] initWithGoRef:matchaGoArrayAt(_ref, i)];
-        [array addObject:value];
-    }
-    return array;
+    return MatchaCGoBufferToNSArray(matchaGoArrayBuffer(_ref));
 }
 
 - (NSMapTable *)toMapTable {

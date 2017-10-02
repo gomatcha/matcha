@@ -1,5 +1,7 @@
 package io.gomatcha.bridge;
 
+import android.util.Log;
+
 public class GoValue {
    static {
       System.loadLibrary("gojni");
@@ -141,5 +143,6 @@ public class GoValue {
    
    protected void finalize() throws Throwable {
       matchaGoUntrack(this.goRef);
+      super.finalize();
    }
 }

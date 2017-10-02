@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         if (view == null) {
-            GoValue rootView = GoValue.withFunc("gomatcha.io/matcha/examples/settings New").call("")[0];
+            GoValue rootView = GoValue.withFunc("gomatcha.io/matcha/examples/view NewSlider").call("")[0];
             view = new MatchaView(this, rootView);
         }
         setContentView(view);

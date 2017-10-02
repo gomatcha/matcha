@@ -18,23 +18,24 @@ GoRef matchaGoUint64(uint64_t);
 uint64_t matchaGoToUint64(GoRef);
 GoRef matchaGoFloat64(double);
 double matchaGoToFloat64(GoRef);
-GoRef matchaGoString(CGoBuffer); // Frees the buffer
+GoRef matchaGoString(CGoBuffer);
 CGoBuffer matchaGoToString(GoRef);
-GoRef matchaGoBytes(CGoBuffer); // Frees the buffer
+GoRef matchaGoBytes(CGoBuffer);
 CGoBuffer matchaGoToBytes(GoRef);
 
 GoRef matchaGoArray();
 int64_t matchaGoArrayLen(GoRef);
 GoRef matchaGoArrayAppend(GoRef, GoRef);
 GoRef matchaGoArrayAt(GoRef, int64_t);
+CGoBuffer matchaGoArrayBuffer(GoRef);
 
 GoRef matchaGoMap();
 GoRef matchaGoMapKeys(GoRef);
 GoRef matchaGoMapGet(GoRef map, GoRef key);
 void matchaGoMapSet(GoRef map, GoRef key, GoRef value);
 
-GoRef matchaGoType(CGoBuffer); // Frees the buffer
-GoRef matchaGoFunc(CGoBuffer); // Frees the buffer
+GoRef matchaGoType(CGoBuffer);
+GoRef matchaGoFunc(CGoBuffer);
 
 bool matchaGoIsNil(GoRef);
 bool matchaGoEqual(GoRef, GoRef);
