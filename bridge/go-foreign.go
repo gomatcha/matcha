@@ -22,24 +22,23 @@ import (
 	"runtime"
 )
 
-//export TestFunc
-func TestFunc() {
+//export matchaTestFunc
+func matchaTestFunc() {
 	a := Bool(true)
 	b := Int64(1234)
 	c := Float64(1.234)
 	d := String("abc")
 	e := Bytes([]byte("def123"))
 
-	fmt.Println("blah", a.ToBool(), b.ToInt64(), c.ToFloat64(), d.ToString(), string(e.ToBytes()), "~")
+	fmt.Println("matchaTestFunc() - Primitives:", a.ToBool(), b.ToInt64(), c.ToFloat64(), d.ToString(), string(e.ToBytes()), "~")
 
 	arr := Array(a, b, c, d, e)
-	fmt.Println("done")
 	arr2 := arr.ToArray()
 
-	fmt.Println("blah2", arr2[0].ToBool(), arr2[1].ToInt64(), arr2[2].ToFloat64(), arr2[3].ToString(), string(arr2[4].ToBytes()), "~")
+	fmt.Println("matchaTestFunc() - Arrays:", arr2[0].ToBool(), arr2[1].ToInt64(), arr2[2].ToFloat64(), arr2[3].ToString(), string(arr2[4].ToBytes()), "~")
 
 	bridge := Bridge("a")
-	fmt.Println("bridge", bridge)
+	fmt.Println("matchaTestFunc() - Bridge:", bridge)
 }
 
 type Value struct {

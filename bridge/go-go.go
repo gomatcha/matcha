@@ -276,9 +276,6 @@ func init() {
 func matchaGoTrack(v reflect.Value) C.GoRef {
 	tracker.Lock()
 	defer tracker.Unlock()
-	if len(tracker.refs)%100 == 0 {
-		fmt.Println("track count:", len(tracker.refs))
-	}
 
 	tracker.minRef -= 1
 	tracker.refs[tracker.minRef] = v

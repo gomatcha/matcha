@@ -41,6 +41,30 @@ public class GoValue {
    public GoValue(GoValue[] v) {
       this(makeGoArray(v), false);
    }
+   public static GoValue WithBoolean(boolean v) {
+      return new GoValue(matchaGoBool(v), false);
+   }
+   public static GoValue WithInt(int v) {
+      return new GoValue(matchaGoInt(v), false);
+   }
+   public static GoValue WithLong(long v) {
+      return new GoValue(matchaGoLong(v), false);
+   }
+   public static GoValue WithDouble(long v) {
+      return new GoValue(matchaGoDouble(v), false);
+   }
+   public static GoValue WithString(String v) {
+      return new GoValue(matchaGoString(v), false);
+   }
+   public static GoValue WithByteArray(byte[] v) {
+      return new GoValue(matchaGoByteArray(v), false);
+   }
+   public static GoValue WithArray(GoValue[] v) {
+      return new GoValue(makeGoArray(v), false);
+   }
+   public static GoValue WithObject(Object v) {
+      return new GoValue(matchaGoForeign(Tracker.singleton().track(v)), false);
+   }
    public static GoValue withFunc(String v) {
       return new GoValue(matchaGoFunc(v), false);
    }
@@ -147,6 +171,11 @@ public class GoValue {
    private static native long[] matchaGoCall(long a, String b, long[] c);
    private static native long matchaGoField(long a, String b);
    private static native void matchaGoFieldSet(long a, String b, long c);
+   private static native void matchaTestFunc();
+   
+   public static void testFunc() {
+      matchaTestFunc();
+   }
 
    private static native void matchaGoUntrack(long a);
    

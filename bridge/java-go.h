@@ -209,6 +209,14 @@ JNIEXPORT void JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoFieldSet
 JNIEXPORT void JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoUntrack
   (JNIEnv *, jclass, jlong);
 
+/*
+ * Class:     io_gomatcha_bridge_GoValue
+ * Method:    matchaTestFunc
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_io_gomatcha_bridge_GoValue_matchaTestFunc
+  (JNIEnv *, jclass);
+
 #ifdef __cplusplus
 }
 #endif

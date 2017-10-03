@@ -119,6 +119,10 @@ JNIEXPORT void JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoFieldSet(JNIEnv *
     matchaGoFieldSet(v, MatchaStringToCGoBuffer(env, v2), v3);
 }
 
+JNIEXPORT void JNICALL Java_io_gomatcha_bridge_GoValue_matchaTestFunc(JNIEnv *env, jclass c) {
+    matchaTestFunc();
+}
+
 JNIEXPORT void JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoUntrack(JNIEnv *env, jclass c, jlong v) {
     matchaGoUntrack(v);
 }

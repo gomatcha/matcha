@@ -35,6 +35,6 @@ void matchaGoFieldSet(GoRef, CGoBuffer, GoRef);
 
 void matchaGoUntrack(GoRef);
 
-void TestFunc();
+void matchaTestFunc(void);
 
 #endif // GO_GO_H

@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 @class MatchaGoValue;
 
+void matchaTestFunc(void);
+
 @interface MatchaGoValue : NSObject
 - (id)initWithObject:(id)v;
 - (id)initWithBool:(BOOL)v;

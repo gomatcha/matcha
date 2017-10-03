@@ -173,8 +173,8 @@ CGoBuffer MatchaForeignToArray(FgnRef v) {
 
 FgnRef MatchaForeignBridge(CGoBuffer str) {
     NSString *string = MatchaCGoBufferToNSString(str);
-    MatchaObjcBridge *root = [[MatchaObjcBridge sharedBridge] objectForKey:string];;
-    return MatchaForeignTrack(root);
+    NSObject *bridge = [[MatchaObjcBridge sharedBridge] objectForKey:string];;
+    return MatchaForeignTrack(bridge);
 }
 
 // Call
