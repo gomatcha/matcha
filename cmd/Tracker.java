@@ -124,21 +124,20 @@ public class Tracker {
     public synchronized byte[] foreignToBytes(long v) {
         return (byte[])this.get(v);
     }
-    public synchronized long foreignArray(int v) {
-        Object[] a = new Object[v];
+    public synchronized long foreignArray(long[] v) {
+        Object[] a = new Object[v.length];
+        for (int i = 0; i < v.length; i++) {
+            a[i] = this.get(v[i]);
+        }
         return track(a);
     }
-    public synchronized void foreignArraySet(long v, long val, int idx) {
+    public synchronized long[] foreignToArray(long v) {
         Object[] a = (Object[])this.get(v);
-        a[idx] = this.get(val);
-    }
-    public synchronized long foreignArrayAt(long v, int idx) {
-        Object[] a = (Object[])this.get(v);
-        return track(a[idx]);
-    }
-    public synchronized long foreignArrayLen(long v) {
-        Object[] a = (Object[])this.get(v);
-        return a.length;
+        long[] fgnRefs = new long[a.length];
+        for (int i = 0; i < a.length; i++) {
+            fgnRefs[i] = track(a[i]);
+        }
+        return fgnRefs;
     }
     public synchronized void foreignPanic() {
         throw new RuntimeException("Golang Panic");

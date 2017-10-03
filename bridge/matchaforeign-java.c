@@ -14,98 +14,6 @@ jobject sTracker;
 
 #define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__);
 
-CGoBuffer MatchaStringToCGoBuffer(JNIEnv *env, jstring v) {
-    const char *nativeString = (*env)->GetStringUTFChars(env, v, 0);
-    
-    int len = strlen(nativeString);
-    char *buf = (char *)malloc(len);
-    strncpy(buf, nativeString, len);
-    
-    (*env)->ReleaseStringUTFChars(env, v, nativeString);
-   
-    CGoBuffer cstr;
-    cstr.ptr = buf;
-    cstr.len = len;
-    return cstr;
-}
-
-jstring MatchaCGoBufferToString(JNIEnv *env, CGoBuffer buf) {
-    char *str = malloc(buf.len+1);
-    strncpy(str, buf.ptr, buf.len);
-    str[buf.len] = '\0';
-    
-    jstring jstrBuf = (*sEnv)->NewStringUTF(sEnv, str);
-    free(buf.ptr);
-    free(str);
-    return jstrBuf;
-}
-
-CGoBuffer MatchaByteArrayToCGoBuffer(JNIEnv *env, jbyteArray v) {
-    int len = (*env)->GetArrayLength(env, v);
-    if (len == 0) {
-        return (CGoBuffer){0};
-    }
-    char *buf = (char *)malloc(len);
-    (*env)->GetByteArrayRegion(env, v, 0, len, (jbyte *)buf);
-  
-    CGoBuffer cstr;
-    cstr.ptr = buf;
-    cstr.len = len;
-    return cstr;
-}
-
-jbyteArray MatchaCGoBufferToByteArray(JNIEnv *env, CGoBuffer buf) {
-    jbyteArray array = (*env)->NewByteArray(env, buf.len);
-    (*env)->SetByteArrayRegion(env, array, 0, buf.len, buf.ptr);
-    free(buf.ptr);
-    return array;
-}
-
-jlongArray MatchaCGoBufferToJlongArray(JNIEnv *env, CGoBuffer buf) {
-    int len = buf.len/8;
-    jlongArray array = (*env)->NewLongArray(env, len);
-    jlong *arr = (*env)->GetLongArrayElements(env, array, NULL);
-    char *data = buf.ptr;
-    for (int i = 0; i < len; i++) {
-        GoRef ref = 0;
-        memcpy(&ref, data, 8);
-        arr[i] = ref;
-        data += 8;
-    }
-    
-    (*env)->ReleaseLongArrayElements(env, array, arr, 0);
-    return array;
-}
-
-CGoBuffer MatchaJlongArrayToCGoBuffer(JNIEnv *env, jlongArray v) {
-    int len = (*env)->GetArrayLength(env, v);
-    if (len == 0) {
-        return (CGoBuffer){0};
-    }
-    
-    char *buf = (char *)malloc(len * 8);
-    char *data = buf;
-    jlong *arr = (*env)->GetLongArrayElements(env, v, 0);
-    for (int i = 0; i < len; i++) {
-        int64_t ref = arr[i];
-        memcpy(data+i*8, &ref, 8);
-    }
-    (*env)->ReleaseLongArrayElements(env, v, arr, 0);
-    
-    CGoBuffer cstr;
-    cstr.ptr = buf;
-    cstr.len = len * 8;
-    return cstr;
-}
-
-ObjcRef MatchaForeignBridge(CGoBuffer str) {
-    jstring *string = MatchaCGoBufferToString(sEnv, str);
-    
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBridge", "(Ljava/lang/String;)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, string);
-}
-
 ObjcRef MatchaObjcBool(bool v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBool", "(Z)J");
@@ -192,30 +100,34 @@ CGoBuffer MatchaObjcToBytes(ObjcRef v) {
     return MatchaByteArrayToCGoBuffer(sEnv, str);
 }
 
-ObjcRef MatchaObjcArray(int64_t len) {
+ObjcRef MatchaObjcArray(CGoBuffer buf) {
+    jbyteArray array = MatchaCGoBufferToJlongArray(sEnv, buf);
+    
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignArray", "(I)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, len);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignArray", "([J)J");
+    long a = (*sEnv)->CallLongMethod(sEnv, sTracker, mid, array);
+    
+    (*sEnv)->DeleteLocalRef(sEnv, array);
+    return a;
 }
 
-int64_t MatchaObjcArrayLen(ObjcRef v) {
+CGoBuffer MatchaObjcToArray(ObjcRef v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignArrayLen", "(J)J");
-    int64_t x = (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
-    return x;
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToArray", "(J)[J");
+    jlongArray str = (jbyteArray)(*sEnv)->CallObjectMethod(sEnv, sTracker, mid, v);
+    
+    return MatchaJlongArrayToCGoBuffer(sEnv, str);
 }
 
-void MatchaObjcArraySet(ObjcRef v, ObjcRef a, int64_t idx) {
+ObjcRef MatchaForeignBridge(CGoBuffer str) {
+    jstring *string = MatchaCGoBufferToString(sEnv, str);
+    
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignArraySet", "(JJI)V");
-    (*sEnv)->CallVoidMethod(sEnv, sTracker, mid, v, a, idx);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBridge", "(Ljava/lang/String;)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, string);
 }
 
-ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t idx) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignArrayAt", "(JI)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v, idx);
-}
+// Call
 
 ObjcRef MatchaObjcCallSentinel() {
     // Not necessary on android.
@@ -230,21 +142,13 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args) {
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v, method, args);
 }
 
-void MatchaForeignPanic() {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignPanic", "()V");
-    return (*sEnv)->CallVoidMethod(sEnv, sTracker, mid);
-}
-
 // Tracker
+
 ObjcRef MatchaTrackObjc(jobject v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "track", "(Ljava/lang/Object;)J");
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
-
-// id MatchaGetObjc(ObjcRef key) {
-// }
 
 void MatchaUntrackObjc(ObjcRef key) {
     JNIEnv *env = NULL;
@@ -257,4 +161,98 @@ void MatchaUntrackObjc(ObjcRef key) {
     jmethodID mid = (*env)->GetMethodID(env, cls, "untrack", "(J)V");
     (*env)->CallVoidMethod(env, sTracker, mid, key);
     (*env)->DeleteLocalRef(env, cls);
+}
+
+// Other
+
+void MatchaForeignPanic() {
+    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignPanic", "()V");
+    return (*sEnv)->CallVoidMethod(sEnv, sTracker, mid);
+}
+
+// Utilities
+
+CGoBuffer MatchaStringToCGoBuffer(JNIEnv *env, jstring v) {
+    const char *nativeString = (*env)->GetStringUTFChars(env, v, 0);
+    
+    int len = strlen(nativeString);
+    char *buf = (char *)malloc(len);
+    strncpy(buf, nativeString, len);
+    
+    (*env)->ReleaseStringUTFChars(env, v, nativeString);
+   
+    CGoBuffer cstr;
+    cstr.ptr = buf;
+    cstr.len = len;
+    return cstr;
+}
+
+jstring MatchaCGoBufferToString(JNIEnv *env, CGoBuffer buf) {
+    char *str = malloc(buf.len+1);
+    strncpy(str, buf.ptr, buf.len);
+    str[buf.len] = '\0';
+    
+    jstring jstrBuf = (*sEnv)->NewStringUTF(sEnv, str);
+    free(buf.ptr);
+    free(str);
+    return jstrBuf;
+}
+
+CGoBuffer MatchaByteArrayToCGoBuffer(JNIEnv *env, jbyteArray v) {
+    int len = (*env)->GetArrayLength(env, v);
+    if (len == 0) {
+        return (CGoBuffer){0};
+    }
+    char *buf = (char *)malloc(len);
+    (*env)->GetByteArrayRegion(env, v, 0, len, (jbyte *)buf);
+  
+    CGoBuffer cstr;
+    cstr.ptr = buf;
+    cstr.len = len;
+    return cstr;
+}
+
+jbyteArray MatchaCGoBufferToByteArray(JNIEnv *env, CGoBuffer buf) {
+    jbyteArray array = (*env)->NewByteArray(env, buf.len);
+    (*env)->SetByteArrayRegion(env, array, 0, buf.len, buf.ptr);
+    free(buf.ptr);
+    return array;
+}
+
+jlongArray MatchaCGoBufferToJlongArray(JNIEnv *env, CGoBuffer buf) {
+    int len = buf.len/8;
+    jlongArray array = (*env)->NewLongArray(env, len);
+    jlong *arr = (*env)->GetLongArrayElements(env, array, NULL);
+    char *data = buf.ptr;
+    for (int i = 0; i < len; i++) {
+        GoRef ref = 0;
+        memcpy(&ref, data, 8);
+        arr[i] = ref;
+        data += 8;
+    }
+    
+    (*env)->ReleaseLongArrayElements(env, array, arr, 0);
+    return array;
+}
+
+CGoBuffer MatchaJlongArrayToCGoBuffer(JNIEnv *env, jlongArray v) {
+    int len = (*env)->GetArrayLength(env, v);
+    if (len == 0) {
+        return (CGoBuffer){0};
+    }
+    
+    char *buf = (char *)malloc(len * 8);
+    char *data = buf;
+    jlong *arr = (*env)->GetLongArrayElements(env, v, 0);
+    for (int i = 0; i < len; i++) {
+        int64_t ref = arr[i];
+        memcpy(data+i*8, &ref, 8);
+    }
+    (*env)->ReleaseLongArrayElements(env, v, arr, 0);
+    
+    CGoBuffer cstr;
+    cstr.ptr = buf;
+    cstr.len = len * 8;
+    return cstr;
 }

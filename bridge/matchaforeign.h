@@ -14,8 +14,6 @@ typedef struct CGoBuffer {
 
 void TestFunc();
 
-ObjcRef MatchaForeignBridge(CGoBuffer str); // Frees the buffer
-
 ObjcRef MatchaObjcBool(bool v);
 bool MatchaObjcToBool(ObjcRef v);
 ObjcRef MatchaObjcInt64(int64_t v);
@@ -28,12 +26,9 @@ ObjcRef MatchaObjcString(CGoBuffer str); // Frees the buffer
 CGoBuffer MatchaObjcToString(ObjcRef v);
 ObjcRef MatchaObjcBytes(CGoBuffer bytes); // Frees the buffer
 CGoBuffer MatchaObjcToBytes(ObjcRef v);
-
-// ObjcRef MatchaObjcArray2(CGoBuffer buf);
-ObjcRef MatchaObjcArray(int64_t len);
-void MatchaObjcArraySet(ObjcRef v, ObjcRef elem, int64_t idx);
-int64_t MatchaObjcArrayLen(ObjcRef v);
-ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t index);
+ObjcRef MatchaObjcArray(CGoBuffer buf); // Frees the buffer
+CGoBuffer MatchaObjcToArray(ObjcRef v);
+ObjcRef MatchaForeignBridge(CGoBuffer str); // Frees the buffer
 
 // Call
 ObjcRef MatchaObjcCallSentinel();
@@ -43,10 +38,6 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args);
 void MatchaUntrackObjc(ObjcRef key);
 
 // Other
-
 void MatchaForeignPanic();
-
-// ObjcRef MatchaObjcWithGo(GoRef v);
-// GoRef MatchaObjcToGo(ObjcRef v);
 
 #endif //MOCHIOBJC_H

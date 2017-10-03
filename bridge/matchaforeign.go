@@ -142,24 +142,14 @@ func (v *Value) ToInterface() interface{} {
 }
 
 func Array(a ...*Value) *Value {
-	ref := C.MatchaObjcArray(C.int64_t(len(a)))
-	array := newValue(ref)
-	for idx, i := range a {
-		C.MatchaObjcArraySet(ref, i._ref(), C.int64_t(idx))
-	}
-	return array
+	ref := C.MatchaObjcArray(cArray2(a))
+	return newValue(ref)
 }
 
-func (v *Value) ToArray() []*Value {
+func (v *Value) ToArray() []*Value { // TODO(KD): Untested....
 	defer runtime.KeepAlive(v)
-	ref := v._ref()
-	length := int64(C.MatchaObjcArrayLen(v._ref()))
-
-	slice := make([]*Value, length)
-	for i := int64(0); i < length; i++ {
-		slice[i] = newValue(C.MatchaObjcArrayAt(ref, C.int64_t(i)))
-	}
-	return slice
+	buf := C.MatchaObjcToArray(v._ref())
+	return goArray2(buf)
 }
 
 func callSentinel() *Value {
@@ -196,6 +186,27 @@ func cArray(v []reflect.Value) C.CGoBuffer {
 		for _, i := range v {
 			goref := matchaGoTrack(i)
 			err := binary.Write(buf, binary.LittleEndian, goref)
+			if err != nil {
+				fmt.Println("binary.Write failed:", err)
+			}
+		}
+		cstr = C.CGoBuffer{
+			ptr: C.CBytes(buf.Bytes()),
+			len: C.int64_t(len(buf.Bytes())),
+		}
+	}
+	return cstr
+}
+
+func cArray2(v []*Value) C.CGoBuffer {
+	var cstr C.CGoBuffer
+	if len(v) == 0 {
+		cstr = C.CGoBuffer{}
+	} else {
+		buf := new(bytes.Buffer)
+		for _, i := range v {
+			foreignRef := i._ref()
+			err := binary.Write(buf, binary.LittleEndian, foreignRef)
 			if err != nil {
 				fmt.Println("binary.Write failed:", err)
 			}
@@ -246,6 +257,23 @@ func goArray(buf C.CGoBuffer) []reflect.Value {
 	rvs := []reflect.Value{}
 	for _, i := range gorefs {
 		rv := matchaGoGet(C.GoRef(i))
+		rvs = append(rvs, rv)
+	}
+	return rvs
+}
+
+func goArray2(buf C.CGoBuffer) []*Value {
+	defer C.free(buf.ptr)
+
+	fgnRef := make([]int64, buf.len/8)
+	err := binary.Read(bytes.NewBuffer(C.GoBytes(buf.ptr, C.int(buf.len))), binary.LittleEndian, fgnRef)
+	if err != nil {
+		panic(err)
+	}
+
+	rvs := []*Value{}
+	for _, i := range fgnRef {
+		rv := newValue(C.ObjcRef(i))
 		rvs = append(rvs, rv)
 	}
 	return rvs

@@ -10,9 +10,10 @@ extern JNIEnv *sEnv;
 extern jint sJavaVersion;
 extern jobject sTracker;
 
+// Tracker
 ObjcRef MatchaTrackObjc(jobject v);
-void MatchaUntrackObjc(ObjcRef key);
 
+// Utilities
 CGoBuffer MatchaStringToCGoBuffer(JNIEnv *env, jstring v); // return buffer needs to be released.
 jstring MatchaCGoBufferToString(JNIEnv *env, CGoBuffer buf); // releases buf, jstring needs to be released.
 CGoBuffer MatchaByteArrayToCGoBuffer(JNIEnv *env, jbyteArray v); // returned buffer needs to be released.
