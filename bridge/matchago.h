@@ -21,8 +21,8 @@ GoRef matchaGoBytes(CGoBuffer);
 CGoBuffer matchaGoToBytes(GoRef);
 GoRef matchaGoArray(CGoBuffer);
 CGoBuffer matchaGoToArray(GoRef);
-GoRef matchaGoForeign(ObjcRef);
-ObjcRef matchaGoToForeign(GoRef);
+GoRef matchaGoForeign(FgnRef);
+FgnRef matchaGoToForeign(GoRef);
 GoRef matchaGoType(CGoBuffer);
 GoRef matchaGoFunc(CGoBuffer);
 

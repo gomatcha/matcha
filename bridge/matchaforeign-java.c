@@ -14,55 +14,55 @@ jobject sTracker;
 
 #define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__);
 
-ObjcRef MatchaObjcBool(bool v) {
+FgnRef MatchaForeignBool(bool v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBool", "(Z)J");
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
-bool MatchaObjcToBool(ObjcRef v) {
+bool MatchaForeignToBool(FgnRef v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToBool", "(J)Z");
     return (*sEnv)->CallBooleanMethod(sEnv, sTracker, mid, v);
 }
 
-ObjcRef MatchaObjcInt64(int64_t v) {
+FgnRef MatchaForeignInt64(int64_t v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignInt64", "(J)J");
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
-int64_t MatchaObjcToInt64(ObjcRef v) {
+int64_t MatchaForeignToInt64(FgnRef v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToInt64", "(J)J");
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
-ObjcRef MatchaObjcFloat64(double v) {
+FgnRef MatchaForeignFloat64(double v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignFloat64", "(D)J");
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
-double MatchaObjcToFloat64(ObjcRef v) {
+double MatchaForeignToFloat64(FgnRef v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToFloat64", "(J)D");
     return (*sEnv)->CallDoubleMethod(sEnv, sTracker, mid, v);
 }
 
-ObjcRef MatchaObjcGoRef(GoRef v) {
+FgnRef MatchaForeignGoRef(GoRef v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignGoRef", "(J)J");
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
-GoRef MatchaObjcToGoRef(ObjcRef v) {
+GoRef MatchaForeignToGoRef(FgnRef v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToGoRef", "(J)J");
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
-ObjcRef MatchaObjcString(CGoBuffer buf) {
+FgnRef MatchaForeignString(CGoBuffer buf) {
     jstring jstrBuf = MatchaCGoBufferToString(sEnv, buf);
     
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
@@ -73,7 +73,7 @@ ObjcRef MatchaObjcString(CGoBuffer buf) {
     return a;
 }
 
-CGoBuffer MatchaObjcToString(ObjcRef v) {
+CGoBuffer MatchaForeignToString(FgnRef v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToString", "(J)Ljava/lang/String;");
     jstring str = (jstring)(*sEnv)->CallObjectMethod(sEnv, sTracker, mid, v);
@@ -81,7 +81,7 @@ CGoBuffer MatchaObjcToString(ObjcRef v) {
     return MatchaStringToCGoBuffer(sEnv, str);
 }
 
-ObjcRef MatchaObjcBytes(CGoBuffer bytes) {
+FgnRef MatchaForeignBytes(CGoBuffer bytes) {
     jbyteArray array = MatchaCGoBufferToByteArray(sEnv, bytes);
     
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
@@ -92,7 +92,7 @@ ObjcRef MatchaObjcBytes(CGoBuffer bytes) {
     return a;
 }
 
-CGoBuffer MatchaObjcToBytes(ObjcRef v) {
+CGoBuffer MatchaForeignToBytes(FgnRef v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToBytes", "(J)[B");
     jbyteArray str = (jbyteArray)(*sEnv)->CallObjectMethod(sEnv, sTracker, mid, v);
@@ -100,7 +100,7 @@ CGoBuffer MatchaObjcToBytes(ObjcRef v) {
     return MatchaByteArrayToCGoBuffer(sEnv, str);
 }
 
-ObjcRef MatchaObjcArray(CGoBuffer buf) {
+FgnRef MatchaForeignArray(CGoBuffer buf) {
     jbyteArray array = MatchaCGoBufferToJlongArray(sEnv, buf);
     
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
@@ -111,7 +111,7 @@ ObjcRef MatchaObjcArray(CGoBuffer buf) {
     return a;
 }
 
-CGoBuffer MatchaObjcToArray(ObjcRef v) {
+CGoBuffer MatchaForeignToArray(FgnRef v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToArray", "(J)[J");
     jlongArray str = (jbyteArray)(*sEnv)->CallObjectMethod(sEnv, sTracker, mid, v);
@@ -119,7 +119,7 @@ CGoBuffer MatchaObjcToArray(ObjcRef v) {
     return MatchaJlongArrayToCGoBuffer(sEnv, str);
 }
 
-ObjcRef MatchaForeignBridge(CGoBuffer str) {
+FgnRef MatchaForeignBridge(CGoBuffer str) {
     jstring *string = MatchaCGoBufferToString(sEnv, str);
     
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
@@ -129,12 +129,12 @@ ObjcRef MatchaForeignBridge(CGoBuffer str) {
 
 // Call
 
-ObjcRef MatchaObjcCallSentinel() {
+FgnRef MatchaForeignCallSentinel() {
     // Not necessary on android.
     return 0;
 }
 
-ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args) {
+FgnRef MatchaForeignCall(FgnRef v, CGoBuffer str, FgnRef args) {
     jstring method = MatchaCGoBufferToString(sEnv, str);
     
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
@@ -144,13 +144,13 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args) {
 
 // Tracker
 
-ObjcRef MatchaTrackObjc(jobject v) {
+FgnRef MatchaForeignTrack(jobject v) {
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
     jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "track", "(Ljava/lang/Object;)J");
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
-void MatchaUntrackObjc(ObjcRef key) {
+void MatchaForeignObjc(FgnRef key) {
     JNIEnv *env = NULL;
     jint success = (*sJavaVM)->GetEnv(sJavaVM, (void **)&env, sJavaVersion);
     if (success == JNI_EDETACHED) {

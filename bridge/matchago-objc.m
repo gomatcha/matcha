@@ -38,7 +38,7 @@
 }
 
 - (id)initWithObject:(id)v {
-    return [self initWithGoRef:matchaGoForeign(MatchaTrackObjc(v))];
+    return [self initWithGoRef:matchaGoForeign(MatchaForeignTrack(v))];
 }
 
 - (id)initWithBool:(BOOL)v {
@@ -87,7 +87,7 @@
 }
 
 - (id)toObject {
-    return MatchaGetObjc(matchaGoToForeign(_ref));
+    return MatchaForeignGet(matchaGoToForeign(_ref));
 }
 
 - (BOOL)toBool {

@@ -13,8 +13,8 @@
 @end
 
 // Tracker
-ObjcRef MatchaTrackObjc(id value);
-id MatchaGetObjc(ObjcRef key);
+FgnRef MatchaForeignTrack(id value);
+id MatchaForeignGet(FgnRef key);
 
 // Utilities
 NSString *MatchaCGoBufferToNSString(CGoBuffer buf); // Frees the buffer.

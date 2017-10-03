@@ -67,7 +67,7 @@
     return self;
 }
 
-- (ObjcRef)track:(id)object {
+- (FgnRef)track:(id)object {
     if (object == nil) {
         return 0;
     }
@@ -78,7 +78,7 @@
     }
 }
 
-- (void)untrack:(ObjcRef)key {
+- (void)untrack:(FgnRef)key {
     if (key == 0) {
         return;
     }
@@ -93,7 +93,7 @@
     }
 }
 
-- (id)get:(ObjcRef)key {
+- (id)get:(FgnRef)key {
     if (key == 0) {
         return nil;
     }
@@ -108,73 +108,73 @@
 
 @end
 
-ObjcRef MatchaObjcBool(bool v) {
-    return MatchaTrackObjc(@(v));
+FgnRef MatchaForeignBool(bool v) {
+    return MatchaForeignTrack(@(v));
 }
 
-bool MatchaObjcToBool(ObjcRef v) {
-    NSNumber *val = MatchaGetObjc(v);
+bool MatchaForeignToBool(FgnRef v) {
+    NSNumber *val = MatchaForeignGet(v);
     return val.boolValue;
 }
 
-ObjcRef MatchaObjcInt64(int64_t v) {
-    return MatchaTrackObjc(@(v));
+FgnRef MatchaForeignInt64(int64_t v) {
+    return MatchaForeignTrack(@(v));
 }
 
-int64_t MatchaObjcToInt64(ObjcRef v) {
-    NSNumber *val = MatchaGetObjc(v);
+int64_t MatchaForeignToInt64(FgnRef v) {
+    NSNumber *val = MatchaForeignGet(v);
     return val.longLongValue;
 }
 
-ObjcRef MatchaObjcFloat64(double v) {
-    return MatchaTrackObjc(@(v));
+FgnRef MatchaForeignFloat64(double v) {
+    return MatchaForeignTrack(@(v));
 }
 
-double MatchaObjcToFloat64(ObjcRef v) {
-    NSNumber *val = MatchaGetObjc(v);
+double MatchaForeignToFloat64(FgnRef v) {
+    NSNumber *val = MatchaForeignGet(v);
     return val.doubleValue;
 }
 
-ObjcRef MatchaObjcGoRef(GoRef v) {
-    return MatchaTrackObjc([[MatchaGoValue alloc] initWithGoRef:v]);
+FgnRef MatchaForeignGoRef(GoRef v) {
+    return MatchaForeignTrack([[MatchaGoValue alloc] initWithGoRef:v]);
 }
 
-GoRef MatchaObjcToGoRef(ObjcRef v) {
-    MatchaGoValue *val = MatchaGetObjc(v);
+GoRef MatchaForeignToGoRef(FgnRef v) {
+    MatchaGoValue *val = MatchaForeignGet(v);
     return val.ref;
 }
 
-ObjcRef MatchaObjcString(CGoBuffer cstr) {
-    return MatchaTrackObjc(MatchaCGoBufferToNSString(cstr));
+FgnRef MatchaForeignString(CGoBuffer cstr) {
+    return MatchaForeignTrack(MatchaCGoBufferToNSString(cstr));
 }
 
-CGoBuffer MatchaObjcToString(ObjcRef v) {
-    return MatchaNSStringToCGoBuffer(MatchaGetObjc(v));
+CGoBuffer MatchaForeignToString(FgnRef v) {
+    return MatchaNSStringToCGoBuffer(MatchaForeignGet(v));
 }
 
-ObjcRef MatchaObjcBytes(CGoBuffer buf) {
-    return MatchaTrackObjc(MatchaCGoBufferToNSData(buf));
+FgnRef MatchaForeignBytes(CGoBuffer buf) {
+    return MatchaForeignTrack(MatchaCGoBufferToNSData(buf));
 }
 
-CGoBuffer MatchaObjcToBytes(ObjcRef v) {
-    NSData *data = MatchaGetObjc(v);
+CGoBuffer MatchaForeignToBytes(FgnRef v) {
+    NSData *data = MatchaForeignGet(v);
     return MatchaNSDataToCGoBuffer(data);
 }
 
-ObjcRef MatchaObjcArray(CGoBuffer buf) {
+FgnRef MatchaForeignArray(CGoBuffer buf) {
     NSArray *array = MatchaCGoBufferToNSArray2(buf);
-    return MatchaTrackObjc(array);
+    return MatchaForeignTrack(array);
 }
 
-CGoBuffer MatchaObjcToArray(ObjcRef v) {
-    NSArray *val = MatchaGetObjc(v);
+CGoBuffer MatchaForeignToArray(FgnRef v) {
+    NSArray *val = MatchaForeignGet(v);
     return MatchaNSArrayToCGoBuffer2(val);
 }
 
-ObjcRef MatchaForeignBridge(CGoBuffer str) {
+FgnRef MatchaForeignBridge(CGoBuffer str) {
     NSString *string = MatchaCGoBufferToNSString(str);
     MatchaObjcBridge *root = [[MatchaObjcBridge sharedBridge] objectForKey:string];;
-    return MatchaTrackObjc(root);
+    return MatchaForeignTrack(root);
 }
 
 // Call
@@ -184,19 +184,19 @@ ObjcRef MatchaForeignBridge(CGoBuffer str) {
 @implementation _MatchaObjcCallSentinel
 @end
 
-ObjcRef MatchaObjcCallSentinel() {
+FgnRef MatchaForeignCallSentinel() {
     _MatchaObjcCallSentinel *sentinel = [[_MatchaObjcCallSentinel alloc] init];
-    return MatchaTrackObjc(sentinel);
+    return MatchaForeignTrack(sentinel);
 }
 
-ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer cstr, ObjcRef arguments) {
-    id obj = MatchaGetObjc(v);
-    NSArray *args = MatchaGetObjc(arguments);
+FgnRef MatchaForeignCall(FgnRef v, CGoBuffer cstr, FgnRef arguments) {
+    id obj = MatchaForeignGet(v);
+    NSArray *args = MatchaForeignGet(arguments);
     NSString *str = MatchaCGoBufferToNSString(cstr);
     SEL sel = NSSelectorFromString(str);
     NSMethodSignature *sig = [[obj class] instanceMethodSignatureForSelector:sel];
     if (sig == nil) {
-        NSLog(@"MatchaObjcCall with nil signature: %@, %@, %@", obj, str, args);
+        NSLog(@"MatchaForeignCall with nil signature: %@, %@, %@", obj, str, args);
     }
     
     // Build invocation.
@@ -284,7 +284,7 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer cstr, ObjcRef arguments) {
             break;
         }
         default: {
-            @throw @"MatchaObjcCall: Unsupported argument type";
+            @throw @"MatchaForeignCall: Unsupported argument type";
         }
         }
     }
@@ -385,23 +385,23 @@ ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer cstr, ObjcRef arguments) {
         break;
     }
     default: {
-        @throw @"MatchaObjcCall: Unsupported return type";
+        @throw @"MatchaForeignCall: Unsupported return type";
     }
     }
-    return MatchaTrackObjc(ret);
+    return MatchaForeignTrack(ret);
 }
 
 // Tracker
 
-ObjcRef MatchaTrackObjc(id value) {
+FgnRef MatchaForeignTrack(id value) {
     return [[MatchaTracker sharedTracker] track:value];
 }
 
-id MatchaGetObjc(ObjcRef key) {
+id MatchaForeignGet(FgnRef key) {
     return [[MatchaTracker sharedTracker] get:key];
 }
 
-void MatchaUntrackObjc(ObjcRef key) {
+void MatchaForeignObjc(FgnRef key) {
     [[MatchaTracker sharedTracker] untrack:key];
 }
 
@@ -476,9 +476,9 @@ NSArray<id> *MatchaCGoBufferToNSArray2(CGoBuffer buf) {
     NSMutableArray *array = [NSMutableArray array];
     char *data = buf.ptr;
     for (NSInteger i = 0; i < buf.len/8; i++) {
-        ObjcRef ref = 0;
+        FgnRef ref = 0;
         memcpy(&ref, data, 8);
-        [array addObject:MatchaGetObjc(ref)];
+        [array addObject:MatchaForeignGet(ref)];
         data += 8;
     }
     free(buf.ptr);
@@ -514,7 +514,7 @@ CGoBuffer MatchaNSArrayToCGoBuffer2(NSArray *array) {
     char *data = buf;
     assert(buf != NULL);
     for (int i = 0; i < array.count; i++) {
-        ObjcRef ref = MatchaTrackObjc(array[i]);
+        FgnRef ref = MatchaForeignTrack(array[i]);
         memcpy(data, &ref, 8);
         data += 8;
     }

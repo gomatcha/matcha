@@ -160,14 +160,14 @@ func matchaGoToArray(v C.GoRef) C.CGoBuffer {
 }
 
 //export matchaGoForeign
-func matchaGoForeign(v C.ObjcRef) C.GoRef {
+func matchaGoForeign(v C.FgnRef) C.GoRef {
 	defer goRecover()
 	rv := reflect.ValueOf(newValue(v))
 	return matchaGoTrack(rv)
 }
 
 //export matchaGoToForeign
-func matchaGoToForeign(v C.GoRef) C.ObjcRef {
+func matchaGoToForeign(v C.GoRef) C.FgnRef {
 	defer goRecover()
 	val := matchaGoGet(v).Interface().(*Value)
 	defer runtime.KeepAlive(val)

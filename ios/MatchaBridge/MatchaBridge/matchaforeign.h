@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-typedef int64_t ObjcRef;
+typedef int64_t FgnRef;
 typedef int64_t GoRef;
 
 typedef struct CGoBuffer {
@@ -12,35 +12,33 @@ typedef struct CGoBuffer {
     int64_t len; // length in bytes
 } CGoBuffer;
 
-ObjcRef MatchaForeignBridge(CGoBuffer str); // Frees the buffer
+void TestFunc();
 
-ObjcRef MatchaObjcBool(bool v);
-bool MatchaObjcToBool(ObjcRef v);
-ObjcRef MatchaObjcInt64(int64_t v);
-int64_t MatchaObjcToInt64(ObjcRef v);
-ObjcRef MatchaObjcFloat64(double v);
-double MatchaObjcToFloat64(ObjcRef v);
-ObjcRef MatchaObjcGoRef(GoRef v);
-GoRef MatchaObjcToGoRef(ObjcRef v);
-ObjcRef MatchaObjcString(CGoBuffer str); // Frees the buffer
-CGoBuffer MatchaObjcToString(ObjcRef v);
-ObjcRef MatchaObjcBytes(CGoBuffer bytes); // Frees the buffer
-CGoBuffer MatchaObjcToBytes(ObjcRef v);
-
-ObjcRef MatchaObjcArray(int64_t len);
-void MatchaObjcArraySet(ObjcRef v, ObjcRef elem, int64_t idx);
-int64_t MatchaObjcArrayLen(ObjcRef v);
-ObjcRef MatchaObjcArrayAt(ObjcRef v, int64_t index);
+FgnRef MatchaForeignBool(bool v);
+bool MatchaForeignToBool(FgnRef v);
+FgnRef MatchaForeignInt64(int64_t v);
+int64_t MatchaForeignToInt64(FgnRef v);
+FgnRef MatchaForeignFloat64(double v);
+double MatchaForeignToFloat64(FgnRef v);
+FgnRef MatchaForeignGoRef(GoRef v);
+GoRef MatchaForeignToGoRef(FgnRef v);
+FgnRef MatchaForeignString(CGoBuffer str); // Frees the buffer
+CGoBuffer MatchaForeignToString(FgnRef v);
+FgnRef MatchaForeignBytes(CGoBuffer bytes); // Frees the buffer
+CGoBuffer MatchaForeignToBytes(FgnRef v);
+FgnRef MatchaForeignArray(CGoBuffer buf); // Frees the buffer
+CGoBuffer MatchaForeignToArray(FgnRef v);
+FgnRef MatchaForeignBridge(CGoBuffer str); // Frees the buffer
 
 // Call
-ObjcRef MatchaObjcCallSentinel();
-ObjcRef MatchaObjcCall(ObjcRef v, CGoBuffer str, ObjcRef args);
+FgnRef MatchaForeignCallSentinel();
+FgnRef MatchaForeignCall(FgnRef v, CGoBuffer str, FgnRef args);
 
 // Tracker
-void MatchaUntrackObjc(ObjcRef key);
+void MatchaForeignObjc(FgnRef key);
 
-// ObjcRef MatchaObjcWithGo(GoRef v);
-// GoRef MatchaObjcToGo(ObjcRef v);
+// Other
+void MatchaForeignPanic();
 
 @interface MatchaObjcBridge : NSObject
 + (MatchaObjcBridge *)sharedBridge;

@@ -46,18 +46,18 @@ type Value struct {
 	ref int64
 }
 
-func newValue(ref C.ObjcRef) *Value {
+func newValue(ref C.FgnRef) *Value {
 	v := &Value{ref: int64(ref)}
 	if ref != 0 {
 		runtime.SetFinalizer(v, func(a *Value) {
-			C.MatchaUntrackObjc(a._ref())
+			C.MatchaForeignObjc(a._ref())
 		})
 	}
 	return v
 }
 
-func (v *Value) _ref() C.ObjcRef {
-	return C.ObjcRef(v.ref)
+func (v *Value) _ref() C.FgnRef {
+	return C.FgnRef(v.ref)
 }
 
 func Bridge(a string) *Value {
@@ -66,7 +66,7 @@ func Bridge(a string) *Value {
 }
 
 func Nil() *Value {
-	return newValue(C.ObjcRef(0))
+	return newValue(C.FgnRef(0))
 }
 
 func (v *Value) IsNil() bool {
@@ -74,51 +74,51 @@ func (v *Value) IsNil() bool {
 }
 
 func Bool(v bool) *Value {
-	return newValue(C.MatchaObjcBool(C.bool(v)))
+	return newValue(C.MatchaForeignBool(C.bool(v)))
 }
 
 func (v *Value) ToBool() bool {
 	defer runtime.KeepAlive(v)
-	return bool(C.MatchaObjcToBool(v._ref()))
+	return bool(C.MatchaForeignToBool(v._ref()))
 }
 
 func Int64(v int64) *Value {
-	return newValue(C.MatchaObjcInt64(C.int64_t(v)))
+	return newValue(C.MatchaForeignInt64(C.int64_t(v)))
 }
 
 func (v *Value) ToInt64() int64 {
 	defer runtime.KeepAlive(v)
-	return int64(C.MatchaObjcToInt64(v._ref()))
+	return int64(C.MatchaForeignToInt64(v._ref()))
 }
 
 func Float64(v float64) *Value {
-	return newValue(C.MatchaObjcFloat64(C.double(v)))
+	return newValue(C.MatchaForeignFloat64(C.double(v)))
 }
 
 func (v *Value) ToFloat64() float64 {
 	defer runtime.KeepAlive(v)
-	return float64(C.MatchaObjcToFloat64(v._ref()))
+	return float64(C.MatchaForeignToFloat64(v._ref()))
 }
 
 func String(v string) *Value {
 	cstr := cString(v)
-	return newValue(C.MatchaObjcString(cstr))
+	return newValue(C.MatchaForeignString(cstr))
 }
 
 func (v *Value) ToString() string {
 	defer runtime.KeepAlive(v)
-	buf := C.MatchaObjcToString(v._ref())
+	buf := C.MatchaForeignToString(v._ref())
 	return goString(buf)
 }
 
 func Bytes(v []byte) *Value {
 	cbytes := cBytes(v)
-	return newValue(C.MatchaObjcBytes(cbytes))
+	return newValue(C.MatchaForeignBytes(cbytes))
 }
 
 func (v *Value) ToBytes() []byte {
 	defer runtime.KeepAlive(v)
-	buf := C.MatchaObjcToBytes(v._ref())
+	buf := C.MatchaForeignToBytes(v._ref())
 	return goBytes(buf)
 }
 
@@ -129,31 +129,31 @@ func Interface(v interface{}) *Value {
 	// Track it, turning it into a goref.
 	ref := matchaGoTrack(rv)
 	// Wrap the goref in an foreign object, returning a foreign ref.
-	return newValue(C.MatchaObjcGoRef(ref))
+	return newValue(C.MatchaForeignGoRef(ref))
 }
 
 func (v *Value) ToInterface() interface{} {
 	defer runtime.KeepAlive(v)
 	// Start with a foreign ref, referring to a foreign value wrapping a go ref.
 	// Get the goref.
-	ref := C.MatchaObjcToGoRef(v._ref())
+	ref := C.MatchaForeignToGoRef(v._ref())
 	// Get the go object, and unreflect.
 	return matchaGoGet(ref).Interface()
 }
 
 func Array(a ...*Value) *Value {
-	ref := C.MatchaObjcArray(cArray2(a))
+	ref := C.MatchaForeignArray(cArray2(a))
 	return newValue(ref)
 }
 
 func (v *Value) ToArray() []*Value { // TODO(KD): Untested....
 	defer runtime.KeepAlive(v)
-	buf := C.MatchaObjcToArray(v._ref())
+	buf := C.MatchaForeignToArray(v._ref())
 	return goArray2(buf)
 }
 
 func callSentinel() *Value {
-	return newValue(C.MatchaObjcCallSentinel())
+	return newValue(C.MatchaForeignCallSentinel())
 }
 
 // Call accepts `nil` in its variadic arguments
@@ -174,7 +174,7 @@ func (v *Value) Call(s string, args ...*Value) *Value {
 		argsValue = Array(args...)
 		defer runtime.KeepAlive(argsValue)
 	}
-	return newValue(C.MatchaObjcCall(v._ref(), cString(s), argsValue._ref()))
+	return newValue(C.MatchaForeignCall(v._ref(), cString(s), argsValue._ref()))
 }
 
 func cArray(v []reflect.Value) C.CGoBuffer {
@@ -273,7 +273,7 @@ func goArray2(buf C.CGoBuffer) []*Value {
 
 	rvs := []*Value{}
 	for _, i := range fgnRef {
-		rv := newValue(C.ObjcRef(i))
+		rv := newValue(C.FgnRef(i))
 		rvs = append(rvs, rv)
 	}
 	return rvs

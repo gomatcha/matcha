@@ -11,7 +11,7 @@ extern jint sJavaVersion;
 extern jobject sTracker;
 
 // Tracker
-ObjcRef MatchaTrackObjc(jobject v);
+FgnRef MatchaForeignTrack(jobject v);
 
 // Utilities
 CGoBuffer MatchaStringToCGoBuffer(JNIEnv *env, jstring v); // return buffer needs to be released.
