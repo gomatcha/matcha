@@ -47,16 +47,12 @@ public class Tracker {
         Bridge bridge = Bridge.singleton();
         return track(bridge.get(key));
     }
-    public synchronized long foreignCall(long v, String method, long args) {
-        Object[] va = (Object[])this.get(args);
-        int len = 0;
-        if (va != null) {
-            len = va.length;
-        }
+    public synchronized long foreignCall(long v, String method, long[] args) {
+        int len = args.length;
         Object[] vb = new Object[len];
         Class[] vc = new Class[len];
         for (int i = 0; i < len; i++) {
-            Object e = va[i];
+            Object e = this.get(args[i]);
             vb[i] = e;
             vc[i] = e.getClass();
         }

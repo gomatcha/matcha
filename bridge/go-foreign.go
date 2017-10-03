@@ -152,29 +152,12 @@ func (v *Value) ToArray() []*Value { // TODO(KD): Untested....
 	return goArray2(buf)
 }
 
-func callSentinel() *Value {
-	return newValue(C.MatchaForeignCallSentinel())
-}
-
 // Call accepts `nil` in its variadic arguments
 func (v *Value) Call(s string, args ...*Value) *Value {
 	defer runtime.KeepAlive(v)
+	defer runtime.KeepAlive(args)
 
-	if runtime.GOOS == "darwin" {
-		// Can't pass nil through NSArray so put a sentinel in.
-		for i, elem := range args {
-			if elem == nil || elem.IsNil() {
-				args[i] = callSentinel()
-			}
-		}
-	}
-
-	argsValue := Nil()
-	if len(args) > 0 {
-		argsValue = Array(args...)
-		defer runtime.KeepAlive(argsValue)
-	}
-	return newValue(C.MatchaForeignCall(v._ref(), cString(s), argsValue._ref()))
+	return newValue(C.MatchaForeignCall(v._ref(), cString(s), cArray2(args)))
 }
 
 func cArray(v []reflect.Value) C.CGoBuffer {

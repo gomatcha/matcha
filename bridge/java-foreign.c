@@ -129,17 +129,13 @@ FgnRef MatchaForeignBridge(CGoBuffer str) {
 
 // Call
 
-FgnRef MatchaForeignCallSentinel() {
-    // Not necessary on android.
-    return 0;
-}
-
-FgnRef MatchaForeignCall(FgnRef v, CGoBuffer str, FgnRef args) {
+FgnRef MatchaForeignCall(FgnRef v, CGoBuffer str, CGoBuffer args) {
     jstring method = MatchaCGoBufferToString(sEnv, str);
+    jbyteArray array = MatchaCGoBufferToJlongArray(sEnv, args);
     
     jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignCall", "(JLjava/lang/String;J)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v, method, args);
+    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignCall", "(JLjava/lang/String;[J)J");
+    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v, method, array);
 }
 
 // Tracker

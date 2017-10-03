@@ -179,19 +179,14 @@ FgnRef MatchaForeignBridge(CGoBuffer str) {
 
 // Call
 
-@interface _MatchaObjcCallSentinel : NSObject
+@interface MatchaNilSentinel : NSObject
 @end
-@implementation _MatchaObjcCallSentinel
+@implementation MatchaNilSentinel
 @end
 
-FgnRef MatchaForeignCallSentinel() {
-    _MatchaObjcCallSentinel *sentinel = [[_MatchaObjcCallSentinel alloc] init];
-    return MatchaForeignTrack(sentinel);
-}
-
-FgnRef MatchaForeignCall(FgnRef v, CGoBuffer cstr, FgnRef arguments) {
+FgnRef MatchaForeignCall(FgnRef v, CGoBuffer cstr, CGoBuffer arguments) {
     id obj = MatchaForeignGet(v);
-    NSArray *args = MatchaForeignGet(arguments);
+    NSArray *args = MatchaCGoBufferToNSArray2(arguments);
     NSString *str = MatchaCGoBufferToNSString(cstr);
     SEL sel = NSSelectorFromString(str);
     NSMethodSignature *sig = [[obj class] instanceMethodSignatureForSelector:sel];
@@ -275,7 +270,7 @@ FgnRef MatchaForeignCall(FgnRef v, CGoBuffer cstr, FgnRef arguments) {
             break;
         }
         case '@': {
-            if ([argObj isKindOfClass:[_MatchaObjcCallSentinel class]]) {
+            if ([argObj isKindOfClass:[MatchaNilSentinel class]]) {
                 id nilObject = nil;
                 [inv setArgument:&nilObject atIndex:i+2];
             } else {
