@@ -196,13 +196,13 @@ func Bind(flags *Flags, args []string) error {
 				}
 			}
 
-			// Copy headers into Xcode project.
-			if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchaobjc.h"), filepath.Join(cmdPath, "matchaforeign.h.support")); err != nil {
-				return err
-			}
-			if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchago.h"), filepath.Join(cmdPath, "matchago.h.support")); err != nil {
-				return err
-			}
+			// // Copy headers into Xcode project. // TODO(KD):
+			// if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchaobjc.h"), filepath.Join(cmdPath, "matchaforeign.h.support")); err != nil {
+			// 	return err
+			// }
+			// if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchago.h"), filepath.Join(cmdPath, "matchago.h.support")); err != nil {
+			// 	return err
+			// }
 		}
 
 		// Build platform binaries concurrently.

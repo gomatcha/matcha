@@ -4,25 +4,8 @@
 #include <stdint.h>
 #include <string.h>
 #import <Foundation/Foundation.h>
-#include "matchago-objc.h"
-#include "matchaforeign-objc.h"
-
-@interface MatchaGoBridge ()
-@property (nonatomic, strong) MatchaGoValue *rootObject;
-@end
-
-@implementation MatchaGoBridge
-
-+ (MatchaGoBridge *)sharedBridge {
-    static MatchaGoBridge *sBridge = nil;
-    static dispatch_once_t sOnce;
-    dispatch_once (&sOnce, ^{
-        sBridge = [[MatchaGoBridge alloc] init];
-    });
-    return sBridge;
-}
-
-@end
+#include "objc-go.h"
+#include "objc-foreign.h"
 
 @implementation MatchaGoValue {
     GoRef _ref;

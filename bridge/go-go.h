@@ -1,9 +1,9 @@
 // +build matcha
 
-#ifndef MOCHIGO_H
-#define MOCHIGO_H
+#ifndef GO_GO_H
+#define GO_GO_H
 
-#include "matchaforeign.h"
+#include "go-foreign.h"
 #include <stdbool.h>
 
 GoRef matchaGoBool(bool);
@@ -35,4 +35,4 @@ void matchaGoFieldSet(GoRef, CGoBuffer, GoRef);
 
 void matchaGoUntrack(GoRef);
 
-#endif // MOCHIGO_H
+#endif // GO_GO_H

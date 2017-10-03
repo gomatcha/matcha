@@ -1,5 +1,5 @@
-#ifndef MOCHIOBJC_H
-#define MOCHIOBJC_H
+#ifndef GO_FOREIGN_H
+#define GO_FOREIGN_H
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -35,9 +35,9 @@ FgnRef MatchaForeignCallSentinel();
 FgnRef MatchaForeignCall(FgnRef v, CGoBuffer str, FgnRef args);
 
 // Tracker
-void MatchaForeignObjc(FgnRef key);
+void MatchaForeignUntrack(FgnRef key);
 
 // Other
 void MatchaForeignPanic();
 
-#endif //MOCHIOBJC_H
+#endif //GO_FOREIGN_H

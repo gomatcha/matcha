@@ -1,7 +1,7 @@
 // +build matcha,darwin
 
-#ifndef MOCHIFOREIGN_OBJC_H
-#define MOCHIFOREIGN_OBJC_H
+#ifndef OBJC_FOREIGN_H
+#define OBJC_FOREIGN_H
 
 #import <Foundation/Foundation.h>
 @class MatchaGoValue;
@@ -26,4 +26,4 @@ NSArray<id> *MatchaCGoBufferToNSArray2(CGoBuffer buf); // Frees the buffer.
 CGoBuffer MatchaNSArrayToCGoBuffer(NSArray<MatchaGoValue *> *array); // Allocates a buffer.
 CGoBuffer MatchaNSArrayToCGoBuffer2(NSArray *array); // Allocates a buffer.
 
-#endif //MOCHIFOREIGN_OBJC_H
+#endif //OBJC_FOREIGN_H

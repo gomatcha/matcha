@@ -10,7 +10,7 @@ package bridge
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "matchago.h"
+#include "go-go.h"
 */
 import "C"
 

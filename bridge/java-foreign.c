@@ -1,7 +1,7 @@
 // +build matcha,android
 
-#include "matchaforeign.h"
-#include "matchaforeign-java.h"
+#include "go-foreign.h"
+#include "java-foreign.h"
 #include <jni.h>
 #include <stdlib.h>
 #include <android/log.h>
@@ -150,7 +150,7 @@ FgnRef MatchaForeignTrack(jobject v) {
     return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
 }
 
-void MatchaForeignObjc(FgnRef key) {
+void MatchaForeignUntrack(FgnRef key) {
     JNIEnv *env = NULL;
     jint success = (*sJavaVM)->GetEnv(sJavaVM, (void **)&env, sJavaVersion);
     if (success == JNI_EDETACHED) {

@@ -1,16 +1,11 @@
 // +build matcha,darwin
 
-#ifndef MOCHIGO_OBJC_H
-#define MOCHIGO_OBJC_H
+#ifndef OBJC_GO_H
+#define OBJC_GO_H
 
 #import <Foundation/Foundation.h>
-#import "matchaforeign.h"
-#import "matchago.h"
-@class MatchaGoValue;
-
-@interface MatchaGoBridge : NSObject
-+ (MatchaGoBridge *)sharedBridge;
-@end
+#import "go-foreign.h"
+#import "go-go.h"
 
 @interface MatchaGoValue : NSObject
 - (id)initWithGoRef:(GoRef)ref; // not for external use.
@@ -45,4 +40,4 @@
 - (void)setObject:(MatchaGoValue *)object forKeyedSubscript:(NSString *)key;
 @end
 
-#endif // MOCHIGO_OBJC_H
+#endif // OBJC_GO_H

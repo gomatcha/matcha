@@ -10,7 +10,7 @@ package bridge
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "matchaforeign.h"
+#include "go-foreign.h"
 */
 import "C"
 
@@ -50,7 +50,7 @@ func newValue(ref C.FgnRef) *Value {
 	v := &Value{ref: int64(ref)}
 	if ref != 0 {
 		runtime.SetFinalizer(v, func(a *Value) {
-			C.MatchaForeignObjc(a._ref())
+			C.MatchaForeignUntrack(a._ref())
 		})
 	}
 	return v

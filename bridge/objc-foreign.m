@@ -4,10 +4,10 @@
 #include <stdint.h>
 #include <string.h>
 #import <Foundation/Foundation.h>
-#include "matchaforeign.h"
-#include "matchaforeign-objc.h"
-#include "matchago.h"
-#include "matchago-objc.h"
+#include "go-foreign.h"
+#include "objc-foreign.h"
+#include "go-go.h"
+#include "objc-go.h"
 
 @interface MatchaObjcBridge ()
 @property (nonatomic, strong) NSMutableDictionary<NSString *, id<NSObject>> *dictionary;
@@ -401,7 +401,7 @@ id MatchaForeignGet(FgnRef key) {
     return [[MatchaTracker sharedTracker] get:key];
 }
 
-void MatchaForeignObjc(FgnRef key) {
+void MatchaForeignUntrack(FgnRef key) {
     [[MatchaTracker sharedTracker] untrack:key];
 }
 

@@ -1,7 +1,7 @@
 // +build matcha,android
 
-#ifndef MOCHIFOREIGN_JAVA_H
-#define MOCHIFOREIGN_JAVA_H
+#ifndef JAVA_FOREIGN_H
+#define JAVA_FOREIGN_H
 
 #include <jni.h>
 
@@ -21,4 +21,4 @@ jbyteArray MatchaCGoBufferToByteArray(JNIEnv *env, CGoBuffer buf); // releases b
 CGoBuffer MatchaJlongArrayToCGoBuffer(JNIEnv *env, jlongArray v); // returned buffer needs to be released.
 jlongArray MatchaCGoBufferToJlongArray(JNIEnv *env, CGoBuffer buf); // releases buf
 
-#endif //MOCHIFOREIGN_JAVA_H
+#endif //JAVA_FOREIGN_H

@@ -3,9 +3,9 @@
 #include <jni.h>
 #include <stdlib.h>
 #include <string.h>
-#include "matchago-java.h"
-#include "matchago.h"
-#include "matchaforeign-java.h"
+#include "java-go.h"
+#include "go-go.h"
+#include "java-foreign.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <android/log.h>
