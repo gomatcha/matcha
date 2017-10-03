@@ -49,18 +49,8 @@ JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoByteArray(JNIEnv
 }
 
 JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoArray(JNIEnv *env, jclass c, jlongArray v) {
-    int len = (*env)->GetArrayLength(env, v);
-    GoRef array = matchaGoArray();
-    
-    jlong *arr = (*env)->GetLongArrayElements(env, v, 0);
-    for (int i = 0; i < len; i++) {
-        GoRef prev = array;
-        array = matchaGoArrayAppend(array, arr[i]);
-        matchaGoUntrack(prev);
-    }
-    
-    (*env)->ReleaseLongArrayElements(env, v, arr, 0);
-    return array;
+    CGoBuffer buf = MatchaJlongArrayToCGoBuffer(env, v);
+    return matchaGoArray(buf);
 }
 
 JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoFunc(JNIEnv *env, jclass c, jstring v) {
@@ -99,7 +89,7 @@ JNIEXPORT jbyteArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoToByteArray
 }
 
 JNIEXPORT jlongArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoToArray(JNIEnv *env, jclass c, jlong v) {
-    CGoBuffer buf = matchaGoArrayBuffer(v);
+    CGoBuffer buf = matchaGoToArray(v);
     return MatchaCGoBufferToJlongArray(env, buf);
 }
 

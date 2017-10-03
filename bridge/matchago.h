@@ -6,9 +6,6 @@
 #include "matchaforeign.h"
 #include <stdbool.h>
 
-GoRef matchaGoForeign(ObjcRef);
-ObjcRef matchaGoToForeign(GoRef);
-
 GoRef matchaGoBool(bool);
 bool matchaGoToBool(GoRef);
 GoRef matchaGoInt(int);
@@ -22,18 +19,10 @@ GoRef matchaGoString(CGoBuffer);
 CGoBuffer matchaGoToString(GoRef);
 GoRef matchaGoBytes(CGoBuffer);
 CGoBuffer matchaGoToBytes(GoRef);
-
-GoRef matchaGoArray();
-int64_t matchaGoArrayLen(GoRef);
-GoRef matchaGoArrayAppend(GoRef, GoRef);
-GoRef matchaGoArrayAt(GoRef, int64_t);
-CGoBuffer matchaGoArrayBuffer(GoRef);
-
-GoRef matchaGoMap();
-GoRef matchaGoMapKeys(GoRef);
-GoRef matchaGoMapGet(GoRef map, GoRef key);
-void matchaGoMapSet(GoRef map, GoRef key, GoRef value);
-
+GoRef matchaGoArray(CGoBuffer);
+CGoBuffer matchaGoToArray(GoRef);
+GoRef matchaGoForeign(ObjcRef);
+ObjcRef matchaGoToForeign(GoRef);
 GoRef matchaGoType(CGoBuffer);
 GoRef matchaGoFunc(CGoBuffer);
 

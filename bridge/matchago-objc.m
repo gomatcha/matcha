@@ -72,12 +72,7 @@
 }
 
 - (id)initWithArray:(NSArray<MatchaGoValue *> *)v {
-    GoRef ref = matchaGoArray();
-    for (MatchaGoValue *i in v) {
-        GoRef prev = ref;
-        ref = matchaGoArrayAppend(ref, i.ref);
-        matchaGoUntrack(prev); // Must manually untrack
-    }
+    GoRef ref = matchaGoArray(MatchaNSArrayToCGoBuffer(v));
     return [self initWithGoRef:ref];
 }
 
@@ -120,17 +115,7 @@
 }
 
 - (NSArray *)toArray {
-    return MatchaCGoBufferToNSArray(matchaGoArrayBuffer(_ref));
-}
-
-- (NSMapTable *)toMapTable {
-    NSMapTable *mapTable = [NSMapTable strongToStrongObjectsMapTable];
-    MatchaGoValue *array = [[MatchaGoValue alloc] initWithGoRef:matchaGoMapKeys(_ref)];
-    for (MatchaGoValue *key in array.toArray) {
-        MatchaGoValue *value = [[MatchaGoValue alloc] initWithGoRef:matchaGoMapGet(_ref, key.ref)];
-        [mapTable setObject:value forKey:key];
-    }
-    return mapTable;
+    return MatchaCGoBufferToNSArray(matchaGoToArray(_ref));
 }
 
 - (BOOL)isEqual:(MatchaGoValue *)value {

@@ -29,6 +29,7 @@ CGoBuffer MatchaObjcToString(ObjcRef v);
 ObjcRef MatchaObjcBytes(CGoBuffer bytes); // Frees the buffer
 CGoBuffer MatchaObjcToBytes(ObjcRef v);
 
+// ObjcRef MatchaObjcArray2(CGoBuffer buf);
 ObjcRef MatchaObjcArray(int64_t len);
 void MatchaObjcArraySet(ObjcRef v, ObjcRef elem, int64_t idx);
 int64_t MatchaObjcArrayLen(ObjcRef v);
