@@ -179,11 +179,11 @@ JNIEXPORT jboolean JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoEqual
 
 /*
  * Class:     io_gomatcha_bridge_GoValue
- * Method:    matchaGoCall
- * Signature: (JLjava/lang/String;J)J
+ * Method:    matchaGoCallArray
+ * Signature: (JLjava/lang/String;J)[J
  */
-JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoCall
-  (JNIEnv *, jclass, jlong, jstring, jlong);
+JNIEXPORT jlongArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoCall
+  (JNIEnv *, jclass, jlong, jstring, jlongArray);
 
 /*
  * Class:     io_gomatcha_bridge_GoValue

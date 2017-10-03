@@ -41,12 +41,10 @@ jstring MatchaCGoBufferToString(JNIEnv *env, CGoBuffer buf) {
 }
 
 CGoBuffer MatchaByteArrayToCGoBuffer(JNIEnv *env, jbyteArray v) {
-    // int len = [data length];
-    // if (len == 0) {
-    //     return (CGoBuffer){0};
-    // }
-    
     int len = (*env)->GetArrayLength(env, v);
+    if (len == 0) {
+        return (CGoBuffer){0};
+    }
     char *buf = (char *)malloc(len);
     (*env)->GetByteArrayRegion(env, v, 0, len, (jbyte *)buf);
   
@@ -61,6 +59,43 @@ jbyteArray MatchaCGoBufferToByteArray(JNIEnv *env, CGoBuffer buf) {
     (*env)->SetByteArrayRegion(env, array, 0, buf.len, buf.ptr);
     free(buf.ptr);
     return array;
+}
+
+jlongArray MatchaCGoBufferToJlongArray(JNIEnv *env, CGoBuffer buf) {
+    int len = buf.len/8;
+    jlongArray array = (*env)->NewLongArray(env, len);
+    jlong *arr = (*env)->GetLongArrayElements(env, array, NULL);
+    char *data = buf.ptr;
+    for (int i = 0; i < len; i++) {
+        GoRef ref = 0;
+        memcpy(&ref, data, 8);
+        arr[i] = ref;
+        data += 8;
+    }
+    
+    (*env)->ReleaseLongArrayElements(env, array, arr, 0);
+    return array;
+}
+
+CGoBuffer MatchaJlongArrayToCGoBuffer(JNIEnv *env, jlongArray v) {
+    int len = (*env)->GetArrayLength(env, v);
+    if (len == 0) {
+        return (CGoBuffer){0};
+    }
+    
+    char *buf = (char *)malloc(len * 8);
+    char *data = buf;
+    jlong *arr = (*env)->GetLongArrayElements(env, v, 0);
+    for (int i = 0; i < len; i++) {
+        int64_t ref = arr[i];
+        memcpy(data+i*8, &ref, 8);
+    }
+    (*env)->ReleaseLongArrayElements(env, v, arr, 0);
+    
+    CGoBuffer cstr;
+    cstr.ptr = buf;
+    cstr.len = len * 8;
+    return cstr;
 }
 
 ObjcRef MatchaForeignBridge(CGoBuffer str) {

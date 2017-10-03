@@ -1,6 +1,7 @@
 package io.gomatcha.bridge;
 
 import android.util.Log;
+import java.util.Arrays;
 
 public class GoValue {
    static {
@@ -119,9 +120,18 @@ public class GoValue {
       if (v2 == null) {
          v2 = new GoValue[0];
       }
-      GoValue x = new GoValue(v2);
-      long goRef = matchaGoCall(this.goRef, v, x.goRef);
-      return new GoValue(goRef, false).toArray();
+      long[] args = new long[v2.length];
+      for (int i = 0; i < v2.length; i++) {
+         args[i] = v2[i].goRef;
+      }
+      
+      long[] refs = matchaGoCall(this.goRef, v, args);
+      
+      GoValue[] array2 = new GoValue[refs.length];
+      for (int i = 0; i < refs.length; i++) {
+         array2[i] = new GoValue(refs[i], false);
+      }
+      return array2;
    }
    
    public GoValue field(String v) {
@@ -135,7 +145,7 @@ public class GoValue {
    private static native long matchaGoElem(long a);
    private static native boolean matchaGoIsNil(long a);
    private static native boolean matchaGoEqual(long a, long b);
-   private static native long matchaGoCall(long a, String b, long c);
+   private static native long[] matchaGoCall(long a, String b, long[] c);
    private static native long matchaGoField(long a, String b);
    private static native void matchaGoFieldSet(long a, String b, long c);
 
