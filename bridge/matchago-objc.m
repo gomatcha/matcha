@@ -163,7 +163,7 @@
     }
 
     CGoBuffer argsBuffer = MatchaNSArrayToCGoBuffer(array);
-    CGoBuffer rlt = matchaGoCall2(_ref, MatchaNSStringToCGoBuffer(method), argsBuffer);
+    CGoBuffer rlt = matchaGoCall(_ref, MatchaNSStringToCGoBuffer(method), argsBuffer);
     return MatchaCGoBufferToNSArray(rlt);
 }
 

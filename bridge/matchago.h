@@ -40,8 +40,7 @@ GoRef matchaGoFunc(CGoBuffer);
 bool matchaGoIsNil(GoRef);
 bool matchaGoEqual(GoRef, GoRef);
 GoRef matchaGoElem(GoRef);
-GoRef matchaGoCall(GoRef, CGoBuffer, GoRef);
-CGoBuffer matchaGoCall2(GoRef, CGoBuffer, CGoBuffer);
+CGoBuffer matchaGoCall(GoRef, CGoBuffer, CGoBuffer);
 GoRef matchaGoField(GoRef, CGoBuffer);
 void matchaGoFieldSet(GoRef, CGoBuffer, GoRef);
 

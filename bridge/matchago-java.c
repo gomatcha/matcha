@@ -117,7 +117,7 @@ JNIEXPORT jboolean JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoEqual(JNIEnv 
 
 JNIEXPORT jlongArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoCall(JNIEnv *env, jclass c, jlong v, jstring v2, jlongArray v3) {
     CGoBuffer args = MatchaJlongArrayToCGoBuffer(env, v3);
-    CGoBuffer rlt = matchaGoCall2(v, MatchaStringToCGoBuffer(env, v2), args);
+    CGoBuffer rlt = matchaGoCall(v, MatchaStringToCGoBuffer(env, v2), args);
     return MatchaCGoBufferToJlongArray(env, rlt);
 }
 
