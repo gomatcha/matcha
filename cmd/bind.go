@@ -135,7 +135,7 @@ func Bind(flags *Flags, args []string) error {
 	}
 
 	// Get the supporting files
-	cmdPath, err := PackageDir(flags, "gomatcha.io/matcha/cmd")
+	bridgePath, err := PackageDir(flags, "gomatcha.io/matcha/bridge")
 	if err != nil {
 		return err
 	}
@@ -196,11 +196,11 @@ func Bind(flags *Flags, args []string) error {
 				}
 			}
 
-			// // Copy headers into Xcode project. // TODO(KD):
-			// if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchaobjc.h"), filepath.Join(cmdPath, "matchaforeign.h.support")); err != nil {
+			// // Copy headers into Xcode project. // TODO(KD): Why does this not error out??
+			// if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchaobjc.h"), filepath.Join(bridgePath, "matchaforeign.h.support")); err != nil {
 			// 	return err
 			// }
-			// if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchago.h"), filepath.Join(cmdPath, "matchago.h.support")); err != nil {
+			// if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchago.h"), filepath.Join(bridgePath, "matchago.h.support")); err != nil {
 			// 	return err
 			// }
 		}
@@ -341,13 +341,13 @@ func Bind(flags *Flags, args []string) error {
 		if err := Mkdir(flags, javaDir2); err != nil {
 			return err
 		}
-		if err := CopyFile(flags, filepath.Join(javaDir2, "GoValue.java"), filepath.Join(cmdPath, "GoValue.java")); err != nil {
+		if err := CopyFile(flags, filepath.Join(javaDir2, "GoValue.java"), filepath.Join(bridgePath, "java-GoValue.java")); err != nil {
 			return err
 		}
-		if err := CopyFile(flags, filepath.Join(javaDir2, "Bridge.java"), filepath.Join(cmdPath, "Bridge.java")); err != nil {
+		if err := CopyFile(flags, filepath.Join(javaDir2, "Bridge.java"), filepath.Join(bridgePath, "java-Bridge.java")); err != nil {
 			return err
 		}
-		if err := CopyFile(flags, filepath.Join(javaDir2, "Tracker.java"), filepath.Join(cmdPath, "Tracker.java")); err != nil {
+		if err := CopyFile(flags, filepath.Join(javaDir2, "Tracker.java"), filepath.Join(bridgePath, "java-Tracker.java")); err != nil {
 			return err
 		}
 

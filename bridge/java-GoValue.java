@@ -20,7 +20,6 @@ public class GoValue {
    public GoValue(Object v) {
       this(matchaGoForeign(Tracker.singleton().track(v)), false);
    }
-   
    public GoValue(boolean v) {
       this(matchaGoBool(v), false);
    }
