@@ -1,5 +1,5 @@
 // Package constraint implements a constraint-based layout system. See
-// http://gomatcha.io/guide/layout for more details.
+// http://gomatcha.io/guide/layout/ for more details.
 package constraint
 
 import (

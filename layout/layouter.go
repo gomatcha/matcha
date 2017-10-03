@@ -1,5 +1,5 @@
 // Package layout provides geometric primitives and interfaces for view layout.
-// See https://gomatcha.io/guide/layout for more details.
+// See https://gomatcha.io/guide/layout/ for more details.
 package layout
 
 import (
