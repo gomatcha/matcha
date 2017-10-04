@@ -195,14 +195,6 @@ func Bind(flags *Flags, args []string) error {
 					}
 				}
 			}
-
-			// // Copy headers into Xcode project. // TODO(KD): Why does this not error out??
-			// if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchaobjc.h"), filepath.Join(bridgePath, "matchaforeign.h.support")); err != nil {
-			// 	return err
-			// }
-			// if err = CopyFile(flags, filepath.Join(workOutputDir, "MatchaBridge", "MatchaBridge", "matchago.h"), filepath.Join(bridgePath, "matchago.h.support")); err != nil {
-			// 	return err
-			// }
 		}
 
 		// Build platform binaries concurrently.
