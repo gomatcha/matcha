@@ -135,13 +135,21 @@
 - (void)displayAlert:(NSData *)protobuf {
     MatchaViewPBAlert *pbalert = [[MatchaViewPBAlert alloc] initWithData:protobuf error:nil];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:pbalert.title message:pbalert.message preferredStyle:UIAlertControllerStyleAlert];
+    NSMutableArray *actions = [NSMutableArray array];
     for (NSInteger i = 0; i < pbalert.buttonsArray.count; i++) {
         MatchaViewPBAlertButton *button = pbalert.buttonsArray[i];
         UIAlertAction *action = [UIAlertAction actionWithTitle:button.title style:UIAlertActionStyleDefault handler:^(UIAlertAction *a){
             MatchaGoValue *onPress = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/view/alert onPress"];
             [onPress call:nil, [[MatchaGoValue alloc] initWithLongLong:pbalert.id_p], [[MatchaGoValue alloc] initWithLongLong:i], nil];
         }];
-        [alert addAction:action];
+        [actions addObject:action];
+    }
+    
+    if (actions.count == 2) {
+        actions = @[actions[1], actions[0]].mutableCopy;
+    }
+    for (UIAlertAction *i in actions) {
+        [alert addAction:i];
     }
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
 }
