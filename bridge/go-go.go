@@ -10,7 +10,7 @@ package bridge
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "matchago.h"
+#include "go-go.h"
 */
 import "C"
 
@@ -47,21 +47,6 @@ func RegisterType(str string, t reflect.Type) {
 
 func RegisterFunc(str string, f interface{}) {
 	goRoot.funcs[str] = reflect.ValueOf(f)
-}
-
-//export matchaGoForeign
-func matchaGoForeign(v C.ObjcRef) C.GoRef {
-	defer goRecover()
-	rv := reflect.ValueOf(newValue(v))
-	return matchaGoTrack(rv)
-}
-
-//export matchaGoToForeign
-func matchaGoToForeign(v C.GoRef) C.ObjcRef {
-	defer goRecover()
-	val := matchaGoGet(v).Interface().(*Value)
-	defer runtime.KeepAlive(val)
-	return val._ref()
 }
 
 //export matchaGoBool
@@ -161,64 +146,32 @@ func matchaGoToBytes(v C.GoRef) C.CGoBuffer {
 }
 
 //export matchaGoArray
-func matchaGoArray() C.GoRef {
+func matchaGoArray(v C.CGoBuffer) C.GoRef {
 	defer goRecover()
-	array := []reflect.Value{}
-	rv := reflect.ValueOf(array)
+	array := goArray(v)
+	return matchaGoTrack(reflect.ValueOf(array))
+}
+
+//export matchaGoToArray
+func matchaGoToArray(v C.GoRef) C.CGoBuffer {
+	defer goRecover()
+	array := matchaGoGet(v).Interface().([]reflect.Value)
+	return cArray(array)
+}
+
+//export matchaGoForeign
+func matchaGoForeign(v C.FgnRef) C.GoRef {
+	defer goRecover()
+	rv := reflect.ValueOf(newValue(v))
 	return matchaGoTrack(rv)
 }
 
-//export matchaGoArrayLen
-func matchaGoArrayLen(v C.GoRef) C.int64_t {
+//export matchaGoToForeign
+func matchaGoToForeign(v C.GoRef) C.FgnRef {
 	defer goRecover()
-	array := matchaGoGet(v).Interface().([]reflect.Value)
-	return C.int64_t(len(array))
-}
-
-//export matchaGoArrayAppend
-func matchaGoArrayAppend(v, a C.GoRef) C.GoRef {
-	defer goRecover()
-	array := matchaGoGet(v).Interface().([]reflect.Value)
-	elem := matchaGoGet(a)
-	newArray := append(array, elem)
-	rv := reflect.ValueOf(newArray)
-	return matchaGoTrack(rv)
-}
-
-//export matchaGoArrayAt
-func matchaGoArrayAt(v C.GoRef, idx C.int64_t) C.GoRef {
-	defer goRecover()
-	array := matchaGoGet(v).Interface().([]reflect.Value)
-	return matchaGoTrack(array[idx])
-}
-
-//export matchaGoMap
-func matchaGoMap() C.GoRef {
-	defer goRecover()
-	m := map[reflect.Value]reflect.Value{}
-	rv := reflect.ValueOf(m)
-	return matchaGoTrack(rv)
-}
-
-//export matchaGoMapKeys
-func matchaGoMapKeys(v C.GoRef) C.GoRef {
-	defer goRecover()
-	keys := matchaGoGet(v).MapKeys()
-	return matchaGoTrack(reflect.ValueOf(keys))
-}
-
-//export matchaGoMapGet
-func matchaGoMapGet(v, key C.GoRef) C.GoRef {
-	defer goRecover()
-	m := matchaGoGet(v)
-	k := matchaGoGet(key)
-	return matchaGoTrack(m.MapIndex(k))
-}
-
-//export matchaGoMapSet
-func matchaGoMapSet(m, key, value C.GoRef) {
-	defer goRecover()
-	matchaGoGet(m).SetMapIndex(matchaGoGet(key), matchaGoGet(value))
+	val := matchaGoGet(v).Interface().(*Value)
+	defer runtime.KeepAlive(val)
+	return val._ref()
 }
 
 //export matchaGoType
@@ -261,7 +214,7 @@ func matchaGoElem(v C.GoRef) C.GoRef {
 }
 
 //export matchaGoCall
-func matchaGoCall(v C.GoRef, name C.CGoBuffer, args C.GoRef) C.GoRef {
+func matchaGoCall(v C.GoRef, name C.CGoBuffer, args C.CGoBuffer) C.CGoBuffer {
 	defer goRecover()
 	str := goString(name)
 	rv := matchaGoGet(v)
@@ -272,10 +225,9 @@ func matchaGoCall(v C.GoRef, name C.CGoBuffer, args C.GoRef) C.GoRef {
 	} else {
 		function = rv.MethodByName(str)
 	}
-	argsRv := matchaGoGet(args).Interface().([]reflect.Value)
-
+	argsRv := goArray(args)
 	rlt := function.Call(argsRv)
-	return matchaGoTrack(reflect.ValueOf(rlt))
+	return cArray(rlt)
 }
 
 //export matchaGoField
@@ -336,6 +288,7 @@ func matchaGoGet(ref C.GoRef) reflect.Value {
 
 	v, ok := tracker.refs[int64(ref)]
 	if !ok {
+		fmt.Println("ref", ref)
 		panic("Get error. No corresponding object for key.")
 	}
 	return v

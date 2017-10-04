@@ -4,25 +4,8 @@
 #include <stdint.h>
 #include <string.h>
 #import <Foundation/Foundation.h>
-#include "matchago-objc.h"
-#include "matchaforeign-objc.h"
-
-@interface MatchaGoBridge ()
-@property (nonatomic, strong) MatchaGoValue *rootObject;
-@end
-
-@implementation MatchaGoBridge
-
-+ (MatchaGoBridge *)sharedBridge {
-    static MatchaGoBridge *sBridge = nil;
-    static dispatch_once_t sOnce;
-    dispatch_once (&sOnce, ^{
-        sBridge = [[MatchaGoBridge alloc] init];
-    });
-    return sBridge;
-}
-
-@end
+#include "objc-go.h"
+#include "objc-foreign.h"
 
 @implementation MatchaGoValue {
     GoRef _ref;
@@ -38,7 +21,7 @@
 }
 
 - (id)initWithObject:(id)v {
-    return [self initWithGoRef:matchaGoForeign(MatchaTrackObjc(v))];
+    return [self initWithGoRef:matchaGoForeign(MatchaForeignTrack(v))];
 }
 
 - (id)initWithBool:(BOOL)v {
@@ -72,12 +55,7 @@
 }
 
 - (id)initWithArray:(NSArray<MatchaGoValue *> *)v {
-    GoRef ref = matchaGoArray();
-    for (MatchaGoValue *i in v) {
-        GoRef prev = ref;
-        ref = matchaGoArrayAppend(ref, i.ref);
-        matchaGoUntrack(prev); // Must manually untrack
-    }
+    GoRef ref = matchaGoArray(MatchaNSArrayToCGoBuffer(v));
     return [self initWithGoRef:ref];
 }
 
@@ -92,7 +70,7 @@
 }
 
 - (id)toObject {
-    return MatchaGetObjc(matchaGoToForeign(_ref));
+    return MatchaForeignGet(matchaGoToForeign(_ref));
 }
 
 - (BOOL)toBool {
@@ -120,23 +98,7 @@
 }
 
 - (NSArray *)toArray {
-    NSInteger len = matchaGoArrayLen(_ref);
-    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:len];
-    for (NSInteger i = 0; i < len; i++) {
-        MatchaGoValue *value = [[MatchaGoValue alloc] initWithGoRef:matchaGoArrayAt(_ref, i)];
-        [array addObject:value];
-    }
-    return array;
-}
-
-- (NSMapTable *)toMapTable {
-    NSMapTable *mapTable = [NSMapTable strongToStrongObjectsMapTable];
-    MatchaGoValue *array = [[MatchaGoValue alloc] initWithGoRef:matchaGoMapKeys(_ref)];
-    for (MatchaGoValue *key in array.toArray) {
-        MatchaGoValue *value = [[MatchaGoValue alloc] initWithGoRef:matchaGoMapGet(_ref, key.ref)];
-        [mapTable setObject:value forKey:key];
-    }
-    return mapTable;
+    return MatchaCGoBufferToNSArray(matchaGoToArray(_ref));
 }
 
 - (BOOL)isEqual:(MatchaGoValue *)value {
@@ -167,9 +129,10 @@
     while ((arg = va_arg(args, id))) {
         [array addObject:arg];
     }
-    MatchaGoValue *argsArray = [[MatchaGoValue alloc] initWithArray:array];
-    GoRef rlt = matchaGoCall(_ref, MatchaNSStringToCGoBuffer(method), argsArray.ref);
-    return [[MatchaGoValue alloc] initWithGoRef:rlt].toArray;
+
+    CGoBuffer argsBuffer = MatchaNSArrayToCGoBuffer(array);
+    CGoBuffer rlt = matchaGoCall(_ref, MatchaNSStringToCGoBuffer(method), argsBuffer);
+    return MatchaCGoBufferToNSArray(rlt);
 }
 
 - (MatchaGoValue *)field:(NSString *)name {

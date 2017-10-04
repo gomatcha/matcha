@@ -6,7 +6,7 @@ package bridge
 #cgo CFLAGS: -x objective-c -fobjc-arc -Werror
 #cgo LDFLAGS: -framework Foundation
 
-#include "matchago-objc.h"
-#include "matchaforeign-objc.h"
+#include "objc-go.h"
+#include "objc-foreign.h"
 */
 import "C"
