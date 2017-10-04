@@ -22,8 +22,6 @@ const (
 )
 
 // If multiple views have a statusBar, the most recently mounted one will be used.
-// UIViewControllerBasedStatusBarAppearance must be set to False in the app's Info.plist
-// to use this component.
 //  return view.Model{
 //      Options: []view.Option{
 //          &android.StatusBar{ Color: colornames.Red },
@@ -53,15 +51,13 @@ type statusBarMiddleware struct {
 func (m *statusBarMiddleware) Build(ctx view.Context, model *view.Model) {
 	path := idSliceToIntSlice(ctx.Path())
 
-	add := false
-	statusBar := &StatusBar{}
+	var statusBar *StatusBar
 	for _, i := range model.Options {
-		var ok bool
-		if statusBar, ok = i.(*StatusBar); ok {
-			add = true
+		if bar, ok := i.(*StatusBar); ok {
+			statusBar = bar
 		}
 	}
-	if add {
+	if statusBar != nil {
 		n := m.radix.Insert(path)
 		n.Value = statusBar
 	} else {

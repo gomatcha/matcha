@@ -28,8 +28,8 @@ func init() {
 			&Todo{Title: "Kill Dog"},
 		}
 
-		if runtime.GOOS == "ios" {
-			v := ios.NewStackView()
+		if runtime.GOOS == "android" {
+			v := android.NewStackView()
 			v.Stack.SetViews(appview)
 			v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 255}
 			v.TitleStyle = &text.Style{}
@@ -37,7 +37,7 @@ func init() {
 			v.TitleStyle.SetTextColor(colornames.White)
 			return v
 		} else {
-			v := android.NewStackView()
+			v := ios.NewStackView()
 			v.Stack.SetViews(appview)
 			v.BarColor = color.RGBA{R: 46, G: 124, B: 190, A: 255}
 			v.TitleStyle = &text.Style{}

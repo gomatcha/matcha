@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/android NewStatusBarView", func() view.View {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/android NewStatusBarView", func() view.View {
 		return NewStatusBarView()
 	})
 }
