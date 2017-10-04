@@ -18,7 +18,7 @@ const (
 )
 
 // If multiple views have a statusBar, the most recently mounted one will be used.
-// UIViewControllerBasedStatusBarAppearance must be set to False in the app's Info.plist
+// UIViewControllerBasedStatusBarAppearance must be set to True in the app's Info.plist
 // to use this component.
 //  return view.Model{
 //      Options: []view.Option{
@@ -49,15 +49,13 @@ type statusBarMiddleware struct {
 func (m *statusBarMiddleware) Build(ctx view.Context, model *view.Model) {
 	path := idSliceToIntSlice(ctx.Path())
 
-	add := false
-	statusBar := &StatusBar{}
+	var statusBar *StatusBar
 	for _, i := range model.Options {
-		var ok bool
-		if statusBar, ok = i.(*StatusBar); ok {
-			add = true
+		if bar, ok := i.(*StatusBar); ok {
+			statusBar = bar
 		}
 	}
-	if add {
+	if statusBar != nil {
 		n := m.radix.Insert(path)
 		n.Value = statusBar
 	} else {
@@ -74,9 +72,6 @@ func (m *statusBarMiddleware) MarshalProtobuf() proto.Message {
 			statusBar = node.Value.(*StatusBar)
 		}
 	})
-	if statusBar == nil {
-		statusBar = &StatusBar{Style: StatusBarStyleDark}
-	}
 	return &pbapp.StatusBar{
 		Hidden: statusBar.Hidden,
 		Style:  pbapp.StatusBarStyle(statusBar.Style + 1),

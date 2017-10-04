@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/ios NewStatusBarView", func() view.View {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/ios NewStatusBarView", func() view.View {
 		return NewStatusBarView()
 	})
 }
@@ -22,7 +22,9 @@ type StatusBarView struct {
 }
 
 func NewStatusBarView() *StatusBarView {
-	return &StatusBarView{}
+	return &StatusBarView{
+		style: ios.StatusBarStyleDark,
+	}
 }
 
 func (v *StatusBarView) Build(ctx view.Context) view.Model {
