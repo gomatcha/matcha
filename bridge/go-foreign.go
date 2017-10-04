@@ -69,6 +69,7 @@ func Nil() *Value {
 }
 
 func (v *Value) IsNil() bool {
+	defer runtime.KeepAlive(v)
 	return v.ref == 0
 }
 
@@ -141,6 +142,7 @@ func (v *Value) ToInterface() interface{} {
 }
 
 func Array(a ...*Value) *Value {
+	defer runtime.KeepAlive(a)
 	ref := C.MatchaForeignArray(cArray2(a))
 	return newValue(ref)
 }
@@ -155,7 +157,6 @@ func (v *Value) ToArray() []*Value { // TODO(KD): Untested....
 func (v *Value) Call(s string, args ...*Value) *Value {
 	defer runtime.KeepAlive(v)
 	defer runtime.KeepAlive(args)
-
 	return newValue(C.MatchaForeignCall(v._ref(), cString(s), cArray2(args)))
 }
 
