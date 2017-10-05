@@ -35,18 +35,19 @@ Created-By: 1.0 (Go)
 `
 
 func NDKRoot() (string, error) {
-	// Try the ndk-bundle SDK package package, if installed.
 	sdkHome := os.Getenv("ANDROID_HOME")
 	if sdkHome == "" {
-		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK.")
-	}
-	path, err := filepath.Abs(filepath.Join(sdkHome, "ndk-bundle"))
-	if err != nil {
-		return "", err
+		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. $ANDROID_HOME is unset.")
 	}
 
-	if st, err := os.Stat(filepath.Join(path, "prebuilt", archNDK(), "bin")); err != nil || !st.IsDir() {
-		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK.")
+	path, err := filepath.Abs(filepath.Join(sdkHome, "ndk-bundle"))
+	if err != nil {
+		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. Error cleaning path %v.", err)
+	}
+
+	binPath := filepath.Join(path, "prebuilt", archNDK(), "bin")
+	if st, err := os.Stat(binPath); err != nil || !st.IsDir() {
+		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. Missing directory at %v.", binPath)
 	}
 	return path, nil
 }
