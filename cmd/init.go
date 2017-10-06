@@ -91,35 +91,34 @@ func Init(flags *Flags) error {
 	// Begin android
 	if _, ok := targets["android"]; ok {
 		// Install standard libraries for cross compilers.
-		var env []string
 		androidEnv, err := GetAndroidEnv(matchaPkgPath)
 		if err != nil {
 			return err
 		}
 
 		if _, ok := targets["android/arm"]; ok {
-			env = androidEnv["arm"]
+			env := androidEnv["arm"]
 			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
 				return err
 			}
 		}
 
 		if _, ok := targets["android/arm64"]; ok {
-			env = androidEnv["arm64"]
+			env := androidEnv["arm64"]
 			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
 				return err
 			}
 		}
 
 		if _, ok := targets["android/386"]; ok {
-			env = androidEnv["386"]
+			env := androidEnv["386"]
 			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
 				return err
 			}
 		}
 
 		if _, ok := targets["android/amd64"]; ok {
-			env = androidEnv["amd64"]
+			env := androidEnv["amd64"]
 			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
 				return err
 			}
