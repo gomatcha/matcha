@@ -17,119 +17,116 @@ import (
 func Init(flags *Flags) error {
 	start := time.Now()
 
-	// BEGIN ANDORID
-	// toolsDir := filepath.Join("prebuilt", "darwin-x86_64", "bin")
-	// // Try the ndk-bundle SDK package package, if installed.
-	// if initNDK == "" {
-	// 	if sdkHome := os.Getenv("ANDROID_HOME"); sdkHome != "" {
-	// 		path := filepath.Join(sdkHome, "ndk-bundle")
-	// 		if st, err := os.Stat(filepath.Join(path, toolsDir)); err == nil && st.IsDir() {
-	// 			initNDK = path
-	// 		}
-	// 	}
-	// }
-	// if initNDK != "" {
-	// 	var err error
-	// 	if initNDK, err = filepath.Abs(initNDK); err != nil {
-	// 		return err
-	// 	}
-	// 	// Check if the platform directory contains a known subdirectory.
-	// 	if _, err := os.Stat(filepath.Join(initNDK, toolsDir)); err != nil {
-	// 		if os.IsNotExist(err) {
-	// 			return fmt.Errorf("%q does not point to an Android NDK.", initNDK)
-	// 		}
-	// 		return err
-	// 	}
-	// 	ndkFile := filepath.Join(gomobilepath, "android_ndk_root")
-	// 	if err := ioutil.WriteFile(ndkFile, []byte(initNDK), 0644); err != nil {
-	// 		return err
-	// 	}
-	// }
+	// Parse targets
+	targets := ParseTargets(flags.BuildTargets)
 
-	// BEGIN IOS
-	// Get $GOPATH/pkg/gomobile
-	gomobilepath, err := GoMobilePath()
+	// Get $GOPATH/pkg/matcha
+	matchaPkgPath, err := MatchaPkgPath()
 	if err != nil {
 		return err
 	}
 	if flags.ShouldPrint() {
-		fmt.Fprintln(os.Stderr, "GOMOBILE="+gomobilepath)
+		fmt.Fprintln(os.Stderr, "GOMOBILE="+matchaPkgPath)
 	}
 
-	// Delete $GOPATH/pkg/gomobile
-	if err := RemoveAll(flags, gomobilepath); err != nil {
+	// Delete $GOPATH/pkg/matcha
+	if err := RemoveAll(flags, matchaPkgPath); err != nil {
 		return err
 	}
 
-	// Make $GOPATH/pkg/gomobile
-	if err := Mkdir(flags, gomobilepath); err != nil {
+	// Make $GOPATH/pkg/matcha
+	if err := Mkdir(flags, matchaPkgPath); err != nil {
 		return err
 	}
 
-	// Make $GOPATH/pkg/gomobile/work...
-	tmpdir, err := NewTmpDir(flags, gomobilepath)
+	// Make $GOPATH/pkg/matcha/work...
+	tmpdir, err := NewTmpDir(flags, matchaPkgPath)
 	if err != nil {
 		return err
 	}
 	defer RemoveAll(flags, tmpdir)
 
-	// Install standard libraries for cross compilers.
-	var env []string
-	if env, err = DarwinArmEnv(flags); err != nil {
-		return err
-	}
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
+	// Begin iOS
+	if _, ok := targets["ios"]; ok {
+		// Install standard libraries for cross compilers.
+		var env []string
+
+		if _, ok := targets["ios/arm"]; ok {
+			if env, err = DarwinArmEnv(flags); err != nil {
+				return err
+			}
+			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+				return err
+			}
+		}
+
+		if _, ok := targets["ios/arm64"]; ok {
+			if env, err = DarwinArm64Env(flags); err != nil {
+				return err
+			}
+			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+				return err
+			}
+		}
+
+		if _, ok := targets["ios/386"]; ok {
+			if env, err = Darwin386Env(flags); err != nil {
+				return err
+			}
+			if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
+				return err
+			}
+		}
+
+		if _, ok := targets["ios/amd64"]; ok {
+			if env, err = DarwinAmd64Env(flags); err != nil {
+				return err
+			}
+			if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
+				return err
+			}
+		}
 	}
 
-	if env, err = DarwinArm64Env(flags); err != nil {
-		return err
-	}
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
+	// Begin android
+	if _, ok := targets["android"]; ok {
+		// Install standard libraries for cross compilers.
+		androidEnv, err := GetAndroidEnv(matchaPkgPath)
+		if err != nil {
+			return err
+		}
+
+		if _, ok := targets["android/arm"]; ok {
+			env := androidEnv["arm"]
+			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+				return err
+			}
+		}
+
+		if _, ok := targets["android/arm64"]; ok {
+			env := androidEnv["arm64"]
+			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+				return err
+			}
+		}
+
+		if _, ok := targets["android/386"]; ok {
+			env := androidEnv["386"]
+			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+				return err
+			}
+		}
+
+		if _, ok := targets["android/amd64"]; ok {
+			env := androidEnv["amd64"]
+			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+				return err
+			}
+		}
 	}
 
-	if env, err = Darwin386Env(flags); err != nil {
-		return err
-	}
-	if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
-		return err
-	}
-
-	if env, err = DarwinAmd64Env(flags); err != nil {
-		return err
-	}
-	if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
-		return err
-	}
-
-	androidEnv, err := GetAndroidEnv(gomobilepath)
-	if err != nil {
-		return err
-	}
-
-	env = androidEnv["arm"]
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
-	}
-
-	env = androidEnv["arm64"]
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
-	}
-
-	env = androidEnv["386"]
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
-	}
-
-	env = androidEnv["amd64"]
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
-	}
-
-	// Write Go Version to $GOPATH/pkg/gomobile/version
-	verpath := filepath.Join(gomobilepath, "version")
+	// Write Go Version to $GOPATH/pkg/matcha/version
+	verpath := filepath.Join(matchaPkgPath, "version")
 	if flags.ShouldPrint() {
 		fmt.Fprintln(os.Stderr, "go version >", verpath)
 	}
@@ -154,7 +151,7 @@ func Init(flags *Flags) error {
 
 // Build package with properties.
 func InstallPkg(f *Flags, temporarydir string, pkg string, env []string, args ...string) error {
-	pd, err := PkgPath(env)
+	pkgPath, err := PkgPath(env)
 	if err != nil {
 		return err
 	}
@@ -164,7 +161,7 @@ func InstallPkg(f *Flags, temporarydir string, pkg string, env []string, args ..
 		if f.BuildV {
 			fmt.Fprintf(os.Stderr, "\n# Installing %s for %s/%s.\n", pkg, tOS, tArch)
 		}
-		args = append(args, "-pkgdir="+pd)
+		args = append(args, "-pkgdir="+pkgPath)
 	} else {
 		if f.BuildV {
 			fmt.Fprintf(os.Stderr, "\n# Installing %s.\n", pkg)
