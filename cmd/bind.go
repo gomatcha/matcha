@@ -72,7 +72,7 @@ func Bind(flags *Flags, args []string) error {
 	}
 
 	// Get $GOPATH/pkg/gomobile.
-	gomobilepath, err := GoMobilePath()
+	gomobilepath, err := MatchaPkgPath()
 	if err != nil {
 		return err
 	}
@@ -307,7 +307,7 @@ func Bind(flags *Flags, args []string) error {
 			androidArchs = append(androidArchs, "amd64")
 		}
 
-		gomobpath, err := GoMobilePath()
+		gomobpath, err := MatchaPkgPath()
 		if err != nil {
 			return err
 		}

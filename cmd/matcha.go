@@ -172,8 +172,8 @@ func Getenv(env []string, key string) string {
 	return ""
 }
 
-// $GOPATH/pkg/gomobile
-func GoMobilePath() (string, error) {
+// $GOPATH/pkg/matcha
+func MatchaPkgPath() (string, error) {
 	gopaths := filepath.SplitList(GoEnv("GOPATH"))
 	gomobilepath := ""
 	for _, p := range gopaths {
@@ -192,9 +192,9 @@ func GoMobilePath() (string, error) {
 	return gomobilepath, nil
 }
 
-// $GOPATH/pkg/gomobile/pkg_darwin_arm64
+// $GOPATH/pkg/matcha/pkg_darwin_arm64
 func PkgPath(env []string) (string, error) {
-	gomobilepath, err := GoMobilePath()
+	gomobilepath, err := MatchaPkgPath()
 	if err != nil {
 		return "", err
 	}

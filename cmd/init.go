@@ -40,34 +40,34 @@ func Init(flags *Flags) error {
 	// 		}
 	// 		return err
 	// 	}
-	// 	ndkFile := filepath.Join(gomobilepath, "android_ndk_root")
+	// 	ndkFile := filepath.Join(matchaPkgPath, "android_ndk_root")
 	// 	if err := ioutil.WriteFile(ndkFile, []byte(initNDK), 0644); err != nil {
 	// 		return err
 	// 	}
 	// }
 
 	// BEGIN IOS
-	// Get $GOPATH/pkg/gomobile
-	gomobilepath, err := GoMobilePath()
+	// Get $GOPATH/pkg/matcha
+	matchaPkgPath, err := MatchaPkgPath()
 	if err != nil {
 		return err
 	}
 	if flags.ShouldPrint() {
-		fmt.Fprintln(os.Stderr, "GOMOBILE="+gomobilepath)
+		fmt.Fprintln(os.Stderr, "GOMOBILE="+matchaPkgPath)
 	}
 
-	// Delete $GOPATH/pkg/gomobile
-	if err := RemoveAll(flags, gomobilepath); err != nil {
+	// Delete $GOPATH/pkg/matcha
+	if err := RemoveAll(flags, matchaPkgPath); err != nil {
 		return err
 	}
 
-	// Make $GOPATH/pkg/gomobile
-	if err := Mkdir(flags, gomobilepath); err != nil {
+	// Make $GOPATH/pkg/matcha
+	if err := Mkdir(flags, matchaPkgPath); err != nil {
 		return err
 	}
 
-	// Make $GOPATH/pkg/gomobile/work...
-	tmpdir, err := NewTmpDir(flags, gomobilepath)
+	// Make $GOPATH/pkg/matcha/work...
+	tmpdir, err := NewTmpDir(flags, matchaPkgPath)
 	if err != nil {
 		return err
 	}
@@ -78,58 +78,62 @@ func Init(flags *Flags) error {
 	if env, err = DarwinArmEnv(flags); err != nil {
 		return err
 	}
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
+
+	if true {
+		if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			return err
+		}
+
+		if env, err = DarwinArm64Env(flags); err != nil {
+			return err
+		}
+		if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			return err
+		}
+
+		if env, err = Darwin386Env(flags); err != nil {
+			return err
+		}
+		if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
+			return err
+		}
+
+		if env, err = DarwinAmd64Env(flags); err != nil {
+			return err
+		}
+		if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
+			return err
+		}
+	}
+	if true {
+		androidEnv, err := GetAndroidEnv(matchaPkgPath)
+		if err != nil {
+			return err
+		}
+
+		env = androidEnv["arm"]
+		if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			return err
+		}
+
+		env = androidEnv["arm64"]
+		if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			return err
+		}
+
+		env = androidEnv["386"]
+		if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			return err
+		}
+
+		env = androidEnv["amd64"]
+		if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			return err
+		}
 	}
 
-	if env, err = DarwinArm64Env(flags); err != nil {
-		return err
-	}
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
-	}
-
-	if env, err = Darwin386Env(flags); err != nil {
-		return err
-	}
-	if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
-		return err
-	}
-
-	if env, err = DarwinAmd64Env(flags); err != nil {
-		return err
-	}
-	if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
-		return err
-	}
-
-	androidEnv, err := GetAndroidEnv(gomobilepath)
-	if err != nil {
-		return err
-	}
-
-	env = androidEnv["arm"]
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
-	}
-
-	env = androidEnv["arm64"]
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
-	}
-
-	env = androidEnv["386"]
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
-	}
-
-	env = androidEnv["amd64"]
-	if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
-		return err
-	}
-
-	// Write Go Version to $GOPATH/pkg/gomobile/version
-	verpath := filepath.Join(gomobilepath, "version")
+	// Write Go Version to $GOPATH/pkg/matcha/version
+	verpath := filepath.Join(matchaPkgPath, "version")
 	if flags.ShouldPrint() {
 		fmt.Fprintln(os.Stderr, "go version >", verpath)
 	}
