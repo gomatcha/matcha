@@ -71,14 +71,14 @@ func Bind(flags *Flags, args []string) error {
 		defer RemoveAll(flags, tempdir)
 	}
 
-	// Get $GOPATH/pkg/gomobile.
-	gomobilepath, err := MatchaPkgPath()
+	// Get $GOPATH/pkg/matcha.
+	matchaPkgPath, err := MatchaPkgPath()
 	if err != nil {
 		return err
 	}
 
 	// Get toolchain version.
-	installedVersion, err := ReadFile(flags, filepath.Join(gomobilepath, "version"))
+	installedVersion, err := ReadFile(flags, filepath.Join(matchaPkgPath, "version"))
 	if err != nil {
 		return errors.New("toolchain partially installed, run `matcha init`")
 	}

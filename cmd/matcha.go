@@ -35,11 +35,6 @@ func (f *Flags) ShouldRun() bool {
 	return !f.BuildN
 }
 
-func XcodeAvailable() bool {
-	_, err := exec.LookPath("xcrun")
-	return err == nil
-}
-
 func ArchClang(goarch string) string {
 	switch goarch {
 	case "arm":
@@ -57,7 +52,7 @@ func ArchClang(goarch string) string {
 
 // Get clang path and clang flags (SDK Path).
 func EnvClang(flags *Flags, sdkName string) (_clang, cflags string, err error) {
-	if !XcodeAvailable() {
+	if _, err := exec.LookPath("xcrun"); err != nil {
 		return "", "", errors.New("Xcode not available")
 	}
 
@@ -240,12 +235,16 @@ func GoInstall(f *Flags, srcs []string, env []string, ctx build.Context, tmpdir 
 }
 
 func GoCmd(f *Flags, subcmd string, srcs []string, env []string, ctx build.Context, tmpdir string, args ...string) error {
-	pd, err := PkgPath(env)
+	pkgPath, err := PkgPath(env)
 	if err != nil {
 		return err
 	}
 
-	cmd := exec.Command("go", subcmd, "-pkgdir="+pd)
+	if st, err := os.Stat(pkgPath); err != nil || !st.IsDir() {
+		return fmt.Errorf("Matcha not initialized for this target. Missing directory at %v.", pkgPath)
+	}
+
+	cmd := exec.Command("go", subcmd, "-pkgdir="+pkgPath)
 	if len(ctx.BuildTags) > 0 {
 		cmd.Args = append(cmd.Args, "-tags", strings.Join(ctx.BuildTags, " "))
 	}
