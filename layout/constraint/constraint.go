@@ -5,6 +5,7 @@ package constraint
 import (
 	"fmt"
 	"math"
+	"strings"
 
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal/device"
@@ -48,21 +49,21 @@ const (
 func (a attribute) String() string {
 	switch a {
 	case leftAttr:
-		return "Left"
+		return "L"
 	case rightAttr:
-		return "Right"
+		return "R"
 	case topAttr:
-		return "Top"
+		return "T"
 	case bottomAttr:
-		return "Bottom"
+		return "B"
 	case widthAttr:
-		return "Width"
+		return "W"
 	case heightAttr:
-		return "Height"
+		return "H"
 	case centerXAttr:
-		return "CenterX"
+		return "X"
 	case centerYAttr:
-		return "CenterY"
+		return "Y"
 	}
 	return ""
 }
@@ -268,6 +269,21 @@ func (g *Guide) add(v view.View, solveFunc func(*Solver)) *Guide {
 	return chl
 }
 
+type solution struct {
+	constraints []resolvedConstraint
+	index       int
+}
+
+type resolvedConstraint struct {
+	attribute  attribute
+	comparison comparison
+	value      float64
+}
+
+func (c resolvedConstraint) String() string {
+	return fmt.Sprintf("%v%v%v", c.attribute, c.comparison, c.value)
+}
+
 type constraint struct {
 	attribute  attribute
 	comparison comparison
@@ -285,9 +301,10 @@ type Solver struct {
 	constraints []constraint
 }
 
-func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
+func (s *Solver) solve(sys *Layouter, ctx layout.Context) *solution {
 	cr := newConstrainedRect()
 
+	sol := &solution{index: s.index}
 	if s.debug {
 		fmt.Println("constraint - Begin solving")
 	}
@@ -296,14 +313,15 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
 		copy := cr
 
 		// Generate the range from constraint
+		val := i.anchor.value(sys)
 		var r _range
 		switch i.comparison {
 		case equal:
-			r = _range{min: i.anchor.value(sys), max: i.anchor.value(sys)}
+			r = _range{min: val, max: val}
 		case greater:
-			r = _range{min: i.anchor.value(sys), max: math.Inf(1)}
+			r = _range{min: val, max: math.Inf(1)}
 		case less:
-			r = _range{min: math.Inf(-1), max: i.anchor.value(sys)}
+			r = _range{min: math.Inf(-1), max: val}
 		}
 
 		// Update the solver
@@ -326,6 +344,7 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
 			copy.centerY = copy.centerY.intersect(r)
 		}
 
+		sol.constraints = append(sol.constraints, resolvedConstraint{attribute: i.attribute, comparison: i.comparison, value: val})
 		if s.debug {
 			if copy.isValid() {
 				fmt.Printf("constraint - Adding constraint: %v%v%v\n", i.attribute, i.comparison, r)
@@ -421,6 +440,7 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) {
 	if s.debug {
 		fmt.Println("constraint - Solved position", g)
 	}
+	return sol
 }
 
 // Debug adds debug logging for the solver.
@@ -579,6 +599,7 @@ type Layouter struct {
 	groupNotifiers map[comm.Id]notifier
 	maxId          comm.Id
 	views          []view.View
+	solutions      []*solution
 }
 
 func (l *Layouter) initialize() {
@@ -621,8 +642,10 @@ func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	}
 	// TODO(KD): reset all guides
 
+	l.solutions = nil
 	for _, i := range l.solvers {
-		i.solve(l, ctx)
+		sol := i.solve(l, ctx)
+		l.solutions = append(l.solutions, sol)
 	}
 
 	g := *l.Guide.matchaGuide
@@ -644,6 +667,24 @@ func (l *Layouter) Add(v view.View, solveFunc func(*Solver)) *Guide {
 func (l *Layouter) Solve(solveFunc func(*Solver)) {
 	l.initialize()
 	l.Guide.Solve(solveFunc)
+}
+
+// DebugStrings must be called after Layout()...
+func (l *Layouter) DebugStrings() (string, []string) {
+	debugstr := ""
+	debugstrs := make([]string, len(l.views))
+	for _, i := range l.solutions {
+		strs := []string{}
+		for _, j := range i.constraints {
+			strs = append(strs, j.String())
+		}
+		if i.index >= 0 {
+			debugstrs[i.index] = strings.Join(strs, " ")
+		} else if i.index == rootId {
+			debugstr = strings.Join(strs, " ")
+		}
+	}
+	return debugstr, debugstrs
 }
 
 type notifier struct {

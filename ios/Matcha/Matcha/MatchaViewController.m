@@ -57,7 +57,6 @@
     return [self.goValue call:@"Call", goValue, goViewId, goArgs, nil];
 }
 
-
 - (NSArray<MatchaGoValue *> *)call:(NSString *)funcId viewId:(int64_t)viewId args:(va_list)args {
     MatchaGoValue *goValue = [[MatchaGoValue alloc] initWithString:funcId];
     MatchaGoValue *goViewId = [[MatchaGoValue alloc] initWithLongLong:viewId];
@@ -111,6 +110,15 @@
 
 - (BOOL)prefersStatusBarHidden {
     return self.statusbarhidden;
+}
+
+- (void)printViewHierarchy {
+    [self.goValue call:@"PrintDebug", nil];
+}
+
+- (void)setPrintViewHierarchyOnUpdate:(BOOL)val {
+    _printViewHierarchyOnUpdate = val;
+    [self.goValue call:@"SetPrintDebug", [[MatchaGoValue alloc] initWithBool:val], nil];
 }
 
 + (void)registerView:(NSString *)viewName block:(MatchaViewRegistrationBlock)block {
