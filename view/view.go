@@ -30,10 +30,11 @@ var embedUpdate bool
 
 // Embed is a convenience struct that provides a default implementation of View. It also wraps a comm.Relay.
 type Embed struct {
-	key   interface{}
-	Key   interface{}
-	mu    sync.Mutex
-	relay comm.Relay
+	key       interface{}
+	Key       interface{}
+	mu        sync.Mutex
+	relay     comm.Relay
+	lastField struct{}
 }
 
 func NewEmbed(key interface{}) Embed {

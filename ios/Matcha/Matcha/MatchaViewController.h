@@ -10,6 +10,8 @@ typedef UIViewController<MatchaChildViewController> *(^MatchaViewControllerRegis
 
 @interface MatchaViewController : UIViewController
 - (id)initWithGoValue:(MatchaGoValue *)value;
+- (void)printViewHierarchy;
+@property (nonatomic, assign) BOOL printViewHierarchyOnUpdate;
 + (void)registerView:(NSString *)viewName block:(MatchaViewRegistrationBlock)block;
 + (void)registerViewController:(NSString *)viewName block:(MatchaViewControllerRegistrationBlock)block;
 @end

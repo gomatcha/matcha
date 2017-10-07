@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"runtime"
 	"sort"
+	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -34,10 +35,11 @@ type middleware interface {
 
 // root contains your view hierarchy.
 type root struct {
-	id     int64
-	root   *nodeRoot
-	size   layout.Point
-	ticker *internal.Ticker
+	id         int64
+	root       *nodeRoot
+	size       layout.Point
+	ticker     *internal.Ticker
+	printDebug bool
 }
 
 func init() {
@@ -77,8 +79,9 @@ func (r *root) start() {
 			return
 		}
 
-		// fmt.Println(r.root.node.debugString())
-		fmt.Println("Update") // TODO(KD): Remove.
+		if r.printDebug {
+			fmt.Println(r.root.node.debugString())
+		}
 
 		success := false
 		if runtime.GOOS == "android" {
@@ -129,6 +132,20 @@ func (r *root) SetSize(width, height float64) {
 
 	r.size = layout.Pt(width, height)
 	r.root.addFlag(r.root.node.id, layoutFlag)
+}
+
+func (r *root) PrintDebug() {
+	matcha.MainLocker.Lock()
+	defer matcha.MainLocker.Unlock()
+
+	fmt.Println(r.root.node.debugString())
+}
+
+func (r *root) SetPrintDebug(v bool) {
+	matcha.MainLocker.Lock()
+	defer matcha.MainLocker.Unlock()
+
+	r.printDebug = v
 }
 
 func newId() Id {
@@ -308,12 +325,13 @@ type node struct {
 	model         *Model
 	children      []*node
 
-	layoutId       int64
-	layoutNotify   bool
-	layoutNotifyId comm.Id
-	layoutGuide    *layout.Guide
-	layoutMinSize  layout.Point
-	layoutMaxSize  layout.Point
+	layoutId          int64
+	layoutNotify      bool
+	layoutNotifyId    comm.Id
+	layoutGuide       *layout.Guide
+	layoutMinSize     layout.Point
+	layoutMaxSize     layout.Point
+	layoutDebugString string
 
 	paintId       int64
 	paintNotify   bool
@@ -618,16 +636,82 @@ func (n *node) done() {
 }
 
 func (n *node) debugString() string {
+	// View line
+	viewLine := reflect.TypeOf(n.view).String() + " - {Id:" + strconv.Itoa(int(n.id)) + " "
+	split := strings.SplitN(fmt.Sprintf("%+v", n.view), "lastField:{}} ", 2)
+	if len(split) == 2 {
+		viewLine += split[1]
+	} else {
+		viewLine += strings.TrimPrefix("{", split[0])
+	}
+
+	// Layout line
+	width := ""
+	if n.layoutMinSize.X == n.layoutMaxSize.X {
+		width = fmt.Sprintf("W=%v", n.layoutMinSize.X)
+	} else {
+		width = fmt.Sprintf("%v<W<%v", n.layoutMinSize.X, n.layoutMaxSize.X)
+	}
+
+	height := ""
+	if n.layoutMinSize.Y == n.layoutMaxSize.Y {
+		height = fmt.Sprintf("H=%v", n.layoutMinSize.Y)
+	} else {
+		height = fmt.Sprintf("%v<H<%v", n.layoutMinSize.Y, n.layoutMaxSize.Y)
+	}
+
+	layout := ""
+	var childLayouts []string
+	if ld, ok := n.model.Layouter.(layouterDebug); ok {
+		layout, childLayouts = ld.DebugStrings()
+	}
+
+	for idx, i := range n.children {
+		childLayout := ""
+		if childLayouts != nil {
+			childLayout = fmt.Sprintf("{%T %v}", n.model.Layouter, childLayouts[idx])
+		} else {
+			childLayout = fmt.Sprintf("{%T}", n.model.Layouter)
+		}
+		i.layoutDebugString = childLayout
+	}
+
+	nodeLayout := ""
+	if layout != "" {
+		nodeLayout = fmt.Sprintf("{%T %v %v %v}", n.model.Layouter, width, height, layout)
+	} else {
+		nodeLayout = fmt.Sprintf("{%T %v %v}", n.model.Layouter, width, height)
+	}
+	parentLayout := n.layoutDebugString
+	if parentLayout == "" {
+		parentLayout = "{<nil>}"
+	}
+	layoutLine := "\n|Layout:" + parentLayout + "->" + nodeLayout + "->" + n.layoutGuide.Frame.String()
+
+	// Paint line
+	paintLine := ""
+	if n.model.Painter != nil {
+		paintLine = "\n|Paint:" + n.paintOptions.String()
+	}
+
+	// Options line
+	optionsLine := ""
+	if len(n.model.Options) != 0 {
+		optionsLine = "\n|Options:" + fmt.Sprintf("{%+v}", n.model.Options)
+	}
+
+	// Build string
+	str := viewLine + layoutLine + paintLine + optionsLine
+
+	// Build children
 	all := []string{}
 	for _, i := range n.children {
 		lines := strings.Split(i.debugString(), "\n")
 		for idx, line := range lines {
-			lines[idx] = "|	" + line
+			lines[idx] = "|    " + line
 		}
 		all = append(all, lines...)
 	}
-
-	str := fmt.Sprintf("{%p Id:%v,%v,%v,%v View:%v Node:%p Layout:%v}", n, n.id, n.buildId, n.layoutId, n.paintId, n.view, n.model, n.layoutGuide.Frame)
 	if len(all) > 0 {
 		str += "\n" + strings.Join(all, "\n")
 	}
@@ -673,4 +757,8 @@ func (l *layoutContext) fitGuide(g layout.Guide) layout.Guide {
 		g.Frame.Max.Y = l.MaxSize().Y - g.Frame.Min.Y
 	}
 	return g
+}
+
+type layouterDebug interface {
+	DebugStrings() (string, []string)
 }

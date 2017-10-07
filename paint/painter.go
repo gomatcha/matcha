@@ -13,6 +13,7 @@ Package paint implements view display properties.
 package paint
 
 import (
+	"fmt"
 	"image/color"
 
 	"gomatcha.io/matcha/comm"
@@ -70,6 +71,13 @@ func (s *Style) Notify(func()) comm.Id {
 // Unnotify implements the Painter interface. This is a no-op.
 func (s *Style) Unnotify(id comm.Id) {
 	// no-op
+}
+
+func (s *Style) String() string {
+	if s == nil {
+		return "{}"
+	}
+	return fmt.Sprintf("{Color:%v}", s.BackgroundColor)
 }
 
 type notifier struct {
