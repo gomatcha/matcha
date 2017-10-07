@@ -26,6 +26,7 @@ public class MatchaView extends RelativeLayout {
     long identifier;
     MatchaViewNode node;
     boolean updating;
+    boolean printViewHierarchyOnUpdate;
 
     public MatchaView(Context context, GoValue v2) {
         super(context);
@@ -45,6 +46,19 @@ public class MatchaView extends RelativeLayout {
 
     public void stop() {
         JavaBridge.viewMap.remove(identifier);
+    }
+
+    public void printViewHierarchy() {
+        goValue.call("PrintDebug");
+    }
+
+    public void setPrintViewHierarchyOnUpdate(boolean v) {
+        printViewHierarchyOnUpdate = v;
+        goValue.call("SetPrintDebug", GoValue.WithBoolean(v));
+    }
+
+    public boolean getPrintViewHierarchyOnUpdate() {
+        return printViewHierarchyOnUpdate;
     }
 
     boolean loaded = false;

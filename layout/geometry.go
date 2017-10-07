@@ -62,7 +62,7 @@ func (r Rect) Add(p Point) Rect {
 
 // String returns a string description of r.
 func (r Rect) String() string {
-	return fmt.Sprintf("Rect{%v, %v, %v, %v}", r.Min.X, r.Min.Y, r.Max.X, r.Max.Y)
+	return fmt.Sprintf("{%v, %v, %v, %v}", r.Min.X, r.Min.Y, r.Max.X, r.Max.Y)
 }
 
 // Point represents a point on the XY coordinate system.
@@ -74,6 +74,11 @@ type Point struct {
 // Pt creates a point with x and y.
 func Pt(x, y float64) Point {
 	return Point{X: x, Y: y}
+}
+
+// String returns a string description of r.
+func (p Point) String() string {
+	return fmt.Sprintf("{%v, %v}", p.X, p.Y)
 }
 
 // MarshalProtobuf serializes p into a protobuf object.
