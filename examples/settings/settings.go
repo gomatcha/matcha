@@ -32,35 +32,39 @@ var (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/settings New", func() view.View {
-		if runtime.GOOS == "android" {
-			v := android.NewStackView()
-			app := NewApp()
-			app.Stack = v.Stack
-			app.Stack.SetViews(NewRootView(app))
-			return v
-		} else {
-			v := ios.NewStackView()
-			app := NewApp()
-			app.Stack = v.Stack
-			app.Stack.SetViews(NewRootView(app))
-			return v
-		}
+		return NewRootView()
 	})
 }
 
-type RootView struct {
+func NewRootView() view.View {
+	if runtime.GOOS == "android" {
+		v := android.NewStackView()
+		app := NewApp()
+		app.Stack = v.Stack
+		app.Stack.SetViews(NewAppView(app))
+		return v
+	} else {
+		v := ios.NewStackView()
+		app := NewApp()
+		app.Stack = v.Stack
+		app.Stack.SetViews(NewAppView(app))
+		return v
+	}
+}
+
+type AppView struct {
 	view.Embed
 	app *App
 }
 
-func NewRootView(app *App) *RootView {
-	return &RootView{
+func NewAppView(app *App) *AppView {
+	return &AppView{
 		Embed: view.NewEmbed(app),
 		app:   app,
 	}
 }
 
-func (v *RootView) Lifecycle(from, to view.Stage) {
+func (v *AppView) Lifecycle(from, to view.Stage) {
 	if view.EntersStage(from, to, view.StageMounted) {
 		v.Subscribe(v.app)
 		v.Subscribe(v.app.Wifi)
@@ -72,7 +76,7 @@ func (v *RootView) Lifecycle(from, to view.Stage) {
 	}
 }
 
-func (v *RootView) Build(ctx view.Context) view.Model {
+func (v *AppView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 	{
 		group := []view.View{}

@@ -13,8 +13,8 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/animate New", func() view.View {
-		return New()
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/animate NewView", func() view.View {
+		return NewView()
 	})
 }
 
@@ -22,7 +22,7 @@ type View struct {
 	view.Embed
 }
 
-func New() *View {
+func NewView() *View {
 	return &View{}
 }
 

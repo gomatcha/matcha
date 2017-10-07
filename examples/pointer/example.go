@@ -15,7 +15,7 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/touch NewTouchView", func() view.View {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/pointer NewTouchView", func() view.View {
 		return NewTouchView()
 	})
 }
