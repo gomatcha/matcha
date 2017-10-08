@@ -2,6 +2,7 @@ package view
 
 import (
 	"fmt"
+	"math"
 	"reflect"
 	"runtime"
 	"sort"
@@ -80,7 +81,7 @@ func (r *root) start() {
 		}
 
 		if r.printDebug {
-			fmt.Println(r.root.node.debugString())
+			fmt.Println(r.root.recursiveString())
 		}
 
 		success := false
@@ -138,7 +139,7 @@ func (r *root) PrintDebug() {
 	matcha.MainLocker.Lock()
 	defer matcha.MainLocker.Unlock()
 
-	fmt.Println(r.root.node.debugString())
+	fmt.Println(r.root.recursiveString())
 }
 
 func (r *root) SetPrintDebug(v bool) {
@@ -197,6 +198,7 @@ type nodeRoot struct {
 
 	flagMu      sync.Mutex
 	updateFlags map[Id]updateFlag
+	printDebug  bool
 }
 
 func newRoot(v View) *nodeRoot {
@@ -226,6 +228,8 @@ func (root *nodeRoot) update(size layout.Point) bool {
 	root.flagMu.Lock()
 	defer root.flagMu.Unlock()
 
+	root.printDebug = false
+
 	var flag updateFlag
 	for _, v := range root.updateFlags {
 		flag |= v
@@ -245,6 +249,11 @@ func (root *nodeRoot) update(size layout.Point) bool {
 		updated = true
 	}
 	root.updateFlags = map[Id]updateFlag{}
+
+	if root.printDebug {
+		fmt.Println(root.recursiveString())
+	}
+
 	return updated
 }
 
@@ -309,6 +318,15 @@ func (root *nodeRoot) call(funcId string, viewId int64, args []reflect.Value) []
 	v := reflect.ValueOf(f)
 
 	return v.Call(args)
+}
+
+func (root *nodeRoot) recursiveString() string {
+	lines := strings.Split(root.node.recursiveString(), "\n")
+	for idx, line := range lines {
+		lines[idx] = "    " + line
+	}
+	all := append([]string{"View hierarchy:"}, lines...)
+	return strings.Join(all, "\n")
 }
 
 type node struct {
@@ -594,6 +612,10 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 	//
 	for idx, i := range n.children {
 		g2 := gs[idx]
+		if !isRectValid(g2.Frame) {
+			fmt.Printf("Invalid rect for view. Rect:%v View:%v\n", g2.Frame, i)
+			n.root.printDebug = true
+		}
 		i.layoutGuide = &g2
 	}
 	return g
@@ -635,7 +657,18 @@ func (n *node) done() {
 	}
 }
 
-func (n *node) debugString() string {
+func (n *node) String() string {
+	viewLine := "{" + reflect.TypeOf(n.view).String() + " Id:" + strconv.Itoa(int(n.id)) + " "
+	split := strings.SplitN(fmt.Sprintf("%+v", n.view), "lastField:{}} ", 2)
+	if len(split) == 2 {
+		viewLine += split[1]
+	} else {
+		viewLine += strings.TrimPrefix("{", split[0])
+	}
+	return viewLine
+}
+
+func (n *node) recursiveString() string {
 	// View line
 	viewLine := reflect.TypeOf(n.view).String() + " - {Id:" + strconv.Itoa(int(n.id)) + " "
 	split := strings.SplitN(fmt.Sprintf("%+v", n.view), "lastField:{}} ", 2)
@@ -706,7 +739,7 @@ func (n *node) debugString() string {
 	// Build children
 	all := []string{}
 	for _, i := range n.children {
-		lines := strings.Split(i.debugString(), "\n")
+		lines := strings.Split(i.recursiveString(), "\n")
 		for idx, line := range lines {
 			lines[idx] = "|    " + line
 		}
@@ -761,4 +794,17 @@ func (l *layoutContext) fitGuide(g layout.Guide) layout.Guide {
 
 type layouterDebug interface {
 	DebugStrings() (string, []string)
+}
+
+func isRectValid(r layout.Rect) bool {
+	if math.IsInf(r.Min.X, 0) || math.IsNaN(r.Min.X) ||
+		math.IsInf(r.Min.Y, 0) || math.IsNaN(r.Min.Y) ||
+		math.IsInf(r.Max.X, 0) || math.IsNaN(r.Max.X) ||
+		math.IsInf(r.Max.Y, 0) || math.IsNaN(r.Max.Y) {
+		return false
+	}
+	if r.Min.X > r.Max.X || r.Min.Y > r.Max.Y {
+		return false
+	}
+	return true
 }
