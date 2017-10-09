@@ -69,17 +69,25 @@ func Orientation() layout.Edge {
 	return orientation(int(o))
 }
 
-var orientationNotifier comm.IntValue
-
 // In order to receive orientation notification on android you may need to set
 // `android:configChanges="orientation|keyboardHidden|screenSize"` in your
 // activity's manifest (https://stackoverflow.com/a/6005624).
-func OrientationNotifier() comm.IntNotifier {
-	return &orientationNotifier
-}
+var OrientationNotifier comm.IntNotifier
+var orientationNotifier comm.IntValue
 
 func init() {
+	OrientationNotifier = &orientationNotifier
 	bridge.RegisterFunc("gomatcha.io/matcha/application SetOrientation", func(v int) {
 		orientationNotifier.SetValue(int(orientation(v)))
+	})
+}
+
+var ShakeNotifier comm.Notifier
+var shakeNotifier comm.Relay
+
+func init() {
+	ShakeNotifier = &shakeNotifier
+	bridge.RegisterFunc("gomatcha.io/matcha/application OnShake", func() {
+		shakeNotifier.Signal()
 	})
 }

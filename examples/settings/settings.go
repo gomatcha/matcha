@@ -28,6 +28,7 @@ var (
 	subtitleColor        = color.Gray{142}
 	titleColor           = color.Gray{0}
 	spacerTitleColor     = color.Gray{102}
+	BackgroundColor      = backgroundColor
 )
 
 func init() {
@@ -158,7 +159,7 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 		}
 		group = append(group, cell6)
 
-		for _, i := range AddSeparators(group) {
+		for _, i := range AddSeparators(group, 60) {
 			l.Add(i, nil)
 		}
 	}
@@ -198,7 +199,7 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 		}
 		group = append(group, cell3)
 
-		for _, i := range AddSeparators(group) {
+		for _, i := range AddSeparators(group, 60) {
 			l.Add(i, nil)
 		}
 	}
@@ -217,7 +218,7 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 	}
 }
 
-func AddSeparators(vs []view.View) []view.View {
+func AddSeparators(vs []view.View, leftPadding float64) []view.View {
 	newViews := []view.View{}
 
 	top := NewSeparator()
@@ -228,7 +229,7 @@ func AddSeparators(vs []view.View) []view.View {
 
 		if idx != len(vs)-1 { // Don't add short separator after last view
 			sep := NewSeparator()
-			sep.LeftPadding = 60
+			sep.LeftPadding = leftPadding
 			newViews = append(newViews, sep)
 		}
 	}
@@ -316,13 +317,12 @@ func (v *SpacerHeader) Build(ctx view.Context) view.Model {
 	titleView.String = strings.ToTitle(v.Title)
 	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 13))
 	titleView.Style.SetTextColor(spacerTitleColor)
-	// titleView.Painter = &paint.Style{BackgroundColor: colornames.Red}
 
 	titleGuide := l.Add(titleView, func(s *constraint.Solver) {
 		s.LeftEqual(l.Left().Add(15))
 		s.RightEqual(l.Right().Add(-15))
 		s.BottomEqual(l.Bottom().Add(-10))
-		s.TopGreater(l.Top())
+		// s.TopGreater(l.Top()) // TODO(KD): Why does this affect the layout?
 	})
 	_ = titleGuide
 

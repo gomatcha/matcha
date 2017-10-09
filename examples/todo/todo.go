@@ -29,8 +29,8 @@ func init() {
 func NewRootView() view.View {
 	appview := NewAppView()
 	appview.Todos = []*Todo{
-		&Todo{Title: "Eat Chicken"},
-		&Todo{Title: "Kill Dog"},
+		&Todo{Title: "Milk Goats"},
+		&Todo{Title: "Call Mother"},
 	}
 
 	if runtime.GOOS == "android" {

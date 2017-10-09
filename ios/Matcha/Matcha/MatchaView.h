@@ -17,5 +17,6 @@
 @end
 
 @interface MatchaViewNode : NSObject
-- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId, ... NS_REQUIRES_NIL_TERMINATION; // varargs should be of MatchaGoValue *
+//- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId, ... NS_REQUIRES_NIL_TERMINATION; // varargs should be of MatchaGoValue *
+- (void)call:(NSString *)funcId, ... NS_REQUIRES_NIL_TERMINATION; // varargs should be of MatchaGoValue *
 @end

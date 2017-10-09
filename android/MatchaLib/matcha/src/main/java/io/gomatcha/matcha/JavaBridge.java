@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
@@ -35,12 +37,16 @@ import io.gomatcha.matcha.proto.text.PbText;
 import io.gomatcha.matcha.proto.view.PbAlert;
 import io.gomatcha.matcha.proto.view.PbView;
 
-public class JavaBridge {
+class JavaBridge {
     static JavaBridge javaBridge;
     static Choreographer.FrameCallback callback;
     static Context context;
     static TextView textView;
     static HashMap<Long, WeakReference<MatchaView>> viewMap = new HashMap<Long, WeakReference<MatchaView>>();
+    // The following are used for the shake detection
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
 
     static synchronized void init(Context ctx) {
         if (context != null) {
@@ -60,6 +66,18 @@ public class JavaBridge {
         javaBridge = new JavaBridge();
         javaBridge.didChangeOrientation();
         Bridge.singleton().put("", javaBridge);
+
+        // ShakeDetector initialization
+        javaBridge.mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        javaBridge.mAccelerometer = javaBridge.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        javaBridge.mShakeDetector = new ShakeDetector();
+        javaBridge.mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+            @Override
+            public void onShake(int count) {
+                javaBridge.onShakeEvent();
+            }
+        });
+        javaBridge.mSensorManager.registerListener(javaBridge.mShakeDetector, javaBridge.mAccelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     public boolean updateViewWithProtobuf(Long id, byte[] protobuf) {
@@ -156,6 +174,10 @@ public class JavaBridge {
 
     void didChangeOrientation() {
         GoValue.withFunc("gomatcha.io/matcha/application SetOrientation").call("", new GoValue(orientation()));
+    }
+
+    void onShakeEvent() {
+        GoValue.withFunc("gomatcha.io/matcha/application OnShake").call("");
     }
 
     public void displayAlert(byte[] protobuf) {

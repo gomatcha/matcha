@@ -25,7 +25,7 @@ type OrientationView struct {
 
 func NewOrientationView() *OrientationView {
 	return &OrientationView{
-		notifier: application.OrientationNotifier(),
+		notifier: application.OrientationNotifier,
 	}
 }
 

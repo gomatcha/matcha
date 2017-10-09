@@ -1,9 +1,10 @@
 package examples
 
 import (
-	"golang.org/x/image/colornames"
+	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/examples/application"
+	"gomatcha.io/matcha/comm"
+	applicationex "gomatcha.io/matcha/examples/application"
 	bridgeex "gomatcha.io/matcha/examples/bridge"
 	"gomatcha.io/matcha/examples/customview"
 	"gomatcha.io/matcha/examples/insta"
@@ -15,136 +16,153 @@ import (
 	"gomatcha.io/matcha/examples/view/android"
 	"gomatcha.io/matcha/examples/view/ios"
 	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pointer"
-	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewExamplesView", func() view.View {
+	bridge.RegisterFunc("gomatcha.io/matcha/examples NewExamplesView", func() view.View {
 		return NewExamplesView()
 	})
 }
 
+type Section struct {
+	Title    string
+	Examples []Example
+}
+
+type Example struct {
+	Title       string
+	Description string
+	View        view.View
+}
+
 type ExamplesView struct {
 	view.Embed
-	child view.View
+	Sections []Section
+	child    view.View
+	shakeKey comm.Id
 }
 
 func NewExamplesView() *ExamplesView {
-	return &ExamplesView{}
+	sections := []Section{
+		{
+			Title: "Examples",
+			Examples: []Example{
+				{"Settings", "", settings.NewRootView()},
+				{"Instagram", "", insta.NewRootView()},
+				{"Todo App", "", todo.NewRootView()},
+			},
+		},
+		{
+			Title: "General",
+			Examples: []Example{
+				// {"animate.NewView", "", animate.NewView()},
+				{"Device Orientation", "", applicationex.NewOrientationView()},
+				{"Native Bridge", "", bridgeex.NewBridgeView()},
+				// {"complex.NewNestedView", "", complex.NewNestedView()},
+				{"Custom Views", "", customview.NewView()},
+				{"Constraints Layout", "", layoutex.NewConstraintsView()},
+				{"Table Layout", "", layoutex.NewTableView()},
+				{"Painters", "", paintex.NewPaintView()},
+				{"Adding/Removing Views", "", viewex.NewAddRemoveView()},
+			},
+		},
+		{
+			Title: "Views",
+			Examples: []Example{
+				{"Alerts", "", viewex.NewAlertView()},
+				{"Button", "", viewex.NewButtonView()},
+				{"Image View", "", viewex.NewImageView()},
+				{"Scroll View", "", viewex.NewScrollView()},
+				{"Slider", "", viewex.NewSliderView()},
+				{"Switch View", "", viewex.NewSwitchView()},
+				{"Text View", "", viewex.NewTextView()},
+			},
+		},
+		{
+			Title: "iOS",
+			Examples: []Example{
+				{"Activity Indicator", "", ios.NewActivityIndicatorView()},
+				{"Navigation", "", ios.NewNavigationView()},
+				{"Segment View", "", ios.NewSegmentView()},
+				{"Stack View", "", ios.NewStackView()},
+				{"Status Bar", "", ios.NewStatusBarView()},
+				{"Tab View", "", ios.NewTabView()},
+				{"Progress View", "", viewex.NewProgressView()},
+			},
+		},
+		{
+			Title: "Android",
+			Examples: []Example{
+				{"Pager View", "", android.NewPagerView()},
+				{"Stack View", "", android.NewStackView()},
+				{"Status Bar", "", android.NewStatusBarView()},
+			},
+		},
+	}
+
+	return &ExamplesView{
+		Sections: sections,
+	}
+}
+
+func (v *ExamplesView) Lifecycle(from, to view.Stage) {
+	if view.EntersStage(from, to, view.StageMounted) {
+		v.shakeKey = application.ShakeNotifier.Notify(func() {
+			v.child = nil
+			v.Signal()
+		})
+	} else if view.ExitsStage(from, to, view.StageMounted) {
+		application.ShakeNotifier.Unnotify(v.shakeKey)
+	}
 }
 
 func (v *ExamplesView) Build(ctx view.Context) view.Model {
+	// If user has selected an example, display it.
 	if v.child != nil {
 		return view.Model{Children: []view.View{v.child}}
 	}
 
-	childLayouter := &table.Layouter{
-		StartEdge: layout.EdgeTop,
-	}
+	childLayouter := &table.Layouter{StartEdge: layout.EdgeTop}
+	for _, i := range v.Sections {
+		// Create header for section.
+		header := settings.NewSpacerHeader()
+		header.Title = i.Title
+		childLayouter.Add(header, nil)
 
-	items := []struct {
-		title string
-		view  view.View
-	}{
-		// {"animate.NewView", animate.NewView()},
-		{"application.NewOrientationView", application.NewOrientationView()},
-		{"bridge.NewBridgeView", bridgeex.NewBridgeView()},
-		// {"complex.NewNestedView", complex.NewNestedView()},
-		{"customview.NewView", customview.NewView()},
-		{"insta.NewRootView", insta.NewRootView()},
-		{"layout.NewConstraintsView", layoutex.NewConstraintsView()},
-		{"layout.NewTableView", layoutex.NewTableView()},
-		{"paint.NewPaintView", paintex.NewPaintView()},
-		{"settings.NewRootView", settings.NewRootView()},
-		{"todo.NewRootView", todo.NewRootView()},
-		{"view/android.NewPagerView", android.NewPagerView()},
-		{"view/android.NewStackView", android.NewStackView()},
-		{"view/android.NewStatusBarView", android.NewStatusBarView()},
-		{"view/ios.NewActivityIndicatorView", ios.NewActivityIndicatorView()},
-		{"view/ios.NewNavigationView", ios.NewNavigationView()},
-		{"view/ios.NewSegmentView", ios.NewSegmentView()},
-		{"view/ios.NewStackView", ios.NewStackView()},
-		{"view/ios.NewStatusBarView", ios.NewStatusBarView()},
-		{"view/ios.NewTabView", ios.NewTabView()},
-		{"view.NewAddRemoveView", viewex.NewAddRemoveView()},
-		{"view.NewAlertView", viewex.NewAlertView()},
-		{"view.NewButtonView", viewex.NewButtonView()},
-		{"view.NewImageView", viewex.NewImageView()},
-		{"view.NewProgressView", viewex.NewProgressView()},
-		{"view.NewScrollView", viewex.NewScrollView()},
-		{"view.NewSliderView", viewex.NewSliderView()},
-		{"view.NewSwitchView", viewex.NewSwitchView()},
-		{"view.NewTextView", viewex.NewTextView()},
-		{"view.NewUnknownView", viewex.NewUnknownView()},
-	}
-
-	for _, i := range items {
-		item := i
-		childView := NewExampleCell()
-		childView.String = i.title
-		childView.OnPress = func() {
-			v.child = item.view
-			v.Signal()
+		// Create example items for section.
+		items := []view.View{}
+		for _, j := range i.Examples {
+			example := j
+			item := settings.NewBasicCell()
+			item.Title = j.Title
+			item.OnTap = func() {
+				v.child = example.View
+				v.Signal()
+			}
+			items = append(items, item)
 		}
-		childLayouter.Add(childView, nil)
+
+		// Add separators around items.
+		for _, j := range settings.AddSeparators(items, 30) {
+			childLayouter.Add(j, nil)
+		}
 	}
+
+	// Add footer.
+	footer := settings.NewSpacerDescription()
+	footer.Description = "Shake the device to return back to this example list."
+	childLayouter.Add(footer, nil)
 
 	sv := view.NewScrollView()
-	sv.ContentPainter = &paint.Style{BackgroundColor: colornames.White}
+	sv.ContentPainter = &paint.Style{BackgroundColor: settings.BackgroundColor}
 	sv.ContentLayouter = childLayouter
 	sv.ContentChildren = childLayouter.Views()
-	sv.PaintStyle = &paint.Style{BackgroundColor: colornames.Cyan}
 
 	return view.Model{
 		Children: []view.View{sv},
-		Painter:  &paint.Style{BackgroundColor: colornames.White},
-	}
-}
-
-type ExampleCell struct {
-	view.Embed
-	String  string
-	OnPress func()
-}
-
-func NewExampleCell() *ExampleCell {
-	return &ExampleCell{}
-}
-
-func (v *ExampleCell) Build(ctx view.Context) view.Model {
-	l := &constraint.Layouter{}
-	l.Solve(func(s *constraint.Solver) {
-		s.Height(50)
-	})
-
-	textView := view.NewTextView()
-	textView.String = v.String
-	textView.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
-	l.Add(textView, func(s *constraint.Solver) {
-		s.LeftEqual(l.Left().Add(10))
-		s.RightEqual(l.Right().Add(-10))
-		s.CenterYEqual(l.CenterY())
-	})
-
-	button := &pointer.ButtonGesture{
-		OnEvent: func(e *pointer.ButtonEvent) {
-			if e.Kind == pointer.EventKindRecognized {
-				v.OnPress()
-			}
-		},
-	}
-
-	return view.Model{
-		Children: l.Views(),
-		Layouter: l,
-		Painter:  &paint.Style{BackgroundColor: colornames.White},
-		Options: []view.Option{
-			pointer.GestureList{button},
-		},
+		Painter:  &paint.Style{BackgroundColor: settings.BackgroundColor},
 	}
 }

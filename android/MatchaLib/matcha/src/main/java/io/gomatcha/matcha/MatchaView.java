@@ -3,6 +3,8 @@ package io.gomatcha.matcha;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
