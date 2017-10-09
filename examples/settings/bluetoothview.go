@@ -47,7 +47,7 @@ func (v *BluetoothView) Build(ctx view.Context) view.Model {
 		cell1.AccessoryView = switchView
 		group = append(group, cell1)
 
-		for _, i := range AddSeparators(group) {
+		for _, i := range AddSeparators(group, 60) {
 			l.Add(i, nil)
 		}
 	}
@@ -74,7 +74,7 @@ func (v *BluetoothView) Build(ctx view.Context) view.Model {
 			group = append(group, cell)
 		}
 
-		for _, i := range AddSeparators(group) {
+		for _, i := range AddSeparators(group, 60) {
 			l.Add(i, nil)
 		}
 	}

@@ -14,28 +14,32 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/ios NewStackView", func() view.View {
-		stackview := ios.NewStackView()
-		app := &StackApp{
-			stack: stackview.Stack,
-		}
-
-		view1 := NewStackChild(app)
-		view1.Color = colornames.Blue
-		v1 := view.WithOptions(view1, &ios.StackBar{Title: "Title 1"})
-
-		view2 := NewStackChild(app)
-		view2.Color = colornames.Red
-		v2 := view.WithOptions(view2, &ios.StackBar{Title: "Title 2"})
-
-		view3 := NewStackChild(app)
-		view3.Color = colornames.Yellow
-
-		view4 := NewStackChild(app)
-		view4.Color = colornames.Green
-
-		app.stack.SetViews(v1, v2, view3, view4)
-		return stackview
+		return NewStackView()
 	})
+}
+
+func NewStackView() view.View {
+	stackview := ios.NewStackView()
+	app := &StackApp{
+		stack: stackview.Stack,
+	}
+
+	view1 := NewStackChild(app)
+	view1.Color = colornames.Blue
+	v1 := view.WithOptions(view1, &ios.StackBar{Title: "Title 1"})
+
+	view2 := NewStackChild(app)
+	view2.Color = colornames.Red
+	v2 := view.WithOptions(view2, &ios.StackBar{Title: "Title 2"})
+
+	view3 := NewStackChild(app)
+	view3.Color = colornames.Yellow
+
+	view4 := NewStackChild(app)
+	view4.Color = colornames.Green
+
+	app.stack.SetViews(v1, v2, view3, view4)
+	return stackview
 }
 
 type StackApp struct {

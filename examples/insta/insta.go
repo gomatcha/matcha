@@ -22,35 +22,39 @@ import (
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/insta New", func() view.View {
-		app := NewApp()
-
-		if runtime.GOOS == "android" {
-			v := android.NewStackView()
-			app.Stack = v.Stack
-			app.Stack.SetViews(NewRootView(app))
-			return v
-		} else {
-			v := ios.NewStackView()
-			app.Stack = v.Stack
-			app.Stack.SetViews(NewRootView(app))
-			return v
-		}
+		return NewRootView()
 	})
 }
 
-type RootView struct {
+func NewRootView() view.View {
+	app := NewApp()
+
+	if runtime.GOOS == "android" {
+		v := android.NewStackView()
+		app.Stack = v.Stack
+		app.Stack.SetViews(NewAppView(app))
+		return v
+	} else {
+		v := ios.NewStackView()
+		app.Stack = v.Stack
+		app.Stack.SetViews(NewAppView(app))
+		return v
+	}
+}
+
+type AppView struct {
 	view.Embed
 	app *App
 }
 
-func NewRootView(app *App) *RootView {
-	return &RootView{
+func NewAppView(app *App) *AppView {
+	return &AppView{
 		Embed: view.NewEmbed(app),
 		app:   app,
 	}
 }
 
-func (v *RootView) Build(ctx view.Context) view.Model {
+func (v *AppView) Build(ctx view.Context) view.Model {
 	l := &table.Layouter{}
 
 	for _, i := range v.app.Posts {

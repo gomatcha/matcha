@@ -41,7 +41,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     // MatchaViewNode changes the scrollOffset. Don't trigger an event back to Go.
     // contentOffset rounds to the nearest 1/screenscale
-    if (fabs(self.contentOffset.x - self.matchaContentOffset.x) < 0.5 && fabs(self.contentOffset.y - self.matchaContentOffset.y) < 0.5) {
+    if ((fabs(self.contentOffset.x - self.matchaContentOffset.x) < 0.5 && fabs(self.contentOffset.y - self.matchaContentOffset.y) < 0.5)) {
         return;
     }
     self.matchaContentOffset = self.contentOffset;

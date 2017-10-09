@@ -121,6 +121,16 @@
     [self.goValue call:@"SetPrintDebug", [[MatchaGoValue alloc] initWithBool:val], nil];
 }
 
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (motion == UIEventSubtypeMotionShake) {
+        [[[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/application OnShake"] call:nil, nil];
+    }
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
 + (void)registerView:(NSString *)viewName block:(MatchaViewRegistrationBlock)block {
     MatchaRegisterView(viewName, block);
 }

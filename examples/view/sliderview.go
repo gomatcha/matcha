@@ -11,23 +11,23 @@ import (
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewSlider", func() view.View {
-		return NewSlider()
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewSliderView", func() view.View {
+		return NewSliderView()
 	})
 }
 
-type Slider struct {
+type SliderView struct {
 	view.Embed
 	value float64
 }
 
-func NewSlider() *Slider {
-	return &Slider{
+func NewSliderView() *SliderView {
+	return &SliderView{
 		value: 0.5,
 	}
 }
 
-func (v *Slider) Build(ctx view.Context) view.Model {
+func (v *SliderView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	chl1 := view.NewSlider()

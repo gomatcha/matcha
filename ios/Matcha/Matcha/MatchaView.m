@@ -101,12 +101,17 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
 
 @implementation MatchaViewNode
 
-- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId, ... NS_REQUIRES_NIL_TERMINATION {
+//- (NSArray<MatchaGoValue *> *)call:(NSString *)funcId, ... NS_REQUIRES_NIL_TERMINATION {
+- (void)call:(NSString *)funcId, ... NS_REQUIRES_NIL_TERMINATION {
+    if (self.rootVC.updating) {
+        return;
+    }
     va_list args;
     va_start(args, funcId);
     NSArray *rlt = [self.rootVC call:funcId viewId:self.identifier.longLongValue args:args];
     va_end(args);
-    return rlt;
+    //return rlt;
+    rlt = nil;
 }
 
 - (id)initWithParent:(MatchaViewNode *)node rootVC:(MatchaViewController *)rootVC identifier:(NSNumber *)identifier {
@@ -211,7 +216,7 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
             } else if (child.view) {
                 [child.view removeFromSuperview];
             } else if (child.viewController) {
-                [child.view removeFromSuperview];
+                [child.materializedView removeFromSuperview];
                 [child.viewController removeFromParentViewController];
             }
         }

@@ -57,7 +57,7 @@ func (v *WifiView) Build(ctx view.Context) view.Model {
 			group = append(group, cell2)
 		}
 
-		for _, i := range AddSeparators(group) {
+		for _, i := range AddSeparators(group, 60) {
 			l.Add(i, nil)
 		}
 	}
@@ -97,7 +97,7 @@ func (v *WifiView) Build(ctx view.Context) view.Model {
 			cell1.Title = "Other..."
 			group = append(group, cell1)
 
-			for _, i := range AddSeparators(group) {
+			for _, i := range AddSeparators(group, 60) {
 				l.Add(i, nil)
 			}
 		}
@@ -115,7 +115,7 @@ func (v *WifiView) Build(ctx view.Context) view.Model {
 			cell1.Title = "Ask to Join Networks"
 			cell1.AccessoryView = switchView
 
-			for _, i := range AddSeparators([]view.View{cell1}) {
+			for _, i := range AddSeparators([]view.View{cell1}, 60) {
 				l.Add(i, nil)
 			}
 		}
@@ -192,7 +192,7 @@ func (v *WifiNetworkView) Build(ctx view.Context) view.Model {
 			)
 		}
 
-		for _, i := range AddSeparators([]view.View{cell1}) {
+		for _, i := range AddSeparators([]view.View{cell1}, 60) {
 			l.Add(i, nil)
 		}
 	}
@@ -231,7 +231,7 @@ func (v *WifiNetworkView) Build(ctx view.Context) view.Model {
 		cell5.Title = "Client ID"
 		cell5.Subtitle = props.ClientID
 
-		for _, i := range AddSeparators([]view.View{cell0, cell1, cell2, cell3, cell4, cell5}) {
+		for _, i := range AddSeparators([]view.View{cell0, cell1, cell2, cell3, cell4, cell5}, 60) {
 			l.Add(i, nil)
 		}
 	}
@@ -246,7 +246,7 @@ func (v *WifiNetworkView) Build(ctx view.Context) view.Model {
 			view.Alert("Renewing Lease...", "")
 		}
 
-		for _, i := range AddSeparators([]view.View{cell1}) {
+		for _, i := range AddSeparators([]view.View{cell1}, 60) {
 			l.Add(i, nil)
 		}
 	}
@@ -265,7 +265,7 @@ func (v *WifiNetworkView) Build(ctx view.Context) view.Model {
 			v.network.SetProperties(props)
 		}
 
-		for _, i := range AddSeparators([]view.View{cell1}) {
+		for _, i := range AddSeparators([]view.View{cell1}, 60) {
 			l.Add(i, nil)
 		}
 	}
@@ -277,7 +277,7 @@ func (v *WifiNetworkView) Build(ctx view.Context) view.Model {
 		cell1 := NewBasicCell()
 		cell1.Title = "Manage This Network"
 
-		for _, i := range AddSeparators([]view.View{cell1}) {
+		for _, i := range AddSeparators([]view.View{cell1}, 60) {
 			l.Add(i, nil)
 		}
 	}
