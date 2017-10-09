@@ -1,6 +1,7 @@
 package android
 
 import (
+	"fmt"
 	"image/color"
 
 	"github.com/gogo/protobuf/proto"
@@ -52,9 +53,11 @@ func (m *statusBarMiddleware) Build(ctx view.Context, model *view.Model) {
 	path := idSliceToIntSlice(ctx.Path())
 
 	var statusBar *StatusBar
-	for _, i := range model.Options {
-		if bar, ok := i.(*StatusBar); ok {
-			statusBar = bar
+	if model != nil {
+		for _, i := range model.Options {
+			if bar, ok := i.(*StatusBar); ok {
+				statusBar = bar
+			}
 		}
 	}
 	if statusBar != nil {
@@ -66,7 +69,7 @@ func (m *statusBarMiddleware) Build(ctx view.Context, model *view.Model) {
 }
 
 func (m *statusBarMiddleware) MarshalProtobuf() proto.Message {
-	statusBar := &StatusBar{Color: colornames.Black}
+	statusBar := &StatusBar{Color: colornames.Black, Style: StatusBarStyleLight}
 	maxId := int64(-1)
 	m.radix.Range(func(path []int64, node *radix.Node) {
 		if len(path) > 0 && path[len(path)-1] > maxId {
