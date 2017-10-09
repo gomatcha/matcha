@@ -36,9 +36,11 @@ func (m *activityIndicatorMiddleware) Build(ctx view.Context, model *view.Model)
 	path := idSliceToIntSlice(ctx.Path())
 
 	add := false
-	for _, i := range model.Options {
-		if _, ok := i.(*ActivityIndicator); ok {
-			add = true
+	if model != nil {
+		for _, i := range model.Options {
+			if _, ok := i.(*ActivityIndicator); ok {
+				add = true
+			}
 		}
 	}
 	if add {

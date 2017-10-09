@@ -50,9 +50,11 @@ func (m *statusBarMiddleware) Build(ctx view.Context, model *view.Model) {
 	path := idSliceToIntSlice(ctx.Path())
 
 	var statusBar *StatusBar
-	for _, i := range model.Options {
-		if bar, ok := i.(*StatusBar); ok {
-			statusBar = bar
+	if model != nil {
+		for _, i := range model.Options {
+			if bar, ok := i.(*StatusBar); ok {
+				statusBar = bar
+			}
 		}
 	}
 	if statusBar != nil {

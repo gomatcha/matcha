@@ -35,10 +35,12 @@ func (r *touchMiddleware) Build(ctx Context, next *Model) {
 	ids := map[int64]pointer.Gesture{}
 
 	var rs pointer.GestureList
-	for _, i := range next.Options {
-		rs, _ = i.(pointer.GestureList)
-		if rs != nil {
-			break
+	if next != nil {
+		for _, i := range next.Options {
+			rs, _ = i.(pointer.GestureList)
+			if rs != nil {
+				break
+			}
 		}
 	}
 

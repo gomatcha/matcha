@@ -60,7 +60,7 @@ func (v *AddRemoveView) Build(ctx view.Context) view.Model {
 
 		var chl3 view.View
 		if runtime.GOOS == "android" {
-			chl3 = android.NewStackView()
+			chl3 = android.NewPagerView()
 		} else {
 			chl3 = ios.NewStackView()
 		}

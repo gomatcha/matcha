@@ -126,6 +126,12 @@ func (v *ExamplesView) Build(ctx view.Context) view.Model {
 	}
 
 	childLayouter := &table.Layouter{StartEdge: layout.EdgeTop}
+
+	// Add header.
+	header := settings.NewSpacerDescription()
+	header.Description = "Shake the device to return back to this list."
+	childLayouter.Add(header, nil)
+
 	for _, i := range v.Sections {
 		// Create header for section.
 		header := settings.NewSpacerHeader()
@@ -152,8 +158,8 @@ func (v *ExamplesView) Build(ctx view.Context) view.Model {
 	}
 
 	// Add footer.
-	footer := settings.NewSpacerDescription()
-	footer.Description = "Shake the device to return back to this example list."
+	footer := settings.NewSpacer()
+	footer.Height = 50
 	childLayouter.Add(footer, nil)
 
 	sv := view.NewScrollView()

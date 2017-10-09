@@ -313,8 +313,10 @@ func (m *stackMiddleware) Build(ctx view.Context, model *view.Model) {
 	path := idSliceToIntSlice(ctx.Path())
 
 	var nativeFuncs map[string]interface{}
-	if model.NativeViewName == "gomatcha.io/matcha/view/android StackView" {
-		nativeFuncs = model.NativeFuncs
+	if model != nil {
+		if model.NativeViewName == "gomatcha.io/matcha/view/android StackView" {
+			nativeFuncs = model.NativeFuncs
+		}
 	}
 
 	if nativeFuncs != nil {

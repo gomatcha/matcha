@@ -36,8 +36,11 @@ public class MatchaViewNode extends Object {
         this.id = id;
     }
 
-    public GoValue[] call(String func, GoValue... args) {
-        return this.rootView.call(func, this.id, args);
+    public void call(String func, GoValue... args) {
+        if (this.rootView.updating) {
+            return;
+        }
+        this.rootView.call(func, this.id, args);
     }
 
     void setRoot(PbView.Root root) {
