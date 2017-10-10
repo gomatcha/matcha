@@ -18,8 +18,8 @@ func main() {
 
 var RootCmd = &cobra.Command{
 	Use:   "matcha",
-	Short: "Matcha is a tool for building iOS apps in Go",
-	Long: `Matcha is a tool for building iOS apps in Go. 
+	Short: "Matcha is a tool for building Android & iOS apps in Go",
+	Long: `Matcha is a tool for building Android & iOS apps in Go. 
 Complete documentation is available at https://gomatcha.io`,
 }
 
