@@ -93,7 +93,7 @@ Building a simple StackView:
 		return appview
 	}
 	func (v *AppView) Build(ctx view.Context) view.Model {
-		child := ios.New()
+		child := ios.NewStackView()
 		child.Stack = v.stack
 		return view.Model{
 			Children: []view.View{child},
@@ -109,8 +109,7 @@ Modifying the stack:
 */
 type StackView struct {
 	view.Embed
-	Stack *Stack
-
+	Stack          *Stack
 	TitleStyle     *text.Style
 	BarColor       color.Color
 	ItemTitleStyle *text.Style
@@ -346,12 +345,11 @@ type StackBar struct {
 	Title            string
 	BackButtonTitle  string
 	BackButtonHidden bool
+	LeftItems        []*StackBarItem
+	RightItems       []*StackBarItem
 	// BarColor   color.Color
-	// BarStyle
+	// Transparent
 	// Search Controller
-
-	LeftItems  []*StackBarItem
-	RightItems []*StackBarItem
 	// TitleView  view.View
 }
 
@@ -382,7 +380,6 @@ type StackBarItem struct {
 	Image      image.Image
 	TintsImage bool
 	OnPress    func()
-	// Image Insets?
 	// CustomView view.View
 }
 
