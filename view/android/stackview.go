@@ -82,7 +82,8 @@ func (s *Stack) Unnotify(id comm.Id) {
 
 type StackView struct {
 	view.Embed
-	Stack         *Stack
+	Stack *Stack
+
 	BarColor      color.Color
 	TitleStyle    *text.Style
 	SubtitleStyle *text.Style

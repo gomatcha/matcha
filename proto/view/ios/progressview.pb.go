@@ -18,6 +18,7 @@ It has these top-level messages:
 	StackView
 	StackBar
 	StackEvent
+	StackBarItem
 	TabChildView
 	TabView
 	TabEvent

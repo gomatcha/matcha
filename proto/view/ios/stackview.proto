@@ -17,6 +17,7 @@ message StackView {
     matcha.text.TextStyle titleTextStyle = 2;
     matcha.text.TextStyle backTextStyle = 3;
     matcha.Color barColor = 4;
+    matcha.Color itemColor = 5;
 }
 
 message StackBar {
@@ -27,8 +28,20 @@ message StackBar {
     bool hasTitleView = 4;
     int64 rightViewCount = 5;
     int64 leftViewCount = 6;
+    repeated StackBarItem rightItems = 8;
+    repeated StackBarItem leftItems = 9;
 }
 
 message StackEvent {
     repeated int64 id = 1;
+}
+
+message StackBarItem {
+    bool enabled = 3;
+    matcha.Color  tintColor = 4;
+    string title = 1;
+    matcha.text.TextStyle titleStyle = 5;
+    matcha.ImageOrResource image = 2;
+    bool tintsImage = 6;
+    string onPress = 7;
 }

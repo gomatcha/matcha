@@ -101,6 +101,7 @@ typedef struct MatchaiOSPBStackChildView__storage_ {
 @dynamic hasTitleTextStyle, titleTextStyle;
 @dynamic hasBackTextStyle, backTextStyle;
 @dynamic hasBarColor, barColor;
+@dynamic hasItemColor, itemColor;
 
 typedef struct MatchaiOSPBStackView__storage_ {
   uint32_t _has_storage_[1];
@@ -108,6 +109,7 @@ typedef struct MatchaiOSPBStackView__storage_ {
   MatchaPBTextStyle *titleTextStyle;
   MatchaPBTextStyle *backTextStyle;
   MatchaPBColor *barColor;
+  MatchaPBColor *itemColor;
 } MatchaiOSPBStackView__storage_;
 
 // This method is threadsafe because it is initially called
@@ -152,6 +154,15 @@ typedef struct MatchaiOSPBStackView__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "itemColor",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
+        .number = MatchaiOSPBStackView_FieldNumber_ItemColor,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(MatchaiOSPBStackView__storage_, itemColor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[MatchaiOSPBStackView class]
@@ -163,7 +174,7 @@ typedef struct MatchaiOSPBStackView__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\003\002\016\000\003\r\000\004\010\000";
+        "\004\002\016\000\003\r\000\004\010\000\005\t\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
@@ -185,11 +196,15 @@ typedef struct MatchaiOSPBStackView__storage_ {
 @dynamic hasTitleView;
 @dynamic rightViewCount;
 @dynamic leftViewCount;
+@dynamic rightItemsArray, rightItemsArray_Count;
+@dynamic leftItemsArray, leftItemsArray_Count;
 
 typedef struct MatchaiOSPBStackBar__storage_ {
   uint32_t _has_storage_[1];
   NSString *title;
   NSString *backButtonTitle;
+  NSMutableArray *rightItemsArray;
+  NSMutableArray *leftItemsArray;
   int64_t rightViewCount;
   int64_t leftViewCount;
 } MatchaiOSPBStackBar__storage_;
@@ -263,6 +278,24 @@ typedef struct MatchaiOSPBStackBar__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeBool,
       },
+      {
+        .name = "rightItemsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaiOSPBStackBarItem),
+        .number = MatchaiOSPBStackBar_FieldNumber_RightItemsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MatchaiOSPBStackBar__storage_, rightItemsArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "leftItemsArray",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaiOSPBStackBarItem),
+        .number = MatchaiOSPBStackBar_FieldNumber_LeftItemsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MatchaiOSPBStackBar__storage_, leftItemsArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[MatchaiOSPBStackBar class]
@@ -274,7 +307,8 @@ typedef struct MatchaiOSPBStackBar__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\006\002\025\000\003\017\000\004\014\000\005\016\000\006\r\000\007\020\000";
+        "\010\002\025\000\003\017\000\004\014\000\005\016\000\006\r\000\007\020\000\010\000rightItems\000\t\000leftIt"
+        "ems\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
@@ -320,6 +354,118 @@ typedef struct MatchaiOSPBStackEvent__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MatchaiOSPBStackEvent__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - MatchaiOSPBStackBarItem
+
+@implementation MatchaiOSPBStackBarItem
+
+@dynamic enabled;
+@dynamic hasTintColor, tintColor;
+@dynamic title;
+@dynamic hasTitleStyle, titleStyle;
+@dynamic hasImage, image;
+@dynamic tintsImage;
+@dynamic onPress;
+
+typedef struct MatchaiOSPBStackBarItem__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *title;
+  MatchaPBImageOrResource *image;
+  MatchaPBColor *tintColor;
+  MatchaPBTextStyle *titleStyle;
+  NSString *onPress;
+} MatchaiOSPBStackBarItem__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "title",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaiOSPBStackBarItem_FieldNumber_Title,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(MatchaiOSPBStackBarItem__storage_, title),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "image",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBImageOrResource),
+        .number = MatchaiOSPBStackBarItem_FieldNumber_Image,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(MatchaiOSPBStackBarItem__storage_, image),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "enabled",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaiOSPBStackBarItem_FieldNumber_Enabled,
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "tintColor",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
+        .number = MatchaiOSPBStackBarItem_FieldNumber_TintColor,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(MatchaiOSPBStackBarItem__storage_, tintColor),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "titleStyle",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBTextStyle),
+        .number = MatchaiOSPBStackBarItem_FieldNumber_TitleStyle,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(MatchaiOSPBStackBarItem__storage_, titleStyle),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "tintsImage",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaiOSPBStackBarItem_FieldNumber_TintsImage,
+        .hasIndex = 6,
+        .offset = 7,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "onPress",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaiOSPBStackBarItem_FieldNumber_OnPress,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(MatchaiOSPBStackBarItem__storage_, onPress),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MatchaiOSPBStackBarItem class]
+                                     rootClass:[MatchaiOSPBStackviewRoot class]
+                                          file:MatchaiOSPBStackviewRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MatchaiOSPBStackBarItem__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\004\004\t\000\005\n\000\006\n\000\007\007\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
