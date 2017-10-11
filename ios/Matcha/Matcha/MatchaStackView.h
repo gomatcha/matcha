@@ -18,15 +18,7 @@
 - (id)initWithViewNode:(MatchaViewNode *)viewNode;
 @property (nonatomic, weak) MatchaViewNode *viewNode;
 @property (nonatomic, strong) NSData *nativeState;
-
-//Internal
-@property (nonatomic, strong) NSString *titleString;
-@property (nonatomic, assign) BOOL backButtonHidden;
-@property (nonatomic, assign) BOOL customBackButtonTitle;
-@property (nonatomic, assign) NSString *backButtonTitle;
-@property (nonatomic, strong) UIView *titleView;
-@property (nonatomic, strong) NSArray<UIBarButtonItem *> *rightViews;
-@property (nonatomic, strong) NSArray<UIBarButtonItem *> *leftViews;
+@property (nonatomic, weak) UIViewController *contentViewController;
 @end
 
 @interface UIBarButtonItem (Protobuf)

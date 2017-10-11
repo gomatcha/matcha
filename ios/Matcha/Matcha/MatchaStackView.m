@@ -61,29 +61,21 @@
         [[UIBarButtonItem appearance] setTitleTextAttributes:nil forState:UIControlStateNormal];
     }
     
-//    NSMutableArray *prevIds = [NSMutableArray array];
-//    for (MatchaiOSPBStackChildView *i in view.childrenArray) {
-//        [prevIds addObject:@(i.screenId)];
-//    }
-//    if ([self.prevIds isEqual:prevIds]) {
-//        return;
-//    }
-//    self.prevIds = prevIds;
+    NSMutableArray *prevIds = [NSMutableArray array];
+    for (MatchaiOSPBStackChildView *i in view.childrenArray) {
+        [prevIds addObject:@(i.screenId)];
+    }
+    if ([self.prevIds isEqual:prevIds]) {
+        return;
+    }
+    self.prevIds = prevIds;
 
     NSMutableArray *viewControllers = [NSMutableArray array];
     for (NSInteger i = 0; i < view.childrenArray.count; i++) {
         MatchaiOSPBStackChildView *childView = view.childrenArray[i];
         MatchaStackBar *bar = (id)childVCs[i * 2];
         UIViewController *vc = childVCs[i * 2 + 1];
-        vc.navigationItem.title = bar.titleString;
-        vc.navigationItem.hidesBackButton = bar.backButtonHidden;
-        vc.navigationItem.titleView = bar.titleView;
-        vc.navigationItem.rightBarButtonItems = bar.rightViews;
-        vc.navigationItem.leftBarButtonItems = bar.leftViews;
-        vc.navigationItem.leftItemsSupplementBackButton = true;
-        if (bar.customBackButtonTitle) {
-            vc.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:bar.backButtonTitle style:UIBarButtonItemStylePlain target:nil action:nil];
-        }
+        bar.contentViewController = vc;
         [vc matcha_setViewId:childView.screenId];
         [viewControllers addObject:vc];
     }
@@ -138,21 +130,30 @@
     return self;
 }
 
-- (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
-    MatchaiOSPBStackBar *bar = [MatchaiOSPBStackBar parseFromData:self.nativeState error:nil];
-    NSInteger idx = 0;
-    
-    self.titleString = bar.title;
-    self.backButtonHidden = bar.backButtonHidden;
-    self.backButtonTitle = bar.backButtonTitle;
-    self.customBackButtonTitle = bar.customBackButtonTitle;
-    if (bar.hasTitleView) {
-        self.titleView = childVCs[idx].view;
-        idx += 1;
-    } else {
-        self.titleView = nil;
-    }
+- (void)setContentViewController:(UIViewController *)contentViewController {
+    _contentViewController = contentViewController;
+    [self reload];
+}
 
+- (void)setNativeState:(NSData *)data {
+    _nativeState = data;
+    [self reload];
+}
+
+- (void)reload {
+    if (!self.contentViewController || self.nativeState == nil) {
+        return;
+    }
+    MatchaiOSPBStackBar *bar = [MatchaiOSPBStackBar parseFromData:self.nativeState error:nil];
+    
+    UINavigationItem *item = self.contentViewController.navigationItem;
+    item.title = bar.title;
+    item.hidesBackButton = bar.backButtonHidden;
+    if (bar.customBackButtonTitle) {
+        item.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:bar.backButtonTitle style:UIBarButtonItemStylePlain target:nil action:nil];
+    } else {
+        item.backBarButtonItem = nil;
+    }
     NSMutableArray *rightViews = [NSMutableArray array];
     for (MatchaiOSPBStackBarItem *i in bar.rightItemsArray) {
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithProtobuf:i];
@@ -160,13 +161,7 @@
         [item setAction:@selector(onPress:)];
         [rightViews addObject:item];
     }
-//    for (NSInteger i = 0; i < bar.rightViewCount; i++) {
-//        UIView *rightView = childVCs[idx].view;
-//        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:rightView];
-//        [rightViews addObject:item];
-//        idx += 1;
-//    }
-    self.rightViews = rightViews;
+    item.rightBarButtonItems = rightViews;
     
     NSMutableArray *leftViews = [NSMutableArray array];
     for (MatchaiOSPBStackBarItem *i in bar.leftItemsArray) {
@@ -175,13 +170,28 @@
         [item setAction:@selector(onPress:)];
         [leftViews addObject:item];
     }
-//    for (NSInteger i = 0; i < bar.leftViewCount; i++) {
-//        UIView *leftView = childVCs[idx].view;
-//        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:leftView];
-//        [leftViews addObject:item];
-//        idx +=1;
-//    }
-    self.leftViews = leftViews;
+    item.leftBarButtonItems = leftViews;
+}
+
+- (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
+    //    if (bar.hasTitleView) {
+    //        self.titleView = childVCs[idx].view;
+    //        idx += 1;
+    //    } else {
+    //        self.titleView = nil;
+    //    }
+    //    for (NSInteger i = 0; i < bar.rightViewCount; i++) {
+    //        UIView *rightView = childVCs[idx].view;
+    //        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:rightView];
+    //        [rightViews addObject:item];
+    //        idx += 1;
+    //    }
+    //    for (NSInteger i = 0; i < bar.leftViewCount; i++) {
+    //        UIView *leftView = childVCs[idx].view;
+    //        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:leftView];
+    //        [leftViews addObject:item];
+    //        idx +=1;
+    //    }
 }
 
 - (void)setMatchaChildLayout:(NSArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes {
@@ -243,6 +253,7 @@ static char defaultHashKey;
     }
     self.enabled = proto.enabled;
     self.tintColor = proto.hasTintColor ? [[UIColor alloc] initWithProtobuf:proto.tintColor] : nil;
+    NSLog(@"%@", self.tintColor);
     self.onPress = proto.onPress;
     return self;
 }

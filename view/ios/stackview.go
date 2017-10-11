@@ -156,24 +156,10 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 	for _, id := range v.Stack.childIds {
 		chld := v.Stack.childrenMap[id]
 
-		// Find the bar.
-		var bar *StackBar
-		for _, opts := range chld.Build(nil).Options {
-			var ok bool
-			if bar, ok = opts.(*StackBar); ok {
-				break
-			}
-		}
-		if bar == nil {
-			bar = &StackBar{
-				Title: "Title",
-			}
-		}
-
 		// Add the bar.
 		barV := &stackBarView{
 			Embed:          view.Embed{Key: strconv.Itoa(int(id))},
-			Bar:            bar,
+			View:           chld,
 			ItemTitleStyle: v.ItemTitleStyle,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
@@ -235,12 +221,39 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 
 type stackBarView struct {
 	view.Embed
-	Bar            *StackBar
+	View           view.View
 	ItemTitleStyle *text.Style
+}
+
+func (v *stackBarView) Lifecycle(from, to view.Stage) {
+	if view.EntersStage(from, to, view.StageMounted) {
+		v.Subscribe(v.View)
+	} else if view.ExitsStage(from, to, view.StageMounted) {
+		v.Unsubscribe(v.View)
+	}
+}
+
+func (v *stackBarView) Update(v2 view.View) {
+	v.Unsubscribe(v.View)
+	view.CopyFields(v, v2)
+	v.Subscribe(v.View)
 }
 
 func (v *stackBarView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
+
+	var bar *StackBar
+	for _, opts := range v.View.Build(nil).Options {
+		var ok bool
+		if bar, ok = opts.(*StackBar); ok {
+			break
+		}
+	}
+	if bar == nil {
+		bar = &StackBar{
+			Title: "Title",
+		}
+	}
 
 	// iOS does the layouting for us. We just need the correct sizes.
 	hasTitleView := false
@@ -278,7 +291,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 	index := 0
 	funcs := map[string]interface{}{}
 	rightItems := []*pbios.StackBarItem{}
-	for _, i := range v.Bar.RightItems {
+	for _, i := range bar.RightItems {
 		if i.TitleStyle == nil {
 			i.TitleStyle = v.ItemTitleStyle
 		}
@@ -294,7 +307,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 		index += 1
 	}
 	leftItems := []*pbios.StackBarItem{}
-	for _, i := range v.Bar.LeftItems {
+	for _, i := range bar.LeftItems {
 		if i.TitleStyle == nil {
 			i.TitleStyle = v.ItemTitleStyle
 		}
@@ -315,10 +328,10 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 		Children:       l.Views(),
 		NativeViewName: "gomatcha.io/matcha/view/stacknav Bar",
 		NativeViewState: internal.MarshalProtobuf(&pbios.StackBar{
-			Title: v.Bar.Title,
-			CustomBackButtonTitle: len(v.Bar.BackButtonTitle) > 0,
-			BackButtonTitle:       v.Bar.BackButtonTitle,
-			BackButtonHidden:      v.Bar.BackButtonHidden,
+			Title: bar.Title,
+			CustomBackButtonTitle: len(bar.BackButtonTitle) > 0,
+			BackButtonTitle:       bar.BackButtonTitle,
+			BackButtonHidden:      bar.BackButtonHidden,
 			HasTitleView:          hasTitleView,
 			RightViewCount:        rightViewCount,
 			LeftViewCount:         leftViewCount,
@@ -340,8 +353,6 @@ type StackBar struct {
 	LeftItems  []*StackBarItem
 	RightItems []*StackBarItem
 	// TitleView  view.View
-	// RightViews []view.View
-	// LeftViews  []view.View
 }
 
 func (t *StackBar) OptionKey() string {

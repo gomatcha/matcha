@@ -78,15 +78,11 @@ func (v *StackAppView) Lifecycle(from, to view.Stage) {
 	if view.EntersStage(from, to, view.StageMounted) {
 		v.Subscribe(&v.App.BarColor)
 		v.Subscribe(&v.App.TitleStyle)
-		v.Subscribe(&v.App.ItemTintColor)
-		v.Subscribe(&v.App.ItemTitleStyle)
 		v.Subscribe(&v.App.AllItemTintColor)
 		v.Subscribe(&v.App.AllItemTitleStyle)
 	} else if view.ExitsStage(from, to, view.StageMounted) {
 		v.Unsubscribe(&v.App.BarColor)
 		v.Unsubscribe(&v.App.TitleStyle)
-		v.Unsubscribe(&v.App.ItemTintColor)
-		v.Unsubscribe(&v.App.ItemTitleStyle)
 		v.Unsubscribe(&v.App.AllItemTintColor)
 		v.Unsubscribe(&v.App.AllItemTitleStyle)
 	}
