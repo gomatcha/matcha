@@ -1,4 +1,7 @@
-// Package comm provides primitives for communication.
+// Package comm provides primitives for signaling when an object has changed.
+// This is done through the Notifier interface and its related children.
+
+// Notifier has two methods.
 package comm
 
 import (
