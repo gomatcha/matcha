@@ -1,4 +1,4 @@
-package view
+package ios
 
 import (
 	"golang.org/x/image/colornames"

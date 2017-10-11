@@ -2,6 +2,7 @@ package ios
 
 import (
 	"fmt"
+	"image"
 	"image/color"
 	"strconv"
 
@@ -108,11 +109,14 @@ Modifying the stack:
 */
 type StackView struct {
 	view.Embed
-	Stack      *Stack
-	stack      *Stack
-	TitleStyle *text.Style
-	BackStyle  *text.Style
-	BarColor   color.Color
+	Stack *Stack
+
+	TitleStyle     *text.Style // uinavigationbar titletextattributes
+	BarColor       color.Color // uinavigationbar.barTintColor
+	ItemTitleStyle *text.Style // uinavigationbar.appearance.font
+	ItemTintColor  color.Color // uinavigationbar tintColor
+	// BarStyle StackBarStyle // uinavigationbar.barstyle
+	// Alternately, Transparent bool
 }
 
 // NewStackView returns a new view.
@@ -169,8 +173,9 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 
 		// Add the bar.
 		barV := &stackBarView{
-			Embed: view.Embed{Key: strconv.Itoa(int(id))},
-			Bar:   bar,
+			Embed:          view.Embed{Key: strconv.Itoa(int(id))},
+			Bar:            bar,
+			ItemTitleStyle: v.ItemTitleStyle,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
 			s.Top(0)
@@ -198,9 +203,9 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 		titleTextStyle = v.TitleStyle.MarshalProtobuf()
 	}
 
-	var backTextStyle *pbtext.TextStyle
-	if v.BackStyle != nil {
-		backTextStyle = v.BackStyle.MarshalProtobuf()
+	var itemTitleStyle *pbtext.TextStyle
+	if v.ItemTitleStyle != nil {
+		itemTitleStyle = v.ItemTitleStyle.MarshalProtobuf()
 	}
 
 	return view.Model{
@@ -210,8 +215,9 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 		NativeViewState: internal.MarshalProtobuf(&pbios.StackView{
 			Children:       childrenPb,
 			TitleTextStyle: titleTextStyle,
-			BackTextStyle:  backTextStyle,
+			BackTextStyle:  itemTitleStyle,
 			BarColor:       pb.ColorEncode(v.BarColor),
+			ItemColor:      pb.ColorEncode(v.ItemTintColor),
 		}),
 		NativeFuncs: map[string]interface{}{
 			"OnChange": func(data []byte) {
@@ -230,7 +236,8 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 
 type stackBarView struct {
 	view.Embed
-	Bar *StackBar
+	Bar            *StackBar
+	ItemTitleStyle *text.Style
 }
 
 func (v *stackBarView) Build(ctx view.Context) view.Model {
@@ -238,35 +245,50 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 
 	// iOS does the layouting for us. We just need the correct sizes.
 	hasTitleView := false
-	if v.Bar.TitleView != nil {
-		hasTitleView = true
-		l.Add(v.Bar.TitleView, func(s *constraint.Solver) {
-			s.Top(0)
-			s.Left(0)
-			s.HeightLess(l.MaxGuide().Height())
-			s.WidthLess(l.MaxGuide().Width())
-		})
-	}
+	// if v.Bar.TitleView != nil {
+	// 	hasTitleView = true
+	// 	l.Add(v.Bar.TitleView, func(s *constraint.Solver) {
+	// 		s.Top(0)
+	// 		s.Left(0)
+	// 		s.HeightLess(l.MaxGuide().Height())
+	// 		s.WidthLess(l.MaxGuide().Width())
+	// 	})
+	// }
 
 	rightViewCount := int64(0)
-	for _, i := range v.Bar.RightViews {
-		rightViewCount += 1
-		l.Add(i, func(s *constraint.Solver) {
-			s.Top(0)
-			s.Left(0)
-			s.HeightLess(l.MaxGuide().Height())
-			s.WidthLess(l.MaxGuide().Width())
-		})
-	}
+	// for _, i := range v.Bar.RightViews {
+	// 	rightViewCount += 1
+	// 	l.Add(i, func(s *constraint.Solver) {
+	// 		s.Top(0)
+	// 		s.Left(0)
+	// 		s.HeightLess(l.MaxGuide().Height())
+	// 		s.WidthLess(l.MaxGuide().Width())
+	// 	})
+	// }
 	leftViewCount := int64(0)
-	for _, i := range v.Bar.LeftViews {
-		leftViewCount += 1
-		l.Add(i, func(s *constraint.Solver) {
-			s.Top(0)
-			s.Left(0)
-			s.HeightLess(l.MaxGuide().Height())
-			s.WidthLess(l.MaxGuide().Width())
-		})
+	// for _, i := range v.Bar.LeftViews {
+	// 	leftViewCount += 1
+	// 	l.Add(i, func(s *constraint.Solver) {
+	// 		s.Top(0)
+	// 		s.Left(0)
+	// 		s.HeightLess(l.MaxGuide().Height())
+	// 		s.WidthLess(l.MaxGuide().Width())
+	// 	})
+	// }
+
+	rightItems := []*pbios.StackBarItem{}
+	for _, i := range v.Bar.RightItems {
+		if i.TitleStyle == nil {
+			i.TitleStyle = v.ItemTitleStyle
+		}
+		rightItems = append(rightItems, i.marshalProtobuf())
+	}
+	leftItems := []*pbios.StackBarItem{}
+	for _, i := range v.Bar.LeftItems {
+		if i.TitleStyle == nil {
+			i.TitleStyle = v.ItemTitleStyle
+		}
+		leftItems = append(leftItems, i.marshalProtobuf())
 	}
 
 	return view.Model{
@@ -281,6 +303,8 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 			HasTitleView:          hasTitleView,
 			RightViewCount:        rightViewCount,
 			LeftViewCount:         leftViewCount,
+			RightItems:            rightItems,
+			LeftItems:             leftItems,
 		}),
 	}
 }
@@ -289,12 +313,60 @@ type StackBar struct {
 	Title            string
 	BackButtonTitle  string
 	BackButtonHidden bool
+	// BarColor   color.Color
+	// BarStyle
+	// Search Controller
 
-	TitleView  view.View
-	RightViews []view.View
-	LeftViews  []view.View
+	LeftItems  []*StackBarItem
+	RightItems []*StackBarItem
+	// TitleView  view.View
+	// RightViews []view.View
+	// LeftViews  []view.View
 }
 
 func (t *StackBar) OptionKey() string {
 	return "gomatcha.io/view/ios StackBar"
+}
+
+func NewImageStackBarItem(image image.Image) *StackBarItem {
+	return &StackBarItem{
+		Enabled:    true,
+		Image:      image,
+		TintsImage: true,
+	}
+}
+
+func NewTitleStackBarItem(title string) *StackBarItem {
+	return &StackBarItem{
+		Enabled: true,
+		Title:   title,
+	}
+}
+
+type StackBarItem struct {
+	Enabled    bool
+	TintColor  color.Color
+	Title      string
+	TitleStyle *text.Style
+	Image      image.Image
+	TintsImage bool
+	OnPress    func()
+	// Image Insets?
+	// CustomView view.View
+}
+
+func (it *StackBarItem) marshalProtobuf() *pbios.StackBarItem {
+	var titleStyle *pbtext.TextStyle
+	if it.TitleStyle != nil {
+		titleStyle = it.TitleStyle.MarshalProtobuf()
+	}
+
+	return &pbios.StackBarItem{
+		Enabled:    it.Enabled,
+		TintColor:  pb.ColorEncode(it.TintColor),
+		Title:      it.Title,
+		TitleStyle: titleStyle,
+		Image:      internal.ImageMarshalProtobuf(it.Image),
+		TintsImage: it.TintsImage,
+	}
 }

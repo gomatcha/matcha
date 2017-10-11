@@ -52,19 +52,23 @@
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs {
     MatchaiOSPBStackView *view = (id)[MatchaiOSPBStackView parseFromData:self.nativeState error:nil];
     
-    NSMutableArray *prevIds = [NSMutableArray array];
-    for (MatchaiOSPBStackChildView *i in view.childrenArray) {
-        [prevIds addObject:@(i.screenId)];
-    }
-    if ([self.prevIds isEqual:prevIds]) {
-        return;
-    }
-    self.prevIds = prevIds;
     self.navigationBar.barTintColor = view.hasBarColor ? [[UIColor alloc] initWithProtobuf:view.barColor] : nil;
     self.navigationBar.titleTextAttributes = view.hasTitleTextStyle ? [NSAttributedString attributesWithProtobuf:view.titleTextStyle] : nil;
+    self.navigationBar.tintColor = view.hasItemColor ? [[UIColor alloc] initWithProtobuf:view.itemColor]: nil;
     if (view.hasBackTextStyle) {
         [[UIBarButtonItem appearance] setTitleTextAttributes:[NSAttributedString attributesWithProtobuf:view.backTextStyle] forState:UIControlStateNormal];
+    } else {
+        [[UIBarButtonItem appearance] setTitleTextAttributes:nil forState:UIControlStateNormal];
     }
+    
+//    NSMutableArray *prevIds = [NSMutableArray array];
+//    for (MatchaiOSPBStackChildView *i in view.childrenArray) {
+//        [prevIds addObject:@(i.screenId)];
+//    }
+//    if ([self.prevIds isEqual:prevIds]) {
+//        return;
+//    }
+//    self.prevIds = prevIds;
 
     NSMutableArray *viewControllers = [NSMutableArray array];
     for (NSInteger i = 0; i < view.childrenArray.count; i++) {
@@ -150,46 +154,75 @@
     }
 
     NSMutableArray *rightViews = [NSMutableArray array];
-    for (NSInteger i = 0; i < bar.rightViewCount; i++) {
-        UIView *rightView = childVCs[idx].view;
-        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:rightView];
+    for (MatchaiOSPBStackBarItem *i in bar.rightItemsArray) {
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithProtobuf:i];
         [rightViews addObject:item];
-        idx += 1;
     }
+//    for (NSInteger i = 0; i < bar.rightViewCount; i++) {
+//        UIView *rightView = childVCs[idx].view;
+//        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:rightView];
+//        [rightViews addObject:item];
+//        idx += 1;
+//    }
     self.rightViews = rightViews;
     
     NSMutableArray *leftViews = [NSMutableArray array];
-    for (NSInteger i = 0; i < bar.leftViewCount; i++) {
-        UIView *leftView = childVCs[idx].view;
-        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:leftView];
+    for (MatchaiOSPBStackBarItem *i in bar.leftItemsArray) {
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithProtobuf:i];
         [leftViews addObject:item];
-        idx +=1;
     }
+//    for (NSInteger i = 0; i < bar.leftViewCount; i++) {
+//        UIView *leftView = childVCs[idx].view;
+//        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:leftView];
+//        [leftViews addObject:item];
+//        idx +=1;
+//    }
     self.leftViews = leftViews;
 }
 
 - (void)setMatchaChildLayout:(NSArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes {
-    NSInteger idx = 0;
-    if (self.titleView) {
-        CGRect f = self.titleView.frame;
-        f.size = ((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame.size;
-        self.titleView.frame = f;
-        idx += 1;
-    }
-    for (NSInteger i = 0; i < self.rightViews.count; i++) {
-        UIBarButtonItem *rightView = self.rightViews[i];
-        CGRect f = rightView.customView.frame;
-        f.size =((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame.size;
-        rightView.customView.frame = f;
-        idx += 1;
-    }
-    for (NSInteger i = 0; i < self.leftViews.count; i++) {
-        UIBarButtonItem *leftView = self.leftViews[i];
-        CGRect f = leftView.customView.frame;
-        f.size =((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame.size;
-        leftView.customView.frame = f;
-        idx += 1;
-    }
+//    NSInteger idx = 0;
+//    if (self.titleView) {
+//        CGRect f = self.titleView.frame;
+//        f.size = ((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame.size;
+//        self.titleView.frame = f;
+//        idx += 1;
+//    }
+//    for (NSInteger i = 0; i < self.rightViews.count; i++) {
+//        UIBarButtonItem *rightView = self.rightViews[i];
+//        CGRect f = rightView.customView.frame;
+//        f.size =((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame.size;
+//        rightView.customView.frame = f;
+//        idx += 1;
+//    }
+//    for (NSInteger i = 0; i < self.leftViews.count; i++) {
+//        UIBarButtonItem *leftView = self.leftViews[i];
+//        CGRect f = leftView.customView.frame;
+//        f.size =((MatchaViewPBLayoutPaintNode *)layoutPaintNodes[idx]).frame.size;
+//        leftView.customView.frame = f;
+//        idx += 1;
+//    }
 }
 
+@end
+
+@implementation UIBarButtonItem (Protobuf)
+- (id)initWithProtobuf:(MatchaiOSPBStackBarItem *)proto {
+    if (proto.hasImage) {
+        UIImage *image = [[UIImage alloc] initWithImageOrResourceProtobuf:proto.image];
+        if (!proto.tintsImage) {
+            image = [self.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        }
+        self = [self initWithImage:image style:UIBarButtonItemStylePlain target:nil action:nil];
+    } else {
+        self = [self initWithTitle:proto.title style:UIBarButtonItemStylePlain target:nil action:nil];
+        if (proto.hasTitleStyle) {
+            NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:proto.titleStyle];
+            [self setTitleTextAttributes:attributes forState:UIControlStateNormal];
+        }
+    }
+    self.enabled = proto.enabled;
+    self.tintColor = proto.hasTintColor ? [[UIColor alloc] initWithProtobuf:proto.tintColor] : nil;
+    return self;
+}
 @end

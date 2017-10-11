@@ -28,7 +28,9 @@
 CF_EXTERN_C_BEGIN
 
 @class MatchaPBColor;
+@class MatchaPBImageOrResource;
 @class MatchaPBTextStyle;
+@class MatchaiOSPBStackBarItem;
 @class MatchaiOSPBStackChildView;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -67,6 +69,7 @@ typedef GPB_ENUM(MatchaiOSPBStackView_FieldNumber) {
   MatchaiOSPBStackView_FieldNumber_TitleTextStyle = 2,
   MatchaiOSPBStackView_FieldNumber_BackTextStyle = 3,
   MatchaiOSPBStackView_FieldNumber_BarColor = 4,
+  MatchaiOSPBStackView_FieldNumber_ItemColor = 5,
 };
 
 @interface MatchaiOSPBStackView : GPBMessage
@@ -87,6 +90,10 @@ typedef GPB_ENUM(MatchaiOSPBStackView_FieldNumber) {
 /** Test to see if @c barColor has been set. */
 @property(nonatomic, readwrite) BOOL hasBarColor;
 
+@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *itemColor;
+/** Test to see if @c itemColor has been set. */
+@property(nonatomic, readwrite) BOOL hasItemColor;
+
 @end
 
 #pragma mark - MatchaiOSPBStackBar
@@ -99,6 +106,8 @@ typedef GPB_ENUM(MatchaiOSPBStackBar_FieldNumber) {
   MatchaiOSPBStackBar_FieldNumber_RightViewCount = 5,
   MatchaiOSPBStackBar_FieldNumber_LeftViewCount = 6,
   MatchaiOSPBStackBar_FieldNumber_BackButtonHidden = 7,
+  MatchaiOSPBStackBar_FieldNumber_RightItemsArray = 8,
+  MatchaiOSPBStackBar_FieldNumber_LeftItemsArray = 9,
 };
 
 @interface MatchaiOSPBStackBar : GPBMessage
@@ -117,6 +126,14 @@ typedef GPB_ENUM(MatchaiOSPBStackBar_FieldNumber) {
 
 @property(nonatomic, readwrite) int64_t leftViewCount;
 
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MatchaiOSPBStackBarItem*> *rightItemsArray;
+/** The number of items in @c rightItemsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger rightItemsArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MatchaiOSPBStackBarItem*> *leftItemsArray;
+/** The number of items in @c leftItemsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger leftItemsArray_Count;
+
 @end
 
 #pragma mark - MatchaiOSPBStackEvent
@@ -130,6 +147,42 @@ typedef GPB_ENUM(MatchaiOSPBStackEvent_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Array *idArray;
 /** The number of items in @c idArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger idArray_Count;
+
+@end
+
+#pragma mark - MatchaiOSPBStackBarItem
+
+typedef GPB_ENUM(MatchaiOSPBStackBarItem_FieldNumber) {
+  MatchaiOSPBStackBarItem_FieldNumber_Title = 1,
+  MatchaiOSPBStackBarItem_FieldNumber_Image = 2,
+  MatchaiOSPBStackBarItem_FieldNumber_Enabled = 3,
+  MatchaiOSPBStackBarItem_FieldNumber_TintColor = 4,
+  MatchaiOSPBStackBarItem_FieldNumber_TitleStyle = 5,
+  MatchaiOSPBStackBarItem_FieldNumber_TintsImage = 6,
+  MatchaiOSPBStackBarItem_FieldNumber_OnPress = 7,
+};
+
+@interface MatchaiOSPBStackBarItem : GPBMessage
+
+@property(nonatomic, readwrite) BOOL enabled;
+
+@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *tintColor;
+/** Test to see if @c tintColor has been set. */
+@property(nonatomic, readwrite) BOOL hasTintColor;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *title;
+
+@property(nonatomic, readwrite, strong, null_resettable) MatchaPBTextStyle *titleStyle;
+/** Test to see if @c titleStyle has been set. */
+@property(nonatomic, readwrite) BOOL hasTitleStyle;
+
+@property(nonatomic, readwrite, strong, null_resettable) MatchaPBImageOrResource *image;
+/** Test to see if @c image has been set. */
+@property(nonatomic, readwrite) BOOL hasImage;
+
+@property(nonatomic, readwrite) BOOL tintsImage;
+
+@property(nonatomic, readwrite) int64_t onPress;
 
 @end
 

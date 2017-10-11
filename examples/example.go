@@ -90,7 +90,7 @@ func NewExamplesView() *ExamplesView {
 				{"Stack View", "", ios.NewStackView()},
 				{"Status Bar", "", ios.NewStatusBarView()},
 				{"Tab View", "", ios.NewTabView()},
-				{"Progress View", "", viewex.NewProgressView()},
+				{"Progress View", "", ios.NewProgressView()},
 			},
 		},
 		{

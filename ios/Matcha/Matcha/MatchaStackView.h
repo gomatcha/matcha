@@ -2,6 +2,7 @@
 #import "MatchaView.h"
 @class MatchaViewNode;
 @class GPBInt64Array;
+@class MatchaiOSPBStackBarItem;
 
 @interface MatchaStackView : UINavigationController <MatchaChildViewController, UINavigationControllerDelegate>
 - (id)initWithViewNode:(MatchaViewNode *)viewNode;
@@ -24,6 +25,10 @@
 @property (nonatomic, assign) BOOL customBackButtonTitle;
 @property (nonatomic, assign) NSString *backButtonTitle;
 @property (nonatomic, strong) UIView *titleView;
-@property (nonatomic, strong) NSArray *rightViews;
-@property (nonatomic, strong) NSArray *leftViews;
+@property (nonatomic, strong) NSArray<UIBarButtonItem *> *rightViews;
+@property (nonatomic, strong) NSArray<UIBarButtonItem *> *leftViews;
+@end
+
+@interface UIBarButtonItem (Protobuf)
+- (id)initWithProtobuf:(MatchaiOSPBStackBarItem *)proto;
 @end
