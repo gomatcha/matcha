@@ -111,12 +111,11 @@ type StackView struct {
 	view.Embed
 	Stack *Stack
 
-	TitleStyle     *text.Style // uinavigationbar titletextattributes
-	BarColor       color.Color // uinavigationbar.barTintColor
-	ItemTitleStyle *text.Style // uinavigationbar.appearance.font
-	ItemTintColor  color.Color // uinavigationbar tintColor
-	// BarStyle StackBarStyle // uinavigationbar.barstyle
-	// Alternately, Transparent bool
+	TitleStyle     *text.Style
+	BarColor       color.Color
+	ItemTitleStyle *text.Style
+	ItemTintColor  color.Color
+	// Transparent bool
 }
 
 // NewStackView returns a new view.
