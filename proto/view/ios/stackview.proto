@@ -43,5 +43,5 @@ message StackBarItem {
     matcha.text.TextStyle titleStyle = 5;
     matcha.ImageOrResource image = 2;
     bool tintsImage = 6;
-    int64 onPress = 7;
+    string onPress = 7;
 }

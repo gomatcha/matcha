@@ -30,5 +30,6 @@
 @end
 
 @interface UIBarButtonItem (Protobuf)
+@property (nonatomic, strong) NSString *onPress;
 - (id)initWithProtobuf:(MatchaiOSPBStackBarItem *)proto;
 @end

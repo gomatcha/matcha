@@ -380,7 +380,7 @@ typedef struct MatchaiOSPBStackBarItem__storage_ {
   MatchaPBImageOrResource *image;
   MatchaPBColor *tintColor;
   MatchaPBTextStyle *titleStyle;
-  int64_t onPress;
+  NSString *onPress;
 } MatchaiOSPBStackBarItem__storage_;
 
 // This method is threadsafe because it is initially called
@@ -450,7 +450,7 @@ typedef struct MatchaiOSPBStackBarItem__storage_ {
         .hasIndex = 8,
         .offset = (uint32_t)offsetof(MatchaiOSPBStackBarItem__storage_, onPress),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

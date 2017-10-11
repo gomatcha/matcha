@@ -1,6 +1,8 @@
 package ios
 
 import (
+	"fmt"
+
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
@@ -220,8 +222,14 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 	leftItem := ios.NewTitleStackBarItem("TEST")
 	leftItem.TintColor = v.App.ItemTintColor.Value()
 	leftItem.TitleStyle, _ = v.App.ItemTitleStyle.Value().(*text.Style)
+	leftItem.OnPress = func() {
+		fmt.Println("Left Item on Press")
+	}
 
 	rightItem := ios.NewTitleStackBarItem("TEST")
+	rightItem.OnPress = func() {
+		fmt.Println("Right Item on Press")
+	}
 
 	return view.Model{
 		Children: l.Views(),

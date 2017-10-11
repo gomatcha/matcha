@@ -182,7 +182,7 @@ typedef GPB_ENUM(MatchaiOSPBStackBarItem_FieldNumber) {
 
 @property(nonatomic, readwrite) BOOL tintsImage;
 
-@property(nonatomic, readwrite) int64_t onPress;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *onPress;
 
 @end
 

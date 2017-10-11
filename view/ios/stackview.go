@@ -275,19 +275,39 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 	// 	})
 	// }
 
+	index := 0
+	funcs := map[string]interface{}{}
 	rightItems := []*pbios.StackBarItem{}
 	for _, i := range v.Bar.RightItems {
 		if i.TitleStyle == nil {
 			i.TitleStyle = v.ItemTitleStyle
 		}
-		rightItems = append(rightItems, i.marshalProtobuf())
+		itemProto := i.marshalProtobuf()
+		itemProto.OnPress = strconv.Itoa(index)
+		rightItems = append(rightItems, itemProto)
+
+		funcs[itemProto.OnPress] = func() {
+			if i.OnPress != nil {
+				i.OnPress()
+			}
+		}
+		index += 1
 	}
 	leftItems := []*pbios.StackBarItem{}
 	for _, i := range v.Bar.LeftItems {
 		if i.TitleStyle == nil {
 			i.TitleStyle = v.ItemTitleStyle
 		}
-		leftItems = append(leftItems, i.marshalProtobuf())
+		itemProto := i.marshalProtobuf()
+		itemProto.OnPress = strconv.Itoa(index)
+		leftItems = append(leftItems, itemProto)
+
+		funcs[itemProto.OnPress] = func() {
+			if i.OnPress != nil {
+				i.OnPress()
+			}
+		}
+		index += 1
 	}
 
 	return view.Model{
@@ -305,6 +325,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 			RightItems:            rightItems,
 			LeftItems:             leftItems,
 		}),
+		NativeFuncs: funcs,
 	}
 }
 

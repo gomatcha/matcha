@@ -156,6 +156,8 @@
     NSMutableArray *rightViews = [NSMutableArray array];
     for (MatchaiOSPBStackBarItem *i in bar.rightItemsArray) {
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithProtobuf:i];
+        [item setTarget:self];
+        [item setAction:@selector(onPress:)];
         [rightViews addObject:item];
     }
 //    for (NSInteger i = 0; i < bar.rightViewCount; i++) {
@@ -169,6 +171,8 @@
     NSMutableArray *leftViews = [NSMutableArray array];
     for (MatchaiOSPBStackBarItem *i in bar.leftItemsArray) {
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithProtobuf:i];
+        [item setTarget:self];
+        [item setAction:@selector(onPress:)];
         [leftViews addObject:item];
     }
 //    for (NSInteger i = 0; i < bar.leftViewCount; i++) {
@@ -204,9 +208,24 @@
 //    }
 }
 
+- (void)onPress:(UIBarButtonItem *)sender {
+    [self.viewNode call:sender.onPress, nil];
+}
+
 @end
 
 @implementation UIBarButtonItem (Protobuf)
+
+static char defaultHashKey;
+
+- (NSString *)onPress {
+    return objc_getAssociatedObject(self, &defaultHashKey) ;
+}
+
+- (void)setOnPress:(NSString *)onPress {
+    objc_setAssociatedObject(self, &defaultHashKey, onPress, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (id)initWithProtobuf:(MatchaiOSPBStackBarItem *)proto {
     if (proto.hasImage) {
         UIImage *image = [[UIImage alloc] initWithImageOrResourceProtobuf:proto.image];
@@ -219,10 +238,12 @@
         if (proto.hasTitleStyle) {
             NSDictionary *attributes = [NSAttributedString attributesWithProtobuf:proto.titleStyle];
             [self setTitleTextAttributes:attributes forState:UIControlStateNormal];
+            [self setTitleTextAttributes:attributes forState:UIControlStateHighlighted];
         }
     }
     self.enabled = proto.enabled;
     self.tintColor = proto.hasTintColor ? [[UIColor alloc] initWithProtobuf:proto.tintColor] : nil;
+    self.onPress = proto.onPress;
     return self;
 }
 @end
