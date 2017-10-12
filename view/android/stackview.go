@@ -84,9 +84,11 @@ type StackView struct {
 	view.Embed
 	Stack *Stack
 
-	BarColor      color.Color
-	TitleStyle    *text.Style
-	SubtitleStyle *text.Style
+	BarColor       color.Color
+	TitleStyle     *text.Style
+	SubtitleStyle  *text.Style
+	ItemTitleStyle *text.Style
+	ItemIconTint   color.Color
 }
 
 // NewStackView returns a new view.
@@ -128,27 +130,15 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 	for idx, id := range v.Stack.childIds {
 		chld := v.Stack.childrenMap[id]
 
-		// Find the bar.
-		var bar *StackBar
-		for _, opts := range chld.Build(nil).Options {
-			var ok bool
-			if bar, ok = opts.(*StackBar); ok {
-				break
-			}
-		}
-		if bar == nil {
-			bar = &StackBar{
-				Title: "Title",
-			}
-		}
-
 		// Add the bar.
 		barV := &stackBarView{
 			Embed:           view.Embed{Key: strconv.Itoa(int(id))},
-			Bar:             bar,
+			View:            chld,
 			BarColor:        v.BarColor,
 			TitleStyle:      v.TitleStyle,
 			SubtitleStyle:   v.SubtitleStyle,
+			ItemTitleStyle:  v.ItemTitleStyle,
+			ItemIconTint:    v.ItemIconTint,
 			NeedsBackButton: idx != 0,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
@@ -192,15 +182,45 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 
 type stackBarView struct {
 	view.Embed
+	View            view.View
 	TitleStyle      *text.Style
 	SubtitleStyle   *text.Style
 	BarColor        color.Color
-	Bar             *StackBar
+	ItemTitleStyle  *text.Style
+	ItemIconTint    color.Color
 	NeedsBackButton bool
 }
 
+func (v *stackBarView) Lifecycle(from, to view.Stage) {
+	if view.EntersStage(from, to, view.StageMounted) {
+		v.Subscribe(v.View)
+	} else if view.ExitsStage(from, to, view.StageMounted) {
+		v.Unsubscribe(v.View)
+	}
+}
+
+func (v *stackBarView) Update(v2 view.View) {
+	v.Unsubscribe(v.View)
+	view.CopyFields(v, v2)
+	v.Subscribe(v.View)
+}
+
 func (v *stackBarView) Build(ctx view.Context) view.Model {
-	col := v.Bar.Color
+	// Find the bar.
+	var bar *StackBar
+	for _, opts := range v.View.Build(nil).Options {
+		var ok bool
+		if bar, ok = opts.(*StackBar); ok {
+			break
+		}
+	}
+	if bar == nil {
+		bar = &StackBar{
+			Title: "Title",
+		}
+	}
+
+	col := bar.Color
 	if col == nil {
 		col = v.BarColor
 	}
@@ -208,19 +228,26 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 		col = colornames.White
 	}
 
-	styledTitle := v.Bar.StyledTitle
+	styledTitle := bar.StyledTitle
 	if v.TitleStyle != nil && styledTitle == nil {
-		styledTitle = text.NewStyledText(v.Bar.Title, v.TitleStyle)
+		styledTitle = text.NewStyledText(bar.Title, v.TitleStyle)
 	}
 
-	styledSubtitle := v.Bar.StyledSubtitle
+	styledSubtitle := bar.StyledSubtitle
 	if v.SubtitleStyle != nil && styledSubtitle == nil {
-		styledSubtitle = text.NewStyledText(v.Bar.Subtitle, v.SubtitleStyle)
+		styledSubtitle = text.NewStyledText(bar.Subtitle, v.SubtitleStyle)
 	}
 
 	funcs := map[string]interface{}{}
 	items := []*android.StackBarItem{}
-	for idx, i := range v.Bar.Items {
+	for idx, i := range bar.Items {
+		if i.IconTint == nil {
+			i.IconTint = v.ItemIconTint
+		}
+		if i.StyledTitle == nil && v.ItemTitleStyle != nil {
+			i.StyledTitle = text.NewStyledText(i.Title, v.ItemTitleStyle)
+		}
+
 		button := i.marshalProtobuf()
 		button.OnPressFunc = strconv.Itoa(idx)
 		items = append(items, button)
@@ -231,9 +258,9 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 		Painter:        &paint.Style{BackgroundColor: col},
 		NativeViewName: "gomatcha.io/matcha/view/android stackBarView",
 		NativeViewState: internal.MarshalProtobuf(&android.StackBar{
-			Title:            v.Bar.Title,
+			Title:            bar.Title,
 			StyledTitle:      styledTitle.MarshalProtobuf(),
-			Subtitle:         v.Bar.Subtitle,
+			Subtitle:         bar.Subtitle,
 			StyledSubtitle:   styledSubtitle.MarshalProtobuf(),
 			Items:            items,
 			BackButtonHidden: !v.NeedsBackButton,
@@ -272,10 +299,11 @@ func NewStackBarItem() *StackBarItem {
 
 func (v *StackBarItem) marshalProtobuf() *android.StackBarItem {
 	return &android.StackBarItem{
-		Title:    v.Title,
-		Icon:     internal.ImageMarshalProtobuf(v.Icon),
-		IconTint: pb.ColorEncode(v.IconTint),
-		Disabled: !v.Enabled,
+		Title:       v.Title,
+		StyledTitle: v.StyledTitle.MarshalProtobuf(),
+		Icon:        internal.ImageMarshalProtobuf(v.Icon),
+		IconTint:    pb.ColorEncode(v.IconTint),
+		Disabled:    !v.Enabled,
 	}
 }
 

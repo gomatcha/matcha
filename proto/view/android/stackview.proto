@@ -28,6 +28,7 @@ message StackBar {
 
 message StackBarItem {
     string title = 1;
+    matcha.text.StyledText styledTitle = 6;
     matcha.ImageOrResource icon = 3;
     matcha.Color iconTint = 2;
     bool disabled = 4;

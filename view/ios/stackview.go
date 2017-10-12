@@ -113,7 +113,7 @@ type StackView struct {
 	TitleStyle     *text.Style
 	BarColor       color.Color
 	ItemTitleStyle *text.Style
-	ItemTintColor  color.Color
+	ItemIconTint   color.Color
 	// Transparent bool
 }
 
@@ -160,6 +160,7 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 			Embed:          view.Embed{Key: strconv.Itoa(int(id))},
 			View:           chld,
 			ItemTitleStyle: v.ItemTitleStyle,
+			ItemIconTint:   v.ItemIconTint,
 		}
 		l.Add(barV, func(s *constraint.Solver) {
 			s.Top(0)
@@ -201,7 +202,7 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 			TitleTextStyle: titleTextStyle,
 			BackTextStyle:  itemTitleStyle,
 			BarColor:       pb.ColorEncode(v.BarColor),
-			ItemColor:      pb.ColorEncode(v.ItemTintColor),
+			ItemColor:      pb.ColorEncode(v.ItemIconTint),
 		}),
 		NativeFuncs: map[string]interface{}{
 			"OnChange": func(data []byte) {
@@ -222,6 +223,7 @@ type stackBarView struct {
 	view.Embed
 	View           view.View
 	ItemTitleStyle *text.Style
+	ItemIconTint   color.Color
 }
 
 func (v *stackBarView) Lifecycle(from, to view.Stage) {
@@ -294,6 +296,9 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 		if i.TitleStyle == nil {
 			i.TitleStyle = v.ItemTitleStyle
 		}
+		if i.IconTint == nil {
+			i.IconTint = v.ItemIconTint
+		}
 		itemProto := i.marshalProtobuf()
 		itemProto.OnPress = strconv.Itoa(index)
 		rightItems = append(rightItems, itemProto)
@@ -309,6 +314,9 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 	for _, i := range bar.LeftItems {
 		if i.TitleStyle == nil {
 			i.TitleStyle = v.ItemTitleStyle
+		}
+		if i.IconTint == nil {
+			i.IconTint = v.ItemIconTint
 		}
 		itemProto := i.marshalProtobuf()
 		itemProto.OnPress = strconv.Itoa(index)
@@ -351,34 +359,27 @@ type StackBar struct {
 	// Transparent
 	// Search Controller
 	// TitleView  view.View
+	// LargeTitle
 }
 
 func (t *StackBar) OptionKey() string {
 	return "gomatcha.io/view/ios StackBar"
 }
 
-func NewImageStackBarItem(image image.Image) *StackBarItem {
+func NewStackBarItem() *StackBarItem {
 	return &StackBarItem{
-		Enabled:    true,
-		Image:      image,
-		TintsImage: true,
-	}
-}
-
-func NewTitleStackBarItem(title string) *StackBarItem {
-	return &StackBarItem{
-		Enabled: true,
-		Title:   title,
+		Enabled:   true,
+		TintsIcon: true,
 	}
 }
 
 type StackBarItem struct {
 	Enabled    bool
-	TintColor  color.Color
 	Title      string
 	TitleStyle *text.Style
-	Image      image.Image
-	TintsImage bool
+	Icon       image.Image
+	IconTint   color.Color
+	TintsIcon  bool
 	OnPress    func()
 	// CustomView view.View
 }
@@ -391,10 +392,10 @@ func (it *StackBarItem) marshalProtobuf() *pbios.StackBarItem {
 
 	return &pbios.StackBarItem{
 		Enabled:    it.Enabled,
-		TintColor:  pb.ColorEncode(it.TintColor),
+		TintColor:  pb.ColorEncode(it.IconTint),
 		Title:      it.Title,
 		TitleStyle: titleStyle,
-		Image:      internal.ImageMarshalProtobuf(it.Image),
-		TintsImage: it.TintsImage,
+		Image:      internal.ImageMarshalProtobuf(it.Icon),
+		TintsImage: it.TintsIcon,
 	}
 }

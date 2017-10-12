@@ -2,6 +2,7 @@ package ios
 
 import (
 	"fmt"
+	"runtime"
 
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/application"
@@ -10,6 +11,7 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
+	"gomatcha.io/matcha/view/android"
 	"gomatcha.io/matcha/view/ios"
 )
 
@@ -20,23 +22,29 @@ func init() {
 }
 
 type StackApp struct {
-	Stack             *ios.Stack
+	IosStack          *ios.Stack
+	AndroidStack      *android.Stack
 	BarColor          comm.ColorValue
-	ItemTintColor     comm.ColorValue
+	ItemIconTint      comm.ColorValue
 	ItemTitleStyle    comm.InterfaceValue
 	TitleStyle        comm.InterfaceValue
-	AllItemTintColor  comm.ColorValue
+	AllItemIconTint   comm.ColorValue
 	AllItemTitleStyle comm.InterfaceValue
 }
 
 func NewStackView() view.View {
 	app := &StackApp{
-		Stack: &ios.Stack{},
+		IosStack:     &ios.Stack{},
+		AndroidStack: &android.Stack{},
 	}
 
 	view1 := NewStackConfigureView()
 	view1.App = app
-	app.Stack.SetViews(view1)
+	if runtime.GOOS == "android" {
+		app.AndroidStack.SetViews(view1)
+	} else {
+		app.IosStack.SetViews(view1)
+	}
 	return &StackAppView{
 		App: app,
 	}
@@ -51,25 +59,37 @@ func (v *StackAppView) Lifecycle(from, to view.Stage) {
 	if view.EntersStage(from, to, view.StageMounted) {
 		v.Subscribe(&v.App.BarColor)
 		v.Subscribe(&v.App.TitleStyle)
-		v.Subscribe(&v.App.AllItemTintColor)
+		v.Subscribe(&v.App.AllItemIconTint)
 		v.Subscribe(&v.App.AllItemTitleStyle)
 	} else if view.ExitsStage(from, to, view.StageMounted) {
 		v.Unsubscribe(&v.App.BarColor)
 		v.Unsubscribe(&v.App.TitleStyle)
-		v.Unsubscribe(&v.App.AllItemTintColor)
+		v.Unsubscribe(&v.App.AllItemIconTint)
 		v.Unsubscribe(&v.App.AllItemTitleStyle)
 	}
 }
 
 func (v *StackAppView) Build(ctx view.Context) view.Model {
-	stackview := ios.NewStackView()
-	stackview.Stack = v.App.Stack
-	stackview.BarColor = v.App.BarColor.Value()
-	stackview.ItemTintColor = v.App.AllItemTintColor.Value()
-	stackview.ItemTitleStyle, _ = v.App.AllItemTitleStyle.Value().(*text.Style)
-	stackview.TitleStyle, _ = v.App.TitleStyle.Value().(*text.Style)
+	var child view.View
+	if runtime.GOOS == "android" {
+		stackview := android.NewStackView()
+		stackview.Stack = v.App.AndroidStack
+		stackview.BarColor = v.App.BarColor.Value()
+		stackview.ItemIconTint = v.App.AllItemIconTint.Value()
+		stackview.ItemTitleStyle, _ = v.App.AllItemTitleStyle.Value().(*text.Style)
+		stackview.TitleStyle, _ = v.App.TitleStyle.Value().(*text.Style)
+		child = stackview
+	} else {
+		stackview := ios.NewStackView()
+		stackview.Stack = v.App.IosStack
+		stackview.BarColor = v.App.BarColor.Value()
+		stackview.ItemIconTint = v.App.AllItemIconTint.Value()
+		stackview.ItemTitleStyle, _ = v.App.AllItemTitleStyle.Value().(*text.Style)
+		stackview.TitleStyle, _ = v.App.TitleStyle.Value().(*text.Style)
+		child = stackview
+	}
 	return view.Model{
-		Children: []view.View{stackview},
+		Children: []view.View{child},
 	}
 }
 
@@ -84,10 +104,10 @@ func NewStackConfigureView() *StackConfigureView {
 
 func (v *StackConfigureView) Lifecycle(from, to view.Stage) {
 	if view.EntersStage(from, to, view.StageMounted) {
-		v.Subscribe(&v.App.ItemTintColor)
+		v.Subscribe(&v.App.ItemIconTint)
 		v.Subscribe(&v.App.ItemTitleStyle)
 	} else if view.ExitsStage(from, to, view.StageMounted) {
-		v.Unsubscribe(&v.App.ItemTintColor)
+		v.Unsubscribe(&v.App.ItemIconTint)
 		v.Unsubscribe(&v.App.ItemTitleStyle)
 	}
 }
@@ -129,10 +149,10 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 	button2 := view.NewButton()
 	button2.String = "Toggle All Item Color"
 	button2.OnPress = func() {
-		if v.App.AllItemTintColor.Value() == nil {
-			v.App.AllItemTintColor.SetValue(colornames.Red)
+		if v.App.AllItemIconTint.Value() == nil {
+			v.App.AllItemIconTint.SetValue(colornames.Red)
 		} else {
-			v.App.AllItemTintColor.SetValue(nil)
+			v.App.AllItemIconTint.SetValue(nil)
 		}
 	}
 	l.Add(button2, func(s *constraint.Solver) {
@@ -160,10 +180,10 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 	button5 := view.NewButton()
 	button5.String = "Toggle Item Color"
 	button5.OnPress = func() {
-		if v.App.ItemTintColor.Value() == nil {
-			v.App.ItemTintColor.SetValue(colornames.Orange)
+		if v.App.ItemIconTint.Value() == nil {
+			v.App.ItemIconTint.SetValue(colornames.Orange)
 		} else {
-			v.App.ItemTintColor.SetValue(nil)
+			v.App.ItemIconTint.SetValue(nil)
 		}
 	}
 	l.Add(button5, func(s *constraint.Solver) {
@@ -188,15 +208,34 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 		s.Left(50)
 	})
 
-	leftItem := ios.NewTitleStackBarItem("TEST")
-	leftItem.TintColor = v.App.ItemTintColor.Value()
-	leftItem.TitleStyle, _ = v.App.ItemTitleStyle.Value().(*text.Style)
-	leftItem.OnPress = func() {
+	leftIosItem := ios.NewStackBarItem()
+	leftIosItem.Title = "TEST"
+	leftIosItem.TitleStyle, _ = v.App.ItemTitleStyle.Value().(*text.Style)
+	leftIosItem.OnPress = func() {
 		fmt.Println("Left Item on Press")
 	}
 
-	rightItem := ios.NewImageStackBarItem(application.MustLoadImage("checkbox_checked"))
-	rightItem.OnPress = func() {
+	rightIosItem := ios.NewStackBarItem()
+	rightIosItem.Icon = application.MustLoadImage("checkbox_checked")
+	rightIosItem.IconTint = v.App.ItemIconTint.Value()
+	rightIosItem.OnPress = func() {
+		fmt.Println("Right Item on Press")
+	}
+
+	leftAndroidItem := android.NewStackBarItem()
+	if style, ok := v.App.ItemTitleStyle.Value().(*text.Style); ok {
+		leftAndroidItem.StyledTitle = text.NewStyledText("TEST", style)
+	} else {
+		leftAndroidItem.Title = "TEST"
+	}
+	leftAndroidItem.OnPress = func() {
+		fmt.Println("Left Item on Press")
+	}
+
+	rightAndroidItem := android.NewStackBarItem()
+	rightAndroidItem.Icon = application.MustLoadImage("checkbox_checked")
+	rightAndroidItem.IconTint = v.App.ItemIconTint.Value()
+	rightAndroidItem.OnPress = func() {
 		fmt.Println("Right Item on Press")
 	}
 
@@ -206,8 +245,12 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 		Options: []view.Option{
 			&ios.StackBar{
 				Title:      "Title",
-				LeftItems:  []*ios.StackBarItem{leftItem},
-				RightItems: []*ios.StackBarItem{rightItem},
+				LeftItems:  []*ios.StackBarItem{leftIosItem},
+				RightItems: []*ios.StackBarItem{rightIosItem},
+			},
+			&android.StackBar{
+				Title: "Title",
+				Items: []*android.StackBarItem{leftAndroidItem, rightAndroidItem},
 			},
 		},
 	}

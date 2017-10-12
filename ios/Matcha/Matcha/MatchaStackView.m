@@ -54,7 +54,7 @@
     
     self.navigationBar.barTintColor = view.hasBarColor ? [[UIColor alloc] initWithProtobuf:view.barColor] : nil;
     self.navigationBar.titleTextAttributes = view.hasTitleTextStyle ? [NSAttributedString attributesWithProtobuf:view.titleTextStyle] : nil;
-    self.navigationBar.tintColor = view.hasItemColor ? [[UIColor alloc] initWithProtobuf:view.itemColor]: nil;
+//    self.navigationBar.tintColor = view.hasItemColor ? [[UIColor alloc] initWithProtobuf:view.itemColor]: nil;
     if (view.hasBackTextStyle) {
         [[UIBarButtonItem appearance] setTitleTextAttributes:[NSAttributedString attributesWithProtobuf:view.backTextStyle] forState:UIControlStateNormal];
     } else {
@@ -243,6 +243,7 @@ static char defaultHashKey;
             image = [self.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         }
         self = [self initWithImage:image style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.tintColor = proto.hasTintColor ? [[UIColor alloc] initWithProtobuf:proto.tintColor] : nil;
     } else {
         self = [self initWithTitle:proto.title style:UIBarButtonItemStylePlain target:nil action:nil];
         if (proto.hasTitleStyle) {
@@ -252,8 +253,6 @@ static char defaultHashKey;
         }
     }
     self.enabled = proto.enabled;
-    self.tintColor = proto.hasTintColor ? [[UIColor alloc] initWithProtobuf:proto.tintColor] : nil;
-    NSLog(@"%@", self.tintColor);
     self.onPress = proto.onPress;
     return self;
 }
