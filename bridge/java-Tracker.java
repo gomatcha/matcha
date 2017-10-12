@@ -64,13 +64,13 @@ public class Tracker {
             Object rlt = m.invoke(a, vb);
             test = track(rlt);
         } catch (NoSuchMethodException e) {
-            Log.v("Bridge", String.format("foreignCall, %d, %s, %d, %s", v, method, args, e.getCause()));
+            Log.v("Bridge", String.format("foreignCall, %d, %s, %s, %s", v, method, Arrays.toString(args), e.getCause()));
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
-            Log.v("Bridge", String.format("foreignCall, %d, %s, %d, %s", v, method, args, e.getCause()));
+            Log.v("Bridge", String.format("foreignCall, %d, %s, %s, %s", v, method, Arrays.toString(args), e.getCause()));
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
-            Log.v("Bridge", String.format("foreignCall, %d, %s, %d, %s", v, method, args, e.getCause()));
+            Log.v("Bridge", String.format("foreignCall, %d, %s, %s, %s", v, method, Arrays.toString(args), e.getCause()));
             throw new RuntimeException(e);
         }
         return test;

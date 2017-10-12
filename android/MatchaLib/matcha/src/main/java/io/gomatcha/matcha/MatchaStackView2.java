@@ -30,6 +30,9 @@ class MatchaStackView2 extends RelativeLayout {
             long duration = getResources().getInteger(android.R.integer.config_shortAnimTime);
             View top = childViews.get(childViews.size()-1);
             if (enter) {
+                if (top.getParent() != null) {
+                    this.removeView(top);
+                }
                 this.addView(top);
                 if (childViews.size() > 1) {
                     top.setAlpha(0f);
@@ -46,6 +49,9 @@ class MatchaStackView2 extends RelativeLayout {
                             });
                 }
             } else {
+                if (top.getParent() != null) {
+                    this.removeView(top);
+                }
                 this.addView(top, 0);
                 topView.animate()
                         .translationY(500)

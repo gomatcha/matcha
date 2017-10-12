@@ -2885,6 +2885,19 @@ public final class PbStackView {
         getTitleBytes();
 
     /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    boolean hasStyledTitle();
+    /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    io.gomatcha.matcha.proto.text.PbText.StyledText getStyledTitle();
+    /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    io.gomatcha.matcha.proto.text.PbText.StyledTextOrBuilder getStyledTitleOrBuilder();
+
+    /**
      * <code>.matcha.ImageOrResource icon = 3;</code>
      */
     boolean hasIcon();
@@ -3010,6 +3023,19 @@ public final class PbStackView {
               onPressFunc_ = s;
               break;
             }
+            case 50: {
+              io.gomatcha.matcha.proto.text.PbText.StyledText.Builder subBuilder = null;
+              if (styledTitle_ != null) {
+                subBuilder = styledTitle_.toBuilder();
+              }
+              styledTitle_ = input.readMessage(io.gomatcha.matcha.proto.text.PbText.StyledText.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(styledTitle_);
+                styledTitle_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -3065,6 +3091,27 @@ public final class PbStackView {
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
+    }
+
+    public static final int STYLEDTITLE_FIELD_NUMBER = 6;
+    private io.gomatcha.matcha.proto.text.PbText.StyledText styledTitle_;
+    /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    public boolean hasStyledTitle() {
+      return styledTitle_ != null;
+    }
+    /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    public io.gomatcha.matcha.proto.text.PbText.StyledText getStyledTitle() {
+      return styledTitle_ == null ? io.gomatcha.matcha.proto.text.PbText.StyledText.getDefaultInstance() : styledTitle_;
+    }
+    /**
+     * <code>.matcha.text.StyledText styledTitle = 6;</code>
+     */
+    public io.gomatcha.matcha.proto.text.PbText.StyledTextOrBuilder getStyledTitleOrBuilder() {
+      return getStyledTitle();
     }
 
     public static final int ICON_FIELD_NUMBER = 3;
@@ -3179,6 +3226,9 @@ public final class PbStackView {
       if (!getOnPressFuncBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, onPressFunc_);
       }
+      if (styledTitle_ != null) {
+        output.writeMessage(6, getStyledTitle());
+      }
     }
 
     public int getSerializedSize() {
@@ -3204,6 +3254,10 @@ public final class PbStackView {
       if (!getOnPressFuncBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, onPressFunc_);
       }
+      if (styledTitle_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getStyledTitle());
+      }
       memoizedSize = size;
       return size;
     }
@@ -3222,6 +3276,11 @@ public final class PbStackView {
       boolean result = true;
       result = result && getTitle()
           .equals(other.getTitle());
+      result = result && (hasStyledTitle() == other.hasStyledTitle());
+      if (hasStyledTitle()) {
+        result = result && getStyledTitle()
+            .equals(other.getStyledTitle());
+      }
       result = result && (hasIcon() == other.hasIcon());
       if (hasIcon()) {
         result = result && getIcon()
@@ -3248,6 +3307,10 @@ public final class PbStackView {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TITLE_FIELD_NUMBER;
       hash = (53 * hash) + getTitle().hashCode();
+      if (hasStyledTitle()) {
+        hash = (37 * hash) + STYLEDTITLE_FIELD_NUMBER;
+        hash = (53 * hash) + getStyledTitle().hashCode();
+      }
       if (hasIcon()) {
         hash = (37 * hash) + ICON_FIELD_NUMBER;
         hash = (53 * hash) + getIcon().hashCode();
@@ -3392,6 +3455,12 @@ public final class PbStackView {
         super.clear();
         title_ = "";
 
+        if (styledTitleBuilder_ == null) {
+          styledTitle_ = null;
+        } else {
+          styledTitle_ = null;
+          styledTitleBuilder_ = null;
+        }
         if (iconBuilder_ == null) {
           icon_ = null;
         } else {
@@ -3431,6 +3500,11 @@ public final class PbStackView {
       public io.gomatcha.matcha.proto.view.android.PbStackView.StackBarItem buildPartial() {
         io.gomatcha.matcha.proto.view.android.PbStackView.StackBarItem result = new io.gomatcha.matcha.proto.view.android.PbStackView.StackBarItem(this);
         result.title_ = title_;
+        if (styledTitleBuilder_ == null) {
+          result.styledTitle_ = styledTitle_;
+        } else {
+          result.styledTitle_ = styledTitleBuilder_.build();
+        }
         if (iconBuilder_ == null) {
           result.icon_ = icon_;
         } else {
@@ -3487,6 +3561,9 @@ public final class PbStackView {
         if (!other.getTitle().isEmpty()) {
           title_ = other.title_;
           onChanged();
+        }
+        if (other.hasStyledTitle()) {
+          mergeStyledTitle(other.getStyledTitle());
         }
         if (other.hasIcon()) {
           mergeIcon(other.getIcon());
@@ -3594,6 +3671,123 @@ public final class PbStackView {
         title_ = value;
         onChanged();
         return this;
+      }
+
+      private io.gomatcha.matcha.proto.text.PbText.StyledText styledTitle_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.proto.text.PbText.StyledText, io.gomatcha.matcha.proto.text.PbText.StyledText.Builder, io.gomatcha.matcha.proto.text.PbText.StyledTextOrBuilder> styledTitleBuilder_;
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public boolean hasStyledTitle() {
+        return styledTitleBuilder_ != null || styledTitle_ != null;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public io.gomatcha.matcha.proto.text.PbText.StyledText getStyledTitle() {
+        if (styledTitleBuilder_ == null) {
+          return styledTitle_ == null ? io.gomatcha.matcha.proto.text.PbText.StyledText.getDefaultInstance() : styledTitle_;
+        } else {
+          return styledTitleBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public Builder setStyledTitle(io.gomatcha.matcha.proto.text.PbText.StyledText value) {
+        if (styledTitleBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          styledTitle_ = value;
+          onChanged();
+        } else {
+          styledTitleBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public Builder setStyledTitle(
+          io.gomatcha.matcha.proto.text.PbText.StyledText.Builder builderForValue) {
+        if (styledTitleBuilder_ == null) {
+          styledTitle_ = builderForValue.build();
+          onChanged();
+        } else {
+          styledTitleBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public Builder mergeStyledTitle(io.gomatcha.matcha.proto.text.PbText.StyledText value) {
+        if (styledTitleBuilder_ == null) {
+          if (styledTitle_ != null) {
+            styledTitle_ =
+              io.gomatcha.matcha.proto.text.PbText.StyledText.newBuilder(styledTitle_).mergeFrom(value).buildPartial();
+          } else {
+            styledTitle_ = value;
+          }
+          onChanged();
+        } else {
+          styledTitleBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public Builder clearStyledTitle() {
+        if (styledTitleBuilder_ == null) {
+          styledTitle_ = null;
+          onChanged();
+        } else {
+          styledTitle_ = null;
+          styledTitleBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public io.gomatcha.matcha.proto.text.PbText.StyledText.Builder getStyledTitleBuilder() {
+        
+        onChanged();
+        return getStyledTitleFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      public io.gomatcha.matcha.proto.text.PbText.StyledTextOrBuilder getStyledTitleOrBuilder() {
+        if (styledTitleBuilder_ != null) {
+          return styledTitleBuilder_.getMessageOrBuilder();
+        } else {
+          return styledTitle_ == null ?
+              io.gomatcha.matcha.proto.text.PbText.StyledText.getDefaultInstance() : styledTitle_;
+        }
+      }
+      /**
+       * <code>.matcha.text.StyledText styledTitle = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.proto.text.PbText.StyledText, io.gomatcha.matcha.proto.text.PbText.StyledText.Builder, io.gomatcha.matcha.proto.text.PbText.StyledTextOrBuilder> 
+          getStyledTitleFieldBuilder() {
+        if (styledTitleBuilder_ == null) {
+          styledTitleBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.gomatcha.matcha.proto.text.PbText.StyledText, io.gomatcha.matcha.proto.text.PbText.StyledText.Builder, io.gomatcha.matcha.proto.text.PbText.StyledTextOrBuilder>(
+                  getStyledTitle(),
+                  getParentForChildren(),
+                  isClean());
+          styledTitle_ = null;
+        }
+        return styledTitleBuilder_;
       }
 
       private io.gomatcha.matcha.proto.Proto.ImageOrResource icon_ = null;
@@ -4570,14 +4764,15 @@ public final class PbStackView {
       "edSubtitle\030\007 \001(\0132\027.matcha.text.StyledTex",
       "t\022\034\n\005color\030\004 \001(\0132\r.matcha.Color\0220\n\005items" +
       "\030\005 \003(\0132!.matcha.view.android.StackBarIte" +
-      "m\022\030\n\020backButtonHidden\030\002 \001(\010\"\214\001\n\014StackBar" +
-      "Item\022\r\n\005title\030\001 \001(\t\022%\n\004icon\030\003 \001(\0132\027.matc" +
-      "ha.ImageOrResource\022\037\n\010iconTint\030\002 \001(\0132\r.m" +
-      "atcha.Color\022\020\n\010disabled\030\004 \001(\010\022\023\n\013onPress" +
-      "Func\030\005 \001(\t\"\030\n\nStackEvent\022\n\n\002id\030\001 \003(\003BO\n%" +
-      "io.gomatcha.matcha.proto.view.androidB\013P" +
-      "bStackViewZ\007android\242\002\017MatchaAndroidPBb\006p" +
-      "roto3"
+      "m\022\030\n\020backButtonHidden\030\002 \001(\010\"\272\001\n\014StackBar" +
+      "Item\022\r\n\005title\030\001 \001(\t\022,\n\013styledTitle\030\006 \001(\013" +
+      "2\027.matcha.text.StyledText\022%\n\004icon\030\003 \001(\0132" +
+      "\027.matcha.ImageOrResource\022\037\n\010iconTint\030\002 \001" +
+      "(\0132\r.matcha.Color\022\020\n\010disabled\030\004 \001(\010\022\023\n\013o" +
+      "nPressFunc\030\005 \001(\t\"\030\n\nStackEvent\022\n\n\002id\030\001 \003" +
+      "(\003BO\n%io.gomatcha.matcha.proto.view.andr" +
+      "oidB\013PbStackViewZ\007android\242\002\017MatchaAndroi",
+      "dPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4616,7 +4811,7 @@ public final class PbStackView {
     internal_static_matcha_view_android_StackBarItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_StackBarItem_descriptor,
-        new java.lang.String[] { "Title", "Icon", "IconTint", "Disabled", "OnPressFunc", });
+        new java.lang.String[] { "Title", "StyledTitle", "Icon", "IconTint", "Disabled", "OnPressFunc", });
     internal_static_matcha_view_android_StackEvent_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_matcha_view_android_StackEvent_fieldAccessorTable = new

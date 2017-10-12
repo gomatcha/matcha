@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,7 +78,11 @@ class MatchaToolbarView extends MatchaChildView {
                 PbStackView.StackBarItem protoItem = itemList.get(i);
                 final String onPressFunc = protoItem.getOnPressFunc();
 
-                MenuItem item = menu.add(0, Menu.FIRST + i, Menu.NONE, protoItem.getTitle());
+                CharSequence title = protoItem.getTitle();
+                if (protoItem.hasStyledTitle()) {
+                    title = Protobuf.newAttributedString(protoItem.getStyledTitle());
+                }
+                MenuItem item = menu.add(0, Menu.FIRST + i, Menu.NONE, title);
                 item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
                 item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
@@ -92,6 +97,8 @@ class MatchaToolbarView extends MatchaChildView {
                     Drawable icon = Protobuf.newDrawable(protoItem.getIcon(), getContext());
                     if (protoItem.hasIconTint()) {
                         icon.setColorFilter(Protobuf.newColor(protoItem.getIconTint()), PorterDuff.Mode.SRC_ATOP);
+                    } else {
+                        icon.setColorFilter(null);
                     }
                     item.setIcon(icon);
                 }
