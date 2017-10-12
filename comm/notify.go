@@ -2,7 +2,6 @@ package comm
 
 import (
 	"image/color"
-	"time"
 )
 
 type Id int64
