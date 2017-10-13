@@ -54,7 +54,6 @@
     
     self.navigationBar.barTintColor = view.hasBarColor ? [[UIColor alloc] initWithProtobuf:view.barColor] : nil;
     self.navigationBar.titleTextAttributes = view.hasTitleTextStyle ? [NSAttributedString attributesWithProtobuf:view.titleTextStyle] : nil;
-//    self.navigationBar.tintColor = view.hasItemColor ? [[UIColor alloc] initWithProtobuf:view.itemColor]: nil;
     if (view.hasBackTextStyle) {
         [[UIBarButtonItem appearance] setTitleTextAttributes:[NSAttributedString attributesWithProtobuf:view.backTextStyle] forState:UIControlStateNormal];
     } else {

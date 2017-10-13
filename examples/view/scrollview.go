@@ -7,6 +7,7 @@ import (
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/animate"
 	"gomatcha.io/matcha/bridge"
+	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
@@ -42,28 +43,46 @@ func (v *ScrollView) Lifecycle(from, to view.Stage) {
 func (v *ScrollView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	childLayouter := &table.Layouter{}
+	vtable := &table.Layouter{}
 	for i := 0; i < 5; i++ {
-		childLayouter.Add(NewTableCell(), nil)
+		vtable.Add(NewTableCell(), nil)
 	}
 
 	scrollview := view.NewScrollView()
 	scrollview.ScrollPosition = v.scrollPosition
 	scrollview.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
-	scrollview.ContentLayouter = childLayouter
-	scrollview.ContentChildren = childLayouter.Views()
+	scrollview.ContentLayouter = vtable
+	scrollview.ContentChildren = vtable.Views()
 	g1 := l.Add(scrollview, func(s *constraint.Solver) {
 		s.Top(0)
 		s.Left(0)
 		s.Width(200)
-		s.HeightEqual(l.Height())
+		s.BottomEqual(l.Bottom().Add(-210))
+	})
+
+	htable := &table.Layouter{
+		StartEdge: layout.EdgeLeft,
+	}
+	for i := 0; i < 5; i++ {
+		htable.Add(NewTableCell(), nil)
+	}
+
+	hscrollview := view.NewScrollView()
+	hscrollview.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
+	hscrollview.ContentLayouter = htable
+	hscrollview.ContentChildren = htable.Views()
+	_ = l.Add(hscrollview, func(s *constraint.Solver) {
+		s.LeftEqual(l.Left())
+		s.RightEqual(l.Right())
+		s.Height(200)
+		s.BottomEqual(l.Bottom())
 	})
 
 	textView := view.NewTextView()
 	textView.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
 	textView.String = fmt.Sprintln("Position:", v.scrollPosition.X.Value(), v.scrollPosition.Y.Value())
 	textView.MaxLines = 2
-	g2 := l.Add(textView, func(s *constraint.Solver) {
+	g3 := l.Add(textView, func(s *constraint.Solver) {
 		s.Top(50)
 		s.LeftEqual(g1.Right())
 		s.RightEqual(l.Right())
@@ -82,7 +101,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 		v.scrollPosition.Y.Run(a)
 	}
 	_ = l.Add(button, func(s *constraint.Solver) {
-		s.TopEqual(g2.Bottom())
+		s.TopEqual(g3.Bottom())
 		s.LeftEqual(g1.Right())
 	})
 
@@ -111,8 +130,8 @@ func (v *TableCell) Build(ctx view.Context) view.Model {
 	l.Add(chl, func(s *constraint.Solver) {
 		s.LeftEqual(l.Left().Add(10))
 		s.RightEqual(l.Right().Add(-10))
-		s.TopEqual(l.Top().Add(50))
-		s.BottomEqual(l.Bottom().Add(-50))
+		s.TopEqual(l.Top().Add(10))
+		s.BottomEqual(l.Bottom().Add(-10))
 	})
 
 	return view.Model{

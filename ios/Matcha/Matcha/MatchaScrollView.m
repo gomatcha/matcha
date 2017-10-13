@@ -15,6 +15,9 @@
     if ((self = [super initWithFrame:CGRectZero])) {
         self.viewNode = viewNode;
         self.delegate = self;
+        if (@available(iOS 11.0, *)) {
+            self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
     }
     return self;
 }
