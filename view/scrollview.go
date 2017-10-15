@@ -3,6 +3,7 @@ package view
 import (
 	"fmt"
 	"math"
+	"runtime"
 
 	"github.com/gogo/protobuf/proto"
 
@@ -16,7 +17,7 @@ import (
 
 type ScrollView struct {
 	Embed
-	ScrollAxes     layout.Axis
+	ScrollAxes     layout.Axis // Multiple scroll axes are not supported.
 	IndicatorAxes  layout.Axis
 	ScrollEnabled  bool
 	ScrollPosition *ScrollPosition
@@ -36,6 +37,10 @@ func NewScrollView() *ScrollView {
 		IndicatorAxes: layout.AxisY | layout.AxisX,
 		ScrollEnabled: true,
 	}
+}
+
+func (v *ScrollView) ViewKey() interface{} {
+	return v.ScrollAxes // On Android, horizontal and vertical scrollViews are different classes.
 }
 
 func (v *ScrollView) Lifecycle(from, to Stage) {
@@ -63,6 +68,11 @@ func (v *ScrollView) Build(ctx Context) Model {
 	child.Layouter = v.ContentLayouter
 	child.Painter = v.ContentPainter
 
+	nativeName := "gomatcha.io/matcha/view/scrollview"
+	if runtime.GOOS == "android" && v.ScrollAxes == layout.AxisX {
+		nativeName = "gomatcha.io/matcha/view/hscrollview"
+	}
+
 	var painter paint.Painter
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
@@ -74,7 +84,7 @@ func (v *ScrollView) Build(ctx Context) Model {
 			axes:           v.ScrollAxes,
 			scrollPosition: v.scrollPosition,
 		},
-		NativeViewName: "gomatcha.io/matcha/view/scrollview",
+		NativeViewName: nativeName,
 		NativeViewState: internal.MarshalProtobuf(&pbview.ScrollView{
 			ScrollEnabled:                  v.ScrollEnabled,
 			Horizontal:                     v.ScrollAxes|layout.AxisX == layout.AxisX,

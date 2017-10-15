@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.HorizontalScrollView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -156,14 +157,24 @@ public class MatchaViewNode extends Object {
             double minY = layoutPaintNode.getMiny() * ratio;
 
             // Offset for scrollviews.
-            if (this.view.getParent() != null && this.view.getParent().getParent() instanceof ScrollView) {
-                ScrollView scrollView = (ScrollView)this.view.getParent().getParent();
-                float offsetX = scrollView.getScrollX();
-                float offsetY = scrollView.getScrollY();
-                minX += offsetX;
-                minY += offsetY;
-                maxX += offsetX;
-                maxY += offsetY;
+            if (this.view.getParent() != null) {
+                if (this.view.getParent().getParent() instanceof ScrollView) {
+                    ScrollView scrollView = (ScrollView)this.view.getParent().getParent();
+                    float offsetX = scrollView.getScrollX();
+                    float offsetY = scrollView.getScrollY();
+                    minX += offsetX;
+                    minY += offsetY;
+                    maxX += offsetX;
+                    maxY += offsetY;
+                } else if (this.view.getParent().getParent() instanceof HorizontalScrollView) {
+                    HorizontalScrollView scrollView = (HorizontalScrollView)this.view.getParent().getParent();
+                    float offsetX = scrollView.getScrollX();
+                    float offsetY = scrollView.getScrollY();
+                    minX += offsetX;
+                    minY += offsetY;
+                    maxX += offsetX;
+                    maxY += offsetY;
+                }
             }
 
             if (this.parent == null) {
