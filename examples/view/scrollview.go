@@ -45,7 +45,9 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 
 	vtable := &table.Layouter{}
 	for i := 0; i < 5; i++ {
-		vtable.Add(NewTableCell(), nil)
+		cell := NewTableCell()
+		cell.Axis = layout.AxisY
+		vtable.Add(cell, nil)
 	}
 
 	scrollview := view.NewScrollView()
@@ -64,10 +66,13 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 		StartEdge: layout.EdgeLeft,
 	}
 	for i := 0; i < 5; i++ {
-		htable.Add(NewTableCell(), nil)
+		cell := NewTableCell()
+		cell.Axis = layout.AxisX
+		htable.Add(cell, nil)
 	}
 
 	hscrollview := view.NewScrollView()
+	hscrollview.ScrollAxes = layout.AxisX
 	hscrollview.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
 	hscrollview.ContentLayouter = htable
 	hscrollview.ContentChildren = htable.Views()
@@ -114,6 +119,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 
 type TableCell struct {
 	view.Embed
+	Axis layout.Axis
 }
 
 func NewTableCell() *TableCell {
@@ -123,7 +129,11 @@ func NewTableCell() *TableCell {
 func (v *TableCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
-		s.Height(200)
+		if v.Axis == layout.AxisY {
+			s.Height(200)
+		} else {
+			s.Width(200)
+		}
 	})
 
 	chl := NewTableButton()

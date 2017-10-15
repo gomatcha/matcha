@@ -20,6 +20,7 @@ type ScrollView struct {
 	IndicatorAxes  layout.Axis
 	ScrollEnabled  bool
 	ScrollPosition *ScrollPosition
+	scrollPosition *ScrollPosition
 	OnScroll       func(position layout.Point)
 
 	ContentChildren []View
@@ -31,17 +32,18 @@ type ScrollView struct {
 // NewScrollView returns a new view.
 func NewScrollView() *ScrollView {
 	return &ScrollView{
-		ScrollPosition: &ScrollPosition{},
-		ScrollAxes:     layout.AxisY,
-		IndicatorAxes:  layout.AxisY | layout.AxisX,
-		ScrollEnabled:  true,
+		ScrollAxes:    layout.AxisY,
+		IndicatorAxes: layout.AxisY | layout.AxisX,
+		ScrollEnabled: true,
 	}
 }
 
 func (v *ScrollView) Lifecycle(from, to Stage) {
 	if EntersStage(from, to, StageMounted) {
-		if v.ScrollPosition == nil {
-			v.ScrollPosition = &ScrollPosition{}
+		if v.ScrollPosition != nil {
+			v.scrollPosition = v.ScrollPosition
+		} else {
+			v.scrollPosition = &ScrollPosition{}
 		}
 	}
 }
@@ -49,8 +51,8 @@ func (v *ScrollView) Lifecycle(from, to Stage) {
 func (v *ScrollView) Update(v2 View) {
 	CopyFields(v, v2)
 
-	if v.ScrollPosition == nil {
-		v.ScrollPosition = &ScrollPosition{}
+	if v.ScrollPosition != nil {
+		v.scrollPosition = v.ScrollPosition
 	}
 }
 
@@ -70,7 +72,7 @@ func (v *ScrollView) Build(ctx Context) Model {
 		Painter:  painter,
 		Layouter: &scrollViewLayouter{
 			axes:           v.ScrollAxes,
-			scrollPosition: v.ScrollPosition,
+			scrollPosition: v.scrollPosition,
 		},
 		NativeViewName: "gomatcha.io/matcha/view/scrollview",
 		NativeViewState: internal.MarshalProtobuf(&pbview.ScrollView{
@@ -92,7 +94,7 @@ func (v *ScrollView) Build(ctx Context) Model {
 				var offset layout.Point
 				(&offset).UnmarshalProtobuf(event.ContentOffset)
 
-				v.ScrollPosition.setValue(offset, true)
+				v.scrollPosition.setValue(offset, true)
 
 				if v.OnScroll != nil {
 					v.OnScroll(offset)

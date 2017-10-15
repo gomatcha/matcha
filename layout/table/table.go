@@ -14,6 +14,7 @@ Package table implements a vertical, single column layout system. Views are laye
 package table
 
 import (
+	"fmt"
 	"math"
 
 	"gomatcha.io/matcha/comm"
@@ -56,6 +57,9 @@ func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	if startEdge == layout.EdgeBottom || startEdge == layout.EdgeTop {
 		y := 0.0
 		x := ctx.MinSize().X
+		if x == 0 {
+			fmt.Println("table.Layouter: Width is 0, is scrollview.ScrollAxes set?")
+		}
 		for i := range l.views {
 			if startEdge == layout.EdgeBottom {
 				i = len(l.views) - i - 1
@@ -70,6 +74,9 @@ func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	} else {
 		y := ctx.MinSize().Y
 		x := 0.0
+		if y == 0 {
+			fmt.Println("table.Layouter: Height is 0, is scrollview.ScrollAxes set?")
+		}
 		for i := range l.views {
 			if startEdge == layout.EdgeLeft {
 				i = len(l.views) - i - 1
@@ -91,6 +98,28 @@ func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 		}
 	}
 	return g, gs
+}
+
+// DebugStrings must be called after Layout()...
+func (l *Layouter) DebugStrings() (string, []string) {
+	debugstr := "Edge="
+	switch l.StartEdge {
+	case layout.EdgeBottom:
+		debugstr += "Bot"
+	case layout.EdgeLeft:
+		debugstr += "Left"
+	case layout.EdgeRight:
+		debugstr += "Right"
+	case layout.EdgeTop:
+	default:
+		debugstr += "Top"
+	}
+
+	debugstrs := make([]string, len(l.views))
+	for i := range l.views {
+		debugstrs[i] = debugstr
+	}
+	return debugstr, debugstrs
 }
 
 // Notify implements the view.Layouter interface.
