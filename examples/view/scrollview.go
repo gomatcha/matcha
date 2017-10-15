@@ -98,6 +98,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 	button.String = "Scroll"
 	button.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
 	button.OnPress = func() {
+		fmt.Println("OnPress")
 		a := &animate.Basic{
 			Start: v.scrollPosition.Y.Value(),
 			End:   200,

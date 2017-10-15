@@ -10,7 +10,6 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
-	"time"
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
@@ -64,8 +63,7 @@ func (r *root) start() {
 	defer matcha.MainLocker.Unlock()
 
 	id := r.id
-	r.ticker = internal.NewTicker(time.Hour * 99999)
-	_ = r.ticker.Notify(func() {
+	r.ticker = internal.NewTicker(func() {
 		matcha.MainLocker.Lock()
 		defer matcha.MainLocker.Unlock()
 

@@ -101,11 +101,15 @@ func (v *ScrollView) Build(ctx Context) Model {
 					return
 				}
 
+				// Ignore if there is a running animation.
+				if v.scrollPosition.X.Animation() != nil || v.scrollPosition.Y.Animation() != nil {
+					return
+				}
+
 				var offset layout.Point
 				(&offset).UnmarshalProtobuf(event.ContentOffset)
 
 				v.scrollPosition.setValue(offset, true)
-
 				if v.OnScroll != nil {
 					v.OnScroll(offset)
 				}

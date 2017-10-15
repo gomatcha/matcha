@@ -281,9 +281,17 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
             origin.y *= -1;
             f.origin = CGPointZero;
             self.materializedView.frame = f;
-            scrollView.matchaContentOffset = origin;
-            scrollView.contentOffset = origin;
-            scrollView.contentSize = f.size;
+            
+            if ((fabs(origin.x - scrollView.matchaContentOffset.x) < 0.5 && fabs(origin.y - scrollView.matchaContentOffset.y) < 0.5)) {
+                scrollView.matchaContentOffset = origin;
+                scrollView.contentOffset = origin;
+                scrollView.contentSize = f.size;
+            } else {
+                // If go has independently changed the content offset. Cancel any running animations.
+                scrollView.matchaContentOffset = origin;
+                [scrollView setContentOffset:origin animated:NO];
+                scrollView.contentSize = f.size;
+            }
         } else if (self.parent.viewController == nil) { // let view controllers do their own layout
             if (!CGRectEqualToRect(f, self.frame)) {
                 self.materializedView.frame = f;
