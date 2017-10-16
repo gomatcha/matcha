@@ -274,7 +274,11 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
         }
         
         CGRect f = pbLayoutPaintNode.frame;
-        if ([self.parent.view isKindOfClass:[MatchaScrollView class]]) {
+        if (self.parent == nil) {
+        } else if (self.parent.viewController) {
+            // let view controllers do their own layout.
+        } else if ([self.parent.view isKindOfClass:[MatchaScrollView class]]) {
+            
             MatchaScrollView *scrollView = (MatchaScrollView *)self.parent.view;
             CGPoint origin = f.origin;
             origin.x *= -1;
@@ -287,17 +291,20 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
                 scrollView.contentOffset = origin;
                 scrollView.contentSize = f.size;
             } else {
-                // If go has independently changed the content offset. Cancel any running animations.
+                // If Go has independently changed the content offset, cancel any acceleration. Otherwise the view will continue scrolling.
                 scrollView.matchaContentOffset = origin;
                 [scrollView setContentOffset:origin animated:NO];
                 scrollView.contentSize = f.size;
             }
-        } else if (self.parent.viewController == nil) { // let view controllers do their own layout
+        } else {
             if (!CGRectEqualToRect(f, self.frame)) {
                 self.materializedView.frame = f;
                 self.frame = f;
             }
-        } else if (self.viewController) {
+        }
+        
+        if (self.viewController) {
+            // Give view controllers their children's layout objects.
             NSMutableArray<MatchaViewPBLayoutPaintNode *> *layoutPaintNodes = [NSMutableArray array];
             for (MatchaViewNode *i in childrenArray) {
                 [layoutPaintNodes addObject:[root.layoutPaintNodes objectForKey:i.identifier.longLongValue]];

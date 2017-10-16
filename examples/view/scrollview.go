@@ -2,6 +2,7 @@ package view
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"golang.org/x/image/colornames"
@@ -11,7 +12,6 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/view"
 )
 
@@ -47,6 +47,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 	for i := 0; i < 5; i++ {
 		cell := NewTableCell()
 		cell.Axis = layout.AxisY
+		cell.Index = i
 		vtable.Add(cell, nil)
 	}
 
@@ -68,6 +69,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 	for i := 0; i < 5; i++ {
 		cell := NewTableCell()
 		cell.Axis = layout.AxisX
+		cell.Index = i
 		htable.Add(cell, nil)
 	}
 
@@ -120,7 +122,8 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 
 type TableCell struct {
 	view.Embed
-	Axis layout.Axis
+	Axis  layout.Axis
+	Index int
 }
 
 func NewTableCell() *TableCell {
@@ -137,40 +140,23 @@ func (v *TableCell) Build(ctx view.Context) view.Model {
 		}
 	})
 
-	chl := NewTableButton()
-	l.Add(chl, func(s *constraint.Solver) {
-		s.LeftEqual(l.Left().Add(10))
-		s.RightEqual(l.Right().Add(-10))
-		s.TopEqual(l.Top().Add(10))
-		s.BottomEqual(l.Bottom().Add(-10))
+	label := view.NewTextView()
+	label.String = strconv.Itoa(v.Index)
+	l.Add(label, func(s *constraint.Solver) {
+	})
+
+	border := view.NewBasicView()
+	border.Painter = &paint.Style{BackgroundColor: colornames.Gray}
+	l.Add(border, func(s *constraint.Solver) {
+		s.Height(1)
+		s.LeftEqual(l.Left())
+		s.RightEqual(l.Right())
+		s.BottomEqual(l.Bottom())
 	})
 
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
-	}
-}
-
-type TableButton struct {
-	view.Embed
-}
-
-func NewTableButton() *TableButton {
-	return &TableButton{}
-}
-
-func (v *TableButton) Build(ctx view.Context) view.Model {
-	return view.Model{
-		Painter: &paint.Style{BackgroundColor: colornames.Blue},
-		Options: []view.Option{
-			pointer.GestureList{
-				&pointer.ButtonGesture{
-					OnEvent: func(e *pointer.ButtonEvent) {
-						v.Signal()
-					},
-				},
-			},
-		},
 	}
 }

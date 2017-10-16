@@ -135,6 +135,7 @@ func (l *scrollViewLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.
 		maxSize.X = math.Inf(1)
 	}
 
+	// We offset the scrollView's contentView by the scrollPosition. And translate that into the actual scroll position on the native side.
 	offset := l.scrollPosition.Value()
 	g := ctx.LayoutChild(0, minSize, maxSize)
 	g.Frame = layout.Rt(-offset.X, -offset.Y, g.Width()-offset.X, g.Height()-offset.Y)

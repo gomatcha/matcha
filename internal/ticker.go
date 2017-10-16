@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"fmt"
 	"sync"
 
 	"gomatcha.io/matcha/bridge"
