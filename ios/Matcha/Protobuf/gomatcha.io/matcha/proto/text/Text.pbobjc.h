@@ -28,8 +28,6 @@
 CF_EXTERN_C_BEGIN
 
 @class MatchaLayoutPBPoint;
-@class MatchaPBColor;
-@class MatchaPBFont;
 @class MatchaPBStyledText;
 @class MatchaPBText;
 @class MatchaPBTextStyle;
@@ -248,17 +246,30 @@ typedef GPB_ENUM(MatchaPBTextStyle_FieldNumber) {
   MatchaPBTextStyle_FieldNumber_Index = 1,
   MatchaPBTextStyle_FieldNumber_TextAlignment = 2,
   MatchaPBTextStyle_FieldNumber_StrikethroughStyle = 4,
-  MatchaPBTextStyle_FieldNumber_StrikethroughColor = 6,
   MatchaPBTextStyle_FieldNumber_UnderlineStyle = 8,
-  MatchaPBTextStyle_FieldNumber_UnderlineColor = 10,
-  MatchaPBTextStyle_FieldNumber_Font = 12,
   MatchaPBTextStyle_FieldNumber_Hyphenation = 14,
   MatchaPBTextStyle_FieldNumber_LineHeightMultiple = 16,
   MatchaPBTextStyle_FieldNumber_MaxLines = 18,
-  MatchaPBTextStyle_FieldNumber_TextColor = 20,
   MatchaPBTextStyle_FieldNumber_Wrap = 22,
   MatchaPBTextStyle_FieldNumber_Truncation = 24,
   MatchaPBTextStyle_FieldNumber_TruncationString = 26,
+  MatchaPBTextStyle_FieldNumber_FontName = 27,
+  MatchaPBTextStyle_FieldNumber_FontSize = 29,
+  MatchaPBTextStyle_FieldNumber_HasStrikethroughColor = 31,
+  MatchaPBTextStyle_FieldNumber_StrikethroughColorRed = 32,
+  MatchaPBTextStyle_FieldNumber_StrikethroughColorGreen = 33,
+  MatchaPBTextStyle_FieldNumber_StrikethroughColorBlue = 34,
+  MatchaPBTextStyle_FieldNumber_StrikethroughColorAlpha = 35,
+  MatchaPBTextStyle_FieldNumber_HasUnderlineColor = 41,
+  MatchaPBTextStyle_FieldNumber_UnderlineColorRed = 42,
+  MatchaPBTextStyle_FieldNumber_UnderlineColorGreen = 43,
+  MatchaPBTextStyle_FieldNumber_UnderlineColorBlue = 44,
+  MatchaPBTextStyle_FieldNumber_UnderlineColorAlpha = 45,
+  MatchaPBTextStyle_FieldNumber_HasTextColor = 51,
+  MatchaPBTextStyle_FieldNumber_TextColorRed = 52,
+  MatchaPBTextStyle_FieldNumber_TextColorGreen = 53,
+  MatchaPBTextStyle_FieldNumber_TextColorBlue = 54,
+  MatchaPBTextStyle_FieldNumber_TextColorAlpha = 55,
 };
 
 @interface MatchaPBTextStyle : GPBMessage
@@ -270,19 +281,27 @@ typedef GPB_ENUM(MatchaPBTextStyle_FieldNumber) {
 
 @property(nonatomic, readwrite) MatchaPBStrikethroughStyle strikethroughStyle;
 
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *strikethroughColor;
-/** Test to see if @c strikethroughColor has been set. */
 @property(nonatomic, readwrite) BOOL hasStrikethroughColor;
+
+@property(nonatomic, readwrite) uint32_t strikethroughColorRed;
+
+@property(nonatomic, readwrite) uint32_t strikethroughColorGreen;
+
+@property(nonatomic, readwrite) uint32_t strikethroughColorBlue;
+
+@property(nonatomic, readwrite) uint32_t strikethroughColorAlpha;
 
 @property(nonatomic, readwrite) MatchaPBUnderlineStyle underlineStyle;
 
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *underlineColor;
-/** Test to see if @c underlineColor has been set. */
 @property(nonatomic, readwrite) BOOL hasUnderlineColor;
 
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBFont *font;
-/** Test to see if @c font has been set. */
-@property(nonatomic, readwrite) BOOL hasFont;
+@property(nonatomic, readwrite) uint32_t underlineColorRed;
+
+@property(nonatomic, readwrite) uint32_t underlineColorGreen;
+
+@property(nonatomic, readwrite) uint32_t underlineColorBlue;
+
+@property(nonatomic, readwrite) uint32_t underlineColorAlpha;
 
 @property(nonatomic, readwrite) double hyphenation;
 
@@ -290,15 +309,25 @@ typedef GPB_ENUM(MatchaPBTextStyle_FieldNumber) {
 
 @property(nonatomic, readwrite) int64_t maxLines;
 
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *textColor;
-/** Test to see if @c textColor has been set. */
 @property(nonatomic, readwrite) BOOL hasTextColor;
+
+@property(nonatomic, readwrite) uint32_t textColorRed;
+
+@property(nonatomic, readwrite) uint32_t textColorGreen;
+
+@property(nonatomic, readwrite) uint32_t textColorBlue;
+
+@property(nonatomic, readwrite) uint32_t textColorAlpha;
 
 @property(nonatomic, readwrite) MatchaPBTextWrap wrap;
 
 @property(nonatomic, readwrite) MatchaPBTruncation truncation;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *truncationString;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *fontName;
+
+@property(nonatomic, readwrite) double fontSize;
 
 @end
 

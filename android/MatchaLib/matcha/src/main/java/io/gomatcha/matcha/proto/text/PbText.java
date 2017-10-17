@@ -3786,17 +3786,29 @@ public final class PbText {
     io.gomatcha.matcha.proto.text.PbText.StrikethroughStyle getStrikethroughStyle();
 
     /**
-     * <code>.matcha.Color strikethroughColor = 6;</code>
+     * <code>bool hasStrikethroughColor = 31;</code>
      */
-    boolean hasStrikethroughColor();
+    boolean getHasStrikethroughColor();
+
     /**
-     * <code>.matcha.Color strikethroughColor = 6;</code>
+     * <code>uint32 strikethroughColorRed = 32;</code>
      */
-    io.gomatcha.matcha.proto.Proto.Color getStrikethroughColor();
+    int getStrikethroughColorRed();
+
     /**
-     * <code>.matcha.Color strikethroughColor = 6;</code>
+     * <code>uint32 strikethroughColorGreen = 33;</code>
      */
-    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getStrikethroughColorOrBuilder();
+    int getStrikethroughColorGreen();
+
+    /**
+     * <code>uint32 strikethroughColorBlue = 34;</code>
+     */
+    int getStrikethroughColorBlue();
+
+    /**
+     * <code>uint32 strikethroughColorAlpha = 35;</code>
+     */
+    int getStrikethroughColorAlpha();
 
     /**
      * <code>.matcha.text.UnderlineStyle underlineStyle = 8;</code>
@@ -3808,30 +3820,29 @@ public final class PbText {
     io.gomatcha.matcha.proto.text.PbText.UnderlineStyle getUnderlineStyle();
 
     /**
-     * <code>.matcha.Color underlineColor = 10;</code>
+     * <code>bool hasUnderlineColor = 41;</code>
      */
-    boolean hasUnderlineColor();
-    /**
-     * <code>.matcha.Color underlineColor = 10;</code>
-     */
-    io.gomatcha.matcha.proto.Proto.Color getUnderlineColor();
-    /**
-     * <code>.matcha.Color underlineColor = 10;</code>
-     */
-    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getUnderlineColorOrBuilder();
+    boolean getHasUnderlineColor();
 
     /**
-     * <code>.matcha.text.Font font = 12;</code>
+     * <code>uint32 underlineColorRed = 42;</code>
      */
-    boolean hasFont();
+    int getUnderlineColorRed();
+
     /**
-     * <code>.matcha.text.Font font = 12;</code>
+     * <code>uint32 underlineColorGreen = 43;</code>
      */
-    io.gomatcha.matcha.proto.text.PbText.Font getFont();
+    int getUnderlineColorGreen();
+
     /**
-     * <code>.matcha.text.Font font = 12;</code>
+     * <code>uint32 underlineColorBlue = 44;</code>
      */
-    io.gomatcha.matcha.proto.text.PbText.FontOrBuilder getFontOrBuilder();
+    int getUnderlineColorBlue();
+
+    /**
+     * <code>uint32 underlineColorAlpha = 45;</code>
+     */
+    int getUnderlineColorAlpha();
 
     /**
      * <code>double hyphenation = 14;</code>
@@ -3849,17 +3860,29 @@ public final class PbText {
     long getMaxLines();
 
     /**
-     * <code>.matcha.Color textColor = 20;</code>
+     * <code>bool hasTextColor = 51;</code>
      */
-    boolean hasTextColor();
+    boolean getHasTextColor();
+
     /**
-     * <code>.matcha.Color textColor = 20;</code>
+     * <code>uint32 textColorRed = 52;</code>
      */
-    io.gomatcha.matcha.proto.Proto.Color getTextColor();
+    int getTextColorRed();
+
     /**
-     * <code>.matcha.Color textColor = 20;</code>
+     * <code>uint32 textColorGreen = 53;</code>
      */
-    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getTextColorOrBuilder();
+    int getTextColorGreen();
+
+    /**
+     * <code>uint32 textColorBlue = 54;</code>
+     */
+    int getTextColorBlue();
+
+    /**
+     * <code>uint32 textColorAlpha = 55;</code>
+     */
+    int getTextColorAlpha();
 
     /**
      * <code>.matcha.text.TextWrap wrap = 22;</code>
@@ -3888,6 +3911,21 @@ public final class PbText {
      */
     com.google.protobuf.ByteString
         getTruncationStringBytes();
+
+    /**
+     * <code>string fontName = 27;</code>
+     */
+    java.lang.String getFontName();
+    /**
+     * <code>string fontName = 27;</code>
+     */
+    com.google.protobuf.ByteString
+        getFontNameBytes();
+
+    /**
+     * <code>double fontSize = 29;</code>
+     */
+    double getFontSize();
   }
   /**
    * Protobuf type {@code matcha.text.TextStyle}
@@ -3904,13 +3942,30 @@ public final class PbText {
       index_ = 0L;
       textAlignment_ = 0;
       strikethroughStyle_ = 0;
+      hasStrikethroughColor_ = false;
+      strikethroughColorRed_ = 0;
+      strikethroughColorGreen_ = 0;
+      strikethroughColorBlue_ = 0;
+      strikethroughColorAlpha_ = 0;
       underlineStyle_ = 0;
+      hasUnderlineColor_ = false;
+      underlineColorRed_ = 0;
+      underlineColorGreen_ = 0;
+      underlineColorBlue_ = 0;
+      underlineColorAlpha_ = 0;
       hyphenation_ = 0D;
       lineHeightMultiple_ = 0D;
       maxLines_ = 0L;
+      hasTextColor_ = false;
+      textColorRed_ = 0;
+      textColorGreen_ = 0;
+      textColorBlue_ = 0;
+      textColorAlpha_ = 0;
       wrap_ = 0;
       truncation_ = 0;
       truncationString_ = "";
+      fontName_ = "";
+      fontSize_ = 0D;
     }
 
     @java.lang.Override
@@ -3955,49 +4010,10 @@ public final class PbText {
               strikethroughStyle_ = rawValue;
               break;
             }
-            case 50: {
-              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
-              if (strikethroughColor_ != null) {
-                subBuilder = strikethroughColor_.toBuilder();
-              }
-              strikethroughColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(strikethroughColor_);
-                strikethroughColor_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
             case 64: {
               int rawValue = input.readEnum();
 
               underlineStyle_ = rawValue;
-              break;
-            }
-            case 82: {
-              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
-              if (underlineColor_ != null) {
-                subBuilder = underlineColor_.toBuilder();
-              }
-              underlineColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(underlineColor_);
-                underlineColor_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 98: {
-              io.gomatcha.matcha.proto.text.PbText.Font.Builder subBuilder = null;
-              if (font_ != null) {
-                subBuilder = font_.toBuilder();
-              }
-              font_ = input.readMessage(io.gomatcha.matcha.proto.text.PbText.Font.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(font_);
-                font_ = subBuilder.buildPartial();
-              }
-
               break;
             }
             case 113: {
@@ -4013,19 +4029,6 @@ public final class PbText {
             case 144: {
 
               maxLines_ = input.readInt64();
-              break;
-            }
-            case 162: {
-              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
-              if (textColor_ != null) {
-                subBuilder = textColor_.toBuilder();
-              }
-              textColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(textColor_);
-                textColor_ = subBuilder.buildPartial();
-              }
-
               break;
             }
             case 176: {
@@ -4044,6 +4047,92 @@ public final class PbText {
               java.lang.String s = input.readStringRequireUtf8();
 
               truncationString_ = s;
+              break;
+            }
+            case 218: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              fontName_ = s;
+              break;
+            }
+            case 233: {
+
+              fontSize_ = input.readDouble();
+              break;
+            }
+            case 248: {
+
+              hasStrikethroughColor_ = input.readBool();
+              break;
+            }
+            case 256: {
+
+              strikethroughColorRed_ = input.readUInt32();
+              break;
+            }
+            case 264: {
+
+              strikethroughColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 272: {
+
+              strikethroughColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 280: {
+
+              strikethroughColorAlpha_ = input.readUInt32();
+              break;
+            }
+            case 328: {
+
+              hasUnderlineColor_ = input.readBool();
+              break;
+            }
+            case 336: {
+
+              underlineColorRed_ = input.readUInt32();
+              break;
+            }
+            case 344: {
+
+              underlineColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 352: {
+
+              underlineColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 360: {
+
+              underlineColorAlpha_ = input.readUInt32();
+              break;
+            }
+            case 408: {
+
+              hasTextColor_ = input.readBool();
+              break;
+            }
+            case 416: {
+
+              textColorRed_ = input.readUInt32();
+              break;
+            }
+            case 424: {
+
+              textColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 432: {
+
+              textColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 440: {
+
+              textColorAlpha_ = input.readUInt32();
               break;
             }
           }
@@ -4114,25 +4203,49 @@ public final class PbText {
       return result == null ? io.gomatcha.matcha.proto.text.PbText.StrikethroughStyle.UNRECOGNIZED : result;
     }
 
-    public static final int STRIKETHROUGHCOLOR_FIELD_NUMBER = 6;
-    private io.gomatcha.matcha.proto.Proto.Color strikethroughColor_;
+    public static final int HASSTRIKETHROUGHCOLOR_FIELD_NUMBER = 31;
+    private boolean hasStrikethroughColor_;
     /**
-     * <code>.matcha.Color strikethroughColor = 6;</code>
+     * <code>bool hasStrikethroughColor = 31;</code>
      */
-    public boolean hasStrikethroughColor() {
-      return strikethroughColor_ != null;
+    public boolean getHasStrikethroughColor() {
+      return hasStrikethroughColor_;
     }
+
+    public static final int STRIKETHROUGHCOLORRED_FIELD_NUMBER = 32;
+    private int strikethroughColorRed_;
     /**
-     * <code>.matcha.Color strikethroughColor = 6;</code>
+     * <code>uint32 strikethroughColorRed = 32;</code>
      */
-    public io.gomatcha.matcha.proto.Proto.Color getStrikethroughColor() {
-      return strikethroughColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : strikethroughColor_;
+    public int getStrikethroughColorRed() {
+      return strikethroughColorRed_;
     }
+
+    public static final int STRIKETHROUGHCOLORGREEN_FIELD_NUMBER = 33;
+    private int strikethroughColorGreen_;
     /**
-     * <code>.matcha.Color strikethroughColor = 6;</code>
+     * <code>uint32 strikethroughColorGreen = 33;</code>
      */
-    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getStrikethroughColorOrBuilder() {
-      return getStrikethroughColor();
+    public int getStrikethroughColorGreen() {
+      return strikethroughColorGreen_;
+    }
+
+    public static final int STRIKETHROUGHCOLORBLUE_FIELD_NUMBER = 34;
+    private int strikethroughColorBlue_;
+    /**
+     * <code>uint32 strikethroughColorBlue = 34;</code>
+     */
+    public int getStrikethroughColorBlue() {
+      return strikethroughColorBlue_;
+    }
+
+    public static final int STRIKETHROUGHCOLORALPHA_FIELD_NUMBER = 35;
+    private int strikethroughColorAlpha_;
+    /**
+     * <code>uint32 strikethroughColorAlpha = 35;</code>
+     */
+    public int getStrikethroughColorAlpha() {
+      return strikethroughColorAlpha_;
     }
 
     public static final int UNDERLINESTYLE_FIELD_NUMBER = 8;
@@ -4151,46 +4264,49 @@ public final class PbText {
       return result == null ? io.gomatcha.matcha.proto.text.PbText.UnderlineStyle.UNRECOGNIZED : result;
     }
 
-    public static final int UNDERLINECOLOR_FIELD_NUMBER = 10;
-    private io.gomatcha.matcha.proto.Proto.Color underlineColor_;
+    public static final int HASUNDERLINECOLOR_FIELD_NUMBER = 41;
+    private boolean hasUnderlineColor_;
     /**
-     * <code>.matcha.Color underlineColor = 10;</code>
+     * <code>bool hasUnderlineColor = 41;</code>
      */
-    public boolean hasUnderlineColor() {
-      return underlineColor_ != null;
-    }
-    /**
-     * <code>.matcha.Color underlineColor = 10;</code>
-     */
-    public io.gomatcha.matcha.proto.Proto.Color getUnderlineColor() {
-      return underlineColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : underlineColor_;
-    }
-    /**
-     * <code>.matcha.Color underlineColor = 10;</code>
-     */
-    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getUnderlineColorOrBuilder() {
-      return getUnderlineColor();
+    public boolean getHasUnderlineColor() {
+      return hasUnderlineColor_;
     }
 
-    public static final int FONT_FIELD_NUMBER = 12;
-    private io.gomatcha.matcha.proto.text.PbText.Font font_;
+    public static final int UNDERLINECOLORRED_FIELD_NUMBER = 42;
+    private int underlineColorRed_;
     /**
-     * <code>.matcha.text.Font font = 12;</code>
+     * <code>uint32 underlineColorRed = 42;</code>
      */
-    public boolean hasFont() {
-      return font_ != null;
+    public int getUnderlineColorRed() {
+      return underlineColorRed_;
     }
+
+    public static final int UNDERLINECOLORGREEN_FIELD_NUMBER = 43;
+    private int underlineColorGreen_;
     /**
-     * <code>.matcha.text.Font font = 12;</code>
+     * <code>uint32 underlineColorGreen = 43;</code>
      */
-    public io.gomatcha.matcha.proto.text.PbText.Font getFont() {
-      return font_ == null ? io.gomatcha.matcha.proto.text.PbText.Font.getDefaultInstance() : font_;
+    public int getUnderlineColorGreen() {
+      return underlineColorGreen_;
     }
+
+    public static final int UNDERLINECOLORBLUE_FIELD_NUMBER = 44;
+    private int underlineColorBlue_;
     /**
-     * <code>.matcha.text.Font font = 12;</code>
+     * <code>uint32 underlineColorBlue = 44;</code>
      */
-    public io.gomatcha.matcha.proto.text.PbText.FontOrBuilder getFontOrBuilder() {
-      return getFont();
+    public int getUnderlineColorBlue() {
+      return underlineColorBlue_;
+    }
+
+    public static final int UNDERLINECOLORALPHA_FIELD_NUMBER = 45;
+    private int underlineColorAlpha_;
+    /**
+     * <code>uint32 underlineColorAlpha = 45;</code>
+     */
+    public int getUnderlineColorAlpha() {
+      return underlineColorAlpha_;
     }
 
     public static final int HYPHENATION_FIELD_NUMBER = 14;
@@ -4220,25 +4336,49 @@ public final class PbText {
       return maxLines_;
     }
 
-    public static final int TEXTCOLOR_FIELD_NUMBER = 20;
-    private io.gomatcha.matcha.proto.Proto.Color textColor_;
+    public static final int HASTEXTCOLOR_FIELD_NUMBER = 51;
+    private boolean hasTextColor_;
     /**
-     * <code>.matcha.Color textColor = 20;</code>
+     * <code>bool hasTextColor = 51;</code>
      */
-    public boolean hasTextColor() {
-      return textColor_ != null;
+    public boolean getHasTextColor() {
+      return hasTextColor_;
     }
+
+    public static final int TEXTCOLORRED_FIELD_NUMBER = 52;
+    private int textColorRed_;
     /**
-     * <code>.matcha.Color textColor = 20;</code>
+     * <code>uint32 textColorRed = 52;</code>
      */
-    public io.gomatcha.matcha.proto.Proto.Color getTextColor() {
-      return textColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : textColor_;
+    public int getTextColorRed() {
+      return textColorRed_;
     }
+
+    public static final int TEXTCOLORGREEN_FIELD_NUMBER = 53;
+    private int textColorGreen_;
     /**
-     * <code>.matcha.Color textColor = 20;</code>
+     * <code>uint32 textColorGreen = 53;</code>
      */
-    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getTextColorOrBuilder() {
-      return getTextColor();
+    public int getTextColorGreen() {
+      return textColorGreen_;
+    }
+
+    public static final int TEXTCOLORBLUE_FIELD_NUMBER = 54;
+    private int textColorBlue_;
+    /**
+     * <code>uint32 textColorBlue = 54;</code>
+     */
+    public int getTextColorBlue() {
+      return textColorBlue_;
+    }
+
+    public static final int TEXTCOLORALPHA_FIELD_NUMBER = 55;
+    private int textColorAlpha_;
+    /**
+     * <code>uint32 textColorAlpha = 55;</code>
+     */
+    public int getTextColorAlpha() {
+      return textColorAlpha_;
     }
 
     public static final int WRAP_FIELD_NUMBER = 22;
@@ -4307,6 +4447,49 @@ public final class PbText {
       }
     }
 
+    public static final int FONTNAME_FIELD_NUMBER = 27;
+    private volatile java.lang.Object fontName_;
+    /**
+     * <code>string fontName = 27;</code>
+     */
+    public java.lang.String getFontName() {
+      java.lang.Object ref = fontName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fontName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string fontName = 27;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFontNameBytes() {
+      java.lang.Object ref = fontName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fontName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int FONTSIZE_FIELD_NUMBER = 29;
+    private double fontSize_;
+    /**
+     * <code>double fontSize = 29;</code>
+     */
+    public double getFontSize() {
+      return fontSize_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -4328,17 +4511,8 @@ public final class PbText {
       if (strikethroughStyle_ != io.gomatcha.matcha.proto.text.PbText.StrikethroughStyle.STRIKETHROUGH_STYLE_NONE.getNumber()) {
         output.writeEnum(4, strikethroughStyle_);
       }
-      if (strikethroughColor_ != null) {
-        output.writeMessage(6, getStrikethroughColor());
-      }
       if (underlineStyle_ != io.gomatcha.matcha.proto.text.PbText.UnderlineStyle.UNDRELINE_STYLE_NONE.getNumber()) {
         output.writeEnum(8, underlineStyle_);
-      }
-      if (underlineColor_ != null) {
-        output.writeMessage(10, getUnderlineColor());
-      }
-      if (font_ != null) {
-        output.writeMessage(12, getFont());
       }
       if (hyphenation_ != 0D) {
         output.writeDouble(14, hyphenation_);
@@ -4349,9 +4523,6 @@ public final class PbText {
       if (maxLines_ != 0L) {
         output.writeInt64(18, maxLines_);
       }
-      if (textColor_ != null) {
-        output.writeMessage(20, getTextColor());
-      }
       if (wrap_ != io.gomatcha.matcha.proto.text.PbText.TextWrap.TEXT_WRAP_NONE.getNumber()) {
         output.writeEnum(22, wrap_);
       }
@@ -4360,6 +4531,57 @@ public final class PbText {
       }
       if (!getTruncationStringBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 26, truncationString_);
+      }
+      if (!getFontNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 27, fontName_);
+      }
+      if (fontSize_ != 0D) {
+        output.writeDouble(29, fontSize_);
+      }
+      if (hasStrikethroughColor_ != false) {
+        output.writeBool(31, hasStrikethroughColor_);
+      }
+      if (strikethroughColorRed_ != 0) {
+        output.writeUInt32(32, strikethroughColorRed_);
+      }
+      if (strikethroughColorGreen_ != 0) {
+        output.writeUInt32(33, strikethroughColorGreen_);
+      }
+      if (strikethroughColorBlue_ != 0) {
+        output.writeUInt32(34, strikethroughColorBlue_);
+      }
+      if (strikethroughColorAlpha_ != 0) {
+        output.writeUInt32(35, strikethroughColorAlpha_);
+      }
+      if (hasUnderlineColor_ != false) {
+        output.writeBool(41, hasUnderlineColor_);
+      }
+      if (underlineColorRed_ != 0) {
+        output.writeUInt32(42, underlineColorRed_);
+      }
+      if (underlineColorGreen_ != 0) {
+        output.writeUInt32(43, underlineColorGreen_);
+      }
+      if (underlineColorBlue_ != 0) {
+        output.writeUInt32(44, underlineColorBlue_);
+      }
+      if (underlineColorAlpha_ != 0) {
+        output.writeUInt32(45, underlineColorAlpha_);
+      }
+      if (hasTextColor_ != false) {
+        output.writeBool(51, hasTextColor_);
+      }
+      if (textColorRed_ != 0) {
+        output.writeUInt32(52, textColorRed_);
+      }
+      if (textColorGreen_ != 0) {
+        output.writeUInt32(53, textColorGreen_);
+      }
+      if (textColorBlue_ != 0) {
+        output.writeUInt32(54, textColorBlue_);
+      }
+      if (textColorAlpha_ != 0) {
+        output.writeUInt32(55, textColorAlpha_);
       }
     }
 
@@ -4380,21 +4602,9 @@ public final class PbText {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(4, strikethroughStyle_);
       }
-      if (strikethroughColor_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, getStrikethroughColor());
-      }
       if (underlineStyle_ != io.gomatcha.matcha.proto.text.PbText.UnderlineStyle.UNDRELINE_STYLE_NONE.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(8, underlineStyle_);
-      }
-      if (underlineColor_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(10, getUnderlineColor());
-      }
-      if (font_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(12, getFont());
       }
       if (hyphenation_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
@@ -4408,10 +4618,6 @@ public final class PbText {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(18, maxLines_);
       }
-      if (textColor_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(20, getTextColor());
-      }
       if (wrap_ != io.gomatcha.matcha.proto.text.PbText.TextWrap.TEXT_WRAP_NONE.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(22, wrap_);
@@ -4422,6 +4628,73 @@ public final class PbText {
       }
       if (!getTruncationStringBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(26, truncationString_);
+      }
+      if (!getFontNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(27, fontName_);
+      }
+      if (fontSize_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(29, fontSize_);
+      }
+      if (hasStrikethroughColor_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(31, hasStrikethroughColor_);
+      }
+      if (strikethroughColorRed_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(32, strikethroughColorRed_);
+      }
+      if (strikethroughColorGreen_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(33, strikethroughColorGreen_);
+      }
+      if (strikethroughColorBlue_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(34, strikethroughColorBlue_);
+      }
+      if (strikethroughColorAlpha_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(35, strikethroughColorAlpha_);
+      }
+      if (hasUnderlineColor_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(41, hasUnderlineColor_);
+      }
+      if (underlineColorRed_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(42, underlineColorRed_);
+      }
+      if (underlineColorGreen_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(43, underlineColorGreen_);
+      }
+      if (underlineColorBlue_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(44, underlineColorBlue_);
+      }
+      if (underlineColorAlpha_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(45, underlineColorAlpha_);
+      }
+      if (hasTextColor_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(51, hasTextColor_);
+      }
+      if (textColorRed_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(52, textColorRed_);
+      }
+      if (textColorGreen_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(53, textColorGreen_);
+      }
+      if (textColorBlue_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(54, textColorBlue_);
+      }
+      if (textColorAlpha_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(55, textColorAlpha_);
       }
       memoizedSize = size;
       return size;
@@ -4443,22 +4716,27 @@ public final class PbText {
           == other.getIndex());
       result = result && textAlignment_ == other.textAlignment_;
       result = result && strikethroughStyle_ == other.strikethroughStyle_;
-      result = result && (hasStrikethroughColor() == other.hasStrikethroughColor());
-      if (hasStrikethroughColor()) {
-        result = result && getStrikethroughColor()
-            .equals(other.getStrikethroughColor());
-      }
+      result = result && (getHasStrikethroughColor()
+          == other.getHasStrikethroughColor());
+      result = result && (getStrikethroughColorRed()
+          == other.getStrikethroughColorRed());
+      result = result && (getStrikethroughColorGreen()
+          == other.getStrikethroughColorGreen());
+      result = result && (getStrikethroughColorBlue()
+          == other.getStrikethroughColorBlue());
+      result = result && (getStrikethroughColorAlpha()
+          == other.getStrikethroughColorAlpha());
       result = result && underlineStyle_ == other.underlineStyle_;
-      result = result && (hasUnderlineColor() == other.hasUnderlineColor());
-      if (hasUnderlineColor()) {
-        result = result && getUnderlineColor()
-            .equals(other.getUnderlineColor());
-      }
-      result = result && (hasFont() == other.hasFont());
-      if (hasFont()) {
-        result = result && getFont()
-            .equals(other.getFont());
-      }
+      result = result && (getHasUnderlineColor()
+          == other.getHasUnderlineColor());
+      result = result && (getUnderlineColorRed()
+          == other.getUnderlineColorRed());
+      result = result && (getUnderlineColorGreen()
+          == other.getUnderlineColorGreen());
+      result = result && (getUnderlineColorBlue()
+          == other.getUnderlineColorBlue());
+      result = result && (getUnderlineColorAlpha()
+          == other.getUnderlineColorAlpha());
       result = result && (
           java.lang.Double.doubleToLongBits(getHyphenation())
           == java.lang.Double.doubleToLongBits(
@@ -4469,15 +4747,26 @@ public final class PbText {
               other.getLineHeightMultiple()));
       result = result && (getMaxLines()
           == other.getMaxLines());
-      result = result && (hasTextColor() == other.hasTextColor());
-      if (hasTextColor()) {
-        result = result && getTextColor()
-            .equals(other.getTextColor());
-      }
+      result = result && (getHasTextColor()
+          == other.getHasTextColor());
+      result = result && (getTextColorRed()
+          == other.getTextColorRed());
+      result = result && (getTextColorGreen()
+          == other.getTextColorGreen());
+      result = result && (getTextColorBlue()
+          == other.getTextColorBlue());
+      result = result && (getTextColorAlpha()
+          == other.getTextColorAlpha());
       result = result && wrap_ == other.wrap_;
       result = result && truncation_ == other.truncation_;
       result = result && getTruncationString()
           .equals(other.getTruncationString());
+      result = result && getFontName()
+          .equals(other.getFontName());
+      result = result && (
+          java.lang.Double.doubleToLongBits(getFontSize())
+          == java.lang.Double.doubleToLongBits(
+              other.getFontSize()));
       return result;
     }
 
@@ -4495,20 +4784,30 @@ public final class PbText {
       hash = (53 * hash) + textAlignment_;
       hash = (37 * hash) + STRIKETHROUGHSTYLE_FIELD_NUMBER;
       hash = (53 * hash) + strikethroughStyle_;
-      if (hasStrikethroughColor()) {
-        hash = (37 * hash) + STRIKETHROUGHCOLOR_FIELD_NUMBER;
-        hash = (53 * hash) + getStrikethroughColor().hashCode();
-      }
+      hash = (37 * hash) + HASSTRIKETHROUGHCOLOR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getHasStrikethroughColor());
+      hash = (37 * hash) + STRIKETHROUGHCOLORRED_FIELD_NUMBER;
+      hash = (53 * hash) + getStrikethroughColorRed();
+      hash = (37 * hash) + STRIKETHROUGHCOLORGREEN_FIELD_NUMBER;
+      hash = (53 * hash) + getStrikethroughColorGreen();
+      hash = (37 * hash) + STRIKETHROUGHCOLORBLUE_FIELD_NUMBER;
+      hash = (53 * hash) + getStrikethroughColorBlue();
+      hash = (37 * hash) + STRIKETHROUGHCOLORALPHA_FIELD_NUMBER;
+      hash = (53 * hash) + getStrikethroughColorAlpha();
       hash = (37 * hash) + UNDERLINESTYLE_FIELD_NUMBER;
       hash = (53 * hash) + underlineStyle_;
-      if (hasUnderlineColor()) {
-        hash = (37 * hash) + UNDERLINECOLOR_FIELD_NUMBER;
-        hash = (53 * hash) + getUnderlineColor().hashCode();
-      }
-      if (hasFont()) {
-        hash = (37 * hash) + FONT_FIELD_NUMBER;
-        hash = (53 * hash) + getFont().hashCode();
-      }
+      hash = (37 * hash) + HASUNDERLINECOLOR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getHasUnderlineColor());
+      hash = (37 * hash) + UNDERLINECOLORRED_FIELD_NUMBER;
+      hash = (53 * hash) + getUnderlineColorRed();
+      hash = (37 * hash) + UNDERLINECOLORGREEN_FIELD_NUMBER;
+      hash = (53 * hash) + getUnderlineColorGreen();
+      hash = (37 * hash) + UNDERLINECOLORBLUE_FIELD_NUMBER;
+      hash = (53 * hash) + getUnderlineColorBlue();
+      hash = (37 * hash) + UNDERLINECOLORALPHA_FIELD_NUMBER;
+      hash = (53 * hash) + getUnderlineColorAlpha();
       hash = (37 * hash) + HYPHENATION_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           java.lang.Double.doubleToLongBits(getHyphenation()));
@@ -4518,16 +4817,28 @@ public final class PbText {
       hash = (37 * hash) + MAXLINES_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getMaxLines());
-      if (hasTextColor()) {
-        hash = (37 * hash) + TEXTCOLOR_FIELD_NUMBER;
-        hash = (53 * hash) + getTextColor().hashCode();
-      }
+      hash = (37 * hash) + HASTEXTCOLOR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getHasTextColor());
+      hash = (37 * hash) + TEXTCOLORRED_FIELD_NUMBER;
+      hash = (53 * hash) + getTextColorRed();
+      hash = (37 * hash) + TEXTCOLORGREEN_FIELD_NUMBER;
+      hash = (53 * hash) + getTextColorGreen();
+      hash = (37 * hash) + TEXTCOLORBLUE_FIELD_NUMBER;
+      hash = (53 * hash) + getTextColorBlue();
+      hash = (37 * hash) + TEXTCOLORALPHA_FIELD_NUMBER;
+      hash = (53 * hash) + getTextColorAlpha();
       hash = (37 * hash) + WRAP_FIELD_NUMBER;
       hash = (53 * hash) + wrap_;
       hash = (37 * hash) + TRUNCATION_FIELD_NUMBER;
       hash = (53 * hash) + truncation_;
       hash = (37 * hash) + TRUNCATIONSTRING_FIELD_NUMBER;
       hash = (53 * hash) + getTruncationString().hashCode();
+      hash = (37 * hash) + FONTNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getFontName().hashCode();
+      hash = (37 * hash) + FONTSIZE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getFontSize()));
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4663,43 +4974,53 @@ public final class PbText {
 
         strikethroughStyle_ = 0;
 
-        if (strikethroughColorBuilder_ == null) {
-          strikethroughColor_ = null;
-        } else {
-          strikethroughColor_ = null;
-          strikethroughColorBuilder_ = null;
-        }
+        hasStrikethroughColor_ = false;
+
+        strikethroughColorRed_ = 0;
+
+        strikethroughColorGreen_ = 0;
+
+        strikethroughColorBlue_ = 0;
+
+        strikethroughColorAlpha_ = 0;
+
         underlineStyle_ = 0;
 
-        if (underlineColorBuilder_ == null) {
-          underlineColor_ = null;
-        } else {
-          underlineColor_ = null;
-          underlineColorBuilder_ = null;
-        }
-        if (fontBuilder_ == null) {
-          font_ = null;
-        } else {
-          font_ = null;
-          fontBuilder_ = null;
-        }
+        hasUnderlineColor_ = false;
+
+        underlineColorRed_ = 0;
+
+        underlineColorGreen_ = 0;
+
+        underlineColorBlue_ = 0;
+
+        underlineColorAlpha_ = 0;
+
         hyphenation_ = 0D;
 
         lineHeightMultiple_ = 0D;
 
         maxLines_ = 0L;
 
-        if (textColorBuilder_ == null) {
-          textColor_ = null;
-        } else {
-          textColor_ = null;
-          textColorBuilder_ = null;
-        }
+        hasTextColor_ = false;
+
+        textColorRed_ = 0;
+
+        textColorGreen_ = 0;
+
+        textColorBlue_ = 0;
+
+        textColorAlpha_ = 0;
+
         wrap_ = 0;
 
         truncation_ = 0;
 
         truncationString_ = "";
+
+        fontName_ = "";
+
+        fontSize_ = 0D;
 
         return this;
       }
@@ -4726,33 +5047,30 @@ public final class PbText {
         result.index_ = index_;
         result.textAlignment_ = textAlignment_;
         result.strikethroughStyle_ = strikethroughStyle_;
-        if (strikethroughColorBuilder_ == null) {
-          result.strikethroughColor_ = strikethroughColor_;
-        } else {
-          result.strikethroughColor_ = strikethroughColorBuilder_.build();
-        }
+        result.hasStrikethroughColor_ = hasStrikethroughColor_;
+        result.strikethroughColorRed_ = strikethroughColorRed_;
+        result.strikethroughColorGreen_ = strikethroughColorGreen_;
+        result.strikethroughColorBlue_ = strikethroughColorBlue_;
+        result.strikethroughColorAlpha_ = strikethroughColorAlpha_;
         result.underlineStyle_ = underlineStyle_;
-        if (underlineColorBuilder_ == null) {
-          result.underlineColor_ = underlineColor_;
-        } else {
-          result.underlineColor_ = underlineColorBuilder_.build();
-        }
-        if (fontBuilder_ == null) {
-          result.font_ = font_;
-        } else {
-          result.font_ = fontBuilder_.build();
-        }
+        result.hasUnderlineColor_ = hasUnderlineColor_;
+        result.underlineColorRed_ = underlineColorRed_;
+        result.underlineColorGreen_ = underlineColorGreen_;
+        result.underlineColorBlue_ = underlineColorBlue_;
+        result.underlineColorAlpha_ = underlineColorAlpha_;
         result.hyphenation_ = hyphenation_;
         result.lineHeightMultiple_ = lineHeightMultiple_;
         result.maxLines_ = maxLines_;
-        if (textColorBuilder_ == null) {
-          result.textColor_ = textColor_;
-        } else {
-          result.textColor_ = textColorBuilder_.build();
-        }
+        result.hasTextColor_ = hasTextColor_;
+        result.textColorRed_ = textColorRed_;
+        result.textColorGreen_ = textColorGreen_;
+        result.textColorBlue_ = textColorBlue_;
+        result.textColorAlpha_ = textColorAlpha_;
         result.wrap_ = wrap_;
         result.truncation_ = truncation_;
         result.truncationString_ = truncationString_;
+        result.fontName_ = fontName_;
+        result.fontSize_ = fontSize_;
         onBuilt();
         return result;
       }
@@ -4803,17 +5121,38 @@ public final class PbText {
         if (other.strikethroughStyle_ != 0) {
           setStrikethroughStyleValue(other.getStrikethroughStyleValue());
         }
-        if (other.hasStrikethroughColor()) {
-          mergeStrikethroughColor(other.getStrikethroughColor());
+        if (other.getHasStrikethroughColor() != false) {
+          setHasStrikethroughColor(other.getHasStrikethroughColor());
+        }
+        if (other.getStrikethroughColorRed() != 0) {
+          setStrikethroughColorRed(other.getStrikethroughColorRed());
+        }
+        if (other.getStrikethroughColorGreen() != 0) {
+          setStrikethroughColorGreen(other.getStrikethroughColorGreen());
+        }
+        if (other.getStrikethroughColorBlue() != 0) {
+          setStrikethroughColorBlue(other.getStrikethroughColorBlue());
+        }
+        if (other.getStrikethroughColorAlpha() != 0) {
+          setStrikethroughColorAlpha(other.getStrikethroughColorAlpha());
         }
         if (other.underlineStyle_ != 0) {
           setUnderlineStyleValue(other.getUnderlineStyleValue());
         }
-        if (other.hasUnderlineColor()) {
-          mergeUnderlineColor(other.getUnderlineColor());
+        if (other.getHasUnderlineColor() != false) {
+          setHasUnderlineColor(other.getHasUnderlineColor());
         }
-        if (other.hasFont()) {
-          mergeFont(other.getFont());
+        if (other.getUnderlineColorRed() != 0) {
+          setUnderlineColorRed(other.getUnderlineColorRed());
+        }
+        if (other.getUnderlineColorGreen() != 0) {
+          setUnderlineColorGreen(other.getUnderlineColorGreen());
+        }
+        if (other.getUnderlineColorBlue() != 0) {
+          setUnderlineColorBlue(other.getUnderlineColorBlue());
+        }
+        if (other.getUnderlineColorAlpha() != 0) {
+          setUnderlineColorAlpha(other.getUnderlineColorAlpha());
         }
         if (other.getHyphenation() != 0D) {
           setHyphenation(other.getHyphenation());
@@ -4824,8 +5163,20 @@ public final class PbText {
         if (other.getMaxLines() != 0L) {
           setMaxLines(other.getMaxLines());
         }
-        if (other.hasTextColor()) {
-          mergeTextColor(other.getTextColor());
+        if (other.getHasTextColor() != false) {
+          setHasTextColor(other.getHasTextColor());
+        }
+        if (other.getTextColorRed() != 0) {
+          setTextColorRed(other.getTextColorRed());
+        }
+        if (other.getTextColorGreen() != 0) {
+          setTextColorGreen(other.getTextColorGreen());
+        }
+        if (other.getTextColorBlue() != 0) {
+          setTextColorBlue(other.getTextColorBlue());
+        }
+        if (other.getTextColorAlpha() != 0) {
+          setTextColorAlpha(other.getTextColorAlpha());
         }
         if (other.wrap_ != 0) {
           setWrapValue(other.getWrapValue());
@@ -4836,6 +5187,13 @@ public final class PbText {
         if (!other.getTruncationString().isEmpty()) {
           truncationString_ = other.truncationString_;
           onChanged();
+        }
+        if (!other.getFontName().isEmpty()) {
+          fontName_ = other.fontName_;
+          onChanged();
+        }
+        if (other.getFontSize() != 0D) {
+          setFontSize(other.getFontSize());
         }
         onChanged();
         return this;
@@ -4989,121 +5347,134 @@ public final class PbText {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.Proto.Color strikethroughColor_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> strikethroughColorBuilder_;
+      private boolean hasStrikethroughColor_ ;
       /**
-       * <code>.matcha.Color strikethroughColor = 6;</code>
+       * <code>bool hasStrikethroughColor = 31;</code>
        */
-      public boolean hasStrikethroughColor() {
-        return strikethroughColorBuilder_ != null || strikethroughColor_ != null;
+      public boolean getHasStrikethroughColor() {
+        return hasStrikethroughColor_;
       }
       /**
-       * <code>.matcha.Color strikethroughColor = 6;</code>
+       * <code>bool hasStrikethroughColor = 31;</code>
        */
-      public io.gomatcha.matcha.proto.Proto.Color getStrikethroughColor() {
-        if (strikethroughColorBuilder_ == null) {
-          return strikethroughColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : strikethroughColor_;
-        } else {
-          return strikethroughColorBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.matcha.Color strikethroughColor = 6;</code>
-       */
-      public Builder setStrikethroughColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (strikethroughColorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          strikethroughColor_ = value;
-          onChanged();
-        } else {
-          strikethroughColorBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color strikethroughColor = 6;</code>
-       */
-      public Builder setStrikethroughColor(
-          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
-        if (strikethroughColorBuilder_ == null) {
-          strikethroughColor_ = builderForValue.build();
-          onChanged();
-        } else {
-          strikethroughColorBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color strikethroughColor = 6;</code>
-       */
-      public Builder mergeStrikethroughColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (strikethroughColorBuilder_ == null) {
-          if (strikethroughColor_ != null) {
-            strikethroughColor_ =
-              io.gomatcha.matcha.proto.Proto.Color.newBuilder(strikethroughColor_).mergeFrom(value).buildPartial();
-          } else {
-            strikethroughColor_ = value;
-          }
-          onChanged();
-        } else {
-          strikethroughColorBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color strikethroughColor = 6;</code>
-       */
-      public Builder clearStrikethroughColor() {
-        if (strikethroughColorBuilder_ == null) {
-          strikethroughColor_ = null;
-          onChanged();
-        } else {
-          strikethroughColor_ = null;
-          strikethroughColorBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color strikethroughColor = 6;</code>
-       */
-      public io.gomatcha.matcha.proto.Proto.Color.Builder getStrikethroughColorBuilder() {
+      public Builder setHasStrikethroughColor(boolean value) {
         
+        hasStrikethroughColor_ = value;
         onChanged();
-        return getStrikethroughColorFieldBuilder().getBuilder();
+        return this;
       }
       /**
-       * <code>.matcha.Color strikethroughColor = 6;</code>
+       * <code>bool hasStrikethroughColor = 31;</code>
        */
-      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getStrikethroughColorOrBuilder() {
-        if (strikethroughColorBuilder_ != null) {
-          return strikethroughColorBuilder_.getMessageOrBuilder();
-        } else {
-          return strikethroughColor_ == null ?
-              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : strikethroughColor_;
-        }
+      public Builder clearHasStrikethroughColor() {
+        
+        hasStrikethroughColor_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int strikethroughColorRed_ ;
+      /**
+       * <code>uint32 strikethroughColorRed = 32;</code>
+       */
+      public int getStrikethroughColorRed() {
+        return strikethroughColorRed_;
       }
       /**
-       * <code>.matcha.Color strikethroughColor = 6;</code>
+       * <code>uint32 strikethroughColorRed = 32;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
-          getStrikethroughColorFieldBuilder() {
-        if (strikethroughColorBuilder_ == null) {
-          strikethroughColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
-                  getStrikethroughColor(),
-                  getParentForChildren(),
-                  isClean());
-          strikethroughColor_ = null;
-        }
-        return strikethroughColorBuilder_;
+      public Builder setStrikethroughColorRed(int value) {
+        
+        strikethroughColorRed_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 strikethroughColorRed = 32;</code>
+       */
+      public Builder clearStrikethroughColorRed() {
+        
+        strikethroughColorRed_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int strikethroughColorGreen_ ;
+      /**
+       * <code>uint32 strikethroughColorGreen = 33;</code>
+       */
+      public int getStrikethroughColorGreen() {
+        return strikethroughColorGreen_;
+      }
+      /**
+       * <code>uint32 strikethroughColorGreen = 33;</code>
+       */
+      public Builder setStrikethroughColorGreen(int value) {
+        
+        strikethroughColorGreen_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 strikethroughColorGreen = 33;</code>
+       */
+      public Builder clearStrikethroughColorGreen() {
+        
+        strikethroughColorGreen_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int strikethroughColorBlue_ ;
+      /**
+       * <code>uint32 strikethroughColorBlue = 34;</code>
+       */
+      public int getStrikethroughColorBlue() {
+        return strikethroughColorBlue_;
+      }
+      /**
+       * <code>uint32 strikethroughColorBlue = 34;</code>
+       */
+      public Builder setStrikethroughColorBlue(int value) {
+        
+        strikethroughColorBlue_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 strikethroughColorBlue = 34;</code>
+       */
+      public Builder clearStrikethroughColorBlue() {
+        
+        strikethroughColorBlue_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int strikethroughColorAlpha_ ;
+      /**
+       * <code>uint32 strikethroughColorAlpha = 35;</code>
+       */
+      public int getStrikethroughColorAlpha() {
+        return strikethroughColorAlpha_;
+      }
+      /**
+       * <code>uint32 strikethroughColorAlpha = 35;</code>
+       */
+      public Builder setStrikethroughColorAlpha(int value) {
+        
+        strikethroughColorAlpha_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 strikethroughColorAlpha = 35;</code>
+       */
+      public Builder clearStrikethroughColorAlpha() {
+        
+        strikethroughColorAlpha_ = 0;
+        onChanged();
+        return this;
       }
 
       private int underlineStyle_ = 0;
@@ -5150,238 +5521,134 @@ public final class PbText {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.Proto.Color underlineColor_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> underlineColorBuilder_;
+      private boolean hasUnderlineColor_ ;
       /**
-       * <code>.matcha.Color underlineColor = 10;</code>
+       * <code>bool hasUnderlineColor = 41;</code>
        */
-      public boolean hasUnderlineColor() {
-        return underlineColorBuilder_ != null || underlineColor_ != null;
+      public boolean getHasUnderlineColor() {
+        return hasUnderlineColor_;
       }
       /**
-       * <code>.matcha.Color underlineColor = 10;</code>
+       * <code>bool hasUnderlineColor = 41;</code>
        */
-      public io.gomatcha.matcha.proto.Proto.Color getUnderlineColor() {
-        if (underlineColorBuilder_ == null) {
-          return underlineColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : underlineColor_;
-        } else {
-          return underlineColorBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.matcha.Color underlineColor = 10;</code>
-       */
-      public Builder setUnderlineColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (underlineColorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          underlineColor_ = value;
-          onChanged();
-        } else {
-          underlineColorBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color underlineColor = 10;</code>
-       */
-      public Builder setUnderlineColor(
-          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
-        if (underlineColorBuilder_ == null) {
-          underlineColor_ = builderForValue.build();
-          onChanged();
-        } else {
-          underlineColorBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color underlineColor = 10;</code>
-       */
-      public Builder mergeUnderlineColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (underlineColorBuilder_ == null) {
-          if (underlineColor_ != null) {
-            underlineColor_ =
-              io.gomatcha.matcha.proto.Proto.Color.newBuilder(underlineColor_).mergeFrom(value).buildPartial();
-          } else {
-            underlineColor_ = value;
-          }
-          onChanged();
-        } else {
-          underlineColorBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color underlineColor = 10;</code>
-       */
-      public Builder clearUnderlineColor() {
-        if (underlineColorBuilder_ == null) {
-          underlineColor_ = null;
-          onChanged();
-        } else {
-          underlineColor_ = null;
-          underlineColorBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color underlineColor = 10;</code>
-       */
-      public io.gomatcha.matcha.proto.Proto.Color.Builder getUnderlineColorBuilder() {
+      public Builder setHasUnderlineColor(boolean value) {
         
+        hasUnderlineColor_ = value;
         onChanged();
-        return getUnderlineColorFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.matcha.Color underlineColor = 10;</code>
-       */
-      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getUnderlineColorOrBuilder() {
-        if (underlineColorBuilder_ != null) {
-          return underlineColorBuilder_.getMessageOrBuilder();
-        } else {
-          return underlineColor_ == null ?
-              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : underlineColor_;
-        }
-      }
-      /**
-       * <code>.matcha.Color underlineColor = 10;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
-          getUnderlineColorFieldBuilder() {
-        if (underlineColorBuilder_ == null) {
-          underlineColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
-                  getUnderlineColor(),
-                  getParentForChildren(),
-                  isClean());
-          underlineColor_ = null;
-        }
-        return underlineColorBuilder_;
-      }
-
-      private io.gomatcha.matcha.proto.text.PbText.Font font_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.text.PbText.Font, io.gomatcha.matcha.proto.text.PbText.Font.Builder, io.gomatcha.matcha.proto.text.PbText.FontOrBuilder> fontBuilder_;
-      /**
-       * <code>.matcha.text.Font font = 12;</code>
-       */
-      public boolean hasFont() {
-        return fontBuilder_ != null || font_ != null;
-      }
-      /**
-       * <code>.matcha.text.Font font = 12;</code>
-       */
-      public io.gomatcha.matcha.proto.text.PbText.Font getFont() {
-        if (fontBuilder_ == null) {
-          return font_ == null ? io.gomatcha.matcha.proto.text.PbText.Font.getDefaultInstance() : font_;
-        } else {
-          return fontBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.matcha.text.Font font = 12;</code>
-       */
-      public Builder setFont(io.gomatcha.matcha.proto.text.PbText.Font value) {
-        if (fontBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          font_ = value;
-          onChanged();
-        } else {
-          fontBuilder_.setMessage(value);
-        }
-
         return this;
       }
       /**
-       * <code>.matcha.text.Font font = 12;</code>
+       * <code>bool hasUnderlineColor = 41;</code>
        */
-      public Builder setFont(
-          io.gomatcha.matcha.proto.text.PbText.Font.Builder builderForValue) {
-        if (fontBuilder_ == null) {
-          font_ = builderForValue.build();
-          onChanged();
-        } else {
-          fontBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.text.Font font = 12;</code>
-       */
-      public Builder mergeFont(io.gomatcha.matcha.proto.text.PbText.Font value) {
-        if (fontBuilder_ == null) {
-          if (font_ != null) {
-            font_ =
-              io.gomatcha.matcha.proto.text.PbText.Font.newBuilder(font_).mergeFrom(value).buildPartial();
-          } else {
-            font_ = value;
-          }
-          onChanged();
-        } else {
-          fontBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.text.Font font = 12;</code>
-       */
-      public Builder clearFont() {
-        if (fontBuilder_ == null) {
-          font_ = null;
-          onChanged();
-        } else {
-          font_ = null;
-          fontBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.text.Font font = 12;</code>
-       */
-      public io.gomatcha.matcha.proto.text.PbText.Font.Builder getFontBuilder() {
+      public Builder clearHasUnderlineColor() {
         
+        hasUnderlineColor_ = false;
         onChanged();
-        return getFontFieldBuilder().getBuilder();
+        return this;
+      }
+
+      private int underlineColorRed_ ;
+      /**
+       * <code>uint32 underlineColorRed = 42;</code>
+       */
+      public int getUnderlineColorRed() {
+        return underlineColorRed_;
       }
       /**
-       * <code>.matcha.text.Font font = 12;</code>
+       * <code>uint32 underlineColorRed = 42;</code>
        */
-      public io.gomatcha.matcha.proto.text.PbText.FontOrBuilder getFontOrBuilder() {
-        if (fontBuilder_ != null) {
-          return fontBuilder_.getMessageOrBuilder();
-        } else {
-          return font_ == null ?
-              io.gomatcha.matcha.proto.text.PbText.Font.getDefaultInstance() : font_;
-        }
+      public Builder setUnderlineColorRed(int value) {
+        
+        underlineColorRed_ = value;
+        onChanged();
+        return this;
       }
       /**
-       * <code>.matcha.text.Font font = 12;</code>
+       * <code>uint32 underlineColorRed = 42;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.text.PbText.Font, io.gomatcha.matcha.proto.text.PbText.Font.Builder, io.gomatcha.matcha.proto.text.PbText.FontOrBuilder> 
-          getFontFieldBuilder() {
-        if (fontBuilder_ == null) {
-          fontBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.text.PbText.Font, io.gomatcha.matcha.proto.text.PbText.Font.Builder, io.gomatcha.matcha.proto.text.PbText.FontOrBuilder>(
-                  getFont(),
-                  getParentForChildren(),
-                  isClean());
-          font_ = null;
-        }
-        return fontBuilder_;
+      public Builder clearUnderlineColorRed() {
+        
+        underlineColorRed_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int underlineColorGreen_ ;
+      /**
+       * <code>uint32 underlineColorGreen = 43;</code>
+       */
+      public int getUnderlineColorGreen() {
+        return underlineColorGreen_;
+      }
+      /**
+       * <code>uint32 underlineColorGreen = 43;</code>
+       */
+      public Builder setUnderlineColorGreen(int value) {
+        
+        underlineColorGreen_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 underlineColorGreen = 43;</code>
+       */
+      public Builder clearUnderlineColorGreen() {
+        
+        underlineColorGreen_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int underlineColorBlue_ ;
+      /**
+       * <code>uint32 underlineColorBlue = 44;</code>
+       */
+      public int getUnderlineColorBlue() {
+        return underlineColorBlue_;
+      }
+      /**
+       * <code>uint32 underlineColorBlue = 44;</code>
+       */
+      public Builder setUnderlineColorBlue(int value) {
+        
+        underlineColorBlue_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 underlineColorBlue = 44;</code>
+       */
+      public Builder clearUnderlineColorBlue() {
+        
+        underlineColorBlue_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int underlineColorAlpha_ ;
+      /**
+       * <code>uint32 underlineColorAlpha = 45;</code>
+       */
+      public int getUnderlineColorAlpha() {
+        return underlineColorAlpha_;
+      }
+      /**
+       * <code>uint32 underlineColorAlpha = 45;</code>
+       */
+      public Builder setUnderlineColorAlpha(int value) {
+        
+        underlineColorAlpha_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 underlineColorAlpha = 45;</code>
+       */
+      public Builder clearUnderlineColorAlpha() {
+        
+        underlineColorAlpha_ = 0;
+        onChanged();
+        return this;
       }
 
       private double hyphenation_ ;
@@ -5462,121 +5729,134 @@ public final class PbText {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.Proto.Color textColor_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> textColorBuilder_;
+      private boolean hasTextColor_ ;
       /**
-       * <code>.matcha.Color textColor = 20;</code>
+       * <code>bool hasTextColor = 51;</code>
        */
-      public boolean hasTextColor() {
-        return textColorBuilder_ != null || textColor_ != null;
+      public boolean getHasTextColor() {
+        return hasTextColor_;
       }
       /**
-       * <code>.matcha.Color textColor = 20;</code>
+       * <code>bool hasTextColor = 51;</code>
        */
-      public io.gomatcha.matcha.proto.Proto.Color getTextColor() {
-        if (textColorBuilder_ == null) {
-          return textColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : textColor_;
-        } else {
-          return textColorBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.matcha.Color textColor = 20;</code>
-       */
-      public Builder setTextColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (textColorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          textColor_ = value;
-          onChanged();
-        } else {
-          textColorBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color textColor = 20;</code>
-       */
-      public Builder setTextColor(
-          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
-        if (textColorBuilder_ == null) {
-          textColor_ = builderForValue.build();
-          onChanged();
-        } else {
-          textColorBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color textColor = 20;</code>
-       */
-      public Builder mergeTextColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (textColorBuilder_ == null) {
-          if (textColor_ != null) {
-            textColor_ =
-              io.gomatcha.matcha.proto.Proto.Color.newBuilder(textColor_).mergeFrom(value).buildPartial();
-          } else {
-            textColor_ = value;
-          }
-          onChanged();
-        } else {
-          textColorBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color textColor = 20;</code>
-       */
-      public Builder clearTextColor() {
-        if (textColorBuilder_ == null) {
-          textColor_ = null;
-          onChanged();
-        } else {
-          textColor_ = null;
-          textColorBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color textColor = 20;</code>
-       */
-      public io.gomatcha.matcha.proto.Proto.Color.Builder getTextColorBuilder() {
+      public Builder setHasTextColor(boolean value) {
         
+        hasTextColor_ = value;
         onChanged();
-        return getTextColorFieldBuilder().getBuilder();
+        return this;
       }
       /**
-       * <code>.matcha.Color textColor = 20;</code>
+       * <code>bool hasTextColor = 51;</code>
        */
-      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getTextColorOrBuilder() {
-        if (textColorBuilder_ != null) {
-          return textColorBuilder_.getMessageOrBuilder();
-        } else {
-          return textColor_ == null ?
-              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : textColor_;
-        }
+      public Builder clearHasTextColor() {
+        
+        hasTextColor_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int textColorRed_ ;
+      /**
+       * <code>uint32 textColorRed = 52;</code>
+       */
+      public int getTextColorRed() {
+        return textColorRed_;
       }
       /**
-       * <code>.matcha.Color textColor = 20;</code>
+       * <code>uint32 textColorRed = 52;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
-          getTextColorFieldBuilder() {
-        if (textColorBuilder_ == null) {
-          textColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
-                  getTextColor(),
-                  getParentForChildren(),
-                  isClean());
-          textColor_ = null;
-        }
-        return textColorBuilder_;
+      public Builder setTextColorRed(int value) {
+        
+        textColorRed_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 textColorRed = 52;</code>
+       */
+      public Builder clearTextColorRed() {
+        
+        textColorRed_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int textColorGreen_ ;
+      /**
+       * <code>uint32 textColorGreen = 53;</code>
+       */
+      public int getTextColorGreen() {
+        return textColorGreen_;
+      }
+      /**
+       * <code>uint32 textColorGreen = 53;</code>
+       */
+      public Builder setTextColorGreen(int value) {
+        
+        textColorGreen_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 textColorGreen = 53;</code>
+       */
+      public Builder clearTextColorGreen() {
+        
+        textColorGreen_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int textColorBlue_ ;
+      /**
+       * <code>uint32 textColorBlue = 54;</code>
+       */
+      public int getTextColorBlue() {
+        return textColorBlue_;
+      }
+      /**
+       * <code>uint32 textColorBlue = 54;</code>
+       */
+      public Builder setTextColorBlue(int value) {
+        
+        textColorBlue_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 textColorBlue = 54;</code>
+       */
+      public Builder clearTextColorBlue() {
+        
+        textColorBlue_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int textColorAlpha_ ;
+      /**
+       * <code>uint32 textColorAlpha = 55;</code>
+       */
+      public int getTextColorAlpha() {
+        return textColorAlpha_;
+      }
+      /**
+       * <code>uint32 textColorAlpha = 55;</code>
+       */
+      public Builder setTextColorAlpha(int value) {
+        
+        textColorAlpha_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 textColorAlpha = 55;</code>
+       */
+      public Builder clearTextColorAlpha() {
+        
+        textColorAlpha_ = 0;
+        onChanged();
+        return this;
       }
 
       private int wrap_ = 0;
@@ -5735,6 +6015,101 @@ public final class PbText {
         onChanged();
         return this;
       }
+
+      private java.lang.Object fontName_ = "";
+      /**
+       * <code>string fontName = 27;</code>
+       */
+      public java.lang.String getFontName() {
+        java.lang.Object ref = fontName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          fontName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string fontName = 27;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFontNameBytes() {
+        java.lang.Object ref = fontName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          fontName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string fontName = 27;</code>
+       */
+      public Builder setFontName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        fontName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string fontName = 27;</code>
+       */
+      public Builder clearFontName() {
+        
+        fontName_ = getDefaultInstance().getFontName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string fontName = 27;</code>
+       */
+      public Builder setFontNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        fontName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private double fontSize_ ;
+      /**
+       * <code>double fontSize = 29;</code>
+       */
+      public double getFontSize() {
+        return fontSize_;
+      }
+      /**
+       * <code>double fontSize = 29;</code>
+       */
+      public Builder setFontSize(double value) {
+        
+        fontSize_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>double fontSize = 29;</code>
+       */
+      public Builder clearFontSize() {
+        
+        fontSize_ = 0D;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -5820,47 +6195,54 @@ public final class PbText {
     java.lang.String[] descriptorData = {
       "\n(gomatcha.io/matcha/proto/text/text.pro" +
       "to\022\013matcha.text\032,gomatcha.io/matcha/prot" +
-      "o/layout/layout.proto\032$gomatcha.io/match" +
-      "a/proto/image.proto\"\177\n\010SizeFunc\022%\n\004text\030" +
-      "\001 \001(\0132\027.matcha.text.StyledText\022%\n\007minSiz" +
-      "e\030\002 \001(\0132\024.matcha.layout.Point\022%\n\007maxSize" +
-      "\030\003 \001(\0132\024.matcha.layout.Point\"\024\n\004Text\022\014\n\004" +
-      "text\030\001 \001(\t\"U\n\nStyledText\022&\n\006styles\030\001 \003(\013" +
-      "2\026.matcha.text.TextStyle\022\037\n\004text\030\002 \001(\0132\021" +
-      ".matcha.text.Text\"2\n\004Font\022\016\n\006family\030\001 \001(",
-      "\t\022\014\n\004face\030\002 \001(\t\022\014\n\004size\030\003 \001(\001\"\203\004\n\tTextSt" +
-      "yle\022\r\n\005index\030\001 \001(\003\0221\n\rtextAlignment\030\002 \001(" +
-      "\0162\032.matcha.text.TextAlignment\022;\n\022striket" +
-      "hroughStyle\030\004 \001(\0162\037.matcha.text.Striketh" +
-      "roughStyle\022)\n\022strikethroughColor\030\006 \001(\0132\r" +
-      ".matcha.Color\0223\n\016underlineStyle\030\010 \001(\0162\033." +
-      "matcha.text.UnderlineStyle\022%\n\016underlineC" +
-      "olor\030\n \001(\0132\r.matcha.Color\022\037\n\004font\030\014 \001(\0132" +
-      "\021.matcha.text.Font\022\023\n\013hyphenation\030\016 \001(\001\022" +
-      "\032\n\022lineHeightMultiple\030\020 \001(\001\022\020\n\010maxLines\030",
-      "\022 \001(\003\022 \n\ttextColor\030\024 \001(\0132\r.matcha.Color\022" +
-      "#\n\004wrap\030\026 \001(\0162\025.matcha.text.TextWrap\022+\n\n" +
-      "truncation\030\030 \001(\0162\027.matcha.text.Truncatio" +
-      "n\022\030\n\020truncationString\030\032 \001(\t*{\n\rTextAlign" +
-      "ment\022\027\n\023TEXT_ALIGNMENT_LEFT\020\000\022\030\n\024TEXT_AL" +
-      "IGNMENT_RIGHT\020\001\022\031\n\025TEXT_ALIGNMENT_CENTER" +
-      "\020\002\022\034\n\030TEXT_ALIGNMENT_JUSTIFIED\020\003*\321\001\n\022Str" +
-      "ikethroughStyle\022\034\n\030STRIKETHROUGH_STYLE_N" +
-      "ONE\020\000\022\036\n\032STRIKETHROUGH_STYLE_SINGLE\020\001\022\036\n" +
-      "\032STRIKETHROUGH_STYLE_DOUBLE\020\002\022\035\n\031STRIKET",
-      "HROUGH_STYLE_THICK\020\003\022\036\n\032STRIKETHROUGH_ST" +
-      "YLE_DOTTED\020\004\022\036\n\032STRIKETHROUGH_STYLE_DASH" +
-      "ED\020\005*\265\001\n\016UnderlineStyle\022\030\n\024UNDRELINE_STY" +
-      "LE_NONE\020\000\022\032\n\026UNDRELINE_STYLE_SINGLE\020\001\022\032\n" +
-      "\026UNDRELINE_STYLE_DOUBLE\020\002\022\031\n\025UNDRELINE_S" +
-      "TYLE_THICK\020\003\022\032\n\026UNDRELINE_STYLE_DOTTED\020\004" +
-      "\022\032\n\026UNDRELINE_STYLE_DASHED\020\005*K\n\010TextWrap" +
-      "\022\022\n\016TEXT_WRAP_NONE\020\000\022\022\n\016TEXT_WRAP_WORD\020\001" +
-      "\022\027\n\023TEXT_WRAP_CHARACTER\020\002*b\n\nTruncation\022" +
-      "\023\n\017TRUNCATION_NONE\020\000\022\024\n\020TRUNCATION_START",
-      "\020\001\022\025\n\021TRUNCATION_MIDDLE\020\002\022\022\n\016TRUNCATION_" +
-      "END\020\003B8\n\035io.gomatcha.matcha.proto.textB\006" +
-      "PbTextZ\004text\242\002\010MatchaPBb\006proto3"
+      "o/layout/layout.proto\"\177\n\010SizeFunc\022%\n\004tex" +
+      "t\030\001 \001(\0132\027.matcha.text.StyledText\022%\n\007minS" +
+      "ize\030\002 \001(\0132\024.matcha.layout.Point\022%\n\007maxSi" +
+      "ze\030\003 \001(\0132\024.matcha.layout.Point\"\024\n\004Text\022\014" +
+      "\n\004text\030\001 \001(\t\"U\n\nStyledText\022&\n\006styles\030\001 \003" +
+      "(\0132\026.matcha.text.TextStyle\022\037\n\004text\030\002 \001(\013" +
+      "2\021.matcha.text.Text\"2\n\004Font\022\016\n\006family\030\001 " +
+      "\001(\t\022\014\n\004face\030\002 \001(\t\022\014\n\004size\030\003 \001(\001\"\261\006\n\tText",
+      "Style\022\r\n\005index\030\001 \001(\003\0221\n\rtextAlignment\030\002 " +
+      "\001(\0162\032.matcha.text.TextAlignment\022;\n\022strik" +
+      "ethroughStyle\030\004 \001(\0162\037.matcha.text.Strike" +
+      "throughStyle\022\035\n\025hasStrikethroughColor\030\037 " +
+      "\001(\010\022\035\n\025strikethroughColorRed\030  \001(\r\022\037\n\027st" +
+      "rikethroughColorGreen\030! \001(\r\022\036\n\026strikethr" +
+      "oughColorBlue\030\" \001(\r\022\037\n\027strikethroughColo" +
+      "rAlpha\030# \001(\r\0223\n\016underlineStyle\030\010 \001(\0162\033.m" +
+      "atcha.text.UnderlineStyle\022\031\n\021hasUnderlin" +
+      "eColor\030) \001(\010\022\031\n\021underlineColorRed\030* \001(\r\022",
+      "\033\n\023underlineColorGreen\030+ \001(\r\022\032\n\022underlin" +
+      "eColorBlue\030, \001(\r\022\033\n\023underlineColorAlpha\030" +
+      "- \001(\r\022\023\n\013hyphenation\030\016 \001(\001\022\032\n\022lineHeight" +
+      "Multiple\030\020 \001(\001\022\020\n\010maxLines\030\022 \001(\003\022\024\n\014hasT" +
+      "extColor\0303 \001(\010\022\024\n\014textColorRed\0304 \001(\r\022\026\n\016" +
+      "textColorGreen\0305 \001(\r\022\025\n\rtextColorBlue\0306 " +
+      "\001(\r\022\026\n\016textColorAlpha\0307 \001(\r\022#\n\004wrap\030\026 \001(" +
+      "\0162\025.matcha.text.TextWrap\022+\n\ntruncation\030\030" +
+      " \001(\0162\027.matcha.text.Truncation\022\030\n\020truncat" +
+      "ionString\030\032 \001(\t\022\020\n\010fontName\030\033 \001(\t\022\020\n\010fon",
+      "tSize\030\035 \001(\001*{\n\rTextAlignment\022\027\n\023TEXT_ALI" +
+      "GNMENT_LEFT\020\000\022\030\n\024TEXT_ALIGNMENT_RIGHT\020\001\022" +
+      "\031\n\025TEXT_ALIGNMENT_CENTER\020\002\022\034\n\030TEXT_ALIGN" +
+      "MENT_JUSTIFIED\020\003*\321\001\n\022StrikethroughStyle\022" +
+      "\034\n\030STRIKETHROUGH_STYLE_NONE\020\000\022\036\n\032STRIKET" +
+      "HROUGH_STYLE_SINGLE\020\001\022\036\n\032STRIKETHROUGH_S" +
+      "TYLE_DOUBLE\020\002\022\035\n\031STRIKETHROUGH_STYLE_THI" +
+      "CK\020\003\022\036\n\032STRIKETHROUGH_STYLE_DOTTED\020\004\022\036\n\032" +
+      "STRIKETHROUGH_STYLE_DASHED\020\005*\265\001\n\016Underli" +
+      "neStyle\022\030\n\024UNDRELINE_STYLE_NONE\020\000\022\032\n\026UND",
+      "RELINE_STYLE_SINGLE\020\001\022\032\n\026UNDRELINE_STYLE" +
+      "_DOUBLE\020\002\022\031\n\025UNDRELINE_STYLE_THICK\020\003\022\032\n\026" +
+      "UNDRELINE_STYLE_DOTTED\020\004\022\032\n\026UNDRELINE_ST" +
+      "YLE_DASHED\020\005*K\n\010TextWrap\022\022\n\016TEXT_WRAP_NO" +
+      "NE\020\000\022\022\n\016TEXT_WRAP_WORD\020\001\022\027\n\023TEXT_WRAP_CH" +
+      "ARACTER\020\002*b\n\nTruncation\022\023\n\017TRUNCATION_NO" +
+      "NE\020\000\022\024\n\020TRUNCATION_START\020\001\022\025\n\021TRUNCATION" +
+      "_MIDDLE\020\002\022\022\n\016TRUNCATION_END\020\003B8\n\035io.goma" +
+      "tcha.matcha.proto.textB\006PbTextZ\004text\242\002\010M" +
+      "atchaPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5874,7 +6256,6 @@ public final class PbText {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           io.gomatcha.matcha.proto.layout.PbLayout.getDescriptor(),
-          io.gomatcha.matcha.proto.Proto.getDescriptor(),
         }, assigner);
     internal_static_matcha_text_SizeFunc_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -5905,9 +6286,8 @@ public final class PbText {
     internal_static_matcha_text_TextStyle_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_text_TextStyle_descriptor,
-        new java.lang.String[] { "Index", "TextAlignment", "StrikethroughStyle", "StrikethroughColor", "UnderlineStyle", "UnderlineColor", "Font", "Hyphenation", "LineHeightMultiple", "MaxLines", "TextColor", "Wrap", "Truncation", "TruncationString", });
+        new java.lang.String[] { "Index", "TextAlignment", "StrikethroughStyle", "HasStrikethroughColor", "StrikethroughColorRed", "StrikethroughColorGreen", "StrikethroughColorBlue", "StrikethroughColorAlpha", "UnderlineStyle", "HasUnderlineColor", "UnderlineColorRed", "UnderlineColorGreen", "UnderlineColorBlue", "UnderlineColorAlpha", "Hyphenation", "LineHeightMultiple", "MaxLines", "HasTextColor", "TextColorRed", "TextColorGreen", "TextColorBlue", "TextColorAlpha", "Wrap", "Truncation", "TruncationString", "FontName", "FontSize", });
     io.gomatcha.matcha.proto.layout.PbLayout.getDescriptor();
-    io.gomatcha.matcha.proto.Proto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

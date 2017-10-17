@@ -52,9 +52,9 @@ message LayoutPaintNode {
   
   bool hasShadowColor = 26;
   uint32 shadowColorRed = 27;
-  uint32 shadowColorBlue = 27;
-  uint32 shadowColorGreen = 28;
-  uint32 shadowColorAlpha = 29;
+  uint32 shadowColorBlue = 28;
+  uint32 shadowColorGreen = 29;
+  uint32 shadowColorAlpha = 30;
 }
 
 message Root {

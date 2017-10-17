@@ -18,7 +18,6 @@ import (
 
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
-	protostyle "gomatcha.io/matcha/proto/paint"
 )
 
 // Painter is the interface that describes how a view should be drawn on screen.
@@ -39,45 +38,6 @@ type Style struct {
 	ShadowRadius float64
 	ShadowOffset layout.Point
 	ShadowColor  color.Color
-}
-
-func (s *Style) MarshalProtobuf() *protostyle.Style {
-	style := &protostyle.Style{
-		Transparency:       s.Transparency,
-		HasBackgroundColor: s.BackgroundColor != nil,
-		HasBorderColor:     s.BorderColor != nil,
-		BorderWidth:        s.BorderWidth,
-		CornerRadius:       s.CornerRadius,
-		ShadowRadius:       s.ShadowRadius,
-		ShadowOffsetX:      s.ShadowOffset.X,
-		ShadowOffsetY:      s.ShadowOffset.Y,
-		HasShadowColor:     s.ShadowColor != nil,
-	}
-	if s.BackgroundColor != nil {
-		r, g, b, a := s.BackgroundColor.RGBA()
-		style.HasBackgroundColor = true
-		style.BackgroundColorRed = r
-		style.BackgroundColorGreen = g
-		style.BackgroundColorBlue = b
-		style.BackgroundColorAlpha = a
-	}
-	if s.BorderColor != nil {
-		r, g, b, a := s.BorderColor.RGBA()
-		style.HasBorderColor = true
-		style.BorderColorRed = r
-		style.BorderColorGreen = g
-		style.BorderColorBlue = b
-		style.BorderColorAlpha = a
-	}
-	if s.ShadowColor != nil {
-		r, g, b, a := s.ShadowColor.RGBA()
-		style.HasShadowColor = true
-		style.ShadowColorRed = r
-		style.ShadowColorGreen = g
-		style.ShadowColorBlue = b
-		style.ShadowColorAlpha = a
-	}
-	return style
 }
 
 // PaintStyle implements the Painter interface.

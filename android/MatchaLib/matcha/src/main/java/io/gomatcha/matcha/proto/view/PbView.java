@@ -1271,107 +1271,107 @@ public final class PbView {
      * Paint
      * </pre>
      *
-     * <code>double transparency = 56;</code>
+     * <code>double transparency = 10;</code>
      */
     double getTransparency();
 
     /**
-     * <code>bool hasBackgroundColor = 24;</code>
+     * <code>bool hasBackgroundColor = 11;</code>
      */
     boolean getHasBackgroundColor();
 
     /**
-     * <code>uint32 backgroundColorRed = 20;</code>
+     * <code>uint32 backgroundColorRed = 12;</code>
      */
     int getBackgroundColorRed();
 
     /**
-     * <code>uint32 backgroundColorGreen = 21;</code>
+     * <code>uint32 backgroundColorGreen = 13;</code>
      */
     int getBackgroundColorGreen();
 
     /**
-     * <code>uint32 backgroundColorBlue = 22;</code>
+     * <code>uint32 backgroundColorBlue = 14;</code>
      */
     int getBackgroundColorBlue();
 
     /**
-     * <code>uint32 backgroundColorAlpha = 23;</code>
+     * <code>uint32 backgroundColorAlpha = 15;</code>
      */
     int getBackgroundColorAlpha();
 
     /**
-     * <code>bool hasBorderColor = 30;</code>
+     * <code>bool hasBorderColor = 16;</code>
      */
     boolean getHasBorderColor();
 
     /**
-     * <code>uint32 borderColorRed = 31;</code>
+     * <code>uint32 borderColorRed = 17;</code>
      */
     int getBorderColorRed();
 
     /**
-     * <code>uint32 borderColorGreen = 32;</code>
+     * <code>uint32 borderColorGreen = 18;</code>
      */
     int getBorderColorGreen();
 
     /**
-     * <code>uint32 borderColorBlue = 33;</code>
+     * <code>uint32 borderColorBlue = 19;</code>
      */
     int getBorderColorBlue();
 
     /**
-     * <code>uint32 borderColorAlpha = 34;</code>
+     * <code>uint32 borderColorAlpha = 20;</code>
      */
     int getBorderColorAlpha();
 
     /**
-     * <code>double borderWidth = 40;</code>
+     * <code>double borderWidth = 21;</code>
      */
     double getBorderWidth();
 
     /**
-     * <code>double cornerRadius = 41;</code>
+     * <code>double cornerRadius = 22;</code>
      */
     double getCornerRadius();
 
     /**
-     * <code>double shadowRadius = 42;</code>
+     * <code>double shadowRadius = 23;</code>
      */
     double getShadowRadius();
 
     /**
-     * <code>double shadowOffsetX = 43;</code>
+     * <code>double shadowOffsetX = 24;</code>
      */
     double getShadowOffsetX();
 
     /**
-     * <code>double shadowOffsetY = 44;</code>
+     * <code>double shadowOffsetY = 25;</code>
      */
     double getShadowOffsetY();
 
     /**
-     * <code>bool hasShadowColor = 90;</code>
+     * <code>bool hasShadowColor = 26;</code>
      */
     boolean getHasShadowColor();
 
     /**
-     * <code>uint32 shadowColorRed = 91;</code>
+     * <code>uint32 shadowColorRed = 27;</code>
      */
     int getShadowColorRed();
 
     /**
-     * <code>uint32 shadowColorBlue = 92;</code>
+     * <code>uint32 shadowColorBlue = 28;</code>
      */
     int getShadowColorBlue();
 
     /**
-     * <code>uint32 shadowColorGreen = 93;</code>
+     * <code>uint32 shadowColorGreen = 29;</code>
      */
     int getShadowColorGreen();
 
     /**
-     * <code>uint32 shadowColorAlpha = 94;</code>
+     * <code>uint32 shadowColorAlpha = 30;</code>
      */
     int getShadowColorAlpha();
   }
@@ -1505,107 +1505,107 @@ public final class PbView {
               input.popLimit(limit);
               break;
             }
-            case 160: {
-
-              backgroundColorRed_ = input.readUInt32();
-              break;
-            }
-            case 168: {
-
-              backgroundColorGreen_ = input.readUInt32();
-              break;
-            }
-            case 176: {
-
-              backgroundColorBlue_ = input.readUInt32();
-              break;
-            }
-            case 184: {
-
-              backgroundColorAlpha_ = input.readUInt32();
-              break;
-            }
-            case 192: {
-
-              hasBackgroundColor_ = input.readBool();
-              break;
-            }
-            case 240: {
-
-              hasBorderColor_ = input.readBool();
-              break;
-            }
-            case 248: {
-
-              borderColorRed_ = input.readUInt32();
-              break;
-            }
-            case 256: {
-
-              borderColorGreen_ = input.readUInt32();
-              break;
-            }
-            case 264: {
-
-              borderColorBlue_ = input.readUInt32();
-              break;
-            }
-            case 272: {
-
-              borderColorAlpha_ = input.readUInt32();
-              break;
-            }
-            case 321: {
-
-              borderWidth_ = input.readDouble();
-              break;
-            }
-            case 329: {
-
-              cornerRadius_ = input.readDouble();
-              break;
-            }
-            case 337: {
-
-              shadowRadius_ = input.readDouble();
-              break;
-            }
-            case 345: {
-
-              shadowOffsetX_ = input.readDouble();
-              break;
-            }
-            case 353: {
-
-              shadowOffsetY_ = input.readDouble();
-              break;
-            }
-            case 449: {
+            case 81: {
 
               transparency_ = input.readDouble();
               break;
             }
-            case 720: {
+            case 88: {
+
+              hasBackgroundColor_ = input.readBool();
+              break;
+            }
+            case 96: {
+
+              backgroundColorRed_ = input.readUInt32();
+              break;
+            }
+            case 104: {
+
+              backgroundColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 112: {
+
+              backgroundColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 120: {
+
+              backgroundColorAlpha_ = input.readUInt32();
+              break;
+            }
+            case 128: {
+
+              hasBorderColor_ = input.readBool();
+              break;
+            }
+            case 136: {
+
+              borderColorRed_ = input.readUInt32();
+              break;
+            }
+            case 144: {
+
+              borderColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 152: {
+
+              borderColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 160: {
+
+              borderColorAlpha_ = input.readUInt32();
+              break;
+            }
+            case 169: {
+
+              borderWidth_ = input.readDouble();
+              break;
+            }
+            case 177: {
+
+              cornerRadius_ = input.readDouble();
+              break;
+            }
+            case 185: {
+
+              shadowRadius_ = input.readDouble();
+              break;
+            }
+            case 193: {
+
+              shadowOffsetX_ = input.readDouble();
+              break;
+            }
+            case 201: {
+
+              shadowOffsetY_ = input.readDouble();
+              break;
+            }
+            case 208: {
 
               hasShadowColor_ = input.readBool();
               break;
             }
-            case 728: {
+            case 216: {
 
               shadowColorRed_ = input.readUInt32();
               break;
             }
-            case 736: {
+            case 224: {
 
               shadowColorBlue_ = input.readUInt32();
               break;
             }
-            case 744: {
+            case 232: {
 
               shadowColorGreen_ = input.readUInt32();
               break;
             }
-            case 752: {
+            case 240: {
 
               shadowColorAlpha_ = input.readUInt32();
               break;
@@ -1736,194 +1736,194 @@ public final class PbView {
     }
     private int childOrderMemoizedSerializedSize = -1;
 
-    public static final int TRANSPARENCY_FIELD_NUMBER = 56;
+    public static final int TRANSPARENCY_FIELD_NUMBER = 10;
     private double transparency_;
     /**
      * <pre>
      * Paint
      * </pre>
      *
-     * <code>double transparency = 56;</code>
+     * <code>double transparency = 10;</code>
      */
     public double getTransparency() {
       return transparency_;
     }
 
-    public static final int HASBACKGROUNDCOLOR_FIELD_NUMBER = 24;
+    public static final int HASBACKGROUNDCOLOR_FIELD_NUMBER = 11;
     private boolean hasBackgroundColor_;
     /**
-     * <code>bool hasBackgroundColor = 24;</code>
+     * <code>bool hasBackgroundColor = 11;</code>
      */
     public boolean getHasBackgroundColor() {
       return hasBackgroundColor_;
     }
 
-    public static final int BACKGROUNDCOLORRED_FIELD_NUMBER = 20;
+    public static final int BACKGROUNDCOLORRED_FIELD_NUMBER = 12;
     private int backgroundColorRed_;
     /**
-     * <code>uint32 backgroundColorRed = 20;</code>
+     * <code>uint32 backgroundColorRed = 12;</code>
      */
     public int getBackgroundColorRed() {
       return backgroundColorRed_;
     }
 
-    public static final int BACKGROUNDCOLORGREEN_FIELD_NUMBER = 21;
+    public static final int BACKGROUNDCOLORGREEN_FIELD_NUMBER = 13;
     private int backgroundColorGreen_;
     /**
-     * <code>uint32 backgroundColorGreen = 21;</code>
+     * <code>uint32 backgroundColorGreen = 13;</code>
      */
     public int getBackgroundColorGreen() {
       return backgroundColorGreen_;
     }
 
-    public static final int BACKGROUNDCOLORBLUE_FIELD_NUMBER = 22;
+    public static final int BACKGROUNDCOLORBLUE_FIELD_NUMBER = 14;
     private int backgroundColorBlue_;
     /**
-     * <code>uint32 backgroundColorBlue = 22;</code>
+     * <code>uint32 backgroundColorBlue = 14;</code>
      */
     public int getBackgroundColorBlue() {
       return backgroundColorBlue_;
     }
 
-    public static final int BACKGROUNDCOLORALPHA_FIELD_NUMBER = 23;
+    public static final int BACKGROUNDCOLORALPHA_FIELD_NUMBER = 15;
     private int backgroundColorAlpha_;
     /**
-     * <code>uint32 backgroundColorAlpha = 23;</code>
+     * <code>uint32 backgroundColorAlpha = 15;</code>
      */
     public int getBackgroundColorAlpha() {
       return backgroundColorAlpha_;
     }
 
-    public static final int HASBORDERCOLOR_FIELD_NUMBER = 30;
+    public static final int HASBORDERCOLOR_FIELD_NUMBER = 16;
     private boolean hasBorderColor_;
     /**
-     * <code>bool hasBorderColor = 30;</code>
+     * <code>bool hasBorderColor = 16;</code>
      */
     public boolean getHasBorderColor() {
       return hasBorderColor_;
     }
 
-    public static final int BORDERCOLORRED_FIELD_NUMBER = 31;
+    public static final int BORDERCOLORRED_FIELD_NUMBER = 17;
     private int borderColorRed_;
     /**
-     * <code>uint32 borderColorRed = 31;</code>
+     * <code>uint32 borderColorRed = 17;</code>
      */
     public int getBorderColorRed() {
       return borderColorRed_;
     }
 
-    public static final int BORDERCOLORGREEN_FIELD_NUMBER = 32;
+    public static final int BORDERCOLORGREEN_FIELD_NUMBER = 18;
     private int borderColorGreen_;
     /**
-     * <code>uint32 borderColorGreen = 32;</code>
+     * <code>uint32 borderColorGreen = 18;</code>
      */
     public int getBorderColorGreen() {
       return borderColorGreen_;
     }
 
-    public static final int BORDERCOLORBLUE_FIELD_NUMBER = 33;
+    public static final int BORDERCOLORBLUE_FIELD_NUMBER = 19;
     private int borderColorBlue_;
     /**
-     * <code>uint32 borderColorBlue = 33;</code>
+     * <code>uint32 borderColorBlue = 19;</code>
      */
     public int getBorderColorBlue() {
       return borderColorBlue_;
     }
 
-    public static final int BORDERCOLORALPHA_FIELD_NUMBER = 34;
+    public static final int BORDERCOLORALPHA_FIELD_NUMBER = 20;
     private int borderColorAlpha_;
     /**
-     * <code>uint32 borderColorAlpha = 34;</code>
+     * <code>uint32 borderColorAlpha = 20;</code>
      */
     public int getBorderColorAlpha() {
       return borderColorAlpha_;
     }
 
-    public static final int BORDERWIDTH_FIELD_NUMBER = 40;
+    public static final int BORDERWIDTH_FIELD_NUMBER = 21;
     private double borderWidth_;
     /**
-     * <code>double borderWidth = 40;</code>
+     * <code>double borderWidth = 21;</code>
      */
     public double getBorderWidth() {
       return borderWidth_;
     }
 
-    public static final int CORNERRADIUS_FIELD_NUMBER = 41;
+    public static final int CORNERRADIUS_FIELD_NUMBER = 22;
     private double cornerRadius_;
     /**
-     * <code>double cornerRadius = 41;</code>
+     * <code>double cornerRadius = 22;</code>
      */
     public double getCornerRadius() {
       return cornerRadius_;
     }
 
-    public static final int SHADOWRADIUS_FIELD_NUMBER = 42;
+    public static final int SHADOWRADIUS_FIELD_NUMBER = 23;
     private double shadowRadius_;
     /**
-     * <code>double shadowRadius = 42;</code>
+     * <code>double shadowRadius = 23;</code>
      */
     public double getShadowRadius() {
       return shadowRadius_;
     }
 
-    public static final int SHADOWOFFSETX_FIELD_NUMBER = 43;
+    public static final int SHADOWOFFSETX_FIELD_NUMBER = 24;
     private double shadowOffsetX_;
     /**
-     * <code>double shadowOffsetX = 43;</code>
+     * <code>double shadowOffsetX = 24;</code>
      */
     public double getShadowOffsetX() {
       return shadowOffsetX_;
     }
 
-    public static final int SHADOWOFFSETY_FIELD_NUMBER = 44;
+    public static final int SHADOWOFFSETY_FIELD_NUMBER = 25;
     private double shadowOffsetY_;
     /**
-     * <code>double shadowOffsetY = 44;</code>
+     * <code>double shadowOffsetY = 25;</code>
      */
     public double getShadowOffsetY() {
       return shadowOffsetY_;
     }
 
-    public static final int HASSHADOWCOLOR_FIELD_NUMBER = 90;
+    public static final int HASSHADOWCOLOR_FIELD_NUMBER = 26;
     private boolean hasShadowColor_;
     /**
-     * <code>bool hasShadowColor = 90;</code>
+     * <code>bool hasShadowColor = 26;</code>
      */
     public boolean getHasShadowColor() {
       return hasShadowColor_;
     }
 
-    public static final int SHADOWCOLORRED_FIELD_NUMBER = 91;
+    public static final int SHADOWCOLORRED_FIELD_NUMBER = 27;
     private int shadowColorRed_;
     /**
-     * <code>uint32 shadowColorRed = 91;</code>
+     * <code>uint32 shadowColorRed = 27;</code>
      */
     public int getShadowColorRed() {
       return shadowColorRed_;
     }
 
-    public static final int SHADOWCOLORBLUE_FIELD_NUMBER = 92;
+    public static final int SHADOWCOLORBLUE_FIELD_NUMBER = 28;
     private int shadowColorBlue_;
     /**
-     * <code>uint32 shadowColorBlue = 92;</code>
+     * <code>uint32 shadowColorBlue = 28;</code>
      */
     public int getShadowColorBlue() {
       return shadowColorBlue_;
     }
 
-    public static final int SHADOWCOLORGREEN_FIELD_NUMBER = 93;
+    public static final int SHADOWCOLORGREEN_FIELD_NUMBER = 29;
     private int shadowColorGreen_;
     /**
-     * <code>uint32 shadowColorGreen = 93;</code>
+     * <code>uint32 shadowColorGreen = 29;</code>
      */
     public int getShadowColorGreen() {
       return shadowColorGreen_;
     }
 
-    public static final int SHADOWCOLORALPHA_FIELD_NUMBER = 94;
+    public static final int SHADOWCOLORALPHA_FIELD_NUMBER = 30;
     private int shadowColorAlpha_;
     /**
-     * <code>uint32 shadowColorAlpha = 94;</code>
+     * <code>uint32 shadowColorAlpha = 30;</code>
      */
     public int getShadowColorAlpha() {
       return shadowColorAlpha_;
@@ -1973,68 +1973,68 @@ public final class PbView {
       for (int i = 0; i < childOrder_.size(); i++) {
         output.writeInt64NoTag(childOrder_.get(i));
       }
-      if (backgroundColorRed_ != 0) {
-        output.writeUInt32(20, backgroundColorRed_);
-      }
-      if (backgroundColorGreen_ != 0) {
-        output.writeUInt32(21, backgroundColorGreen_);
-      }
-      if (backgroundColorBlue_ != 0) {
-        output.writeUInt32(22, backgroundColorBlue_);
-      }
-      if (backgroundColorAlpha_ != 0) {
-        output.writeUInt32(23, backgroundColorAlpha_);
+      if (transparency_ != 0D) {
+        output.writeDouble(10, transparency_);
       }
       if (hasBackgroundColor_ != false) {
-        output.writeBool(24, hasBackgroundColor_);
+        output.writeBool(11, hasBackgroundColor_);
+      }
+      if (backgroundColorRed_ != 0) {
+        output.writeUInt32(12, backgroundColorRed_);
+      }
+      if (backgroundColorGreen_ != 0) {
+        output.writeUInt32(13, backgroundColorGreen_);
+      }
+      if (backgroundColorBlue_ != 0) {
+        output.writeUInt32(14, backgroundColorBlue_);
+      }
+      if (backgroundColorAlpha_ != 0) {
+        output.writeUInt32(15, backgroundColorAlpha_);
       }
       if (hasBorderColor_ != false) {
-        output.writeBool(30, hasBorderColor_);
+        output.writeBool(16, hasBorderColor_);
       }
       if (borderColorRed_ != 0) {
-        output.writeUInt32(31, borderColorRed_);
+        output.writeUInt32(17, borderColorRed_);
       }
       if (borderColorGreen_ != 0) {
-        output.writeUInt32(32, borderColorGreen_);
+        output.writeUInt32(18, borderColorGreen_);
       }
       if (borderColorBlue_ != 0) {
-        output.writeUInt32(33, borderColorBlue_);
+        output.writeUInt32(19, borderColorBlue_);
       }
       if (borderColorAlpha_ != 0) {
-        output.writeUInt32(34, borderColorAlpha_);
+        output.writeUInt32(20, borderColorAlpha_);
       }
       if (borderWidth_ != 0D) {
-        output.writeDouble(40, borderWidth_);
+        output.writeDouble(21, borderWidth_);
       }
       if (cornerRadius_ != 0D) {
-        output.writeDouble(41, cornerRadius_);
+        output.writeDouble(22, cornerRadius_);
       }
       if (shadowRadius_ != 0D) {
-        output.writeDouble(42, shadowRadius_);
+        output.writeDouble(23, shadowRadius_);
       }
       if (shadowOffsetX_ != 0D) {
-        output.writeDouble(43, shadowOffsetX_);
+        output.writeDouble(24, shadowOffsetX_);
       }
       if (shadowOffsetY_ != 0D) {
-        output.writeDouble(44, shadowOffsetY_);
-      }
-      if (transparency_ != 0D) {
-        output.writeDouble(56, transparency_);
+        output.writeDouble(25, shadowOffsetY_);
       }
       if (hasShadowColor_ != false) {
-        output.writeBool(90, hasShadowColor_);
+        output.writeBool(26, hasShadowColor_);
       }
       if (shadowColorRed_ != 0) {
-        output.writeUInt32(91, shadowColorRed_);
+        output.writeUInt32(27, shadowColorRed_);
       }
       if (shadowColorBlue_ != 0) {
-        output.writeUInt32(92, shadowColorBlue_);
+        output.writeUInt32(28, shadowColorBlue_);
       }
       if (shadowColorGreen_ != 0) {
-        output.writeUInt32(93, shadowColorGreen_);
+        output.writeUInt32(29, shadowColorGreen_);
       }
       if (shadowColorAlpha_ != 0) {
-        output.writeUInt32(94, shadowColorAlpha_);
+        output.writeUInt32(30, shadowColorAlpha_);
       }
     }
 
@@ -2089,89 +2089,89 @@ public final class PbView {
         }
         childOrderMemoizedSerializedSize = dataSize;
       }
-      if (backgroundColorRed_ != 0) {
+      if (transparency_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(20, backgroundColorRed_);
-      }
-      if (backgroundColorGreen_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(21, backgroundColorGreen_);
-      }
-      if (backgroundColorBlue_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(22, backgroundColorBlue_);
-      }
-      if (backgroundColorAlpha_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(23, backgroundColorAlpha_);
+          .computeDoubleSize(10, transparency_);
       }
       if (hasBackgroundColor_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(24, hasBackgroundColor_);
+          .computeBoolSize(11, hasBackgroundColor_);
+      }
+      if (backgroundColorRed_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(12, backgroundColorRed_);
+      }
+      if (backgroundColorGreen_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(13, backgroundColorGreen_);
+      }
+      if (backgroundColorBlue_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(14, backgroundColorBlue_);
+      }
+      if (backgroundColorAlpha_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(15, backgroundColorAlpha_);
       }
       if (hasBorderColor_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(30, hasBorderColor_);
+          .computeBoolSize(16, hasBorderColor_);
       }
       if (borderColorRed_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(31, borderColorRed_);
+          .computeUInt32Size(17, borderColorRed_);
       }
       if (borderColorGreen_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(32, borderColorGreen_);
+          .computeUInt32Size(18, borderColorGreen_);
       }
       if (borderColorBlue_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(33, borderColorBlue_);
+          .computeUInt32Size(19, borderColorBlue_);
       }
       if (borderColorAlpha_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(34, borderColorAlpha_);
+          .computeUInt32Size(20, borderColorAlpha_);
       }
       if (borderWidth_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(40, borderWidth_);
+          .computeDoubleSize(21, borderWidth_);
       }
       if (cornerRadius_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(41, cornerRadius_);
+          .computeDoubleSize(22, cornerRadius_);
       }
       if (shadowRadius_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(42, shadowRadius_);
+          .computeDoubleSize(23, shadowRadius_);
       }
       if (shadowOffsetX_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(43, shadowOffsetX_);
+          .computeDoubleSize(24, shadowOffsetX_);
       }
       if (shadowOffsetY_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(44, shadowOffsetY_);
-      }
-      if (transparency_ != 0D) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(56, transparency_);
+          .computeDoubleSize(25, shadowOffsetY_);
       }
       if (hasShadowColor_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(90, hasShadowColor_);
+          .computeBoolSize(26, hasShadowColor_);
       }
       if (shadowColorRed_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(91, shadowColorRed_);
+          .computeUInt32Size(27, shadowColorRed_);
       }
       if (shadowColorBlue_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(92, shadowColorBlue_);
+          .computeUInt32Size(28, shadowColorBlue_);
       }
       if (shadowColorGreen_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(93, shadowColorGreen_);
+          .computeUInt32Size(29, shadowColorGreen_);
       }
       if (shadowColorAlpha_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(94, shadowColorAlpha_);
+          .computeUInt32Size(30, shadowColorAlpha_);
       }
       memoizedSize = size;
       return size;
@@ -3063,7 +3063,7 @@ public final class PbView {
        * Paint
        * </pre>
        *
-       * <code>double transparency = 56;</code>
+       * <code>double transparency = 10;</code>
        */
       public double getTransparency() {
         return transparency_;
@@ -3073,7 +3073,7 @@ public final class PbView {
        * Paint
        * </pre>
        *
-       * <code>double transparency = 56;</code>
+       * <code>double transparency = 10;</code>
        */
       public Builder setTransparency(double value) {
         
@@ -3086,7 +3086,7 @@ public final class PbView {
        * Paint
        * </pre>
        *
-       * <code>double transparency = 56;</code>
+       * <code>double transparency = 10;</code>
        */
       public Builder clearTransparency() {
         
@@ -3097,13 +3097,13 @@ public final class PbView {
 
       private boolean hasBackgroundColor_ ;
       /**
-       * <code>bool hasBackgroundColor = 24;</code>
+       * <code>bool hasBackgroundColor = 11;</code>
        */
       public boolean getHasBackgroundColor() {
         return hasBackgroundColor_;
       }
       /**
-       * <code>bool hasBackgroundColor = 24;</code>
+       * <code>bool hasBackgroundColor = 11;</code>
        */
       public Builder setHasBackgroundColor(boolean value) {
         
@@ -3112,7 +3112,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>bool hasBackgroundColor = 24;</code>
+       * <code>bool hasBackgroundColor = 11;</code>
        */
       public Builder clearHasBackgroundColor() {
         
@@ -3123,13 +3123,13 @@ public final class PbView {
 
       private int backgroundColorRed_ ;
       /**
-       * <code>uint32 backgroundColorRed = 20;</code>
+       * <code>uint32 backgroundColorRed = 12;</code>
        */
       public int getBackgroundColorRed() {
         return backgroundColorRed_;
       }
       /**
-       * <code>uint32 backgroundColorRed = 20;</code>
+       * <code>uint32 backgroundColorRed = 12;</code>
        */
       public Builder setBackgroundColorRed(int value) {
         
@@ -3138,7 +3138,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 backgroundColorRed = 20;</code>
+       * <code>uint32 backgroundColorRed = 12;</code>
        */
       public Builder clearBackgroundColorRed() {
         
@@ -3149,13 +3149,13 @@ public final class PbView {
 
       private int backgroundColorGreen_ ;
       /**
-       * <code>uint32 backgroundColorGreen = 21;</code>
+       * <code>uint32 backgroundColorGreen = 13;</code>
        */
       public int getBackgroundColorGreen() {
         return backgroundColorGreen_;
       }
       /**
-       * <code>uint32 backgroundColorGreen = 21;</code>
+       * <code>uint32 backgroundColorGreen = 13;</code>
        */
       public Builder setBackgroundColorGreen(int value) {
         
@@ -3164,7 +3164,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 backgroundColorGreen = 21;</code>
+       * <code>uint32 backgroundColorGreen = 13;</code>
        */
       public Builder clearBackgroundColorGreen() {
         
@@ -3175,13 +3175,13 @@ public final class PbView {
 
       private int backgroundColorBlue_ ;
       /**
-       * <code>uint32 backgroundColorBlue = 22;</code>
+       * <code>uint32 backgroundColorBlue = 14;</code>
        */
       public int getBackgroundColorBlue() {
         return backgroundColorBlue_;
       }
       /**
-       * <code>uint32 backgroundColorBlue = 22;</code>
+       * <code>uint32 backgroundColorBlue = 14;</code>
        */
       public Builder setBackgroundColorBlue(int value) {
         
@@ -3190,7 +3190,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 backgroundColorBlue = 22;</code>
+       * <code>uint32 backgroundColorBlue = 14;</code>
        */
       public Builder clearBackgroundColorBlue() {
         
@@ -3201,13 +3201,13 @@ public final class PbView {
 
       private int backgroundColorAlpha_ ;
       /**
-       * <code>uint32 backgroundColorAlpha = 23;</code>
+       * <code>uint32 backgroundColorAlpha = 15;</code>
        */
       public int getBackgroundColorAlpha() {
         return backgroundColorAlpha_;
       }
       /**
-       * <code>uint32 backgroundColorAlpha = 23;</code>
+       * <code>uint32 backgroundColorAlpha = 15;</code>
        */
       public Builder setBackgroundColorAlpha(int value) {
         
@@ -3216,7 +3216,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 backgroundColorAlpha = 23;</code>
+       * <code>uint32 backgroundColorAlpha = 15;</code>
        */
       public Builder clearBackgroundColorAlpha() {
         
@@ -3227,13 +3227,13 @@ public final class PbView {
 
       private boolean hasBorderColor_ ;
       /**
-       * <code>bool hasBorderColor = 30;</code>
+       * <code>bool hasBorderColor = 16;</code>
        */
       public boolean getHasBorderColor() {
         return hasBorderColor_;
       }
       /**
-       * <code>bool hasBorderColor = 30;</code>
+       * <code>bool hasBorderColor = 16;</code>
        */
       public Builder setHasBorderColor(boolean value) {
         
@@ -3242,7 +3242,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>bool hasBorderColor = 30;</code>
+       * <code>bool hasBorderColor = 16;</code>
        */
       public Builder clearHasBorderColor() {
         
@@ -3253,13 +3253,13 @@ public final class PbView {
 
       private int borderColorRed_ ;
       /**
-       * <code>uint32 borderColorRed = 31;</code>
+       * <code>uint32 borderColorRed = 17;</code>
        */
       public int getBorderColorRed() {
         return borderColorRed_;
       }
       /**
-       * <code>uint32 borderColorRed = 31;</code>
+       * <code>uint32 borderColorRed = 17;</code>
        */
       public Builder setBorderColorRed(int value) {
         
@@ -3268,7 +3268,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 borderColorRed = 31;</code>
+       * <code>uint32 borderColorRed = 17;</code>
        */
       public Builder clearBorderColorRed() {
         
@@ -3279,13 +3279,13 @@ public final class PbView {
 
       private int borderColorGreen_ ;
       /**
-       * <code>uint32 borderColorGreen = 32;</code>
+       * <code>uint32 borderColorGreen = 18;</code>
        */
       public int getBorderColorGreen() {
         return borderColorGreen_;
       }
       /**
-       * <code>uint32 borderColorGreen = 32;</code>
+       * <code>uint32 borderColorGreen = 18;</code>
        */
       public Builder setBorderColorGreen(int value) {
         
@@ -3294,7 +3294,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 borderColorGreen = 32;</code>
+       * <code>uint32 borderColorGreen = 18;</code>
        */
       public Builder clearBorderColorGreen() {
         
@@ -3305,13 +3305,13 @@ public final class PbView {
 
       private int borderColorBlue_ ;
       /**
-       * <code>uint32 borderColorBlue = 33;</code>
+       * <code>uint32 borderColorBlue = 19;</code>
        */
       public int getBorderColorBlue() {
         return borderColorBlue_;
       }
       /**
-       * <code>uint32 borderColorBlue = 33;</code>
+       * <code>uint32 borderColorBlue = 19;</code>
        */
       public Builder setBorderColorBlue(int value) {
         
@@ -3320,7 +3320,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 borderColorBlue = 33;</code>
+       * <code>uint32 borderColorBlue = 19;</code>
        */
       public Builder clearBorderColorBlue() {
         
@@ -3331,13 +3331,13 @@ public final class PbView {
 
       private int borderColorAlpha_ ;
       /**
-       * <code>uint32 borderColorAlpha = 34;</code>
+       * <code>uint32 borderColorAlpha = 20;</code>
        */
       public int getBorderColorAlpha() {
         return borderColorAlpha_;
       }
       /**
-       * <code>uint32 borderColorAlpha = 34;</code>
+       * <code>uint32 borderColorAlpha = 20;</code>
        */
       public Builder setBorderColorAlpha(int value) {
         
@@ -3346,7 +3346,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 borderColorAlpha = 34;</code>
+       * <code>uint32 borderColorAlpha = 20;</code>
        */
       public Builder clearBorderColorAlpha() {
         
@@ -3357,13 +3357,13 @@ public final class PbView {
 
       private double borderWidth_ ;
       /**
-       * <code>double borderWidth = 40;</code>
+       * <code>double borderWidth = 21;</code>
        */
       public double getBorderWidth() {
         return borderWidth_;
       }
       /**
-       * <code>double borderWidth = 40;</code>
+       * <code>double borderWidth = 21;</code>
        */
       public Builder setBorderWidth(double value) {
         
@@ -3372,7 +3372,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>double borderWidth = 40;</code>
+       * <code>double borderWidth = 21;</code>
        */
       public Builder clearBorderWidth() {
         
@@ -3383,13 +3383,13 @@ public final class PbView {
 
       private double cornerRadius_ ;
       /**
-       * <code>double cornerRadius = 41;</code>
+       * <code>double cornerRadius = 22;</code>
        */
       public double getCornerRadius() {
         return cornerRadius_;
       }
       /**
-       * <code>double cornerRadius = 41;</code>
+       * <code>double cornerRadius = 22;</code>
        */
       public Builder setCornerRadius(double value) {
         
@@ -3398,7 +3398,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>double cornerRadius = 41;</code>
+       * <code>double cornerRadius = 22;</code>
        */
       public Builder clearCornerRadius() {
         
@@ -3409,13 +3409,13 @@ public final class PbView {
 
       private double shadowRadius_ ;
       /**
-       * <code>double shadowRadius = 42;</code>
+       * <code>double shadowRadius = 23;</code>
        */
       public double getShadowRadius() {
         return shadowRadius_;
       }
       /**
-       * <code>double shadowRadius = 42;</code>
+       * <code>double shadowRadius = 23;</code>
        */
       public Builder setShadowRadius(double value) {
         
@@ -3424,7 +3424,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>double shadowRadius = 42;</code>
+       * <code>double shadowRadius = 23;</code>
        */
       public Builder clearShadowRadius() {
         
@@ -3435,13 +3435,13 @@ public final class PbView {
 
       private double shadowOffsetX_ ;
       /**
-       * <code>double shadowOffsetX = 43;</code>
+       * <code>double shadowOffsetX = 24;</code>
        */
       public double getShadowOffsetX() {
         return shadowOffsetX_;
       }
       /**
-       * <code>double shadowOffsetX = 43;</code>
+       * <code>double shadowOffsetX = 24;</code>
        */
       public Builder setShadowOffsetX(double value) {
         
@@ -3450,7 +3450,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>double shadowOffsetX = 43;</code>
+       * <code>double shadowOffsetX = 24;</code>
        */
       public Builder clearShadowOffsetX() {
         
@@ -3461,13 +3461,13 @@ public final class PbView {
 
       private double shadowOffsetY_ ;
       /**
-       * <code>double shadowOffsetY = 44;</code>
+       * <code>double shadowOffsetY = 25;</code>
        */
       public double getShadowOffsetY() {
         return shadowOffsetY_;
       }
       /**
-       * <code>double shadowOffsetY = 44;</code>
+       * <code>double shadowOffsetY = 25;</code>
        */
       public Builder setShadowOffsetY(double value) {
         
@@ -3476,7 +3476,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>double shadowOffsetY = 44;</code>
+       * <code>double shadowOffsetY = 25;</code>
        */
       public Builder clearShadowOffsetY() {
         
@@ -3487,13 +3487,13 @@ public final class PbView {
 
       private boolean hasShadowColor_ ;
       /**
-       * <code>bool hasShadowColor = 90;</code>
+       * <code>bool hasShadowColor = 26;</code>
        */
       public boolean getHasShadowColor() {
         return hasShadowColor_;
       }
       /**
-       * <code>bool hasShadowColor = 90;</code>
+       * <code>bool hasShadowColor = 26;</code>
        */
       public Builder setHasShadowColor(boolean value) {
         
@@ -3502,7 +3502,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>bool hasShadowColor = 90;</code>
+       * <code>bool hasShadowColor = 26;</code>
        */
       public Builder clearHasShadowColor() {
         
@@ -3513,13 +3513,13 @@ public final class PbView {
 
       private int shadowColorRed_ ;
       /**
-       * <code>uint32 shadowColorRed = 91;</code>
+       * <code>uint32 shadowColorRed = 27;</code>
        */
       public int getShadowColorRed() {
         return shadowColorRed_;
       }
       /**
-       * <code>uint32 shadowColorRed = 91;</code>
+       * <code>uint32 shadowColorRed = 27;</code>
        */
       public Builder setShadowColorRed(int value) {
         
@@ -3528,7 +3528,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 shadowColorRed = 91;</code>
+       * <code>uint32 shadowColorRed = 27;</code>
        */
       public Builder clearShadowColorRed() {
         
@@ -3539,13 +3539,13 @@ public final class PbView {
 
       private int shadowColorBlue_ ;
       /**
-       * <code>uint32 shadowColorBlue = 92;</code>
+       * <code>uint32 shadowColorBlue = 28;</code>
        */
       public int getShadowColorBlue() {
         return shadowColorBlue_;
       }
       /**
-       * <code>uint32 shadowColorBlue = 92;</code>
+       * <code>uint32 shadowColorBlue = 28;</code>
        */
       public Builder setShadowColorBlue(int value) {
         
@@ -3554,7 +3554,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 shadowColorBlue = 92;</code>
+       * <code>uint32 shadowColorBlue = 28;</code>
        */
       public Builder clearShadowColorBlue() {
         
@@ -3565,13 +3565,13 @@ public final class PbView {
 
       private int shadowColorGreen_ ;
       /**
-       * <code>uint32 shadowColorGreen = 93;</code>
+       * <code>uint32 shadowColorGreen = 29;</code>
        */
       public int getShadowColorGreen() {
         return shadowColorGreen_;
       }
       /**
-       * <code>uint32 shadowColorGreen = 93;</code>
+       * <code>uint32 shadowColorGreen = 29;</code>
        */
       public Builder setShadowColorGreen(int value) {
         
@@ -3580,7 +3580,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 shadowColorGreen = 93;</code>
+       * <code>uint32 shadowColorGreen = 29;</code>
        */
       public Builder clearShadowColorGreen() {
         
@@ -3591,13 +3591,13 @@ public final class PbView {
 
       private int shadowColorAlpha_ ;
       /**
-       * <code>uint32 shadowColorAlpha = 94;</code>
+       * <code>uint32 shadowColorAlpha = 30;</code>
        */
       public int getShadowColorAlpha() {
         return shadowColorAlpha_;
       }
       /**
-       * <code>uint32 shadowColorAlpha = 94;</code>
+       * <code>uint32 shadowColorAlpha = 30;</code>
        */
       public Builder setShadowColorAlpha(int value) {
         
@@ -3606,7 +3606,7 @@ public final class PbView {
         return this;
       }
       /**
-       * <code>uint32 shadowColorAlpha = 94;</code>
+       * <code>uint32 shadowColorAlpha = 30;</code>
        */
       public Builder clearShadowColorAlpha() {
         
@@ -4961,20 +4961,20 @@ public final class PbView {
       "ayoutId\030\002 \001(\003\022\017\n\007paintId\030\003 \001(\003\022\014\n\004minx\030\004" +
       " \001(\001\022\014\n\004miny\030\005 \001(\001\022\014\n\004maxx\030\006 \001(\001\022\014\n\004maxy",
       "\030\007 \001(\001\022\016\n\006zIndex\030\010 \001(\003\022\022\n\nchildOrder\030\t \003" +
-      "(\003\022\024\n\014transparency\0308 \001(\001\022\032\n\022hasBackgroun" +
-      "dColor\030\030 \001(\010\022\032\n\022backgroundColorRed\030\024 \001(\r" +
-      "\022\034\n\024backgroundColorGreen\030\025 \001(\r\022\033\n\023backgr" +
-      "oundColorBlue\030\026 \001(\r\022\034\n\024backgroundColorAl" +
-      "pha\030\027 \001(\r\022\026\n\016hasBorderColor\030\036 \001(\010\022\026\n\016bor" +
-      "derColorRed\030\037 \001(\r\022\030\n\020borderColorGreen\030  " +
-      "\001(\r\022\027\n\017borderColorBlue\030! \001(\r\022\030\n\020borderCo" +
-      "lorAlpha\030\" \001(\r\022\023\n\013borderWidth\030( \001(\001\022\024\n\014c" +
-      "ornerRadius\030) \001(\001\022\024\n\014shadowRadius\030* \001(\001\022",
-      "\025\n\rshadowOffsetX\030+ \001(\001\022\025\n\rshadowOffsetY\030" +
-      ", \001(\001\022\026\n\016hasShadowColor\030Z \001(\010\022\026\n\016shadowC" +
-      "olorRed\030[ \001(\r\022\027\n\017shadowColorBlue\030\\ \001(\r\022\030" +
-      "\n\020shadowColorGreen\030] \001(\r\022\030\n\020shadowColorA" +
-      "lpha\030^ \001(\r\"\242\003\n\004Root\022A\n\020layoutPaintNodes\030" +
+      "(\003\022\024\n\014transparency\030\n \001(\001\022\032\n\022hasBackgroun" +
+      "dColor\030\013 \001(\010\022\032\n\022backgroundColorRed\030\014 \001(\r" +
+      "\022\034\n\024backgroundColorGreen\030\r \001(\r\022\033\n\023backgr" +
+      "oundColorBlue\030\016 \001(\r\022\034\n\024backgroundColorAl" +
+      "pha\030\017 \001(\r\022\026\n\016hasBorderColor\030\020 \001(\010\022\026\n\016bor" +
+      "derColorRed\030\021 \001(\r\022\030\n\020borderColorGreen\030\022 " +
+      "\001(\r\022\027\n\017borderColorBlue\030\023 \001(\r\022\030\n\020borderCo" +
+      "lorAlpha\030\024 \001(\r\022\023\n\013borderWidth\030\025 \001(\001\022\024\n\014c" +
+      "ornerRadius\030\026 \001(\001\022\024\n\014shadowRadius\030\027 \001(\001\022",
+      "\025\n\rshadowOffsetX\030\030 \001(\001\022\025\n\rshadowOffsetY\030" +
+      "\031 \001(\001\022\026\n\016hasShadowColor\030\032 \001(\010\022\026\n\016shadowC" +
+      "olorRed\030\033 \001(\r\022\027\n\017shadowColorBlue\030\034 \001(\r\022\030" +
+      "\n\020shadowColorGreen\030\035 \001(\r\022\030\n\020shadowColorA" +
+      "lpha\030\036 \001(\r\"\242\003\n\004Root\022A\n\020layoutPaintNodes\030" +
       "\002 \003(\0132\'.matcha.view.Root.LayoutPaintNode" +
       "sEntry\0225\n\nbuildNodes\030\003 \003(\0132!.matcha.view" +
       ".Root.BuildNodesEntry\0225\n\nmiddleware\030\004 \003(" +
