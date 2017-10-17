@@ -24,30 +24,54 @@ public final class PbPaint {
     double getTransparency();
 
     /**
-     * <code>.matcha.Color backgroundColor = 2;</code>
+     * <code>bool hasBackgroundColor = 24;</code>
      */
-    boolean hasBackgroundColor();
-    /**
-     * <code>.matcha.Color backgroundColor = 2;</code>
-     */
-    io.gomatcha.matcha.proto.Proto.Color getBackgroundColor();
-    /**
-     * <code>.matcha.Color backgroundColor = 2;</code>
-     */
-    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getBackgroundColorOrBuilder();
+    boolean getHasBackgroundColor();
 
     /**
-     * <code>.matcha.Color borderColor = 3;</code>
+     * <code>uint32 backgroundColorRed = 20;</code>
      */
-    boolean hasBorderColor();
+    int getBackgroundColorRed();
+
     /**
-     * <code>.matcha.Color borderColor = 3;</code>
+     * <code>uint32 backgroundColorGreen = 21;</code>
      */
-    io.gomatcha.matcha.proto.Proto.Color getBorderColor();
+    int getBackgroundColorGreen();
+
     /**
-     * <code>.matcha.Color borderColor = 3;</code>
+     * <code>uint32 backgroundColorBlue = 22;</code>
      */
-    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getBorderColorOrBuilder();
+    int getBackgroundColorBlue();
+
+    /**
+     * <code>uint32 backgroundColorAlpha = 23;</code>
+     */
+    int getBackgroundColorAlpha();
+
+    /**
+     * <code>bool hasBorderColor = 30;</code>
+     */
+    boolean getHasBorderColor();
+
+    /**
+     * <code>uint32 borderColorRed = 31;</code>
+     */
+    int getBorderColorRed();
+
+    /**
+     * <code>uint32 borderColorGreen = 32;</code>
+     */
+    int getBorderColorGreen();
+
+    /**
+     * <code>uint32 borderColorBlue = 33;</code>
+     */
+    int getBorderColorBlue();
+
+    /**
+     * <code>uint32 borderColorAlpha = 34;</code>
+     */
+    int getBorderColorAlpha();
 
     /**
      * <code>double borderWidth = 4;</code>
@@ -65,30 +89,43 @@ public final class PbPaint {
     double getShadowRadius();
 
     /**
-     * <code>.matcha.layout.Point shadowOffset = 8;</code>
+     * <code>double shadowOffsetX = 10;</code>
      */
-    boolean hasShadowOffset();
-    /**
-     * <code>.matcha.layout.Point shadowOffset = 8;</code>
-     */
-    io.gomatcha.matcha.proto.layout.PbLayout.Point getShadowOffset();
-    /**
-     * <code>.matcha.layout.Point shadowOffset = 8;</code>
-     */
-    io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder getShadowOffsetOrBuilder();
+    double getShadowOffsetX();
 
     /**
-     * <code>.matcha.Color shadowColor = 9;</code>
+     * <pre>
+     * matcha.layout.Point shadowOffset = 8;
+     * </pre>
+     *
+     * <code>double shadowOffsetY = 9;</code>
      */
-    boolean hasShadowColor();
+    double getShadowOffsetY();
+
     /**
-     * <code>.matcha.Color shadowColor = 9;</code>
+     * <code>bool hasShadowColor = 90;</code>
      */
-    io.gomatcha.matcha.proto.Proto.Color getShadowColor();
+    boolean getHasShadowColor();
+
     /**
-     * <code>.matcha.Color shadowColor = 9;</code>
+     * <code>uint32 shadowColorRed = 91;</code>
      */
-    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getShadowColorOrBuilder();
+    int getShadowColorRed();
+
+    /**
+     * <code>uint32 shadowColorBlue = 92;</code>
+     */
+    int getShadowColorBlue();
+
+    /**
+     * <code>uint32 shadowColorGreen = 93;</code>
+     */
+    int getShadowColorGreen();
+
+    /**
+     * <code>uint32 shadowColorAlpha = 94;</code>
+     */
+    int getShadowColorAlpha();
   }
   /**
    * Protobuf type {@code matcha.paint.Style}
@@ -103,9 +140,26 @@ public final class PbPaint {
     }
     private Style() {
       transparency_ = 0D;
+      hasBackgroundColor_ = false;
+      backgroundColorRed_ = 0;
+      backgroundColorGreen_ = 0;
+      backgroundColorBlue_ = 0;
+      backgroundColorAlpha_ = 0;
+      hasBorderColor_ = false;
+      borderColorRed_ = 0;
+      borderColorGreen_ = 0;
+      borderColorBlue_ = 0;
+      borderColorAlpha_ = 0;
       borderWidth_ = 0D;
       cornerRadius_ = 0D;
       shadowRadius_ = 0D;
+      shadowOffsetX_ = 0D;
+      shadowOffsetY_ = 0D;
+      hasShadowColor_ = false;
+      shadowColorRed_ = 0;
+      shadowColorBlue_ = 0;
+      shadowColorGreen_ = 0;
+      shadowColorAlpha_ = 0;
     }
 
     @java.lang.Override
@@ -138,32 +192,6 @@ public final class PbPaint {
               transparency_ = input.readDouble();
               break;
             }
-            case 18: {
-              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
-              if (backgroundColor_ != null) {
-                subBuilder = backgroundColor_.toBuilder();
-              }
-              backgroundColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(backgroundColor_);
-                backgroundColor_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 26: {
-              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
-              if (borderColor_ != null) {
-                subBuilder = borderColor_.toBuilder();
-              }
-              borderColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(borderColor_);
-                borderColor_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
             case 33: {
 
               borderWidth_ = input.readDouble();
@@ -179,30 +207,89 @@ public final class PbPaint {
               shadowRadius_ = input.readDouble();
               break;
             }
-            case 66: {
-              io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder subBuilder = null;
-              if (shadowOffset_ != null) {
-                subBuilder = shadowOffset_.toBuilder();
-              }
-              shadowOffset_ = input.readMessage(io.gomatcha.matcha.proto.layout.PbLayout.Point.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(shadowOffset_);
-                shadowOffset_ = subBuilder.buildPartial();
-              }
+            case 73: {
 
+              shadowOffsetY_ = input.readDouble();
               break;
             }
-            case 74: {
-              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
-              if (shadowColor_ != null) {
-                subBuilder = shadowColor_.toBuilder();
-              }
-              shadowColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(shadowColor_);
-                shadowColor_ = subBuilder.buildPartial();
-              }
+            case 81: {
 
+              shadowOffsetX_ = input.readDouble();
+              break;
+            }
+            case 160: {
+
+              backgroundColorRed_ = input.readUInt32();
+              break;
+            }
+            case 168: {
+
+              backgroundColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 176: {
+
+              backgroundColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 184: {
+
+              backgroundColorAlpha_ = input.readUInt32();
+              break;
+            }
+            case 192: {
+
+              hasBackgroundColor_ = input.readBool();
+              break;
+            }
+            case 240: {
+
+              hasBorderColor_ = input.readBool();
+              break;
+            }
+            case 248: {
+
+              borderColorRed_ = input.readUInt32();
+              break;
+            }
+            case 256: {
+
+              borderColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 264: {
+
+              borderColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 272: {
+
+              borderColorAlpha_ = input.readUInt32();
+              break;
+            }
+            case 720: {
+
+              hasShadowColor_ = input.readBool();
+              break;
+            }
+            case 728: {
+
+              shadowColorRed_ = input.readUInt32();
+              break;
+            }
+            case 736: {
+
+              shadowColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 744: {
+
+              shadowColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 752: {
+
+              shadowColorAlpha_ = input.readUInt32();
               break;
             }
           }
@@ -237,46 +324,94 @@ public final class PbPaint {
       return transparency_;
     }
 
-    public static final int BACKGROUNDCOLOR_FIELD_NUMBER = 2;
-    private io.gomatcha.matcha.proto.Proto.Color backgroundColor_;
+    public static final int HASBACKGROUNDCOLOR_FIELD_NUMBER = 24;
+    private boolean hasBackgroundColor_;
     /**
-     * <code>.matcha.Color backgroundColor = 2;</code>
+     * <code>bool hasBackgroundColor = 24;</code>
      */
-    public boolean hasBackgroundColor() {
-      return backgroundColor_ != null;
-    }
-    /**
-     * <code>.matcha.Color backgroundColor = 2;</code>
-     */
-    public io.gomatcha.matcha.proto.Proto.Color getBackgroundColor() {
-      return backgroundColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : backgroundColor_;
-    }
-    /**
-     * <code>.matcha.Color backgroundColor = 2;</code>
-     */
-    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getBackgroundColorOrBuilder() {
-      return getBackgroundColor();
+    public boolean getHasBackgroundColor() {
+      return hasBackgroundColor_;
     }
 
-    public static final int BORDERCOLOR_FIELD_NUMBER = 3;
-    private io.gomatcha.matcha.proto.Proto.Color borderColor_;
+    public static final int BACKGROUNDCOLORRED_FIELD_NUMBER = 20;
+    private int backgroundColorRed_;
     /**
-     * <code>.matcha.Color borderColor = 3;</code>
+     * <code>uint32 backgroundColorRed = 20;</code>
      */
-    public boolean hasBorderColor() {
-      return borderColor_ != null;
+    public int getBackgroundColorRed() {
+      return backgroundColorRed_;
     }
+
+    public static final int BACKGROUNDCOLORGREEN_FIELD_NUMBER = 21;
+    private int backgroundColorGreen_;
     /**
-     * <code>.matcha.Color borderColor = 3;</code>
+     * <code>uint32 backgroundColorGreen = 21;</code>
      */
-    public io.gomatcha.matcha.proto.Proto.Color getBorderColor() {
-      return borderColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : borderColor_;
+    public int getBackgroundColorGreen() {
+      return backgroundColorGreen_;
     }
+
+    public static final int BACKGROUNDCOLORBLUE_FIELD_NUMBER = 22;
+    private int backgroundColorBlue_;
     /**
-     * <code>.matcha.Color borderColor = 3;</code>
+     * <code>uint32 backgroundColorBlue = 22;</code>
      */
-    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getBorderColorOrBuilder() {
-      return getBorderColor();
+    public int getBackgroundColorBlue() {
+      return backgroundColorBlue_;
+    }
+
+    public static final int BACKGROUNDCOLORALPHA_FIELD_NUMBER = 23;
+    private int backgroundColorAlpha_;
+    /**
+     * <code>uint32 backgroundColorAlpha = 23;</code>
+     */
+    public int getBackgroundColorAlpha() {
+      return backgroundColorAlpha_;
+    }
+
+    public static final int HASBORDERCOLOR_FIELD_NUMBER = 30;
+    private boolean hasBorderColor_;
+    /**
+     * <code>bool hasBorderColor = 30;</code>
+     */
+    public boolean getHasBorderColor() {
+      return hasBorderColor_;
+    }
+
+    public static final int BORDERCOLORRED_FIELD_NUMBER = 31;
+    private int borderColorRed_;
+    /**
+     * <code>uint32 borderColorRed = 31;</code>
+     */
+    public int getBorderColorRed() {
+      return borderColorRed_;
+    }
+
+    public static final int BORDERCOLORGREEN_FIELD_NUMBER = 32;
+    private int borderColorGreen_;
+    /**
+     * <code>uint32 borderColorGreen = 32;</code>
+     */
+    public int getBorderColorGreen() {
+      return borderColorGreen_;
+    }
+
+    public static final int BORDERCOLORBLUE_FIELD_NUMBER = 33;
+    private int borderColorBlue_;
+    /**
+     * <code>uint32 borderColorBlue = 33;</code>
+     */
+    public int getBorderColorBlue() {
+      return borderColorBlue_;
+    }
+
+    public static final int BORDERCOLORALPHA_FIELD_NUMBER = 34;
+    private int borderColorAlpha_;
+    /**
+     * <code>uint32 borderColorAlpha = 34;</code>
+     */
+    public int getBorderColorAlpha() {
+      return borderColorAlpha_;
     }
 
     public static final int BORDERWIDTH_FIELD_NUMBER = 4;
@@ -306,46 +441,71 @@ public final class PbPaint {
       return shadowRadius_;
     }
 
-    public static final int SHADOWOFFSET_FIELD_NUMBER = 8;
-    private io.gomatcha.matcha.proto.layout.PbLayout.Point shadowOffset_;
+    public static final int SHADOWOFFSETX_FIELD_NUMBER = 10;
+    private double shadowOffsetX_;
     /**
-     * <code>.matcha.layout.Point shadowOffset = 8;</code>
+     * <code>double shadowOffsetX = 10;</code>
      */
-    public boolean hasShadowOffset() {
-      return shadowOffset_ != null;
-    }
-    /**
-     * <code>.matcha.layout.Point shadowOffset = 8;</code>
-     */
-    public io.gomatcha.matcha.proto.layout.PbLayout.Point getShadowOffset() {
-      return shadowOffset_ == null ? io.gomatcha.matcha.proto.layout.PbLayout.Point.getDefaultInstance() : shadowOffset_;
-    }
-    /**
-     * <code>.matcha.layout.Point shadowOffset = 8;</code>
-     */
-    public io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder getShadowOffsetOrBuilder() {
-      return getShadowOffset();
+    public double getShadowOffsetX() {
+      return shadowOffsetX_;
     }
 
-    public static final int SHADOWCOLOR_FIELD_NUMBER = 9;
-    private io.gomatcha.matcha.proto.Proto.Color shadowColor_;
+    public static final int SHADOWOFFSETY_FIELD_NUMBER = 9;
+    private double shadowOffsetY_;
     /**
-     * <code>.matcha.Color shadowColor = 9;</code>
+     * <pre>
+     * matcha.layout.Point shadowOffset = 8;
+     * </pre>
+     *
+     * <code>double shadowOffsetY = 9;</code>
      */
-    public boolean hasShadowColor() {
-      return shadowColor_ != null;
+    public double getShadowOffsetY() {
+      return shadowOffsetY_;
     }
+
+    public static final int HASSHADOWCOLOR_FIELD_NUMBER = 90;
+    private boolean hasShadowColor_;
     /**
-     * <code>.matcha.Color shadowColor = 9;</code>
+     * <code>bool hasShadowColor = 90;</code>
      */
-    public io.gomatcha.matcha.proto.Proto.Color getShadowColor() {
-      return shadowColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : shadowColor_;
+    public boolean getHasShadowColor() {
+      return hasShadowColor_;
     }
+
+    public static final int SHADOWCOLORRED_FIELD_NUMBER = 91;
+    private int shadowColorRed_;
     /**
-     * <code>.matcha.Color shadowColor = 9;</code>
+     * <code>uint32 shadowColorRed = 91;</code>
      */
-    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getShadowColorOrBuilder() {
-      return getShadowColor();
+    public int getShadowColorRed() {
+      return shadowColorRed_;
+    }
+
+    public static final int SHADOWCOLORBLUE_FIELD_NUMBER = 92;
+    private int shadowColorBlue_;
+    /**
+     * <code>uint32 shadowColorBlue = 92;</code>
+     */
+    public int getShadowColorBlue() {
+      return shadowColorBlue_;
+    }
+
+    public static final int SHADOWCOLORGREEN_FIELD_NUMBER = 93;
+    private int shadowColorGreen_;
+    /**
+     * <code>uint32 shadowColorGreen = 93;</code>
+     */
+    public int getShadowColorGreen() {
+      return shadowColorGreen_;
+    }
+
+    public static final int SHADOWCOLORALPHA_FIELD_NUMBER = 94;
+    private int shadowColorAlpha_;
+    /**
+     * <code>uint32 shadowColorAlpha = 94;</code>
+     */
+    public int getShadowColorAlpha() {
+      return shadowColorAlpha_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -363,12 +523,6 @@ public final class PbPaint {
       if (transparency_ != 0D) {
         output.writeDouble(1, transparency_);
       }
-      if (backgroundColor_ != null) {
-        output.writeMessage(2, getBackgroundColor());
-      }
-      if (borderColor_ != null) {
-        output.writeMessage(3, getBorderColor());
-      }
       if (borderWidth_ != 0D) {
         output.writeDouble(4, borderWidth_);
       }
@@ -378,11 +532,56 @@ public final class PbPaint {
       if (shadowRadius_ != 0D) {
         output.writeDouble(7, shadowRadius_);
       }
-      if (shadowOffset_ != null) {
-        output.writeMessage(8, getShadowOffset());
+      if (shadowOffsetY_ != 0D) {
+        output.writeDouble(9, shadowOffsetY_);
       }
-      if (shadowColor_ != null) {
-        output.writeMessage(9, getShadowColor());
+      if (shadowOffsetX_ != 0D) {
+        output.writeDouble(10, shadowOffsetX_);
+      }
+      if (backgroundColorRed_ != 0) {
+        output.writeUInt32(20, backgroundColorRed_);
+      }
+      if (backgroundColorGreen_ != 0) {
+        output.writeUInt32(21, backgroundColorGreen_);
+      }
+      if (backgroundColorBlue_ != 0) {
+        output.writeUInt32(22, backgroundColorBlue_);
+      }
+      if (backgroundColorAlpha_ != 0) {
+        output.writeUInt32(23, backgroundColorAlpha_);
+      }
+      if (hasBackgroundColor_ != false) {
+        output.writeBool(24, hasBackgroundColor_);
+      }
+      if (hasBorderColor_ != false) {
+        output.writeBool(30, hasBorderColor_);
+      }
+      if (borderColorRed_ != 0) {
+        output.writeUInt32(31, borderColorRed_);
+      }
+      if (borderColorGreen_ != 0) {
+        output.writeUInt32(32, borderColorGreen_);
+      }
+      if (borderColorBlue_ != 0) {
+        output.writeUInt32(33, borderColorBlue_);
+      }
+      if (borderColorAlpha_ != 0) {
+        output.writeUInt32(34, borderColorAlpha_);
+      }
+      if (hasShadowColor_ != false) {
+        output.writeBool(90, hasShadowColor_);
+      }
+      if (shadowColorRed_ != 0) {
+        output.writeUInt32(91, shadowColorRed_);
+      }
+      if (shadowColorBlue_ != 0) {
+        output.writeUInt32(92, shadowColorBlue_);
+      }
+      if (shadowColorGreen_ != 0) {
+        output.writeUInt32(93, shadowColorGreen_);
+      }
+      if (shadowColorAlpha_ != 0) {
+        output.writeUInt32(94, shadowColorAlpha_);
       }
     }
 
@@ -394,14 +593,6 @@ public final class PbPaint {
       if (transparency_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
           .computeDoubleSize(1, transparency_);
-      }
-      if (backgroundColor_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getBackgroundColor());
-      }
-      if (borderColor_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getBorderColor());
       }
       if (borderWidth_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
@@ -415,13 +606,73 @@ public final class PbPaint {
         size += com.google.protobuf.CodedOutputStream
           .computeDoubleSize(7, shadowRadius_);
       }
-      if (shadowOffset_ != null) {
+      if (shadowOffsetY_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(8, getShadowOffset());
+          .computeDoubleSize(9, shadowOffsetY_);
       }
-      if (shadowColor_ != null) {
+      if (shadowOffsetX_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(9, getShadowColor());
+          .computeDoubleSize(10, shadowOffsetX_);
+      }
+      if (backgroundColorRed_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(20, backgroundColorRed_);
+      }
+      if (backgroundColorGreen_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(21, backgroundColorGreen_);
+      }
+      if (backgroundColorBlue_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(22, backgroundColorBlue_);
+      }
+      if (backgroundColorAlpha_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(23, backgroundColorAlpha_);
+      }
+      if (hasBackgroundColor_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(24, hasBackgroundColor_);
+      }
+      if (hasBorderColor_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(30, hasBorderColor_);
+      }
+      if (borderColorRed_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(31, borderColorRed_);
+      }
+      if (borderColorGreen_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(32, borderColorGreen_);
+      }
+      if (borderColorBlue_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(33, borderColorBlue_);
+      }
+      if (borderColorAlpha_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(34, borderColorAlpha_);
+      }
+      if (hasShadowColor_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(90, hasShadowColor_);
+      }
+      if (shadowColorRed_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(91, shadowColorRed_);
+      }
+      if (shadowColorBlue_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(92, shadowColorBlue_);
+      }
+      if (shadowColorGreen_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(93, shadowColorGreen_);
+      }
+      if (shadowColorAlpha_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(94, shadowColorAlpha_);
       }
       memoizedSize = size;
       return size;
@@ -443,16 +694,26 @@ public final class PbPaint {
           java.lang.Double.doubleToLongBits(getTransparency())
           == java.lang.Double.doubleToLongBits(
               other.getTransparency()));
-      result = result && (hasBackgroundColor() == other.hasBackgroundColor());
-      if (hasBackgroundColor()) {
-        result = result && getBackgroundColor()
-            .equals(other.getBackgroundColor());
-      }
-      result = result && (hasBorderColor() == other.hasBorderColor());
-      if (hasBorderColor()) {
-        result = result && getBorderColor()
-            .equals(other.getBorderColor());
-      }
+      result = result && (getHasBackgroundColor()
+          == other.getHasBackgroundColor());
+      result = result && (getBackgroundColorRed()
+          == other.getBackgroundColorRed());
+      result = result && (getBackgroundColorGreen()
+          == other.getBackgroundColorGreen());
+      result = result && (getBackgroundColorBlue()
+          == other.getBackgroundColorBlue());
+      result = result && (getBackgroundColorAlpha()
+          == other.getBackgroundColorAlpha());
+      result = result && (getHasBorderColor()
+          == other.getHasBorderColor());
+      result = result && (getBorderColorRed()
+          == other.getBorderColorRed());
+      result = result && (getBorderColorGreen()
+          == other.getBorderColorGreen());
+      result = result && (getBorderColorBlue()
+          == other.getBorderColorBlue());
+      result = result && (getBorderColorAlpha()
+          == other.getBorderColorAlpha());
       result = result && (
           java.lang.Double.doubleToLongBits(getBorderWidth())
           == java.lang.Double.doubleToLongBits(
@@ -465,16 +726,24 @@ public final class PbPaint {
           java.lang.Double.doubleToLongBits(getShadowRadius())
           == java.lang.Double.doubleToLongBits(
               other.getShadowRadius()));
-      result = result && (hasShadowOffset() == other.hasShadowOffset());
-      if (hasShadowOffset()) {
-        result = result && getShadowOffset()
-            .equals(other.getShadowOffset());
-      }
-      result = result && (hasShadowColor() == other.hasShadowColor());
-      if (hasShadowColor()) {
-        result = result && getShadowColor()
-            .equals(other.getShadowColor());
-      }
+      result = result && (
+          java.lang.Double.doubleToLongBits(getShadowOffsetX())
+          == java.lang.Double.doubleToLongBits(
+              other.getShadowOffsetX()));
+      result = result && (
+          java.lang.Double.doubleToLongBits(getShadowOffsetY())
+          == java.lang.Double.doubleToLongBits(
+              other.getShadowOffsetY()));
+      result = result && (getHasShadowColor()
+          == other.getHasShadowColor());
+      result = result && (getShadowColorRed()
+          == other.getShadowColorRed());
+      result = result && (getShadowColorBlue()
+          == other.getShadowColorBlue());
+      result = result && (getShadowColorGreen()
+          == other.getShadowColorGreen());
+      result = result && (getShadowColorAlpha()
+          == other.getShadowColorAlpha());
       return result;
     }
 
@@ -488,14 +757,28 @@ public final class PbPaint {
       hash = (37 * hash) + TRANSPARENCY_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           java.lang.Double.doubleToLongBits(getTransparency()));
-      if (hasBackgroundColor()) {
-        hash = (37 * hash) + BACKGROUNDCOLOR_FIELD_NUMBER;
-        hash = (53 * hash) + getBackgroundColor().hashCode();
-      }
-      if (hasBorderColor()) {
-        hash = (37 * hash) + BORDERCOLOR_FIELD_NUMBER;
-        hash = (53 * hash) + getBorderColor().hashCode();
-      }
+      hash = (37 * hash) + HASBACKGROUNDCOLOR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getHasBackgroundColor());
+      hash = (37 * hash) + BACKGROUNDCOLORRED_FIELD_NUMBER;
+      hash = (53 * hash) + getBackgroundColorRed();
+      hash = (37 * hash) + BACKGROUNDCOLORGREEN_FIELD_NUMBER;
+      hash = (53 * hash) + getBackgroundColorGreen();
+      hash = (37 * hash) + BACKGROUNDCOLORBLUE_FIELD_NUMBER;
+      hash = (53 * hash) + getBackgroundColorBlue();
+      hash = (37 * hash) + BACKGROUNDCOLORALPHA_FIELD_NUMBER;
+      hash = (53 * hash) + getBackgroundColorAlpha();
+      hash = (37 * hash) + HASBORDERCOLOR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getHasBorderColor());
+      hash = (37 * hash) + BORDERCOLORRED_FIELD_NUMBER;
+      hash = (53 * hash) + getBorderColorRed();
+      hash = (37 * hash) + BORDERCOLORGREEN_FIELD_NUMBER;
+      hash = (53 * hash) + getBorderColorGreen();
+      hash = (37 * hash) + BORDERCOLORBLUE_FIELD_NUMBER;
+      hash = (53 * hash) + getBorderColorBlue();
+      hash = (37 * hash) + BORDERCOLORALPHA_FIELD_NUMBER;
+      hash = (53 * hash) + getBorderColorAlpha();
       hash = (37 * hash) + BORDERWIDTH_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           java.lang.Double.doubleToLongBits(getBorderWidth()));
@@ -505,14 +788,23 @@ public final class PbPaint {
       hash = (37 * hash) + SHADOWRADIUS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           java.lang.Double.doubleToLongBits(getShadowRadius()));
-      if (hasShadowOffset()) {
-        hash = (37 * hash) + SHADOWOFFSET_FIELD_NUMBER;
-        hash = (53 * hash) + getShadowOffset().hashCode();
-      }
-      if (hasShadowColor()) {
-        hash = (37 * hash) + SHADOWCOLOR_FIELD_NUMBER;
-        hash = (53 * hash) + getShadowColor().hashCode();
-      }
+      hash = (37 * hash) + SHADOWOFFSETX_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getShadowOffsetX()));
+      hash = (37 * hash) + SHADOWOFFSETY_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getShadowOffsetY()));
+      hash = (37 * hash) + HASSHADOWCOLOR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getHasShadowColor());
+      hash = (37 * hash) + SHADOWCOLORRED_FIELD_NUMBER;
+      hash = (53 * hash) + getShadowColorRed();
+      hash = (37 * hash) + SHADOWCOLORBLUE_FIELD_NUMBER;
+      hash = (53 * hash) + getShadowColorBlue();
+      hash = (37 * hash) + SHADOWCOLORGREEN_FIELD_NUMBER;
+      hash = (53 * hash) + getShadowColorGreen();
+      hash = (37 * hash) + SHADOWCOLORALPHA_FIELD_NUMBER;
+      hash = (53 * hash) + getShadowColorAlpha();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -644,36 +936,46 @@ public final class PbPaint {
         super.clear();
         transparency_ = 0D;
 
-        if (backgroundColorBuilder_ == null) {
-          backgroundColor_ = null;
-        } else {
-          backgroundColor_ = null;
-          backgroundColorBuilder_ = null;
-        }
-        if (borderColorBuilder_ == null) {
-          borderColor_ = null;
-        } else {
-          borderColor_ = null;
-          borderColorBuilder_ = null;
-        }
+        hasBackgroundColor_ = false;
+
+        backgroundColorRed_ = 0;
+
+        backgroundColorGreen_ = 0;
+
+        backgroundColorBlue_ = 0;
+
+        backgroundColorAlpha_ = 0;
+
+        hasBorderColor_ = false;
+
+        borderColorRed_ = 0;
+
+        borderColorGreen_ = 0;
+
+        borderColorBlue_ = 0;
+
+        borderColorAlpha_ = 0;
+
         borderWidth_ = 0D;
 
         cornerRadius_ = 0D;
 
         shadowRadius_ = 0D;
 
-        if (shadowOffsetBuilder_ == null) {
-          shadowOffset_ = null;
-        } else {
-          shadowOffset_ = null;
-          shadowOffsetBuilder_ = null;
-        }
-        if (shadowColorBuilder_ == null) {
-          shadowColor_ = null;
-        } else {
-          shadowColor_ = null;
-          shadowColorBuilder_ = null;
-        }
+        shadowOffsetX_ = 0D;
+
+        shadowOffsetY_ = 0D;
+
+        hasShadowColor_ = false;
+
+        shadowColorRed_ = 0;
+
+        shadowColorBlue_ = 0;
+
+        shadowColorGreen_ = 0;
+
+        shadowColorAlpha_ = 0;
+
         return this;
       }
 
@@ -697,29 +999,26 @@ public final class PbPaint {
       public io.gomatcha.matcha.proto.paint.PbPaint.Style buildPartial() {
         io.gomatcha.matcha.proto.paint.PbPaint.Style result = new io.gomatcha.matcha.proto.paint.PbPaint.Style(this);
         result.transparency_ = transparency_;
-        if (backgroundColorBuilder_ == null) {
-          result.backgroundColor_ = backgroundColor_;
-        } else {
-          result.backgroundColor_ = backgroundColorBuilder_.build();
-        }
-        if (borderColorBuilder_ == null) {
-          result.borderColor_ = borderColor_;
-        } else {
-          result.borderColor_ = borderColorBuilder_.build();
-        }
+        result.hasBackgroundColor_ = hasBackgroundColor_;
+        result.backgroundColorRed_ = backgroundColorRed_;
+        result.backgroundColorGreen_ = backgroundColorGreen_;
+        result.backgroundColorBlue_ = backgroundColorBlue_;
+        result.backgroundColorAlpha_ = backgroundColorAlpha_;
+        result.hasBorderColor_ = hasBorderColor_;
+        result.borderColorRed_ = borderColorRed_;
+        result.borderColorGreen_ = borderColorGreen_;
+        result.borderColorBlue_ = borderColorBlue_;
+        result.borderColorAlpha_ = borderColorAlpha_;
         result.borderWidth_ = borderWidth_;
         result.cornerRadius_ = cornerRadius_;
         result.shadowRadius_ = shadowRadius_;
-        if (shadowOffsetBuilder_ == null) {
-          result.shadowOffset_ = shadowOffset_;
-        } else {
-          result.shadowOffset_ = shadowOffsetBuilder_.build();
-        }
-        if (shadowColorBuilder_ == null) {
-          result.shadowColor_ = shadowColor_;
-        } else {
-          result.shadowColor_ = shadowColorBuilder_.build();
-        }
+        result.shadowOffsetX_ = shadowOffsetX_;
+        result.shadowOffsetY_ = shadowOffsetY_;
+        result.hasShadowColor_ = hasShadowColor_;
+        result.shadowColorRed_ = shadowColorRed_;
+        result.shadowColorBlue_ = shadowColorBlue_;
+        result.shadowColorGreen_ = shadowColorGreen_;
+        result.shadowColorAlpha_ = shadowColorAlpha_;
         onBuilt();
         return result;
       }
@@ -764,11 +1063,35 @@ public final class PbPaint {
         if (other.getTransparency() != 0D) {
           setTransparency(other.getTransparency());
         }
-        if (other.hasBackgroundColor()) {
-          mergeBackgroundColor(other.getBackgroundColor());
+        if (other.getHasBackgroundColor() != false) {
+          setHasBackgroundColor(other.getHasBackgroundColor());
         }
-        if (other.hasBorderColor()) {
-          mergeBorderColor(other.getBorderColor());
+        if (other.getBackgroundColorRed() != 0) {
+          setBackgroundColorRed(other.getBackgroundColorRed());
+        }
+        if (other.getBackgroundColorGreen() != 0) {
+          setBackgroundColorGreen(other.getBackgroundColorGreen());
+        }
+        if (other.getBackgroundColorBlue() != 0) {
+          setBackgroundColorBlue(other.getBackgroundColorBlue());
+        }
+        if (other.getBackgroundColorAlpha() != 0) {
+          setBackgroundColorAlpha(other.getBackgroundColorAlpha());
+        }
+        if (other.getHasBorderColor() != false) {
+          setHasBorderColor(other.getHasBorderColor());
+        }
+        if (other.getBorderColorRed() != 0) {
+          setBorderColorRed(other.getBorderColorRed());
+        }
+        if (other.getBorderColorGreen() != 0) {
+          setBorderColorGreen(other.getBorderColorGreen());
+        }
+        if (other.getBorderColorBlue() != 0) {
+          setBorderColorBlue(other.getBorderColorBlue());
+        }
+        if (other.getBorderColorAlpha() != 0) {
+          setBorderColorAlpha(other.getBorderColorAlpha());
         }
         if (other.getBorderWidth() != 0D) {
           setBorderWidth(other.getBorderWidth());
@@ -779,11 +1102,26 @@ public final class PbPaint {
         if (other.getShadowRadius() != 0D) {
           setShadowRadius(other.getShadowRadius());
         }
-        if (other.hasShadowOffset()) {
-          mergeShadowOffset(other.getShadowOffset());
+        if (other.getShadowOffsetX() != 0D) {
+          setShadowOffsetX(other.getShadowOffsetX());
         }
-        if (other.hasShadowColor()) {
-          mergeShadowColor(other.getShadowColor());
+        if (other.getShadowOffsetY() != 0D) {
+          setShadowOffsetY(other.getShadowOffsetY());
+        }
+        if (other.getHasShadowColor() != false) {
+          setHasShadowColor(other.getHasShadowColor());
+        }
+        if (other.getShadowColorRed() != 0) {
+          setShadowColorRed(other.getShadowColorRed());
+        }
+        if (other.getShadowColorBlue() != 0) {
+          setShadowColorBlue(other.getShadowColorBlue());
+        }
+        if (other.getShadowColorGreen() != 0) {
+          setShadowColorGreen(other.getShadowColorGreen());
+        }
+        if (other.getShadowColorAlpha() != 0) {
+          setShadowColorAlpha(other.getShadowColorAlpha());
         }
         onChanged();
         return this;
@@ -837,238 +1175,264 @@ public final class PbPaint {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.Proto.Color backgroundColor_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> backgroundColorBuilder_;
+      private boolean hasBackgroundColor_ ;
       /**
-       * <code>.matcha.Color backgroundColor = 2;</code>
+       * <code>bool hasBackgroundColor = 24;</code>
        */
-      public boolean hasBackgroundColor() {
-        return backgroundColorBuilder_ != null || backgroundColor_ != null;
+      public boolean getHasBackgroundColor() {
+        return hasBackgroundColor_;
       }
       /**
-       * <code>.matcha.Color backgroundColor = 2;</code>
+       * <code>bool hasBackgroundColor = 24;</code>
        */
-      public io.gomatcha.matcha.proto.Proto.Color getBackgroundColor() {
-        if (backgroundColorBuilder_ == null) {
-          return backgroundColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : backgroundColor_;
-        } else {
-          return backgroundColorBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.matcha.Color backgroundColor = 2;</code>
-       */
-      public Builder setBackgroundColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (backgroundColorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          backgroundColor_ = value;
-          onChanged();
-        } else {
-          backgroundColorBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color backgroundColor = 2;</code>
-       */
-      public Builder setBackgroundColor(
-          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
-        if (backgroundColorBuilder_ == null) {
-          backgroundColor_ = builderForValue.build();
-          onChanged();
-        } else {
-          backgroundColorBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color backgroundColor = 2;</code>
-       */
-      public Builder mergeBackgroundColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (backgroundColorBuilder_ == null) {
-          if (backgroundColor_ != null) {
-            backgroundColor_ =
-              io.gomatcha.matcha.proto.Proto.Color.newBuilder(backgroundColor_).mergeFrom(value).buildPartial();
-          } else {
-            backgroundColor_ = value;
-          }
-          onChanged();
-        } else {
-          backgroundColorBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color backgroundColor = 2;</code>
-       */
-      public Builder clearBackgroundColor() {
-        if (backgroundColorBuilder_ == null) {
-          backgroundColor_ = null;
-          onChanged();
-        } else {
-          backgroundColor_ = null;
-          backgroundColorBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color backgroundColor = 2;</code>
-       */
-      public io.gomatcha.matcha.proto.Proto.Color.Builder getBackgroundColorBuilder() {
+      public Builder setHasBackgroundColor(boolean value) {
         
+        hasBackgroundColor_ = value;
         onChanged();
-        return getBackgroundColorFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.matcha.Color backgroundColor = 2;</code>
-       */
-      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getBackgroundColorOrBuilder() {
-        if (backgroundColorBuilder_ != null) {
-          return backgroundColorBuilder_.getMessageOrBuilder();
-        } else {
-          return backgroundColor_ == null ?
-              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : backgroundColor_;
-        }
-      }
-      /**
-       * <code>.matcha.Color backgroundColor = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
-          getBackgroundColorFieldBuilder() {
-        if (backgroundColorBuilder_ == null) {
-          backgroundColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
-                  getBackgroundColor(),
-                  getParentForChildren(),
-                  isClean());
-          backgroundColor_ = null;
-        }
-        return backgroundColorBuilder_;
-      }
-
-      private io.gomatcha.matcha.proto.Proto.Color borderColor_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> borderColorBuilder_;
-      /**
-       * <code>.matcha.Color borderColor = 3;</code>
-       */
-      public boolean hasBorderColor() {
-        return borderColorBuilder_ != null || borderColor_ != null;
-      }
-      /**
-       * <code>.matcha.Color borderColor = 3;</code>
-       */
-      public io.gomatcha.matcha.proto.Proto.Color getBorderColor() {
-        if (borderColorBuilder_ == null) {
-          return borderColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : borderColor_;
-        } else {
-          return borderColorBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.matcha.Color borderColor = 3;</code>
-       */
-      public Builder setBorderColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (borderColorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          borderColor_ = value;
-          onChanged();
-        } else {
-          borderColorBuilder_.setMessage(value);
-        }
-
         return this;
       }
       /**
-       * <code>.matcha.Color borderColor = 3;</code>
+       * <code>bool hasBackgroundColor = 24;</code>
        */
-      public Builder setBorderColor(
-          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
-        if (borderColorBuilder_ == null) {
-          borderColor_ = builderForValue.build();
-          onChanged();
-        } else {
-          borderColorBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color borderColor = 3;</code>
-       */
-      public Builder mergeBorderColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (borderColorBuilder_ == null) {
-          if (borderColor_ != null) {
-            borderColor_ =
-              io.gomatcha.matcha.proto.Proto.Color.newBuilder(borderColor_).mergeFrom(value).buildPartial();
-          } else {
-            borderColor_ = value;
-          }
-          onChanged();
-        } else {
-          borderColorBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color borderColor = 3;</code>
-       */
-      public Builder clearBorderColor() {
-        if (borderColorBuilder_ == null) {
-          borderColor_ = null;
-          onChanged();
-        } else {
-          borderColor_ = null;
-          borderColorBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color borderColor = 3;</code>
-       */
-      public io.gomatcha.matcha.proto.Proto.Color.Builder getBorderColorBuilder() {
+      public Builder clearHasBackgroundColor() {
         
+        hasBackgroundColor_ = false;
         onChanged();
-        return getBorderColorFieldBuilder().getBuilder();
+        return this;
+      }
+
+      private int backgroundColorRed_ ;
+      /**
+       * <code>uint32 backgroundColorRed = 20;</code>
+       */
+      public int getBackgroundColorRed() {
+        return backgroundColorRed_;
       }
       /**
-       * <code>.matcha.Color borderColor = 3;</code>
+       * <code>uint32 backgroundColorRed = 20;</code>
        */
-      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getBorderColorOrBuilder() {
-        if (borderColorBuilder_ != null) {
-          return borderColorBuilder_.getMessageOrBuilder();
-        } else {
-          return borderColor_ == null ?
-              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : borderColor_;
-        }
+      public Builder setBackgroundColorRed(int value) {
+        
+        backgroundColorRed_ = value;
+        onChanged();
+        return this;
       }
       /**
-       * <code>.matcha.Color borderColor = 3;</code>
+       * <code>uint32 backgroundColorRed = 20;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
-          getBorderColorFieldBuilder() {
-        if (borderColorBuilder_ == null) {
-          borderColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
-                  getBorderColor(),
-                  getParentForChildren(),
-                  isClean());
-          borderColor_ = null;
-        }
-        return borderColorBuilder_;
+      public Builder clearBackgroundColorRed() {
+        
+        backgroundColorRed_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int backgroundColorGreen_ ;
+      /**
+       * <code>uint32 backgroundColorGreen = 21;</code>
+       */
+      public int getBackgroundColorGreen() {
+        return backgroundColorGreen_;
+      }
+      /**
+       * <code>uint32 backgroundColorGreen = 21;</code>
+       */
+      public Builder setBackgroundColorGreen(int value) {
+        
+        backgroundColorGreen_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 backgroundColorGreen = 21;</code>
+       */
+      public Builder clearBackgroundColorGreen() {
+        
+        backgroundColorGreen_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int backgroundColorBlue_ ;
+      /**
+       * <code>uint32 backgroundColorBlue = 22;</code>
+       */
+      public int getBackgroundColorBlue() {
+        return backgroundColorBlue_;
+      }
+      /**
+       * <code>uint32 backgroundColorBlue = 22;</code>
+       */
+      public Builder setBackgroundColorBlue(int value) {
+        
+        backgroundColorBlue_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 backgroundColorBlue = 22;</code>
+       */
+      public Builder clearBackgroundColorBlue() {
+        
+        backgroundColorBlue_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int backgroundColorAlpha_ ;
+      /**
+       * <code>uint32 backgroundColorAlpha = 23;</code>
+       */
+      public int getBackgroundColorAlpha() {
+        return backgroundColorAlpha_;
+      }
+      /**
+       * <code>uint32 backgroundColorAlpha = 23;</code>
+       */
+      public Builder setBackgroundColorAlpha(int value) {
+        
+        backgroundColorAlpha_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 backgroundColorAlpha = 23;</code>
+       */
+      public Builder clearBackgroundColorAlpha() {
+        
+        backgroundColorAlpha_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private boolean hasBorderColor_ ;
+      /**
+       * <code>bool hasBorderColor = 30;</code>
+       */
+      public boolean getHasBorderColor() {
+        return hasBorderColor_;
+      }
+      /**
+       * <code>bool hasBorderColor = 30;</code>
+       */
+      public Builder setHasBorderColor(boolean value) {
+        
+        hasBorderColor_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool hasBorderColor = 30;</code>
+       */
+      public Builder clearHasBorderColor() {
+        
+        hasBorderColor_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int borderColorRed_ ;
+      /**
+       * <code>uint32 borderColorRed = 31;</code>
+       */
+      public int getBorderColorRed() {
+        return borderColorRed_;
+      }
+      /**
+       * <code>uint32 borderColorRed = 31;</code>
+       */
+      public Builder setBorderColorRed(int value) {
+        
+        borderColorRed_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 borderColorRed = 31;</code>
+       */
+      public Builder clearBorderColorRed() {
+        
+        borderColorRed_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int borderColorGreen_ ;
+      /**
+       * <code>uint32 borderColorGreen = 32;</code>
+       */
+      public int getBorderColorGreen() {
+        return borderColorGreen_;
+      }
+      /**
+       * <code>uint32 borderColorGreen = 32;</code>
+       */
+      public Builder setBorderColorGreen(int value) {
+        
+        borderColorGreen_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 borderColorGreen = 32;</code>
+       */
+      public Builder clearBorderColorGreen() {
+        
+        borderColorGreen_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int borderColorBlue_ ;
+      /**
+       * <code>uint32 borderColorBlue = 33;</code>
+       */
+      public int getBorderColorBlue() {
+        return borderColorBlue_;
+      }
+      /**
+       * <code>uint32 borderColorBlue = 33;</code>
+       */
+      public Builder setBorderColorBlue(int value) {
+        
+        borderColorBlue_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 borderColorBlue = 33;</code>
+       */
+      public Builder clearBorderColorBlue() {
+        
+        borderColorBlue_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int borderColorAlpha_ ;
+      /**
+       * <code>uint32 borderColorAlpha = 34;</code>
+       */
+      public int getBorderColorAlpha() {
+        return borderColorAlpha_;
+      }
+      /**
+       * <code>uint32 borderColorAlpha = 34;</code>
+       */
+      public Builder setBorderColorAlpha(int value) {
+        
+        borderColorAlpha_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 borderColorAlpha = 34;</code>
+       */
+      public Builder clearBorderColorAlpha() {
+        
+        borderColorAlpha_ = 0;
+        onChanged();
+        return this;
       }
 
       private double borderWidth_ ;
@@ -1149,238 +1513,198 @@ public final class PbPaint {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.layout.PbLayout.Point shadowOffset_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.layout.PbLayout.Point, io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder, io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder> shadowOffsetBuilder_;
+      private double shadowOffsetX_ ;
       /**
-       * <code>.matcha.layout.Point shadowOffset = 8;</code>
+       * <code>double shadowOffsetX = 10;</code>
        */
-      public boolean hasShadowOffset() {
-        return shadowOffsetBuilder_ != null || shadowOffset_ != null;
+      public double getShadowOffsetX() {
+        return shadowOffsetX_;
       }
       /**
-       * <code>.matcha.layout.Point shadowOffset = 8;</code>
+       * <code>double shadowOffsetX = 10;</code>
        */
-      public io.gomatcha.matcha.proto.layout.PbLayout.Point getShadowOffset() {
-        if (shadowOffsetBuilder_ == null) {
-          return shadowOffset_ == null ? io.gomatcha.matcha.proto.layout.PbLayout.Point.getDefaultInstance() : shadowOffset_;
-        } else {
-          return shadowOffsetBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.matcha.layout.Point shadowOffset = 8;</code>
-       */
-      public Builder setShadowOffset(io.gomatcha.matcha.proto.layout.PbLayout.Point value) {
-        if (shadowOffsetBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          shadowOffset_ = value;
-          onChanged();
-        } else {
-          shadowOffsetBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.layout.Point shadowOffset = 8;</code>
-       */
-      public Builder setShadowOffset(
-          io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder builderForValue) {
-        if (shadowOffsetBuilder_ == null) {
-          shadowOffset_ = builderForValue.build();
-          onChanged();
-        } else {
-          shadowOffsetBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.layout.Point shadowOffset = 8;</code>
-       */
-      public Builder mergeShadowOffset(io.gomatcha.matcha.proto.layout.PbLayout.Point value) {
-        if (shadowOffsetBuilder_ == null) {
-          if (shadowOffset_ != null) {
-            shadowOffset_ =
-              io.gomatcha.matcha.proto.layout.PbLayout.Point.newBuilder(shadowOffset_).mergeFrom(value).buildPartial();
-          } else {
-            shadowOffset_ = value;
-          }
-          onChanged();
-        } else {
-          shadowOffsetBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.layout.Point shadowOffset = 8;</code>
-       */
-      public Builder clearShadowOffset() {
-        if (shadowOffsetBuilder_ == null) {
-          shadowOffset_ = null;
-          onChanged();
-        } else {
-          shadowOffset_ = null;
-          shadowOffsetBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.layout.Point shadowOffset = 8;</code>
-       */
-      public io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder getShadowOffsetBuilder() {
+      public Builder setShadowOffsetX(double value) {
         
+        shadowOffsetX_ = value;
         onChanged();
-        return getShadowOffsetFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.matcha.layout.Point shadowOffset = 8;</code>
-       */
-      public io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder getShadowOffsetOrBuilder() {
-        if (shadowOffsetBuilder_ != null) {
-          return shadowOffsetBuilder_.getMessageOrBuilder();
-        } else {
-          return shadowOffset_ == null ?
-              io.gomatcha.matcha.proto.layout.PbLayout.Point.getDefaultInstance() : shadowOffset_;
-        }
-      }
-      /**
-       * <code>.matcha.layout.Point shadowOffset = 8;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.layout.PbLayout.Point, io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder, io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder> 
-          getShadowOffsetFieldBuilder() {
-        if (shadowOffsetBuilder_ == null) {
-          shadowOffsetBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.layout.PbLayout.Point, io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder, io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder>(
-                  getShadowOffset(),
-                  getParentForChildren(),
-                  isClean());
-          shadowOffset_ = null;
-        }
-        return shadowOffsetBuilder_;
-      }
-
-      private io.gomatcha.matcha.proto.Proto.Color shadowColor_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> shadowColorBuilder_;
-      /**
-       * <code>.matcha.Color shadowColor = 9;</code>
-       */
-      public boolean hasShadowColor() {
-        return shadowColorBuilder_ != null || shadowColor_ != null;
-      }
-      /**
-       * <code>.matcha.Color shadowColor = 9;</code>
-       */
-      public io.gomatcha.matcha.proto.Proto.Color getShadowColor() {
-        if (shadowColorBuilder_ == null) {
-          return shadowColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : shadowColor_;
-        } else {
-          return shadowColorBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.matcha.Color shadowColor = 9;</code>
-       */
-      public Builder setShadowColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (shadowColorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          shadowColor_ = value;
-          onChanged();
-        } else {
-          shadowColorBuilder_.setMessage(value);
-        }
-
         return this;
       }
       /**
-       * <code>.matcha.Color shadowColor = 9;</code>
+       * <code>double shadowOffsetX = 10;</code>
        */
-      public Builder setShadowColor(
-          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
-        if (shadowColorBuilder_ == null) {
-          shadowColor_ = builderForValue.build();
-          onChanged();
-        } else {
-          shadowColorBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color shadowColor = 9;</code>
-       */
-      public Builder mergeShadowColor(io.gomatcha.matcha.proto.Proto.Color value) {
-        if (shadowColorBuilder_ == null) {
-          if (shadowColor_ != null) {
-            shadowColor_ =
-              io.gomatcha.matcha.proto.Proto.Color.newBuilder(shadowColor_).mergeFrom(value).buildPartial();
-          } else {
-            shadowColor_ = value;
-          }
-          onChanged();
-        } else {
-          shadowColorBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color shadowColor = 9;</code>
-       */
-      public Builder clearShadowColor() {
-        if (shadowColorBuilder_ == null) {
-          shadowColor_ = null;
-          onChanged();
-        } else {
-          shadowColor_ = null;
-          shadowColorBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.matcha.Color shadowColor = 9;</code>
-       */
-      public io.gomatcha.matcha.proto.Proto.Color.Builder getShadowColorBuilder() {
+      public Builder clearShadowOffsetX() {
         
+        shadowOffsetX_ = 0D;
         onChanged();
-        return getShadowColorFieldBuilder().getBuilder();
+        return this;
+      }
+
+      private double shadowOffsetY_ ;
+      /**
+       * <pre>
+       * matcha.layout.Point shadowOffset = 8;
+       * </pre>
+       *
+       * <code>double shadowOffsetY = 9;</code>
+       */
+      public double getShadowOffsetY() {
+        return shadowOffsetY_;
       }
       /**
-       * <code>.matcha.Color shadowColor = 9;</code>
+       * <pre>
+       * matcha.layout.Point shadowOffset = 8;
+       * </pre>
+       *
+       * <code>double shadowOffsetY = 9;</code>
        */
-      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getShadowColorOrBuilder() {
-        if (shadowColorBuilder_ != null) {
-          return shadowColorBuilder_.getMessageOrBuilder();
-        } else {
-          return shadowColor_ == null ?
-              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : shadowColor_;
-        }
+      public Builder setShadowOffsetY(double value) {
+        
+        shadowOffsetY_ = value;
+        onChanged();
+        return this;
       }
       /**
-       * <code>.matcha.Color shadowColor = 9;</code>
+       * <pre>
+       * matcha.layout.Point shadowOffset = 8;
+       * </pre>
+       *
+       * <code>double shadowOffsetY = 9;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
-          getShadowColorFieldBuilder() {
-        if (shadowColorBuilder_ == null) {
-          shadowColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
-                  getShadowColor(),
-                  getParentForChildren(),
-                  isClean());
-          shadowColor_ = null;
-        }
-        return shadowColorBuilder_;
+      public Builder clearShadowOffsetY() {
+        
+        shadowOffsetY_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private boolean hasShadowColor_ ;
+      /**
+       * <code>bool hasShadowColor = 90;</code>
+       */
+      public boolean getHasShadowColor() {
+        return hasShadowColor_;
+      }
+      /**
+       * <code>bool hasShadowColor = 90;</code>
+       */
+      public Builder setHasShadowColor(boolean value) {
+        
+        hasShadowColor_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool hasShadowColor = 90;</code>
+       */
+      public Builder clearHasShadowColor() {
+        
+        hasShadowColor_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int shadowColorRed_ ;
+      /**
+       * <code>uint32 shadowColorRed = 91;</code>
+       */
+      public int getShadowColorRed() {
+        return shadowColorRed_;
+      }
+      /**
+       * <code>uint32 shadowColorRed = 91;</code>
+       */
+      public Builder setShadowColorRed(int value) {
+        
+        shadowColorRed_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 shadowColorRed = 91;</code>
+       */
+      public Builder clearShadowColorRed() {
+        
+        shadowColorRed_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int shadowColorBlue_ ;
+      /**
+       * <code>uint32 shadowColorBlue = 92;</code>
+       */
+      public int getShadowColorBlue() {
+        return shadowColorBlue_;
+      }
+      /**
+       * <code>uint32 shadowColorBlue = 92;</code>
+       */
+      public Builder setShadowColorBlue(int value) {
+        
+        shadowColorBlue_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 shadowColorBlue = 92;</code>
+       */
+      public Builder clearShadowColorBlue() {
+        
+        shadowColorBlue_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int shadowColorGreen_ ;
+      /**
+       * <code>uint32 shadowColorGreen = 93;</code>
+       */
+      public int getShadowColorGreen() {
+        return shadowColorGreen_;
+      }
+      /**
+       * <code>uint32 shadowColorGreen = 93;</code>
+       */
+      public Builder setShadowColorGreen(int value) {
+        
+        shadowColorGreen_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 shadowColorGreen = 93;</code>
+       */
+      public Builder clearShadowColorGreen() {
+        
+        shadowColorGreen_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int shadowColorAlpha_ ;
+      /**
+       * <code>uint32 shadowColorAlpha = 94;</code>
+       */
+      public int getShadowColorAlpha() {
+        return shadowColorAlpha_;
+      }
+      /**
+       * <code>uint32 shadowColorAlpha = 94;</code>
+       */
+      public Builder setShadowColorAlpha(int value) {
+        
+        shadowColorAlpha_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 shadowColorAlpha = 94;</code>
+       */
+      public Builder clearShadowColorAlpha() {
+        
+        shadowColorAlpha_ = 0;
+        onChanged();
+        return this;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1446,17 +1770,22 @@ public final class PbPaint {
   static {
     java.lang.String[] descriptorData = {
       "\n*gomatcha.io/matcha/proto/paint/paint.p" +
-      "roto\022\014matcha.paint\032$gomatcha.io/matcha/p" +
-      "roto/image.proto\032,gomatcha.io/matcha/pro" +
-      "to/layout/layout.proto\"\372\001\n\005Style\022\024\n\014tran" +
-      "sparency\030\001 \001(\001\022&\n\017backgroundColor\030\002 \001(\0132" +
-      "\r.matcha.Color\022\"\n\013borderColor\030\003 \001(\0132\r.ma" +
-      "tcha.Color\022\023\n\013borderWidth\030\004 \001(\001\022\024\n\014corne" +
-      "rRadius\030\005 \001(\001\022\024\n\014shadowRadius\030\007 \001(\001\022*\n\014s" +
-      "hadowOffset\030\010 \001(\0132\024.matcha.layout.Point\022" +
-      "\"\n\013shadowColor\030\t \001(\0132\r.matcha.ColorB@\n\036i",
-      "o.gomatcha.matcha.proto.paintB\007PbPaintZ\005" +
-      "paint\242\002\rMatchaPaintPBb\006proto3"
+      "roto\022\014matcha.paint\"\227\004\n\005Style\022\024\n\014transpar" +
+      "ency\030\001 \001(\001\022\032\n\022hasBackgroundColor\030\030 \001(\010\022\032" +
+      "\n\022backgroundColorRed\030\024 \001(\r\022\034\n\024background" +
+      "ColorGreen\030\025 \001(\r\022\033\n\023backgroundColorBlue\030" +
+      "\026 \001(\r\022\034\n\024backgroundColorAlpha\030\027 \001(\r\022\026\n\016h" +
+      "asBorderColor\030\036 \001(\010\022\026\n\016borderColorRed\030\037 " +
+      "\001(\r\022\030\n\020borderColorGreen\030  \001(\r\022\027\n\017borderC" +
+      "olorBlue\030! \001(\r\022\030\n\020borderColorAlpha\030\" \001(\r" +
+      "\022\023\n\013borderWidth\030\004 \001(\001\022\024\n\014cornerRadius\030\005 ",
+      "\001(\001\022\024\n\014shadowRadius\030\007 \001(\001\022\025\n\rshadowOffse" +
+      "tX\030\n \001(\001\022\025\n\rshadowOffsetY\030\t \001(\001\022\026\n\016hasSh" +
+      "adowColor\030Z \001(\010\022\026\n\016shadowColorRed\030[ \001(\r\022" +
+      "\027\n\017shadowColorBlue\030\\ \001(\r\022\030\n\020shadowColorG" +
+      "reen\030] \001(\r\022\030\n\020shadowColorAlpha\030^ \001(\rB@\n\036" +
+      "io.gomatcha.matcha.proto.paintB\007PbPaintZ" +
+      "\005paint\242\002\rMatchaPaintPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1469,17 +1798,13 @@ public final class PbPaint {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          io.gomatcha.matcha.proto.Proto.getDescriptor(),
-          io.gomatcha.matcha.proto.layout.PbLayout.getDescriptor(),
         }, assigner);
     internal_static_matcha_paint_Style_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_matcha_paint_Style_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_paint_Style_descriptor,
-        new java.lang.String[] { "Transparency", "BackgroundColor", "BorderColor", "BorderWidth", "CornerRadius", "ShadowRadius", "ShadowOffset", "ShadowColor", });
-    io.gomatcha.matcha.proto.Proto.getDescriptor();
-    io.gomatcha.matcha.proto.layout.PbLayout.getDescriptor();
+        new java.lang.String[] { "Transparency", "HasBackgroundColor", "BackgroundColorRed", "BackgroundColorGreen", "BackgroundColorBlue", "BackgroundColorAlpha", "HasBorderColor", "BorderColorRed", "BorderColorGreen", "BorderColorBlue", "BorderColorAlpha", "BorderWidth", "CornerRadius", "ShadowRadius", "ShadowOffsetX", "ShadowOffsetY", "HasShadowColor", "ShadowColorRed", "ShadowColorBlue", "ShadowColorGreen", "ShadowColorAlpha", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

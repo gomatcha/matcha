@@ -215,20 +215,22 @@ public class MatchaViewNode extends Object {
             double cornerRadius = paintStyle.getCornerRadius();
             gd.setCornerRadius((float)(cornerRadius * ratio));
 
-            if (paintStyle.hasBorderColor()) {
-                gd.setStroke((int)(paintStyle.getBorderWidth() * ratio), Protobuf.newColor(paintStyle.getBorderColor()));
+            if (paintStyle.getHasBorderColor()) {
+                int c = Protobuf.newColor(paintStyle.getBorderColorRed(), paintStyle.getBorderColorGreen(), paintStyle.getBorderColorBlue(), paintStyle.getBorderColorAlpha());
+                gd.setStroke((int)(paintStyle.getBorderWidth() * ratio), c);
             } else {
                 gd.setStroke(0, 0);
             }
 
             if (this.view instanceof MatchaImageView) {
                 ((MatchaImageView)this.view).view.setCornerRadius((float)(cornerRadius*ratio));
-                ((MatchaImageView)this.view).view.setBorderColor(Protobuf.newColor(paintStyle.getBorderColor()));
+                //((MatchaImageView)this.view).view.setBorderColor(Protobuf.newColor(paintStyle.getBorderColor()));
                 ((MatchaImageView)this.view).view.setBorderWidth((float)(paintStyle.getBorderWidth()*ratio));
             }
 
-            if (paintStyle.hasBackgroundColor()) {
-                gd.setColor(Protobuf.newColor(paintStyle.getBackgroundColor()));
+            if (paintStyle.getHasBackgroundColor()) {
+                int c = Protobuf.newColor(paintStyle.getBackgroundColorRed(), paintStyle.getBackgroundColorGreen(), paintStyle.getBackgroundColorBlue(), paintStyle.getBackgroundColorAlpha());
+                gd.setColor(c);
             } else {
                 gd.setColor(Color.alpha(0));
             }

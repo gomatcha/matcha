@@ -36,6 +36,16 @@ CGColorRef MatchaCGColorCreateWithProtobuf(MatchaPBColor *value) {
     return color;
 }
 
+CGColorRef MatchaCGColorCreateWithValues(bool exists, int red, int green, int blue, int alpha) {
+    if (!exists) {
+        return nil;
+    }
+    CGFloat colors[4] = {((double)red)/0xffff, ((double)green)/0xffff, ((double)blue)/0xffff, ((double)alpha)/0xffff};
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef color = CGColorCreate(colorspace, colors);
+    CFRelease(colorspace);
+    return color;
+}
 
 @implementation NSAttributedString (Matcha)
 
@@ -296,17 +306,6 @@ CGColorRef MatchaCGColorCreateWithProtobuf(MatchaPBColor *value) {
 
 - (CGRect)frame {
     return CGRectMake(self.minx, self.miny, self.maxx - self.minx, self.maxy - self.miny);
-}
-
-- (MatchaColor) matchaBackgroundColor {
-    MatchaPBColor *c = self.paintStyle.backgroundColor;
-    MatchaColor color = {
-        .red = c.red,
-        .green = c.green,
-        .blue = c.blue,
-        .alpha = c.alpha,
-    };
-    return color;
 }
 
 @end

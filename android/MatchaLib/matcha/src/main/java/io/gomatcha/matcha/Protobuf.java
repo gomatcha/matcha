@@ -91,6 +91,10 @@ class Protobuf {
     public static int newColor(Proto.Color c) {
         return Color.argb(c.getAlpha()*255/65535, c.getRed()*255/65535, c.getGreen()*255/65535, c.getBlue()*255/65535);
     }
+
+    public static int newColor(int red, int green, int blue, int alpha) {
+        return Color.argb(alpha*255/65535, red*255/65535, green*255/65535, blue*255/65535);
+    }
     
     public static PointF newPoint(PbLayout.Point pt) {
         return new PointF((float)pt.getX(), (float)pt.getY());

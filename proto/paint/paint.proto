@@ -1,7 +1,5 @@
 syntax = "proto3";
 package matcha.paint;
-import "gomatcha.io/matcha/proto/image.proto";
-import "gomatcha.io/matcha/proto/layout/layout.proto";
 option go_package = "paint";
 option objc_class_prefix = "MatchaPaintPB";
 option java_package = "io.gomatcha.matcha.proto.paint";
@@ -9,11 +7,33 @@ option java_outer_classname = "PbPaint";
 
 message Style {
   double transparency = 1;
-  matcha.Color backgroundColor = 2;
-  matcha.Color borderColor = 3;
+  
+  bool hasBackgroundColor = 24;
+  uint32 backgroundColorRed = 20;
+  uint32 backgroundColorGreen = 21;
+  uint32 backgroundColorBlue = 22;
+  uint32 backgroundColorAlpha = 23;
+  
+  bool hasBorderColor = 30;
+  uint32 borderColorRed = 31;
+  uint32 borderColorGreen = 32;
+  uint32 borderColorBlue = 33;
+  uint32 borderColorAlpha = 34;
+  
   double borderWidth = 4;
   double cornerRadius = 5;
   double shadowRadius = 7;
-  matcha.layout.Point shadowOffset = 8;
-  matcha.Color shadowColor = 9;
+  double shadowOffsetX = 10;
+  double shadowOffsetY = 9;  
+  // matcha.layout.Point shadowOffset = 8;
+  
+  bool hasShadowColor = 90;
+  uint32 shadowColorRed = 91;
+  uint32 shadowColorBlue = 92;
+  uint32 shadowColorGreen = 93;
+  uint32 shadowColorAlpha = 94;
+  
+  //matcha.Color backgroundColor = 2;
+  //matcha.Color borderColor = 3;
+  //matcha.Color shadowColor = 9;
 }

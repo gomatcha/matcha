@@ -27,9 +27,6 @@
 
 CF_EXTERN_C_BEGIN
 
-@class MatchaLayoutPBPoint;
-@class MatchaPBColor;
-
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - MatchaPaintPBPaintRoot
@@ -51,26 +48,51 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef GPB_ENUM(MatchaPaintPBStyle_FieldNumber) {
   MatchaPaintPBStyle_FieldNumber_Transparency = 1,
-  MatchaPaintPBStyle_FieldNumber_BackgroundColor = 2,
-  MatchaPaintPBStyle_FieldNumber_BorderColor = 3,
   MatchaPaintPBStyle_FieldNumber_BorderWidth = 4,
   MatchaPaintPBStyle_FieldNumber_CornerRadius = 5,
   MatchaPaintPBStyle_FieldNumber_ShadowRadius = 7,
-  MatchaPaintPBStyle_FieldNumber_ShadowOffset = 8,
-  MatchaPaintPBStyle_FieldNumber_ShadowColor = 9,
+  MatchaPaintPBStyle_FieldNumber_ShadowOffsetY = 9,
+  MatchaPaintPBStyle_FieldNumber_ShadowOffsetX = 10,
+  MatchaPaintPBStyle_FieldNumber_BackgroundColorRed = 20,
+  MatchaPaintPBStyle_FieldNumber_BackgroundColorGreen = 21,
+  MatchaPaintPBStyle_FieldNumber_BackgroundColorBlue = 22,
+  MatchaPaintPBStyle_FieldNumber_BackgroundColorAlpha = 23,
+  MatchaPaintPBStyle_FieldNumber_HasBackgroundColor = 24,
+  MatchaPaintPBStyle_FieldNumber_HasBorderColor = 30,
+  MatchaPaintPBStyle_FieldNumber_BorderColorRed = 31,
+  MatchaPaintPBStyle_FieldNumber_BorderColorGreen = 32,
+  MatchaPaintPBStyle_FieldNumber_BorderColorBlue = 33,
+  MatchaPaintPBStyle_FieldNumber_BorderColorAlpha = 34,
+  MatchaPaintPBStyle_FieldNumber_HasShadowColor = 90,
+  MatchaPaintPBStyle_FieldNumber_ShadowColorRed = 91,
+  MatchaPaintPBStyle_FieldNumber_ShadowColorBlue = 92,
+  MatchaPaintPBStyle_FieldNumber_ShadowColorGreen = 93,
+  MatchaPaintPBStyle_FieldNumber_ShadowColorAlpha = 94,
 };
 
 @interface MatchaPaintPBStyle : GPBMessage
 
 @property(nonatomic, readwrite) double transparency;
 
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *backgroundColor;
-/** Test to see if @c backgroundColor has been set. */
 @property(nonatomic, readwrite) BOOL hasBackgroundColor;
 
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *borderColor;
-/** Test to see if @c borderColor has been set. */
+@property(nonatomic, readwrite) uint32_t backgroundColorRed;
+
+@property(nonatomic, readwrite) uint32_t backgroundColorGreen;
+
+@property(nonatomic, readwrite) uint32_t backgroundColorBlue;
+
+@property(nonatomic, readwrite) uint32_t backgroundColorAlpha;
+
 @property(nonatomic, readwrite) BOOL hasBorderColor;
+
+@property(nonatomic, readwrite) uint32_t borderColorRed;
+
+@property(nonatomic, readwrite) uint32_t borderColorGreen;
+
+@property(nonatomic, readwrite) uint32_t borderColorBlue;
+
+@property(nonatomic, readwrite) uint32_t borderColorAlpha;
 
 @property(nonatomic, readwrite) double borderWidth;
 
@@ -78,13 +100,20 @@ typedef GPB_ENUM(MatchaPaintPBStyle_FieldNumber) {
 
 @property(nonatomic, readwrite) double shadowRadius;
 
-@property(nonatomic, readwrite, strong, null_resettable) MatchaLayoutPBPoint *shadowOffset;
-/** Test to see if @c shadowOffset has been set. */
-@property(nonatomic, readwrite) BOOL hasShadowOffset;
+@property(nonatomic, readwrite) double shadowOffsetX;
 
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *shadowColor;
-/** Test to see if @c shadowColor has been set. */
+/** matcha.layout.Point shadowOffset = 8; */
+@property(nonatomic, readwrite) double shadowOffsetY;
+
 @property(nonatomic, readwrite) BOOL hasShadowColor;
+
+@property(nonatomic, readwrite) uint32_t shadowColorRed;
+
+@property(nonatomic, readwrite) uint32_t shadowColorBlue;
+
+@property(nonatomic, readwrite) uint32_t shadowColorGreen;
+
+@property(nonatomic, readwrite) uint32_t shadowColorAlpha;
 
 @end
 
