@@ -14,6 +14,7 @@ Package table implements a vertical, single column layout system. Views are laye
 package table
 
 import (
+	"fmt"
 	"math"
 
 	"gomatcha.io/matcha/comm"
@@ -56,10 +57,10 @@ func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	if startEdge == layout.EdgeBottom || startEdge == layout.EdgeTop {
 		y := 0.0
 		x := ctx.MinSize().X
+		if x == 0 {
+			fmt.Println("table.Layouter: Width is 0, is scrollview.ScrollAxes set?")
+		}
 		for i := range l.views {
-			if startEdge == layout.EdgeBottom {
-				i = len(l.views) - i - 1
-			}
 			g := ctx.LayoutChild(i, layout.Pt(x, 0), layout.Pt(x, math.Inf(1)))
 			g.Frame = layout.Rt(0, y, g.Width(), y+g.Height())
 			g.ZIndex = i
@@ -70,10 +71,10 @@ func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	} else {
 		y := ctx.MinSize().Y
 		x := 0.0
+		if y == 0 {
+			fmt.Println("table.Layouter: Height is 0, is scrollview.ScrollAxes set?")
+		}
 		for i := range l.views {
-			if startEdge == layout.EdgeLeft {
-				i = len(l.views) - i - 1
-			}
 			g := ctx.LayoutChild(i, layout.Pt(0, y), layout.Pt(math.Inf(1), y))
 			g.Frame = layout.Rt(x, 0, x+g.Width(), g.Height())
 			g.ZIndex = i
@@ -84,13 +85,35 @@ func (l *Layouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
 	}
 
 	// reverse slice
-	if startEdge == layout.EdgeBottom || startEdge == layout.EdgeLeft {
+	if startEdge == layout.EdgeBottom || startEdge == layout.EdgeRight {
 		for i := len(gs)/2 - 1; i >= 0; i-- {
 			opp := len(gs) - 1 - i
 			gs[i], gs[opp] = gs[opp], gs[i]
 		}
 	}
 	return g, gs
+}
+
+// DebugStrings must be called after Layout()...
+func (l *Layouter) DebugStrings() (string, []string) {
+	debugstr := "Edge="
+	switch l.StartEdge {
+	case layout.EdgeBottom:
+		debugstr += "Bot"
+	case layout.EdgeLeft:
+		debugstr += "Left"
+	case layout.EdgeRight:
+		debugstr += "Right"
+	case layout.EdgeTop:
+	default:
+		debugstr += "Top"
+	}
+
+	debugstrs := make([]string, len(l.views))
+	for i := range l.views {
+		debugstrs[i] = debugstr
+	}
+	return debugstr, debugstrs
 }
 
 // Notify implements the view.Layouter interface.

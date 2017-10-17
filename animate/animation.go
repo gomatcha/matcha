@@ -53,8 +53,8 @@ func (v *Value) Run(a Animation) (cancelFunc func()) {
 	}
 
 	start := time.Now()
-	an := &animation{animation: a, ticker: internal.NewTicker(time.Hour * 99), value: v}
-	an.tickerId = an.ticker.Notify(func() {
+	an := &animation{animation: a, value: v}
+	an.ticker = internal.NewTicker(func() {
 		matcha.MainLocker.Lock()
 		defer matcha.MainLocker.Unlock()
 		if an.cancelled {
@@ -62,7 +62,6 @@ func (v *Value) Run(a Animation) (cancelFunc func()) {
 		}
 
 		d := time.Now().Sub(start)
-
 		v.setValue(a.Tick(d))
 		if d > a.Duration() {
 			an.cancel()
@@ -75,6 +74,14 @@ func (v *Value) Run(a Animation) (cancelFunc func()) {
 	}
 }
 
+// Animation returns the current running animation, if it exists.
+func (v *Value) Animation() Animation {
+	if v.animation == nil {
+		return nil
+	}
+	return v.animation.animation
+}
+
 // Animation is an interface that represents a float64 that changes over a fixed duration.
 type Animation interface {
 	Duration() time.Duration
@@ -85,7 +92,6 @@ type animation struct {
 	cancelled  bool
 	animation  Animation
 	ticker     *internal.Ticker
-	tickerId   comm.Id
 	onComplete func()
 	value      *Value
 }
@@ -95,7 +101,7 @@ func (a *animation) cancel() {
 		return
 	}
 
-	a.ticker.Unnotify(a.tickerId)
+	a.ticker.Stop()
 	a.value.animation = nil
 	if a.onComplete != nil {
 		a.onComplete()

@@ -2,15 +2,16 @@ package view
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/animate"
 	"gomatcha.io/matcha/bridge"
+	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pointer"
 	"gomatcha.io/matcha/view"
 )
 
@@ -42,28 +43,53 @@ func (v *ScrollView) Lifecycle(from, to view.Stage) {
 func (v *ScrollView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	childLayouter := &table.Layouter{}
+	vtable := &table.Layouter{}
 	for i := 0; i < 5; i++ {
-		childLayouter.Add(NewTableCell(), nil)
+		cell := NewTableCell()
+		cell.Axis = layout.AxisY
+		cell.Index = i
+		vtable.Add(cell, nil)
 	}
 
 	scrollview := view.NewScrollView()
 	scrollview.ScrollPosition = v.scrollPosition
 	scrollview.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
-	scrollview.ContentLayouter = childLayouter
-	scrollview.ContentChildren = childLayouter.Views()
+	scrollview.ContentLayouter = vtable
+	scrollview.ContentChildren = vtable.Views()
 	g1 := l.Add(scrollview, func(s *constraint.Solver) {
 		s.Top(0)
 		s.Left(0)
 		s.Width(200)
-		s.HeightEqual(l.Height())
+		s.BottomEqual(l.Bottom().Add(-210))
+	})
+
+	htable := &table.Layouter{
+		StartEdge: layout.EdgeLeft,
+	}
+	for i := 0; i < 5; i++ {
+		cell := NewTableCell()
+		cell.Axis = layout.AxisX
+		cell.Index = i
+		htable.Add(cell, nil)
+	}
+
+	hscrollview := view.NewScrollView()
+	hscrollview.ScrollAxes = layout.AxisX
+	hscrollview.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
+	hscrollview.ContentLayouter = htable
+	hscrollview.ContentChildren = htable.Views()
+	_ = l.Add(hscrollview, func(s *constraint.Solver) {
+		s.LeftEqual(l.Left())
+		s.RightEqual(l.Right())
+		s.Height(200)
+		s.BottomEqual(l.Bottom())
 	})
 
 	textView := view.NewTextView()
 	textView.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
 	textView.String = fmt.Sprintln("Position:", v.scrollPosition.X.Value(), v.scrollPosition.Y.Value())
 	textView.MaxLines = 2
-	g2 := l.Add(textView, func(s *constraint.Solver) {
+	g3 := l.Add(textView, func(s *constraint.Solver) {
 		s.Top(50)
 		s.LeftEqual(g1.Right())
 		s.RightEqual(l.Right())
@@ -74,6 +100,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 	button.String = "Scroll"
 	button.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
 	button.OnPress = func() {
+		fmt.Println("OnPress")
 		a := &animate.Basic{
 			Start: v.scrollPosition.Y.Value(),
 			End:   200,
@@ -82,7 +109,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 		v.scrollPosition.Y.Run(a)
 	}
 	_ = l.Add(button, func(s *constraint.Solver) {
-		s.TopEqual(g2.Bottom())
+		s.TopEqual(g3.Bottom())
 		s.LeftEqual(g1.Right())
 	})
 
@@ -95,6 +122,8 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 
 type TableCell struct {
 	view.Embed
+	Axis  layout.Axis
+	Index int
 }
 
 func NewTableCell() *TableCell {
@@ -104,43 +133,30 @@ func NewTableCell() *TableCell {
 func (v *TableCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
-		s.Height(200)
+		if v.Axis == layout.AxisY {
+			s.Height(200)
+		} else {
+			s.Width(200)
+		}
 	})
 
-	chl := NewTableButton()
-	l.Add(chl, func(s *constraint.Solver) {
-		s.LeftEqual(l.Left().Add(10))
-		s.RightEqual(l.Right().Add(-10))
-		s.TopEqual(l.Top().Add(50))
-		s.BottomEqual(l.Bottom().Add(-50))
+	label := view.NewTextView()
+	label.String = strconv.Itoa(v.Index)
+	l.Add(label, func(s *constraint.Solver) {
+	})
+
+	border := view.NewBasicView()
+	border.Painter = &paint.Style{BackgroundColor: colornames.Gray}
+	l.Add(border, func(s *constraint.Solver) {
+		s.Height(1)
+		s.LeftEqual(l.Left())
+		s.RightEqual(l.Right())
+		s.BottomEqual(l.Bottom())
 	})
 
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
-	}
-}
-
-type TableButton struct {
-	view.Embed
-}
-
-func NewTableButton() *TableButton {
-	return &TableButton{}
-}
-
-func (v *TableButton) Build(ctx view.Context) view.Model {
-	return view.Model{
-		Painter: &paint.Style{BackgroundColor: colornames.Blue},
-		Options: []view.Option{
-			pointer.GestureList{
-				&pointer.ButtonGesture{
-					OnEvent: func(e *pointer.ButtonEvent) {
-						v.Signal()
-					},
-				},
-			},
-		},
 	}
 }

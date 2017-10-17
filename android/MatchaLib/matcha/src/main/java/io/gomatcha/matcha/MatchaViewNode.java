@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.HorizontalScrollView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -155,20 +156,40 @@ public class MatchaViewNode extends Object {
             double minX = layoutPaintNode.getMinx() * ratio;
             double minY = layoutPaintNode.getMiny() * ratio;
 
-            // Offset for scrollviews.
-            if (this.view.getParent() != null && this.view.getParent().getParent() instanceof ScrollView) {
-                ScrollView scrollView = (ScrollView)this.view.getParent().getParent();
-                float offsetX = scrollView.getScrollX();
-                float offsetY = scrollView.getScrollY();
-                minX += offsetX;
-                minY += offsetY;
-                maxX += offsetX;
-                maxY += offsetY;
-            }
-
             if (this.parent == null) {
             } else if (this.parent.view.isContainerView()) {
-            // } else if (this.parent.scrollView.getClass().isInstance(MatchaScrollView.class)) {
+                // Let containers do their own layout.
+            } else if (this.parent.view instanceof MatchaScrollView) {
+                // Translate the scrollview's contentView offset into a ScrollX and ScrollY.
+                MatchaScrollView matchaScrollView = (MatchaScrollView)this.parent.view;
+                double offsetX = -minX;
+                double offsetY = -minY;
+                minX = 0;
+                minY = 0;
+                maxX += offsetX;
+                maxY += offsetY;
+
+                if (!matchaScrollView.horizontal) {
+                    ScrollView scrollView = matchaScrollView.scrollView;
+                    scrollView.setScrollX((int)offsetX);
+                    scrollView.setScrollY((int)offsetY);
+                } else {
+                    HorizontalScrollView scrollView = matchaScrollView.hScrollView;
+                    scrollView.setScrollX((int)offsetX);
+                    scrollView.setScrollY((int)offsetY);
+                }
+                matchaScrollView.matchaX = (int)offsetX;
+                matchaScrollView.matchaY = (int)offsetY;
+
+                MatchaLayout.LayoutParams params = (MatchaLayout.LayoutParams)this.view.getLayoutParams();
+                if (params == null) {
+                    params = new MatchaLayout.LayoutParams();
+                }
+                params.left = minX;
+                params.top = minY;
+                params.right = maxX;
+                params.bottom = maxY;
+                this.view.setLayoutParams(params);
             } else {
                 MatchaLayout.LayoutParams params = (MatchaLayout.LayoutParams)this.view.getLayoutParams();
                 if (params == null) {

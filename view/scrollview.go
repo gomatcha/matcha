@@ -3,6 +3,7 @@ package view
 import (
 	"fmt"
 	"math"
+	"runtime"
 
 	"github.com/gogo/protobuf/proto"
 
@@ -16,10 +17,11 @@ import (
 
 type ScrollView struct {
 	Embed
-	ScrollAxes     layout.Axis
+	ScrollAxes     layout.Axis // Multiple scroll axes are not supported.
 	IndicatorAxes  layout.Axis
 	ScrollEnabled  bool
 	ScrollPosition *ScrollPosition
+	scrollPosition *ScrollPosition
 	OnScroll       func(position layout.Point)
 
 	ContentChildren []View
@@ -31,17 +33,22 @@ type ScrollView struct {
 // NewScrollView returns a new view.
 func NewScrollView() *ScrollView {
 	return &ScrollView{
-		ScrollPosition: &ScrollPosition{},
-		ScrollAxes:     layout.AxisY,
-		IndicatorAxes:  layout.AxisY | layout.AxisX,
-		ScrollEnabled:  true,
+		ScrollAxes:    layout.AxisY,
+		IndicatorAxes: layout.AxisY | layout.AxisX,
+		ScrollEnabled: true,
 	}
+}
+
+func (v *ScrollView) ViewKey() interface{} {
+	return v.ScrollAxes // On Android, horizontal and vertical scrollViews are different classes.
 }
 
 func (v *ScrollView) Lifecycle(from, to Stage) {
 	if EntersStage(from, to, StageMounted) {
-		if v.ScrollPosition == nil {
-			v.ScrollPosition = &ScrollPosition{}
+		if v.ScrollPosition != nil {
+			v.scrollPosition = v.ScrollPosition
+		} else {
+			v.scrollPosition = &ScrollPosition{}
 		}
 	}
 }
@@ -49,8 +56,8 @@ func (v *ScrollView) Lifecycle(from, to Stage) {
 func (v *ScrollView) Update(v2 View) {
 	CopyFields(v, v2)
 
-	if v.ScrollPosition == nil {
-		v.ScrollPosition = &ScrollPosition{}
+	if v.ScrollPosition != nil {
+		v.scrollPosition = v.ScrollPosition
 	}
 }
 
@@ -61,6 +68,11 @@ func (v *ScrollView) Build(ctx Context) Model {
 	child.Layouter = v.ContentLayouter
 	child.Painter = v.ContentPainter
 
+	nativeName := "gomatcha.io/matcha/view/scrollview"
+	if runtime.GOOS == "android" && v.ScrollAxes == layout.AxisX {
+		nativeName = "gomatcha.io/matcha/view/hscrollview"
+	}
+
 	var painter paint.Painter
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
@@ -70,9 +82,9 @@ func (v *ScrollView) Build(ctx Context) Model {
 		Painter:  painter,
 		Layouter: &scrollViewLayouter{
 			axes:           v.ScrollAxes,
-			scrollPosition: v.ScrollPosition,
+			scrollPosition: v.scrollPosition,
 		},
-		NativeViewName: "gomatcha.io/matcha/view/scrollview",
+		NativeViewName: nativeName,
 		NativeViewState: internal.MarshalProtobuf(&pbview.ScrollView{
 			ScrollEnabled:                  v.ScrollEnabled,
 			Horizontal:                     v.ScrollAxes|layout.AxisX == layout.AxisX,
@@ -89,11 +101,15 @@ func (v *ScrollView) Build(ctx Context) Model {
 					return
 				}
 
+				// Ignore if there is a running animation.
+				if v.scrollPosition.X.Animation() != nil || v.scrollPosition.Y.Animation() != nil {
+					return
+				}
+
 				var offset layout.Point
 				(&offset).UnmarshalProtobuf(event.ContentOffset)
 
-				v.ScrollPosition.setValue(offset, true)
-
+				v.scrollPosition.setValue(offset, true)
 				if v.OnScroll != nil {
 					v.OnScroll(offset)
 				}
@@ -119,6 +135,7 @@ func (l *scrollViewLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.
 		maxSize.X = math.Inf(1)
 	}
 
+	// We offset the scrollView's contentView by the scrollPosition. And translate that into the actual scroll position on the native side.
 	offset := l.scrollPosition.Value()
 	g := ctx.LayoutChild(0, minSize, maxSize)
 	g.Frame = layout.Rt(-offset.X, -offset.Y, g.Width()-offset.X, g.Height()-offset.Y)
