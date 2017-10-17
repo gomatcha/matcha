@@ -385,7 +385,8 @@ func (n *node) marshalLayoutPaintProtobuf(m map[int64]*pb.LayoutPaintNode) {
 		order = append(order, i.id)
 	}
 
-	m[int64(n.id)] = &pb.LayoutPaintNode{
+	s := n.paintOptions
+	lpnode := &pb.LayoutPaintNode{
 		Id:       int64(n.id),
 		LayoutId: n.layoutId,
 		PaintId:  n.paintId,
@@ -398,8 +399,42 @@ func (n *node) marshalLayoutPaintProtobuf(m map[int64]*pb.LayoutPaintNode) {
 		ZIndex:     int64(guide.ZIndex),
 		ChildOrder: order,
 
-		PaintStyle: n.paintOptions.MarshalProtobuf(),
+		Transparency:       s.Transparency,
+		HasBackgroundColor: s.BackgroundColor != nil,
+		HasBorderColor:     s.BorderColor != nil,
+		BorderWidth:        s.BorderWidth,
+		CornerRadius:       s.CornerRadius,
+		ShadowRadius:       s.ShadowRadius,
+		ShadowOffsetX:      s.ShadowOffset.X,
+		ShadowOffsetY:      s.ShadowOffset.Y,
+		HasShadowColor:     s.ShadowColor != nil,
 	}
+	if s.BackgroundColor != nil {
+		r, g, b, a := s.BackgroundColor.RGBA()
+		lpnode.HasBackgroundColor = true
+		lpnode.BackgroundColorRed = r
+		lpnode.BackgroundColorGreen = g
+		lpnode.BackgroundColorBlue = b
+		lpnode.BackgroundColorAlpha = a
+	}
+	if s.BorderColor != nil {
+		r, g, b, a := s.BorderColor.RGBA()
+		lpnode.HasBorderColor = true
+		lpnode.BorderColorRed = r
+		lpnode.BorderColorGreen = g
+		lpnode.BorderColorBlue = b
+		lpnode.BorderColorAlpha = a
+	}
+	if s.ShadowColor != nil {
+		r, g, b, a := s.ShadowColor.RGBA()
+		lpnode.HasShadowColor = true
+		lpnode.ShadowColorRed = r
+		lpnode.ShadowColorGreen = g
+		lpnode.ShadowColorBlue = b
+		lpnode.ShadowColorAlpha = a
+	}
+	m[int64(n.id)] = lpnode
+
 	for _, v := range n.children {
 		v.marshalLayoutPaintProtobuf(m)
 	}

@@ -102,7 +102,6 @@ typedef GPB_ENUM(MatchaPaintPBStyle_FieldNumber) {
 
 @property(nonatomic, readwrite) double shadowOffsetX;
 
-/** matcha.layout.Point shadowOffset = 8; */
 @property(nonatomic, readwrite) double shadowOffsetY;
 
 @property(nonatomic, readwrite) BOOL hasShadowColor;

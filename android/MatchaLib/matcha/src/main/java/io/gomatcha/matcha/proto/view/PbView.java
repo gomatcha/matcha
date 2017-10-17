@@ -89,40 +89,6 @@ public final class PbView {
      * <code>repeated int64 children = 6;</code>
      */
     long getChildren(int index);
-
-    /**
-     * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-     */
-    int getAltIdsCount();
-    /**
-     * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-     */
-    boolean containsAltIds(
-        long key);
-    /**
-     * Use {@link #getAltIdsMap()} instead.
-     */
-    @java.lang.Deprecated
-    java.util.Map<java.lang.Long, java.lang.Long>
-    getAltIds();
-    /**
-     * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-     */
-    java.util.Map<java.lang.Long, java.lang.Long>
-    getAltIdsMap();
-    /**
-     * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-     */
-
-    long getAltIdsOrDefault(
-        long key,
-        long defaultValue);
-    /**
-     * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-     */
-
-    long getAltIdsOrThrow(
-        long key);
   }
   /**
    * Protobuf type {@code matcha.view.BuildNode}
@@ -223,19 +189,6 @@ public final class PbView {
               input.popLimit(limit);
               break;
             }
-            case 58: {
-              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
-                altIds_ = com.google.protobuf.MapField.newMapField(
-                    AltIdsDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000040;
-              }
-              com.google.protobuf.MapEntry<java.lang.Long, java.lang.Long>
-              altIds__ = input.readMessage(
-                  AltIdsDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
-              altIds_.getMutableMap().put(
-                  altIds__.getKey(), altIds__.getValue());
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -261,8 +214,6 @@ public final class PbView {
       switch (number) {
         case 5:
           return internalGetValues();
-        case 7:
-          return internalGetAltIds();
         default:
           throw new RuntimeException(
               "Invalid map field number: " + number);
@@ -436,82 +387,6 @@ public final class PbView {
     }
     private int childrenMemoizedSerializedSize = -1;
 
-    public static final int ALTIDS_FIELD_NUMBER = 7;
-    private static final class AltIdsDefaultEntryHolder {
-      static final com.google.protobuf.MapEntry<
-          java.lang.Long, java.lang.Long> defaultEntry =
-              com.google.protobuf.MapEntry
-              .<java.lang.Long, java.lang.Long>newDefaultInstance(
-                  io.gomatcha.matcha.proto.view.PbView.internal_static_matcha_view_BuildNode_AltIdsEntry_descriptor, 
-                  com.google.protobuf.WireFormat.FieldType.INT64,
-                  0L,
-                  com.google.protobuf.WireFormat.FieldType.INT64,
-                  0L);
-    }
-    private com.google.protobuf.MapField<
-        java.lang.Long, java.lang.Long> altIds_;
-    private com.google.protobuf.MapField<java.lang.Long, java.lang.Long>
-    internalGetAltIds() {
-      if (altIds_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(
-            AltIdsDefaultEntryHolder.defaultEntry);
-      }
-      return altIds_;
-    }
-
-    public int getAltIdsCount() {
-      return internalGetAltIds().getMap().size();
-    }
-    /**
-     * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-     */
-
-    public boolean containsAltIds(
-        long key) {
-      
-      return internalGetAltIds().getMap().containsKey(key);
-    }
-    /**
-     * Use {@link #getAltIdsMap()} instead.
-     */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.Long, java.lang.Long> getAltIds() {
-      return getAltIdsMap();
-    }
-    /**
-     * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-     */
-
-    public java.util.Map<java.lang.Long, java.lang.Long> getAltIdsMap() {
-      return internalGetAltIds().getMap();
-    }
-    /**
-     * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-     */
-
-    public long getAltIdsOrDefault(
-        long key,
-        long defaultValue) {
-      
-      java.util.Map<java.lang.Long, java.lang.Long> map =
-          internalGetAltIds().getMap();
-      return map.containsKey(key) ? map.get(key) : defaultValue;
-    }
-    /**
-     * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-     */
-
-    public long getAltIdsOrThrow(
-        long key) {
-      
-      java.util.Map<java.lang.Long, java.lang.Long> map =
-          internalGetAltIds().getMap();
-      if (!map.containsKey(key)) {
-        throw new java.lang.IllegalArgumentException();
-      }
-      return map.get(key);
-    }
-
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -550,12 +425,6 @@ public final class PbView {
       for (int i = 0; i < children_.size(); i++) {
         output.writeInt64NoTag(children_.get(i));
       }
-      com.google.protobuf.GeneratedMessageV3
-        .serializeLongMapTo(
-          output,
-          internalGetAltIds(),
-          AltIdsDefaultEntryHolder.defaultEntry,
-          7);
     }
 
     public int getSerializedSize() {
@@ -602,16 +471,6 @@ public final class PbView {
         }
         childrenMemoizedSerializedSize = dataSize;
       }
-      for (java.util.Map.Entry<java.lang.Long, java.lang.Long> entry
-           : internalGetAltIds().getMap().entrySet()) {
-        com.google.protobuf.MapEntry<java.lang.Long, java.lang.Long>
-        altIds__ = AltIdsDefaultEntryHolder.defaultEntry.newBuilderForType()
-            .setKey(entry.getKey())
-            .setValue(entry.getValue())
-            .build();
-        size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(7, altIds__);
-      }
       memoizedSize = size;
       return size;
     }
@@ -640,8 +499,6 @@ public final class PbView {
           other.internalGetValues());
       result = result && getChildrenList()
           .equals(other.getChildrenList());
-      result = result && internalGetAltIds().equals(
-          other.internalGetAltIds());
       return result;
     }
 
@@ -669,10 +526,6 @@ public final class PbView {
       if (getChildrenCount() > 0) {
         hash = (37 * hash) + CHILDREN_FIELD_NUMBER;
         hash = (53 * hash) + getChildrenList().hashCode();
-      }
-      if (!internalGetAltIds().getMap().isEmpty()) {
-        hash = (37 * hash) + ALTIDS_FIELD_NUMBER;
-        hash = (53 * hash) + internalGetAltIds().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -785,8 +638,6 @@ public final class PbView {
         switch (number) {
           case 5:
             return internalGetValues();
-          case 7:
-            return internalGetAltIds();
           default:
             throw new RuntimeException(
                 "Invalid map field number: " + number);
@@ -798,8 +649,6 @@ public final class PbView {
         switch (number) {
           case 5:
             return internalGetMutableValues();
-          case 7:
-            return internalGetMutableAltIds();
           default:
             throw new RuntimeException(
                 "Invalid map field number: " + number);
@@ -840,7 +689,6 @@ public final class PbView {
         internalGetMutableValues().clear();
         children_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000020);
-        internalGetMutableAltIds().clear();
         return this;
       }
 
@@ -876,8 +724,6 @@ public final class PbView {
           bitField0_ = (bitField0_ & ~0x00000020);
         }
         result.children_ = children_;
-        result.altIds_ = internalGetAltIds();
-        result.altIds_.makeImmutable();
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -945,8 +791,6 @@ public final class PbView {
           }
           onChanged();
         }
-        internalGetMutableAltIds().mergeFrom(
-            other.internalGetAltIds());
         onChanged();
         return this;
       }
@@ -1312,129 +1156,6 @@ public final class PbView {
         onChanged();
         return this;
       }
-
-      private com.google.protobuf.MapField<
-          java.lang.Long, java.lang.Long> altIds_;
-      private com.google.protobuf.MapField<java.lang.Long, java.lang.Long>
-      internalGetAltIds() {
-        if (altIds_ == null) {
-          return com.google.protobuf.MapField.emptyMapField(
-              AltIdsDefaultEntryHolder.defaultEntry);
-        }
-        return altIds_;
-      }
-      private com.google.protobuf.MapField<java.lang.Long, java.lang.Long>
-      internalGetMutableAltIds() {
-        onChanged();;
-        if (altIds_ == null) {
-          altIds_ = com.google.protobuf.MapField.newMapField(
-              AltIdsDefaultEntryHolder.defaultEntry);
-        }
-        if (!altIds_.isMutable()) {
-          altIds_ = altIds_.copy();
-        }
-        return altIds_;
-      }
-
-      public int getAltIdsCount() {
-        return internalGetAltIds().getMap().size();
-      }
-      /**
-       * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-       */
-
-      public boolean containsAltIds(
-          long key) {
-        
-        return internalGetAltIds().getMap().containsKey(key);
-      }
-      /**
-       * Use {@link #getAltIdsMap()} instead.
-       */
-      @java.lang.Deprecated
-      public java.util.Map<java.lang.Long, java.lang.Long> getAltIds() {
-        return getAltIdsMap();
-      }
-      /**
-       * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-       */
-
-      public java.util.Map<java.lang.Long, java.lang.Long> getAltIdsMap() {
-        return internalGetAltIds().getMap();
-      }
-      /**
-       * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-       */
-
-      public long getAltIdsOrDefault(
-          long key,
-          long defaultValue) {
-        
-        java.util.Map<java.lang.Long, java.lang.Long> map =
-            internalGetAltIds().getMap();
-        return map.containsKey(key) ? map.get(key) : defaultValue;
-      }
-      /**
-       * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-       */
-
-      public long getAltIdsOrThrow(
-          long key) {
-        
-        java.util.Map<java.lang.Long, java.lang.Long> map =
-            internalGetAltIds().getMap();
-        if (!map.containsKey(key)) {
-          throw new java.lang.IllegalArgumentException();
-        }
-        return map.get(key);
-      }
-
-      public Builder clearAltIds() {
-        internalGetMutableAltIds().getMutableMap()
-            .clear();
-        return this;
-      }
-      /**
-       * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-       */
-
-      public Builder removeAltIds(
-          long key) {
-        
-        internalGetMutableAltIds().getMutableMap()
-            .remove(key);
-        return this;
-      }
-      /**
-       * Use alternate mutation accessors instead.
-       */
-      @java.lang.Deprecated
-      public java.util.Map<java.lang.Long, java.lang.Long>
-      getMutableAltIds() {
-        return internalGetMutableAltIds().getMutableMap();
-      }
-      /**
-       * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-       */
-      public Builder putAltIds(
-          long key,
-          long value) {
-        
-        
-        internalGetMutableAltIds().getMutableMap()
-            .put(key, value);
-        return this;
-      }
-      /**
-       * <code>map&lt;int64, int64&gt; altIds = 7;</code>
-       */
-
-      public Builder putAllAltIds(
-          java.util.Map<java.lang.Long, java.lang.Long> values) {
-        internalGetMutableAltIds().getMutableMap()
-            .putAll(values);
-        return this;
-      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -1505,7 +1226,6 @@ public final class PbView {
 
     /**
      * <pre>
-     * matcha.layout.Guide layoutGuide = 4;
      * Guide
      * </pre>
      *
@@ -1548,52 +1268,112 @@ public final class PbView {
 
     /**
      * <pre>
-     * PaintStyle
-     * double transparency = 1;
-     * matcha.Color backgroundColor = 2;
-     * matcha.Color borderColor = 3;
-     * double borderWidth = 4;
-     * double cornerRadius = 5;
-     * double shadowRadius = 7;
-     * matcha.layout.Point shadowOffset = 8;
-     * matcha.Color shadowColor = 9;
+     * Paint
      * </pre>
      *
-     * <code>.matcha.paint.Style paintStyle = 10;</code>
+     * <code>double transparency = 56;</code>
      */
-    boolean hasPaintStyle();
+    double getTransparency();
+
     /**
-     * <pre>
-     * PaintStyle
-     * double transparency = 1;
-     * matcha.Color backgroundColor = 2;
-     * matcha.Color borderColor = 3;
-     * double borderWidth = 4;
-     * double cornerRadius = 5;
-     * double shadowRadius = 7;
-     * matcha.layout.Point shadowOffset = 8;
-     * matcha.Color shadowColor = 9;
-     * </pre>
-     *
-     * <code>.matcha.paint.Style paintStyle = 10;</code>
+     * <code>bool hasBackgroundColor = 24;</code>
      */
-    io.gomatcha.matcha.proto.paint.PbPaint.Style getPaintStyle();
+    boolean getHasBackgroundColor();
+
     /**
-     * <pre>
-     * PaintStyle
-     * double transparency = 1;
-     * matcha.Color backgroundColor = 2;
-     * matcha.Color borderColor = 3;
-     * double borderWidth = 4;
-     * double cornerRadius = 5;
-     * double shadowRadius = 7;
-     * matcha.layout.Point shadowOffset = 8;
-     * matcha.Color shadowColor = 9;
-     * </pre>
-     *
-     * <code>.matcha.paint.Style paintStyle = 10;</code>
+     * <code>uint32 backgroundColorRed = 20;</code>
      */
-    io.gomatcha.matcha.proto.paint.PbPaint.StyleOrBuilder getPaintStyleOrBuilder();
+    int getBackgroundColorRed();
+
+    /**
+     * <code>uint32 backgroundColorGreen = 21;</code>
+     */
+    int getBackgroundColorGreen();
+
+    /**
+     * <code>uint32 backgroundColorBlue = 22;</code>
+     */
+    int getBackgroundColorBlue();
+
+    /**
+     * <code>uint32 backgroundColorAlpha = 23;</code>
+     */
+    int getBackgroundColorAlpha();
+
+    /**
+     * <code>bool hasBorderColor = 30;</code>
+     */
+    boolean getHasBorderColor();
+
+    /**
+     * <code>uint32 borderColorRed = 31;</code>
+     */
+    int getBorderColorRed();
+
+    /**
+     * <code>uint32 borderColorGreen = 32;</code>
+     */
+    int getBorderColorGreen();
+
+    /**
+     * <code>uint32 borderColorBlue = 33;</code>
+     */
+    int getBorderColorBlue();
+
+    /**
+     * <code>uint32 borderColorAlpha = 34;</code>
+     */
+    int getBorderColorAlpha();
+
+    /**
+     * <code>double borderWidth = 40;</code>
+     */
+    double getBorderWidth();
+
+    /**
+     * <code>double cornerRadius = 41;</code>
+     */
+    double getCornerRadius();
+
+    /**
+     * <code>double shadowRadius = 42;</code>
+     */
+    double getShadowRadius();
+
+    /**
+     * <code>double shadowOffsetX = 43;</code>
+     */
+    double getShadowOffsetX();
+
+    /**
+     * <code>double shadowOffsetY = 44;</code>
+     */
+    double getShadowOffsetY();
+
+    /**
+     * <code>bool hasShadowColor = 90;</code>
+     */
+    boolean getHasShadowColor();
+
+    /**
+     * <code>uint32 shadowColorRed = 91;</code>
+     */
+    int getShadowColorRed();
+
+    /**
+     * <code>uint32 shadowColorBlue = 92;</code>
+     */
+    int getShadowColorBlue();
+
+    /**
+     * <code>uint32 shadowColorGreen = 93;</code>
+     */
+    int getShadowColorGreen();
+
+    /**
+     * <code>uint32 shadowColorAlpha = 94;</code>
+     */
+    int getShadowColorAlpha();
   }
   /**
    * Protobuf type {@code matcha.view.LayoutPaintNode}
@@ -1616,6 +1396,27 @@ public final class PbView {
       maxy_ = 0D;
       zIndex_ = 0L;
       childOrder_ = java.util.Collections.emptyList();
+      transparency_ = 0D;
+      hasBackgroundColor_ = false;
+      backgroundColorRed_ = 0;
+      backgroundColorGreen_ = 0;
+      backgroundColorBlue_ = 0;
+      backgroundColorAlpha_ = 0;
+      hasBorderColor_ = false;
+      borderColorRed_ = 0;
+      borderColorGreen_ = 0;
+      borderColorBlue_ = 0;
+      borderColorAlpha_ = 0;
+      borderWidth_ = 0D;
+      cornerRadius_ = 0D;
+      shadowRadius_ = 0D;
+      shadowOffsetX_ = 0D;
+      shadowOffsetY_ = 0D;
+      hasShadowColor_ = false;
+      shadowColorRed_ = 0;
+      shadowColorBlue_ = 0;
+      shadowColorGreen_ = 0;
+      shadowColorAlpha_ = 0;
     }
 
     @java.lang.Override
@@ -1704,17 +1505,109 @@ public final class PbView {
               input.popLimit(limit);
               break;
             }
-            case 82: {
-              io.gomatcha.matcha.proto.paint.PbPaint.Style.Builder subBuilder = null;
-              if (paintStyle_ != null) {
-                subBuilder = paintStyle_.toBuilder();
-              }
-              paintStyle_ = input.readMessage(io.gomatcha.matcha.proto.paint.PbPaint.Style.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(paintStyle_);
-                paintStyle_ = subBuilder.buildPartial();
-              }
+            case 160: {
 
+              backgroundColorRed_ = input.readUInt32();
+              break;
+            }
+            case 168: {
+
+              backgroundColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 176: {
+
+              backgroundColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 184: {
+
+              backgroundColorAlpha_ = input.readUInt32();
+              break;
+            }
+            case 192: {
+
+              hasBackgroundColor_ = input.readBool();
+              break;
+            }
+            case 240: {
+
+              hasBorderColor_ = input.readBool();
+              break;
+            }
+            case 248: {
+
+              borderColorRed_ = input.readUInt32();
+              break;
+            }
+            case 256: {
+
+              borderColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 264: {
+
+              borderColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 272: {
+
+              borderColorAlpha_ = input.readUInt32();
+              break;
+            }
+            case 321: {
+
+              borderWidth_ = input.readDouble();
+              break;
+            }
+            case 329: {
+
+              cornerRadius_ = input.readDouble();
+              break;
+            }
+            case 337: {
+
+              shadowRadius_ = input.readDouble();
+              break;
+            }
+            case 345: {
+
+              shadowOffsetX_ = input.readDouble();
+              break;
+            }
+            case 353: {
+
+              shadowOffsetY_ = input.readDouble();
+              break;
+            }
+            case 449: {
+
+              transparency_ = input.readDouble();
+              break;
+            }
+            case 720: {
+
+              hasShadowColor_ = input.readBool();
+              break;
+            }
+            case 728: {
+
+              shadowColorRed_ = input.readUInt32();
+              break;
+            }
+            case 736: {
+
+              shadowColorBlue_ = input.readUInt32();
+              break;
+            }
+            case 744: {
+
+              shadowColorGreen_ = input.readUInt32();
+              break;
+            }
+            case 752: {
+
+              shadowColorAlpha_ = input.readUInt32();
               break;
             }
           }
@@ -1775,7 +1668,6 @@ public final class PbView {
     private double minx_;
     /**
      * <pre>
-     * matcha.layout.Guide layoutGuide = 4;
      * Guide
      * </pre>
      *
@@ -1844,61 +1736,197 @@ public final class PbView {
     }
     private int childOrderMemoizedSerializedSize = -1;
 
-    public static final int PAINTSTYLE_FIELD_NUMBER = 10;
-    private io.gomatcha.matcha.proto.paint.PbPaint.Style paintStyle_;
+    public static final int TRANSPARENCY_FIELD_NUMBER = 56;
+    private double transparency_;
     /**
      * <pre>
-     * PaintStyle
-     * double transparency = 1;
-     * matcha.Color backgroundColor = 2;
-     * matcha.Color borderColor = 3;
-     * double borderWidth = 4;
-     * double cornerRadius = 5;
-     * double shadowRadius = 7;
-     * matcha.layout.Point shadowOffset = 8;
-     * matcha.Color shadowColor = 9;
+     * Paint
      * </pre>
      *
-     * <code>.matcha.paint.Style paintStyle = 10;</code>
+     * <code>double transparency = 56;</code>
      */
-    public boolean hasPaintStyle() {
-      return paintStyle_ != null;
+    public double getTransparency() {
+      return transparency_;
     }
+
+    public static final int HASBACKGROUNDCOLOR_FIELD_NUMBER = 24;
+    private boolean hasBackgroundColor_;
     /**
-     * <pre>
-     * PaintStyle
-     * double transparency = 1;
-     * matcha.Color backgroundColor = 2;
-     * matcha.Color borderColor = 3;
-     * double borderWidth = 4;
-     * double cornerRadius = 5;
-     * double shadowRadius = 7;
-     * matcha.layout.Point shadowOffset = 8;
-     * matcha.Color shadowColor = 9;
-     * </pre>
-     *
-     * <code>.matcha.paint.Style paintStyle = 10;</code>
+     * <code>bool hasBackgroundColor = 24;</code>
      */
-    public io.gomatcha.matcha.proto.paint.PbPaint.Style getPaintStyle() {
-      return paintStyle_ == null ? io.gomatcha.matcha.proto.paint.PbPaint.Style.getDefaultInstance() : paintStyle_;
+    public boolean getHasBackgroundColor() {
+      return hasBackgroundColor_;
     }
+
+    public static final int BACKGROUNDCOLORRED_FIELD_NUMBER = 20;
+    private int backgroundColorRed_;
     /**
-     * <pre>
-     * PaintStyle
-     * double transparency = 1;
-     * matcha.Color backgroundColor = 2;
-     * matcha.Color borderColor = 3;
-     * double borderWidth = 4;
-     * double cornerRadius = 5;
-     * double shadowRadius = 7;
-     * matcha.layout.Point shadowOffset = 8;
-     * matcha.Color shadowColor = 9;
-     * </pre>
-     *
-     * <code>.matcha.paint.Style paintStyle = 10;</code>
+     * <code>uint32 backgroundColorRed = 20;</code>
      */
-    public io.gomatcha.matcha.proto.paint.PbPaint.StyleOrBuilder getPaintStyleOrBuilder() {
-      return getPaintStyle();
+    public int getBackgroundColorRed() {
+      return backgroundColorRed_;
+    }
+
+    public static final int BACKGROUNDCOLORGREEN_FIELD_NUMBER = 21;
+    private int backgroundColorGreen_;
+    /**
+     * <code>uint32 backgroundColorGreen = 21;</code>
+     */
+    public int getBackgroundColorGreen() {
+      return backgroundColorGreen_;
+    }
+
+    public static final int BACKGROUNDCOLORBLUE_FIELD_NUMBER = 22;
+    private int backgroundColorBlue_;
+    /**
+     * <code>uint32 backgroundColorBlue = 22;</code>
+     */
+    public int getBackgroundColorBlue() {
+      return backgroundColorBlue_;
+    }
+
+    public static final int BACKGROUNDCOLORALPHA_FIELD_NUMBER = 23;
+    private int backgroundColorAlpha_;
+    /**
+     * <code>uint32 backgroundColorAlpha = 23;</code>
+     */
+    public int getBackgroundColorAlpha() {
+      return backgroundColorAlpha_;
+    }
+
+    public static final int HASBORDERCOLOR_FIELD_NUMBER = 30;
+    private boolean hasBorderColor_;
+    /**
+     * <code>bool hasBorderColor = 30;</code>
+     */
+    public boolean getHasBorderColor() {
+      return hasBorderColor_;
+    }
+
+    public static final int BORDERCOLORRED_FIELD_NUMBER = 31;
+    private int borderColorRed_;
+    /**
+     * <code>uint32 borderColorRed = 31;</code>
+     */
+    public int getBorderColorRed() {
+      return borderColorRed_;
+    }
+
+    public static final int BORDERCOLORGREEN_FIELD_NUMBER = 32;
+    private int borderColorGreen_;
+    /**
+     * <code>uint32 borderColorGreen = 32;</code>
+     */
+    public int getBorderColorGreen() {
+      return borderColorGreen_;
+    }
+
+    public static final int BORDERCOLORBLUE_FIELD_NUMBER = 33;
+    private int borderColorBlue_;
+    /**
+     * <code>uint32 borderColorBlue = 33;</code>
+     */
+    public int getBorderColorBlue() {
+      return borderColorBlue_;
+    }
+
+    public static final int BORDERCOLORALPHA_FIELD_NUMBER = 34;
+    private int borderColorAlpha_;
+    /**
+     * <code>uint32 borderColorAlpha = 34;</code>
+     */
+    public int getBorderColorAlpha() {
+      return borderColorAlpha_;
+    }
+
+    public static final int BORDERWIDTH_FIELD_NUMBER = 40;
+    private double borderWidth_;
+    /**
+     * <code>double borderWidth = 40;</code>
+     */
+    public double getBorderWidth() {
+      return borderWidth_;
+    }
+
+    public static final int CORNERRADIUS_FIELD_NUMBER = 41;
+    private double cornerRadius_;
+    /**
+     * <code>double cornerRadius = 41;</code>
+     */
+    public double getCornerRadius() {
+      return cornerRadius_;
+    }
+
+    public static final int SHADOWRADIUS_FIELD_NUMBER = 42;
+    private double shadowRadius_;
+    /**
+     * <code>double shadowRadius = 42;</code>
+     */
+    public double getShadowRadius() {
+      return shadowRadius_;
+    }
+
+    public static final int SHADOWOFFSETX_FIELD_NUMBER = 43;
+    private double shadowOffsetX_;
+    /**
+     * <code>double shadowOffsetX = 43;</code>
+     */
+    public double getShadowOffsetX() {
+      return shadowOffsetX_;
+    }
+
+    public static final int SHADOWOFFSETY_FIELD_NUMBER = 44;
+    private double shadowOffsetY_;
+    /**
+     * <code>double shadowOffsetY = 44;</code>
+     */
+    public double getShadowOffsetY() {
+      return shadowOffsetY_;
+    }
+
+    public static final int HASSHADOWCOLOR_FIELD_NUMBER = 90;
+    private boolean hasShadowColor_;
+    /**
+     * <code>bool hasShadowColor = 90;</code>
+     */
+    public boolean getHasShadowColor() {
+      return hasShadowColor_;
+    }
+
+    public static final int SHADOWCOLORRED_FIELD_NUMBER = 91;
+    private int shadowColorRed_;
+    /**
+     * <code>uint32 shadowColorRed = 91;</code>
+     */
+    public int getShadowColorRed() {
+      return shadowColorRed_;
+    }
+
+    public static final int SHADOWCOLORBLUE_FIELD_NUMBER = 92;
+    private int shadowColorBlue_;
+    /**
+     * <code>uint32 shadowColorBlue = 92;</code>
+     */
+    public int getShadowColorBlue() {
+      return shadowColorBlue_;
+    }
+
+    public static final int SHADOWCOLORGREEN_FIELD_NUMBER = 93;
+    private int shadowColorGreen_;
+    /**
+     * <code>uint32 shadowColorGreen = 93;</code>
+     */
+    public int getShadowColorGreen() {
+      return shadowColorGreen_;
+    }
+
+    public static final int SHADOWCOLORALPHA_FIELD_NUMBER = 94;
+    private int shadowColorAlpha_;
+    /**
+     * <code>uint32 shadowColorAlpha = 94;</code>
+     */
+    public int getShadowColorAlpha() {
+      return shadowColorAlpha_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1945,8 +1973,68 @@ public final class PbView {
       for (int i = 0; i < childOrder_.size(); i++) {
         output.writeInt64NoTag(childOrder_.get(i));
       }
-      if (paintStyle_ != null) {
-        output.writeMessage(10, getPaintStyle());
+      if (backgroundColorRed_ != 0) {
+        output.writeUInt32(20, backgroundColorRed_);
+      }
+      if (backgroundColorGreen_ != 0) {
+        output.writeUInt32(21, backgroundColorGreen_);
+      }
+      if (backgroundColorBlue_ != 0) {
+        output.writeUInt32(22, backgroundColorBlue_);
+      }
+      if (backgroundColorAlpha_ != 0) {
+        output.writeUInt32(23, backgroundColorAlpha_);
+      }
+      if (hasBackgroundColor_ != false) {
+        output.writeBool(24, hasBackgroundColor_);
+      }
+      if (hasBorderColor_ != false) {
+        output.writeBool(30, hasBorderColor_);
+      }
+      if (borderColorRed_ != 0) {
+        output.writeUInt32(31, borderColorRed_);
+      }
+      if (borderColorGreen_ != 0) {
+        output.writeUInt32(32, borderColorGreen_);
+      }
+      if (borderColorBlue_ != 0) {
+        output.writeUInt32(33, borderColorBlue_);
+      }
+      if (borderColorAlpha_ != 0) {
+        output.writeUInt32(34, borderColorAlpha_);
+      }
+      if (borderWidth_ != 0D) {
+        output.writeDouble(40, borderWidth_);
+      }
+      if (cornerRadius_ != 0D) {
+        output.writeDouble(41, cornerRadius_);
+      }
+      if (shadowRadius_ != 0D) {
+        output.writeDouble(42, shadowRadius_);
+      }
+      if (shadowOffsetX_ != 0D) {
+        output.writeDouble(43, shadowOffsetX_);
+      }
+      if (shadowOffsetY_ != 0D) {
+        output.writeDouble(44, shadowOffsetY_);
+      }
+      if (transparency_ != 0D) {
+        output.writeDouble(56, transparency_);
+      }
+      if (hasShadowColor_ != false) {
+        output.writeBool(90, hasShadowColor_);
+      }
+      if (shadowColorRed_ != 0) {
+        output.writeUInt32(91, shadowColorRed_);
+      }
+      if (shadowColorBlue_ != 0) {
+        output.writeUInt32(92, shadowColorBlue_);
+      }
+      if (shadowColorGreen_ != 0) {
+        output.writeUInt32(93, shadowColorGreen_);
+      }
+      if (shadowColorAlpha_ != 0) {
+        output.writeUInt32(94, shadowColorAlpha_);
       }
     }
 
@@ -2001,9 +2089,89 @@ public final class PbView {
         }
         childOrderMemoizedSerializedSize = dataSize;
       }
-      if (paintStyle_ != null) {
+      if (backgroundColorRed_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(10, getPaintStyle());
+          .computeUInt32Size(20, backgroundColorRed_);
+      }
+      if (backgroundColorGreen_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(21, backgroundColorGreen_);
+      }
+      if (backgroundColorBlue_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(22, backgroundColorBlue_);
+      }
+      if (backgroundColorAlpha_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(23, backgroundColorAlpha_);
+      }
+      if (hasBackgroundColor_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(24, hasBackgroundColor_);
+      }
+      if (hasBorderColor_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(30, hasBorderColor_);
+      }
+      if (borderColorRed_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(31, borderColorRed_);
+      }
+      if (borderColorGreen_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(32, borderColorGreen_);
+      }
+      if (borderColorBlue_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(33, borderColorBlue_);
+      }
+      if (borderColorAlpha_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(34, borderColorAlpha_);
+      }
+      if (borderWidth_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(40, borderWidth_);
+      }
+      if (cornerRadius_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(41, cornerRadius_);
+      }
+      if (shadowRadius_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(42, shadowRadius_);
+      }
+      if (shadowOffsetX_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(43, shadowOffsetX_);
+      }
+      if (shadowOffsetY_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(44, shadowOffsetY_);
+      }
+      if (transparency_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(56, transparency_);
+      }
+      if (hasShadowColor_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(90, hasShadowColor_);
+      }
+      if (shadowColorRed_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(91, shadowColorRed_);
+      }
+      if (shadowColorBlue_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(92, shadowColorBlue_);
+      }
+      if (shadowColorGreen_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(93, shadowColorGreen_);
+      }
+      if (shadowColorAlpha_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(94, shadowColorAlpha_);
       }
       memoizedSize = size;
       return size;
@@ -2047,11 +2215,60 @@ public final class PbView {
           == other.getZIndex());
       result = result && getChildOrderList()
           .equals(other.getChildOrderList());
-      result = result && (hasPaintStyle() == other.hasPaintStyle());
-      if (hasPaintStyle()) {
-        result = result && getPaintStyle()
-            .equals(other.getPaintStyle());
-      }
+      result = result && (
+          java.lang.Double.doubleToLongBits(getTransparency())
+          == java.lang.Double.doubleToLongBits(
+              other.getTransparency()));
+      result = result && (getHasBackgroundColor()
+          == other.getHasBackgroundColor());
+      result = result && (getBackgroundColorRed()
+          == other.getBackgroundColorRed());
+      result = result && (getBackgroundColorGreen()
+          == other.getBackgroundColorGreen());
+      result = result && (getBackgroundColorBlue()
+          == other.getBackgroundColorBlue());
+      result = result && (getBackgroundColorAlpha()
+          == other.getBackgroundColorAlpha());
+      result = result && (getHasBorderColor()
+          == other.getHasBorderColor());
+      result = result && (getBorderColorRed()
+          == other.getBorderColorRed());
+      result = result && (getBorderColorGreen()
+          == other.getBorderColorGreen());
+      result = result && (getBorderColorBlue()
+          == other.getBorderColorBlue());
+      result = result && (getBorderColorAlpha()
+          == other.getBorderColorAlpha());
+      result = result && (
+          java.lang.Double.doubleToLongBits(getBorderWidth())
+          == java.lang.Double.doubleToLongBits(
+              other.getBorderWidth()));
+      result = result && (
+          java.lang.Double.doubleToLongBits(getCornerRadius())
+          == java.lang.Double.doubleToLongBits(
+              other.getCornerRadius()));
+      result = result && (
+          java.lang.Double.doubleToLongBits(getShadowRadius())
+          == java.lang.Double.doubleToLongBits(
+              other.getShadowRadius()));
+      result = result && (
+          java.lang.Double.doubleToLongBits(getShadowOffsetX())
+          == java.lang.Double.doubleToLongBits(
+              other.getShadowOffsetX()));
+      result = result && (
+          java.lang.Double.doubleToLongBits(getShadowOffsetY())
+          == java.lang.Double.doubleToLongBits(
+              other.getShadowOffsetY()));
+      result = result && (getHasShadowColor()
+          == other.getHasShadowColor());
+      result = result && (getShadowColorRed()
+          == other.getShadowColorRed());
+      result = result && (getShadowColorBlue()
+          == other.getShadowColorBlue());
+      result = result && (getShadowColorGreen()
+          == other.getShadowColorGreen());
+      result = result && (getShadowColorAlpha()
+          == other.getShadowColorAlpha());
       return result;
     }
 
@@ -2090,10 +2307,57 @@ public final class PbView {
         hash = (37 * hash) + CHILDORDER_FIELD_NUMBER;
         hash = (53 * hash) + getChildOrderList().hashCode();
       }
-      if (hasPaintStyle()) {
-        hash = (37 * hash) + PAINTSTYLE_FIELD_NUMBER;
-        hash = (53 * hash) + getPaintStyle().hashCode();
-      }
+      hash = (37 * hash) + TRANSPARENCY_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getTransparency()));
+      hash = (37 * hash) + HASBACKGROUNDCOLOR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getHasBackgroundColor());
+      hash = (37 * hash) + BACKGROUNDCOLORRED_FIELD_NUMBER;
+      hash = (53 * hash) + getBackgroundColorRed();
+      hash = (37 * hash) + BACKGROUNDCOLORGREEN_FIELD_NUMBER;
+      hash = (53 * hash) + getBackgroundColorGreen();
+      hash = (37 * hash) + BACKGROUNDCOLORBLUE_FIELD_NUMBER;
+      hash = (53 * hash) + getBackgroundColorBlue();
+      hash = (37 * hash) + BACKGROUNDCOLORALPHA_FIELD_NUMBER;
+      hash = (53 * hash) + getBackgroundColorAlpha();
+      hash = (37 * hash) + HASBORDERCOLOR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getHasBorderColor());
+      hash = (37 * hash) + BORDERCOLORRED_FIELD_NUMBER;
+      hash = (53 * hash) + getBorderColorRed();
+      hash = (37 * hash) + BORDERCOLORGREEN_FIELD_NUMBER;
+      hash = (53 * hash) + getBorderColorGreen();
+      hash = (37 * hash) + BORDERCOLORBLUE_FIELD_NUMBER;
+      hash = (53 * hash) + getBorderColorBlue();
+      hash = (37 * hash) + BORDERCOLORALPHA_FIELD_NUMBER;
+      hash = (53 * hash) + getBorderColorAlpha();
+      hash = (37 * hash) + BORDERWIDTH_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getBorderWidth()));
+      hash = (37 * hash) + CORNERRADIUS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getCornerRadius()));
+      hash = (37 * hash) + SHADOWRADIUS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getShadowRadius()));
+      hash = (37 * hash) + SHADOWOFFSETX_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getShadowOffsetX()));
+      hash = (37 * hash) + SHADOWOFFSETY_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getShadowOffsetY()));
+      hash = (37 * hash) + HASSHADOWCOLOR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getHasShadowColor());
+      hash = (37 * hash) + SHADOWCOLORRED_FIELD_NUMBER;
+      hash = (53 * hash) + getShadowColorRed();
+      hash = (37 * hash) + SHADOWCOLORBLUE_FIELD_NUMBER;
+      hash = (53 * hash) + getShadowColorBlue();
+      hash = (37 * hash) + SHADOWCOLORGREEN_FIELD_NUMBER;
+      hash = (53 * hash) + getShadowColorGreen();
+      hash = (37 * hash) + SHADOWCOLORALPHA_FIELD_NUMBER;
+      hash = (53 * hash) + getShadowColorAlpha();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2241,12 +2505,48 @@ public final class PbView {
 
         childOrder_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000100);
-        if (paintStyleBuilder_ == null) {
-          paintStyle_ = null;
-        } else {
-          paintStyle_ = null;
-          paintStyleBuilder_ = null;
-        }
+        transparency_ = 0D;
+
+        hasBackgroundColor_ = false;
+
+        backgroundColorRed_ = 0;
+
+        backgroundColorGreen_ = 0;
+
+        backgroundColorBlue_ = 0;
+
+        backgroundColorAlpha_ = 0;
+
+        hasBorderColor_ = false;
+
+        borderColorRed_ = 0;
+
+        borderColorGreen_ = 0;
+
+        borderColorBlue_ = 0;
+
+        borderColorAlpha_ = 0;
+
+        borderWidth_ = 0D;
+
+        cornerRadius_ = 0D;
+
+        shadowRadius_ = 0D;
+
+        shadowOffsetX_ = 0D;
+
+        shadowOffsetY_ = 0D;
+
+        hasShadowColor_ = false;
+
+        shadowColorRed_ = 0;
+
+        shadowColorBlue_ = 0;
+
+        shadowColorGreen_ = 0;
+
+        shadowColorAlpha_ = 0;
+
         return this;
       }
 
@@ -2284,11 +2584,27 @@ public final class PbView {
           bitField0_ = (bitField0_ & ~0x00000100);
         }
         result.childOrder_ = childOrder_;
-        if (paintStyleBuilder_ == null) {
-          result.paintStyle_ = paintStyle_;
-        } else {
-          result.paintStyle_ = paintStyleBuilder_.build();
-        }
+        result.transparency_ = transparency_;
+        result.hasBackgroundColor_ = hasBackgroundColor_;
+        result.backgroundColorRed_ = backgroundColorRed_;
+        result.backgroundColorGreen_ = backgroundColorGreen_;
+        result.backgroundColorBlue_ = backgroundColorBlue_;
+        result.backgroundColorAlpha_ = backgroundColorAlpha_;
+        result.hasBorderColor_ = hasBorderColor_;
+        result.borderColorRed_ = borderColorRed_;
+        result.borderColorGreen_ = borderColorGreen_;
+        result.borderColorBlue_ = borderColorBlue_;
+        result.borderColorAlpha_ = borderColorAlpha_;
+        result.borderWidth_ = borderWidth_;
+        result.cornerRadius_ = cornerRadius_;
+        result.shadowRadius_ = shadowRadius_;
+        result.shadowOffsetX_ = shadowOffsetX_;
+        result.shadowOffsetY_ = shadowOffsetY_;
+        result.hasShadowColor_ = hasShadowColor_;
+        result.shadowColorRed_ = shadowColorRed_;
+        result.shadowColorBlue_ = shadowColorBlue_;
+        result.shadowColorGreen_ = shadowColorGreen_;
+        result.shadowColorAlpha_ = shadowColorAlpha_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2365,8 +2681,68 @@ public final class PbView {
           }
           onChanged();
         }
-        if (other.hasPaintStyle()) {
-          mergePaintStyle(other.getPaintStyle());
+        if (other.getTransparency() != 0D) {
+          setTransparency(other.getTransparency());
+        }
+        if (other.getHasBackgroundColor() != false) {
+          setHasBackgroundColor(other.getHasBackgroundColor());
+        }
+        if (other.getBackgroundColorRed() != 0) {
+          setBackgroundColorRed(other.getBackgroundColorRed());
+        }
+        if (other.getBackgroundColorGreen() != 0) {
+          setBackgroundColorGreen(other.getBackgroundColorGreen());
+        }
+        if (other.getBackgroundColorBlue() != 0) {
+          setBackgroundColorBlue(other.getBackgroundColorBlue());
+        }
+        if (other.getBackgroundColorAlpha() != 0) {
+          setBackgroundColorAlpha(other.getBackgroundColorAlpha());
+        }
+        if (other.getHasBorderColor() != false) {
+          setHasBorderColor(other.getHasBorderColor());
+        }
+        if (other.getBorderColorRed() != 0) {
+          setBorderColorRed(other.getBorderColorRed());
+        }
+        if (other.getBorderColorGreen() != 0) {
+          setBorderColorGreen(other.getBorderColorGreen());
+        }
+        if (other.getBorderColorBlue() != 0) {
+          setBorderColorBlue(other.getBorderColorBlue());
+        }
+        if (other.getBorderColorAlpha() != 0) {
+          setBorderColorAlpha(other.getBorderColorAlpha());
+        }
+        if (other.getBorderWidth() != 0D) {
+          setBorderWidth(other.getBorderWidth());
+        }
+        if (other.getCornerRadius() != 0D) {
+          setCornerRadius(other.getCornerRadius());
+        }
+        if (other.getShadowRadius() != 0D) {
+          setShadowRadius(other.getShadowRadius());
+        }
+        if (other.getShadowOffsetX() != 0D) {
+          setShadowOffsetX(other.getShadowOffsetX());
+        }
+        if (other.getShadowOffsetY() != 0D) {
+          setShadowOffsetY(other.getShadowOffsetY());
+        }
+        if (other.getHasShadowColor() != false) {
+          setHasShadowColor(other.getHasShadowColor());
+        }
+        if (other.getShadowColorRed() != 0) {
+          setShadowColorRed(other.getShadowColorRed());
+        }
+        if (other.getShadowColorBlue() != 0) {
+          setShadowColorBlue(other.getShadowColorBlue());
+        }
+        if (other.getShadowColorGreen() != 0) {
+          setShadowColorGreen(other.getShadowColorGreen());
+        }
+        if (other.getShadowColorAlpha() != 0) {
+          setShadowColorAlpha(other.getShadowColorAlpha());
         }
         onChanged();
         return this;
@@ -2476,7 +2852,6 @@ public final class PbView {
       private double minx_ ;
       /**
        * <pre>
-       * matcha.layout.Guide layoutGuide = 4;
        * Guide
        * </pre>
        *
@@ -2487,7 +2862,6 @@ public final class PbView {
       }
       /**
        * <pre>
-       * matcha.layout.Guide layoutGuide = 4;
        * Guide
        * </pre>
        *
@@ -2501,7 +2875,6 @@ public final class PbView {
       }
       /**
        * <pre>
-       * matcha.layout.Guide layoutGuide = 4;
        * Guide
        * </pre>
        *
@@ -2684,229 +3057,562 @@ public final class PbView {
         return this;
       }
 
-      private io.gomatcha.matcha.proto.paint.PbPaint.Style paintStyle_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.paint.PbPaint.Style, io.gomatcha.matcha.proto.paint.PbPaint.Style.Builder, io.gomatcha.matcha.proto.paint.PbPaint.StyleOrBuilder> paintStyleBuilder_;
+      private double transparency_ ;
       /**
        * <pre>
-       * PaintStyle
-       * double transparency = 1;
-       * matcha.Color backgroundColor = 2;
-       * matcha.Color borderColor = 3;
-       * double borderWidth = 4;
-       * double cornerRadius = 5;
-       * double shadowRadius = 7;
-       * matcha.layout.Point shadowOffset = 8;
-       * matcha.Color shadowColor = 9;
+       * Paint
        * </pre>
        *
-       * <code>.matcha.paint.Style paintStyle = 10;</code>
+       * <code>double transparency = 56;</code>
        */
-      public boolean hasPaintStyle() {
-        return paintStyleBuilder_ != null || paintStyle_ != null;
+      public double getTransparency() {
+        return transparency_;
       }
       /**
        * <pre>
-       * PaintStyle
-       * double transparency = 1;
-       * matcha.Color backgroundColor = 2;
-       * matcha.Color borderColor = 3;
-       * double borderWidth = 4;
-       * double cornerRadius = 5;
-       * double shadowRadius = 7;
-       * matcha.layout.Point shadowOffset = 8;
-       * matcha.Color shadowColor = 9;
+       * Paint
        * </pre>
        *
-       * <code>.matcha.paint.Style paintStyle = 10;</code>
+       * <code>double transparency = 56;</code>
        */
-      public io.gomatcha.matcha.proto.paint.PbPaint.Style getPaintStyle() {
-        if (paintStyleBuilder_ == null) {
-          return paintStyle_ == null ? io.gomatcha.matcha.proto.paint.PbPaint.Style.getDefaultInstance() : paintStyle_;
-        } else {
-          return paintStyleBuilder_.getMessage();
-        }
-      }
-      /**
-       * <pre>
-       * PaintStyle
-       * double transparency = 1;
-       * matcha.Color backgroundColor = 2;
-       * matcha.Color borderColor = 3;
-       * double borderWidth = 4;
-       * double cornerRadius = 5;
-       * double shadowRadius = 7;
-       * matcha.layout.Point shadowOffset = 8;
-       * matcha.Color shadowColor = 9;
-       * </pre>
-       *
-       * <code>.matcha.paint.Style paintStyle = 10;</code>
-       */
-      public Builder setPaintStyle(io.gomatcha.matcha.proto.paint.PbPaint.Style value) {
-        if (paintStyleBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          paintStyle_ = value;
-          onChanged();
-        } else {
-          paintStyleBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       * PaintStyle
-       * double transparency = 1;
-       * matcha.Color backgroundColor = 2;
-       * matcha.Color borderColor = 3;
-       * double borderWidth = 4;
-       * double cornerRadius = 5;
-       * double shadowRadius = 7;
-       * matcha.layout.Point shadowOffset = 8;
-       * matcha.Color shadowColor = 9;
-       * </pre>
-       *
-       * <code>.matcha.paint.Style paintStyle = 10;</code>
-       */
-      public Builder setPaintStyle(
-          io.gomatcha.matcha.proto.paint.PbPaint.Style.Builder builderForValue) {
-        if (paintStyleBuilder_ == null) {
-          paintStyle_ = builderForValue.build();
-          onChanged();
-        } else {
-          paintStyleBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       * PaintStyle
-       * double transparency = 1;
-       * matcha.Color backgroundColor = 2;
-       * matcha.Color borderColor = 3;
-       * double borderWidth = 4;
-       * double cornerRadius = 5;
-       * double shadowRadius = 7;
-       * matcha.layout.Point shadowOffset = 8;
-       * matcha.Color shadowColor = 9;
-       * </pre>
-       *
-       * <code>.matcha.paint.Style paintStyle = 10;</code>
-       */
-      public Builder mergePaintStyle(io.gomatcha.matcha.proto.paint.PbPaint.Style value) {
-        if (paintStyleBuilder_ == null) {
-          if (paintStyle_ != null) {
-            paintStyle_ =
-              io.gomatcha.matcha.proto.paint.PbPaint.Style.newBuilder(paintStyle_).mergeFrom(value).buildPartial();
-          } else {
-            paintStyle_ = value;
-          }
-          onChanged();
-        } else {
-          paintStyleBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       * PaintStyle
-       * double transparency = 1;
-       * matcha.Color backgroundColor = 2;
-       * matcha.Color borderColor = 3;
-       * double borderWidth = 4;
-       * double cornerRadius = 5;
-       * double shadowRadius = 7;
-       * matcha.layout.Point shadowOffset = 8;
-       * matcha.Color shadowColor = 9;
-       * </pre>
-       *
-       * <code>.matcha.paint.Style paintStyle = 10;</code>
-       */
-      public Builder clearPaintStyle() {
-        if (paintStyleBuilder_ == null) {
-          paintStyle_ = null;
-          onChanged();
-        } else {
-          paintStyle_ = null;
-          paintStyleBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       * PaintStyle
-       * double transparency = 1;
-       * matcha.Color backgroundColor = 2;
-       * matcha.Color borderColor = 3;
-       * double borderWidth = 4;
-       * double cornerRadius = 5;
-       * double shadowRadius = 7;
-       * matcha.layout.Point shadowOffset = 8;
-       * matcha.Color shadowColor = 9;
-       * </pre>
-       *
-       * <code>.matcha.paint.Style paintStyle = 10;</code>
-       */
-      public io.gomatcha.matcha.proto.paint.PbPaint.Style.Builder getPaintStyleBuilder() {
+      public Builder setTransparency(double value) {
         
+        transparency_ = value;
         onChanged();
-        return getPaintStyleFieldBuilder().getBuilder();
+        return this;
       }
       /**
        * <pre>
-       * PaintStyle
-       * double transparency = 1;
-       * matcha.Color backgroundColor = 2;
-       * matcha.Color borderColor = 3;
-       * double borderWidth = 4;
-       * double cornerRadius = 5;
-       * double shadowRadius = 7;
-       * matcha.layout.Point shadowOffset = 8;
-       * matcha.Color shadowColor = 9;
+       * Paint
        * </pre>
        *
-       * <code>.matcha.paint.Style paintStyle = 10;</code>
+       * <code>double transparency = 56;</code>
        */
-      public io.gomatcha.matcha.proto.paint.PbPaint.StyleOrBuilder getPaintStyleOrBuilder() {
-        if (paintStyleBuilder_ != null) {
-          return paintStyleBuilder_.getMessageOrBuilder();
-        } else {
-          return paintStyle_ == null ?
-              io.gomatcha.matcha.proto.paint.PbPaint.Style.getDefaultInstance() : paintStyle_;
-        }
+      public Builder clearTransparency() {
+        
+        transparency_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private boolean hasBackgroundColor_ ;
+      /**
+       * <code>bool hasBackgroundColor = 24;</code>
+       */
+      public boolean getHasBackgroundColor() {
+        return hasBackgroundColor_;
       }
       /**
-       * <pre>
-       * PaintStyle
-       * double transparency = 1;
-       * matcha.Color backgroundColor = 2;
-       * matcha.Color borderColor = 3;
-       * double borderWidth = 4;
-       * double cornerRadius = 5;
-       * double shadowRadius = 7;
-       * matcha.layout.Point shadowOffset = 8;
-       * matcha.Color shadowColor = 9;
-       * </pre>
-       *
-       * <code>.matcha.paint.Style paintStyle = 10;</code>
+       * <code>bool hasBackgroundColor = 24;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          io.gomatcha.matcha.proto.paint.PbPaint.Style, io.gomatcha.matcha.proto.paint.PbPaint.Style.Builder, io.gomatcha.matcha.proto.paint.PbPaint.StyleOrBuilder> 
-          getPaintStyleFieldBuilder() {
-        if (paintStyleBuilder_ == null) {
-          paintStyleBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              io.gomatcha.matcha.proto.paint.PbPaint.Style, io.gomatcha.matcha.proto.paint.PbPaint.Style.Builder, io.gomatcha.matcha.proto.paint.PbPaint.StyleOrBuilder>(
-                  getPaintStyle(),
-                  getParentForChildren(),
-                  isClean());
-          paintStyle_ = null;
-        }
-        return paintStyleBuilder_;
+      public Builder setHasBackgroundColor(boolean value) {
+        
+        hasBackgroundColor_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool hasBackgroundColor = 24;</code>
+       */
+      public Builder clearHasBackgroundColor() {
+        
+        hasBackgroundColor_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int backgroundColorRed_ ;
+      /**
+       * <code>uint32 backgroundColorRed = 20;</code>
+       */
+      public int getBackgroundColorRed() {
+        return backgroundColorRed_;
+      }
+      /**
+       * <code>uint32 backgroundColorRed = 20;</code>
+       */
+      public Builder setBackgroundColorRed(int value) {
+        
+        backgroundColorRed_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 backgroundColorRed = 20;</code>
+       */
+      public Builder clearBackgroundColorRed() {
+        
+        backgroundColorRed_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int backgroundColorGreen_ ;
+      /**
+       * <code>uint32 backgroundColorGreen = 21;</code>
+       */
+      public int getBackgroundColorGreen() {
+        return backgroundColorGreen_;
+      }
+      /**
+       * <code>uint32 backgroundColorGreen = 21;</code>
+       */
+      public Builder setBackgroundColorGreen(int value) {
+        
+        backgroundColorGreen_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 backgroundColorGreen = 21;</code>
+       */
+      public Builder clearBackgroundColorGreen() {
+        
+        backgroundColorGreen_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int backgroundColorBlue_ ;
+      /**
+       * <code>uint32 backgroundColorBlue = 22;</code>
+       */
+      public int getBackgroundColorBlue() {
+        return backgroundColorBlue_;
+      }
+      /**
+       * <code>uint32 backgroundColorBlue = 22;</code>
+       */
+      public Builder setBackgroundColorBlue(int value) {
+        
+        backgroundColorBlue_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 backgroundColorBlue = 22;</code>
+       */
+      public Builder clearBackgroundColorBlue() {
+        
+        backgroundColorBlue_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int backgroundColorAlpha_ ;
+      /**
+       * <code>uint32 backgroundColorAlpha = 23;</code>
+       */
+      public int getBackgroundColorAlpha() {
+        return backgroundColorAlpha_;
+      }
+      /**
+       * <code>uint32 backgroundColorAlpha = 23;</code>
+       */
+      public Builder setBackgroundColorAlpha(int value) {
+        
+        backgroundColorAlpha_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 backgroundColorAlpha = 23;</code>
+       */
+      public Builder clearBackgroundColorAlpha() {
+        
+        backgroundColorAlpha_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private boolean hasBorderColor_ ;
+      /**
+       * <code>bool hasBorderColor = 30;</code>
+       */
+      public boolean getHasBorderColor() {
+        return hasBorderColor_;
+      }
+      /**
+       * <code>bool hasBorderColor = 30;</code>
+       */
+      public Builder setHasBorderColor(boolean value) {
+        
+        hasBorderColor_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool hasBorderColor = 30;</code>
+       */
+      public Builder clearHasBorderColor() {
+        
+        hasBorderColor_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int borderColorRed_ ;
+      /**
+       * <code>uint32 borderColorRed = 31;</code>
+       */
+      public int getBorderColorRed() {
+        return borderColorRed_;
+      }
+      /**
+       * <code>uint32 borderColorRed = 31;</code>
+       */
+      public Builder setBorderColorRed(int value) {
+        
+        borderColorRed_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 borderColorRed = 31;</code>
+       */
+      public Builder clearBorderColorRed() {
+        
+        borderColorRed_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int borderColorGreen_ ;
+      /**
+       * <code>uint32 borderColorGreen = 32;</code>
+       */
+      public int getBorderColorGreen() {
+        return borderColorGreen_;
+      }
+      /**
+       * <code>uint32 borderColorGreen = 32;</code>
+       */
+      public Builder setBorderColorGreen(int value) {
+        
+        borderColorGreen_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 borderColorGreen = 32;</code>
+       */
+      public Builder clearBorderColorGreen() {
+        
+        borderColorGreen_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int borderColorBlue_ ;
+      /**
+       * <code>uint32 borderColorBlue = 33;</code>
+       */
+      public int getBorderColorBlue() {
+        return borderColorBlue_;
+      }
+      /**
+       * <code>uint32 borderColorBlue = 33;</code>
+       */
+      public Builder setBorderColorBlue(int value) {
+        
+        borderColorBlue_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 borderColorBlue = 33;</code>
+       */
+      public Builder clearBorderColorBlue() {
+        
+        borderColorBlue_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int borderColorAlpha_ ;
+      /**
+       * <code>uint32 borderColorAlpha = 34;</code>
+       */
+      public int getBorderColorAlpha() {
+        return borderColorAlpha_;
+      }
+      /**
+       * <code>uint32 borderColorAlpha = 34;</code>
+       */
+      public Builder setBorderColorAlpha(int value) {
+        
+        borderColorAlpha_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 borderColorAlpha = 34;</code>
+       */
+      public Builder clearBorderColorAlpha() {
+        
+        borderColorAlpha_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private double borderWidth_ ;
+      /**
+       * <code>double borderWidth = 40;</code>
+       */
+      public double getBorderWidth() {
+        return borderWidth_;
+      }
+      /**
+       * <code>double borderWidth = 40;</code>
+       */
+      public Builder setBorderWidth(double value) {
+        
+        borderWidth_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>double borderWidth = 40;</code>
+       */
+      public Builder clearBorderWidth() {
+        
+        borderWidth_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private double cornerRadius_ ;
+      /**
+       * <code>double cornerRadius = 41;</code>
+       */
+      public double getCornerRadius() {
+        return cornerRadius_;
+      }
+      /**
+       * <code>double cornerRadius = 41;</code>
+       */
+      public Builder setCornerRadius(double value) {
+        
+        cornerRadius_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>double cornerRadius = 41;</code>
+       */
+      public Builder clearCornerRadius() {
+        
+        cornerRadius_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private double shadowRadius_ ;
+      /**
+       * <code>double shadowRadius = 42;</code>
+       */
+      public double getShadowRadius() {
+        return shadowRadius_;
+      }
+      /**
+       * <code>double shadowRadius = 42;</code>
+       */
+      public Builder setShadowRadius(double value) {
+        
+        shadowRadius_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>double shadowRadius = 42;</code>
+       */
+      public Builder clearShadowRadius() {
+        
+        shadowRadius_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private double shadowOffsetX_ ;
+      /**
+       * <code>double shadowOffsetX = 43;</code>
+       */
+      public double getShadowOffsetX() {
+        return shadowOffsetX_;
+      }
+      /**
+       * <code>double shadowOffsetX = 43;</code>
+       */
+      public Builder setShadowOffsetX(double value) {
+        
+        shadowOffsetX_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>double shadowOffsetX = 43;</code>
+       */
+      public Builder clearShadowOffsetX() {
+        
+        shadowOffsetX_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private double shadowOffsetY_ ;
+      /**
+       * <code>double shadowOffsetY = 44;</code>
+       */
+      public double getShadowOffsetY() {
+        return shadowOffsetY_;
+      }
+      /**
+       * <code>double shadowOffsetY = 44;</code>
+       */
+      public Builder setShadowOffsetY(double value) {
+        
+        shadowOffsetY_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>double shadowOffsetY = 44;</code>
+       */
+      public Builder clearShadowOffsetY() {
+        
+        shadowOffsetY_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private boolean hasShadowColor_ ;
+      /**
+       * <code>bool hasShadowColor = 90;</code>
+       */
+      public boolean getHasShadowColor() {
+        return hasShadowColor_;
+      }
+      /**
+       * <code>bool hasShadowColor = 90;</code>
+       */
+      public Builder setHasShadowColor(boolean value) {
+        
+        hasShadowColor_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool hasShadowColor = 90;</code>
+       */
+      public Builder clearHasShadowColor() {
+        
+        hasShadowColor_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int shadowColorRed_ ;
+      /**
+       * <code>uint32 shadowColorRed = 91;</code>
+       */
+      public int getShadowColorRed() {
+        return shadowColorRed_;
+      }
+      /**
+       * <code>uint32 shadowColorRed = 91;</code>
+       */
+      public Builder setShadowColorRed(int value) {
+        
+        shadowColorRed_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 shadowColorRed = 91;</code>
+       */
+      public Builder clearShadowColorRed() {
+        
+        shadowColorRed_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int shadowColorBlue_ ;
+      /**
+       * <code>uint32 shadowColorBlue = 92;</code>
+       */
+      public int getShadowColorBlue() {
+        return shadowColorBlue_;
+      }
+      /**
+       * <code>uint32 shadowColorBlue = 92;</code>
+       */
+      public Builder setShadowColorBlue(int value) {
+        
+        shadowColorBlue_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 shadowColorBlue = 92;</code>
+       */
+      public Builder clearShadowColorBlue() {
+        
+        shadowColorBlue_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int shadowColorGreen_ ;
+      /**
+       * <code>uint32 shadowColorGreen = 93;</code>
+       */
+      public int getShadowColorGreen() {
+        return shadowColorGreen_;
+      }
+      /**
+       * <code>uint32 shadowColorGreen = 93;</code>
+       */
+      public Builder setShadowColorGreen(int value) {
+        
+        shadowColorGreen_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 shadowColorGreen = 93;</code>
+       */
+      public Builder clearShadowColorGreen() {
+        
+        shadowColorGreen_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int shadowColorAlpha_ ;
+      /**
+       * <code>uint32 shadowColorAlpha = 94;</code>
+       */
+      public int getShadowColorAlpha() {
+        return shadowColorAlpha_;
+      }
+      /**
+       * <code>uint32 shadowColorAlpha = 94;</code>
+       */
+      public Builder setShadowColorAlpha(int value) {
+        
+        shadowColorAlpha_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 shadowColorAlpha = 94;</code>
+       */
+      public Builder clearShadowColorAlpha() {
+        
+        shadowColorAlpha_ = 0;
+        onChanged();
+        return this;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -4211,11 +4917,6 @@ public final class PbView {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_matcha_view_BuildNode_ValuesEntry_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_matcha_view_BuildNode_AltIdsEntry_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_matcha_view_BuildNode_AltIdsEntry_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_matcha_view_LayoutPaintNode_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -4250,33 +4951,42 @@ public final class PbView {
   static {
     java.lang.String[] descriptorData = {
       "\n(gomatcha.io/matcha/proto/view/view.pro" +
-      "to\022\013matcha.view\032*gomatcha.io/matcha/prot" +
-      "o/paint/paint.proto\032\031google/protobuf/any" +
-      ".proto\"\251\002\n\tBuildNode\022\n\n\002id\030\001 \001(\003\022\017\n\007buil" +
-      "dId\030\002 \001(\003\022\022\n\nbridgeName\030\003 \001(\t\022\023\n\013bridgeV" +
-      "alue\030\004 \001(\014\0222\n\006values\030\005 \003(\0132\".matcha.view" +
-      ".BuildNode.ValuesEntry\022\020\n\010children\030\006 \003(\003" +
-      "\0222\n\006altIds\030\007 \003(\0132\".matcha.view.BuildNode" +
-      ".AltIdsEntry\032-\n\013ValuesEntry\022\013\n\003key\030\001 \001(\t" +
-      "\022\r\n\005value\030\002 \001(\014:\0028\001\032-\n\013AltIdsEntry\022\013\n\003ke",
-      "y\030\001 \001(\003\022\r\n\005value\030\002 \001(\003:\0028\001\"\305\001\n\017LayoutPai" +
-      "ntNode\022\n\n\002id\030\001 \001(\003\022\020\n\010layoutId\030\002 \001(\003\022\017\n\007" +
-      "paintId\030\003 \001(\003\022\014\n\004minx\030\004 \001(\001\022\014\n\004miny\030\005 \001(" +
-      "\001\022\014\n\004maxx\030\006 \001(\001\022\014\n\004maxy\030\007 \001(\001\022\016\n\006zIndex\030" +
-      "\010 \001(\003\022\022\n\nchildOrder\030\t \003(\003\022\'\n\npaintStyle\030" +
-      "\n \001(\0132\023.matcha.paint.Style\"\242\003\n\004Root\022A\n\020l" +
-      "ayoutPaintNodes\030\002 \003(\0132\'.matcha.view.Root" +
-      ".LayoutPaintNodesEntry\0225\n\nbuildNodes\030\003 \003" +
-      "(\0132!.matcha.view.Root.BuildNodesEntry\0225\n" +
-      "\nmiddleware\030\004 \003(\0132!.matcha.view.Root.Mid",
-      "dlewareEntry\032U\n\025LayoutPaintNodesEntry\022\013\n" +
-      "\003key\030\001 \001(\003\022+\n\005value\030\002 \001(\0132\034.matcha.view." +
-      "LayoutPaintNode:\0028\001\032I\n\017BuildNodesEntry\022\013" +
-      "\n\003key\030\001 \001(\003\022%\n\005value\030\002 \001(\0132\026.matcha.view" +
-      ".BuildNode:\0028\001\032G\n\017MiddlewareEntry\022\013\n\003key" +
-      "\030\001 \001(\t\022#\n\005value\030\002 \001(\0132\024.google.protobuf." +
-      "Any:\0028\001B<\n\035io.gomatcha.matcha.proto.view" +
-      "B\006PbViewZ\004view\242\002\014MatchaViewPBb\006proto3"
+      "to\022\013matcha.view\032\031google/protobuf/any.pro" +
+      "to\"\306\001\n\tBuildNode\022\n\n\002id\030\001 \001(\003\022\017\n\007buildId\030" +
+      "\002 \001(\003\022\022\n\nbridgeName\030\003 \001(\t\022\023\n\013bridgeValue" +
+      "\030\004 \001(\014\0222\n\006values\030\005 \003(\0132\".matcha.view.Bui" +
+      "ldNode.ValuesEntry\022\020\n\010children\030\006 \003(\003\032-\n\013" +
+      "ValuesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:" +
+      "\0028\001\"\254\005\n\017LayoutPaintNode\022\n\n\002id\030\001 \001(\003\022\020\n\010l" +
+      "ayoutId\030\002 \001(\003\022\017\n\007paintId\030\003 \001(\003\022\014\n\004minx\030\004" +
+      " \001(\001\022\014\n\004miny\030\005 \001(\001\022\014\n\004maxx\030\006 \001(\001\022\014\n\004maxy",
+      "\030\007 \001(\001\022\016\n\006zIndex\030\010 \001(\003\022\022\n\nchildOrder\030\t \003" +
+      "(\003\022\024\n\014transparency\0308 \001(\001\022\032\n\022hasBackgroun" +
+      "dColor\030\030 \001(\010\022\032\n\022backgroundColorRed\030\024 \001(\r" +
+      "\022\034\n\024backgroundColorGreen\030\025 \001(\r\022\033\n\023backgr" +
+      "oundColorBlue\030\026 \001(\r\022\034\n\024backgroundColorAl" +
+      "pha\030\027 \001(\r\022\026\n\016hasBorderColor\030\036 \001(\010\022\026\n\016bor" +
+      "derColorRed\030\037 \001(\r\022\030\n\020borderColorGreen\030  " +
+      "\001(\r\022\027\n\017borderColorBlue\030! \001(\r\022\030\n\020borderCo" +
+      "lorAlpha\030\" \001(\r\022\023\n\013borderWidth\030( \001(\001\022\024\n\014c" +
+      "ornerRadius\030) \001(\001\022\024\n\014shadowRadius\030* \001(\001\022",
+      "\025\n\rshadowOffsetX\030+ \001(\001\022\025\n\rshadowOffsetY\030" +
+      ", \001(\001\022\026\n\016hasShadowColor\030Z \001(\010\022\026\n\016shadowC" +
+      "olorRed\030[ \001(\r\022\027\n\017shadowColorBlue\030\\ \001(\r\022\030" +
+      "\n\020shadowColorGreen\030] \001(\r\022\030\n\020shadowColorA" +
+      "lpha\030^ \001(\r\"\242\003\n\004Root\022A\n\020layoutPaintNodes\030" +
+      "\002 \003(\0132\'.matcha.view.Root.LayoutPaintNode" +
+      "sEntry\0225\n\nbuildNodes\030\003 \003(\0132!.matcha.view" +
+      ".Root.BuildNodesEntry\0225\n\nmiddleware\030\004 \003(" +
+      "\0132!.matcha.view.Root.MiddlewareEntry\032U\n\025" +
+      "LayoutPaintNodesEntry\022\013\n\003key\030\001 \001(\003\022+\n\005va",
+      "lue\030\002 \001(\0132\034.matcha.view.LayoutPaintNode:" +
+      "\0028\001\032I\n\017BuildNodesEntry\022\013\n\003key\030\001 \001(\003\022%\n\005v" +
+      "alue\030\002 \001(\0132\026.matcha.view.BuildNode:\0028\001\032G" +
+      "\n\017MiddlewareEntry\022\013\n\003key\030\001 \001(\t\022#\n\005value\030" +
+      "\002 \001(\0132\024.google.protobuf.Any:\0028\001B<\n\035io.go" +
+      "matcha.matcha.proto.viewB\006PbViewZ\004view\242\002" +
+      "\014MatchaViewPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4289,7 +4999,6 @@ public final class PbView {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          io.gomatcha.matcha.proto.paint.PbPaint.getDescriptor(),
           com.google.protobuf.AnyProto.getDescriptor(),
         }, assigner);
     internal_static_matcha_view_BuildNode_descriptor =
@@ -4297,25 +5006,19 @@ public final class PbView {
     internal_static_matcha_view_BuildNode_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_BuildNode_descriptor,
-        new java.lang.String[] { "Id", "BuildId", "BridgeName", "BridgeValue", "Values", "Children", "AltIds", });
+        new java.lang.String[] { "Id", "BuildId", "BridgeName", "BridgeValue", "Values", "Children", });
     internal_static_matcha_view_BuildNode_ValuesEntry_descriptor =
       internal_static_matcha_view_BuildNode_descriptor.getNestedTypes().get(0);
     internal_static_matcha_view_BuildNode_ValuesEntry_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_BuildNode_ValuesEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
-    internal_static_matcha_view_BuildNode_AltIdsEntry_descriptor =
-      internal_static_matcha_view_BuildNode_descriptor.getNestedTypes().get(1);
-    internal_static_matcha_view_BuildNode_AltIdsEntry_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_matcha_view_BuildNode_AltIdsEntry_descriptor,
-        new java.lang.String[] { "Key", "Value", });
     internal_static_matcha_view_LayoutPaintNode_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_matcha_view_LayoutPaintNode_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_LayoutPaintNode_descriptor,
-        new java.lang.String[] { "Id", "LayoutId", "PaintId", "Minx", "Miny", "Maxx", "Maxy", "ZIndex", "ChildOrder", "PaintStyle", });
+        new java.lang.String[] { "Id", "LayoutId", "PaintId", "Minx", "Miny", "Maxx", "Maxy", "ZIndex", "ChildOrder", "Transparency", "HasBackgroundColor", "BackgroundColorRed", "BackgroundColorGreen", "BackgroundColorBlue", "BackgroundColorAlpha", "HasBorderColor", "BorderColorRed", "BorderColorGreen", "BorderColorBlue", "BorderColorAlpha", "BorderWidth", "CornerRadius", "ShadowRadius", "ShadowOffsetX", "ShadowOffsetY", "HasShadowColor", "ShadowColorRed", "ShadowColorBlue", "ShadowColorGreen", "ShadowColorAlpha", });
     internal_static_matcha_view_Root_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_matcha_view_Root_fieldAccessorTable = new
@@ -4340,7 +5043,6 @@ public final class PbView {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_Root_MiddlewareEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
-    io.gomatcha.matcha.proto.paint.PbPaint.getDescriptor();
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

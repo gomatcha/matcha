@@ -207,17 +207,15 @@ public class MatchaViewNode extends Object {
         if (layoutPaintNode != null & this.paintId != layoutPaintNode.getPaintId()) {
             this.paintId = layoutPaintNode.getPaintId();
 
-            PbPaint.Style paintStyle = layoutPaintNode.getPaintStyle();
-
             double ratio = (float)this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
             GradientDrawable gd = new GradientDrawable();
 
-            double cornerRadius = paintStyle.getCornerRadius();
+            double cornerRadius = layoutPaintNode.getCornerRadius();
             gd.setCornerRadius((float)(cornerRadius * ratio));
 
-            if (paintStyle.getHasBorderColor()) {
-                int c = Protobuf.newColor(paintStyle.getBorderColorRed(), paintStyle.getBorderColorGreen(), paintStyle.getBorderColorBlue(), paintStyle.getBorderColorAlpha());
-                gd.setStroke((int)(paintStyle.getBorderWidth() * ratio), c);
+            if (layoutPaintNode.getHasBorderColor()) {
+                int c = Protobuf.newColor(layoutPaintNode.getBorderColorRed(), layoutPaintNode.getBorderColorGreen(), layoutPaintNode.getBorderColorBlue(), layoutPaintNode.getBorderColorAlpha());
+                gd.setStroke((int)(layoutPaintNode.getBorderWidth() * ratio), c);
             } else {
                 gd.setStroke(0, 0);
             }
@@ -225,18 +223,18 @@ public class MatchaViewNode extends Object {
             if (this.view instanceof MatchaImageView) {
                 ((MatchaImageView)this.view).view.setCornerRadius((float)(cornerRadius*ratio));
                 //((MatchaImageView)this.view).view.setBorderColor(Protobuf.newColor(paintStyle.getBorderColor()));
-                ((MatchaImageView)this.view).view.setBorderWidth((float)(paintStyle.getBorderWidth()*ratio));
+                ((MatchaImageView)this.view).view.setBorderWidth((float)(layoutPaintNode.getBorderWidth()*ratio));
             }
 
-            if (paintStyle.getHasBackgroundColor()) {
-                int c = Protobuf.newColor(paintStyle.getBackgroundColorRed(), paintStyle.getBackgroundColorGreen(), paintStyle.getBackgroundColorBlue(), paintStyle.getBackgroundColorAlpha());
+            if (layoutPaintNode.getHasBackgroundColor()) {
+                int c = Protobuf.newColor(layoutPaintNode.getBackgroundColorRed(), layoutPaintNode.getBackgroundColorGreen(), layoutPaintNode.getBackgroundColorBlue(), layoutPaintNode.getBackgroundColorAlpha());
                 gd.setColor(c);
             } else {
                 gd.setColor(Color.alpha(0));
             }
             this.view.setBackground(gd);
 
-            this.view.setAlpha((float)(1.0 - paintStyle.getTransparency()));
+            this.view.setAlpha((float)(1.0 - layoutPaintNode.getTransparency()));
         }
 
         this.children = children;

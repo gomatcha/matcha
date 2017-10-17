@@ -24,16 +24,11 @@ message Style {
   double cornerRadius = 5;
   double shadowRadius = 7;
   double shadowOffsetX = 10;
-  double shadowOffsetY = 9;  
-  // matcha.layout.Point shadowOffset = 8;
+  double shadowOffsetY = 9;
   
   bool hasShadowColor = 90;
   uint32 shadowColorRed = 91;
   uint32 shadowColorBlue = 92;
   uint32 shadowColorGreen = 93;
   uint32 shadowColorAlpha = 94;
-  
-  //matcha.Color backgroundColor = 2;
-  //matcha.Color borderColor = 3;
-  //matcha.Color shadowColor = 9;
 }

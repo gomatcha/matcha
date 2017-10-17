@@ -1,6 +1,5 @@
 syntax = "proto3";
 package matcha.view;
-import "gomatcha.io/matcha/proto/paint/paint.proto";
 import "google/protobuf/any.proto";
 
 option go_package = "view";
@@ -15,7 +14,6 @@ message BuildNode {
   bytes bridgeValue = 4;
   map<string, bytes> values = 5;
   repeated int64 children = 6;
-  map<int64, int64> altIds = 7;
 }
 
 message LayoutPaintNode {
@@ -23,7 +21,6 @@ message LayoutPaintNode {
   int64 layoutId = 2;
   int64 paintId = 3;
   
-  // matcha.layout.Guide layoutGuide = 4;
   // Guide
   double minx = 4;
   double miny = 5;
@@ -32,16 +29,32 @@ message LayoutPaintNode {
   int64 zIndex = 8;
   repeated int64 childOrder = 9;
   
-  matcha.paint.Style paintStyle = 10;
-  // PaintStyle
-  // double transparency = 1;
-  // matcha.Color backgroundColor = 2;
-  // matcha.Color borderColor = 3;
-  // double borderWidth = 4;
-  // double cornerRadius = 5;
-  // double shadowRadius = 7;
-  // matcha.layout.Point shadowOffset = 8;
-  // matcha.Color shadowColor = 9;
+  // Paint
+  double transparency = 10;
+  
+  bool hasBackgroundColor = 11;
+  uint32 backgroundColorRed = 12;
+  uint32 backgroundColorGreen = 13;
+  uint32 backgroundColorBlue = 14;
+  uint32 backgroundColorAlpha = 15;
+  
+  bool hasBorderColor = 16;
+  uint32 borderColorRed = 17;
+  uint32 borderColorGreen = 18;
+  uint32 borderColorBlue = 19;
+  uint32 borderColorAlpha = 20;
+  
+  double borderWidth = 21;
+  double cornerRadius = 22;
+  double shadowRadius = 23;
+  double shadowOffsetX = 24;
+  double shadowOffsetY = 25;
+  
+  bool hasShadowColor = 26;
+  uint32 shadowColorRed = 27;
+  uint32 shadowColorBlue = 27;
+  uint32 shadowColorGreen = 28;
+  uint32 shadowColorAlpha = 29;
 }
 
 message Root {

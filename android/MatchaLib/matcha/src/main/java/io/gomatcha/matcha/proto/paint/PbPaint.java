@@ -94,10 +94,6 @@ public final class PbPaint {
     double getShadowOffsetX();
 
     /**
-     * <pre>
-     * matcha.layout.Point shadowOffset = 8;
-     * </pre>
-     *
      * <code>double shadowOffsetY = 9;</code>
      */
     double getShadowOffsetY();
@@ -453,10 +449,6 @@ public final class PbPaint {
     public static final int SHADOWOFFSETY_FIELD_NUMBER = 9;
     private double shadowOffsetY_;
     /**
-     * <pre>
-     * matcha.layout.Point shadowOffset = 8;
-     * </pre>
-     *
      * <code>double shadowOffsetY = 9;</code>
      */
     public double getShadowOffsetY() {
@@ -1541,20 +1533,12 @@ public final class PbPaint {
 
       private double shadowOffsetY_ ;
       /**
-       * <pre>
-       * matcha.layout.Point shadowOffset = 8;
-       * </pre>
-       *
        * <code>double shadowOffsetY = 9;</code>
        */
       public double getShadowOffsetY() {
         return shadowOffsetY_;
       }
       /**
-       * <pre>
-       * matcha.layout.Point shadowOffset = 8;
-       * </pre>
-       *
        * <code>double shadowOffsetY = 9;</code>
        */
       public Builder setShadowOffsetY(double value) {
@@ -1564,10 +1548,6 @@ public final class PbPaint {
         return this;
       }
       /**
-       * <pre>
-       * matcha.layout.Point shadowOffset = 8;
-       * </pre>
-       *
        * <code>double shadowOffsetY = 9;</code>
        */
       public Builder clearShadowOffsetY() {
