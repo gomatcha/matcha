@@ -334,25 +334,25 @@ type node struct {
 	view  View
 	stage Stage
 
-	buildId       int64
-	buildPbId     int64
-	buildNotify   bool
-	buildNotifyId comm.Id
-	model         *Model
-	children      []*node
+	buildId         int64
+	buildLastId     int64
+	buildIsNotified bool
+	buildNotifyId   comm.Id
+	model           *Model
+	children        []*node
 
 	layoutId          int64
-	layoutNotify      bool
+	layoutIsNotified  bool
 	layoutNotifyId    comm.Id
 	layoutGuide       *layout.Guide
 	layoutMinSize     layout.Point
 	layoutMaxSize     layout.Point
 	layoutDebugString string
 
-	paintId       int64
-	paintNotify   bool
-	paintNotifyId comm.Id
-	paintOptions  paint.Style
+	paintId         int64
+	paintIsNotified bool
+	paintNotifyId   comm.Id
+	paintOptions    paint.Style
 }
 
 func (n *node) marshalLayoutPaintProtobuf(m map[int64]*pb.LayoutPaintNode) {
@@ -446,10 +446,10 @@ func (n *node) marshalBuildProtobuf(m map[int64]*pb.BuildNode) {
 	}
 
 	// Don't build if nothing has changed
-	if n.buildPbId == n.buildId {
+	if n.buildLastId == n.buildId {
 		return
 	}
-	n.buildPbId = n.buildId
+	n.buildLastId = n.buildId
 
 	children := []int64{}
 	for _, v := range n.children {
@@ -564,35 +564,35 @@ func (n *node) build() {
 		}
 
 		// Watch for build changes, if we haven't
-		if !n.buildNotify {
+		if !n.buildIsNotified {
 			n.buildNotifyId = n.view.Notify(func() {
 				n.root.addFlag(n.id, buildFlag)
 			})
-			n.buildNotify = true
+			n.buildIsNotified = true
 		}
 
 		// Watch for layout changes.
-		if n.layoutNotify {
+		if n.layoutIsNotified {
 			n.model.Layouter.Unnotify(n.layoutNotifyId)
-			n.layoutNotify = false
+			n.layoutIsNotified = false
 		}
 		if viewModel.Layouter != nil {
 			n.layoutNotifyId = viewModel.Layouter.Notify(func() {
 				n.root.addFlag(n.id, layoutFlag)
 			})
-			n.layoutNotify = true
+			n.layoutIsNotified = true
 		}
 
 		// Watch for paint changes.
-		if n.paintNotify {
+		if n.paintIsNotified {
 			n.model.Painter.Unnotify(n.paintNotifyId)
-			n.paintNotify = false
+			n.paintIsNotified = false
 		}
 		if viewModel.Painter != nil {
 			n.paintNotifyId = viewModel.Painter.Notify(func() {
 				n.root.addFlag(n.id, paintFlag)
 			})
-			n.paintNotify = true
+			n.paintIsNotified = true
 		}
 
 		n.children = children
@@ -616,6 +616,11 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 	if len(n.children) == 0 && n.layoutGuide != nil && n.layoutMinSize == minSize && n.layoutMaxSize == maxSize && !n.root.updateFlags[n.id].needsLayout() {
 		return *n.layoutGuide
 	}
+	// If node has no children, and min/max size are equivalent, return the min size.
+	if len(n.children) == 0 && minSize == maxSize {
+		return layout.Guide{Frame: layout.Rt(0, 0, minSize.X, minSize.Y)}
+	}
+
 	n.layoutMinSize = minSize
 	n.layoutMaxSize = maxSize
 
@@ -642,14 +647,14 @@ func (n *node) layout(minSize layout.Point, maxSize layout.Point) layout.Guide {
 	g, gs := layouter.Layout(ctx)
 	g = ctx.fitGuide(g)
 
-	//
+	// Assign guides to children
 	for idx, i := range n.children {
-		g2 := gs[idx]
-		if !isRectValid(g2.Frame) {
-			fmt.Printf("Invalid rect for view. Rect:%v View:%v\n", g2.Frame, i)
+		childGuide := gs[idx]
+		if !isRectValid(childGuide.Frame) {
+			fmt.Printf("Invalid rect for view. Rect:%v View:%v\n", childGuide.Frame, i)
 			n.root.printDebug = true
 		}
-		i.layoutGuide = &g2
+		i.layoutGuide = &childGuide
 	}
 	return g
 }
@@ -675,13 +680,13 @@ func (n *node) done() {
 	n.view.Lifecycle(n.stage, StageDead)
 	n.stage = StageDead
 
-	if n.buildNotify {
+	if n.buildIsNotified {
 		n.view.Unnotify(n.buildNotifyId)
 	}
-	if n.layoutNotify {
+	if n.layoutIsNotified {
 		n.model.Layouter.Unnotify(n.layoutNotifyId)
 	}
-	if n.paintNotify {
+	if n.paintIsNotified {
 		n.model.Painter.Unnotify(n.paintNotifyId)
 	}
 
