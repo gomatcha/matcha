@@ -53,7 +53,7 @@ func ArchClang(goarch string) string {
 // Get clang path and clang flags (SDK Path).
 func EnvClang(flags *Flags, sdkName string) (_clang, cflags string, err error) {
 	if _, err := exec.LookPath("xcrun"); err != nil {
-		return "", "", errors.New("Xcode not available")
+		return "", "", errors.New("Xcode not available: could not find xcrun command.")
 	}
 
 	// Get the clang path

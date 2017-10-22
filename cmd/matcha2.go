@@ -91,14 +91,12 @@ func GetAndroidEnv(gomobpath string) (map[string][]string, error) {
 	var ndk_ = ndkConfig{
 		"arm": {
 			arch:       "arm",
-			abi:        "armeabi-v7a",
 			platform:   "android-15",
 			gcc:        "arm-linux-androideabi-4.9",
 			toolPrefix: "arm-linux-androideabi",
 		},
 		"arm64": {
 			arch:       "arm64",
-			abi:        "arm64-v8a",
 			platform:   "android-21",
 			gcc:        "aarch64-linux-android-4.9",
 			toolPrefix: "aarch64-linux-android",
@@ -106,14 +104,12 @@ func GetAndroidEnv(gomobpath string) (map[string][]string, error) {
 
 		"386": {
 			arch:       "x86",
-			abi:        "x86",
 			platform:   "android-15",
 			gcc:        "x86-4.9",
 			toolPrefix: "i686-linux-android",
 		},
 		"amd64": {
 			arch:       "x86_64",
-			abi:        "x86_64",
 			platform:   "android-21",
 			gcc:        "x86_64-4.9",
 			toolPrefix: "x86_64-linux-android",
@@ -149,7 +145,6 @@ func GetAndroidEnv(gomobpath string) (map[string][]string, error) {
 			androidENV[arch] = append(androidENV[arch], "GOARM=7")
 		}
 	}
-
 	return androidENV, nil
 }
 
@@ -449,10 +444,10 @@ func BuildJar(flags *Flags, w io.Writer, srcDir string, tmpdir string) error {
 }
 
 func bootClasspath() (string, error) {
-	bindBootClasspath := "" // KD: command parameter
-	if bindBootClasspath != "" {
-		return bindBootClasspath, nil
-	}
+	// bindBootClasspath := "" // KD: command parameter
+	// if bindBootClasspath != "" {
+	// 	return bindBootClasspath, nil
+	// }
 	apiPath, err := AndroidAPIPath()
 	if err != nil {
 		return "", err
