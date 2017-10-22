@@ -307,11 +307,6 @@ func Bind(flags *Flags, args []string) error {
 			androidArchs = append(androidArchs, "amd64")
 		}
 
-		gomobpath, err := MatchaPkgPath()
-		if err != nil {
-			return err
-		}
-
 		ctx := build.Default
 		ctx.GOARCH = "arm"
 		ctx.GOOS = "android"
@@ -358,11 +353,10 @@ func Bind(flags *Flags, args []string) error {
 
 		// Generate binding code and java source code only when processing the first package.
 		for _, arch := range androidArchs {
-			androidENV, err := GetAndroidEnv(gomobpath)
+			env, err := androidEnv(arch)
 			if err != nil {
 				return err
 			}
-			env := androidENV[arch]
 			env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+os.Getenv("GOPATH"))
 
 			err = GoBuild(flags,

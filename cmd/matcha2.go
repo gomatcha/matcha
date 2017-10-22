@@ -41,32 +41,76 @@ func NDKRoot() (string, error) {
 	return path, nil
 }
 
+// Emulate the flags in the clang wrapper scripts generated
+// by make_standalone_toolchain.py
 type ndkToolchain struct {
-	arch       string
-	abi        string
-	platform   string
-	gcc        string
-	toolPrefix string
+	arch        string
+	abi         string
+	platform    string
+	gcc         string
+	toolPrefix  string
+	clangTarget string
+	ndkRoot     string
 }
 
-func (tc *ndkToolchain) Path(ndkRoot string, toolName string) string {
-	// The nm tool is located in the GCC directory structure.
-	isUtil := toolName == "nm"
-	if runtime.GOOS == "windows" {
-		toolName += ".exe"
+func toolchainForArch(goarch string) (*ndkToolchain, error) {
+	m := map[string]*ndkToolchain{
+		"arm": &ndkToolchain{
+			arch:        "arm",
+			platform:    "android-15",
+			gcc:         "arm-linux-androideabi-4.9",
+			toolPrefix:  "arm-linux-androideabi",
+			clangTarget: "armv7a-none-linux-androideabi",
+		},
+		"arm64": &ndkToolchain{
+			arch:        "arm64",
+			platform:    "android-21",
+			gcc:         "aarch64-linux-android-4.9",
+			toolPrefix:  "aarch64-linux-android",
+			clangTarget: "aarch64-none-linux-android",
+		},
+		"386": &ndkToolchain{
+			arch:        "x86",
+			platform:    "android-15",
+			gcc:         "x86-4.9",
+			toolPrefix:  "i686-linux-android",
+			clangTarget: "i686-none-linux-android",
+		},
+		"amd64": &ndkToolchain{
+			arch:        "x86_64",
+			platform:    "android-21",
+			gcc:         "x86_64-4.9",
+			toolPrefix:  "x86_64-linux-android",
+			clangTarget: "x86_64-none-linux-android",
+		},
 	}
-	path := filepath.Join(ndkRoot, "toolchains")
-	if isUtil {
-		toolName = tc.toolPrefix + "-" + toolName
-		path = filepath.Join(path, tc.gcc)
-	} else {
-		path = filepath.Join(path, "llvm")
+	toolchain, ok := m[goarch]
+	if !ok {
+		return nil, fmt.Errorf("toolchainForArch(): Unknown arch %v", goarch)
 	}
-	path = filepath.Join(path, "prebuilt")
-	return filepath.Join(path, archNDK(), "bin", toolName)
+	ndkRoot, err := NDKRoot()
+	if err != nil {
+		return nil, err
+	}
+	toolchain.ndkRoot = ndkRoot
+	return toolchain, nil
 }
 
-type ndkConfig map[string]ndkToolchain // map: GOOS->androidConfig.
+func (tc *ndkToolchain) gccToolchain() string {
+	return filepath.Join(tc.ndkRoot, "toolchains", tc.gcc, "prebuilt", archNDK())
+}
+
+func (tc *ndkToolchain) clangPath() string {
+	return filepath.Join(tc.ndkRoot, "toolchains", "llvm", "prebuilt", archNDK(), "bin", "clang")
+}
+
+func (tc *ndkToolchain) clangppPath() string {
+	return filepath.Join(tc.ndkRoot, "toolchains", "llvm", "prebuilt", archNDK(), "bin", "clang++")
+}
+
+func (tc *ndkToolchain) sysroot() string {
+	return filepath.Join(tc.ndkRoot, "platforms", tc.platform, "arch-"+tc.arch)
+}
 
 func GetAndroidABI(arch string) string {
 	switch arch {
@@ -82,70 +126,28 @@ func GetAndroidABI(arch string) string {
 	return ""
 }
 
-func GetAndroidEnv(gomobpath string) (map[string][]string, error) {
-	ndkRoot, err := NDKRoot()
+func androidEnv(goarch string) ([]string, error) {
+	tc, err := toolchainForArch(goarch)
 	if err != nil {
 		return nil, err
 	}
-
-	var ndk_ = ndkConfig{
-		"arm": {
-			arch:       "arm",
-			platform:   "android-15",
-			gcc:        "arm-linux-androideabi-4.9",
-			toolPrefix: "arm-linux-androideabi",
-		},
-		"arm64": {
-			arch:       "arm64",
-			platform:   "android-21",
-			gcc:        "aarch64-linux-android-4.9",
-			toolPrefix: "aarch64-linux-android",
-		},
-
-		"386": {
-			arch:       "x86",
-			platform:   "android-15",
-			gcc:        "x86-4.9",
-			toolPrefix: "i686-linux-android",
-		},
-		"amd64": {
-			arch:       "x86_64",
-			platform:   "android-21",
-			gcc:        "x86_64-4.9",
-			toolPrefix: "x86_64-linux-android",
-		},
+	flags := fmt.Sprintf("-target %s --sysroot %s -gcc-toolchain %s", tc.clangTarget, tc.sysroot(), tc.gccToolchain())
+	cflags := fmt.Sprintf("%s", flags)
+	ldflags := fmt.Sprintf("%s -L%s/usr/lib", flags, tc.sysroot())
+	env := []string{
+		"GOOS=android",
+		"GOARCH=" + goarch,
+		"CC=" + tc.clangPath(),
+		"CXX=" + tc.clangppPath(),
+		"CGO_CFLAGS=" + cflags,
+		"CGO_CPPFLAGS=" + cflags,
+		"CGO_LDFLAGS=" + ldflags,
+		"CGO_ENABLED=1",
 	}
-
-	androidENV := make(map[string][]string)
-	for arch, toolchain := range ndk_ {
-		// Emulate the flags in the clang wrapper scripts generated
-		// by make_standalone_toolchain.py
-		s := strings.SplitN(toolchain.toolPrefix, "-", 3)
-		a, os, env := s[0], s[1], s[2]
-		if a == "arm" {
-			a = "armv7a"
-		}
-		target := strings.Join([]string{a, "none", os, env}, "-")
-		sysroot := filepath.Join(ndkRoot, "platforms", toolchain.platform, "arch-"+toolchain.arch)
-		gcctoolchain := filepath.Join(ndkRoot, "toolchains", toolchain.gcc, "prebuilt", archNDK())
-		flags := fmt.Sprintf("-target %s --sysroot %s -gcc-toolchain %s", target, sysroot, gcctoolchain)
-		cflags := fmt.Sprintf("%s", flags)
-		ldflags := fmt.Sprintf("%s -L%s/usr/lib", flags, sysroot)
-		androidENV[arch] = []string{
-			"GOOS=android",
-			"GOARCH=" + arch,
-			"CC=" + toolchain.Path(ndkRoot, "clang"),
-			"CXX=" + toolchain.Path(ndkRoot, "clang++"),
-			"CGO_CFLAGS=" + cflags,
-			"CGO_CPPFLAGS=" + cflags,
-			"CGO_LDFLAGS=" + ldflags,
-			"CGO_ENABLED=1",
-		}
-		if arch == "arm" {
-			androidENV[arch] = append(androidENV[arch], "GOARM=7")
-		}
+	if goarch == "arm" {
+		env = append(env, "GOARM=7")
 	}
-	return androidENV, nil
+	return env, nil
 }
 
 func archNDK() string {
