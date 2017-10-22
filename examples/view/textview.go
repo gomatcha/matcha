@@ -100,7 +100,7 @@ func (v *TextView) Build(ctx view.Context) view.Model {
 	})
 
 	input := view.NewTextInput()
-	input.Text = v.text
+	input.RWText = v.text
 	input.Placeholder = "Placeholder"
 	input.KeyboardType = keyboard.URLType
 	input.MaxLines = 1

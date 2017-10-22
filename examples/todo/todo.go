@@ -133,18 +133,17 @@ func (v *AddView) Build(ctx view.Context) view.Model {
 	placeholderStyle.SetTextColor(colornames.Lightgray)
 
 	input := view.NewTextInput()
-	input.Text = v.text
+	input.RWText = v.text
 	input.Style = style
 	input.Placeholder = "What needs to be done?"
 	input.PlaceholderStyle = placeholderStyle
 	input.Responder = &v.responder
 	input.OnSubmit = func(t *text.Text) {
-		str := v.text.String()
 		v.responder.Dismiss()
-		v.text.SetString("")
-		if str != "" {
-			v.OnAdd(str)
+		if t.String() != "" && v.OnAdd != nil {
+			v.OnAdd(t.String())
 		}
+		t.SetString("")
 	}
 	l.Add(input, func(s *constraint.Solver) {
 		s.LeftEqual(l.Left().Add(15))

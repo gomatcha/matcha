@@ -2,6 +2,7 @@ package text
 
 import (
 	"image/color"
+	"reflect"
 	"runtime"
 
 	pbtext "gomatcha.io/matcha/proto/text"
@@ -211,16 +212,27 @@ func (f *Style) set(k styleKey, v interface{}) {
 	delete(f.cleared, k)
 }
 
-func (f *Style) copy() *Style {
-	c := &Style{
-		attributes: map[styleKey]interface{}{},
-		cleared:    map[styleKey]bool{},
+func (f *Style) Equal(f2 *Style) bool {
+	return reflect.DeepEqual(f, f2)
+}
+
+func (f *Style) Copy() *Style {
+	if f == nil {
+		return nil
 	}
-	for k, v := range f.attributes {
-		c.attributes[k] = v
+
+	c := &Style{}
+	if f.attributes != nil {
+		c.attributes = map[styleKey]interface{}{}
+		for k, v := range f.attributes {
+			c.attributes[k] = v
+		}
 	}
-	for k, v := range f.cleared {
-		c.attributes[k] = v
+	if f.cleared != nil {
+		c.cleared = map[styleKey]bool{}
+		for k, v := range f.cleared {
+			c.cleared[k] = v
+		}
 	}
 	return c
 }

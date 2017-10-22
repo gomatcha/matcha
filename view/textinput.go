@@ -21,16 +21,13 @@ import (
 type TextInput struct {
 	Embed
 	PaintStyle       *paint.Style
-	Text             *text.Text
-	text             *text.Text
+	RWText           *text.Text
 	Style            *text.Style
 	Placeholder      string
 	PlaceholderStyle *text.Style
 	Password         bool
 	KeyboardType     keyboard.Type
 	Responder        *keyboard.Responder
-	prevResponder    *keyboard.Responder
-	responder        *keyboard.Responder
 	MaxLines         int // This is used only for sizing.
 	OnChange         func(*text.Text)
 	OnSubmit         func(*text.Text)
@@ -40,17 +37,43 @@ type TextInput struct {
 // NewTextInput returns a new view.
 func NewTextInput() *TextInput {
 	return &TextInput{
-		MaxLines:  1,
-		text:      text.New(""),
-		responder: &keyboard.Responder{},
+		MaxLines: 1,
 	}
 }
 
 // Lifecyle implements the view.View interface.
 func (v *TextInput) Lifecycle(from, to Stage) {
-	if ExitsStage(from, to, StageMounted) {
-		v.Unsubscribe(v.prevResponder)
+	if EntersStage(from, to, StageMounted) {
+		if v.RWText == nil {
+			v.RWText = text.New("")
+		}
+		v.Subscribe(v.RWText)
+
+		if v.Responder == nil {
+			v.Responder = &keyboard.Responder{}
+		}
+		v.Subscribe(v.Responder)
+	} else if ExitsStage(from, to, StageMounted) {
+		v.Unsubscribe(v.RWText)
+		v.Unsubscribe(v.Responder)
 	}
+}
+
+func (v *TextInput) Update(v2 View) {
+	v.Unsubscribe(v.RWText)
+	v.Unsubscribe(v.Responder)
+
+	CopyFields(v, v2)
+
+	if v.RWText == nil {
+		v.RWText = text.New("")
+	}
+	v.Subscribe(v.RWText)
+
+	if v.Responder == nil {
+		v.Responder = &keyboard.Responder{}
+	}
+	v.Subscribe(v.Responder)
 }
 
 // Build implements the view.View interface.
@@ -65,11 +88,7 @@ func (v *TextInput) Build(ctx Context) Model {
 		}
 	}
 
-	t := v.Text
-	if t == nil {
-		t = v.text
-	}
-	st := text.NewStyledText(t.String(), style)
+	st := text.NewStyledText(v.RWText.String(), style)
 
 	placeholderStyle := v.PlaceholderStyle
 	if placeholderStyle == nil {
@@ -84,22 +103,6 @@ func (v *TextInput) Build(ctx Context) Model {
 	}
 	placeholderStyledText := text.NewStyledText(v.Placeholder, placeholderStyle)
 
-	if v.Responder != v.prevResponder {
-		if v.prevResponder != nil {
-			v.Unsubscribe(v.prevResponder)
-		}
-
-		v.prevResponder = v.Responder
-		if v.Responder != nil {
-			v.Subscribe(v.Responder)
-		}
-	}
-
-	responder := v.Responder
-	if responder == nil {
-		responder = v.responder
-	}
-
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
@@ -113,7 +116,7 @@ func (v *TextInput) Build(ctx Context) Model {
 			StyledText:      st.MarshalProtobuf(),
 			PlaceholderText: placeholderStyledText.MarshalProtobuf(),
 			KeyboardType:    v.KeyboardType.MarshalProtobuf(),
-			Focused:         responder.Visible(),
+			Focused:         v.Responder.Visible(),
 			MaxLines:        int64(v.MaxLines),
 			SecureTextEntry: v.Password,
 		}),
@@ -126,24 +129,14 @@ func (v *TextInput) Build(ctx Context) Model {
 					return
 				}
 
-				_text := v.Text
-				if _text == nil {
-					_text = v.text
-				}
-
-				_text.UnmarshalProtobuf(pbevent.StyledText.Text)
+				v.RWText.UnmarshalProtobuf(pbevent.StyledText.Text)
 				if v.OnChange != nil {
-					v.OnChange(_text)
+					v.OnChange(v.RWText)
 				}
 			},
 			"OnSubmit": func() {
-				_text := v.Text
-				if _text == nil {
-					_text = v.text
-				}
-
 				if v.OnSubmit != nil {
-					v.OnSubmit(_text)
+					v.OnSubmit(v.RWText)
 				}
 			},
 			"OnFocus": func(data []byte) {
@@ -154,18 +147,13 @@ func (v *TextInput) Build(ctx Context) Model {
 					return
 				}
 
-				responder := v.Responder
-				if responder == nil {
-					responder = v.responder
-				}
-
 				if pbevent.Focused {
-					responder.Show()
+					v.Responder.Show()
 				} else {
-					responder.Dismiss()
+					v.Responder.Dismiss()
 				}
 				if v.OnFocus != nil {
-					v.OnFocus(responder)
+					v.OnFocus(v.Responder)
 				}
 			},
 		},

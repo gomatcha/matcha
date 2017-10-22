@@ -2,6 +2,8 @@
 package text
 
 import (
+	"bytes"
+
 	"gomatcha.io/matcha/comm"
 	pb "gomatcha.io/matcha/proto/text"
 )
@@ -24,11 +26,12 @@ import (
 // }
 
 type Text struct {
-	group comm.Relay
-	bytes []byte
+	bytes     []byte
+	runeCount int
+	relay     comm.Relay
+
 	// isRune        []bool
 	// isGlyph       []bool
-	runeCount int
 	// glyphCount    int
 	// positions     map[int64]int
 	// positionMaxId int64
@@ -59,14 +62,47 @@ func (t *Text) UnmarshalProtobuf(pbtext *pb.Text) error {
 	return nil
 }
 
+func (t *Text) SetString(str string) {
+	t.runeCount = len(str)
+	t.bytes = []byte(str)
+	t.relay.Signal()
+}
+
+func (t *Text) String() string {
+	if t == nil {
+		return "nil"
+	}
+	return string(t.bytes)
+}
+
 // Notify implements comm.Notify.
 func (t *Text) Notify(f func()) comm.Id {
-	return t.group.Notify(f)
+	return t.relay.Notify(f)
 }
 
 // Unnotify implements comm.Notify.
 func (t *Text) Unnotify(id comm.Id) {
-	t.group.Unnotify(id)
+	t.relay.Unnotify(id)
+}
+
+func (t *Text) Copy() *Text {
+	if t == nil {
+		return nil
+	}
+
+	b := make([]byte, len(t.bytes))
+	copy(b, t.bytes)
+	return &Text{
+		bytes:     b,
+		runeCount: t.runeCount,
+	}
+}
+
+func (t *Text) Equal(t2 *Text) bool {
+	if t == nil || t2 == nil {
+		return t == t2
+	}
+	return bytes.Compare(t.bytes, t2.bytes) == 0 && t.runeCount == t2.runeCount
 }
 
 // // Panics if idx is out of range.
@@ -268,22 +304,3 @@ func (t *Text) Unnotify(id comm.Id) {
 // 	t.isRune = isRune
 // 	t.bytes = bytes
 // }
-
-func (t *Text) SetString(str string) {
-	t.runeCount = len(str)
-	t.bytes = []byte(str)
-	// t.normalize()
-	t.group.Signal()
-}
-
-func (t *Text) String() string {
-	if t == nil {
-		return "nil"
-	}
-	return string(t.bytes)
-}
-
-// Value implements comm.StringNotifier
-func (t *Text) Value() string {
-	return string(t.bytes)
-}

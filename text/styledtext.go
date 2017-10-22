@@ -2,6 +2,7 @@ package text
 
 import (
 	"fmt"
+	"reflect"
 	"runtime"
 
 	"github.com/gogo/protobuf/proto"
@@ -31,9 +32,28 @@ func NewStyledText(str string, s *Style) *StyledText {
 	return st
 }
 
-// func (st *StyledText) Text() *Text {
-// 	return st.text
-// }
+func (st *StyledText) Equal(st2 *StyledText) bool {
+	return reflect.DeepEqual(st, st2)
+}
+
+func (st *StyledText) Copy() *StyledText {
+	if st == nil {
+		return nil
+	}
+
+	s := make([]styleRange, len(st.styles))
+	for idx, i := range st.styles {
+		s[idx] = styleRange{
+			index: i.index,
+			style: i.style.Copy(),
+		}
+	}
+	c := &StyledText{
+		text:   st.text.Copy(),
+		styles: s,
+	}
+	return c
+}
 
 // returns null if a is outside of text range.
 func (st *StyledText) At(a int) *Style {
@@ -48,18 +68,18 @@ func (st *StyledText) At(a int) *Style {
 		}
 		style = i.style
 	}
-	return style.copy()
+	return style.Copy()
 }
 
 func (st *StyledText) Set(s *Style, start, end int) {
 	st.update(func(prev *Style) *Style {
-		return s.copy()
+		return s.Copy()
 	}, start, end)
 }
 
 func (st *StyledText) Update(s *Style, start, end int) {
 	st.update(func(prev *Style) *Style {
-		prev = prev.copy()
+		prev = prev.Copy()
 		prev.Update(s)
 		return prev
 	}, start, end)
@@ -87,7 +107,7 @@ func (st *StyledText) update(f func(*Style) *Style, start, end int) {
 			} else if rangeMax > end {
 				styles = append(styles, styleRange{index: rangeMin, style: i.style})
 				styles = append(styles, styleRange{index: start, style: f(i.style)})
-				styles = append(styles, styleRange{index: end + 1, style: i.style.copy()})
+				styles = append(styles, styleRange{index: end + 1, style: i.style.Copy()})
 			}
 		} else if rangeMin == start {
 			if rangeMax <= end {
@@ -109,10 +129,7 @@ func (st *StyledText) update(f func(*Style) *Style, start, end int) {
 
 func (st *StyledText) Size(min layout.Point, max layout.Point, maxLines int) layout.Point {
 	if st.text.String() == "" {
-		st = &StyledText{
-			text: New("A"),
-			// style: st.style,
-		}
+		st = NewStyledText("A", nil)
 	}
 
 	sizeFunc := &pbtext.SizeFunc{
