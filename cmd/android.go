@@ -66,10 +66,9 @@ func ndkRoot() (string, error) {
 // by make_standalone_toolchain.py
 type ndkToolchain struct {
 	arch        string
-	abi         string
-	platform    string
+	apiLevel    string
 	gcc         string
-	toolPrefix  string
+	triple      string
 	clangTarget string
 	// Computed
 	ndkRoot string
@@ -80,30 +79,30 @@ func toolchainForArch(goarch string) (*ndkToolchain, error) {
 	m := map[string]*ndkToolchain{
 		"arm": &ndkToolchain{
 			arch:        "arm",
-			platform:    "android-15",
+			apiLevel:    "15",
 			gcc:         "arm-linux-androideabi-4.9",
-			toolPrefix:  "arm-linux-androideabi",
+			triple:      "arm-linux-androideabi",
 			clangTarget: "armv7a-none-linux-androideabi",
 		},
 		"arm64": &ndkToolchain{
 			arch:        "arm64",
-			platform:    "android-21",
+			apiLevel:    "21",
 			gcc:         "aarch64-linux-android-4.9",
-			toolPrefix:  "aarch64-linux-android",
+			triple:      "aarch64-linux-android",
 			clangTarget: "aarch64-none-linux-android",
 		},
 		"386": &ndkToolchain{
 			arch:        "x86",
-			platform:    "android-15",
+			apiLevel:    "15",
 			gcc:         "x86-4.9",
-			toolPrefix:  "i686-linux-android",
+			triple:      "i686-linux-android",
 			clangTarget: "i686-none-linux-android",
 		},
 		"amd64": &ndkToolchain{
 			arch:        "x86_64",
-			platform:    "android-21",
+			apiLevel:    "21",
 			gcc:         "x86_64-4.9",
-			toolPrefix:  "x86_64-linux-android",
+			triple:      "x86_64-linux-android",
 			clangTarget: "x86_64-none-linux-android",
 		},
 	}
@@ -139,7 +138,7 @@ func (tc *ndkToolchain) clangppPath() string {
 }
 
 func (tc *ndkToolchain) sysroot() string {
-	return filepath.Join(tc.ndkRoot, "platforms", tc.platform, "arch-"+tc.arch)
+	return filepath.Join(tc.ndkRoot, "platforms", "android-"+tc.apiLevel, "arch-"+tc.arch)
 }
 
 func GetAndroidABI(arch string) string {
