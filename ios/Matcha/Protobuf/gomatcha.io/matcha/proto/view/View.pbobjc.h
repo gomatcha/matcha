@@ -28,7 +28,6 @@
 CF_EXTERN_C_BEGIN
 
 @class GPBAny;
-@class MatchaPaintPBStyle;
 @class MatchaViewPBBuildNode;
 @class MatchaViewPBLayoutPaintNode;
 
@@ -58,7 +57,6 @@ typedef GPB_ENUM(MatchaViewPBBuildNode_FieldNumber) {
   MatchaViewPBBuildNode_FieldNumber_BridgeValue = 4,
   MatchaViewPBBuildNode_FieldNumber_Values = 5,
   MatchaViewPBBuildNode_FieldNumber_ChildrenArray = 6,
-  MatchaViewPBBuildNode_FieldNumber_AltIds = 7,
 };
 
 @interface MatchaViewPBBuildNode : GPBMessage
@@ -79,10 +77,6 @@ typedef GPB_ENUM(MatchaViewPBBuildNode_FieldNumber) {
 /** The number of items in @c childrenArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger childrenArray_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Int64Dictionary *altIds;
-/** The number of items in @c altIds without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger altIds_Count;
-
 @end
 
 #pragma mark - MatchaViewPBLayoutPaintNode
@@ -97,7 +91,27 @@ typedef GPB_ENUM(MatchaViewPBLayoutPaintNode_FieldNumber) {
   MatchaViewPBLayoutPaintNode_FieldNumber_Maxy = 7,
   MatchaViewPBLayoutPaintNode_FieldNumber_ZIndex = 8,
   MatchaViewPBLayoutPaintNode_FieldNumber_ChildOrderArray = 9,
-  MatchaViewPBLayoutPaintNode_FieldNumber_PaintStyle = 10,
+  MatchaViewPBLayoutPaintNode_FieldNumber_Transparency = 10,
+  MatchaViewPBLayoutPaintNode_FieldNumber_HasBackgroundColor = 11,
+  MatchaViewPBLayoutPaintNode_FieldNumber_BackgroundColorRed = 12,
+  MatchaViewPBLayoutPaintNode_FieldNumber_BackgroundColorGreen = 13,
+  MatchaViewPBLayoutPaintNode_FieldNumber_BackgroundColorBlue = 14,
+  MatchaViewPBLayoutPaintNode_FieldNumber_BackgroundColorAlpha = 15,
+  MatchaViewPBLayoutPaintNode_FieldNumber_HasBorderColor = 16,
+  MatchaViewPBLayoutPaintNode_FieldNumber_BorderColorRed = 17,
+  MatchaViewPBLayoutPaintNode_FieldNumber_BorderColorGreen = 18,
+  MatchaViewPBLayoutPaintNode_FieldNumber_BorderColorBlue = 19,
+  MatchaViewPBLayoutPaintNode_FieldNumber_BorderColorAlpha = 20,
+  MatchaViewPBLayoutPaintNode_FieldNumber_BorderWidth = 21,
+  MatchaViewPBLayoutPaintNode_FieldNumber_CornerRadius = 22,
+  MatchaViewPBLayoutPaintNode_FieldNumber_ShadowRadius = 23,
+  MatchaViewPBLayoutPaintNode_FieldNumber_ShadowOffsetX = 24,
+  MatchaViewPBLayoutPaintNode_FieldNumber_ShadowOffsetY = 25,
+  MatchaViewPBLayoutPaintNode_FieldNumber_HasShadowColor = 26,
+  MatchaViewPBLayoutPaintNode_FieldNumber_ShadowColorRed = 27,
+  MatchaViewPBLayoutPaintNode_FieldNumber_ShadowColorBlue = 28,
+  MatchaViewPBLayoutPaintNode_FieldNumber_ShadowColorGreen = 29,
+  MatchaViewPBLayoutPaintNode_FieldNumber_ShadowColorAlpha = 30,
 };
 
 @interface MatchaViewPBLayoutPaintNode : GPBMessage
@@ -108,10 +122,7 @@ typedef GPB_ENUM(MatchaViewPBLayoutPaintNode_FieldNumber) {
 
 @property(nonatomic, readwrite) int64_t paintId;
 
-/**
- * matcha.layout.Guide layoutGuide = 4;
- * Guide
- **/
+/** Guide */
 @property(nonatomic, readwrite) double minx;
 
 @property(nonatomic, readwrite) double miny;
@@ -126,20 +137,48 @@ typedef GPB_ENUM(MatchaViewPBLayoutPaintNode_FieldNumber) {
 /** The number of items in @c childOrderArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger childOrderArray_Count;
 
-/**
- * PaintStyle
- * double transparency = 1;
- * matcha.Color backgroundColor = 2;
- * matcha.Color borderColor = 3;
- * double borderWidth = 4;
- * double cornerRadius = 5;
- * double shadowRadius = 7;
- * matcha.layout.Point shadowOffset = 8;
- * matcha.Color shadowColor = 9;
- **/
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPaintPBStyle *paintStyle;
-/** Test to see if @c paintStyle has been set. */
-@property(nonatomic, readwrite) BOOL hasPaintStyle;
+/** Paint */
+@property(nonatomic, readwrite) double transparency;
+
+@property(nonatomic, readwrite) BOOL hasBackgroundColor;
+
+@property(nonatomic, readwrite) uint32_t backgroundColorRed;
+
+@property(nonatomic, readwrite) uint32_t backgroundColorGreen;
+
+@property(nonatomic, readwrite) uint32_t backgroundColorBlue;
+
+@property(nonatomic, readwrite) uint32_t backgroundColorAlpha;
+
+@property(nonatomic, readwrite) BOOL hasBorderColor;
+
+@property(nonatomic, readwrite) uint32_t borderColorRed;
+
+@property(nonatomic, readwrite) uint32_t borderColorGreen;
+
+@property(nonatomic, readwrite) uint32_t borderColorBlue;
+
+@property(nonatomic, readwrite) uint32_t borderColorAlpha;
+
+@property(nonatomic, readwrite) double borderWidth;
+
+@property(nonatomic, readwrite) double cornerRadius;
+
+@property(nonatomic, readwrite) double shadowRadius;
+
+@property(nonatomic, readwrite) double shadowOffsetX;
+
+@property(nonatomic, readwrite) double shadowOffsetY;
+
+@property(nonatomic, readwrite) BOOL hasShadowColor;
+
+@property(nonatomic, readwrite) uint32_t shadowColorRed;
+
+@property(nonatomic, readwrite) uint32_t shadowColorBlue;
+
+@property(nonatomic, readwrite) uint32_t shadowColorGreen;
+
+@property(nonatomic, readwrite) uint32_t shadowColorAlpha;
 
 @end
 

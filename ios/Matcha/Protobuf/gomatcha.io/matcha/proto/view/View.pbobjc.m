@@ -20,7 +20,6 @@
 #endif
 
  #import "gomatcha.io/matcha/proto/view/View.pbobjc.h"
- #import "gomatcha.io/matcha/proto/paint/Paint.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -60,7 +59,6 @@ static GPBFileDescriptor *MatchaViewPBViewRoot_FileDescriptor(void) {
 @dynamic bridgeValue;
 @dynamic values, values_Count;
 @dynamic childrenArray, childrenArray_Count;
-@dynamic altIds, altIds_Count;
 
 typedef struct MatchaViewPBBuildNode__storage_ {
   uint32_t _has_storage_[1];
@@ -68,7 +66,6 @@ typedef struct MatchaViewPBBuildNode__storage_ {
   NSData *bridgeValue;
   NSMutableDictionary *values;
   GPBInt64Array *childrenArray;
-  GPBInt64Int64Dictionary *altIds;
   int64_t id_p;
   int64_t buildId;
 } MatchaViewPBBuildNode__storage_;
@@ -133,15 +130,6 @@ typedef struct MatchaViewPBBuildNode__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked),
         .dataType = GPBDataTypeInt64,
       },
-      {
-        .name = "altIds",
-        .dataTypeSpecific.className = NULL,
-        .number = MatchaViewPBBuildNode_FieldNumber_AltIds,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(MatchaViewPBBuildNode__storage_, altIds),
-        .flags = (GPBFieldFlags)(GPBFieldMapKeyInt64 | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeInt64,
-      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[MatchaViewPBBuildNode class]
@@ -153,7 +141,7 @@ typedef struct MatchaViewPBBuildNode__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\004\002\007\000\003\n\000\004\013\000\007\006\000";
+        "\003\002\007\000\003\n\000\004\013\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
@@ -177,12 +165,43 @@ typedef struct MatchaViewPBBuildNode__storage_ {
 @dynamic maxy;
 @dynamic zIndex;
 @dynamic childOrderArray, childOrderArray_Count;
-@dynamic hasPaintStyle, paintStyle;
+@dynamic transparency;
+@dynamic hasBackgroundColor;
+@dynamic backgroundColorRed;
+@dynamic backgroundColorGreen;
+@dynamic backgroundColorBlue;
+@dynamic backgroundColorAlpha;
+@dynamic hasBorderColor;
+@dynamic borderColorRed;
+@dynamic borderColorGreen;
+@dynamic borderColorBlue;
+@dynamic borderColorAlpha;
+@dynamic borderWidth;
+@dynamic cornerRadius;
+@dynamic shadowRadius;
+@dynamic shadowOffsetX;
+@dynamic shadowOffsetY;
+@dynamic hasShadowColor;
+@dynamic shadowColorRed;
+@dynamic shadowColorBlue;
+@dynamic shadowColorGreen;
+@dynamic shadowColorAlpha;
 
 typedef struct MatchaViewPBLayoutPaintNode__storage_ {
   uint32_t _has_storage_[1];
+  uint32_t backgroundColorRed;
+  uint32_t backgroundColorGreen;
+  uint32_t backgroundColorBlue;
+  uint32_t backgroundColorAlpha;
+  uint32_t borderColorRed;
+  uint32_t borderColorGreen;
+  uint32_t borderColorBlue;
+  uint32_t borderColorAlpha;
+  uint32_t shadowColorRed;
+  uint32_t shadowColorBlue;
+  uint32_t shadowColorGreen;
+  uint32_t shadowColorAlpha;
   GPBInt64Array *childOrderArray;
-  MatchaPaintPBStyle *paintStyle;
   int64_t id_p;
   int64_t layoutId;
   int64_t paintId;
@@ -191,6 +210,12 @@ typedef struct MatchaViewPBLayoutPaintNode__storage_ {
   double maxx;
   double maxy;
   int64_t zIndex;
+  double transparency;
+  double borderWidth;
+  double cornerRadius;
+  double shadowRadius;
+  double shadowOffsetX;
+  double shadowOffsetY;
 } MatchaViewPBLayoutPaintNode__storage_;
 
 // This method is threadsafe because it is initially called
@@ -281,13 +306,193 @@ typedef struct MatchaViewPBLayoutPaintNode__storage_ {
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "paintStyle",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPaintPBStyle),
-        .number = MatchaViewPBLayoutPaintNode_FieldNumber_PaintStyle,
+        .name = "transparency",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_Transparency,
         .hasIndex = 8,
-        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, paintStyle),
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, transparency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "hasBackgroundColor",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_HasBackgroundColor,
+        .hasIndex = 9,
+        .offset = 10,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "backgroundColorRed",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_BackgroundColorRed,
+        .hasIndex = 11,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, backgroundColorRed),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "backgroundColorGreen",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_BackgroundColorGreen,
+        .hasIndex = 12,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, backgroundColorGreen),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "backgroundColorBlue",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_BackgroundColorBlue,
+        .hasIndex = 13,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, backgroundColorBlue),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "backgroundColorAlpha",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_BackgroundColorAlpha,
+        .hasIndex = 14,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, backgroundColorAlpha),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "hasBorderColor",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_HasBorderColor,
+        .hasIndex = 15,
+        .offset = 16,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "borderColorRed",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_BorderColorRed,
+        .hasIndex = 17,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, borderColorRed),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "borderColorGreen",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_BorderColorGreen,
+        .hasIndex = 18,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, borderColorGreen),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "borderColorBlue",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_BorderColorBlue,
+        .hasIndex = 19,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, borderColorBlue),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "borderColorAlpha",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_BorderColorAlpha,
+        .hasIndex = 20,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, borderColorAlpha),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "borderWidth",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_BorderWidth,
+        .hasIndex = 21,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, borderWidth),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "cornerRadius",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_CornerRadius,
+        .hasIndex = 22,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, cornerRadius),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "shadowRadius",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_ShadowRadius,
+        .hasIndex = 23,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, shadowRadius),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "shadowOffsetX",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_ShadowOffsetX,
+        .hasIndex = 24,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, shadowOffsetX),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "shadowOffsetY",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_ShadowOffsetY,
+        .hasIndex = 25,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, shadowOffsetY),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "hasShadowColor",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_HasShadowColor,
+        .hasIndex = 26,
+        .offset = 27,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "shadowColorRed",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_ShadowColorRed,
+        .hasIndex = 28,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, shadowColorRed),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "shadowColorBlue",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_ShadowColorBlue,
+        .hasIndex = 29,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, shadowColorBlue),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "shadowColorGreen",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_ShadowColorGreen,
+        .hasIndex = 30,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, shadowColorGreen),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "shadowColorAlpha",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaViewPBLayoutPaintNode_FieldNumber_ShadowColorAlpha,
+        .hasIndex = 31,
+        .offset = (uint32_t)offsetof(MatchaViewPBLayoutPaintNode__storage_, shadowColorAlpha),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -300,7 +505,9 @@ typedef struct MatchaViewPBLayoutPaintNode__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\005\002\010\000\003\007\000\010\006\000\t\000childOrder\000\n\n\000";
+        "\030\002\010\000\003\007\000\010\006\000\t\000childOrder\000\013\022\000\014\022\000\r\024\000\016\023\000\017\024\000\020\016"
+        "\000\021\016\000\022\020\000\023\017\000\024\020\000\025\013\000\026\014\000\027\014\000\030\r\000\031\r\000\032\016\000\033\016\000\034\017\000\035\020\000"
+        "\036\020\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");

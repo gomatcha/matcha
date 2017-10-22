@@ -54,7 +54,6 @@ typedef struct MatchaColor {
 
 @interface MatchaViewPBLayoutPaintNode (Matcha)
 @property (nonatomic, readonly) CGRect frame;
-@property (nonatomic, readonly) MatchaColor matchaBackgroundColor;
 @end
 
 @interface MatchaLayoutPBRect (Matcha)
@@ -79,6 +78,7 @@ typedef struct MatchaColor {
 @end
 
 CGColorRef MatchaCGColorCreateWithProtobuf(MatchaPBColor *value);
+CGColorRef MatchaCGColorCreateWithValues(bool exists, int red, int green, int blue, int alpha);
 UIKeyboardType MatchaKeyboardTypeWithProtobuf(MatchaKeyboardPBType t);
 UIKeyboardAppearance MatchaKeyboardAppearanceWithProtobuf(MatchaKeyboardPBAppearance t);
 UIReturnKeyType MatchaReturnTypeWithProtobuf(MatchaKeyboardPBReturnType t);

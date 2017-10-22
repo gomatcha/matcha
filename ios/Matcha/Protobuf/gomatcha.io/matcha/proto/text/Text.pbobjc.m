@@ -15,7 +15,6 @@
 
  #import "gomatcha.io/matcha/proto/text/Text.pbobjc.h"
  #import "gomatcha.io/matcha/proto/layout/Layout.pbobjc.h"
- #import "gomatcha.io/matcha/proto/Image.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -489,17 +488,30 @@ typedef struct MatchaPBFont__storage_ {
 @dynamic index;
 @dynamic textAlignment;
 @dynamic strikethroughStyle;
-@dynamic hasStrikethroughColor, strikethroughColor;
+@dynamic hasStrikethroughColor;
+@dynamic strikethroughColorRed;
+@dynamic strikethroughColorGreen;
+@dynamic strikethroughColorBlue;
+@dynamic strikethroughColorAlpha;
 @dynamic underlineStyle;
-@dynamic hasUnderlineColor, underlineColor;
-@dynamic hasFont, font;
+@dynamic hasUnderlineColor;
+@dynamic underlineColorRed;
+@dynamic underlineColorGreen;
+@dynamic underlineColorBlue;
+@dynamic underlineColorAlpha;
 @dynamic hyphenation;
 @dynamic lineHeightMultiple;
 @dynamic maxLines;
-@dynamic hasTextColor, textColor;
+@dynamic hasTextColor;
+@dynamic textColorRed;
+@dynamic textColorGreen;
+@dynamic textColorBlue;
+@dynamic textColorAlpha;
 @dynamic wrap;
 @dynamic truncation;
 @dynamic truncationString;
+@dynamic fontName;
+@dynamic fontSize;
 
 typedef struct MatchaPBTextStyle__storage_ {
   uint32_t _has_storage_[1];
@@ -508,15 +520,25 @@ typedef struct MatchaPBTextStyle__storage_ {
   MatchaPBUnderlineStyle underlineStyle;
   MatchaPBTextWrap wrap;
   MatchaPBTruncation truncation;
-  MatchaPBColor *strikethroughColor;
-  MatchaPBColor *underlineColor;
-  MatchaPBFont *font;
-  MatchaPBColor *textColor;
+  uint32_t strikethroughColorRed;
+  uint32_t strikethroughColorGreen;
+  uint32_t strikethroughColorBlue;
+  uint32_t strikethroughColorAlpha;
+  uint32_t underlineColorRed;
+  uint32_t underlineColorGreen;
+  uint32_t underlineColorBlue;
+  uint32_t underlineColorAlpha;
+  uint32_t textColorRed;
+  uint32_t textColorGreen;
+  uint32_t textColorBlue;
+  uint32_t textColorAlpha;
   NSString *truncationString;
+  NSString *fontName;
   int64_t index;
   double hyphenation;
   double lineHeightMultiple;
   int64_t maxLines;
+  double fontSize;
 } MatchaPBTextStyle__storage_;
 
 // This method is threadsafe because it is initially called
@@ -553,46 +575,19 @@ typedef struct MatchaPBTextStyle__storage_ {
         .dataType = GPBDataTypeEnum,
       },
       {
-        .name = "strikethroughColor",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
-        .number = MatchaPBTextStyle_FieldNumber_StrikethroughColor,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, strikethroughColor),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "underlineStyle",
         .dataTypeSpecific.enumDescFunc = MatchaPBUnderlineStyle_EnumDescriptor,
         .number = MatchaPBTextStyle_FieldNumber_UnderlineStyle,
-        .hasIndex = 4,
+        .hasIndex = 9,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, underlineStyle),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
       {
-        .name = "underlineColor",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
-        .number = MatchaPBTextStyle_FieldNumber_UnderlineColor,
-        .hasIndex = 5,
-        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, underlineColor),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "font",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBFont),
-        .number = MatchaPBTextStyle_FieldNumber_Font,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, font),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "hyphenation",
         .dataTypeSpecific.className = NULL,
         .number = MatchaPBTextStyle_FieldNumber_Hyphenation,
-        .hasIndex = 7,
+        .hasIndex = 16,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, hyphenation),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeDouble,
@@ -601,7 +596,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "lineHeightMultiple",
         .dataTypeSpecific.className = NULL,
         .number = MatchaPBTextStyle_FieldNumber_LineHeightMultiple,
-        .hasIndex = 8,
+        .hasIndex = 17,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, lineHeightMultiple),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeDouble,
@@ -610,25 +605,16 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "maxLines",
         .dataTypeSpecific.className = NULL,
         .number = MatchaPBTextStyle_FieldNumber_MaxLines,
-        .hasIndex = 9,
+        .hasIndex = 18,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, maxLines),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "textColor",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
-        .number = MatchaPBTextStyle_FieldNumber_TextColor,
-        .hasIndex = 10,
-        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, textColor),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "wrap",
         .dataTypeSpecific.enumDescFunc = MatchaPBTextWrap_EnumDescriptor,
         .number = MatchaPBTextStyle_FieldNumber_Wrap,
-        .hasIndex = 11,
+        .hasIndex = 25,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, wrap),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -637,7 +623,7 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "truncation",
         .dataTypeSpecific.enumDescFunc = MatchaPBTruncation_EnumDescriptor,
         .number = MatchaPBTextStyle_FieldNumber_Truncation,
-        .hasIndex = 12,
+        .hasIndex = 26,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, truncation),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -646,10 +632,163 @@ typedef struct MatchaPBTextStyle__storage_ {
         .name = "truncationString",
         .dataTypeSpecific.className = NULL,
         .number = MatchaPBTextStyle_FieldNumber_TruncationString,
-        .hasIndex = 13,
+        .hasIndex = 27,
         .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, truncationString),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "fontName",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_FontName,
+        .hasIndex = 28,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, fontName),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "fontSize",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_FontSize,
+        .hasIndex = 29,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, fontSize),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "hasStrikethroughColor",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_HasStrikethroughColor,
+        .hasIndex = 3,
+        .offset = 4,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "strikethroughColorRed",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_StrikethroughColorRed,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, strikethroughColorRed),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "strikethroughColorGreen",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_StrikethroughColorGreen,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, strikethroughColorGreen),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "strikethroughColorBlue",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_StrikethroughColorBlue,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, strikethroughColorBlue),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "strikethroughColorAlpha",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_StrikethroughColorAlpha,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, strikethroughColorAlpha),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "hasUnderlineColor",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_HasUnderlineColor,
+        .hasIndex = 10,
+        .offset = 11,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "underlineColorRed",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_UnderlineColorRed,
+        .hasIndex = 12,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, underlineColorRed),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "underlineColorGreen",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_UnderlineColorGreen,
+        .hasIndex = 13,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, underlineColorGreen),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "underlineColorBlue",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_UnderlineColorBlue,
+        .hasIndex = 14,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, underlineColorBlue),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "underlineColorAlpha",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_UnderlineColorAlpha,
+        .hasIndex = 15,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, underlineColorAlpha),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "hasTextColor",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_HasTextColor,
+        .hasIndex = 19,
+        .offset = 20,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "textColorRed",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_TextColorRed,
+        .hasIndex = 21,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, textColorRed),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "textColorGreen",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_TextColorGreen,
+        .hasIndex = 22,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, textColorGreen),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "textColorBlue",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_TextColorBlue,
+        .hasIndex = 23,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, textColorBlue),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "textColorAlpha",
+        .dataTypeSpecific.className = NULL,
+        .number = MatchaPBTextStyle_FieldNumber_TextColorAlpha,
+        .hasIndex = 24,
+        .offset = (uint32_t)offsetof(MatchaPBTextStyle__storage_, textColorAlpha),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeUInt32,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -662,7 +801,8 @@ typedef struct MatchaPBTextStyle__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\t\002\r\000\004\022\000\006\022\000\010\016\000\n\016\000\020\022\000\022\010\000\024\t\000\032\020\000";
+        "\027\002\r\000\004\022\000\010\016\000\020\022\000\022\010\000\032\020\000\033\010\000\035\010\000\037\025\000 \025\000!\027\000\"\026\000#\027\000"
+        ")\021\000*\021\000+\023\000,\022\000-\023\0003\014\0004\014\0005\016\0006\r\0007\016\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");

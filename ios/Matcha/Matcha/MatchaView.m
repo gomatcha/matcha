@@ -315,27 +315,41 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
     
     // Paint view
     if (pbLayoutPaintNode != nil && pbLayoutPaintNode.paintId != self.layoutPaintNode.paintId) {
-        if (pbLayoutPaintNode.paintStyle.hasBackgroundColor) {
-            CGColorRef color = MatchaCGColorCreateWithProtobuf(pbLayoutPaintNode.paintStyle.backgroundColor);
-            self.view.layer.backgroundColor = color;
-            if (color) {
-                CFRelease(color);
-            }
+        
+        CGColorRef backgroundColor = MatchaCGColorCreateWithValues(
+            pbLayoutPaintNode.hasBackgroundColor,
+            pbLayoutPaintNode.backgroundColorRed,
+            pbLayoutPaintNode.backgroundColorGreen,
+            pbLayoutPaintNode.backgroundColorBlue,
+            pbLayoutPaintNode.backgroundColorAlpha);
+        CGColorRef borderColor = MatchaCGColorCreateWithValues(
+            pbLayoutPaintNode.hasBorderColor,
+            pbLayoutPaintNode.borderColorRed,
+            pbLayoutPaintNode.borderColorGreen,
+            pbLayoutPaintNode.borderColorBlue,
+            pbLayoutPaintNode.borderColorAlpha);
+        CGColorRef shadowColor = MatchaCGColorCreateWithValues(
+            pbLayoutPaintNode.hasShadowColor,
+            pbLayoutPaintNode.shadowColorRed,
+            pbLayoutPaintNode.shadowColorGreen,
+            pbLayoutPaintNode.shadowColorBlue,
+            pbLayoutPaintNode.shadowColorAlpha);
+        
+        if (backgroundColor) {
+            self.view.layer.backgroundColor = backgroundColor;
+            CFRelease(backgroundColor);
         } else {
             self.view.backgroundColor = [UIColor clearColor];
         }
-        
-        CGColorRef borderColor = MatchaCGColorCreateWithProtobuf(pbLayoutPaintNode.paintStyle.borderColor);
-        CGColorRef shadowColor = MatchaCGColorCreateWithProtobuf(pbLayoutPaintNode.paintStyle.shadowColor);
-        self.view.alpha = 1 - pbLayoutPaintNode.paintStyle.transparency;
+        self.view.alpha = 1 - pbLayoutPaintNode.transparency;
         self.view.layer.borderColor = borderColor;
-        self.view.layer.borderWidth = pbLayoutPaintNode.paintStyle.borderWidth;
-        self.view.layer.cornerRadius = pbLayoutPaintNode.paintStyle.cornerRadius;
-        self.view.layer.shadowRadius = pbLayoutPaintNode.paintStyle.shadowRadius;
-        self.view.layer.shadowOffset = pbLayoutPaintNode.paintStyle.shadowOffset.toCGSize;
+        self.view.layer.borderWidth = pbLayoutPaintNode.borderWidth;
+        self.view.layer.cornerRadius = pbLayoutPaintNode.cornerRadius;
+        self.view.layer.shadowRadius = pbLayoutPaintNode.shadowRadius;
+        self.view.layer.shadowOffset = CGSizeMake(pbLayoutPaintNode.shadowOffsetX, pbLayoutPaintNode.shadowOffsetY);
         self.view.layer.shadowColor = shadowColor;
-        self.view.layer.shadowOpacity = pbLayoutPaintNode.paintStyle.hasShadowColor ? 1 : 0;
-        if (pbLayoutPaintNode.paintStyle.cornerRadius != 0) {
+        self.view.layer.shadowOpacity = pbLayoutPaintNode.hasShadowColor ? 1 : 0;
+        if (pbLayoutPaintNode.cornerRadius != 0) {
             self.view.clipsToBounds = YES; // TODO(KD): Be better about this...
         }
         if (borderColor) {

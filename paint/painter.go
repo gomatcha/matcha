@@ -18,8 +18,6 @@ import (
 
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout"
-	pb "gomatcha.io/matcha/proto"
-	"gomatcha.io/matcha/proto/paint"
 )
 
 // Painter is the interface that describes how a view should be drawn on screen.
@@ -36,23 +34,10 @@ type Style struct {
 	BorderWidth     float64
 	// CornerRadius is only supported for imageview on android.
 	CornerRadius float64
-	// Shadows are not supported on android. And do not work with corner radius on iOS (https://stackoverflow.com/q/11437750).
+	// Shadows are not supported on android. And does not work with corner radius on iOS (https://stackoverflow.com/q/11437750).
 	ShadowRadius float64
 	ShadowOffset layout.Point
 	ShadowColor  color.Color
-}
-
-func (s *Style) MarshalProtobuf() *paint.Style {
-	return &paint.Style{
-		Transparency:    s.Transparency,
-		BackgroundColor: pb.ColorEncode(s.BackgroundColor),
-		BorderColor:     pb.ColorEncode(s.BorderColor),
-		BorderWidth:     s.BorderWidth,
-		CornerRadius:    s.CornerRadius,
-		ShadowRadius:    s.ShadowRadius,
-		ShadowOffset:    s.ShadowOffset.MarshalProtobuf(),
-		ShadowColor:     pb.ColorEncode(s.ShadowColor),
-	}
 }
 
 // PaintStyle implements the Painter interface.

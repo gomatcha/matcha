@@ -14,8 +14,6 @@
 #endif
 
  #import "gomatcha.io/matcha/proto/paint/Paint.pbobjc.h"
- #import "gomatcha.io/matcha/proto/Image.pbobjc.h"
- #import "gomatcha.io/matcha/proto/layout/Layout.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -25,148 +23,8 @@
 
 @implementation MatchaPaintPBPaintRoot
 
-// No extensions in the file and none of the imports (direct or indirect)
-// defined extensions, so no need to generate +extensionRegistry.
-
-@end
-
-#pragma mark - MatchaPaintPBPaintRoot_FileDescriptor
-
-static GPBFileDescriptor *MatchaPaintPBPaintRoot_FileDescriptor(void) {
-  // This is called by +initialize so there is no need to worry
-  // about thread safety of the singleton.
-  static GPBFileDescriptor *descriptor = NULL;
-  if (!descriptor) {
-    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
-    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"matcha.paint"
-                                                 objcPrefix:@"MatchaPaintPB"
-                                                     syntax:GPBFileSyntaxProto3];
-  }
-  return descriptor;
-}
-
-#pragma mark - MatchaPaintPBStyle
-
-@implementation MatchaPaintPBStyle
-
-@dynamic transparency;
-@dynamic hasBackgroundColor, backgroundColor;
-@dynamic hasBorderColor, borderColor;
-@dynamic borderWidth;
-@dynamic cornerRadius;
-@dynamic shadowRadius;
-@dynamic hasShadowOffset, shadowOffset;
-@dynamic hasShadowColor, shadowColor;
-
-typedef struct MatchaPaintPBStyle__storage_ {
-  uint32_t _has_storage_[1];
-  MatchaPBColor *backgroundColor;
-  MatchaPBColor *borderColor;
-  MatchaLayoutPBPoint *shadowOffset;
-  MatchaPBColor *shadowColor;
-  double transparency;
-  double borderWidth;
-  double cornerRadius;
-  double shadowRadius;
-} MatchaPaintPBStyle__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "transparency",
-        .dataTypeSpecific.className = NULL,
-        .number = MatchaPaintPBStyle_FieldNumber_Transparency,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MatchaPaintPBStyle__storage_, transparency),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeDouble,
-      },
-      {
-        .name = "backgroundColor",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
-        .number = MatchaPaintPBStyle_FieldNumber_BackgroundColor,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(MatchaPaintPBStyle__storage_, backgroundColor),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "borderColor",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
-        .number = MatchaPaintPBStyle_FieldNumber_BorderColor,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(MatchaPaintPBStyle__storage_, borderColor),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "borderWidth",
-        .dataTypeSpecific.className = NULL,
-        .number = MatchaPaintPBStyle_FieldNumber_BorderWidth,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(MatchaPaintPBStyle__storage_, borderWidth),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeDouble,
-      },
-      {
-        .name = "cornerRadius",
-        .dataTypeSpecific.className = NULL,
-        .number = MatchaPaintPBStyle_FieldNumber_CornerRadius,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(MatchaPaintPBStyle__storage_, cornerRadius),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeDouble,
-      },
-      {
-        .name = "shadowRadius",
-        .dataTypeSpecific.className = NULL,
-        .number = MatchaPaintPBStyle_FieldNumber_ShadowRadius,
-        .hasIndex = 5,
-        .offset = (uint32_t)offsetof(MatchaPaintPBStyle__storage_, shadowRadius),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeDouble,
-      },
-      {
-        .name = "shadowOffset",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaLayoutPBPoint),
-        .number = MatchaPaintPBStyle_FieldNumber_ShadowOffset,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(MatchaPaintPBStyle__storage_, shadowOffset),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "shadowColor",
-        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
-        .number = MatchaPaintPBStyle_FieldNumber_ShadowColor,
-        .hasIndex = 7,
-        .offset = (uint32_t)offsetof(MatchaPaintPBStyle__storage_, shadowColor),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[MatchaPaintPBStyle class]
-                                     rootClass:[MatchaPaintPBPaintRoot class]
-                                          file:MatchaPaintPBPaintRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(MatchaPaintPBStyle__storage_)
-                                         flags:GPBDescriptorInitializationFlag_None];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\007\002\017\000\003\013\000\004\013\000\005\014\000\007\014\000\010\014\000\t\013\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    NSAssert(descriptor == nil, @"Startup recursed!");
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
+// No extensions in the file and no imports, so no need to generate
+// +extensionRegistry.
 
 @end
 

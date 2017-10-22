@@ -36,6 +36,16 @@ CGColorRef MatchaCGColorCreateWithProtobuf(MatchaPBColor *value) {
     return color;
 }
 
+CGColorRef MatchaCGColorCreateWithValues(bool exists, int red, int green, int blue, int alpha) {
+    if (!exists) {
+        return nil;
+    }
+    CGFloat colors[4] = {((double)red)/0xffff, ((double)green)/0xffff, ((double)blue)/0xffff, ((double)alpha)/0xffff};
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef color = CGColorCreate(colorspace, colors);
+    CFRelease(colorspace);
+    return color;
+}
 
 @implementation NSAttributedString (Matcha)
 
@@ -123,7 +133,11 @@ CGColorRef MatchaCGColorCreateWithProtobuf(MatchaPBColor *value) {
     }
     dictionary[NSStrikethroughStyleAttributeName] = @(strikethroughStyle);
     
-    dictionary[NSStrikethroughColorAttributeName] = [[UIColor alloc] initWithProtobuf:style.strikethroughColor];
+    CGColorRef strikethroughColor = MatchaCGColorCreateWithValues(style.hasStrikethroughColor, style.strikethroughColorRed, style.strikethroughColorGreen, style.strikethroughColorBlue, style.strikethroughColorAlpha);
+    if (strikethroughColor) {
+        dictionary[NSStrikethroughColorAttributeName] = [UIColor colorWithCGColor:strikethroughColor];
+        CFRelease(strikethroughColor);
+    }
     
     NSUnderlineStyle underlineStyle;
     switch (style.underlineStyle) {
@@ -150,122 +164,130 @@ CGColorRef MatchaCGColorCreateWithProtobuf(MatchaPBColor *value) {
     }
     dictionary[NSUnderlineStyleAttributeName] = @(underlineStyle);
     
-    dictionary[NSUnderlineColorAttributeName] = [[UIColor alloc] initWithProtobuf:style.underlineColor];
-    dictionary[NSFontAttributeName] = [[UIFont alloc] initWithProtobuf:style.font];
+    CGColorRef underlineColor = MatchaCGColorCreateWithValues(style.hasUnderlineColor, style.underlineColorRed, style.underlineColorGreen, style.underlineColorBlue, style.underlineColorAlpha);
+    if (underlineColor) {
+        dictionary[NSUnderlineColorAttributeName] = [UIColor colorWithCGColor:underlineColor];
+        CFRelease(underlineColor);
+    }
+    
+    dictionary[NSFontAttributeName] = [UIFont fontWithName:style.fontName size:style.fontSize];
     dictionary[NSHyphenationFactorDocumentAttribute] = @(style.hyphenation);
     paragraphStyle.lineHeightMultiple = style.lineHeightMultiple;
-    // TODO(KD): AttributeKeyMaxLines
-    dictionary[NSForegroundColorAttributeName] = [[UIColor alloc] initWithProtobuf:style.textColor];
+    CGColorRef textColor = MatchaCGColorCreateWithValues(style.hasTextColor, style.textColorRed, style.textColorGreen, style.textColorBlue, style.textColorAlpha);
+    if (textColor) {
+        dictionary[NSForegroundColorAttributeName] = [UIColor colorWithCGColor:textColor];
+        CFRelease(textColor);
+    }
     // TODO(KD): AttributeKeyTextWrap
     // TODO(KD): AttributeKeyTruncation
     // TODO(KD): AttributeKeyTruncationString
     return dictionary;
 }
 
-+ (MatchaPBTextStyle *)protobufWithAttributes:(NSDictionary *)dictionary {
-    MatchaPBTextStyle *style = [[MatchaPBTextStyle alloc] init];
-    
-    NSMutableParagraphStyle *paragraphStyle = dictionary[NSParagraphStyleAttributeName];
-    if (paragraphStyle) {
-        int alignment;
-        switch (paragraphStyle.alignment) {
-        case NSTextAlignmentLeft:
-            alignment = 0;
-            break;
-        case NSTextAlignmentRight:
-            alignment = 1;
-            break;
-        case NSTextAlignmentCenter:
-            alignment = 2;
-            break;
-        case NSTextAlignmentJustified:
-            alignment = 3;
-            break;
-        default:
-            alignment = 0;
-        }
-        style.textAlignment = alignment;
-    }
-    
-    if (dictionary[NSStrikethroughStyleAttributeName]) {
-        int strikethroughStyle;
-        switch (((NSNumber *)dictionary[NSStrikethroughStyleAttributeName]).integerValue) {
-        case NSUnderlineStyleNone:
-            strikethroughStyle = 0;
-            break;
-        case NSUnderlineStyleSingle:
-            strikethroughStyle = 1;
-            break;
-        case NSUnderlineStyleDouble:
-            strikethroughStyle = 2;
-            break;
-        case NSUnderlineStyleThick:
-            strikethroughStyle = 3;
-            break;
-        case NSUnderlinePatternDot:
-            strikethroughStyle = 4;
-            break;
-        case NSUnderlinePatternDash:
-            strikethroughStyle = 5;
-            break;
-        default:
-            strikethroughStyle = 0;
-        }
-        style.strikethroughStyle = strikethroughStyle;
-    }
-    
-    if (dictionary[NSStrikethroughColorAttributeName]) {
-        style.strikethroughColor = ((UIColor *)dictionary[NSStrikethroughColorAttributeName]).protobuf;
-    }
-    
-    if (dictionary[NSUnderlineStyleAttributeName]) {
-        int strikethroughStyle;
-        switch (((NSNumber *)dictionary[NSUnderlineStyleAttributeName]).integerValue) {
-        case NSUnderlineStyleNone:
-            strikethroughStyle = 0;
-            break;
-        case NSUnderlineStyleSingle:
-            strikethroughStyle = 1;
-            break;
-        case NSUnderlineStyleDouble:
-            strikethroughStyle = 2;
-            break;
-        case NSUnderlineStyleThick:
-            strikethroughStyle = 3;
-            break;
-        case NSUnderlinePatternDot:
-            strikethroughStyle = 4;
-            break;
-        case NSUnderlinePatternDash:
-            strikethroughStyle = 5;
-            break;
-        default:
-            strikethroughStyle = 0;
-        }
-        style.underlineStyle = strikethroughStyle;
-    }
-    
-    if (dictionary[NSUnderlineColorAttributeName]) {
-        style.underlineColor = ((UIColor *)dictionary[NSUnderlineColorAttributeName]).protobuf;
-    }
-    
-    if (dictionary[NSFontAttributeName]) {
-        style.font = ((UIFont *)dictionary[NSFontAttributeName]).protobuf;
-    }
-    
-    if (dictionary[NSHyphenationFactorDocumentAttribute]) {
-        style.hyphenation = ((NSNumber *)dictionary[NSHyphenationFactorDocumentAttribute]).integerValue;
-    }
-    
-    style.lineHeightMultiple = paragraphStyle.lineHeightMultiple;
-    if (dictionary[NSForegroundColorAttributeName]) {
-        style.textColor = ((UIColor *)dictionary[NSForegroundColorAttributeName]).protobuf;
-    }  
-    // TODO(KD): AttributeKeyTextWrap
-    // TODO(KD): AttributeKeyTruncation
-    // TODO(KD): AttributeKeyTruncationString
-    return style;
-}
+//+ (MatchaPBTextStyle *)protobufWithAttributes:(NSDictionary *)dictionary {
+//    MatchaPBTextStyle *style = [[MatchaPBTextStyle alloc] init];
+//
+//    NSMutableParagraphStyle *paragraphStyle = dictionary[NSParagraphStyleAttributeName];
+//    if (paragraphStyle) {
+//        int alignment;
+//        switch (paragraphStyle.alignment) {
+//        case NSTextAlignmentLeft:
+//            alignment = 0;
+//            break;
+//        case NSTextAlignmentRight:
+//            alignment = 1;
+//            break;
+//        case NSTextAlignmentCenter:
+//            alignment = 2;
+//            break;
+//        case NSTextAlignmentJustified:
+//            alignment = 3;
+//            break;
+//        default:
+//            alignment = 0;
+//        }
+//        style.textAlignment = alignment;
+//    }
+//
+//    if (dictionary[NSStrikethroughStyleAttributeName]) {
+//        int strikethroughStyle;
+//        switch (((NSNumber *)dictionary[NSStrikethroughStyleAttributeName]).integerValue) {
+//        case NSUnderlineStyleNone:
+//            strikethroughStyle = 0;
+//            break;
+//        case NSUnderlineStyleSingle:
+//            strikethroughStyle = 1;
+//            break;
+//        case NSUnderlineStyleDouble:
+//            strikethroughStyle = 2;
+//            break;
+//        case NSUnderlineStyleThick:
+//            strikethroughStyle = 3;
+//            break;
+//        case NSUnderlinePatternDot:
+//            strikethroughStyle = 4;
+//            break;
+//        case NSUnderlinePatternDash:
+//            strikethroughStyle = 5;
+//            break;
+//        default:
+//            strikethroughStyle = 0;
+//        }
+//        style.strikethroughStyle = strikethroughStyle;
+//    }
+//
+//    if (dictionary[NSStrikethroughColorAttributeName]) {
+//        style.strikethroughColor = ((UIColor *)dictionary[NSStrikethroughColorAttributeName]).protobuf;
+//    }
+//
+//    if (dictionary[NSUnderlineStyleAttributeName]) {
+//        int strikethroughStyle;
+//        switch (((NSNumber *)dictionary[NSUnderlineStyleAttributeName]).integerValue) {
+//        case NSUnderlineStyleNone:
+//            strikethroughStyle = 0;
+//            break;
+//        case NSUnderlineStyleSingle:
+//            strikethroughStyle = 1;
+//            break;
+//        case NSUnderlineStyleDouble:
+//            strikethroughStyle = 2;
+//            break;
+//        case NSUnderlineStyleThick:
+//            strikethroughStyle = 3;
+//            break;
+//        case NSUnderlinePatternDot:
+//            strikethroughStyle = 4;
+//            break;
+//        case NSUnderlinePatternDash:
+//            strikethroughStyle = 5;
+//            break;
+//        default:
+//            strikethroughStyle = 0;
+//        }
+//        style.underlineStyle = strikethroughStyle;
+//    }
+//
+//    if (dictionary[NSUnderlineColorAttributeName]) {
+//        style.underlineColor = ((UIColor *)dictionary[NSUnderlineColorAttributeName]).protobuf;
+//    }
+//
+//    if (dictionary[NSFontAttributeName]) {
+//        style.font = ((UIFont *)dictionary[NSFontAttributeName]).protobuf;
+//    }
+//
+//    if (dictionary[NSHyphenationFactorDocumentAttribute]) {
+//        style.hyphenation = ((NSNumber *)dictionary[NSHyphenationFactorDocumentAttribute]).integerValue;
+//    }
+//
+//    style.lineHeightMultiple = paragraphStyle.lineHeightMultiple;
+//    if (dictionary[NSForegroundColorAttributeName]) {
+//        style.textColor = ((UIColor *)dictionary[NSForegroundColorAttributeName]).protobuf;
+//    }
+//    // TODO(KD): AttributeKeyTextWrap
+//    // TODO(KD): AttributeKeyTruncation
+//    // TODO(KD): AttributeKeyTruncationString
+//    return style;
+//}
 
 @end
 
@@ -296,17 +318,6 @@ CGColorRef MatchaCGColorCreateWithProtobuf(MatchaPBColor *value) {
 
 - (CGRect)frame {
     return CGRectMake(self.minx, self.miny, self.maxx - self.minx, self.maxy - self.miny);
-}
-
-- (MatchaColor) matchaBackgroundColor {
-    MatchaPBColor *c = self.paintStyle.backgroundColor;
-    MatchaColor color = {
-        .red = c.red,
-        .green = c.green,
-        .blue = c.blue,
-        .alpha = c.alpha,
-    };
-    return color;
 }
 
 @end

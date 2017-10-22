@@ -27,9 +27,6 @@
 
 CF_EXTERN_C_BEGIN
 
-@class MatchaLayoutPBPoint;
-@class MatchaPBColor;
-
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - MatchaPaintPBPaintRoot
@@ -45,47 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
  * this file and all files that it depends on.
  **/
 @interface MatchaPaintPBPaintRoot : GPBRootObject
-@end
-
-#pragma mark - MatchaPaintPBStyle
-
-typedef GPB_ENUM(MatchaPaintPBStyle_FieldNumber) {
-  MatchaPaintPBStyle_FieldNumber_Transparency = 1,
-  MatchaPaintPBStyle_FieldNumber_BackgroundColor = 2,
-  MatchaPaintPBStyle_FieldNumber_BorderColor = 3,
-  MatchaPaintPBStyle_FieldNumber_BorderWidth = 4,
-  MatchaPaintPBStyle_FieldNumber_CornerRadius = 5,
-  MatchaPaintPBStyle_FieldNumber_ShadowRadius = 7,
-  MatchaPaintPBStyle_FieldNumber_ShadowOffset = 8,
-  MatchaPaintPBStyle_FieldNumber_ShadowColor = 9,
-};
-
-@interface MatchaPaintPBStyle : GPBMessage
-
-@property(nonatomic, readwrite) double transparency;
-
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *backgroundColor;
-/** Test to see if @c backgroundColor has been set. */
-@property(nonatomic, readwrite) BOOL hasBackgroundColor;
-
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *borderColor;
-/** Test to see if @c borderColor has been set. */
-@property(nonatomic, readwrite) BOOL hasBorderColor;
-
-@property(nonatomic, readwrite) double borderWidth;
-
-@property(nonatomic, readwrite) double cornerRadius;
-
-@property(nonatomic, readwrite) double shadowRadius;
-
-@property(nonatomic, readwrite, strong, null_resettable) MatchaLayoutPBPoint *shadowOffset;
-/** Test to see if @c shadowOffset has been set. */
-@property(nonatomic, readwrite) BOOL hasShadowOffset;
-
-@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *shadowColor;
-/** Test to see if @c shadowColor has been set. */
-@property(nonatomic, readwrite) BOOL hasShadowColor;
-
 @end
 
 NS_ASSUME_NONNULL_END

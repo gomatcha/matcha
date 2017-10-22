@@ -91,6 +91,10 @@ class Protobuf {
     public static int newColor(Proto.Color c) {
         return Color.argb(c.getAlpha()*255/65535, c.getRed()*255/65535, c.getGreen()*255/65535, c.getBlue()*255/65535);
     }
+
+    public static int newColor(int red, int green, int blue, int alpha) {
+        return Color.argb(alpha*255/65535, red*255/65535, green*255/65535, blue*255/65535);
+    }
     
     public static PointF newPoint(PbLayout.Point pt) {
         return new PointF((float)pt.getX(), (float)pt.getY());
@@ -193,8 +197,7 @@ class Protobuf {
             arrayList.add(span);
         }
 
-        PbText.Font font = textStyle.getFont();
-        String fontName = font.getFamily();
+        String fontName = textStyle.getFontName();
         if (fontName.endsWith("-bold")) {
             fontName = fontName.substring(0, fontName.length() - 5);
             arrayList.add(new StyleSpan(Typeface.BOLD));
@@ -205,15 +208,15 @@ class Protobuf {
             fontName = fontName.substring(0, fontName.length() - 11);
             arrayList.add(new StyleSpan(Typeface.BOLD_ITALIC));
         }
-        span = new TypefaceSpan(font.getFamily());
+        span = new TypefaceSpan(fontName);
         arrayList.add(span);
 
-        span = new AbsoluteSizeSpan((int)font.getSize(), true);
+        span = new AbsoluteSizeSpan((int)textStyle.getFontSize(), true);
         arrayList.add(span);
 
         // span = new LineHeightSpan();
 
-        int color = newColor(textStyle.getTextColor());
+        int color = newColor(textStyle.getTextColorRed(), textStyle.getTextColorGreen(), textStyle.getTextColorBlue(), textStyle.getTextColorAlpha());
         span = new ForegroundColorSpan(color);
         arrayList.add(span);
 

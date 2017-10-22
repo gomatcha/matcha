@@ -1,7 +1,6 @@
 syntax = "proto3";
 package matcha.text;
 import "gomatcha.io/matcha/proto/layout/layout.proto";
-import "gomatcha.io/matcha/proto/image.proto";
 
 option go_package = "text";
 option objc_class_prefix = "MatchaPB";
@@ -71,15 +70,29 @@ message TextStyle {
     int64 index = 1; // Only for StyledText
     TextAlignment textAlignment = 2;
     StrikethroughStyle strikethroughStyle = 4;
-    matcha.Color strikethroughColor = 6;
+    bool hasStrikethroughColor = 31;
+    uint32 strikethroughColorRed = 32;
+    uint32 strikethroughColorGreen = 33;
+    uint32 strikethroughColorBlue = 34;
+    uint32 strikethroughColorAlpha = 35;
     UnderlineStyle underlineStyle = 8;
-    matcha.Color underlineColor = 10;
-    Font font = 12;
+    bool hasUnderlineColor = 41;
+    uint32 underlineColorRed = 42;
+    uint32 underlineColorGreen = 43;
+    uint32 underlineColorBlue = 44;
+    uint32 underlineColorAlpha = 45;
     double hyphenation = 14;
     double lineHeightMultiple = 16;
     int64 maxLines = 18;
-    matcha.Color textColor = 20;
+    bool hasTextColor = 51;
+    uint32 textColorRed = 52;
+    uint32 textColorGreen = 53;
+    uint32 textColorBlue = 54;
+    uint32 textColorAlpha = 55;
     TextWrap wrap = 22;
     Truncation truncation = 24;
     string truncationString = 26;
+    
+    string fontName = 27;
+    double fontSize = 29;
 }
