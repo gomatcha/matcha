@@ -204,7 +204,7 @@ public class MatchaViewNode extends Object {
         }
 
         // Paint scrollView
-        if (layoutPaintNode != null & this.paintId != layoutPaintNode.getPaintId()) {
+        if (layoutPaintNode != null && this.paintId != layoutPaintNode.getPaintId()) {
             this.paintId = layoutPaintNode.getPaintId();
 
             double ratio = (float)this.view.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
