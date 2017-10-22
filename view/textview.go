@@ -15,8 +15,9 @@ type TextView struct {
 	String     string
 	Text       *text.Text
 	Style      *text.Style
-	StyledText *text.StyledText // TODO(KD): subscribe to StyledText and Text
+	StyledText *text.StyledText
 	MaxLines   int
+	layouter   textViewLayouter
 }
 
 // NewTextView returns a new view.
@@ -37,13 +38,16 @@ func (v *TextView) Build(ctx Context) Model {
 		st = text.NewStyledText(t.String(), v.Style)
 	}
 
+	v.layouter.styledText = st
+	v.layouter.maxLines = v.MaxLines
+
 	painter := paint.Painter(nil)
 	if v.PaintStyle != nil {
 		painter = v.PaintStyle
 	}
 	return Model{
 		Painter:         painter,
-		Layouter:        &textViewLayouter{styledText: st, maxLines: v.MaxLines},
+		Layouter:        &v.layouter,
 		NativeViewName:  "gomatcha.io/matcha/view/textview",
 		NativeViewState: internal.MarshalProtobuf(st.MarshalProtobuf()),
 	}
@@ -52,11 +56,27 @@ func (v *TextView) Build(ctx Context) Model {
 type textViewLayouter struct {
 	styledText *text.StyledText
 	maxLines   int
+
+	cachedStyledText *text.StyledText
+	maxSize          layout.Point
+	minSize          layout.Point
+	guide            layout.Guide
 }
 
 func (l *textViewLayouter) Layout(ctx layout.Context) (layout.Guide, []layout.Guide) {
+	if l.maxSize == ctx.MaxSize() && l.minSize == ctx.MinSize() && l.styledText.Equal(l.cachedStyledText) {
+		return l.guide, nil
+	}
+
 	size := l.styledText.Size(layout.Pt(0, 0), ctx.MaxSize(), l.maxLines)
 	g := layout.Guide{Frame: layout.Rt(0, 0, size.X, size.Y)}
+
+	// Cache values for later
+	l.cachedStyledText = l.styledText.Copy()
+	l.maxSize = ctx.MaxSize()
+	l.minSize = ctx.MinSize()
+	l.guide = g
+
 	return g, nil
 }
 

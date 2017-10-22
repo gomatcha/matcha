@@ -2,6 +2,7 @@ package io.gomatcha.matcha;
 
 import android.content.Context;
 import android.text.SpannableString;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -33,7 +34,7 @@ class MatchaTextView extends MatchaChildView {
     public void setNativeState(byte[] nativeState) {
         super.setNativeState(nativeState);
         try {
-            PbText.StyledText proto  = PbText.StyledText.parseFrom(nativeState);
+            PbText.StyledText proto = PbText.StyledText.parseFrom(nativeState);
             SpannableString str = Protobuf.newAttributedString(proto);
             view.setText(str);
         } catch (InvalidProtocolBufferException e) {

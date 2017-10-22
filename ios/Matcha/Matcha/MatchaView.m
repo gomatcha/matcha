@@ -303,14 +303,14 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
             }
         }
         
-        if (self.viewController) {
-            // Give view controllers their children's layout objects.
-            NSMutableArray<MatchaViewPBLayoutPaintNode *> *layoutPaintNodes = [NSMutableArray array];
-            for (MatchaViewNode *i in childrenArray) {
-                [layoutPaintNodes addObject:[root.layoutPaintNodes objectForKey:i.identifier.longLongValue]];
-            }
-            self.viewController.matchaChildLayout = layoutPaintNodes;
-        }
+//        if (self.viewController) {
+//            // Give view controllers their children's layout objects.
+//            NSMutableArray<MatchaViewPBLayoutPaintNode *> *layoutPaintNodes = [NSMutableArray array];
+//            for (MatchaViewNode *i in childrenArray) {
+//                [layoutPaintNodes addObject:[root.layoutPaintNodes objectForKey:i.identifier.longLongValue]];
+//            }
+//            self.viewController.matchaChildLayout = layoutPaintNodes;
+//        }
     }
     
     // Paint view
