@@ -55,6 +55,10 @@ func ndkRoot() (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. Error cleaning path %v.", err)
 	}
+
+	if st, err := os.Stat(path); err != nil || !st.IsDir() {
+		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. Missing directory at %v.", path)
+	}
 	return path, nil
 }
 
