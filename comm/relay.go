@@ -3,6 +3,8 @@
 package comm
 
 import (
+	"fmt"
+	"strconv"
 	"sync"
 )
 
@@ -76,7 +78,8 @@ func (r *Relay) Unnotify(id Id) {
 		r.funcs = map[Id]func(){}
 	}
 	if _, ok := r.funcs[id]; !ok {
-		panic("comm.Unnotify(): on unknown id")
+		fmt.Println("funcs", r.funcs)
+		panic("comm.Unnotify(): on unknown id: " + strconv.Itoa(int(id)))
 	}
 	delete(r.funcs, id)
 }

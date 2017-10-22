@@ -139,11 +139,11 @@ type Model struct {
 
 // WithPainter wraps the view v, and replaces its Model.Painter with p.
 func WithPainter(v View, p paint.Painter) View {
-	return &painterView{View: v, painter: p}
+	return &painterView{view: v, painter: p}
 }
 
 type painterView struct {
-	View
+	view    View
 	painter paint.Painter
 }
 
@@ -151,26 +151,39 @@ func (v *painterView) ViewKey() interface{} {
 	return struct {
 		A interface{}
 		B interface{}
-	}{A: v.View.ViewKey(), B: internal.ReflectName(v.View)}
+	}{A: v.view.ViewKey(), B: internal.ReflectName(v.view)}
+}
+
+func (v *painterView) Lifecycle(from, to Stage) {
+	v.view.Lifecycle(from, to)
 }
 
 func (v *painterView) Update(v2 View) {
-	v.View.Update(v2.(*painterView).View)
+	v.view.Update(v2.(*painterView).view)
 }
 
 func (v *painterView) Build(ctx Context) Model {
-	m := v.View.Build(ctx)
+	m := v.view.Build(ctx)
 	m.Painter = v.painter
 	return m
 }
 
+func (v *painterView) Notify(f func()) comm.Id {
+	id := v.view.Notify(f)
+	return id
+}
+
+func (v *painterView) Unnotify(id comm.Id) {
+	v.view.Unnotify(id)
+}
+
 // WithOptions wraps the view v, and adds the given options to its Model.Options.
 func WithOptions(v View, opts ...Option) View {
-	return &optionsView{View: v, options: opts}
+	return &optionsView{view: v, options: opts}
 }
 
 type optionsView struct {
-	View
+	view    View
 	options []Option
 }
 
@@ -178,15 +191,28 @@ func (v *optionsView) ViewKey() interface{} {
 	return struct {
 		A interface{}
 		B interface{}
-	}{A: v.View.ViewKey(), B: internal.ReflectName(v.View)}
+	}{A: v.view.ViewKey(), B: internal.ReflectName(v.view)}
+}
+
+func (v *optionsView) Lifecycle(from, to Stage) {
+	v.view.Lifecycle(from, to)
 }
 
 func (v *optionsView) Update(v2 View) {
-	v.View.Update(v2.(*optionsView).View)
+	v.view.Update(v2.(*optionsView).view)
 }
 
 func (v *optionsView) Build(ctx Context) Model {
-	m := v.View.Build(ctx)
+	m := v.view.Build(ctx)
 	m.Options = append(m.Options, v.options...)
 	return m
+}
+
+func (v *optionsView) Notify(f func()) comm.Id {
+	id := v.view.Notify(f)
+	return id
+}
+
+func (v *optionsView) Unnotify(id comm.Id) {
+	v.view.Unnotify(id)
 }

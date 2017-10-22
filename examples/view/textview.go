@@ -16,26 +16,26 @@ func init() {
 	})
 }
 
-type TextView struct {
+type TextViewTest struct {
 	view.Embed
 	text      *text.Text
 	responder *keyboard.Responder
 }
 
-func NewTextView() *TextView {
-	return &TextView{
+func NewTextView() *TextViewTest {
+	return &TextViewTest{
 		text:      text.New("blah"),
 		responder: &keyboard.Responder{},
 	}
 }
 
-func (v *TextView) Lifecycle(from, to view.Stage) {
+func (v *TextViewTest) Lifecycle(from, to view.Stage) {
 	if view.EntersStage(from, to, view.StageVisible) {
 		v.responder.Show()
 	}
 }
 
-func (v *TextView) Build(ctx view.Context) view.Model {
+func (v *TextViewTest) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
 	style := &text.Style{}
