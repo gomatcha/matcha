@@ -18,12 +18,6 @@ import (
 	"strings"
 )
 
-var (
-	goos   = runtime.GOOS
-	goarch = runtime.GOARCH
-	// ndkarch string
-)
-
 const (
 	javacTargetVer = "1.7"
 	minAndroidAPI  = 15
@@ -44,11 +38,6 @@ func NDKRoot() (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. Error cleaning path %v.", err)
 	}
-
-	binPath := filepath.Join(path, "prebuilt", archNDK(), "bin")
-	if st, err := os.Stat(binPath); err != nil || !st.IsDir() {
-		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. Missing directory at %v.", binPath)
-	}
 	return path, nil
 }
 
@@ -63,7 +52,7 @@ type ndkToolchain struct {
 func (tc *ndkToolchain) Path(ndkRoot string, toolName string) string {
 	// The nm tool is located in the GCC directory structure.
 	isUtil := toolName == "nm"
-	if goos == "windows" {
+	if runtime.GOOS == "windows" {
 		toolName += ".exe"
 	}
 	path := filepath.Join(ndkRoot, "toolchains")
