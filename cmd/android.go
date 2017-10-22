@@ -28,7 +28,24 @@ Created-By: 1.0 (Go)
 
 `
 
-func NDKRoot() (string, error) {
+func androidHostTag() (string, error) {
+	if runtime.GOOS == "windows" && runtime.GOARCH == "386" {
+		return "windows", nil
+	} else {
+		var arch string
+		switch runtime.GOARCH {
+		case "386":
+			arch = "x86"
+		case "amd64":
+			arch = "x86_64"
+		default:
+			return "", fmt.Errorf("androidHostTag(): Unsupported GOARCH: %v", runtime.GOARCH)
+		}
+		return runtime.GOOS + "-" + arch, nil
+	}
+}
+
+func ndkRoot() (string, error) {
 	sdkHome := os.Getenv("ANDROID_HOME")
 	if sdkHome == "" {
 		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. $ANDROID_HOME is unset.")
@@ -50,7 +67,9 @@ type ndkToolchain struct {
 	gcc         string
 	toolPrefix  string
 	clangTarget string
-	ndkRoot     string
+	// Computed
+	ndkRoot string
+	hostTag string
 }
 
 func toolchainForArch(goarch string) (*ndkToolchain, error) {
@@ -88,24 +107,31 @@ func toolchainForArch(goarch string) (*ndkToolchain, error) {
 	if !ok {
 		return nil, fmt.Errorf("toolchainForArch(): Unknown arch %v", goarch)
 	}
-	ndkRoot, err := NDKRoot()
+
+	ndkRoot, err := ndkRoot()
 	if err != nil {
 		return nil, err
 	}
 	toolchain.ndkRoot = ndkRoot
+
+	hostTag, err := androidHostTag()
+	if err != nil {
+		return nil, err
+	}
+	toolchain.hostTag = hostTag
 	return toolchain, nil
 }
 
-func (tc *ndkToolchain) gccToolchain() string {
-	return filepath.Join(tc.ndkRoot, "toolchains", tc.gcc, "prebuilt", archNDK())
+func (tc *ndkToolchain) gccToolchainPath() string {
+	return filepath.Join(tc.ndkRoot, "toolchains", tc.gcc, "prebuilt", tc.hostTag)
 }
 
 func (tc *ndkToolchain) clangPath() string {
-	return filepath.Join(tc.ndkRoot, "toolchains", "llvm", "prebuilt", archNDK(), "bin", "clang")
+	return filepath.Join(tc.ndkRoot, "toolchains", "llvm", "prebuilt", tc.hostTag, "bin", "clang")
 }
 
 func (tc *ndkToolchain) clangppPath() string {
-	return filepath.Join(tc.ndkRoot, "toolchains", "llvm", "prebuilt", archNDK(), "bin", "clang++")
+	return filepath.Join(tc.ndkRoot, "toolchains", "llvm", "prebuilt", tc.hostTag, "bin", "clang++")
 }
 
 func (tc *ndkToolchain) sysroot() string {
@@ -131,7 +157,7 @@ func androidEnv(goarch string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	flags := fmt.Sprintf("-target %s --sysroot %s -gcc-toolchain %s", tc.clangTarget, tc.sysroot(), tc.gccToolchain())
+	flags := fmt.Sprintf("-target %s --sysroot %s -gcc-toolchain %s", tc.clangTarget, tc.sysroot(), tc.gccToolchainPath())
 	cflags := fmt.Sprintf("%s", flags)
 	ldflags := fmt.Sprintf("%s -L%s/usr/lib", flags, tc.sysroot())
 	env := []string{
@@ -148,23 +174,6 @@ func androidEnv(goarch string) ([]string, error) {
 		env = append(env, "GOARM=7")
 	}
 	return env, nil
-}
-
-func archNDK() string {
-	if runtime.GOOS == "windows" && runtime.GOARCH == "386" {
-		return "windows"
-	} else {
-		var arch string
-		switch runtime.GOARCH {
-		case "386":
-			arch = "x86"
-		case "amd64":
-			arch = "x86_64"
-		default:
-			panic("unsupported GOARCH: " + runtime.GOARCH)
-		}
-		return runtime.GOOS + "-" + arch
-	}
 }
 
 // androidAPIPath returns an android SDK platform directory under ANDROID_HOME.
