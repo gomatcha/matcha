@@ -2,8 +2,8 @@ package android
 
 import (
 	"gomatcha.io/matcha/bridge"
+	"gomatcha.io/matcha/examples/view/ios"
 	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/ios"
 )
 
 func init() {
