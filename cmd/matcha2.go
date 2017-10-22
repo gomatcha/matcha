@@ -129,8 +129,8 @@ func GetAndroidEnv(gomobpath string) (map[string][]string, error) {
 		sysroot := filepath.Join(ndkRoot, "platforms", toolchain.platform, "arch-"+toolchain.arch)
 		gcctoolchain := filepath.Join(ndkRoot, "toolchains", toolchain.gcc, "prebuilt", archNDK())
 		flags := fmt.Sprintf("-target %s --sysroot %s -gcc-toolchain %s", target, sysroot, gcctoolchain)
-		cflags := fmt.Sprintf("%s -I%s/include", flags, gomobpath)
-		ldflags := fmt.Sprintf("%s -L%s/usr/lib -L%s/lib/%s", flags, sysroot, gomobpath, arch)
+		cflags := fmt.Sprintf("%s", flags)
+		ldflags := fmt.Sprintf("%s -L%s/usr/lib", flags, sysroot)
 		androidENV[arch] = []string{
 			"GOOS=android",
 			"GOARCH=" + arch,
