@@ -13,7 +13,7 @@
 - (id)initWithViewNode:(MatchaViewNode *)viewNode; // viewNode should be weakly retained
 - (void)setNativeState:(NSData *)nativeState;
 - (void)setMatchaChildViewControllers:(NSArray<UIViewController *> *)childVCs;
-- (void)setMatchaChildLayout:(NSArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
+//- (void)setMatchaChildLayout:(NSArray<MatchaViewPBLayoutPaintNode *> *)layoutPaintNodes;
 @end
 
 @interface MatchaViewNode : NSObject

@@ -572,7 +572,6 @@ func (n *node) build() {
 				n.root.addFlag(n.id, buildFlag)
 			})
 			n.buildIsNotified = true
-			fmt.Println(n.String(), n.view, n.buildNotifyId)
 		}
 
 		// Watch for layout changes.
@@ -686,7 +685,6 @@ func (n *node) done() {
 	n.view.Lifecycle(n.stage, StageDead)
 	n.stage = StageDead
 
-	fmt.Println(n.String(), n.view)
 	if n.buildIsNotified {
 		n.view.Unnotify(n.buildNotifyId)
 	}
