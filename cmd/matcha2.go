@@ -141,11 +141,15 @@ func GetAndroidEnv(gomobpath string) (map[string][]string, error) {
 			a = "armv7a"
 		}
 		target := strings.Join([]string{a, "none", os, env}, "-")
-		sysroot := filepath.Join(ndkRoot, "platforms", toolchain.platform, "arch-"+toolchain.arch)
+		androidApi := strings.TrimPrefix(toolchain.platform, "android-")
+		sysroot := filepath.Join(ndkRoot, "sysroot")
+		isystem := filepath.Join(sysroot, "usr", "include", toolchain.toolPrefix)
+		ldsysroot := filepath.Join(ndkRoot, "platforms", toolchain.platform, "arch-"+toolchain.arch)
 		gcctoolchain := filepath.Join(ndkRoot, "toolchains", toolchain.gcc, "prebuilt", archNDK())
-		flags := fmt.Sprintf("-target %s --sysroot %s -gcc-toolchain %s", target, sysroot, gcctoolchain)
-		cflags := fmt.Sprintf("%s -I%s/include", flags, gomobpath)
-		ldflags := fmt.Sprintf("%s -L%s/usr/lib -L%s/lib/%s", flags, sysroot, gomobpath, arch)
+		flags := fmt.Sprintf("-target %s -gcc-toolchain %s", target, gcctoolchain)
+		cflags := fmt.Sprintf("%s --sysroot %s -isystem %s -D__ANDROID_API__=%s -I%s/include", flags, sysroot, isystem, androidApi, gomobpath)
+		ldflags := fmt.Sprintf("%s --sysroot %s -L%s/lib/%s", flags, ldsysroot, gomobpath, arch)
+
 		androidENV[arch] = []string{
 			"GOOS=android",
 			"GOARCH=" + arch,
