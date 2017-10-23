@@ -10,8 +10,8 @@ import (
 	"strings"
 )
 
-func validateXcodeInstall(flags *Flags) error {
-	err := _validateXcodeInstall(flags)
+func validateXcodeInstall(f *Flags) error {
+	err := _validateXcodeInstall(f)
 	if err != nil {
 		fmt.Println(`Invalid or unsupported Xcode installation. See https://gomatcha.io/guide/installation/
 for detailed instructions or set the --targets="android" flag to skip iOS builds.
@@ -20,8 +20,8 @@ for detailed instructions or set the --targets="android" flag to skip iOS builds
 	return err
 }
 
-func _validateXcodeInstall(flags *Flags) error {
-	if _, err := LookPath(flags, "xcrun"); err != nil {
+func _validateXcodeInstall(f *Flags) error {
+	if _, err := LookPath(f, "xcrun"); err != nil {
 		return err
 	}
 	return nil
@@ -43,15 +43,14 @@ func ArchClang(goarch string) string {
 }
 
 // Get clang path and clang flags (SDK Path).
-func EnvClang(flags *Flags, sdkName string) (_clang, cflags string, err error) {
+func EnvClang(f *Flags, sdkName string) (_clang, cflags string, err error) {
 	// Get the clang path
 	cmd := exec.Command("xcrun", "--sdk", sdkName, "--find", "clang")
-
 	var clang string
-	if flags.ShouldPrint() {
+	if f.ShouldPrint() {
 		PrintCmd(cmd)
 	}
-	if flags.ShouldRun() {
+	if f.ShouldRun() {
 		out, err := cmd.Output()
 		if err != nil {
 			return "", "", fmt.Errorf("xcrun --find: %v\n%s", err, out)
@@ -64,10 +63,10 @@ func EnvClang(flags *Flags, sdkName string) (_clang, cflags string, err error) {
 	// Get the SDK path
 	cmd = exec.Command("xcrun", "--sdk", sdkName, "--show-sdk-path")
 	var sdk string
-	if flags.ShouldPrint() {
+	if f.ShouldPrint() {
 		PrintCmd(cmd)
 	}
-	if flags.ShouldRun() {
+	if f.ShouldRun() {
 		out, err := cmd.Output()
 		if err != nil {
 			return "", "", fmt.Errorf("xcrun --show-sdk-path: %v\n%s", err, out)

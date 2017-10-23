@@ -21,7 +21,7 @@ func Init(flags *Flags) error {
 	targets := ParseTargets(flags.BuildTargets)
 
 	// Get $GOPATH/pkg/matcha directory
-	matchaPkgPath, err := MatchaPkgPath()
+	matchaPkgPath, err := MatchaPkgPath(flags)
 	if err != nil {
 		return err
 	}
@@ -102,7 +102,7 @@ func Init(flags *Flags) error {
 
 		// Install standard libraries for cross compilers.
 		if _, ok := targets["android/arm"]; ok {
-			env, err := androidEnv("arm")
+			env, err := androidEnv(flags, "arm")
 			if err != nil {
 				return err
 			}
@@ -112,7 +112,7 @@ func Init(flags *Flags) error {
 		}
 
 		if _, ok := targets["android/arm64"]; ok {
-			env, err := androidEnv("arm64")
+			env, err := androidEnv(flags, "arm64")
 			if err != nil {
 				return err
 			}
@@ -122,7 +122,7 @@ func Init(flags *Flags) error {
 		}
 
 		if _, ok := targets["android/386"]; ok {
-			env, err := androidEnv("386")
+			env, err := androidEnv(flags, "386")
 			if err != nil {
 				return err
 			}
@@ -132,7 +132,7 @@ func Init(flags *Flags) error {
 		}
 
 		if _, ok := targets["android/amd64"]; ok {
-			env, err := androidEnv("amd64")
+			env, err := androidEnv(flags, "amd64")
 			if err != nil {
 				return err
 			}
@@ -168,12 +168,12 @@ func Init(flags *Flags) error {
 
 // Build package with properties.
 func InstallPkg(f *Flags, temporarydir string, pkg string, env []string, args ...string) error {
-	pkgPath, err := PkgPath(env)
+	pkgPath, err := PkgPath(f, env)
 	if err != nil {
 		return err
 	}
 
-	tOS, tArch := Getenv(env, "GOOS"), Getenv(env, "GOARCH")
+	tOS, tArch := FindEnv(env, "GOOS"), FindEnv(env, "GOARCH")
 	if tOS != "" && tArch != "" {
 		if f.BuildV {
 			fmt.Fprintf(os.Stderr, "\n# Installing %s for %s/%s.\n", pkg, tOS, tArch)

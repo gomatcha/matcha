@@ -77,7 +77,7 @@ func Bind(flags *Flags, args []string) error {
 	}
 
 	// Get $GOPATH/pkg/matcha.
-	matchaPkgPath, err := MatchaPkgPath()
+	matchaPkgPath, err := MatchaPkgPath(flags)
 	if err != nil {
 		return err
 	}
@@ -246,7 +246,7 @@ func Bind(flags *Flags, args []string) error {
 		archChan := make(chan archPath)
 		for _, i := range envs {
 			go func(env []string) {
-				arch := Getenv(env, "GOARCH")
+				arch := FindEnv(env, "GOARCH")
 				env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+os.Getenv("GOPATH"))
 				path := filepath.Join(tempdir, "matcha-"+arch+".a")
 				err := GoBuild(flags, mainPath, env, ctx, tempdir, "-buildmode=c-archive", "-o", path)
@@ -368,7 +368,7 @@ func Bind(flags *Flags, args []string) error {
 
 		// Generate binding code and java source code only when processing the first package.
 		for _, arch := range androidArchs {
-			env, err := androidEnv(arch)
+			env, err := androidEnv(flags, arch)
 			if err != nil {
 				return err
 			}

@@ -28,8 +28,8 @@ Created-By: 1.0 (Go)
 
 `
 
-func validateAndroidInstall(flags *Flags) error {
-	err := _validateAndroidInstall(flags)
+func validateAndroidInstall(f *Flags) error {
+	err := _validateAndroidInstall(f)
 	if err != nil {
 		fmt.Println(`Invalid or unsupported Android installation. See https://gomatcha.io/guide/installation/
 for detailed instructions or set the --targets="ios" flag to skip Android builds.
@@ -38,21 +38,21 @@ for detailed instructions or set the --targets="ios" flag to skip Android builds
 	return err
 }
 
-func _validateAndroidInstall(flags *Flags) error {
-	if _, err := AndroidAPIPath(); err != nil {
+func _validateAndroidInstall(f *Flags) error {
+	if _, err := AndroidAPIPath(f); err != nil {
 		return err
 	}
-	if _, err := ndkRoot(); err != nil {
+	if _, err := ndkRoot(f); err != nil {
 		return err
 	}
-	if _, err := LookPath(flags, "javac"); err != nil {
+	if _, err := LookPath(f, "javac"); err != nil {
 		return err
 	}
 	return nil
 }
 
-func androidEnv(goarch string) ([]string, error) {
-	tc, err := toolchainForArch(goarch)
+func androidEnv(f *Flags, goarch string) ([]string, error) {
+	tc, err := toolchainForArch(f, goarch)
 	if err != nil {
 		return nil, err
 	}
@@ -92,8 +92,8 @@ func ndkHostTag() (string, error) {
 	}
 }
 
-func ndkRoot() (string, error) {
-	sdkHome := os.Getenv("ANDROID_HOME")
+func ndkRoot(f *Flags) (string, error) {
+	sdkHome := GetEnv(f, "ANDROID_HOME")
 	if sdkHome == "" {
 		return "", fmt.Errorf("ndkRoot(): $ANDROID_HOME enviromental var is unset.")
 	}
@@ -103,8 +103,8 @@ func ndkRoot() (string, error) {
 		return "", fmt.Errorf("ndkRoot(): Error cleaning path %v.", err)
 	}
 
-	if st, err := os.Stat(path); err != nil || !st.IsDir() {
-		return "", fmt.Errorf("ndkRoot(): Missing $ANDROID_HOME/ndk-bundle directory at %v.", path)
+	if !IsDir(f, path) {
+		return "", fmt.Errorf("Missing $ANDROID_HOME/ndk-bundle directory at %v.", path)
 	}
 	return path, nil
 }
@@ -125,7 +125,7 @@ type ndkToolchain struct {
 	hostTag string
 }
 
-func toolchainForArch(goarch string) (*ndkToolchain, error) {
+func toolchainForArch(f *Flags, goarch string) (*ndkToolchain, error) {
 	m := map[string]*ndkToolchain{
 		"arm": &ndkToolchain{
 			arch:        "arm",
@@ -161,7 +161,7 @@ func toolchainForArch(goarch string) (*ndkToolchain, error) {
 		return nil, fmt.Errorf("toolchainForArch(): Unknown arch %v", goarch)
 	}
 
-	ndkRoot, err := ndkRoot()
+	ndkRoot, err := ndkRoot(f)
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func GetAndroidABI(arch string) string {
 // androidAPIPath returns an android SDK platform directory under ANDROID_HOME.
 // If there are multiple platforms that satisfy the minimum version requirement
 // androidAPIPath returns the latest one among them.
-func AndroidAPIPath() (string, error) {
+func AndroidAPIPath(f *Flags) (string, error) {
 	sdk := os.Getenv("ANDROID_HOME")
 	if sdk == "" {
 		return "", fmt.Errorf("ANDROID_HOME environment var is not set")
@@ -274,9 +274,13 @@ func AndroidAPIPath() (string, error) {
 //  aidl (optional, not relevant)
 //
 // javac and jar commands are needed to build classes.jar.
-func BuildAAR(flags *Flags, androidDir string, pkgs []*build.Package, androidArchs []string, tmpdir string, aarPath string) (err error) {
+func BuildAAR(f *Flags, androidDir string, pkgs []*build.Package, androidArchs []string, tmpdir string, aarPath string) (err error) {
+	if !f.ShouldRun() { // TODO(KD):
+		return nil
+	}
+
 	var out io.Writer = ioutil.Discard
-	if !flags.BuildN {
+	if !f.BuildN {
 		f, err := os.Create(aarPath)
 		if err != nil {
 			return err
@@ -291,7 +295,7 @@ func BuildAAR(flags *Flags, androidDir string, pkgs []*build.Package, androidArc
 
 	aarw := zip.NewWriter(out)
 	aarwcreate := func(name string) (io.Writer, error) {
-		if flags.BuildV {
+		if f.BuildV {
 			fmt.Fprintf(os.Stderr, "aar: %s\n", name)
 		}
 		return aarw.Create(name)
@@ -315,7 +319,7 @@ func BuildAAR(flags *Flags, androidDir string, pkgs []*build.Package, androidArc
 		return err
 	}
 	src := filepath.Join(androidDir, "src/main/java")
-	if err := BuildJar(flags, w, src, tmpdir); err != nil {
+	if err := BuildJar(f, w, src, tmpdir); err != nil {
 		return err
 	}
 
@@ -368,7 +372,7 @@ func BuildAAR(flags *Flags, androidDir string, pkgs []*build.Package, androidArc
 		if err != nil {
 			return err
 		}
-		if !flags.BuildN {
+		if !f.BuildN {
 			r, err := os.Open(filepath.Join(androidDir, "src/main/jniLibs/"+lib))
 			if err != nil {
 				return err
@@ -394,11 +398,9 @@ func BuildAAR(flags *Flags, androidDir string, pkgs []*build.Package, androidArc
 	return aarw.Close()
 }
 
-func BuildJar(flags *Flags, w io.Writer, srcDir string, tmpdir string) error {
-	bindClasspath := ""
-
+func BuildJar(f *Flags, w io.Writer, srcDir string, tmpdir string) error {
 	var srcFiles []string
-	if flags.BuildN {
+	if !f.ShouldRun() {
 		srcFiles = []string{"*.java"}
 	} else {
 		err := filepath.Walk(srcDir, func(path string, info os.FileInfo, err error) error {
@@ -416,14 +418,11 @@ func BuildJar(flags *Flags, w io.Writer, srcDir string, tmpdir string) error {
 	}
 
 	dst := filepath.Join(tmpdir, "javac-output")
-	if !flags.BuildN {
-		if err := os.MkdirAll(dst, 0700); err != nil {
-			return err
-		}
+	if err := Mkdir(f, dst); err != nil {
+		return err
 	}
 
-	bClspath, err := bootClasspath()
-
+	bClspath, err := bootClasspath(f)
 	if err != nil {
 		return err
 	}
@@ -433,16 +432,13 @@ func BuildJar(flags *Flags, w io.Writer, srcDir string, tmpdir string) error {
 		"-source", javacTargetVer,
 		"-target", javacTargetVer,
 		"-bootclasspath", bClspath,
+		// "-classpath", bindClasspath
 	}
-	if bindClasspath != "" {
-		args = append(args, "-classpath", bindClasspath)
-	}
-
 	args = append(args, srcFiles...)
 
 	javac := exec.Command("javac", args...)
 	javac.Dir = srcDir
-	if err := RunCmd(&Flags{}, tmpdir, javac); err != nil {
+	if err := RunCmd(f, tmpdir, javac); err != nil {
 		return err
 	}
 
@@ -450,21 +446,21 @@ func BuildJar(flags *Flags, w io.Writer, srcDir string, tmpdir string) error {
 	// if buildX {
 	// KD: printcmd("jar c -C %s .", dst)
 	// }
-	if flags.BuildN {
+	if !f.ShouldRun() {
 		return nil
 	}
 	jarw := zip.NewWriter(w)
 	jarwcreate := func(name string) (io.Writer, error) {
-		if flags.BuildV {
+		if f.BuildV {
 			fmt.Fprintf(os.Stderr, "jar: %s\n", name)
 		}
 		return jarw.Create(name)
 	}
-	f, err := jarwcreate("META-INF/MANIFEST.MF")
+	manifestFile, err := jarwcreate("META-INF/MANIFEST.MF")
 	if err != nil {
 		return err
 	}
-	fmt.Fprintf(f, manifestHeader)
+	fmt.Fprintf(manifestFile, manifestHeader)
 
 	err = filepath.Walk(dst, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -491,12 +487,12 @@ func BuildJar(flags *Flags, w io.Writer, srcDir string, tmpdir string) error {
 	return jarw.Close()
 }
 
-func bootClasspath() (string, error) {
+func bootClasspath(f *Flags) (string, error) {
 	// bindBootClasspath := "" // KD: command parameter
 	// if bindBootClasspath != "" {
 	// 	return bindBootClasspath, nil
 	// }
-	apiPath, err := AndroidAPIPath()
+	apiPath, err := AndroidAPIPath(f)
 	if err != nil {
 		return "", err
 	}

@@ -35,7 +35,7 @@ func (f *Flags) ShouldRun() bool {
 	return !f.BuildN
 }
 
-func Getenv(env []string, key string) string {
+func FindEnv(env []string, key string) string {
 	prefix := key + "="
 	for _, kv := range env {
 		if strings.HasPrefix(kv, prefix) {
@@ -46,8 +46,8 @@ func Getenv(env []string, key string) string {
 }
 
 // $GOPATH/pkg/matcha
-func MatchaPkgPath() (string, error) {
-	gopaths := filepath.SplitList(GoEnv("GOPATH"))
+func MatchaPkgPath(f *Flags) (string, error) {
+	gopaths := filepath.SplitList(GoEnv(f, "GOPATH"))
 	gomobilepath := ""
 	for _, p := range gopaths {
 		gomobilepath = filepath.Join(p, "pkg", "matcha")
@@ -66,24 +66,32 @@ func MatchaPkgPath() (string, error) {
 }
 
 // $GOPATH/pkg/matcha/pkg_darwin_arm64
-func PkgPath(env []string) (string, error) {
-	gomobilepath, err := MatchaPkgPath()
+func PkgPath(f *Flags, env []string) (string, error) {
+	gomobilepath, err := MatchaPkgPath(f)
 	if err != nil {
 		return "", err
 	}
-	return gomobilepath + "/pkg_" + Getenv(env, "GOOS") + "_" + Getenv(env, "GOARCH"), nil
+	return gomobilepath + "/pkg_" + FindEnv(env, "GOOS") + "_" + FindEnv(env, "GOARCH"), nil
 }
 
 // Returns the go enviromental variable for name.
-func GoEnv(name string) string {
-	if val := os.Getenv(name); val != "" {
+func GoEnv(f *Flags, name string) string {
+	if val := GetEnv(f, name); val != "" {
 		return val
 	}
-	val, err := exec.Command("go", "env", name).Output()
-	if err != nil {
-		return ""
+
+	cmd := exec.Command("go", "env", name)
+	if f.ShouldPrint() {
+		PrintCmd(cmd)
 	}
-	return strings.TrimSpace(string(val))
+	if f.ShouldRun() {
+		val, err := cmd.Output()
+		if err != nil {
+			return ""
+		}
+		return strings.TrimSpace(string(val))
+	}
+	return "$" + name
 }
 
 func GoVersion(f *Flags) ([]byte, error) {
@@ -113,12 +121,12 @@ func GoInstall(f *Flags, srcs []string, env []string, ctx build.Context, tmpdir 
 }
 
 func GoCmd(f *Flags, subcmd string, srcs []string, env []string, ctx build.Context, tmpdir string, args ...string) error {
-	pkgPath, err := PkgPath(env)
+	pkgPath, err := PkgPath(f, env)
 	if err != nil {
 		return err
 	}
 
-	if st, err := os.Stat(pkgPath); err != nil || !st.IsDir() {
+	if !IsDir(f, pkgPath) {
 		return fmt.Errorf("Matcha not initialized for this target. Missing directory at %v.", pkgPath)
 	}
 

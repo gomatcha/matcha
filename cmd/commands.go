@@ -235,3 +235,25 @@ func LookPath(f *Flags, file string) (string, error) {
 	}
 	return file, nil
 }
+
+func GetEnv(f *Flags, key string) string {
+	if f.ShouldPrint() {
+		fmt.Fprintf(os.Stderr, "printenv %s\n", key)
+	}
+	if f.ShouldRun() {
+		return os.Getenv(key)
+	}
+	return "$" + key
+}
+
+func IsDir(f *Flags, path string) bool {
+	if f.ShouldPrint() {
+		fmt.Fprintf(os.Stderr, "test -d %s\n", path)
+	}
+	if f.ShouldRun() {
+		if st, err := os.Stat(path); err != nil || !st.IsDir() {
+			return false
+		}
+	}
+	return true
+}
