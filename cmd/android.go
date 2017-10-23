@@ -28,6 +28,18 @@ Created-By: 1.0 (Go)
 
 `
 
+func validateAndroidInstall() error {
+	if _, err := AndroidAPIPath(); err != nil {
+		fmt.Println("Android SDK could not be found. Install Android SDK or run with --target='ios' to not build for Android.")
+		return err
+	}
+	if _, err := ndkRoot(); err != nil {
+		fmt.Println("Android NDK could not be found. Install Android NDK or run with --target='ios' to not build for Android.")
+		return err
+	}
+	return nil
+}
+
 func androidEnv(goarch string) ([]string, error) {
 	tc, err := toolchainForArch(goarch)
 	if err != nil {
@@ -72,16 +84,16 @@ func ndkHostTag() (string, error) {
 func ndkRoot() (string, error) {
 	sdkHome := os.Getenv("ANDROID_HOME")
 	if sdkHome == "" {
-		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. $ANDROID_HOME enviromental var is unset.")
+		return "", fmt.Errorf("ndkRoot(): $ANDROID_HOME enviromental var is unset.")
 	}
 
 	path, err := filepath.Abs(filepath.Join(sdkHome, "ndk-bundle"))
 	if err != nil {
-		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. Error cleaning path %v.", err)
+		return "", fmt.Errorf("ndkRoot(): Error cleaning path %v.", err)
 	}
 
 	if st, err := os.Stat(path); err != nil || !st.IsDir() {
-		return "", fmt.Errorf("$ANDROID_HOME does not point to an Android NDK. Missing directory at %v.", path)
+		return "", fmt.Errorf("ndkRoot(): Missing $ANDROID_HOME/ndk-bundle directory at %v.", path)
 	}
 	return path, nil
 }

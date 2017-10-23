@@ -15,13 +15,18 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
+	"runtime"
 	"strings"
 )
 
 func ParseTargets(a string) map[string]struct{} {
 	targetsSlice := strings.Fields(a)
 	if len(targetsSlice) == 0 {
-		targetsSlice = []string{"android", "ios"}
+		if runtime.GOOS == "darwin" {
+			targetsSlice = []string{"android", "ios"}
+		} else {
+			targetsSlice = []string{"android"}
+		}
 	}
 	targets := map[string]struct{}{}
 	for _, i := range targetsSlice {
@@ -142,6 +147,11 @@ func Bind(flags *Flags, args []string) error {
 
 	// Begin iOS
 	if _, ok := targets["ios"]; ok {
+		// Validate Xcode installation
+		if err := validateXcodeInstall(); err != nil {
+			return err
+		}
+
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "IOS-GOPATH")
 
@@ -285,6 +295,11 @@ func Bind(flags *Flags, args []string) error {
 		}
 	}
 	if _, ok := targets["android"]; ok {
+		// Validate Android installation
+		if err := validateAndroidInstall(); err != nil {
+			return err
+		}
+
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "ANDROID-GOPATH")
 

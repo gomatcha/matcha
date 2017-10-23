@@ -20,7 +20,7 @@ func Init(flags *Flags) error {
 	// Parse targets
 	targets := ParseTargets(flags.BuildTargets)
 
-	// Get $GOPATH/pkg/matcha
+	// Get $GOPATH/pkg/matcha directory
 	matchaPkgPath, err := MatchaPkgPath()
 	if err != nil {
 		return err
@@ -48,6 +48,11 @@ func Init(flags *Flags) error {
 
 	// Begin iOS
 	if _, ok := targets["ios"]; ok {
+		// Validate Xcode installation
+		if err := validateXcodeInstall(); err != nil {
+			return err
+		}
+
 		// Install standard libraries for cross compilers.
 		var env []string
 
@@ -90,6 +95,11 @@ func Init(flags *Flags) error {
 
 	// Begin android
 	if _, ok := targets["android"]; ok {
+		// Validate Android installation
+		if err := validateAndroidInstall(); err != nil {
+			return err
+		}
+
 		// Install standard libraries for cross compilers.
 		if _, ok := targets["android/arm"]; ok {
 			env, err := androidEnv("arm")
