@@ -5,16 +5,24 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 	"os/exec"
 	"strings"
 )
 
-func validateXcodeInstall() error {
-	if _, err := exec.LookPath("xcrun"); err != nil {
-		fmt.Println("Xcode could not be found. Install Xcode or run with --target='android' to not build for iOS.")
-		return errors.New("validateXcodeInstall(): xcrun command not found.")
+func validateXcodeInstall(flags *Flags) error {
+	err := _validateXcodeInstall(flags)
+	if err != nil {
+		fmt.Println(`Invalid or unsupported Xcode installation. See https://gomatcha.io/guide/installation/
+for detailed instructions or set the --targets="android" flag to skip iOS builds.
+`)
+	}
+	return err
+}
+
+func _validateXcodeInstall(flags *Flags) error {
+	if _, err := LookPath(flags, "xcrun"); err != nil {
+		return err
 	}
 	return nil
 }
@@ -36,10 +44,6 @@ func ArchClang(goarch string) string {
 
 // Get clang path and clang flags (SDK Path).
 func EnvClang(flags *Flags, sdkName string) (_clang, cflags string, err error) {
-	if _, err := exec.LookPath("xcrun"); err != nil {
-		return "", "", errors.New("Xcode not available: could not find xcrun command.")
-	}
-
 	// Get the clang path
 	cmd := exec.Command("xcrun", "--sdk", sdkName, "--find", "clang")
 

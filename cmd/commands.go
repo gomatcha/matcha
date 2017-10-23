@@ -225,3 +225,13 @@ func Symlink(flags *Flags, src, dst string) error {
 	}
 	return nil
 }
+
+func LookPath(f *Flags, file string) (string, error) {
+	if f.ShouldPrint() {
+		fmt.Fprintf(os.Stderr, "which %s\n", file)
+	}
+	if f.ShouldRun() {
+		return exec.LookPath(file)
+	}
+	return file, nil
+}

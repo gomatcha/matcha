@@ -28,13 +28,24 @@ Created-By: 1.0 (Go)
 
 `
 
-func validateAndroidInstall() error {
+func validateAndroidInstall(flags *Flags) error {
+	err := _validateAndroidInstall(flags)
+	if err != nil {
+		fmt.Println(`Invalid or unsupported Android installation. See https://gomatcha.io/guide/installation/
+for detailed instructions or set the --targets="ios" flag to skip Android builds.
+`)
+	}
+	return err
+}
+
+func _validateAndroidInstall(flags *Flags) error {
 	if _, err := AndroidAPIPath(); err != nil {
-		fmt.Println("Android SDK could not be found. Install Android SDK or run with --target='ios' to not build for Android.")
 		return err
 	}
 	if _, err := ndkRoot(); err != nil {
-		fmt.Println("Android NDK could not be found. Install Android NDK or run with --target='ios' to not build for Android.")
+		return err
+	}
+	if _, err := LookPath(flags, "javac"); err != nil {
 		return err
 	}
 	return nil

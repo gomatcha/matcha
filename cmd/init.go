@@ -49,7 +49,7 @@ func Init(flags *Flags) error {
 	// Begin iOS
 	if _, ok := targets["ios"]; ok {
 		// Validate Xcode installation
-		if err := validateXcodeInstall(); err != nil {
+		if err := validateXcodeInstall(flags); err != nil {
 			return err
 		}
 
@@ -96,7 +96,7 @@ func Init(flags *Flags) error {
 	// Begin android
 	if _, ok := targets["android"]; ok {
 		// Validate Android installation
-		if err := validateAndroidInstall(); err != nil {
+		if err := validateAndroidInstall(flags); err != nil {
 			return err
 		}
 

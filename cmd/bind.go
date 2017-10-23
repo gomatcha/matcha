@@ -148,7 +148,7 @@ func Bind(flags *Flags, args []string) error {
 	// Begin iOS
 	if _, ok := targets["ios"]; ok {
 		// Validate Xcode installation
-		if err := validateXcodeInstall(); err != nil {
+		if err := validateXcodeInstall(flags); err != nil {
 			return err
 		}
 
@@ -296,7 +296,7 @@ func Bind(flags *Flags, args []string) error {
 	}
 	if _, ok := targets["android"]; ok {
 		// Validate Android installation
-		if err := validateAndroidInstall(); err != nil {
+		if err := validateAndroidInstall(flags); err != nil {
 			return err
 		}
 
