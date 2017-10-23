@@ -408,7 +408,6 @@ var BindFile = `
 package main
 
 import (
-	_ "golang.org/x/mobile/bind/java"
     _ "gomatcha.io/matcha/bridge"
     _ "%s"
 )
