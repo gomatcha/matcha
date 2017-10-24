@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 	"go/build"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -18,7 +17,7 @@ import (
 type Flags struct {
 	BuildN       bool   // print commands but don't run
 	BuildX       bool   // print commands
-	BuildV       bool   // print package names
+	BuildV       bool   // print package names. Verbose.
 	BuildWork    bool   // use working directory
 	BuildGcflags string // -gcflags
 	BuildLdflags string // -ldflags
@@ -48,21 +47,21 @@ func FindEnv(env []string, key string) string {
 // $GOPATH/pkg/matcha
 func MatchaPkgPath(f *Flags) (string, error) {
 	gopaths := filepath.SplitList(GoEnv(f, "GOPATH"))
-	gomobilepath := ""
-	for _, p := range gopaths {
-		gomobilepath = filepath.Join(p, "pkg", "matcha")
-		if _, err := os.Stat(gomobilepath); err == nil {
+	p := ""
+	for _, i := range gopaths {
+		p = filepath.Join(i, "pkg", "matcha")
+		if IsDir(f, p) {
 			break
 		}
 	}
-	if gomobilepath == "" {
+	if p == "" {
 		if len(gopaths) == 0 {
 			return "", fmt.Errorf("$GOPATH does not exist")
 		} else {
 			return filepath.Join(gopaths[0], "pkg", "matcha"), nil
 		}
 	}
-	return gomobilepath, nil
+	return p, nil
 }
 
 // $GOPATH/pkg/matcha/pkg_darwin_arm64
@@ -81,35 +80,25 @@ func GoEnv(f *Flags, name string) string {
 	}
 
 	cmd := exec.Command("go", "env", name)
-	if f.ShouldPrint() {
-		PrintCmd(cmd)
+	out, err := OutputCmd(f, []byte("$"+name), "", cmd)
+	if err != nil {
+		return ""
 	}
-	if f.ShouldRun() {
-		val, err := cmd.Output()
-		if err != nil {
-			return ""
-		}
-		return strings.TrimSpace(string(val))
-	}
-	return "$" + name
+	return strings.TrimSpace(string(out))
 }
 
 func GoVersion(f *Flags) ([]byte, error) {
 	cmd := exec.Command("go", "version")
-	if f.ShouldPrint() {
-		PrintCmd(cmd)
+	goVer, err := OutputCmd(f, []byte("go version goX.X.X x/x"), "", cmd)
+	if err != nil {
+		return nil, err
 	}
 	if f.ShouldRun() {
-		goVer, err := cmd.Output()
-		if err != nil {
-			return nil, fmt.Errorf("'go version' failed: %v, %s", err, goVer)
-		}
 		if bytes.HasPrefix(goVer, []byte("go version go1.4")) || bytes.HasPrefix(goVer, []byte("go version go1.5")) || bytes.HasPrefix(goVer, []byte("go version go1.6")) {
 			return nil, errors.New("Go 1.7 or newer is required")
 		}
-		return goVer, nil
 	}
-	return []byte("go version goX.X.X"), nil
+	return goVer, nil
 }
 
 func GoBuild(f *Flags, src string, env []string, ctx build.Context, tmpdir string, args ...string) error {

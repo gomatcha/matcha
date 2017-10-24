@@ -22,27 +22,27 @@ func PrintCmd(cmd *exec.Cmd) {
 }
 
 func RunCmd(f *Flags, tmpdir string, cmd *exec.Cmd) error {
+	_, err := OutputCmd(f, nil, tmpdir, cmd)
+	return err
+}
+
+func OutputCmd(f *Flags, fallback []byte, tmpdir string, cmd *exec.Cmd) ([]byte, error) {
 	if f.ShouldPrint() {
-		dir := ""
+		str := ""
 		if cmd.Dir != "" {
-			dir = "PWD=" + cmd.Dir + " "
+			str += "PWD=" + cmd.Dir + " "
 		}
-		env := strings.Join(cmd.Env, " ")
-		if env != "" {
-			env += " "
+		if len(cmd.Env) > 0 {
+			str += strings.Join(cmd.Env, " ") + " "
 		}
-		fmt.Fprintln(os.Stderr, dir, env, strings.Join(cmd.Args, " "))
+		str += strings.Join(cmd.Args, " ")
+		fmt.Fprintln(os.Stderr, str)
 	}
 
-	buf := new(bytes.Buffer)
-	buf.WriteByte('\n')
-	if f.BuildV {
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-	} else {
-		cmd.Stdout = buf
-		cmd.Stderr = buf
-	}
+	outbuf := new(bytes.Buffer)
+	errbuf := new(bytes.Buffer)
+	cmd.Stdout = outbuf
+	cmd.Stderr = errbuf
 
 	if f.BuildWork && tmpdir != "" {
 		if runtime.GOOS == "windows" {
@@ -53,13 +53,26 @@ func RunCmd(f *Flags, tmpdir string, cmd *exec.Cmd) error {
 		}
 	}
 
+	var output []byte
 	if f.ShouldRun() {
 		cmd.Env = Environ(cmd.Env)
 		if err := cmd.Run(); err != nil {
-			return fmt.Errorf("%s failed: %v%s", strings.Join(cmd.Args, " "), err, buf)
+			return nil, fmt.Errorf("%s failed: %v\n%s\n%s", strings.Join(cmd.Args, " "), err, outbuf, errbuf)
+		}
+		output = outbuf.Bytes()
+	} else {
+		output = fallback
+	}
+
+	if f.BuildV {
+		if _, err := outbuf.WriteTo(os.Stderr); err != nil {
+			return nil, err
+		}
+		if _, err := outbuf.WriteTo(os.Stdout); err != nil {
+			return nil, err
 		}
 	}
-	return nil
+	return output, nil
 }
 
 // environ merges os.Environ and the given "key=value" pairs.
@@ -124,11 +137,17 @@ func NewTmpDir(f *Flags, path string) (string, error) {
 
 // Returns the directory for a given package.
 func PackageDir(f *Flags, pkgpath string) (string, error) {
-	pkg, err := build.Default.Import(pkgpath, "", build.FindOnly)
-	if err != nil {
-		return "", err
+	if f.ShouldPrint() {
+		fmt.Fprintf(os.Stderr, "go findpackage %s\n", pkgpath)
 	}
-	return pkg.Dir, nil
+	if f.ShouldRun() {
+		pkg, err := build.Default.Import(pkgpath, "", build.FindOnly)
+		if err != nil {
+			return "", err
+		}
+		return pkg.Dir, nil
+	}
+	return "$GOPATH/src/" + pkgpath, nil
 }
 
 func RemoveAll(f *Flags, path string) error {
@@ -256,4 +275,14 @@ func IsDir(f *Flags, path string) bool {
 		}
 	}
 	return true
+}
+
+func Getwd(f *Flags) (string, error) {
+	if f.ShouldPrint() {
+		fmt.Fprintf(os.Stderr, "pwd\n")
+	}
+	if f.ShouldRun() {
+		return os.Getwd()
+	}
+	return "$CWD", nil
 }

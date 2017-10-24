@@ -11,7 +11,6 @@ import (
 	"go/build"
 	"io"
 	"io/ioutil"
-	"os"
 	"os/exec"
 	"path"
 	"path/filepath"
@@ -100,7 +99,7 @@ func Bind(flags *Flags, args []string) error {
 	}
 
 	// Get current working directory.
-	cwd, err := os.Getwd()
+	cwd, err := Getwd(flags)
 	if err != nil {
 		return err
 	}
@@ -247,7 +246,7 @@ func Bind(flags *Flags, args []string) error {
 		for _, i := range envs {
 			go func(env []string) {
 				arch := FindEnv(env, "GOARCH")
-				env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+os.Getenv("GOPATH"))
+				env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+GoEnv(flags, "GOPATH"))
 				path := filepath.Join(tempdir, "matcha-"+arch+".a")
 				err := GoBuild(flags, mainPath, env, ctx, tempdir, "-buildmode=c-archive", "-o", path)
 				archChan <- archPath{arch, path, err}
@@ -372,7 +371,7 @@ func Bind(flags *Flags, args []string) error {
 			if err != nil {
 				return err
 			}
-			env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+os.Getenv("GOPATH"))
+			env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+GoEnv(flags, "GOPATH"))
 
 			err = GoBuild(flags,
 				mainPath,

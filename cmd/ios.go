@@ -46,36 +46,19 @@ func ArchClang(goarch string) string {
 func EnvClang(f *Flags, sdkName string) (_clang, cflags string, err error) {
 	// Get the clang path
 	cmd := exec.Command("xcrun", "--sdk", sdkName, "--find", "clang")
-	var clang string
-	if f.ShouldPrint() {
-		PrintCmd(cmd)
+	out, err := OutputCmd(f, []byte("$CLANG_"+strings.ToUpper(sdkName)), "", cmd)
+	if err != nil {
+		return "", "", err
 	}
-	if f.ShouldRun() {
-		out, err := cmd.Output()
-		if err != nil {
-			return "", "", fmt.Errorf("xcrun --find: %v\n%s", err, out)
-		}
-		clang = strings.TrimSpace(string(out))
-	} else {
-		clang = "clang-" + sdkName
-	}
+	clang := strings.TrimSpace(string(out))
 
 	// Get the SDK path
 	cmd = exec.Command("xcrun", "--sdk", sdkName, "--show-sdk-path")
-	var sdk string
-	if f.ShouldPrint() {
-		PrintCmd(cmd)
+	out, err = OutputCmd(f, []byte("$SDK_"+strings.ToUpper(sdkName)), "", cmd)
+	if err != nil {
+		return "", "", err
 	}
-	if f.ShouldRun() {
-		out, err := cmd.Output()
-		if err != nil {
-			return "", "", fmt.Errorf("xcrun --show-sdk-path: %v\n%s", err, out)
-		}
-		sdk = strings.TrimSpace(string(out))
-	} else {
-		sdk = sdkName
-	}
-
+	sdk := strings.TrimSpace(string(out))
 	return clang, "-isysroot " + sdk, nil
 }
 

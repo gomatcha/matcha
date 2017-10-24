@@ -93,18 +93,14 @@ func ndkHostTag() (string, error) {
 }
 
 func ndkRoot(f *Flags) (string, error) {
-	sdkHome := GetEnv(f, "ANDROID_HOME")
-	if sdkHome == "" {
+	path := GetEnv(f, "ANDROID_HOME")
+	if path == "" {
 		return "", fmt.Errorf("ndkRoot(): $ANDROID_HOME enviromental var is unset.")
 	}
 
-	path, err := filepath.Abs(filepath.Join(sdkHome, "ndk-bundle"))
-	if err != nil {
-		return "", fmt.Errorf("ndkRoot(): Error cleaning path %v.", err)
-	}
-
+	path = filepath.Join(path, "ndk-bundle")
 	if !IsDir(f, path) {
-		return "", fmt.Errorf("Missing $ANDROID_HOME/ndk-bundle directory at %v.", path)
+		return "", fmt.Errorf("ndkRoot(): Missing $ANDROID_HOME/ndk-bundle directory at %v.", path)
 	}
 	return path, nil
 }
@@ -217,10 +213,15 @@ func GetAndroidABI(arch string) string {
 // If there are multiple platforms that satisfy the minimum version requirement
 // androidAPIPath returns the latest one among them.
 func AndroidAPIPath(f *Flags) (string, error) {
-	sdk := os.Getenv("ANDROID_HOME")
+	sdk := GetEnv(f, "ANDROID_HOME")
 	if sdk == "" {
-		return "", fmt.Errorf("ANDROID_HOME environment var is not set")
+		return "", fmt.Errorf("AndroidAPIPath(): ANDROID_HOME environment var is not set")
 	}
+
+	if !f.ShouldRun() {
+		return filepath.Join(sdk, "platforms", "android-21"), nil
+	}
+
 	sdkDir, err := os.Open(filepath.Join(sdk, "platforms"))
 	if err != nil {
 		return "", fmt.Errorf("failed to find android SDK platform: %v", err)

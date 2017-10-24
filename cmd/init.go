@@ -7,7 +7,7 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -25,9 +25,6 @@ func Init(flags *Flags) error {
 	if err != nil {
 		return err
 	}
-	if flags.ShouldPrint() {
-		fmt.Fprintln(os.Stderr, "GOMOBILE="+matchaPkgPath)
-	}
 
 	// Delete $GOPATH/pkg/matcha
 	if err := RemoveAll(flags, matchaPkgPath); err != nil {
@@ -39,8 +36,8 @@ func Init(flags *Flags) error {
 		return err
 	}
 
-	// Make $GOPATH/pkg/matcha/work...
-	tmpdir, err := NewTmpDir(flags, matchaPkgPath)
+	// Make $WORK
+	tmpdir, err := NewTmpDir(flags, "")
 	if err != nil {
 		return err
 	}
@@ -143,18 +140,16 @@ func Init(flags *Flags) error {
 	}
 
 	// Write Go Version to $GOPATH/pkg/matcha/version
-	verpath := filepath.Join(matchaPkgPath, "version")
-	if flags.ShouldPrint() {
-		fmt.Fprintln(os.Stderr, "go version >", verpath)
+	goversion, err := GoVersion(flags)
+	if err != nil {
+		return nil
 	}
-	if flags.ShouldRun() {
-		goversion, err := GoVersion(flags)
-		if err != nil {
-			return nil
-		}
-		if err := ioutil.WriteFile(verpath, goversion, 0644); err != nil {
-			return err
-		}
+	verpath := filepath.Join(matchaPkgPath, "version")
+	if err := WriteFile(flags, verpath, func(w io.Writer) error {
+		_, err := w.Write(goversion)
+		return err
+	}); err != nil {
+		return err
 	}
 
 	// Timing
