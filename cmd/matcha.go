@@ -65,12 +65,8 @@ func MatchaPkgPath(f *Flags) (string, error) {
 }
 
 // $GOPATH/pkg/matcha/pkg_darwin_arm64
-func PkgPath(f *Flags, env []string) (string, error) {
-	gomobilepath, err := MatchaPkgPath(f)
-	if err != nil {
-		return "", err
-	}
-	return gomobilepath + "/pkg_" + FindEnv(env, "GOOS") + "_" + FindEnv(env, "GOARCH"), nil
+func PkgPath(f *Flags, matchaPkgPath string, env []string) (string, error) {
+	return matchaPkgPath + "/pkg_" + FindEnv(env, "GOOS") + "_" + FindEnv(env, "GOARCH"), nil
 }
 
 // Returns the go enviromental variable for name.
@@ -101,16 +97,16 @@ func GoVersion(f *Flags) ([]byte, error) {
 	return goVer, nil
 }
 
-func GoBuild(f *Flags, src string, env []string, ctx build.Context, tmpdir string, args ...string) error {
-	return GoCmd(f, "build", []string{src}, env, ctx, tmpdir, args...)
+func GoBuild(f *Flags, src string, env []string, ctx build.Context, matchaPkgPath, tmpdir string, args ...string) error {
+	return GoCmd(f, "build", []string{src}, env, ctx, matchaPkgPath, tmpdir, args...)
 }
 
-func GoInstall(f *Flags, srcs []string, env []string, ctx build.Context, tmpdir string, args ...string) error {
-	return GoCmd(f, "install", srcs, env, ctx, tmpdir, args...)
+func GoInstall(f *Flags, srcs []string, env []string, ctx build.Context, matchaPkgPath, tmpdir string, args ...string) error {
+	return GoCmd(f, "install", srcs, env, ctx, matchaPkgPath, tmpdir, args...)
 }
 
-func GoCmd(f *Flags, subcmd string, srcs []string, env []string, ctx build.Context, tmpdir string, args ...string) error {
-	pkgPath, err := PkgPath(f, env)
+func GoCmd(f *Flags, subcmd string, srcs []string, env []string, ctx build.Context, matchaPkgPath, tmpdir string, args ...string) error {
+	pkgPath, err := PkgPath(f, matchaPkgPath, env)
 	if err != nil {
 		return err
 	}

@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 	"go/build"
-	"io"
 	"io/ioutil"
 	"os/exec"
 	"path"
@@ -168,11 +167,7 @@ func Bind(flags *Flags, args []string) error {
 
 		// Create the "main" go package, that references the other go packages
 		mainPath := filepath.Join(tempdir, "src", "iosbin", "main.go")
-		err = WriteFile(flags, mainPath, func(w io.Writer) error {
-			format := fmt.Sprintf(BindFile, args[0]) // TODO(KD): Should this be args[0] or should it use the logic to generate pkgs
-			_, err := w.Write([]byte(format))
-			return err
-		})
+		err = WriteFile(flags, mainPath, strings.NewReader(fmt.Sprintf(BindFile, args[0]))) // TODO(KD): Should this be args[0] or should it use the logic to generate pkgs
 		if err != nil {
 			return fmt.Errorf("failed to create the binding package for iOS: %v", err)
 		}
@@ -248,7 +243,7 @@ func Bind(flags *Flags, args []string) error {
 				arch := FindEnv(env, "GOARCH")
 				env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+GoEnv(flags, "GOPATH"))
 				path := filepath.Join(tempdir, "matcha-"+arch+".a")
-				err := GoBuild(flags, mainPath, env, ctx, tempdir, "-buildmode=c-archive", "-o", path)
+				err := GoBuild(flags, mainPath, env, ctx, matchaPkgPath, tempdir, "-buildmode=c-archive", "-o", path)
 				archChan <- archPath{arch, path, err}
 			}(i)
 		}
@@ -329,11 +324,7 @@ func Bind(flags *Flags, args []string) error {
 		androidDir := filepath.Join(tempdir, "android")
 		mainPath := filepath.Join(tempdir, "androidlib/main.go")
 
-		err = WriteFile(flags, mainPath, func(w io.Writer) error {
-			format := fmt.Sprintf(BindFile, args[0]) // TODO(KD): Should this be args[0] or should it use the logic to generate pkgs
-			_, err := w.Write([]byte(format))
-			return err
-		})
+		err = WriteFile(flags, mainPath, strings.NewReader(fmt.Sprintf(BindFile, args[0]))) // TODO(KD): Should this be args[0] or should it use the logic to generate pkgs
 		if err != nil {
 			return fmt.Errorf("failed to create the main package for android: %v", err)
 		}
@@ -377,6 +368,7 @@ func Bind(flags *Flags, args []string) error {
 				mainPath,
 				env,
 				ctx,
+				matchaPkgPath,
 				tempdir,
 				"-buildmode=c-shared",
 				"-o="+filepath.Join(androidDir, "src/main/jniLibs/"+GetAndroidABI(arch)+"/libgojni.so"),

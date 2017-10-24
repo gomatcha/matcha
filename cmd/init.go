@@ -6,8 +6,8 @@
 package cmd
 
 import (
+	"bytes"
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -57,7 +57,7 @@ func Init(flags *Flags) error {
 			if env, err = DarwinArmEnv(flags); err != nil {
 				return err
 			}
-			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			if err := InstallPkg(flags, matchaPkgPath, tmpdir, "std", env); err != nil {
 				return err
 			}
 		}
@@ -66,7 +66,7 @@ func Init(flags *Flags) error {
 			if env, err = DarwinArm64Env(flags); err != nil {
 				return err
 			}
-			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			if err := InstallPkg(flags, matchaPkgPath, tmpdir, "std", env); err != nil {
 				return err
 			}
 		}
@@ -75,7 +75,7 @@ func Init(flags *Flags) error {
 			if env, err = Darwin386Env(flags); err != nil {
 				return err
 			}
-			if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
+			if err := InstallPkg(flags, matchaPkgPath, tmpdir, "std", env, "-tags=ios"); err != nil {
 				return err
 			}
 		}
@@ -84,7 +84,7 @@ func Init(flags *Flags) error {
 			if env, err = DarwinAmd64Env(flags); err != nil {
 				return err
 			}
-			if err := InstallPkg(flags, tmpdir, "std", env, "-tags=ios"); err != nil {
+			if err := InstallPkg(flags, matchaPkgPath, tmpdir, "std", env, "-tags=ios"); err != nil {
 				return err
 			}
 		}
@@ -103,7 +103,7 @@ func Init(flags *Flags) error {
 			if err != nil {
 				return err
 			}
-			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			if err := InstallPkg(flags, matchaPkgPath, tmpdir, "std", env); err != nil {
 				return err
 			}
 		}
@@ -113,7 +113,7 @@ func Init(flags *Flags) error {
 			if err != nil {
 				return err
 			}
-			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			if err := InstallPkg(flags, matchaPkgPath, tmpdir, "std", env); err != nil {
 				return err
 			}
 		}
@@ -123,7 +123,7 @@ func Init(flags *Flags) error {
 			if err != nil {
 				return err
 			}
-			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			if err := InstallPkg(flags, matchaPkgPath, tmpdir, "std", env); err != nil {
 				return err
 			}
 		}
@@ -133,7 +133,7 @@ func Init(flags *Flags) error {
 			if err != nil {
 				return err
 			}
-			if err := InstallPkg(flags, tmpdir, "std", env); err != nil {
+			if err := InstallPkg(flags, matchaPkgPath, tmpdir, "std", env); err != nil {
 				return err
 			}
 		}
@@ -145,10 +145,7 @@ func Init(flags *Flags) error {
 		return nil
 	}
 	verpath := filepath.Join(matchaPkgPath, "version")
-	if err := WriteFile(flags, verpath, func(w io.Writer) error {
-		_, err := w.Write(goversion)
-		return err
-	}); err != nil {
+	if err := WriteFile(flags, verpath, bytes.NewReader(goversion)); err != nil {
 		return err
 	}
 
@@ -162,8 +159,8 @@ func Init(flags *Flags) error {
 }
 
 // Build package with properties.
-func InstallPkg(f *Flags, temporarydir string, pkg string, env []string, args ...string) error {
-	pkgPath, err := PkgPath(f, env)
+func InstallPkg(f *Flags, matchaPkgPath, temp string, pkg string, env []string, args ...string) error {
+	pkgPath, err := PkgPath(f, matchaPkgPath, env)
 	if err != nil {
 		return err
 	}
@@ -193,5 +190,5 @@ func InstallPkg(f *Flags, temporarydir string, pkg string, env []string, args ..
 	}
 	cmd.Args = append(cmd.Args, pkg)
 	cmd.Env = append([]string{}, env...)
-	return RunCmd(f, temporarydir, cmd)
+	return RunCmd(f, temp, cmd)
 }

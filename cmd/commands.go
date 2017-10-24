@@ -160,26 +160,30 @@ func RemoveAll(f *Flags, path string) error {
 	return nil
 }
 
-func WriteFile(flags *Flags, filename string, generate func(io.Writer) error) error {
-	if err := Mkdir(flags, filepath.Dir(filename)); err != nil {
-		return err
+func WriteFile(f *Flags, filename string, r io.Reader) (err error) {
+	if err = Mkdir(f, filepath.Dir(filename)); err != nil {
+		return
 	}
-	if flags.ShouldPrint() {
+	if f.ShouldPrint() {
 		fmt.Fprintf(os.Stderr, "write %s\n", filename)
 	}
-	if flags.ShouldRun() {
-		f, err := os.Create(filename)
+	if f.ShouldRun() {
+		var file *os.File
+		file, err = os.Create(filename)
 		if err != nil {
-			return err
+			return
 		}
 		defer func() {
-			if cerr := f.Close(); err == nil {
+			if cerr := file.Close(); err == nil {
 				err = cerr
 			}
 		}()
-		return generate(f)
+
+		if _, err = io.Copy(file, r); err != nil {
+			return
+		}
 	}
-	return generate(ioutil.Discard)
+	return
 }
 
 func ReadFile(flags *Flags, filename string) ([]byte, error) {
@@ -196,20 +200,15 @@ func CopyFile(f *Flags, dst, src string) error {
 	if f.ShouldPrint() {
 		fmt.Fprintf(os.Stderr, "cp %s %s\n", src, dst)
 	}
-	return WriteFile(f, dst, func(w io.Writer) error {
-		if f.ShouldRun() {
-			f, err := os.Open(src)
-			if err != nil {
-				return err
-			}
-			defer f.Close()
-
-			if _, err := io.Copy(w, f); err != nil {
-				return fmt.Errorf("cp %s %s failed: %v", src, dst, err)
-			}
+	if f.ShouldRun() {
+		file, err := os.Open(src)
+		if err != nil {
+			return err
 		}
-		return nil
-	})
+		defer file.Close()
+		return WriteFile(f, dst, file)
+	}
+	return nil
 }
 
 func CopyDir(f *Flags, dst, src string) error {
