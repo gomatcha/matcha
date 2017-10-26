@@ -17,10 +17,6 @@ import (
 	"strings"
 )
 
-func PrintCmd(f *Flags, cmd *exec.Cmd) {
-	f.Logger.Println(strings.Join(cmd.Args, " "))
-}
-
 func RunCmd(f *Flags, tmpdir string, cmd *exec.Cmd) error {
 	_, err := OutputCmd(f, nil, tmpdir, cmd)
 	return err
@@ -55,7 +51,7 @@ func OutputCmd(f *Flags, fallback []byte, tmpdir string, cmd *exec.Cmd) ([]byte,
 
 	var output []byte
 	if f.ShouldRun() {
-		cmd.Env = Environ(cmd.Env)
+		cmd.Env = MergeEnviron(cmd.Env, os.Environ())
 		if err := cmd.Run(); err != nil {
 			return nil, fmt.Errorf("%s failed: %v\n%s\n%s", strings.Join(cmd.Args, " "), err, outbuf, errbuf)
 		}
@@ -78,9 +74,8 @@ func OutputCmd(f *Flags, fallback []byte, tmpdir string, cmd *exec.Cmd) ([]byte,
 }
 
 // environ merges os.Environ and the given "key=value" pairs.
-// If a key is in both os.Environ and kv, kv takes precedence.
-func Environ(kv []string) []string {
-	cur := os.Environ()
+// If a key is in both curr and kv, kv takes precedence.
+func MergeEnviron(kv, cur []string) []string {
 	new := make([]string, 0, len(cur)+len(kv))
 	goos := runtime.GOOS
 
@@ -93,7 +88,7 @@ func Environ(kv []string) []string {
 			new = append(new, ev)
 			continue
 		}
-		if goos == "windows" {
+		if goos == "windows" { // Windows is case-insensitive?
 			elem[0] = strings.ToUpper(elem[0])
 		}
 		envs[elem[0]] = elem[1]
@@ -227,15 +222,15 @@ func CopyFile(f *Flags, dst, src string) error {
 	return nil
 }
 
-func CopyDir(f *Flags, dst, src string) error {
-	cmd := exec.Command("cp", "-R", src, dst)
-	return RunCmd(f, "", cmd)
-}
+// func CopyDir(f *Flags, dst, src string) error {
+// 	cmd := exec.Command("cp", "-R", src, dst)
+// 	return RunCmd(f, "", cmd)
+// }
 
-func CopyDirContents(f *Flags, dst, src string) error {
-	cmd := exec.Command("cp", "-R", src+string(filepath.Separator)+".", dst)
-	return RunCmd(f, "", cmd)
-}
+// func CopyDirContents(f *Flags, dst, src string) error {
+// 	cmd := exec.Command("cp", "-R", src+string(filepath.Separator)+".", dst)
+// 	return RunCmd(f, "", cmd)
+// }
 
 func Mkdir(f *Flags, dir string) error {
 	if f.ShouldPrint() {
@@ -243,19 +238,6 @@ func Mkdir(f *Flags, dir string) error {
 	}
 	if f.ShouldRun() {
 		return os.MkdirAll(dir, 0755)
-	}
-	return nil
-}
-
-func Symlink(f *Flags, src, dst string) error {
-	if f.ShouldPrint() {
-		f.Logger.Printf("ln -s %s %s\n", src, dst)
-	}
-	if f.ShouldRun() {
-		// if goos == "windows" {
-		//  return doCopyAll(dst, src)
-		// }
-		return os.Symlink(src, dst)
 	}
 	return nil
 }

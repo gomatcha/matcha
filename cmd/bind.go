@@ -111,20 +111,17 @@ func Bind(flags *Flags, args []string) error {
 
 	// Get import paths to be built.
 	importPaths := []string{}
-	srcDir := ""
 	if len(args) == 0 {
 		importPaths = append(importPaths, ".")
-		srcDir = cwd
 	} else {
 		for _, i := range args {
 			i = path.Clean(i)
 			importPaths = append(importPaths, i)
 		}
-		srcDir = cwd
 	}
 
 	// Get packages to be built
-	pkgs, err := ImportAll(&ctx, importPaths, srcDir, build.ImportComment)
+	pkgs, err := ImportAll(&ctx, importPaths, cwd, build.ImportComment)
 	if err != nil {
 		return err
 	}
