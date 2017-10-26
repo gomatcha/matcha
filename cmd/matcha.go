@@ -15,6 +15,7 @@ import (
 )
 
 type Flags struct {
+	disablePrint bool
 	BuildN       bool   // print commands but don't run
 	BuildX       bool   // print commands
 	BuildV       bool   // print package names. Verbose.
@@ -27,7 +28,7 @@ type Flags struct {
 }
 
 func (f *Flags) ShouldPrint() bool {
-	return f.BuildN || f.BuildX
+	return (f.BuildN || f.BuildX) && !f.disablePrint
 }
 
 func (f *Flags) ShouldRun() bool {

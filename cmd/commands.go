@@ -161,11 +161,18 @@ func RemoveAll(f *Flags, path string) error {
 }
 
 func WriteFile(f *Flags, filename string, r io.Reader) (err error) {
-	if err = Mkdir(f, filepath.Dir(filename)); err != nil {
-		return
-	}
 	if f.ShouldPrint() {
 		fmt.Fprintf(os.Stderr, "write %s\n", filename)
+	}
+
+	disablePrint := f.disablePrint
+	f.disablePrint = true
+	defer func() {
+		f.disablePrint = disablePrint
+	}()
+
+	if err = Mkdir(f, filepath.Dir(filename)); err != nil {
+		return
 	}
 	if f.ShouldRun() {
 		var file *os.File
@@ -200,6 +207,13 @@ func CopyFile(f *Flags, dst, src string) error {
 	if f.ShouldPrint() {
 		fmt.Fprintf(os.Stderr, "cp %s %s\n", src, dst)
 	}
+
+	disablePrint := f.disablePrint
+	f.disablePrint = true
+	defer func() {
+		f.disablePrint = disablePrint
+	}()
+
 	if f.ShouldRun() {
 		file, err := os.Open(src)
 		if err != nil {
