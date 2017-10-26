@@ -106,7 +106,6 @@ func Bind(flags *Flags, args []string) error {
 	ctx := build.Default
 	ctx.GOARCH = "arm"
 	ctx.GOOS = "darwin"
-	ctx.BuildTags = append(ctx.BuildTags, "ios")
 	ctx.BuildTags = append(ctx.BuildTags, "matcha")
 
 	// Get import paths to be built.
@@ -240,7 +239,7 @@ func Bind(flags *Flags, args []string) error {
 				arch := FindEnv(env, "GOARCH")
 				env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+GoEnv(flags, "GOPATH"))
 				path := filepath.Join(tempdir, "matcha-"+arch+".a")
-				err := GoBuild(flags, []string{mainPath}, env, ctx, matchaPkgPath, tempdir, "-buildmode=c-archive", "-o", path)
+				err := GoBuild(flags, []string{mainPath}, env, []string{"matcha"}, matchaPkgPath, tempdir, "-buildmode=c-archive", "-o", path)
 				archChan <- archPath{arch, path, err}
 			}(i)
 
@@ -305,11 +304,6 @@ func Bind(flags *Flags, args []string) error {
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "ANDROID-GOPATH")
 
-		pkgs2 := []*build.Package{}
-		for _, i := range pkgs {
-			pkgs2 = append(pkgs2, i)
-		}
-
 		androidArchs := []string{}
 		if _, ok := targets["android/arm"]; ok {
 			androidArchs = append(androidArchs, "arm")
@@ -323,11 +317,6 @@ func Bind(flags *Flags, args []string) error {
 		if _, ok := targets["android/amd64"]; ok {
 			androidArchs = append(androidArchs, "amd64")
 		}
-
-		ctx := build.Default
-		ctx.GOARCH = "arm"
-		ctx.GOOS = "android"
-		ctx.BuildTags = append(ctx.BuildTags, "matcha")
 
 		androidDir := filepath.Join(tempdir, "android")
 		mainPath := filepath.Join(tempdir, "androidlib/main.go")
@@ -375,7 +364,7 @@ func Bind(flags *Flags, args []string) error {
 			err = GoBuild(flags,
 				[]string{mainPath},
 				env,
-				ctx,
+				[]string{"matcha"},
 				matchaPkgPath,
 				tempdir,
 				"-buildmode=c-shared",
@@ -385,7 +374,7 @@ func Bind(flags *Flags, args []string) error {
 				return err
 			}
 		}
-		if err := BuildAAR(flags, androidDir, pkgs2, androidArchs, tempdir, aarPath); err != nil {
+		if err := BuildAAR(flags, androidDir, pkgs, androidArchs, tempdir, aarPath); err != nil {
 			return err
 		}
 

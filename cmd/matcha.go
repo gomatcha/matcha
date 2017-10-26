@@ -106,7 +106,7 @@ func GoVersion(f *Flags) ([]byte, error) {
 	return goVer, nil
 }
 
-func GoBuild(f *Flags, srcs []string, env []string, ctx build.Context, matchaPkgPath, tmpdir string, args ...string) error {
+func GoBuild(f *Flags, srcs []string, env []string, buildTags []string, matchaPkgPath, tmpdir string, args ...string) error {
 	pkgPath, err := PkgPath(f, matchaPkgPath, env)
 	if err != nil {
 		return err
@@ -117,8 +117,8 @@ func GoBuild(f *Flags, srcs []string, env []string, ctx build.Context, matchaPkg
 	}
 
 	cmd := exec.Command("go", "build", "-pkgdir="+pkgPath)
-	if len(ctx.BuildTags) > 0 {
-		cmd.Args = append(cmd.Args, "-tags", strings.Join(ctx.BuildTags, " "))
+	if len(buildTags) > 0 {
+		cmd.Args = append(cmd.Args, "-tags", strings.Join(buildTags, " "))
 	}
 	if f.BuildV {
 		cmd.Args = append(cmd.Args, "-v")
