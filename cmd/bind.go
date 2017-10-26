@@ -243,7 +243,7 @@ func Bind(flags *Flags, args []string) error {
 				arch := FindEnv(env, "GOARCH")
 				env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+GoEnv(flags, "GOPATH"))
 				path := filepath.Join(tempdir, "matcha-"+arch+".a")
-				err := GoBuild(flags, mainPath, env, ctx, matchaPkgPath, tempdir, "-buildmode=c-archive", "-o", path)
+				err := GoBuild(flags, []string{mainPath}, env, ctx, matchaPkgPath, tempdir, "-buildmode=c-archive", "-o", path)
 				archChan <- archPath{arch, path, err}
 			}(i)
 
@@ -376,7 +376,7 @@ func Bind(flags *Flags, args []string) error {
 			env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+GoEnv(flags, "GOPATH"))
 
 			err = GoBuild(flags,
-				mainPath,
+				[]string{mainPath},
 				env,
 				ctx,
 				matchaPkgPath,

@@ -106,15 +106,7 @@ func GoVersion(f *Flags) ([]byte, error) {
 	return goVer, nil
 }
 
-func GoBuild(f *Flags, src string, env []string, ctx build.Context, matchaPkgPath, tmpdir string, args ...string) error {
-	return GoCmd(f, "build", []string{src}, env, ctx, matchaPkgPath, tmpdir, args...)
-}
-
-func GoInstall(f *Flags, srcs []string, env []string, ctx build.Context, matchaPkgPath, tmpdir string, args ...string) error {
-	return GoCmd(f, "install", srcs, env, ctx, matchaPkgPath, tmpdir, args...)
-}
-
-func GoCmd(f *Flags, subcmd string, srcs []string, env []string, ctx build.Context, matchaPkgPath, tmpdir string, args ...string) error {
+func GoBuild(f *Flags, srcs []string, env []string, ctx build.Context, matchaPkgPath, tmpdir string, args ...string) error {
 	pkgPath, err := PkgPath(f, matchaPkgPath, env)
 	if err != nil {
 		return err
@@ -124,7 +116,7 @@ func GoCmd(f *Flags, subcmd string, srcs []string, env []string, ctx build.Conte
 		return fmt.Errorf("Matcha not initialized for this target. Missing directory at %v.", pkgPath)
 	}
 
-	cmd := exec.Command("go", subcmd, "-pkgdir="+pkgPath)
+	cmd := exec.Command("go", "build", "-pkgdir="+pkgPath)
 	if len(ctx.BuildTags) > 0 {
 		cmd.Args = append(cmd.Args, "-tags", strings.Join(ctx.BuildTags, " "))
 	}
@@ -150,4 +142,28 @@ func GoCmd(f *Flags, subcmd string, srcs []string, env []string, ctx build.Conte
 	cmd.Args = append(cmd.Args, srcs...)
 	cmd.Env = append([]string{}, env...)
 	return RunCmd(f, tmpdir, cmd)
+}
+
+// Build package with properties.
+func InstallPkg(f *Flags, matchaPkgPath, temp string, pkg string, env []string, args ...string) error {
+	pkgPath, err := PkgPath(f, matchaPkgPath, env)
+	if err != nil {
+		return err
+	}
+	args = append(args, "-pkgdir="+pkgPath)
+
+	cmd := exec.Command("go", "install")
+	cmd.Args = append(cmd.Args, args...)
+	if f.BuildV {
+		cmd.Args = append(cmd.Args, "-v")
+	}
+	if f.BuildX {
+		cmd.Args = append(cmd.Args, "-x")
+	}
+	if f.BuildWork {
+		cmd.Args = append(cmd.Args, "-work")
+	}
+	cmd.Args = append(cmd.Args, pkg)
+	cmd.Env = append([]string{}, env...)
+	return RunCmd(f, temp, cmd)
 }
