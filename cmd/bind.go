@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 	"go/build"
-	"io/ioutil"
 	"os/exec"
 	"path"
 	"path/filepath"
@@ -57,7 +56,7 @@ func Build(flags *Flags, args []string) error {
 	if err != nil {
 		return err
 	}
-	flags.BuildBinary = true
+	// flags.BuildBinary = true
 	flags.BuildO = iosDir
 	return Bind(flags, args)
 }
@@ -172,34 +171,34 @@ func Bind(flags *Flags, args []string) error {
 			return fmt.Errorf("failed to create the binding package for iOS: %v", err)
 		}
 
-		if !flags.BuildBinary {
-			// Copy package's ios directory if it imports gomatcha.io/bridge.
-			for _, pkg := range pkgs {
-				importsBridge := false
-				for _, i := range pkg.Imports {
-					if i == "gomatcha.io/bridge" {
-						importsBridge = true
-						break
-					}
-				}
+		// if !flags.BuildBinary {
+		// 	// Copy package's ios directory if it imports gomatcha.io/bridge.
+		// 	for _, pkg := range pkgs {
+		// 		importsBridge := false
+		// 		for _, i := range pkg.Imports {
+		// 			if i == "gomatcha.io/bridge" {
+		// 				importsBridge = true
+		// 				break
+		// 			}
+		// 		}
 
-				if importsBridge {
-					files, err := ioutil.ReadDir(pkg.Dir)
-					if err != nil {
-						continue
-					}
+		// 		if importsBridge {
+		// 			files, err := ioutil.ReadDir(pkg.Dir)
+		// 			if err != nil {
+		// 				continue
+		// 			}
 
-					for _, i := range files {
-						if i.IsDir() && i.Name() == "ios" {
-							// Copy directory
-							src := filepath.Join(pkg.Dir, "ios")
-							dst := filepath.Join(workOutputDir)
-							CopyDirContents(flags, dst, src)
-						}
-					}
-				}
-			}
-		}
+		// 			for _, i := range files {
+		// 				if i.IsDir() && i.Name() == "ios" {
+		// 					// Copy directory
+		// 					src := filepath.Join(pkg.Dir, "ios")
+		// 					dst := filepath.Join(workOutputDir)
+		// 					CopyDirContents(flags, dst, src)
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// }
 
 		// Build platform binaries concurrently.
 		envs := [][]string{}
@@ -237,6 +236,7 @@ func Bind(flags *Flags, args []string) error {
 			path string
 			err  error
 		}
+		archs := []archPath{}
 		archChan := make(chan archPath)
 		for _, i := range envs {
 			go func(env []string) {
@@ -246,14 +246,23 @@ func Bind(flags *Flags, args []string) error {
 				err := GoBuild(flags, mainPath, env, ctx, matchaPkgPath, tempdir, "-buildmode=c-archive", "-o", path)
 				archChan <- archPath{arch, path, err}
 			}(i)
-		}
-		archs := []archPath{}
-		for i := 0; i < len(envs); i++ {
-			arch := <-archChan
-			if arch.err != nil {
-				return arch.err
+
+			if !flags.Threaded {
+				arch := <-archChan
+				if arch.err != nil {
+					return arch.err
+				}
+				archs = append(archs, arch)
 			}
-			archs = append(archs, arch)
+		}
+		if flags.Threaded {
+			for i := 0; i < len(envs); i++ {
+				arch := <-archChan
+				if arch.err != nil {
+					return arch.err
+				}
+				archs = append(archs, arch)
+			}
 		}
 
 		// Lipo to build fat binary.
@@ -272,21 +281,23 @@ func Bind(flags *Flags, args []string) error {
 			outputDir = "Matcha-iOS"
 		}
 
-		if !flags.BuildBinary {
-			if err := RemoveAll(flags, outputDir); err != nil {
-				return err
-			}
+		// if !flags.BuildBinary {
+		// 	if err := RemoveAll(flags, outputDir); err != nil {
+		// 		return err
+		// 	}
 
-			// Copy output directory into place.
-			if err := CopyDir(flags, outputDir, workOutputDir); err != nil {
-				return err
-			}
-		} else {
-			// Copy binary into place.
-			if err := CopyFile(flags, filepath.Join(outputDir, "ios", "MatchaBridge", "MatchaBridge", "MatchaBridge.a"), binaryPath); err != nil {
-				return err
-			}
+		// 	// Copy output directory into place.
+		// 	if err := CopyDir(flags, outputDir, workOutputDir); err != nil {
+		// 		return err
+		// 	}
+		// } else {
+
+		// Copy binary into place.
+		if err := CopyFile(flags, filepath.Join(outputDir, "ios", "MatchaBridge", "MatchaBridge", "MatchaBridge.a"), binaryPath); err != nil {
+			return err
 		}
+
+		// }
 	}
 	if _, ok := targets["android"]; ok {
 		// Validate Android installation

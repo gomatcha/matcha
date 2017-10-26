@@ -9,12 +9,15 @@ import (
 	"errors"
 	"fmt"
 	"go/build"
+	"log"
 	"os/exec"
 	"path/filepath"
 	"strings"
 )
 
 type Flags struct {
+	Logger       *log.Logger
+	Threaded     bool
 	disablePrint bool
 	BuildN       bool   // print commands but don't run
 	BuildX       bool   // print commands
@@ -24,7 +27,7 @@ type Flags struct {
 	BuildLdflags string // -ldflags
 	BuildO       string // output path
 	BuildBinary  bool
-	BuildTargets string
+	BuildTargets string // targets
 }
 
 func (f *Flags) ShouldPrint() bool {
@@ -67,7 +70,12 @@ func MatchaPkgPath(f *Flags) (string, error) {
 
 // $GOPATH/pkg/matcha/pkg_darwin_arm64
 func PkgPath(f *Flags, matchaPkgPath string, env []string) (string, error) {
-	return matchaPkgPath + "/pkg_" + FindEnv(env, "GOOS") + "_" + FindEnv(env, "GOARCH"), nil
+	tOS, tArch := FindEnv(env, "GOOS"), FindEnv(env, "GOARCH")
+	if tOS == "" || tArch == "" {
+		return "", fmt.Errorf("PkgPath(): Missing GOOS or GOARCH", tOS, tArch)
+	}
+
+	return matchaPkgPath + "/pkg_" + tOS + "_" + tArch, nil
 }
 
 // Returns the go enviromental variable for name.

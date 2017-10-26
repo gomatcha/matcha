@@ -297,7 +297,7 @@ func BuildAAR(f *Flags, androidDir string, pkgs []*build.Package, androidArchs [
 	aarw := zip.NewWriter(out)
 	aarwcreate := func(name string) (io.Writer, error) {
 		if f.BuildV {
-			fmt.Fprintf(os.Stderr, "aar: %s\n", name)
+			f.Logger.Printf("aar: %s\n", name)
 		}
 		return aarw.Create(name)
 	}
@@ -453,7 +453,7 @@ func BuildJar(f *Flags, w io.Writer, srcDir string, tmpdir string) error {
 	jarw := zip.NewWriter(w)
 	jarwcreate := func(name string) (io.Writer, error) {
 		if f.BuildV {
-			fmt.Fprintf(os.Stderr, "jar: %s\n", name)
+			f.Logger.Printf("jar: %s\n", name)
 		}
 		return jarw.Create(name)
 	}

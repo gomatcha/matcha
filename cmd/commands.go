@@ -17,8 +17,8 @@ import (
 	"strings"
 )
 
-func PrintCmd(cmd *exec.Cmd) {
-	fmt.Fprintln(os.Stderr, strings.Join(cmd.Args, " "))
+func PrintCmd(f *Flags, cmd *exec.Cmd) {
+	f.Logger.Println(strings.Join(cmd.Args, " "))
 }
 
 func RunCmd(f *Flags, tmpdir string, cmd *exec.Cmd) error {
@@ -36,7 +36,7 @@ func OutputCmd(f *Flags, fallback []byte, tmpdir string, cmd *exec.Cmd) ([]byte,
 			str += strings.Join(cmd.Env, " ") + " "
 		}
 		str += strings.Join(cmd.Args, " ")
-		fmt.Fprintln(os.Stderr, str)
+		f.Logger.Println(str)
 	}
 
 	outbuf := new(bytes.Buffer)
@@ -65,6 +65,8 @@ func OutputCmd(f *Flags, fallback []byte, tmpdir string, cmd *exec.Cmd) ([]byte,
 	}
 
 	if f.BuildV {
+		// f.Logger.Println(outbuf.Bytes())
+		// f.Logger.Println(errbuf.Bytes())
 		if _, err := outbuf.WriteTo(os.Stderr); err != nil {
 			return nil, err
 		}
@@ -130,7 +132,7 @@ func NewTmpDir(f *Flags, path string) (string, error) {
 		}
 	}
 	if f.ShouldPrint() || f.BuildWork {
-		fmt.Fprintln(os.Stderr, "WORK="+tmpdir)
+		f.Logger.Println("WORK=" + tmpdir)
 	}
 	return tmpdir, nil
 }
@@ -138,7 +140,7 @@ func NewTmpDir(f *Flags, path string) (string, error) {
 // Returns the directory for a given package.
 func PackageDir(f *Flags, pkgpath string) (string, error) {
 	if f.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "go findpackage %s\n", pkgpath)
+		f.Logger.Printf("go findpackage %s\n", pkgpath)
 	}
 	if f.ShouldRun() {
 		pkg, err := build.Default.Import(pkgpath, "", build.FindOnly)
@@ -152,7 +154,7 @@ func PackageDir(f *Flags, pkgpath string) (string, error) {
 
 func RemoveAll(f *Flags, path string) error {
 	if f.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "rm -r -f %s\n", path)
+		f.Logger.Printf("rm -r -f %s\n", path)
 	}
 	if f.ShouldRun() {
 		return os.RemoveAll(path)
@@ -162,7 +164,7 @@ func RemoveAll(f *Flags, path string) error {
 
 func WriteFile(f *Flags, filename string, r io.Reader) (err error) {
 	if f.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "write %s\n", filename)
+		f.Logger.Printf("write %s\n", filename)
 	}
 
 	disablePrint := f.disablePrint
@@ -193,11 +195,11 @@ func WriteFile(f *Flags, filename string, r io.Reader) (err error) {
 	return
 }
 
-func ReadFile(flags *Flags, filename string) ([]byte, error) {
-	if flags.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "read %s\n", filename)
+func ReadFile(f *Flags, filename string) ([]byte, error) {
+	if f.ShouldPrint() {
+		f.Logger.Printf("read %s\n", filename)
 	}
-	if flags.ShouldRun() {
+	if f.ShouldRun() {
 		return ioutil.ReadFile(filename)
 	}
 	return []byte{}, nil
@@ -205,7 +207,7 @@ func ReadFile(flags *Flags, filename string) ([]byte, error) {
 
 func CopyFile(f *Flags, dst, src string) error {
 	if f.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "cp %s %s\n", src, dst)
+		f.Logger.Printf("cp %s %s\n", src, dst)
 	}
 
 	disablePrint := f.disablePrint
@@ -235,21 +237,21 @@ func CopyDirContents(f *Flags, dst, src string) error {
 	return RunCmd(f, "", cmd)
 }
 
-func Mkdir(flags *Flags, dir string) error {
-	if flags.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "mkdir -p %s\n", dir)
+func Mkdir(f *Flags, dir string) error {
+	if f.ShouldPrint() {
+		f.Logger.Printf("mkdir -p %s\n", dir)
 	}
-	if flags.ShouldRun() {
+	if f.ShouldRun() {
 		return os.MkdirAll(dir, 0755)
 	}
 	return nil
 }
 
-func Symlink(flags *Flags, src, dst string) error {
-	if flags.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "ln -s %s %s\n", src, dst)
+func Symlink(f *Flags, src, dst string) error {
+	if f.ShouldPrint() {
+		f.Logger.Printf("ln -s %s %s\n", src, dst)
 	}
-	if flags.ShouldRun() {
+	if f.ShouldRun() {
 		// if goos == "windows" {
 		//  return doCopyAll(dst, src)
 		// }
@@ -260,7 +262,7 @@ func Symlink(flags *Flags, src, dst string) error {
 
 func LookPath(f *Flags, file string) (string, error) {
 	if f.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "which %s\n", file)
+		f.Logger.Printf("which %s\n", file)
 	}
 	if f.ShouldRun() {
 		return exec.LookPath(file)
@@ -270,7 +272,7 @@ func LookPath(f *Flags, file string) (string, error) {
 
 func GetEnv(f *Flags, key string) string {
 	if f.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "printenv %s\n", key)
+		f.Logger.Printf("printenv %s\n", key)
 	}
 	if f.ShouldRun() {
 		return os.Getenv(key)
@@ -280,7 +282,7 @@ func GetEnv(f *Flags, key string) string {
 
 func IsDir(f *Flags, path string) bool {
 	if f.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "test -d %s\n", path)
+		f.Logger.Printf("test -d %s\n", path)
 	}
 	if f.ShouldRun() {
 		if st, err := os.Stat(path); err != nil || !st.IsDir() {
@@ -292,7 +294,7 @@ func IsDir(f *Flags, path string) bool {
 
 func Getwd(f *Flags) (string, error) {
 	if f.ShouldPrint() {
-		fmt.Fprintf(os.Stderr, "pwd\n")
+		f.Logger.Printf("pwd\n")
 	}
 	if f.ShouldRun() {
 		return os.Getwd()
