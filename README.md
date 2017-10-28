@@ -25,8 +25,7 @@ Matcha requires the following components to be installed. Unfortunately only mac
 * Go 1.8
 * Xcode 8.3
 * Android Studio 2.3
-* NDK
-* Protobuf 3.3 - ObjC and Java
+* NDK - Installed through Android Studio
 
 To start, fetch the project and install the matcha command.
 

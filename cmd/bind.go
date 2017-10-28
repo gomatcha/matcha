@@ -304,6 +304,11 @@ func Bind(flags *Flags, args []string) error {
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "ANDROID-GOPATH")
 
+		pkgs2 := []*build.Package{}
+		for _, i := range pkgs {
+			pkgs2 = append(pkgs2, i)
+		}
+
 		androidArchs := []string{}
 		if _, ok := targets["android/arm"]; ok {
 			androidArchs = append(androidArchs, "arm")
@@ -374,7 +379,7 @@ func Bind(flags *Flags, args []string) error {
 				return err
 			}
 		}
-		if err := BuildAAR(flags, androidDir, pkgs, androidArchs, tempdir, aarPath); err != nil {
+		if err := BuildAAR(flags, androidDir, pkgs2, androidArchs, tempdir, aarPath); err != nil {
 			return err
 		}
 

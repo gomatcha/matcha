@@ -8,7 +8,6 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"go/build"
 	"log"
 	"os/exec"
 	"path/filepath"
