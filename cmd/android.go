@@ -28,11 +28,11 @@ Created-By: 1.0 (Go)
 )
 
 const (
-	missingAndroidHomeEnvVar  = "$ANDROID_HOME enviromental variable is unset and does not point to an Android SDK. The SDK is often at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
-	missingAndroidHome        = "$ANDROID_HOME enviromental variable does not point to an Android SDK. The SDK is often at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
-	missingNDK                = "NDK was not found at $ANDROID_HOME/ndk-bundle. NDK can be installed in Android Studio > SDK Manager."
-	missingAndroidPlatformDir = "Android SDK platform directory was not found at $ANDROID_HOME/ndk-bundle/platforms. $ANDROID_HOME may be set incorrectly."
+	missingAndroidHomeEnvVar  = "$ANDROID_HOME enviromental variable is unset and does not point to an Android SDK. The SDK is often located at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
+	missingAndroidHome        = "$ANDROID_HOME enviromental variable does not point to an Android SDK. The SDK is often located at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
+	missingAndroidPlatformDir = "$ANDROID_HOME enviromental variable does not point to an Android SDK. Missing directory at $ANDROID_HOME/platforms. The SDK is often located at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
 	missingAndroidPlatform    = "Android SDK platform with minimum API level of 15 was not found in $ANDROID_HOME/ndk-bundle/platforms. SDK platforms can be installed in Android Studio > SDK Manager."
+	missingNDK                = "NDK was not found at $ANDROID_HOME/ndk-bundle. NDK can be installed in Android Studio > SDK Manager."
 	missingJavac              = "javac was not found in $PATH."
 )
 
@@ -40,7 +40,7 @@ func ValidateAndroidInstall(f *Flags) error {
 	err := validateAndroidInstall(f)
 	if err != nil {
 		fmt.Println(`Invalid or unsupported Android installation. See https://gomatcha.io/guide/installation/
-for detailed instructions or set the --targets="ios" flag to skip Android builds.
+for detailed instructions or set the --targets="ios" flag to only build for iOS.
 `)
 	}
 	return err
