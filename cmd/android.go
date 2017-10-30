@@ -28,8 +28,8 @@ Created-By: 1.0 (Go)
 )
 
 const (
-	missingAndroidHomeEnvVar  = "$ANDROID_HOME enviromental variable is unset. $ANDROID_HOME should point to your Android SDK. This is often installed at ~/Library/Android/sdk on macOS and ~/Android/sdk on Linux."
-	missingAndroidHome        = "$ANDROID_HOME enviromental variable does not point to a Android SDK. This is often installed at ~/Library/Android/sdk on macOS and ~/Android/sdk on Linux."
+	missingAndroidHomeEnvVar  = "$ANDROID_HOME enviromental variable is unset and does not point to an Android SDK. The SDK is often at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
+	missingAndroidHome        = "$ANDROID_HOME enviromental variable does not point to an Android SDK. The SDK is often at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
 	missingNDK                = "NDK was not found at $ANDROID_HOME/ndk-bundle. NDK can be installed in Android Studio > SDK Manager."
 	missingAndroidPlatformDir = "Android SDK platform directory was not found at $ANDROID_HOME/ndk-bundle/platforms."
 	missingAndroidPlatform    = "Android SDK platform with minimum API level of 15 was not found in $ANDROID_HOME/ndk-bundle/platforms. SDK platforms can be installed in Android Studio > SDK Manager."
