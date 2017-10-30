@@ -48,16 +48,91 @@ for detailed instructions or set the --targets="ios" flag to skip Android builds
 }
 
 func _validateAndroidInstall(f *Flags) error {
-	if _, err := AndroidAPIPath(f); err != nil {
+	if _, err := AndroidPlatformPath(f); err != nil {
 		return err
 	}
-	if _, err := ndkRoot(f); err != nil {
+	if _, err := NDKPath(f); err != nil {
 		return err
 	}
 	if _, err := LookPath(f, "javac"); err != nil {
 		return fmt.Errorf(missingJavac)
 	}
 	return nil
+}
+
+func AndroidSDKPath(f *Flags) (string, error) {
+	path := GetEnv(f, "ANDROID_HOME")
+	if path == "" {
+		return "", fmt.Errorf(missingAndroidHomeEnvVar)
+	}
+
+	if !IsDir(f, path) {
+		return "", fmt.Errorf(missingAndroidHome)
+	}
+	return path, nil
+}
+
+// AndroidPlatformPath returns an android SDK platform directory under ANDROID_HOME.
+// If there are multiple platforms that satisfy the minimum version requirement
+// AndroidPlatformPath returns the latest one among them.
+func AndroidPlatformPath(f *Flags) (string, error) {
+	androidHome, err := AndroidSDKPath(f)
+	if err != nil {
+		return "", err
+	}
+
+	platformsDir := filepath.Join(androidHome, "platforms")
+	if !IsDir(f, platformsDir) {
+		return "", fmt.Errorf(missingAndroidPlatformDir)
+	}
+
+	platformsDirNames, err := ReadDirNames(f, platformsDir)
+	if err != nil {
+		return "", err
+	}
+	if !f.ShouldRun() {
+		platformsDirNames = []string{"android-21"}
+	}
+
+	var apiPath string
+	var apiVer int
+	for _, i := range platformsDirNames {
+		verStr := strings.TrimPrefix(i, "android-")
+		if i == verStr {
+			continue
+		}
+
+		ver, err := strconv.Atoi(verStr)
+		if err != nil || ver < minAndroidAPI || ver < apiVer {
+			continue
+		}
+
+		p := filepath.Join(platformsDir, i)
+		if !IsFile(f, filepath.Join(p, "android.jar")) {
+			continue
+		}
+
+		apiPath = p
+		apiVer = ver
+	}
+
+	if apiVer == 0 {
+		return "", fmt.Errorf(missingAndroidPlatform)
+	}
+	return apiPath, nil
+}
+
+func NDKPath(f *Flags) (string, error) {
+	path, err := AndroidSDKPath(f)
+	if err != nil {
+		return "", err
+	}
+
+	path = filepath.Join(path, "ndk-bundle")
+	if !IsDir(f, path) {
+		return "", fmt.Errorf(missingNDK)
+	}
+	return path, nil
 }
 
 func androidEnv(f *Flags, goarch string) ([]string, error) {
@@ -99,19 +174,6 @@ func ndkHostTag() (string, error) {
 		}
 		return runtime.GOOS + "-" + arch, nil
 	}
-}
-
-func ndkRoot(f *Flags) (string, error) {
-	path := GetEnv(f, "ANDROID_HOME")
-	if path == "" {
-		return "", fmt.Errorf(missingAndroidHomeEnvVar)
-	}
-
-	path = filepath.Join(path, "ndk-bundle")
-	if !IsDir(f, path) {
-		return "", fmt.Errorf(missingNDK)
-	}
-	return path, nil
 }
 
 // Emulate the flags in the clang wrapper scripts generated
@@ -166,7 +228,7 @@ func toolchainForArch(f *Flags, goarch string) (*ndkToolchain, error) {
 		return nil, fmt.Errorf("toolchainForArch(): Unknown arch %v", goarch)
 	}
 
-	ndkRoot, err := ndkRoot(f)
+	ndkRoot, err := NDKPath(f)
 	if err != nil {
 		return nil, err
 	}
@@ -216,56 +278,6 @@ func GetAndroidABI(arch string) string {
 		return "x86_64"
 	}
 	return ""
-}
-
-// androidAPIPath returns an android SDK platform directory under ANDROID_HOME.
-// If there are multiple platforms that satisfy the minimum version requirement
-// androidAPIPath returns the latest one among them.
-func AndroidAPIPath(f *Flags) (string, error) {
-	sdk := GetEnv(f, "ANDROID_HOME")
-	if sdk == "" {
-		return "", fmt.Errorf(missingAndroidHomeEnvVar)
-	}
-
-	platformsDir := filepath.Join(sdk, "platforms")
-	if !IsDir(f, platformsDir) {
-		return "", fmt.Errorf(missingAndroidPlatformDir)
-	}
-
-	platformsDirNames, err := ReadDirNames(f, platformsDir)
-	if err != nil {
-		return "", err
-	}
-	if !f.ShouldRun() {
-		platformsDirNames = []string{"android-21"}
-	}
-
-	var apiPath string
-	var apiVer int
-	for _, i := range platformsDirNames {
-		verStr := strings.TrimPrefix(i, "android-")
-		if i == verStr {
-			continue
-		}
-
-		ver, err := strconv.Atoi(verStr)
-		if err != nil || ver < minAndroidAPI || ver < apiVer {
-			continue
-		}
-
-		p := filepath.Join(platformsDir, i)
-		if !IsFile(f, filepath.Join(p, "android.jar")) {
-			continue
-		}
-
-		apiPath = p
-		apiVer = ver
-	}
-
-	if apiVer == 0 {
-		return "", fmt.Errorf(missingAndroidPlatform)
-	}
-	return apiPath, nil
 }
 
 // AAR is the format for the binary distribution of an Android Library Project
@@ -505,7 +517,7 @@ func bootClasspath(f *Flags) (string, error) {
 	// if bindBootClasspath != "" {
 	// 	return bindBootClasspath, nil
 	// }
-	apiPath, err := AndroidAPIPath(f)
+	apiPath, err := AndroidPlatformPath(f)
 	if err != nil {
 		return "", err
 	}
