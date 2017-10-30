@@ -33,7 +33,7 @@ const (
 	missingAndroidPlatformDir = "$ANDROID_HOME enviromental variable does not point to an Android SDK. Missing directory at $ANDROID_HOME/platforms. The SDK is often located at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
 	missingAndroidPlatform    = "Android SDK platform with minimum API level of 15 was not found in $ANDROID_HOME/ndk-bundle/platforms. SDK platforms can be installed in Android Studio > SDK Manager."
 	missingNDK                = "NDK was not found at $ANDROID_HOME/ndk-bundle. NDK can be installed in Android Studio > SDK Manager."
-	missingJavac              = "javac was not found in $PATH."
+	missingJavac              = "javac was not found in $PATH. The Java compiler is often located at /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home on macOS and /usr/local/android-studio/jre/bin on Linux."
 )
 
 func ValidateAndroidInstall(f *Flags) error {
