@@ -262,6 +262,34 @@ func GetEnv(f *Flags, key string) string {
 	return "$" + key
 }
 
+func ReadDirNames(f *Flags, path string) ([]string, error) {
+	if f.ShouldPrint() {
+		f.Logger.Printf("ls %s\n", path)
+	}
+	if f.ShouldRun() {
+		file, err := os.Open(path)
+		if err != nil {
+			return []string{}, err
+		}
+		defer file.Close()
+
+		return file.Readdirnames(-1)
+	}
+	return []string{}, nil
+}
+
+func IsFile(f *Flags, path string) bool {
+	if f.ShouldPrint() {
+		f.Logger.Printf("test -f %s\n", path)
+	}
+	if f.ShouldRun() {
+		if st, err := os.Stat(path); err != nil || st.IsDir() {
+			return false
+		}
+	}
+	return true
+}
+
 func IsDir(f *Flags, path string) bool {
 	if f.ShouldPrint() {
 		f.Logger.Printf("test -d %s\n", path)

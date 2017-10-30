@@ -23,6 +23,15 @@ const (
 	minAndroidAPI  = 15
 )
 
+var (
+	missingAndroidHomeEnvVar  = "$ANDROID_HOME enviromental variable is unset. $ANDROID_HOME should point to your Android SDK. This is often installed at ~/Library/Android/sdk on macOS and ~/Android/sdk on Linux."
+	missingAndroidHome        = "$ANDROID_HOME enviromental variable does not point to a Android SDK. This is often installed at ~/Library/Android/sdk on macOS and ~/Android/sdk on Linux."
+	missingNDK                = "NDK was not found at $ANDROID_HOME/ndk-bundle. NDK can be installed in Android Studio > SDK Manager."
+	missingAndroidPlatformDir = "Android SDK platform directory was not found at $ANDROID_HOME/ndk-bundle/platforms."
+	missingAndroidPlatform    = "Android SDK platform with minimum API level of 15 was not found in $ANDROID_HOME/ndk-bundle/platforms. SDK platforms can be installed in Android Studio > SDK Manager."
+	missingJavac              = "javac was not found in $PATH."
+)
+
 const manifestHeader = `Manifest-Version: 1.0
 Created-By: 1.0 (Go)
 
@@ -46,7 +55,7 @@ func _validateAndroidInstall(f *Flags) error {
 		return err
 	}
 	if _, err := LookPath(f, "javac"); err != nil {
-		return err
+		return fmt.Errorf(missingJavac)
 	}
 	return nil
 }
@@ -95,12 +104,12 @@ func ndkHostTag() (string, error) {
 func ndkRoot(f *Flags) (string, error) {
 	path := GetEnv(f, "ANDROID_HOME")
 	if path == "" {
-		return "", fmt.Errorf("ndkRoot(): $ANDROID_HOME enviromental var is unset.")
+		return "", fmt.Errorf(missingAndroidHomeEnvVar)
 	}
 
 	path = filepath.Join(path, "ndk-bundle")
 	if !IsDir(f, path) {
-		return "", fmt.Errorf("ndkRoot(): Missing $ANDROID_HOME/ndk-bundle directory at %v.", path)
+		return "", fmt.Errorf(missingNDK)
 	}
 	return path, nil
 }
@@ -215,44 +224,46 @@ func GetAndroidABI(arch string) string {
 func AndroidAPIPath(f *Flags) (string, error) {
 	sdk := GetEnv(f, "ANDROID_HOME")
 	if sdk == "" {
-		return "", fmt.Errorf("AndroidAPIPath(): ANDROID_HOME environment var is not set")
+		return "", fmt.Errorf(missingAndroidHomeEnvVar)
 	}
 
+	platformsDir := filepath.Join(sdk, "platforms")
+	if !IsDir(f, platformsDir) {
+		return "", fmt.Errorf(missingAndroidPlatformDir)
+	}
+
+	platformsDirNames, err := ReadDirNames(f, platformsDir)
+	if err != nil {
+		return "", err
+	}
 	if !f.ShouldRun() {
-		return filepath.Join(sdk, "platforms", "android-21"), nil
-	}
-
-	sdkDir, err := os.Open(filepath.Join(sdk, "platforms"))
-	if err != nil {
-		return "", fmt.Errorf("failed to find android SDK platform: %v", err)
-	}
-	defer sdkDir.Close()
-	fis, err := sdkDir.Readdir(-1)
-	if err != nil {
-		return "", fmt.Errorf("failed to find android SDK platform (min API level: %d): %v", minAndroidAPI, err)
+		platformsDirNames = []string{"android-21"}
 	}
 
 	var apiPath string
 	var apiVer int
-	for _, fi := range fis {
-		name := fi.Name()
-		if !fi.IsDir() || !strings.HasPrefix(name, "android-") {
+	for _, i := range platformsDirNames {
+		verStr := strings.TrimPrefix(i, "android-")
+		if i == verStr {
 			continue
 		}
-		n, err := strconv.Atoi(name[len("android-"):])
-		if err != nil || n < minAndroidAPI {
+
+		ver, err := strconv.Atoi(verStr)
+		if err != nil || ver < minAndroidAPI || ver < apiVer {
 			continue
 		}
-		p := filepath.Join(sdkDir.Name(), name)
-		_, err = os.Stat(filepath.Join(p, "android.jar"))
-		if err == nil && apiVer < n {
-			apiPath = p
-			apiVer = n
+
+		p := filepath.Join(platformsDir, i)
+		if !IsFile(f, filepath.Join(p, "android.jar")) {
+			continue
 		}
+
+		apiPath = p
+		apiVer = ver
 	}
+
 	if apiVer == 0 {
-		return "", fmt.Errorf("failed to find android SDK platform (min API level: %d) in %s",
-			minAndroidAPI, sdkDir.Name())
+		return "", fmt.Errorf(missingAndroidPlatform)
 	}
 	return apiPath, nil
 }

@@ -60,6 +60,9 @@ xcrun --sdk iphonesimulator --find clang
 xcrun --sdk iphonesimulator --show-sdk-path
 GOOS=darwin GOARCH=amd64 CC=$CLANG_IPHONESIMULATOR CXX=$CLANG_IPHONESIMULATOR CGO_CFLAGS=-isysroot $SDK_IPHONESIMULATOR -mios-simulator-version-min=6.1 -arch x86_64 CGO_LDFLAGS=-isysroot $SDK_IPHONESIMULATOR -mios-simulator-version-min=6.1 -arch x86_64 CGO_ENABLED=1 go install -tags=ios -pkgdir=$GOPATH/pkg/matcha/pkg_darwin_amd64 std
 printenv ANDROID_HOME
+test -d $ANDROID_HOME/platforms
+ls $ANDROID_HOME/platforms
+test -f $ANDROID_HOME/platforms/android-21/android.jar
 printenv ANDROID_HOME
 test -d $ANDROID_HOME/ndk-bundle
 which javac
@@ -95,16 +98,19 @@ xcrun --sdk iphonesimulator --find clang
 xcrun --sdk iphonesimulator --show-sdk-path
 printenv GOPATH
 test -d $GOPATH/pkg/matcha/pkg_darwin_arm
-GOOS=darwin GOARCH=arm GOARM=7 CC=$CLANG_IPHONEOS CXX=$CLANG_IPHONEOS CGO_CFLAGS=-isysroot $SDK_IPHONEOS -miphoneos-version-min=6.1 -arch armv7 CGO_LDFLAGS=-isysroot $SDK_IPHONEOS -miphoneos-version-min=6.1 -arch armv7 CGO_ENABLED=1 GOPATH=$WORK/IOS-GOPATH:$GOPATH go build -pkgdir=$GOPATH/pkg/matcha/pkg_darwin_arm -tags ios matcha -buildmode=c-archive -o $WORK/matcha-arm.a $WORK/src/iosbin/main.go
+GOOS=darwin GOARCH=arm GOARM=7 CC=$CLANG_IPHONEOS CXX=$CLANG_IPHONEOS CGO_CFLAGS=-isysroot $SDK_IPHONEOS -miphoneos-version-min=6.1 -arch armv7 CGO_LDFLAGS=-isysroot $SDK_IPHONEOS -miphoneos-version-min=6.1 -arch armv7 CGO_ENABLED=1 GOPATH=$WORK/IOS-GOPATH:$GOPATH go build -pkgdir=$GOPATH/pkg/matcha/pkg_darwin_arm -tags matcha -buildmode=c-archive -o $WORK/matcha-arm.a $WORK/src/iosbin/main.go
 printenv GOPATH
 test -d $GOPATH/pkg/matcha/pkg_darwin_arm64
-GOOS=darwin GOARCH=arm64 CC=$CLANG_IPHONEOS CXX=$CLANG_IPHONEOS CGO_CFLAGS=-isysroot $SDK_IPHONEOS -miphoneos-version-min=6.1 -arch arm64 CGO_LDFLAGS=-isysroot $SDK_IPHONEOS -miphoneos-version-min=6.1 -arch arm64 CGO_ENABLED=1 GOPATH=$WORK/IOS-GOPATH:$GOPATH go build -pkgdir=$GOPATH/pkg/matcha/pkg_darwin_arm64 -tags ios matcha -buildmode=c-archive -o $WORK/matcha-arm64.a $WORK/src/iosbin/main.go
+GOOS=darwin GOARCH=arm64 CC=$CLANG_IPHONEOS CXX=$CLANG_IPHONEOS CGO_CFLAGS=-isysroot $SDK_IPHONEOS -miphoneos-version-min=6.1 -arch arm64 CGO_LDFLAGS=-isysroot $SDK_IPHONEOS -miphoneos-version-min=6.1 -arch arm64 CGO_ENABLED=1 GOPATH=$WORK/IOS-GOPATH:$GOPATH go build -pkgdir=$GOPATH/pkg/matcha/pkg_darwin_arm64 -tags matcha -buildmode=c-archive -o $WORK/matcha-arm64.a $WORK/src/iosbin/main.go
 printenv GOPATH
 test -d $GOPATH/pkg/matcha/pkg_darwin_amd64
-GOOS=darwin GOARCH=amd64 CC=$CLANG_IPHONESIMULATOR CXX=$CLANG_IPHONESIMULATOR CGO_CFLAGS=-isysroot $SDK_IPHONESIMULATOR -mios-simulator-version-min=6.1 -arch x86_64 CGO_LDFLAGS=-isysroot $SDK_IPHONESIMULATOR -mios-simulator-version-min=6.1 -arch x86_64 CGO_ENABLED=1 GOPATH=$WORK/IOS-GOPATH:$GOPATH go build -pkgdir=$GOPATH/pkg/matcha/pkg_darwin_amd64 -tags ios matcha -buildmode=c-archive -o $WORK/matcha-amd64.a $WORK/src/iosbin/main.go
+GOOS=darwin GOARCH=amd64 CC=$CLANG_IPHONESIMULATOR CXX=$CLANG_IPHONESIMULATOR CGO_CFLAGS=-isysroot $SDK_IPHONESIMULATOR -mios-simulator-version-min=6.1 -arch x86_64 CGO_LDFLAGS=-isysroot $SDK_IPHONESIMULATOR -mios-simulator-version-min=6.1 -arch x86_64 CGO_ENABLED=1 GOPATH=$WORK/IOS-GOPATH:$GOPATH go build -pkgdir=$GOPATH/pkg/matcha/pkg_darwin_amd64 -tags matcha -buildmode=c-archive -o $WORK/matcha-amd64.a $WORK/src/iosbin/main.go
 xcrun lipo -create -arch armv7 $WORK/matcha-arm.a -arch arm64 $WORK/matcha-arm64.a -arch x86_64 $WORK/matcha-amd64.a -o $WORK/matcha-ios/MatchaBridge/MatchaBridge/MatchaBridge.a
 cp $WORK/matcha-ios/MatchaBridge/MatchaBridge/MatchaBridge.a $GOPATH/src/gomatcha.io/matcha/ios/MatchaBridge/MatchaBridge/MatchaBridge.a
 printenv ANDROID_HOME
+test -d $ANDROID_HOME/platforms
+ls $ANDROID_HOME/platforms
+test -f $ANDROID_HOME/platforms/android-21/android.jar
 printenv ANDROID_HOME
 test -d $ANDROID_HOME/ndk-bundle
 which javac
