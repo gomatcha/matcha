@@ -21,9 +21,13 @@ import (
 const (
 	javacTargetVer = "1.7"
 	minAndroidAPI  = 15
+	manifestHeader = `Manifest-Version: 1.0
+Created-By: 1.0 (Go)
+
+`
 )
 
-var (
+const (
 	missingAndroidHomeEnvVar  = "$ANDROID_HOME enviromental variable is unset. $ANDROID_HOME should point to your Android SDK. This is often installed at ~/Library/Android/sdk on macOS and ~/Android/sdk on Linux."
 	missingAndroidHome        = "$ANDROID_HOME enviromental variable does not point to a Android SDK. This is often installed at ~/Library/Android/sdk on macOS and ~/Android/sdk on Linux."
 	missingNDK                = "NDK was not found at $ANDROID_HOME/ndk-bundle. NDK can be installed in Android Studio > SDK Manager."
@@ -32,13 +36,8 @@ var (
 	missingJavac              = "javac was not found in $PATH."
 )
 
-const manifestHeader = `Manifest-Version: 1.0
-Created-By: 1.0 (Go)
-
-`
-
-func validateAndroidInstall(f *Flags) error {
-	err := _validateAndroidInstall(f)
+func ValidateAndroidInstall(f *Flags) error {
+	err := validateAndroidInstall(f)
 	if err != nil {
 		fmt.Println(`Invalid or unsupported Android installation. See https://gomatcha.io/guide/installation/
 for detailed instructions or set the --targets="ios" flag to skip Android builds.
@@ -47,7 +46,7 @@ for detailed instructions or set the --targets="ios" flag to skip Android builds
 	return err
 }
 
-func _validateAndroidInstall(f *Flags) error {
+func validateAndroidInstall(f *Flags) error {
 	if _, err := AndroidPlatformPath(f); err != nil {
 		return err
 	}
@@ -135,7 +134,7 @@ func NDKPath(f *Flags) (string, error) {
 	return path, nil
 }
 
-func androidEnv(f *Flags, goarch string) ([]string, error) {
+func AndroidEnv(f *Flags, goarch string) ([]string, error) {
 	tc, err := toolchainForArch(f, goarch)
 	if err != nil {
 		return nil, err
@@ -157,23 +156,6 @@ func androidEnv(f *Flags, goarch string) ([]string, error) {
 		env = append(env, "GOARM=7")
 	}
 	return env, nil
-}
-
-func ndkHostTag() (string, error) {
-	if runtime.GOOS == "windows" && runtime.GOARCH == "386" {
-		return "windows", nil
-	} else {
-		var arch string
-		switch runtime.GOARCH {
-		case "386":
-			arch = "x86"
-		case "amd64":
-			arch = "x86_64"
-		default:
-			return "", fmt.Errorf("ndkHostTag(): Unsupported GOARCH %v", runtime.GOARCH)
-		}
-		return runtime.GOOS + "-" + arch, nil
-	}
 }
 
 // Emulate the flags in the clang wrapper scripts generated
@@ -278,6 +260,23 @@ func GetAndroidABI(arch string) string {
 		return "x86_64"
 	}
 	return ""
+}
+
+func ndkHostTag() (string, error) {
+	if runtime.GOOS == "windows" && runtime.GOARCH == "386" {
+		return "windows", nil
+	} else {
+		var arch string
+		switch runtime.GOARCH {
+		case "386":
+			arch = "x86"
+		case "amd64":
+			arch = "x86_64"
+		default:
+			return "", fmt.Errorf("ndkHostTag(): Unsupported GOARCH %v", runtime.GOARCH)
+		}
+		return runtime.GOOS + "-" + arch, nil
+	}
 }
 
 // AAR is the format for the binary distribution of an Android Library Project

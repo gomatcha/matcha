@@ -90,13 +90,13 @@ func Init(f *Flags) error {
 	// Begin android
 	if _, ok := targets["android"]; ok {
 		// Validate Android installation
-		if err := validateAndroidInstall(f); err != nil {
+		if err := ValidateAndroidInstall(f); err != nil {
 			return err
 		}
 
 		// Install standard libraries for cross compilers.
 		if _, ok := targets["android/arm"]; ok {
-			env, err := androidEnv(f, "arm")
+			env, err := AndroidEnv(f, "arm")
 			if err != nil {
 				return err
 			}
@@ -106,7 +106,7 @@ func Init(f *Flags) error {
 		}
 
 		if _, ok := targets["android/arm64"]; ok {
-			env, err := androidEnv(f, "arm64")
+			env, err := AndroidEnv(f, "arm64")
 			if err != nil {
 				return err
 			}
@@ -116,7 +116,7 @@ func Init(f *Flags) error {
 		}
 
 		if _, ok := targets["android/386"]; ok {
-			env, err := androidEnv(f, "386")
+			env, err := AndroidEnv(f, "386")
 			if err != nil {
 				return err
 			}
@@ -126,7 +126,7 @@ func Init(f *Flags) error {
 		}
 
 		if _, ok := targets["android/amd64"]; ok {
-			env, err := androidEnv(f, "amd64")
+			env, err := AndroidEnv(f, "amd64")
 			if err != nil {
 				return err
 			}

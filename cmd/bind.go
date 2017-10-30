@@ -297,7 +297,7 @@ func Bind(flags *Flags, args []string) error {
 	}
 	if _, ok := targets["android"]; ok {
 		// Validate Android installation
-		if err := validateAndroidInstall(flags); err != nil {
+		if err := ValidateAndroidInstall(flags); err != nil {
 			return err
 		}
 
@@ -355,7 +355,7 @@ func Bind(flags *Flags, args []string) error {
 
 		// Generate binding code and java source code only when processing the first package.
 		for _, arch := range androidArchs {
-			env, err := androidEnv(flags, arch)
+			env, err := AndroidEnv(flags, arch)
 			if err != nil {
 				return err
 			}
