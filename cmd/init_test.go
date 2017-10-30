@@ -89,6 +89,7 @@ test -d $GOPATH/pkg/matcha
 read $GOPATH/pkg/matcha/version
 go version
 pwd
+go importall $CWD gomatcha.io/matcha/examples
 go findpackage gomatcha.io/matcha/bridge
 which xcrun
 mkdir -p $WORK/matcha-ios

@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"go/build"
 	"log"
 	"os/exec"
 	"path/filepath"
@@ -165,4 +166,50 @@ func InstallPkg(f *Flags, matchaPkgPath, temp string, pkg string, env []string, 
 	cmd.Args = append(cmd.Args, pkg)
 	cmd.Env = append([]string{}, env...)
 	return RunCmd(f, temp, cmd)
+}
+
+func ImportAll(f *Flags, ctx *build.Context, paths []string, srcDir string, mode build.ImportMode) ([]*build.Package, error) {
+	pkgs := map[string]*build.Package{}
+	for _, i := range paths {
+		if f.ShouldPrint() {
+			f.Logger.Printf("go importall %v %v\n", srcDir, i)
+		}
+
+		if err := Import(ctx, i, srcDir, mode, pkgs); err != nil {
+			return nil, err
+		}
+	}
+
+	pkgSlice := []*build.Package{}
+	for _, i := range pkgs {
+		pkgSlice = append(pkgSlice, i)
+	}
+
+	return pkgSlice, nil
+}
+
+func Import(ctx *build.Context, path, srcDir string, mode build.ImportMode, pkgs map[string]*build.Package) error {
+	// Ignore C
+	if path == "C" {
+		return nil
+	}
+
+	pkg, err := ctx.Import(path, srcDir, mode)
+	if err != nil {
+		return err
+	}
+
+	// Bail if we have already added this package
+	if _, ok := pkgs[pkg.Dir]; ok {
+		return nil
+	}
+	pkgs[pkg.Dir] = pkg
+
+	// Import dependencies
+	for _, i := range pkg.Imports {
+		if err := Import(ctx, i, pkg.Dir, mode, pkgs); err != nil {
+			return err
+		}
+	}
+	return nil
 }
