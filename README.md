@@ -31,7 +31,7 @@ https://developer.apple.com/download/ and
 https://developer.android.com/studio/install.html.
 
 Open Android Studio's SDK Manager and under the SDK Platforms tab, install
-the Android 8 Platform (API 27). And in the SDK Tools tab, install NDK and the
+the Android 8 Platform (API 26). And in the SDK Tools tab, install NDK and the
 Android Support Repository.
 
 Configure the ANDROID_HOME enviromental variable to point to the Android SDK.
@@ -83,7 +83,7 @@ Start by installing Android Studio. Instructions can be found at
 https://developer.android.com/studio/install.html. 
 
 Open Android Studio's SDK Manager and under the SDK Platforms tab, install
-the Android 8 Platform (API 27). And in the SDK Tools tab, install NDK and the
+the Android 8 Platform (API 26). And in the SDK Tools tab, install NDK and the
 Android Support Repository.
 
 Configure the ANDROID_HOME enviromental variable to point to the Android SDK.
@@ -127,7 +127,7 @@ Start by installing Android Studio. Instructions can be found at
 https://developer.android.com/studio/install.html. 
 
 Open Android Studio's SDK Manager and under the SDK Platforms tab, install
-the Android 8 Platform (API 27). And in the SDK Tools tab, install NDK and the
+the Android 8 Platform (API 26). And in the SDK Tools tab, install NDK and the
 Android Support Repository.
 
 Configure the ANDROID_HOME enviromental variable to point to the Android SDK.
