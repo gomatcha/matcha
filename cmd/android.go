@@ -46,7 +46,7 @@ func ValidateAndroidInstall(f *Flags) error {
 	err := validateAndroidInstall(f)
 	if err != nil {
 		fmt.Println(`Invalid or unsupported Android installation. See https://gomatcha.io/guide/installation/
-for detailed instructions or set the --targets="ios" flag to only build for iOS.
+for detailed instructions or set the --target="ios" flag to only build for iOS.
 `)
 	}
 	return err

@@ -25,14 +25,14 @@ Complete documentation is available at https://gomatcha.io`,
 }
 
 var (
-	buildN        bool   // -n
-	buildX        bool   // -x
-	buildV        bool   // -v
-	buildWork     bool   // -work
-	buildGcflags  string // -gcflags
-	buildLdflags  string // -ldflags
-	buildO        string // -o
-	buildThreaded bool
+	buildN       bool   // -n
+	buildX       bool   // -x
+	buildV       bool   // -v
+	buildWork    bool   // -work
+	buildGcflags string // -gcflags
+	buildLdflags string // -ldflags
+	buildO       string // -o
+	// buildThreaded bool
 	// buildBinary  bool   // -binary
 	buildTargets string // --targets
 )
@@ -46,7 +46,7 @@ func init() {
 	flags.BoolVar(&buildThreaded, "threaded", true, "use multiple threads when building.")
 	flags.StringVar(&buildGcflags, "gcflags", "", "arguments to pass on each go tool compile invocation.")
 	flags.StringVar(&buildLdflags, "ldflags", "", "arguments to pass on each go tool link invocation.")
-	flags.StringVar(&buildTargets, "targets", "", "space separated os/arch. Valid values are: android, ios, android/arm, android/arm64, android/386, android/amd64, ios/arm, ios/arm64, ios/386, ios/amd64.")
+	flags.StringVar(&buildTargets, "target", "", "space separated os/arch. Valid values are: android, ios, android/arm, android/arm64, android/386, android/amd64, ios/arm, ios/arm64, ios/386, ios/amd64.")
 
 	RootCmd.AddCommand(InitCmd)
 }
@@ -65,7 +65,7 @@ var InitCmd = &cobra.Command{
 			BuildGcflags: buildGcflags,
 			BuildLdflags: buildLdflags,
 			BuildTargets: buildTargets,
-			Threaded:     buildThreaded,
+			Threaded:     true,
 		}
 		if err := cmd.Init(flags); err != nil {
 			fmt.Println(err)
@@ -79,10 +79,10 @@ func init() {
 	flags.BoolVar(&buildX, "x", false, "print the commands.")
 	flags.BoolVar(&buildV, "v", false, "print the names of packages as they are compiled.")
 	flags.BoolVar(&buildWork, "work", false, "print the name of the temporary work directory and do not delete it when exiting.")
-	flags.BoolVar(&buildThreaded, "threaded", true, "use multiple threads when building.")
+	// flags.BoolVar(&buildThreaded, "threaded", true, "use multiple threads when building.")
 	flags.StringVar(&buildGcflags, "gcflags", "", "arguments to pass on each go tool compile invocation.")
 	flags.StringVar(&buildLdflags, "ldflags", "", "arguments to pass on each go tool link invocation.")
-	flags.StringVar(&buildTargets, "targets", "", "space separated os/arch. Valid values are: android, ios, android/arm, android/arm64, android/386, android/amd64, ios/arm, ios/arm64, ios/386, ios/amd64.")
+	flags.StringVar(&buildTargets, "target", "", "space separated os/arch. Valid values are: android, ios, android/arm, android/arm64, android/386, android/amd64, ios/arm, ios/arm64, ios/386, ios/amd64.")
 
 	RootCmd.AddCommand(BuildCmd)
 }
@@ -101,7 +101,7 @@ var BuildCmd = &cobra.Command{
 			BuildGcflags: buildGcflags,
 			BuildLdflags: buildLdflags,
 			BuildTargets: buildTargets,
-			Threaded:     buildThreaded,
+			Threaded:     true,
 		}
 		if err := cmd.Build(flags, args); err != nil {
 			fmt.Println(err)
