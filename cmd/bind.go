@@ -9,19 +9,21 @@ import (
 	"errors"
 	"fmt"
 	"go/build"
-	"io"
-	"io/ioutil"
-	"os"
 	"os/exec"
 	"path"
 	"path/filepath"
+	"runtime"
 	"strings"
 )
 
 func ParseTargets(a string) map[string]struct{} {
 	targetsSlice := strings.Fields(a)
 	if len(targetsSlice) == 0 {
-		targetsSlice = []string{"android", "ios"}
+		if runtime.GOOS == "darwin" {
+			targetsSlice = []string{"android", "ios"}
+		} else {
+			targetsSlice = []string{"android"}
+		}
 	}
 	targets := map[string]struct{}{}
 	for _, i := range targetsSlice {
@@ -30,8 +32,8 @@ func ParseTargets(a string) map[string]struct{} {
 			targets["android"] = struct{}{}
 			targets["android/arm"] = struct{}{}
 			targets["android/arm64"] = struct{}{}
-			targets["android/386"] = struct{}{}
-			targets["android/amd64"] = struct{}{}
+			// targets["android/386"] = struct{}{}
+			// targets["android/amd64"] = struct{}{}
 		case "android/arm", "android/arm64", "android/386", "android/amd64":
 			targets["android"] = struct{}{}
 			targets[i] = struct{}{}
@@ -39,7 +41,7 @@ func ParseTargets(a string) map[string]struct{} {
 			targets["ios"] = struct{}{}
 			targets["ios/arm"] = struct{}{}
 			targets["ios/arm64"] = struct{}{}
-			targets["ios/386"] = struct{}{}
+			// targets["ios/386"] = struct{}{}
 			targets["ios/amd64"] = struct{}{}
 		case "ios/arm", "ios/arm64", "ios/386", "ios/amd64":
 			targets["ios"] = struct{}{}
@@ -54,13 +56,19 @@ func Build(flags *Flags, args []string) error {
 	if err != nil {
 		return err
 	}
-	flags.BuildBinary = true
+	// flags.BuildBinary = true
 	flags.BuildO = iosDir
 	return Bind(flags, args)
 }
 
 func Bind(flags *Flags, args []string) error {
 	targets := ParseTargets(flags.BuildTargets)
+
+	// Validate Go
+	err := validateGoInstall(flags)
+	if err != nil {
+		return err
+	}
 
 	// Make $WORK.
 	tempdir, err := NewTmpDir(flags, "")
@@ -72,7 +80,7 @@ func Bind(flags *Flags, args []string) error {
 	}
 
 	// Get $GOPATH/pkg/matcha.
-	matchaPkgPath, err := MatchaPkgPath()
+	matchaPkgPath, err := MatchaPkgPath(flags)
 	if err != nil {
 		return err
 	}
@@ -95,7 +103,7 @@ func Bind(flags *Flags, args []string) error {
 	}
 
 	// Get current working directory.
-	cwd, err := os.Getwd()
+	cwd, err := Getwd(flags)
 	if err != nil {
 		return err
 	}
@@ -104,25 +112,21 @@ func Bind(flags *Flags, args []string) error {
 	ctx := build.Default
 	ctx.GOARCH = "arm"
 	ctx.GOOS = "darwin"
-	ctx.BuildTags = append(ctx.BuildTags, "ios")
 	ctx.BuildTags = append(ctx.BuildTags, "matcha")
 
 	// Get import paths to be built.
 	importPaths := []string{}
-	srcDir := ""
 	if len(args) == 0 {
 		importPaths = append(importPaths, ".")
-		srcDir = cwd
 	} else {
 		for _, i := range args {
 			i = path.Clean(i)
 			importPaths = append(importPaths, i)
 		}
-		srcDir = cwd
 	}
 
 	// Get packages to be built
-	pkgs, err := ImportAll(&ctx, importPaths, srcDir, build.ImportComment)
+	pkgs, err := ImportAll(flags, &ctx, importPaths, cwd, build.ImportComment)
 	if err != nil {
 		return err
 	}
@@ -142,6 +146,11 @@ func Bind(flags *Flags, args []string) error {
 
 	// Begin iOS
 	if _, ok := targets["ios"]; ok {
+		// Validate Xcode installation
+		if err := validateXcodeInstall(flags); err != nil {
+			return err
+		}
+
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "IOS-GOPATH")
 
@@ -159,43 +168,39 @@ func Bind(flags *Flags, args []string) error {
 
 		// Create the "main" go package, that references the other go packages
 		mainPath := filepath.Join(tempdir, "src", "iosbin", "main.go")
-		err = WriteFile(flags, mainPath, func(w io.Writer) error {
-			format := fmt.Sprintf(BindFile, args[0]) // TODO(KD): Should this be args[0] or should it use the logic to generate pkgs
-			_, err := w.Write([]byte(format))
-			return err
-		})
+		err = WriteFile(flags, mainPath, strings.NewReader(fmt.Sprintf(BindFile, args[0]))) // TODO(KD): Should this be args[0] or should it use the logic to generate pkgs
 		if err != nil {
 			return fmt.Errorf("failed to create the binding package for iOS: %v", err)
 		}
 
-		if !flags.BuildBinary {
-			// Copy package's ios directory if it imports gomatcha.io/bridge.
-			for _, pkg := range pkgs {
-				importsBridge := false
-				for _, i := range pkg.Imports {
-					if i == "gomatcha.io/bridge" {
-						importsBridge = true
-						break
-					}
-				}
+		// if !flags.BuildBinary {
+		// 	// Copy package's ios directory if it imports gomatcha.io/bridge.
+		// 	for _, pkg := range pkgs {
+		// 		importsBridge := false
+		// 		for _, i := range pkg.Imports {
+		// 			if i == "gomatcha.io/bridge" {
+		// 				importsBridge = true
+		// 				break
+		// 			}
+		// 		}
 
-				if importsBridge {
-					files, err := ioutil.ReadDir(pkg.Dir)
-					if err != nil {
-						continue
-					}
+		// 		if importsBridge {
+		// 			files, err := ioutil.ReadDir(pkg.Dir)
+		// 			if err != nil {
+		// 				continue
+		// 			}
 
-					for _, i := range files {
-						if i.IsDir() && i.Name() == "ios" {
-							// Copy directory
-							src := filepath.Join(pkg.Dir, "ios")
-							dst := filepath.Join(workOutputDir)
-							CopyDirContents(flags, dst, src)
-						}
-					}
-				}
-			}
-		}
+		// 			for _, i := range files {
+		// 				if i.IsDir() && i.Name() == "ios" {
+		// 					// Copy directory
+		// 					src := filepath.Join(pkg.Dir, "ios")
+		// 					dst := filepath.Join(workOutputDir)
+		// 					CopyDirContents(flags, dst, src)
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// }
 
 		// Build platform binaries concurrently.
 		envs := [][]string{}
@@ -233,23 +238,35 @@ func Bind(flags *Flags, args []string) error {
 			path string
 			err  error
 		}
+		archs := []archPath{}
 		archChan := make(chan archPath)
 		for _, i := range envs {
 			go func(env []string) {
-				arch := Getenv(env, "GOARCH")
-				env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+os.Getenv("GOPATH"))
+				arch := FindEnv(env, "GOARCH")
+				env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+GoEnv(flags, "GOPATH"))
 				path := filepath.Join(tempdir, "matcha-"+arch+".a")
-				err := GoBuild(flags, mainPath, env, ctx, tempdir, "-buildmode=c-archive", "-o", path)
+
+				// ios needs to be added as a build tag due to https://github.com/golang/go/commit/29eb7d18ed71c057bbdb69d85953a32252f0ea73
+				err := GoBuild(flags, []string{mainPath}, env, []string{"matcha", "ios"}, matchaPkgPath, tempdir, "-buildmode=c-archive", "-o", path)
 				archChan <- archPath{arch, path, err}
 			}(i)
-		}
-		archs := []archPath{}
-		for i := 0; i < len(envs); i++ {
-			arch := <-archChan
-			if arch.err != nil {
-				return arch.err
+
+			if !flags.Threaded {
+				arch := <-archChan
+				if arch.err != nil {
+					return arch.err
+				}
+				archs = append(archs, arch)
 			}
-			archs = append(archs, arch)
+		}
+		if flags.Threaded {
+			for i := 0; i < len(envs); i++ {
+				arch := <-archChan
+				if arch.err != nil {
+					return arch.err
+				}
+				archs = append(archs, arch)
+			}
 		}
 
 		// Lipo to build fat binary.
@@ -268,30 +285,32 @@ func Bind(flags *Flags, args []string) error {
 			outputDir = "Matcha-iOS"
 		}
 
-		if !flags.BuildBinary {
-			if err := RemoveAll(flags, outputDir); err != nil {
-				return err
-			}
+		// if !flags.BuildBinary {
+		// 	if err := RemoveAll(flags, outputDir); err != nil {
+		// 		return err
+		// 	}
 
-			// Copy output directory into place.
-			if err := CopyDir(flags, outputDir, workOutputDir); err != nil {
-				return err
-			}
-		} else {
-			// Copy binary into place.
-			if err := CopyFile(flags, filepath.Join(outputDir, "ios", "MatchaBridge", "MatchaBridge", "MatchaBridge.a"), binaryPath); err != nil {
-				return err
-			}
+		// 	// Copy output directory into place.
+		// 	if err := CopyDir(flags, outputDir, workOutputDir); err != nil {
+		// 		return err
+		// 	}
+		// } else {
+
+		// Copy binary into place.
+		if err := CopyFile(flags, filepath.Join(outputDir, "ios", "MatchaBridge", "MatchaBridge", "MatchaBridge.a"), binaryPath); err != nil {
+			return err
 		}
+
+		// }
 	}
 	if _, ok := targets["android"]; ok {
+		// Validate Android installation
+		if err := ValidateAndroidInstall(flags); err != nil {
+			return err
+		}
+
 		// Build the "matcha/bridge" dir
 		gopathDir := filepath.Join(tempdir, "ANDROID-GOPATH")
-
-		pkgs2 := []*build.Package{}
-		for _, i := range pkgs {
-			pkgs2 = append(pkgs2, i)
-		}
 
 		androidArchs := []string{}
 		if _, ok := targets["android/arm"]; ok {
@@ -307,24 +326,10 @@ func Bind(flags *Flags, args []string) error {
 			androidArchs = append(androidArchs, "amd64")
 		}
 
-		gomobpath, err := MatchaPkgPath()
-		if err != nil {
-			return err
-		}
-
-		ctx := build.Default
-		ctx.GOARCH = "arm"
-		ctx.GOOS = "android"
-		ctx.BuildTags = append(ctx.BuildTags, "matcha")
-
 		androidDir := filepath.Join(tempdir, "android")
 		mainPath := filepath.Join(tempdir, "androidlib/main.go")
 
-		err = WriteFile(flags, mainPath, func(w io.Writer) error {
-			format := fmt.Sprintf(BindFile, args[0]) // TODO(KD): Should this be args[0] or should it use the logic to generate pkgs
-			_, err := w.Write([]byte(format))
-			return err
-		})
+		err = WriteFile(flags, mainPath, strings.NewReader(fmt.Sprintf(BindFile, args[0]))) // TODO(KD): Should this be args[0] or should it use the logic to generate pkgs
 		if err != nil {
 			return fmt.Errorf("failed to create the main package for android: %v", err)
 		}
@@ -358,17 +363,17 @@ func Bind(flags *Flags, args []string) error {
 
 		// Generate binding code and java source code only when processing the first package.
 		for _, arch := range androidArchs {
-			androidENV, err := GetAndroidEnv(gomobpath)
+			env, err := AndroidEnv(flags, arch)
 			if err != nil {
 				return err
 			}
-			env := androidENV[arch]
-			env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+os.Getenv("GOPATH"))
+			env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+GoEnv(flags, "GOPATH"))
 
 			err = GoBuild(flags,
-				mainPath,
+				[]string{mainPath},
 				env,
-				ctx,
+				[]string{"matcha"},
+				matchaPkgPath,
 				tempdir,
 				"-buildmode=c-shared",
 				"-o="+filepath.Join(androidDir, "src/main/jniLibs/"+GetAndroidABI(arch)+"/libgojni.so"),
@@ -377,7 +382,8 @@ func Bind(flags *Flags, args []string) error {
 				return err
 			}
 		}
-		if err := BuildAAR(flags, androidDir, pkgs2, androidArchs, tempdir, aarPath); err != nil {
+
+		if err := BuildAAR(flags, androidDir, pkgs, androidArchs, tempdir, aarPath); err != nil {
 			return err
 		}
 
@@ -399,7 +405,6 @@ var BindFile = `
 package main
 
 import (
-	_ "golang.org/x/mobile/bind/java"
     _ "gomatcha.io/matcha/bridge"
     _ "%s"
 )

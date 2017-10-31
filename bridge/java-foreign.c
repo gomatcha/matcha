@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <android/log.h>
 #include <stdint.h>
+#include <string.h>
 
 JavaVM *sJavaVM;
 JNIEnv *sEnv;

@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -31,19 +32,20 @@ var (
 	buildGcflags string // -gcflags
 	buildLdflags string // -ldflags
 	buildO       string // -o
-	buildBinary  bool   // -binary
+	// buildThreaded bool
+	// buildBinary  bool   // -binary
 	buildTargets string // --targets
 )
 
 func init() {
 	flags := InitCmd.Flags()
-	flags.BoolVar(&buildN, "n", false, "print the commands but do not run them.")
-	flags.BoolVar(&buildX, "x", false, "print the commands.")
-	flags.BoolVar(&buildV, "v", false, "print the names of packages as they are compiled.")
+	flags.BoolVarP(&buildN, "dry-run", "n", false, "print the commands but do not run them.")
+	flags.BoolVarP(&buildX, "trace", "x", false, "print the commands.")
+	flags.BoolVarP(&buildV, "verbose", "v", false, "print the logs verbosely.")
 	flags.BoolVar(&buildWork, "work", false, "print the name of the temporary work directory and do not delete it when exiting.")
 	flags.StringVar(&buildGcflags, "gcflags", "", "arguments to pass on each go tool compile invocation.")
 	flags.StringVar(&buildLdflags, "ldflags", "", "arguments to pass on each go tool link invocation.")
-	flags.StringVar(&buildTargets, "targets", "", "space separated os/arch. Valid values are: android, ios, android/arm, android/arm64, android/386, android/amd64, ios/arm, ios/arm64, ios/386, ios/amd64.")
+	flags.StringVar(&buildTargets, "target", "", "space separated os/arch. Valid values are: android, ios, android/arm, android/arm64, android/386, android/amd64, ios/arm, ios/arm64, ios/386, ios/amd64.")
 
 	RootCmd.AddCommand(InitCmd)
 }
@@ -54,6 +56,7 @@ var InitCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(command *cobra.Command, args []string) {
 		flags := &cmd.Flags{
+			Logger:       log.New(os.Stderr, "", 0),
 			BuildN:       buildN,
 			BuildX:       buildX,
 			BuildV:       buildV,
@@ -61,6 +64,7 @@ var InitCmd = &cobra.Command{
 			BuildGcflags: buildGcflags,
 			BuildLdflags: buildLdflags,
 			BuildTargets: buildTargets,
+			Threaded:     true,
 		}
 		if err := cmd.Init(flags); err != nil {
 			fmt.Println(err)
@@ -70,13 +74,13 @@ var InitCmd = &cobra.Command{
 
 func init() {
 	flags := BuildCmd.Flags()
-	flags.BoolVar(&buildN, "n", false, "print the commands but do not run them.")
-	flags.BoolVar(&buildX, "x", false, "print the commands.")
-	flags.BoolVar(&buildV, "v", false, "print the names of packages as they are compiled.")
+	flags.BoolVarP(&buildN, "dry-run", "n", false, "print the commands but do not run them.")
+	flags.BoolVarP(&buildX, "trace", "x", false, "print the commands.")
+	flags.BoolVarP(&buildV, "verbose", "v", false, "print the logs verbosely.")
 	flags.BoolVar(&buildWork, "work", false, "print the name of the temporary work directory and do not delete it when exiting.")
 	flags.StringVar(&buildGcflags, "gcflags", "", "arguments to pass on each go tool compile invocation.")
 	flags.StringVar(&buildLdflags, "ldflags", "", "arguments to pass on each go tool link invocation.")
-	flags.StringVar(&buildTargets, "targets", "", "space separated os/arch. Valid values are: android, ios, android/arm, android/arm64, android/386, android/amd64, ios/arm, ios/arm64, ios/386, ios/amd64.")
+	flags.StringVar(&buildTargets, "target", "", "space separated os/arch. Valid values are: android, ios, android/arm, android/arm64, android/386, android/amd64, ios/arm, ios/arm64, ios/386, ios/amd64.")
 
 	RootCmd.AddCommand(BuildCmd)
 }
@@ -87,6 +91,7 @@ var BuildCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(command *cobra.Command, args []string) {
 		flags := &cmd.Flags{
+			Logger:       log.New(os.Stderr, "", 0),
 			BuildN:       buildN,
 			BuildX:       buildX,
 			BuildV:       buildV,
@@ -94,6 +99,7 @@ var BuildCmd = &cobra.Command{
 			BuildGcflags: buildGcflags,
 			BuildLdflags: buildLdflags,
 			BuildTargets: buildTargets,
+			Threaded:     true,
 		}
 		if err := cmd.Build(flags, args); err != nil {
 			fmt.Println(err)
