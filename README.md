@@ -30,12 +30,19 @@ Start by installing Xcode and Android Studio. Instructions can be found at
 https://developer.apple.com/download/ and
 https://developer.android.com/studio/install.html.
 
+You may need to run the following before starting Android Studio to allow it to read
+your GOPATH (https://stackoverflow.com/a/14285335). This also must be done on
+reboot.
+
+    launchctl setenv GOPATH $GOPATH
+
 Open Android Studio's SDK Manager and under the SDK Platforms tab, install
 the Android 8 Platform (API 26). And in the SDK Tools tab, install NDK and the
 Android Support Repository.
 
-Configure the ANDROID_HOME enviromental variable to point to the Android SDK.
-This is usually located at ~/Library/Android/sdk.
+Configure the ANDROID_HOME enviromental variable to point to the Android SDK by 
+adding the following to your ~/.bash_profile. The Android SDK is 
+often located at ~/Library/Android/sdk depending on your install.
 
     export ANDROID_HOME=<SDK location>
 
@@ -61,13 +68,7 @@ We can now open the sample iOS project.
 Set the Development Team in Xcode under General > Signing and select `SampleApp` in
 the target dropdown in the upper right. Then run the App!
 
-For Android, you may need to run the following to allow Android Studio to read
-your GOPATH (https://stackoverflow.com/a/14285335). This also must be done on
-reboot.
-
-    launchctl setenv GOPATH $GOPATH
-
-Then simply open the sample Android Studio project and hit run!
+For Android, simply open the sample Android Studio project and hit run!
 
     open -a /Applications/Android\ Studio.app $GOPATH/src/gomatcha.io/matcha/examples/android-app/SampleApp
 
@@ -86,13 +87,15 @@ Open Android Studio's SDK Manager and under the SDK Platforms tab, install
 the Android 8 Platform (API 26). And in the SDK Tools tab, install NDK and the
 Android Support Repository.
 
-Configure the ANDROID_HOME enviromental variable to point to the Android SDK.
-This is often located at ~/Android/Sdk depending on your install.
+Configure the ANDROID_HOME enviromental variable to point to the Android SDK by 
+adding the following to your ~/.bash_profile. The Android SDK is often located 
+at ~/Android/Sdk depending on your install.
 
     export ANDROID_HOME=<SDK location>
 
-Modify your PATH to include the Java compiler if it does not already. javac can
-be found at android-studio/jre/bin.
+Additionally add the following to your ~/.bash_profile to modify your PATH to
+include the Java compiler if it does not already. javac can be found at android-
+studio/jre/bin.
 
     export PATH=${PATH}:<Java Compiler location>
 
@@ -131,14 +134,15 @@ the Android 8 Platform (API 26). And in the SDK Tools tab, install NDK and the
 Android Support Repository.
 
 Configure the ANDROID_HOME enviromental variable to point to the Android SDK.
-This is often located at ~/Android/Sdk depending on your install.
+The Android SDK is often located at %USERPROFILE%\AppData\Local\Android\Sdk 
+depending on your install. 
 
-    export ANDROID_HOME=<SDK location>
+    setx ANDROID_HOME <SDK location>
 
 Modify your PATH to include the Java compiler if it does not already. javac can
-be found at android-studio/jre/bin.
+often be found at C:\Program Files\Android\Android Studio\jre\bin.
 
-    export PATH=${PATH}:<Java Compiler location>
+    setx PATH %PATH%;<Java Compiler location>
 
 Fetch the project and install the matcha command.
 
@@ -156,9 +160,6 @@ Now build the example project. The output is installed at `$GOPATH/src/gomatcha.
     matcha build gomatcha.io/matcha/examples
 
 Now open the sample Android Studio project and hit run!
-
-    <Android Studio location>/bin/studio.sh $GOPATH/src/gomatcha.io/matcha/examples/android-app/SampleApp
-
 
 
 <h3>Try it out!</h3>
