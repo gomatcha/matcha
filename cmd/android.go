@@ -28,12 +28,18 @@ Created-By: 1.0 (Go)
 )
 
 const (
-	missingAndroidHomeEnvVar  = "$ANDROID_HOME enviromental variable is unset and does not point to an Android SDK. The SDK is often located at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
-	missingAndroidHome        = "$ANDROID_HOME enviromental variable does not point to an Android SDK. The SDK is often located at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
-	missingAndroidPlatformDir = "$ANDROID_HOME enviromental variable does not point to an Android SDK. Missing directory at $ANDROID_HOME/platforms. The SDK is often located at ~/Library/Android/sdk on macOS and ~/Android/Sdk on Linux."
-	missingAndroidPlatform    = "Android SDK platform with minimum API level of 15 was not found in $ANDROID_HOME/ndk-bundle/platforms. SDK platforms can be installed in Android Studio > SDK Manager."
+	missingAndroidHomeEnvVar  = "$ANDROID_HOME enviromental variable is unset and does not point to an Android SDK. "
+	missingAndroidHome        = "$ANDROID_HOME enviromental variable does not point to an Android SDK. "
+	missingAndroidPlatformDir = "$ANDROID_HOME enviromental variable does not point to an Android SDK. Missing directory at $ANDROID_HOME/platforms. "
+	missingAndroidPlatform    = "Android SDK platform with minimum API level of 15 was not found in $ANDROID_HOME/platforms. SDK platforms can be installed in Android Studio > SDK Manager."
 	missingNDK                = "NDK was not found at $ANDROID_HOME/ndk-bundle. NDK can be installed in Android Studio > SDK Manager."
-	missingJavac              = "javac was not found in $PATH. The Java compiler is often located at /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home on macOS and /usr/local/android-studio/jre/bin on Linux."
+	missingJavac              = "javac was not found in $PATH. "
+	missingAndroidHomeWin     = "The SDK is often located at %USERPROFILE%\\AppData\\Local\\Android\\Sdk on Windows."
+	missingAndroidHomeMac     = "The SDK is often located at ~/Library/Android/sdk on macOS."
+	missingAndroidHomeLinux   = "The SDK is often located at ~/Android/Sdk on Linux."
+	missingJavacWin           = "The Java compiler is often located at C:\\Program Files\\Android\\Android Studio\\jre\\bin on Windows."
+	missingJavacMac           = "The Java compiler is often located at /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home on macOS."
+	missingJavacLinux         = "The Java compiler is often located at /usr/local/android-studio/jre/bin on Linux."
 )
 
 func ValidateAndroidInstall(f *Flags) error {
@@ -54,7 +60,7 @@ func validateAndroidInstall(f *Flags) error {
 		return err
 	}
 	if _, err := LookPath(f, "javac"); err != nil {
-		return fmt.Errorf(missingJavac)
+		return fmt.Errorf(missingJavac + javacErrorString())
 	}
 	return nil
 }
@@ -62,11 +68,11 @@ func validateAndroidInstall(f *Flags) error {
 func AndroidSDKPath(f *Flags) (string, error) {
 	path := GetEnv(f, "ANDROID_HOME")
 	if path == "" {
-		return "", fmt.Errorf(missingAndroidHomeEnvVar)
+		return "", fmt.Errorf(missingAndroidHomeEnvVar + androidHomeErrorString())
 	}
 
 	if !IsDir(f, path) {
-		return "", fmt.Errorf(missingAndroidHome)
+		return "", fmt.Errorf(missingAndroidHome + androidHomeErrorString())
 	}
 	return path, nil
 }
@@ -82,7 +88,7 @@ func AndroidPlatformPath(f *Flags) (string, error) {
 
 	platformsDir := filepath.Join(androidHome, "platforms")
 	if !IsDir(f, platformsDir) {
-		return "", fmt.Errorf(missingAndroidPlatformDir)
+		return "", fmt.Errorf(missingAndroidPlatformDir + androidHomeErrorString())
 	}
 
 	platformsDirNames, err := ReadDirNames(f, platformsDir)
@@ -277,6 +283,24 @@ func ndkHostTag() (string, error) {
 		}
 		return runtime.GOOS + "-" + arch, nil
 	}
+}
+
+func androidHomeErrorString() string {
+	if runtime.GOOS == "windows" {
+		return missingAndroidHomeWin
+	} else if runtime.GOOS == "darwin" {
+		return missingAndroidHomeMac
+	}
+	return missingAndroidHomeLinux
+}
+
+func javacErrorString() string {
+	if runtime.GOOS == "windows" {
+		return missingJavacWin
+	} else if runtime.GOOS == "darwin" {
+		return missingJavacMac
+	}
+	return missingJavacLinux
 }
 
 // AAR is the format for the binary distribution of an Android Library Project
