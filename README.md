@@ -59,9 +59,15 @@ We can now open the sample iOS project.
     open $GOPATH/src/gomatcha.io/matcha/examples/ios-app/SampleApp.xcworkspace
     
 Set the Development Team in Xcode under General > Signing and select `SampleApp` in
-the target dropdown in the upper right. Then run the App! 
+the target dropdown in the upper right. Then run the App!
 
-For Android simply open the sample Android Studio project and hit run!
+For Android, you may need to run the following to allow Android Studio to read
+your GOPATH (https://stackoverflow.com/a/14285335). This also must be done on
+reboot.
+
+    launchctl setenv GOPATH $GOPATH
+
+Then simply open the sample Android Studio project and hit run!
 
     open -a /Applications/Android\ Studio.app $GOPATH/src/gomatcha.io/matcha/examples/android-app/SampleApp
 
