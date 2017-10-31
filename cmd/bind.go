@@ -245,7 +245,9 @@ func Bind(flags *Flags, args []string) error {
 				arch := FindEnv(env, "GOARCH")
 				env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+GoEnv(flags, "GOPATH"))
 				path := filepath.Join(tempdir, "matcha-"+arch+".a")
-				err := GoBuild(flags, []string{mainPath}, env, []string{"matcha"}, matchaPkgPath, tempdir, "-buildmode=c-archive", "-o", path)
+
+				// ios needs to be added as a build tag due to https://github.com/golang/go/commit/29eb7d18ed71c057bbdb69d85953a32252f0ea73
+				err := GoBuild(flags, []string{mainPath}, env, []string{"matcha", "ios"}, matchaPkgPath, tempdir, "-buildmode=c-archive", "-o", path)
 				archChan <- archPath{arch, path, err}
 			}(i)
 
