@@ -42,7 +42,7 @@ Android Support Repository.
 
 Configure the ANDROID_HOME enviromental variable to point to the Android SDK by 
 adding the following to your ~/.bash_profile. The Android SDK is 
-often located at ~/Library/Android/sdk depending on your install.
+often located at `~/Library/Android/sdk` depending on your install.
 
     export ANDROID_HOME=<SDK location>
 
@@ -50,9 +50,9 @@ Fetch the project and install the matcha command.
 
     go get gomatcha.io/matcha/...
 
-We build the Go standard library for iOS and Android with the following command.
-This may take awhile. The output is installed at `$GOPATH/pkg/matcha`. If your
-path doesn't contain $GOPATH/bin, you may need to replace these calls with
+Next we build the Go standard library for iOS and Android with the following command.
+The output is installed at `$GOPATH/pkg/matcha`. If your
+path doesn't contain `$GOPATH/bin`, you may need to replace these calls with
 `$GOPATH/bin/matcha`.
 
     matcha init
@@ -94,8 +94,8 @@ at ~/Android/Sdk depending on your install.
     export ANDROID_HOME=<SDK location>
 
 Additionally add the following to your ~/.bash_profile to modify your PATH to
-include the Java compiler if it does not already. javac can be found at android-
-studio/jre/bin.
+include the Java compiler if it does not already. javac can often be found at 
+`/usr/local/android-studio/jre/bin`.
 
     export PATH=${PATH}:<Java Compiler location>
 
@@ -103,9 +103,9 @@ Fetch the project and install the matcha command.
 
     go get gomatcha.io/matcha/...
 
-We build the Go standard library for Android with the following command.
-This may take awhile. The output is installed at `$GOPATH/pkg/matcha`. If your
-path doesn't contain $GOPATH/bin, you may need to replace these calls with
+Next we build the Go standard library for Android with the following command.
+The output is installed at `$GOPATH/pkg/matcha`. If your
+path doesn't contain `$GOPATH/bin`, you may need to replace these calls with
 `$GOPATH/bin/matcha`.
 
     matcha init
@@ -134,7 +134,7 @@ the Android 8 Platform (API 26). And in the SDK Tools tab, install NDK and the
 Android Support Repository.
 
 Configure the ANDROID_HOME enviromental variable to point to the Android SDK.
-The Android SDK is often located at %USERPROFILE%\AppData\Local\Android\Sdk 
+The Android SDK is often located at `%USERPROFILE%\AppData\Local\Android\Sdk` 
 depending on your install. 
 
     setx ANDROID_HOME <SDK location>
@@ -148,10 +148,9 @@ Fetch the project and install the matcha command.
 
     go get gomatcha.io/matcha/...
 
-We build the Go standard library for Android with the following command.
-This may take awhile. The output is installed at `$GOPATH/pkg/matcha`. If your
-path doesn't contain $GOPATH/bin, you may need to replace these calls with
-`$GOPATH/bin/matcha`.
+Next we build the Go standard library for Android with the following command.
+The output is installed at `$GOPATH/pkg/matcha`. If your path doesn't contain
+`$GOPATH/bin`, you may need to replace these calls with `$GOPATH/bin/matcha`.
 
     matcha init
 
