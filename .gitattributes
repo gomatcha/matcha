@@ -1,1 +1,4 @@
 ios/Protobuf/* linguist-vendored
+ios/Matcha/Protobuf/* linguist-vendored
+android/MatchaLib/matcha/src/main/java/io/gomatcha/matcha/proto/* linguist-vendored
+proto/* linguist-vendored
