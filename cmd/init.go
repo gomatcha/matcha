@@ -14,6 +14,12 @@ import (
 func Init(f *Flags) error {
 	start := time.Now()
 
+	// Validate Go
+	err := validateGoInstall(f)
+	if err != nil {
+		return err
+	}
+
 	// Parse targets
 	targets := ParseTargets(f.BuildTargets)
 

@@ -44,7 +44,9 @@ func TestBuild(t *testing.T) {
 	}
 }
 
-const expectedInit = `printenv GOPATH
+const expectedInit = `which go
+go version
+printenv GOPATH
 test -d $GOPATH/pkg/matcha
 rm -r -f $GOPATH/pkg/matcha
 mkdir -p $GOPATH/pkg/matcha
@@ -83,6 +85,8 @@ rm -r -f $WORK
 `
 
 const expectedBuild = `go findpackage gomatcha.io/matcha
+which go
+go version
 WORK=$WORK
 printenv GOPATH
 test -d $GOPATH/pkg/matcha

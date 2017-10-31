@@ -64,6 +64,12 @@ func Build(flags *Flags, args []string) error {
 func Bind(flags *Flags, args []string) error {
 	targets := ParseTargets(flags.BuildTargets)
 
+	// Validate Go
+	err := validateGoInstall(flags)
+	if err != nil {
+		return err
+	}
+
 	// Make $WORK.
 	tempdir, err := NewTmpDir(flags, "")
 	if err != nil {

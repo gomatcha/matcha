@@ -15,6 +15,11 @@ import (
 	"strings"
 )
 
+const (
+	goMissingErr   = "go was not found in $PATH."
+	goOutOfDateErr = "Go 1.7 or newer is required"
+)
+
 type Flags struct {
 	Logger       *log.Logger
 	Threaded     bool
@@ -36,6 +41,32 @@ func (f *Flags) ShouldPrint() bool {
 
 func (f *Flags) ShouldRun() bool {
 	return !f.BuildN
+}
+
+func validateGoInstall(f *Flags) error {
+	err := _validateGoInstall(f)
+	if err != nil {
+		fmt.Println(`Invalid or unsupported Go installation. See https://gomatcha.io/guide/installation/ for detailed instructions.
+`)
+	}
+	return err
+}
+
+func _validateGoInstall(f *Flags) error {
+	if _, err := LookPath(f, "go"); err != nil {
+		return fmt.Errorf(goMissingErr)
+	}
+
+	ver, err := GoVersion(f)
+	if err != nil {
+		return err
+	}
+	if f.ShouldRun() {
+		if bytes.HasPrefix(ver, []byte("go version go1.4")) || bytes.HasPrefix(ver, []byte("go version go1.5")) || bytes.HasPrefix(ver, []byte("go version go1.6")) {
+			return errors.New(goOutOfDateErr)
+		}
+	}
+	return nil
 }
 
 func FindEnv(env []string, key string) string {
@@ -94,16 +125,11 @@ func GoEnv(f *Flags, name string) string {
 
 func GoVersion(f *Flags) ([]byte, error) {
 	cmd := exec.Command("go", "version")
-	goVer, err := OutputCmd(f, []byte("go version goX.X.X x/x"), "", cmd)
+	ver, err := OutputCmd(f, []byte("go version goX.X.X x/x"), "", cmd)
 	if err != nil {
 		return nil, err
 	}
-	if f.ShouldRun() {
-		if bytes.HasPrefix(goVer, []byte("go version go1.4")) || bytes.HasPrefix(goVer, []byte("go version go1.5")) || bytes.HasPrefix(goVer, []byte("go version go1.6")) {
-			return nil, errors.New("Go 1.7 or newer is required")
-		}
-	}
-	return goVer, nil
+	return ver, nil
 }
 
 func GoBuild(f *Flags, srcs []string, env []string, buildTags []string, matchaPkgPath, tmpdir string, args ...string) error {
