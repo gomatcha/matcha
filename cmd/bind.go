@@ -32,8 +32,8 @@ func ParseTargets(a string) map[string]struct{} {
 			targets["android"] = struct{}{}
 			targets["android/arm"] = struct{}{}
 			targets["android/arm64"] = struct{}{}
-			// targets["android/386"] = struct{}{}
-			// targets["android/amd64"] = struct{}{}
+			targets["android/386"] = struct{}{}
+			targets["android/amd64"] = struct{}{}
 		case "android/arm", "android/arm64", "android/386", "android/amd64":
 			targets["android"] = struct{}{}
 			targets[i] = struct{}{}
