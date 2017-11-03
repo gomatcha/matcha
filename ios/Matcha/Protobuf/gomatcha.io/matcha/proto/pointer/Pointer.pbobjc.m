@@ -93,6 +93,45 @@ BOOL MatchaPointerPBEventKind_IsValidValue(int32_t value__) {
   }
 }
 
+#pragma mark - Enum MatchaPointerPBPhase
+
+GPBEnumDescriptor *MatchaPointerPBPhase_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "PhaseBegan\000PhaseMoved\000PhaseEnded\000PhaseCa"
+        "ncelled\000";
+    static const int32_t values[] = {
+        MatchaPointerPBPhase_PhaseBegan,
+        MatchaPointerPBPhase_PhaseMoved,
+        MatchaPointerPBPhase_PhaseEnded,
+        MatchaPointerPBPhase_PhaseCancelled,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(MatchaPointerPBPhase)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:MatchaPointerPBPhase_IsValidValue];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL MatchaPointerPBPhase_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case MatchaPointerPBPhase_PhaseBegan:
+    case MatchaPointerPBPhase_PhaseMoved:
+    case MatchaPointerPBPhase_PhaseEnded:
+    case MatchaPointerPBPhase_PhaseCancelled:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - MatchaPointerPBRecognizer
 
 @implementation MatchaPointerPBRecognizer
@@ -604,6 +643,83 @@ int32_t MatchaPointerPBPressEvent_Kind_RawValue(MatchaPointerPBPressEvent *messa
 void SetMatchaPointerPBPressEvent_Kind_RawValue(MatchaPointerPBPressEvent *message, int32_t value) {
   GPBDescriptor *descriptor = [MatchaPointerPBPressEvent descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:MatchaPointerPBPressEvent_FieldNumber_Kind];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+#pragma mark - MatchaPointerPBEvent
+
+@implementation MatchaPointerPBEvent
+
+@dynamic hasTimestamp, timestamp;
+@dynamic hasLocation, location;
+@dynamic phase;
+
+typedef struct MatchaPointerPBEvent__storage_ {
+  uint32_t _has_storage_[1];
+  MatchaPointerPBPhase phase;
+  GPBTimestamp *timestamp;
+  MatchaLayoutPBPoint *location;
+} MatchaPointerPBEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "timestamp",
+        .dataTypeSpecific.className = GPBStringifySymbol(GPBTimestamp),
+        .number = MatchaPointerPBEvent_FieldNumber_Timestamp,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(MatchaPointerPBEvent__storage_, timestamp),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "location",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaLayoutPBPoint),
+        .number = MatchaPointerPBEvent_FieldNumber_Location,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(MatchaPointerPBEvent__storage_, location),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "phase",
+        .dataTypeSpecific.enumDescFunc = MatchaPointerPBPhase_EnumDescriptor,
+        .number = MatchaPointerPBEvent_FieldNumber_Phase,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(MatchaPointerPBEvent__storage_, phase),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MatchaPointerPBEvent class]
+                                     rootClass:[MatchaPointerPBPointerRoot class]
+                                          file:MatchaPointerPBPointerRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MatchaPointerPBEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t MatchaPointerPBEvent_Phase_RawValue(MatchaPointerPBEvent *message) {
+  GPBDescriptor *descriptor = [MatchaPointerPBEvent descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:MatchaPointerPBEvent_FieldNumber_Phase];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetMatchaPointerPBEvent_Phase_RawValue(MatchaPointerPBEvent *message, int32_t value) {
+  GPBDescriptor *descriptor = [MatchaPointerPBEvent descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:MatchaPointerPBEvent_FieldNumber_Phase];
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 

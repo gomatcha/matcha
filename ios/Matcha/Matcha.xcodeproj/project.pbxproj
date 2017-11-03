@@ -59,6 +59,8 @@
 		6732FAA01F7445F2002DC2EF /* MatchaViewController_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732FA9F1F7445C0002DC2EF /* MatchaViewController_Private.h */; };
 		6759EE521F2E632C00B8E0A9 /* MatchaMiddleware.h in Headers */ = {isa = PBXBuildFile; fileRef = 6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */; };
 		6759EE531F2E632C00B8E0A9 /* MatchaMiddleware.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */; };
+		67E1332A1FAB241F00B3B835 /* MatchaGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 67E133281FAB241F00B3B835 /* MatchaGestureRecognizer.h */; };
+		67E1332B1FAB241F00B3B835 /* MatchaGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E133291FAB241F00B3B835 /* MatchaGestureRecognizer.m */; };
 		67FEBA701F099EDF005AFEDA /* Matcha.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FEBA6E1F099EDF005AFEDA /* Matcha.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67FEBAD11F09A096005AFEDA /* MatchaBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67FEBAD01F09A096005AFEDA /* MatchaBridge.framework */; };
 		67FEBAF81F09A18F005AFEDA /* MatchaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FEBAD21F09A18F005AFEDA /* MatchaViewController.m */; };
@@ -157,6 +159,8 @@
 		6732FA9F1F7445C0002DC2EF /* MatchaViewController_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchaViewController_Private.h; sourceTree = "<group>"; };
 		6759EE501F2E632C00B8E0A9 /* MatchaMiddleware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchaMiddleware.h; sourceTree = "<group>"; };
 		6759EE511F2E632C00B8E0A9 /* MatchaMiddleware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchaMiddleware.m; sourceTree = "<group>"; };
+		67E133281FAB241F00B3B835 /* MatchaGestureRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchaGestureRecognizer.h; sourceTree = "<group>"; };
+		67E133291FAB241F00B3B835 /* MatchaGestureRecognizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchaGestureRecognizer.m; sourceTree = "<group>"; };
 		67FEBA6B1F099EDF005AFEDA /* Matcha.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Matcha.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67FEBA6E1F099EDF005AFEDA /* Matcha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matcha.h; sourceTree = "<group>"; };
 		67FEBA6F1F099EDF005AFEDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -462,6 +466,8 @@
 		67FEBB291F09AD17005AFEDA /* Touch */ = {
 			isa = PBXGroup;
 			children = (
+				67E133281FAB241F00B3B835 /* MatchaGestureRecognizer.h */,
+				67E133291FAB241F00B3B835 /* MatchaGestureRecognizer.m */,
 				67FEBADB1F09A18F005AFEDA /* MatchaTapGestureRecognizer.h */,
 				67FEBADA1F09A18F005AFEDA /* MatchaTapGestureRecognizer.m */,
 				67FEBAE91F09A18F005AFEDA /* MatchaPressGestureRecognizer.h */,
@@ -631,6 +637,7 @@
 				6732FA631F734305002DC2EF /* Paint.pbobjc.h in Headers */,
 				6732FA611F734305002DC2EF /* Layout.pbobjc.h in Headers */,
 				67FEBB051F09A18F005AFEDA /* MatchaSwitchView.h in Headers */,
+				67E1332A1FAB241F00B3B835 /* MatchaGestureRecognizer.h in Headers */,
 				6732FA651F734305002DC2EF /* Text.pbobjc.h in Headers */,
 				6732FA691F734305002DC2EF /* Alert.pbobjc.h in Headers */,
 				67FEBB011F09A18F005AFEDA /* MatchaTapGestureRecognizer.h in Headers */,
@@ -739,6 +746,7 @@
 				67FEBB1C1F09A18F005AFEDA /* MatchaBridge.m in Sources */,
 				671B30591F5F509D00F2ABFE /* MatchaUnknownView.m in Sources */,
 				6732FA701F734305002DC2EF /* Progressview.pbobjc.m in Sources */,
+				67E1332B1FAB241F00B3B835 /* MatchaGestureRecognizer.m in Sources */,
 				6732FA601F734305002DC2EF /* Keyboard.pbobjc.m in Sources */,
 				6732FA7E1F734305002DC2EF /* Textinput.pbobjc.m in Sources */,
 				67FEBAFE1F09A18F005AFEDA /* MatchaTextInput.m in Sources */,

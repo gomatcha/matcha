@@ -54,9 +54,7 @@
     event.timestamp = [[GPBTimestamp alloc] initWithDate:[NSDate date]];
     event.kind = MatchaPointerPBEventKind_EventKindRecognized;
     
-    
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:event.data];
-    
     [self.viewController call:[NSString stringWithFormat:@"gomatcha.io/matcha/touch %@",@(self.funcId)] viewId:self.viewId args2:@[value]];
 }
 

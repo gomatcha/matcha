@@ -58,6 +58,29 @@ GPBEnumDescriptor *MatchaPointerPBEventKind_EnumDescriptor(void);
  **/
 BOOL MatchaPointerPBEventKind_IsValidValue(int32_t value);
 
+#pragma mark - Enum MatchaPointerPBPhase
+
+typedef GPB_ENUM(MatchaPointerPBPhase) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  MatchaPointerPBPhase_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  MatchaPointerPBPhase_PhaseBegan = 0,
+  MatchaPointerPBPhase_PhaseMoved = 1,
+  MatchaPointerPBPhase_PhaseEnded = 2,
+  MatchaPointerPBPhase_PhaseCancelled = 3,
+};
+
+GPBEnumDescriptor *MatchaPointerPBPhase_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL MatchaPointerPBPhase_IsValidValue(int32_t value);
+
 #pragma mark - MatchaPointerPBPointerRoot
 
 /**
@@ -255,6 +278,40 @@ int32_t MatchaPointerPBPressEvent_Kind_RawValue(MatchaPointerPBPressEvent *messa
  * was generated.
  **/
 void SetMatchaPointerPBPressEvent_Kind_RawValue(MatchaPointerPBPressEvent *message, int32_t value);
+
+#pragma mark - MatchaPointerPBEvent
+
+typedef GPB_ENUM(MatchaPointerPBEvent_FieldNumber) {
+  MatchaPointerPBEvent_FieldNumber_Timestamp = 1,
+  MatchaPointerPBEvent_FieldNumber_Location = 2,
+  MatchaPointerPBEvent_FieldNumber_Phase = 3,
+};
+
+@interface MatchaPointerPBEvent : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *timestamp;
+/** Test to see if @c timestamp has been set. */
+@property(nonatomic, readwrite) BOOL hasTimestamp;
+
+@property(nonatomic, readwrite, strong, null_resettable) MatchaLayoutPBPoint *location;
+/** Test to see if @c location has been set. */
+@property(nonatomic, readwrite) BOOL hasLocation;
+
+@property(nonatomic, readwrite) MatchaPointerPBPhase phase;
+
+@end
+
+/**
+ * Fetches the raw value of a @c MatchaPointerPBEvent's @c phase property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t MatchaPointerPBEvent_Phase_RawValue(MatchaPointerPBEvent *message);
+/**
+ * Sets the raw value of an @c MatchaPointerPBEvent's @c phase property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetMatchaPointerPBEvent_Phase_RawValue(MatchaPointerPBEvent *message, int32_t value);
 
 NS_ASSUME_NONNULL_END
 

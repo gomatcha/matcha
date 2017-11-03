@@ -130,6 +130,122 @@ public final class PbPointer {
     // @@protoc_insertion_point(enum_scope:matcha.pointer.EventKind)
   }
 
+  /**
+   * Protobuf enum {@code matcha.pointer.Phase}
+   */
+  public enum Phase
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>PHASE_BEGAN = 0;</code>
+     */
+    PHASE_BEGAN(0),
+    /**
+     * <code>PHASE_MOVED = 1;</code>
+     */
+    PHASE_MOVED(1),
+    /**
+     * <code>PHASE_ENDED = 2;</code>
+     */
+    PHASE_ENDED(2),
+    /**
+     * <code>PHASE_CANCELLED = 3;</code>
+     */
+    PHASE_CANCELLED(3),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>PHASE_BEGAN = 0;</code>
+     */
+    public static final int PHASE_BEGAN_VALUE = 0;
+    /**
+     * <code>PHASE_MOVED = 1;</code>
+     */
+    public static final int PHASE_MOVED_VALUE = 1;
+    /**
+     * <code>PHASE_ENDED = 2;</code>
+     */
+    public static final int PHASE_ENDED_VALUE = 2;
+    /**
+     * <code>PHASE_CANCELLED = 3;</code>
+     */
+    public static final int PHASE_CANCELLED_VALUE = 3;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static Phase valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static Phase forNumber(int value) {
+      switch (value) {
+        case 0: return PHASE_BEGAN;
+        case 1: return PHASE_MOVED;
+        case 2: return PHASE_ENDED;
+        case 3: return PHASE_CANCELLED;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<Phase>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        Phase> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<Phase>() {
+            public Phase findValueByNumber(int number) {
+              return Phase.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return io.gomatcha.matcha.proto.pointer.PbPointer.getDescriptor().getEnumTypes().get(1);
+    }
+
+    private static final Phase[] VALUES = values();
+
+    public static Phase valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private Phase(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:matcha.pointer.Phase)
+  }
+
   public interface RecognizerOrBuilder extends
       // @@protoc_insertion_point(interface_extends:matcha.pointer.Recognizer)
       com.google.protobuf.MessageOrBuilder {
@@ -5791,6 +5907,863 @@ public final class PbPointer {
 
   }
 
+  public interface EventOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:matcha.pointer.Event)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+     */
+    boolean hasTimestamp();
+    /**
+     * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+     */
+    com.google.protobuf.Timestamp getTimestamp();
+    /**
+     * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+     */
+    com.google.protobuf.TimestampOrBuilder getTimestampOrBuilder();
+
+    /**
+     * <code>.matcha.layout.Point location = 2;</code>
+     */
+    boolean hasLocation();
+    /**
+     * <code>.matcha.layout.Point location = 2;</code>
+     */
+    io.gomatcha.matcha.proto.layout.PbLayout.Point getLocation();
+    /**
+     * <code>.matcha.layout.Point location = 2;</code>
+     */
+    io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder getLocationOrBuilder();
+
+    /**
+     * <code>.matcha.pointer.Phase phase = 3;</code>
+     */
+    int getPhaseValue();
+    /**
+     * <code>.matcha.pointer.Phase phase = 3;</code>
+     */
+    io.gomatcha.matcha.proto.pointer.PbPointer.Phase getPhase();
+  }
+  /**
+   * Protobuf type {@code matcha.pointer.Event}
+   */
+  public  static final class Event extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:matcha.pointer.Event)
+      EventOrBuilder {
+    // Use Event.newBuilder() to construct.
+    private Event(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Event() {
+      phase_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private Event(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.Timestamp.Builder subBuilder = null;
+              if (timestamp_ != null) {
+                subBuilder = timestamp_.toBuilder();
+              }
+              timestamp_ = input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(timestamp_);
+                timestamp_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 18: {
+              io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder subBuilder = null;
+              if (location_ != null) {
+                subBuilder = location_.toBuilder();
+              }
+              location_ = input.readMessage(io.gomatcha.matcha.proto.layout.PbLayout.Point.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(location_);
+                location_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 24: {
+              int rawValue = input.readEnum();
+
+              phase_ = rawValue;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return io.gomatcha.matcha.proto.pointer.PbPointer.internal_static_matcha_pointer_Event_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return io.gomatcha.matcha.proto.pointer.PbPointer.internal_static_matcha_pointer_Event_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              io.gomatcha.matcha.proto.pointer.PbPointer.Event.class, io.gomatcha.matcha.proto.pointer.PbPointer.Event.Builder.class);
+    }
+
+    public static final int TIMESTAMP_FIELD_NUMBER = 1;
+    private com.google.protobuf.Timestamp timestamp_;
+    /**
+     * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+     */
+    public boolean hasTimestamp() {
+      return timestamp_ != null;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+     */
+    public com.google.protobuf.Timestamp getTimestamp() {
+      return timestamp_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : timestamp_;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+     */
+    public com.google.protobuf.TimestampOrBuilder getTimestampOrBuilder() {
+      return getTimestamp();
+    }
+
+    public static final int LOCATION_FIELD_NUMBER = 2;
+    private io.gomatcha.matcha.proto.layout.PbLayout.Point location_;
+    /**
+     * <code>.matcha.layout.Point location = 2;</code>
+     */
+    public boolean hasLocation() {
+      return location_ != null;
+    }
+    /**
+     * <code>.matcha.layout.Point location = 2;</code>
+     */
+    public io.gomatcha.matcha.proto.layout.PbLayout.Point getLocation() {
+      return location_ == null ? io.gomatcha.matcha.proto.layout.PbLayout.Point.getDefaultInstance() : location_;
+    }
+    /**
+     * <code>.matcha.layout.Point location = 2;</code>
+     */
+    public io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder getLocationOrBuilder() {
+      return getLocation();
+    }
+
+    public static final int PHASE_FIELD_NUMBER = 3;
+    private int phase_;
+    /**
+     * <code>.matcha.pointer.Phase phase = 3;</code>
+     */
+    public int getPhaseValue() {
+      return phase_;
+    }
+    /**
+     * <code>.matcha.pointer.Phase phase = 3;</code>
+     */
+    public io.gomatcha.matcha.proto.pointer.PbPointer.Phase getPhase() {
+      io.gomatcha.matcha.proto.pointer.PbPointer.Phase result = io.gomatcha.matcha.proto.pointer.PbPointer.Phase.valueOf(phase_);
+      return result == null ? io.gomatcha.matcha.proto.pointer.PbPointer.Phase.UNRECOGNIZED : result;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (timestamp_ != null) {
+        output.writeMessage(1, getTimestamp());
+      }
+      if (location_ != null) {
+        output.writeMessage(2, getLocation());
+      }
+      if (phase_ != io.gomatcha.matcha.proto.pointer.PbPointer.Phase.PHASE_BEGAN.getNumber()) {
+        output.writeEnum(3, phase_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (timestamp_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getTimestamp());
+      }
+      if (location_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getLocation());
+      }
+      if (phase_ != io.gomatcha.matcha.proto.pointer.PbPointer.Phase.PHASE_BEGAN.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(3, phase_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof io.gomatcha.matcha.proto.pointer.PbPointer.Event)) {
+        return super.equals(obj);
+      }
+      io.gomatcha.matcha.proto.pointer.PbPointer.Event other = (io.gomatcha.matcha.proto.pointer.PbPointer.Event) obj;
+
+      boolean result = true;
+      result = result && (hasTimestamp() == other.hasTimestamp());
+      if (hasTimestamp()) {
+        result = result && getTimestamp()
+            .equals(other.getTimestamp());
+      }
+      result = result && (hasLocation() == other.hasLocation());
+      if (hasLocation()) {
+        result = result && getLocation()
+            .equals(other.getLocation());
+      }
+      result = result && phase_ == other.phase_;
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasTimestamp()) {
+        hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
+        hash = (53 * hash) + getTimestamp().hashCode();
+      }
+      if (hasLocation()) {
+        hash = (37 * hash) + LOCATION_FIELD_NUMBER;
+        hash = (53 * hash) + getLocation().hashCode();
+      }
+      hash = (37 * hash) + PHASE_FIELD_NUMBER;
+      hash = (53 * hash) + phase_;
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(io.gomatcha.matcha.proto.pointer.PbPointer.Event prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code matcha.pointer.Event}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:matcha.pointer.Event)
+        io.gomatcha.matcha.proto.pointer.PbPointer.EventOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return io.gomatcha.matcha.proto.pointer.PbPointer.internal_static_matcha_pointer_Event_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return io.gomatcha.matcha.proto.pointer.PbPointer.internal_static_matcha_pointer_Event_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                io.gomatcha.matcha.proto.pointer.PbPointer.Event.class, io.gomatcha.matcha.proto.pointer.PbPointer.Event.Builder.class);
+      }
+
+      // Construct using io.gomatcha.matcha.proto.pointer.PbPointer.Event.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (timestampBuilder_ == null) {
+          timestamp_ = null;
+        } else {
+          timestamp_ = null;
+          timestampBuilder_ = null;
+        }
+        if (locationBuilder_ == null) {
+          location_ = null;
+        } else {
+          location_ = null;
+          locationBuilder_ = null;
+        }
+        phase_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return io.gomatcha.matcha.proto.pointer.PbPointer.internal_static_matcha_pointer_Event_descriptor;
+      }
+
+      public io.gomatcha.matcha.proto.pointer.PbPointer.Event getDefaultInstanceForType() {
+        return io.gomatcha.matcha.proto.pointer.PbPointer.Event.getDefaultInstance();
+      }
+
+      public io.gomatcha.matcha.proto.pointer.PbPointer.Event build() {
+        io.gomatcha.matcha.proto.pointer.PbPointer.Event result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public io.gomatcha.matcha.proto.pointer.PbPointer.Event buildPartial() {
+        io.gomatcha.matcha.proto.pointer.PbPointer.Event result = new io.gomatcha.matcha.proto.pointer.PbPointer.Event(this);
+        if (timestampBuilder_ == null) {
+          result.timestamp_ = timestamp_;
+        } else {
+          result.timestamp_ = timestampBuilder_.build();
+        }
+        if (locationBuilder_ == null) {
+          result.location_ = location_;
+        } else {
+          result.location_ = locationBuilder_.build();
+        }
+        result.phase_ = phase_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof io.gomatcha.matcha.proto.pointer.PbPointer.Event) {
+          return mergeFrom((io.gomatcha.matcha.proto.pointer.PbPointer.Event)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(io.gomatcha.matcha.proto.pointer.PbPointer.Event other) {
+        if (other == io.gomatcha.matcha.proto.pointer.PbPointer.Event.getDefaultInstance()) return this;
+        if (other.hasTimestamp()) {
+          mergeTimestamp(other.getTimestamp());
+        }
+        if (other.hasLocation()) {
+          mergeLocation(other.getLocation());
+        }
+        if (other.phase_ != 0) {
+          setPhaseValue(other.getPhaseValue());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        io.gomatcha.matcha.proto.pointer.PbPointer.Event parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (io.gomatcha.matcha.proto.pointer.PbPointer.Event) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private com.google.protobuf.Timestamp timestamp_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> timestampBuilder_;
+      /**
+       * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+       */
+      public boolean hasTimestamp() {
+        return timestampBuilder_ != null || timestamp_ != null;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+       */
+      public com.google.protobuf.Timestamp getTimestamp() {
+        if (timestampBuilder_ == null) {
+          return timestamp_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : timestamp_;
+        } else {
+          return timestampBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+       */
+      public Builder setTimestamp(com.google.protobuf.Timestamp value) {
+        if (timestampBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          timestamp_ = value;
+          onChanged();
+        } else {
+          timestampBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+       */
+      public Builder setTimestamp(
+          com.google.protobuf.Timestamp.Builder builderForValue) {
+        if (timestampBuilder_ == null) {
+          timestamp_ = builderForValue.build();
+          onChanged();
+        } else {
+          timestampBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+       */
+      public Builder mergeTimestamp(com.google.protobuf.Timestamp value) {
+        if (timestampBuilder_ == null) {
+          if (timestamp_ != null) {
+            timestamp_ =
+              com.google.protobuf.Timestamp.newBuilder(timestamp_).mergeFrom(value).buildPartial();
+          } else {
+            timestamp_ = value;
+          }
+          onChanged();
+        } else {
+          timestampBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+       */
+      public Builder clearTimestamp() {
+        if (timestampBuilder_ == null) {
+          timestamp_ = null;
+          onChanged();
+        } else {
+          timestamp_ = null;
+          timestampBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+       */
+      public com.google.protobuf.Timestamp.Builder getTimestampBuilder() {
+        
+        onChanged();
+        return getTimestampFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+       */
+      public com.google.protobuf.TimestampOrBuilder getTimestampOrBuilder() {
+        if (timestampBuilder_ != null) {
+          return timestampBuilder_.getMessageOrBuilder();
+        } else {
+          return timestamp_ == null ?
+              com.google.protobuf.Timestamp.getDefaultInstance() : timestamp_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.Timestamp timestamp = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> 
+          getTimestampFieldBuilder() {
+        if (timestampBuilder_ == null) {
+          timestampBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder>(
+                  getTimestamp(),
+                  getParentForChildren(),
+                  isClean());
+          timestamp_ = null;
+        }
+        return timestampBuilder_;
+      }
+
+      private io.gomatcha.matcha.proto.layout.PbLayout.Point location_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.proto.layout.PbLayout.Point, io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder, io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder> locationBuilder_;
+      /**
+       * <code>.matcha.layout.Point location = 2;</code>
+       */
+      public boolean hasLocation() {
+        return locationBuilder_ != null || location_ != null;
+      }
+      /**
+       * <code>.matcha.layout.Point location = 2;</code>
+       */
+      public io.gomatcha.matcha.proto.layout.PbLayout.Point getLocation() {
+        if (locationBuilder_ == null) {
+          return location_ == null ? io.gomatcha.matcha.proto.layout.PbLayout.Point.getDefaultInstance() : location_;
+        } else {
+          return locationBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.matcha.layout.Point location = 2;</code>
+       */
+      public Builder setLocation(io.gomatcha.matcha.proto.layout.PbLayout.Point value) {
+        if (locationBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          location_ = value;
+          onChanged();
+        } else {
+          locationBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.layout.Point location = 2;</code>
+       */
+      public Builder setLocation(
+          io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder builderForValue) {
+        if (locationBuilder_ == null) {
+          location_ = builderForValue.build();
+          onChanged();
+        } else {
+          locationBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.layout.Point location = 2;</code>
+       */
+      public Builder mergeLocation(io.gomatcha.matcha.proto.layout.PbLayout.Point value) {
+        if (locationBuilder_ == null) {
+          if (location_ != null) {
+            location_ =
+              io.gomatcha.matcha.proto.layout.PbLayout.Point.newBuilder(location_).mergeFrom(value).buildPartial();
+          } else {
+            location_ = value;
+          }
+          onChanged();
+        } else {
+          locationBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.layout.Point location = 2;</code>
+       */
+      public Builder clearLocation() {
+        if (locationBuilder_ == null) {
+          location_ = null;
+          onChanged();
+        } else {
+          location_ = null;
+          locationBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.matcha.layout.Point location = 2;</code>
+       */
+      public io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder getLocationBuilder() {
+        
+        onChanged();
+        return getLocationFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.matcha.layout.Point location = 2;</code>
+       */
+      public io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder getLocationOrBuilder() {
+        if (locationBuilder_ != null) {
+          return locationBuilder_.getMessageOrBuilder();
+        } else {
+          return location_ == null ?
+              io.gomatcha.matcha.proto.layout.PbLayout.Point.getDefaultInstance() : location_;
+        }
+      }
+      /**
+       * <code>.matcha.layout.Point location = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.proto.layout.PbLayout.Point, io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder, io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder> 
+          getLocationFieldBuilder() {
+        if (locationBuilder_ == null) {
+          locationBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.gomatcha.matcha.proto.layout.PbLayout.Point, io.gomatcha.matcha.proto.layout.PbLayout.Point.Builder, io.gomatcha.matcha.proto.layout.PbLayout.PointOrBuilder>(
+                  getLocation(),
+                  getParentForChildren(),
+                  isClean());
+          location_ = null;
+        }
+        return locationBuilder_;
+      }
+
+      private int phase_ = 0;
+      /**
+       * <code>.matcha.pointer.Phase phase = 3;</code>
+       */
+      public int getPhaseValue() {
+        return phase_;
+      }
+      /**
+       * <code>.matcha.pointer.Phase phase = 3;</code>
+       */
+      public Builder setPhaseValue(int value) {
+        phase_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.matcha.pointer.Phase phase = 3;</code>
+       */
+      public io.gomatcha.matcha.proto.pointer.PbPointer.Phase getPhase() {
+        io.gomatcha.matcha.proto.pointer.PbPointer.Phase result = io.gomatcha.matcha.proto.pointer.PbPointer.Phase.valueOf(phase_);
+        return result == null ? io.gomatcha.matcha.proto.pointer.PbPointer.Phase.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.matcha.pointer.Phase phase = 3;</code>
+       */
+      public Builder setPhase(io.gomatcha.matcha.proto.pointer.PbPointer.Phase value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        phase_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.matcha.pointer.Phase phase = 3;</code>
+       */
+      public Builder clearPhase() {
+        
+        phase_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:matcha.pointer.Event)
+    }
+
+    // @@protoc_insertion_point(class_scope:matcha.pointer.Event)
+    private static final io.gomatcha.matcha.proto.pointer.PbPointer.Event DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new io.gomatcha.matcha.proto.pointer.PbPointer.Event();
+    }
+
+    public static io.gomatcha.matcha.proto.pointer.PbPointer.Event getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Event>
+        PARSER = new com.google.protobuf.AbstractParser<Event>() {
+      public Event parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Event(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Event> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Event> getParserForType() {
+      return PARSER;
+    }
+
+    public io.gomatcha.matcha.proto.pointer.PbPointer.Event getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_matcha_pointer_Recognizer_descriptor;
   private static final 
@@ -5831,6 +6804,11 @@ public final class PbPointer {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_matcha_pointer_PressEvent_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_matcha_pointer_Event_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_matcha_pointer_Event_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -5864,12 +6842,17 @@ public final class PbPointer {
       "uf.Timestamp\022&\n\010position\030\002 \001(\0132\024.matcha." +
       "layout.Point\022\'\n\004kind\030\003 \001(\0162\031.matcha.poin" +
       "ter.EventKind\022+\n\010duration\030\004 \001(\0132\031.google" +
-      ".protobuf.Duration*n\n\tEventKind\022\027\n\023EVENT" +
-      "_KIND_POSSIBLE\020\000\022\026\n\022EVENT_KIND_CHANGED\020\001" +
-      "\022\025\n\021EVENT_KIND_FAILED\020\002\022\031\n\025EVENT_KIND_RE" +
-      "COGNIZED\020\003BH\n io.gomatcha.matcha.proto.p" +
-      "ointerB\tPbPointerZ\007pointer\242\002\017MatchaPoint" +
-      "erPBb\006proto3"
+      ".protobuf.Duration\"\204\001\n\005Event\022-\n\ttimestam" +
+      "p\030\001 \001(\0132\032.google.protobuf.Timestamp\022&\n\010l" +
+      "ocation\030\002 \001(\0132\024.matcha.layout.Point\022$\n\005p" +
+      "hase\030\003 \001(\0162\025.matcha.pointer.Phase*n\n\tEve" +
+      "ntKind\022\027\n\023EVENT_KIND_POSSIBLE\020\000\022\026\n\022EVENT" +
+      "_KIND_CHANGED\020\001\022\025\n\021EVENT_KIND_FAILED\020\002\022\031",
+      "\n\025EVENT_KIND_RECOGNIZED\020\003*O\n\005Phase\022\017\n\013PH" +
+      "ASE_BEGAN\020\000\022\017\n\013PHASE_MOVED\020\001\022\017\n\013PHASE_EN" +
+      "DED\020\002\022\023\n\017PHASE_CANCELLED\020\003BH\n io.gomatch" +
+      "a.matcha.proto.pointerB\tPbPointerZ\007point" +
+      "er\242\002\017MatchaPointerPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5935,6 +6918,12 @@ public final class PbPointer {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_pointer_PressEvent_descriptor,
         new java.lang.String[] { "Timestamp", "Position", "Kind", "Duration", });
+    internal_static_matcha_pointer_Event_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_matcha_pointer_Event_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_matcha_pointer_Event_descriptor,
+        new java.lang.String[] { "Timestamp", "Location", "Phase", });
     com.google.protobuf.AnyProto.getDescriptor();
     com.google.protobuf.DurationProto.getDescriptor();
     com.google.protobuf.TimestampProto.getDescriptor();

@@ -68,8 +68,6 @@ type Model struct {
 //  EventKindPossible -> EventKindFailed
 //  EventKindPossible -> EventKindRecognized
 // Continuous gestures:
-//  EventKindPossible -> EventKindFailed
-//  EventKindPossible -> EventKindRecognized
 //  EventKindPossible -> EventKindChanged(optionally) -> EventKindFailed
 //  EventKindPossible -> EventKindChanged(optionally) -> EventKindRecognized
 type EventKind int

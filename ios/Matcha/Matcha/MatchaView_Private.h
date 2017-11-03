@@ -15,4 +15,5 @@ void MatchaRegisterViewController(NSString *string, MatchaViewControllerRegistra
 - (UIViewController<MatchaChildViewController> *)viewController;
 - (UIView<MatchaChildView> *)view;
 - (MatchaViewController *)rootVC;
+- (NSArray<MatchaGoValue *> *)call2:(NSString *)funcId, ... NS_REQUIRES_NIL_TERMINATION;
 @end

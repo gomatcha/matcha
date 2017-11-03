@@ -77,6 +77,9 @@
     [self.viewController call:[NSString stringWithFormat:@"gomatcha.io/matcha/touch %@", @(self.funcId)] viewId:self.viewId args2:@[value]];
 }
 
+#pragma mark - UIGestureRecognizerDelegate
+
+// Ignore the touch if button in parent.
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     UIView *view = touch.view;
     while (true) {

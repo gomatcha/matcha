@@ -59,3 +59,16 @@ message PressEvent {
     EventKind kind = 3;
     google.protobuf.Duration duration = 4;
 }
+
+enum Phase {
+    PHASE_BEGAN = 0;
+    PHASE_MOVED = 1;
+    PHASE_ENDED = 2;
+    PHASE_CANCELLED = 3;
+}
+
+message Event {
+    google.protobuf.Timestamp timestamp = 1;
+    matcha.layout.Point location = 2;
+    Phase phase = 3;
+}

@@ -10,7 +10,6 @@ import (
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pointer"
 	pb "gomatcha.io/matcha/proto"
 	pbview "gomatcha.io/matcha/proto/view"
 	"gomatcha.io/matcha/text"
@@ -114,19 +113,19 @@ func (v *ImageButton) Build(ctx Context) Model {
 		painter = v.PaintStyle
 	}
 
-	t := &pointer.ButtonGesture{
-		OnEvent: func(e *pointer.ButtonEvent) {
-			if e.Kind == pointer.EventKindRecognized && v.OnPress != nil {
-				v.OnPress()
-			}
-		},
-	}
+	// t := &pointer.ButtonGesture{
+	// 	OnEvent: func(e *pointer.ButtonEvent) {
+	// 		if e.Kind == pointer.EventKindRecognized && v.OnPress != nil {
+	// 			v.OnPress()
+	// 		}
+	// 	},
+	// }
 	return Model{
 		Children: []View{iv},
 		Layouter: &imageButtonLayouter{},
 		Painter:  painter,
-		Options: []Option{
-			pointer.GestureList{t},
+		Options:  []Option{
+		// pointer.GestureList{t},
 		},
 	}
 }
