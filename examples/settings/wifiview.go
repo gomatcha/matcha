@@ -362,20 +362,18 @@ func (v *InfoButton) Build(ctx view.Context) view.Model {
 		s.RightEqual(l.Right())
 	})
 
-	button := &pointer.ButtonGesture{
-		OnEvent: func(e *pointer.ButtonEvent) {
-			if e.Kind == pointer.EventKindRecognized && v.OnPress != nil {
-				v.OnPress()
-			}
-		},
-	}
-
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  v.PaintStyle,
 		Options: []view.Option{
-			pointer.GestureList{button},
+			&pointer.ButtonGesture2{
+				OnRecognize: func(e *pointer.ButtonEvent2) {
+					if v.OnPress != nil {
+						v.OnPress()
+					}
+				},
+			},
 		},
 	}
 }

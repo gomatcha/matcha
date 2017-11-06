@@ -3,7 +3,15 @@
 #import "MatchaView_Private.h"
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
+UIGestureRecognizerState GoGestureStateToIOSState(long long a);
+NSString *GestureStateToString(UIGestureRecognizerState s);
+
 @implementation MatchaGestureRecognizer
+
+- (void)reset {
+    NSLog(@"RESET");
+    [self.viewNode call2:@"gomatcha.io/matcha/pointer Reset", nil];
+}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     MatchaPointerPBEvent *proto = [[MatchaPointerPBEvent alloc] init];
@@ -12,7 +20,7 @@
     proto.phase = MatchaPointerPBPhase_PhaseBegan;
     
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:proto.data];
-    self.state = [self.viewNode call2:@"gomatcha.io/matcha/pointer OnEvent", value, nil][1].toLongLong;
+    self.state = GoGestureStateToIOSState([self.viewNode call2:@"gomatcha.io/matcha/pointer OnEvent", value, nil][1].toLongLong);
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -22,7 +30,7 @@
     proto.phase = MatchaPointerPBPhase_PhaseMoved;
     
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:proto.data];
-    self.state = [self.viewNode call2:@"gomatcha.io/matcha/pointer OnEvent", value, nil][1].toLongLong;
+    self.state = GoGestureStateToIOSState([self.viewNode call2:@"gomatcha.io/matcha/pointer OnEvent", value, nil][1].toLongLong);
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -32,7 +40,7 @@
     proto.phase = MatchaPointerPBPhase_PhaseEnded;
     
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:proto.data];
-    self.state = [self.viewNode call2:@"gomatcha.io/matcha/pointer OnEvent", value, nil][1].toLongLong;
+    self.state = GoGestureStateToIOSState([self.viewNode call2:@"gomatcha.io/matcha/pointer OnEvent", value, nil][1].toLongLong);
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -42,7 +50,41 @@
     proto.phase = MatchaPointerPBPhase_PhaseCancelled;
     
     MatchaGoValue *value = [[MatchaGoValue alloc] initWithData:proto.data];
-    self.state = [self.viewNode call2:@"gomatcha.io/matcha/pointer OnEvent", value, nil][1].toLongLong;
+    self.state = GoGestureStateToIOSState([self.viewNode call2:@"gomatcha.io/matcha/pointer OnEvent", value, nil][1].toLongLong);
 }
 
 @end
+
+UIGestureRecognizerState GoGestureStateToIOSState(long long a) {
+    switch (a) {
+        case 0:
+            return UIGestureRecognizerStatePossible;
+        case 1:
+            return UIGestureRecognizerStateChanged;
+        case 2:
+            return UIGestureRecognizerStateFailed;
+        case 3:
+            return UIGestureRecognizerStateEnded;
+        default:
+            return UIGestureRecognizerStateFailed;
+    }
+}
+
+NSString *GestureStateToString(UIGestureRecognizerState s) {
+    switch (s) {
+        case UIGestureRecognizerStatePossible:
+            return @"Possible";
+        case UIGestureRecognizerStateBegan:
+            return @"Began";
+        case UIGestureRecognizerStateChanged:
+            return @"Changed";
+        case UIGestureRecognizerStateEnded:
+            return @"Recognized/Ended";
+        case UIGestureRecognizerStateCancelled:
+            return @"Cancelled";
+        case UIGestureRecognizerStateFailed:
+            return @"Failed";
+        default:
+            return @"Unknown";
+    }
+}

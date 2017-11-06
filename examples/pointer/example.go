@@ -3,7 +3,6 @@ package pointer
 
 import (
 	"fmt"
-	"time"
 
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/bridge"
@@ -23,6 +22,7 @@ func init() {
 type TouchView struct {
 	view.Embed
 	tapCounter    int
+	tap2Counter   int
 	pressCounter  int
 	buttonCounter int
 }
@@ -36,43 +36,76 @@ func NewTouchView() *TouchView {
 func (v *TouchView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	scrollLayouter := &constraint.Layouter{}
-	scrollLayouter.Solve(func(s *constraint.Solver) {
-		s.Width(200)
-		s.Height(500)
-	})
+	// scrollLayouter := &constraint.Layouter{}
+	// scrollLayouter.Solve(func(s *constraint.Solver) {
+	// 	s.Width(200)
+	// 	s.Height(500)
+	// })
+	// tap := NewTapChildView()
+	// tap.OnTouch = func() {
+	// 	v.tapCounter += 1
+	// 	go v.Signal() // TODO(KD): Why is this on separate thread?
+	// }
+	// scrollLayouter.Add(tap, func(s *constraint.Solver) {
+	// 	s.TopEqual(constraint.Const(0))
+	// 	s.LeftEqual(constraint.Const(0))
+	// 	s.Width(200)
+	// 	s.Height(100)
+	// })
+
+	// scrollview := view.NewScrollView()
+	// scrollview.ContentChildren = scrollLayouter.Views()
+	// scrollview.ContentPainter = &paint.Style{BackgroundColor: colornames.Yellow}
+	// scrollview.ContentLayouter = scrollLayouter
+	// g1 := l.Add(scrollview, func(s *constraint.Solver) {
+	// 	s.Top(0)
+	// 	s.Left(0)
+	// 	s.Width(200)
+	// 	s.Height(200)
+	// })
+
 	tap := NewTapChildView()
+	tap.Count = 1
 	tap.OnTouch = func() {
 		v.tapCounter += 1
 		go v.Signal() // TODO(KD): Why is this on separate thread?
 	}
-	scrollLayouter.Add(tap, func(s *constraint.Solver) {
-		s.TopEqual(constraint.Const(0))
-		s.LeftEqual(constraint.Const(0))
-		s.Width(200)
+	g := l.Add(tap, func(s *constraint.Solver) {
+		s.Top(0)
+		s.Left(0)
+		s.Width(100)
 		s.Height(100)
 	})
 
-	scrollview := view.NewScrollView()
-	scrollview.ContentChildren = scrollLayouter.Views()
-	scrollview.ContentPainter = &paint.Style{BackgroundColor: colornames.Yellow}
-	scrollview.ContentLayouter = scrollLayouter
-	g1 := l.Add(scrollview, func(s *constraint.Solver) {
-		s.Top(0)
-		s.Left(0)
-		s.Width(200)
-		s.Height(200)
+	tapCount := view.NewTextView()
+	tapCount.String = fmt.Sprintf("tap: %v", v.tapCounter)
+	tapCount.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
+	g = l.Add(tapCount, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 	})
 
-	chl2 := view.NewTextView()
-	chl2.String = fmt.Sprintf("tap: %v", v.tapCounter)
-	chl2.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
-	g2 := l.Add(chl2, func(s *constraint.Solver) {
-		s.TopEqual(g1.Bottom())
-		s.LeftEqual(g1.Left())
+	tap2 := NewTapChildView()
+	tap2.Count = 2
+	tap2.OnTouch = func() {
+		v.tap2Counter += 1
+		go v.Signal() // TODO(KD): Why is this on separate thread?
+	}
+	g = l.Add(tap2, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(100)
+		s.Height(100)
 	})
 
-	_ = g2
+	tap2Count := view.NewTextView()
+	tap2Count.String = fmt.Sprintf("double tap: %v", v.tap2Counter)
+	tap2Count.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
+	g = l.Add(tap2Count, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
 	// chl3 := NewPressChildView()
 	// chl3.OnTouch = func() {
 	// 	fmt.Println("On Press")
@@ -94,26 +127,25 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 	// 	s.LeftEqual(g3.Left())
 	// })
 
-	// chl5 := NewButtonChildView()
-	// chl5.OnTouch = func() {
-	// 	fmt.Println("On Button")
-	// 	v.buttonCounter += 1
-	// 	go v.Signal()
-	// }
-	// g5 := l.Add(chl5, func(s *constraint.Solver) {
-	// 	s.TopEqual(g4.Bottom())
-	// 	s.LeftEqual(g4.Left())
-	// 	s.Width(100)
-	// 	s.Height(100)
-	// })
-	// chl6 := view.NewTextView()
-	// chl6.String = fmt.Sprintf("Button: %v", v.buttonCounter)
-	// chl6.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
-	// g6 := l.Add(chl6, func(s *constraint.Solver) {
-	// 	s.TopEqual(g5.Bottom())
-	// 	s.LeftEqual(g5.Left())
-	// })
-	// _ = g6
+	button := NewButtonChildView()
+	button.OnTouch = func() {
+		fmt.Println("On Button")
+		v.buttonCounter += 1
+		go v.Signal()
+	}
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(100)
+		s.Height(100)
+	})
+	buttonCount := view.NewTextView()
+	buttonCount.String = fmt.Sprintf("Button: %v", v.buttonCounter)
+	buttonCount.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
+	g = l.Add(buttonCount, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
 
 	return view.Model{
 		Children: l.Views(),
@@ -125,6 +157,7 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 type TapChildView struct {
 	view.Embed
 	OnTouch func()
+	Count   int
 }
 
 func NewTapChildView() *TapChildView {
@@ -146,51 +179,53 @@ func (v *TapChildView) Build(ctx view.Context) view.Model {
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.Blue},
 		Options: []view.Option{
-			&pointer.TapGesture2{
-				Count: 1,
-				OnRecognize: func(e *pointer.TapEvent2) {
+			&pointer.TapGesture{
+				Count: v.Count,
+				OnRecognize: func(e *pointer.TapEvent) {
 					fmt.Println("Tap Recognized")
+					v.OnTouch()
 				},
 			},
 		},
 	}
 }
 
-type PressChildView struct {
-	view.Embed
-	OnTouch func()
-}
+// type PressChildView struct {
+// 	view.Embed
+// 	OnTouch func()
+// }
 
-func NewPressChildView() *PressChildView {
-	return &PressChildView{}
-}
+// func NewPressChildView() *PressChildView {
+// 	return &PressChildView{}
+// }
 
-func (v *PressChildView) Build(ctx view.Context) view.Model {
-	return view.Model{
-		Painter: &paint.Style{BackgroundColor: colornames.Blue},
-		Options: []view.Option{
-			pointer.GestureList{&pointer.PressGesture{
-				MinDuration: time.Second / 2,
-				OnEvent: func(e *pointer.PressEvent) {
-					if e.Kind == pointer.EventKindPossible {
-						fmt.Println("Press Possible")
-					} else if e.Kind == pointer.EventKindChanged {
-						fmt.Println("Press Changed")
-					} else if e.Kind == pointer.EventKindFailed {
-						fmt.Println("Press Failed")
-					} else if e.Kind == pointer.EventKindRecognized {
-						fmt.Println("Press Recognized")
-						v.OnTouch()
-					}
-				},
-			}},
-		},
-	}
-}
+// func (v *PressChildView) Build(ctx view.Context) view.Model {
+// 	return view.Model{
+// 		Painter: &paint.Style{BackgroundColor: colornames.Blue},
+// 		Options: []view.Option{
+// 			pointer.GestureList{&pointer.PressGesture{
+// 				MinDuration: time.Second / 2,
+// 				OnEvent: func(e *pointer.PressEvent) {
+// 					if e.Kind == pointer.EventKindPossible {
+// 						fmt.Println("Press Possible")
+// 					} else if e.Kind == pointer.EventKindChanged {
+// 						fmt.Println("Press Changed")
+// 					} else if e.Kind == pointer.EventKindFailed {
+// 						fmt.Println("Press Failed")
+// 					} else if e.Kind == pointer.EventKindRecognized {
+// 						fmt.Println("Press Recognized")
+// 						v.OnTouch()
+// 					}
+// 				},
+// 			}},
+// 		},
+// 	}
+// }
 
 type ButtonChildView struct {
 	view.Embed
-	OnTouch func()
+	OnTouch     func()
+	highlighted bool
 }
 
 func NewButtonChildView() *ButtonChildView {
@@ -198,23 +233,24 @@ func NewButtonChildView() *ButtonChildView {
 }
 
 func (v *ButtonChildView) Build(ctx view.Context) view.Model {
+	color := colornames.Blue
+	if v.highlighted {
+		color = colornames.Red
+	}
+
 	return view.Model{
-		Painter: &paint.Style{BackgroundColor: colornames.Blue},
+		Painter: &paint.Style{BackgroundColor: color},
 		Options: []view.Option{
-			pointer.GestureList{&pointer.ButtonGesture{
-				OnEvent: func(e *pointer.ButtonEvent) {
-					if e.Kind == pointer.EventKindPossible {
-						fmt.Println("Button Possible")
-					} else if e.Kind == pointer.EventKindChanged {
-						fmt.Println("Button Changed")
-					} else if e.Kind == pointer.EventKindFailed {
-						fmt.Println("Button Failed")
-					} else if e.Kind == pointer.EventKindRecognized {
-						fmt.Println("Button Recognized")
-						v.OnTouch()
-					}
+			&pointer.ButtonGesture2{
+				OnHighlight: func(highlighted bool) {
+					v.highlighted = highlighted
+					v.Signal()
 				},
-			}},
+				OnRecognize: func(e *pointer.ButtonEvent2) {
+					v.highlighted = false
+					v.OnTouch()
+				},
+			},
 		},
 	}
 }

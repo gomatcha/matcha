@@ -258,20 +258,16 @@ func (v *Checkbox) Build(ctx view.Context) view.Model {
 		s.HeightEqual(l.Height())
 	})
 
-	button := &pointer.ButtonGesture{
-		OnEvent: func(e *pointer.ButtonEvent) {
-			if e.Kind == pointer.EventKindRecognized {
-				v.OnValueChange(!v.Value)
-			}
-		},
-	}
-
 	return view.Model{
 		Children: l.Views(),
 		// Painter:  painter,
 		Layouter: l,
 		Options: []view.Option{
-			pointer.GestureList{button},
+			&pointer.ButtonGesture2{
+				OnRecognize: func(e *pointer.ButtonEvent2) {
+					v.OnValueChange(!v.Value)
+				},
+			},
 		},
 	}
 }
@@ -301,19 +297,15 @@ func (v *DeleteButton) Build(ctx view.Context) view.Model {
 		s.HeightEqual(l.Height())
 	})
 
-	button := &pointer.ButtonGesture{
-		OnEvent: func(e *pointer.ButtonEvent) {
-			if e.Kind == pointer.EventKindRecognized {
-				v.OnPress()
-			}
-		},
-	}
-
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Options: []view.Option{
-			pointer.GestureList{button},
+			&pointer.ButtonGesture2{
+				OnRecognize: func(e *pointer.ButtonEvent2) {
+					v.OnPress()
+				},
+			},
 		},
 	}
 }

@@ -239,30 +239,25 @@ func (v *PostImageView) Build(ctx view.Context) view.Model {
 		})
 	}
 
-	tap := &pointer.TapGesture{
-		Count: 2,
-		OnEvent: func(e *pointer.TapEvent) {
-			if e.Kind != pointer.EventKindRecognized {
-				return
-			}
-			v.showHeart = true
-			v.Signal()
-			time.AfterFunc(time.Second, func() {
-				v.showHeart = false
-				v.Signal()
-			})
-
-			if v.OnDoubleTouch != nil {
-				v.OnDoubleTouch()
-			}
-		},
-	}
-
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Options: []view.Option{
-			pointer.GestureList{tap},
+			&pointer.TapGesture{
+				Count: 2,
+				OnRecognize: func(e *pointer.TapEvent) {
+					v.showHeart = true
+					v.Signal()
+					time.AfterFunc(time.Second, func() {
+						v.showHeart = false
+						v.Signal()
+					})
+
+					if v.OnDoubleTouch != nil {
+						v.OnDoubleTouch()
+					}
+				},
+			},
 		},
 	}
 }

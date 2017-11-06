@@ -310,7 +310,7 @@ func (v *StackBarItem) marshalProtobuf() *android.StackBarItem {
 var stackMiddlewareVar *stackMiddleware
 
 func init() {
-	internal.RegisterMiddleware(func() interface{} {
+	internal.RegisterMiddleware(func(ctx *internal.MiddlewareRoot) interface{} {
 		stackMiddlewareVar = &stackMiddleware{
 			radix: radix.NewRadix(),
 		}

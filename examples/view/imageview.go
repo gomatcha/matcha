@@ -70,22 +70,18 @@ func (v *ImageView) Build(ctx view.Context) view.Model {
 		s.HeightEqual(g2.Height())
 	})
 
-	tap := &pointer.TapGesture{
-		Count: 1,
-		OnEvent: func(e *pointer.TapEvent) {
-			if e.Kind == pointer.EventKindRecognized {
-				v.toggle = !v.toggle
-				v.Signal()
-			}
-		},
-	}
-
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
 		Options: []view.Option{
-			pointer.GestureList{tap},
+			&pointer.TapGesture{
+				Count: 1,
+				OnRecognize: func(e *pointer.TapEvent) {
+					v.toggle = !v.toggle
+					v.Signal()
+				},
+			},
 		},
 	}
 }

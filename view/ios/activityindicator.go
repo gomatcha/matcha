@@ -21,7 +21,7 @@ func (a *ActivityIndicator) OptionKey() string {
 }
 
 func init() {
-	internal.RegisterMiddleware(func() interface{} {
+	internal.RegisterMiddleware(func(ctx *internal.MiddlewareRoot) interface{} {
 		return &activityIndicatorMiddleware{
 			radix: radix.NewRadix(),
 		}

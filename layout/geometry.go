@@ -2,6 +2,7 @@ package layout
 
 import (
 	"fmt"
+	"math"
 
 	"gomatcha.io/matcha/comm"
 	pblayout "gomatcha.io/matcha/proto/layout"
@@ -36,6 +37,28 @@ func Rt(x0, y0, x1, y1 float64) Rect {
 	return Rect{Min: Point{X: x0, Y: y0}, Max: Point{X: x1, Y: y1}}
 }
 
+// Add translates rect r by p.
+func (r Rect) Add(p Point) Rect {
+	n := r
+	n.Min.X += p.X
+	n.Min.Y += p.Y
+	n.Max.X += p.X
+	n.Max.Y += p.Y
+	return n
+}
+
+func (r Rect) Size() Point {
+	return Point{
+		r.Max.X - r.Min.X,
+		r.Max.Y - r.Min.Y,
+	}
+}
+
+// String returns a string description of r.
+func (r Rect) String() string {
+	return fmt.Sprintf("{%v, %v, %v, %v}", r.Min.X, r.Min.Y, r.Max.X, r.Max.Y)
+}
+
 // MarshalProtobuf serializes r into a protobuf object.
 func (r *Rect) MarshalProtobuf() *pblayout.Rect {
 	return &pblayout.Rect{
@@ -50,21 +73,6 @@ func (r *Rect) UnmarshalProtobuf(pbrect *pblayout.Rect) {
 	r.Max.UnmarshalProtobuf(pbrect.Max)
 }
 
-// Add translates rect r by p.
-func (r Rect) Add(p Point) Rect {
-	n := r
-	n.Min.X += p.X
-	n.Min.Y += p.Y
-	n.Max.X += p.X
-	n.Max.Y += p.Y
-	return n
-}
-
-// String returns a string description of r.
-func (r Rect) String() string {
-	return fmt.Sprintf("{%v, %v, %v, %v}", r.Min.X, r.Min.Y, r.Max.X, r.Max.Y)
-}
-
 // Point represents a point on the XY coordinate system.
 type Point struct {
 	X float64
@@ -74,6 +82,22 @@ type Point struct {
 // Pt creates a point with x and y.
 func Pt(x, y float64) Point {
 	return Point{X: x, Y: y}
+}
+
+func (p Point) Norm() float64 {
+	return math.Sqrt(p.X*p.X + p.Y*p.Y)
+}
+
+func (p Point) Add(q Point) Point {
+	return Point{p.X + q.X, p.Y + q.Y}
+}
+
+func (p Point) Sub(q Point) Point {
+	return Point{p.X - q.X, p.Y - q.Y}
+}
+
+func (p Point) In(r Rect) bool {
+	return r.Min.X <= p.X && p.X <= r.Max.X && r.Min.Y <= p.Y && p.Y <= r.Max.Y
 }
 
 // String returns a string description of r.

@@ -28,245 +28,256 @@ Attach the recognizer to the view.
 package pointer
 
 import (
-	"fmt"
-	"sync/atomic"
 	"time"
 
-	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
 	"gomatcha.io/matcha/layout"
-	pbtouch "gomatcha.io/matcha/proto/pointer"
+	prototouch "gomatcha.io/matcha/proto/pointer"
 )
 
-var maxFuncId int64 = 0
-
-// NewFuncId generates a new func identifier for serialization.
-func newFuncId() int64 {
-	return atomic.AddInt64(&maxFuncId, 1)
-}
-
-type GestureList []Gesture
-
-func (r GestureList) OptionKey() string {
-	return "gomatcha.io/matcha/touch"
-}
-
-type Gesture interface {
-	Build() Model
-	TouchKey() int64
-}
-
-type Model struct {
-	NativeViewName  string
-	NativeViewState proto.Message
-	NativeFuncs     map[string]interface{}
-}
-
-// EventKind are the possible recognizer states
+// gestureState are the possible recognizer states
 //
 // Discrete gestures:
-//  EventKindPossible -> EventKindFailed
-//  EventKindPossible -> EventKindRecognized
+//  gestureStatePossible -> gestureStateFailed
+//  gestureStatePossible -> gestureStateRecognized
 // Continuous gestures:
-//  EventKindPossible -> EventKindChanged(optionally) -> EventKindFailed
-//  EventKindPossible -> EventKindChanged(optionally) -> EventKindRecognized
-type EventKind int
+//  gestureStatePossible -> gestureStateChanged(optionally) -> gestureStateFailed
+//  gestureStatePossible -> gestureStateChanged(optionally) -> gestureStateRecognized
+type gestureState int
 
 const (
 	// Finger is down, but before gesture has been recognized.
-	EventKindPossible EventKind = iota
+	gestureStatePossible gestureState = iota
 	// After the continuous gesture has been recognized, while the finger is still down. Only for continuous recognizers.
-	EventKindChanged
+	gestureStateChanged
 	// Gesture recognition failed or cancelled.
-	EventKindFailed
+	gestureStateFailed
 	// Gesture recognition succeded.
-	EventKindRecognized
+	gestureStateRecognized
 )
 
-// TapEvent is emitted by TapGesture, representing its current state.
-type TapEvent struct {
-	Kind      EventKind
+type phase int
+
+const (
+	phaseBegan phase = iota
+	phaseMoved
+	phaseEnded
+	phaseCancelled
+	phaseNone
+)
+
+type event struct {
 	Timestamp time.Time
-	Position  layout.Point
+	Location  layout.Point
+	Phase     phase
+	ViewSize  layout.Point
+	// Pointers []pointer Multitouch....
 }
 
-func (e *TapEvent) unmarshalProtobuf(ev *pbtouch.TapEvent) error {
+func (e *event) unmarshalProtobuf(ev *prototouch.Event) error {
 	t, _ := ptypes.Timestamp(ev.Timestamp)
 	e.Timestamp = t
-	e.Kind = EventKind(ev.Kind)
-	e.Position.UnmarshalProtobuf(ev.Position)
+	e.Phase = phase(ev.Phase)
+	e.Location.UnmarshalProtobuf(ev.Location)
 	return nil
 }
 
-// PressRecognizer is a discrete recognizer that detects a number of taps.
+type gesture2 interface {
+	onEvent(gestureState, *event) gestureState
+	reset()
+	gestureKey() interface{}
+
+	// Future...
+	// priority() int
+}
+
+const tapMaxDuration = time.Duration(0.5 * float64(time.Second))
+const tapMaxDurationBetween = time.Duration(0.5 * float64(time.Second))
+const tapMaxDistance = 25
+const tapMaxDistanceBetween = 50
+
 type TapGesture struct {
-	Key     int64
-	Count   int
-	OnEvent func(*TapEvent)
+	Count       int
+	OnRecognize func(e *TapEvent)
+
+	state          gestureState
+	count          int
+	startTimestamp []time.Time
+	startLocation  []layout.Point
 }
 
-func (r *TapGesture) TouchKey() int64 {
-	return r.Key
+func (g *TapGesture) OptionKey() string {
+	return "gomatcha.io/matcha/touch Gesture"
 }
 
-func (r *TapGesture) Build() Model {
-	funcId := newFuncId()
-	f := func(data []byte) {
-		pbevent := &pbtouch.TapEvent{}
-		err := proto.Unmarshal(data, pbevent)
-		if err != nil {
-			fmt.Println("error", err)
-			return
-		}
+func (g *TapGesture) gestureKey() interface{} {
+	return g.Count
+}
 
-		event := &TapEvent{}
-		if err := event.unmarshalProtobuf(pbevent); err != nil {
-			fmt.Println("error", err)
-			return
-		}
-
-		if r.OnEvent != nil {
-			r.OnEvent(event)
-		}
+func (g *TapGesture) onEvent(s gestureState, e *event) gestureState {
+	if s != g.state {
+		g.state = gestureStateFailed
+		return gestureStateFailed
 	}
 
-	return Model{
-		NativeViewName: "",
-		NativeViewState: &pbtouch.TapRecognizer{
-			Count:   int64(r.Count),
-			OnEvent: funcId,
-		},
-		NativeFuncs: map[string]interface{}{
-			fmt.Sprintf("gomatcha.io/matcha/touch %v", funcId): f,
-		},
+	switch e.Phase {
+	case phaseBegan:
+		if g.count > 0 {
+			timestamp := g.startTimestamp[len(g.startTimestamp)-1]
+			location := g.startLocation[len(g.startLocation)-1]
+			if e.Timestamp.Sub(timestamp) > tapMaxDurationBetween || e.Location.Sub(location).Norm() > tapMaxDistanceBetween {
+				g.state = gestureStateFailed
+				return gestureStateFailed
+			}
+		}
+
+		g.startTimestamp = append(g.startTimestamp, e.Timestamp)
+		g.startLocation = append(g.startLocation, e.Location)
+		g.state = gestureStatePossible
+		return gestureStatePossible
+	case phaseMoved:
+		timestamp := g.startTimestamp[len(g.startTimestamp)-1]
+		location := g.startLocation[len(g.startLocation)-1]
+		if e.Timestamp.Sub(timestamp) > tapMaxDuration || e.Location.Sub(location).Norm() > tapMaxDistance {
+			g.state = gestureStateFailed
+			return gestureStateFailed
+		}
+
+		g.state = gestureStatePossible
+		return gestureStatePossible
+	case phaseEnded:
+		timestamp := g.startTimestamp[len(g.startTimestamp)-1]
+		location := g.startLocation[len(g.startLocation)-1]
+		if e.Timestamp.Sub(timestamp) > tapMaxDuration || e.Location.Sub(location).Norm() > tapMaxDistance {
+			g.state = gestureStateFailed
+			return gestureStateFailed
+		}
+
+		if g.count == g.Count-1 {
+			if g.OnRecognize != nil {
+				tapEvent := &TapEvent{
+					Timestamp: e.Timestamp,
+					Location:  e.Location,
+				}
+				g.OnRecognize(tapEvent)
+			}
+			g.state = gestureStateRecognized
+			return gestureStateRecognized
+		} else if g.count < g.Count-1 {
+			g.count += 1
+			g.state = gestureStatePossible
+			return gestureStatePossible
+		}
+		g.state = gestureStateFailed
+		return gestureStateFailed
+	case phaseNone:
+		if g.count > 0 {
+			timestamp := g.startTimestamp[len(g.startTimestamp)-1]
+			if e.Timestamp.Sub(timestamp) > tapMaxDurationBetween {
+				g.state = gestureStateFailed
+				return gestureStateFailed
+			}
+		}
+
+		g.state = gestureStatePossible
+		return gestureStatePossible
+	default:
+		g.state = gestureStateFailed
+		return gestureStateFailed
 	}
 }
 
-// PressEvent is emitted by PressRecognizer, representing its current state.
-type PressEvent struct {
-	Kind      EventKind // TODO(KD): Does this work?
+func (g *TapGesture) reset() {
+	g.state = gestureStatePossible
+	g.startTimestamp = nil
+	g.startLocation = nil
+	g.count = 0
+}
+
+type TapEvent struct {
 	Timestamp time.Time
-	Position  layout.Point
-	Duration  time.Duration
+	Location  layout.Point
 }
 
-func (e *PressEvent) unmarshalProtobuf(ev *pbtouch.PressEvent) error {
-	d, err := ptypes.Duration(ev.Duration)
-	if err != nil {
-		return err
-	}
-	t, err := ptypes.Timestamp(ev.Timestamp)
-	if err != nil {
-		return err
-	}
-	e.Kind = EventKind(ev.Kind)
-	e.Timestamp = t
-	e.Position.UnmarshalProtobuf(ev.Position)
-	e.Duration = d
+type ButtonGesture2 struct {
+	OnHighlight func(highlighted bool)
+	OnRecognize func(e *ButtonEvent2)
+	highlighted bool
+}
+
+func (g *ButtonGesture2) OptionKey() string {
+	return "gomatcha.io/matcha/touch Gesture"
+}
+
+func (g *ButtonGesture2) gestureKey() interface{} {
 	return nil
 }
 
-// PressGesture is a continuous recognizer that detects single presses with a given duration.
+func (g *ButtonGesture2) onEvent(s gestureState, e *event) gestureState {
+	switch e.Phase {
+	case phaseBegan:
+		highlighted := e.Location.X >= 0 && e.Location.Y >= 0 && e.Location.X <= e.ViewSize.X && e.Location.Y <= e.ViewSize.Y
+		if g.OnHighlight != nil && g.highlighted != highlighted {
+			g.OnHighlight(highlighted)
+		}
+		g.highlighted = highlighted
+
+		return gestureStatePossible
+	case phaseMoved:
+		highlighted := e.Location.X >= 0 && e.Location.Y >= 0 && e.Location.X <= e.ViewSize.X && e.Location.Y <= e.ViewSize.Y
+		if g.OnHighlight != nil && g.highlighted != highlighted {
+			g.OnHighlight(highlighted)
+		}
+		g.highlighted = highlighted
+
+		return gestureStatePossible
+	case phaseEnded:
+		highlighted := e.Location.X >= 0 && e.Location.Y >= 0 && e.Location.X <= e.ViewSize.X && e.Location.Y <= e.ViewSize.Y
+		if g.OnHighlight != nil && g.highlighted != highlighted {
+			g.OnHighlight(highlighted)
+		}
+		g.highlighted = highlighted
+
+		if !highlighted {
+			return gestureStateFailed
+		}
+
+		if g.OnRecognize != nil {
+			buttonEvent := &ButtonEvent2{
+				Timestamp: e.Timestamp,
+				Location:  e.Location,
+			}
+			g.OnRecognize(buttonEvent)
+		}
+		return gestureStateRecognized
+	case phaseNone:
+		return gestureStateFailed
+	default:
+		return gestureStateFailed
+	}
+}
+
+func (g *ButtonGesture2) reset() {
+	if g.OnHighlight != nil && g.highlighted {
+		g.OnHighlight(false)
+	}
+	g.highlighted = false
+}
+
+type ButtonEvent2 struct {
+	Timestamp time.Time
+	Location  layout.Point
+}
+
 type PressGesture struct {
-	Key         int64
 	MinDuration time.Duration
-	OnEvent     func(e *PressEvent)
+	OnChange    func(e *PressEvent)
+	OnFail      func(e *PressEvent)
+	OnRecognize func(e *PressEvent)
 }
 
-func (r *PressGesture) TouchKey() int64 {
-	return r.Key
-}
-
-func (r *PressGesture) Build() Model {
-	funcId := newFuncId()
-	f := func(data []byte) {
-		event := &PressEvent{}
-		pbevent := &pbtouch.PressEvent{}
-		err := proto.Unmarshal(data, pbevent)
-		if err != nil {
-			fmt.Println("error", err)
-			return
-		}
-
-		if err := event.unmarshalProtobuf(pbevent); err != nil {
-			fmt.Println("error", err)
-			return
-		}
-		if r.OnEvent != nil {
-			r.OnEvent(event)
-		}
-	}
-
-	return Model{
-		NativeViewName: "",
-		NativeViewState: &pbtouch.PressRecognizer{
-			MinDuration: ptypes.DurationProto(r.MinDuration),
-			OnEvent:     funcId,
-		},
-		NativeFuncs: map[string]interface{}{
-			fmt.Sprintf("gomatcha.io/matcha/touch %v", funcId): f,
-		},
-	}
-}
-
-// ButtonEvent is emitted by ButtonRecognizer, representing its current state.
-type ButtonEvent struct {
+type PressEvent struct {
 	Timestamp time.Time
-	Inside    bool
-	Kind      EventKind
-}
-
-func (e *ButtonEvent) unmarshalProtobuf(ev *pbtouch.ButtonEvent) error {
-	t, err := ptypes.Timestamp(ev.Timestamp)
-	if err != nil {
-		return err
-	}
-	e.Timestamp = t
-	e.Inside = ev.Inside
-	e.Kind = EventKind(ev.Kind)
-	return nil
-}
-
-// ButtonGesture is a discrete recognizer that mimics the behavior of a button. The recognizer will fail if the touch ends outside of the view's bounds.
-type ButtonGesture struct {
-	Key           int64
-	OnEvent       func(e *ButtonEvent)
-	IgnoresScroll bool
-}
-
-func (r *ButtonGesture) TouchKey() int64 {
-	return r.Key
-}
-
-func (r *ButtonGesture) Build() Model {
-	funcId := newFuncId()
-	f := func(data []byte) {
-		event := &ButtonEvent{}
-		pbevent := &pbtouch.ButtonEvent{}
-		err := proto.Unmarshal(data, pbevent)
-		if err != nil {
-			fmt.Println("error", err)
-			return
-		}
-
-		if err := event.unmarshalProtobuf(pbevent); err != nil {
-			fmt.Println("error", err)
-			return
-		}
-
-		if r.OnEvent != nil {
-			r.OnEvent(event)
-		}
-	}
-
-	return Model{
-		NativeViewName: "",
-		NativeViewState: &pbtouch.ButtonRecognizer{
-			OnEvent:       funcId,
-			IgnoresScroll: r.IgnoresScroll,
-		},
-		NativeFuncs: map[string]interface{}{
-			fmt.Sprintf("gomatcha.io/matcha/touch %v", funcId): f,
-		},
-	}
+	Location  layout.Point
+	Duration  time.Duration
 }

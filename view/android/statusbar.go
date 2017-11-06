@@ -37,7 +37,7 @@ func (s *StatusBar) OptionKey() string {
 }
 
 func init() {
-	internal.RegisterMiddleware(func() interface{} {
+	internal.RegisterMiddleware(func(ctx *internal.MiddlewareRoot) interface{} {
 		return &statusBarMiddleware{
 			radix: radix.NewRadix(),
 		}

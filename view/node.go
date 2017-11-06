@@ -210,7 +210,15 @@ func newRoot(v View) *nodeRoot {
 	}
 	root.updateFlags = map[Id]updateFlag{id: buildFlag}
 	for _, i := range internal.Middlewares() {
-		root.middlewares = append(root.middlewares, i().(middleware))
+		middlewareRoot := &internal.MiddlewareRoot{
+			LayoutGuideFunc: func(id int64) layout.Guide {
+				return root.nodes[Id(id)].layoutGuide
+			},
+			PaintStyleFunc: func(id int64) paint.Style {
+				return root.nodes[Id(id)].paintOptions
+			},
+		}
+		root.middlewares = append(root.middlewares, i(middlewareRoot).(middleware))
 	}
 	return root
 }
