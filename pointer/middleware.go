@@ -2,7 +2,6 @@ package pointer
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/gogo/protobuf/proto"
 	"gomatcha.io/matcha/internal"
@@ -17,10 +16,6 @@ func init() {
 			root:  root,
 			radix: radix.NewRadix(),
 		}
-		t := internal.NewTicker(func() {
-			m.tick()
-		})
-		m.ticker = t
 		return m
 	})
 }
@@ -38,7 +33,6 @@ type gestureWrapper struct {
 type gestureNode struct {
 	middleware *touchMiddleware
 	gestures   []*gestureWrapper
-	getTicks   bool
 	id         view.Id
 }
 
@@ -199,7 +193,6 @@ func (n *gestureNode) onEvent(e *event) (bool, gestureState) {
 				n.setFailed(idx)
 			case gestureStateRecognized:
 				n.setRecognized(idx)
-				// done = true
 			default:
 				panic("Internal inconsistency")
 			}
@@ -212,31 +205,11 @@ func (n *gestureNode) onEvent(e *event) (bool, gestureState) {
 
 	state := n.state()
 
-	// Reset if recognized
-	switch state {
-	case gestureStateRecognized:
-		n.markComplete()
-	}
-
-	// If touch is up but the gesture is still possible, send a event on every screen update with phaseNone so the gesture can cancel.
-	if (state == gestureStatePossible || state == gestureStateChanged) && (e.Phase == phaseEnded || e.Phase == phaseCancelled || e.Phase == phaseNone) {
-		if !n.getTicks {
-			n.getTicks = true
-			n.middleware.tickNodes = append(n.middleware.tickNodes, n)
-		}
-	} else {
-		if n.getTicks {
-			n.getTicks = false
-
-			tickNodes := make([]*gestureNode, 0, len(n.middleware.tickNodes))
-			for _, i := range n.middleware.tickNodes {
-				if i != n {
-					tickNodes = append(tickNodes, i)
-				}
-			}
-			n.middleware.tickNodes = tickNodes
-		}
-	}
+	// // Reset if recognized
+	// switch state {
+	// case gestureStateRecognized:
+	// 	// n.markComplete()
+	// }
 
 	return false, state
 }
@@ -250,12 +223,16 @@ func (n *gestureNode) reset() {
 	}
 }
 
+func (n *gestureNode) action() {
+	if n.state() == gestureStateRecognized {
+		n.markComplete()
+	}
+}
+
 type touchMiddleware struct {
-	root      *internal.MiddlewareRoot
-	maxId     int64
-	radix     *radix.Radix
-	ticker    *internal.Ticker
-	tickNodes []*gestureNode // nodes that want a tick message
+	root  *internal.MiddlewareRoot
+	maxId int64
+	radix *radix.Radix
 }
 
 func (r *touchMiddleware) MarshalProtobuf() proto.Message {
@@ -340,22 +317,13 @@ func (r *touchMiddleware) Build(ctx view.Context, model *view.Model) {
 	model.NativeFuncs["gomatcha.io/matcha/pointer Reset"] = func() {
 		n.reset()
 	}
+	model.NativeFuncs["gomatcha.io/matcha/pointer Action"] = func() {
+		n.action()
+	}
 }
 
 func (r *touchMiddleware) Key() string {
 	return "gomatcha.io/matcha/touch"
-}
-
-func (r *touchMiddleware) tick() {
-	for _, i := range r.tickNodes {
-		layoutGuide := r.root.LayoutGuide(int64(i.id))
-		e := &event{
-			Timestamp: time.Now(),
-			Phase:     phaseNone,
-			ViewSize:  layoutGuide.Frame.Size(),
-		}
-		i.onEvent(e)
-	}
 }
 
 func idSliceToIntSlice(ids []view.Id) []int64 {

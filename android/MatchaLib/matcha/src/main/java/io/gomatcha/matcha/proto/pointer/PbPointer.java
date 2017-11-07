@@ -151,6 +151,10 @@ public final class PbPointer {
      * <code>PHASE_CANCELLED = 3;</code>
      */
     PHASE_CANCELLED(3),
+    /**
+     * <code>PHASE_NONE = 4;</code>
+     */
+    PHASE_NONE(4),
     UNRECOGNIZED(-1),
     ;
 
@@ -170,6 +174,10 @@ public final class PbPointer {
      * <code>PHASE_CANCELLED = 3;</code>
      */
     public static final int PHASE_CANCELLED_VALUE = 3;
+    /**
+     * <code>PHASE_NONE = 4;</code>
+     */
+    public static final int PHASE_NONE_VALUE = 4;
 
 
     public final int getNumber() {
@@ -194,6 +202,7 @@ public final class PbPointer {
         case 1: return PHASE_MOVED;
         case 2: return PHASE_ENDED;
         case 3: return PHASE_CANCELLED;
+        case 4: return PHASE_NONE;
         default: return null;
       }
     }
@@ -6848,11 +6857,12 @@ public final class PbPointer {
       "hase\030\003 \001(\0162\025.matcha.pointer.Phase*n\n\tEve" +
       "ntKind\022\027\n\023EVENT_KIND_POSSIBLE\020\000\022\026\n\022EVENT" +
       "_KIND_CHANGED\020\001\022\025\n\021EVENT_KIND_FAILED\020\002\022\031",
-      "\n\025EVENT_KIND_RECOGNIZED\020\003*O\n\005Phase\022\017\n\013PH" +
+      "\n\025EVENT_KIND_RECOGNIZED\020\003*_\n\005Phase\022\017\n\013PH" +
       "ASE_BEGAN\020\000\022\017\n\013PHASE_MOVED\020\001\022\017\n\013PHASE_EN" +
-      "DED\020\002\022\023\n\017PHASE_CANCELLED\020\003BH\n io.gomatch" +
-      "a.matcha.proto.pointerB\tPbPointerZ\007point" +
-      "er\242\002\017MatchaPointerPBb\006proto3"
+      "DED\020\002\022\023\n\017PHASE_CANCELLED\020\003\022\016\n\nPHASE_NONE" +
+      "\020\004BH\n io.gomatcha.matcha.proto.pointerB\t" +
+      "PbPointerZ\007pointer\242\002\017MatchaPointerPBb\006pr" +
+      "oto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

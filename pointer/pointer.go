@@ -266,15 +266,15 @@ type ButtonEvent struct {
 	Location  layout.Point
 }
 
-type PressGesture struct {
-	MinDuration time.Duration
-	OnChange    func(e *PressEvent)
-	OnFail      func(e *PressEvent)
-	OnRecognize func(e *PressEvent)
-}
+// type PressGesture struct {
+// 	MinDuration time.Duration
+// 	OnChange    func(e *PressEvent)
+// 	OnFail      func(e *PressEvent)
+// 	OnRecognize func(e *PressEvent)
+// }
 
-type PressEvent struct {
-	Timestamp time.Time
-	Location  layout.Point
-	Duration  time.Duration
-}
+// type PressEvent struct {
+// 	Timestamp time.Time
+// 	Location  layout.Point
+// 	Duration  time.Duration
+// }

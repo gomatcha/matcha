@@ -100,12 +100,13 @@ GPBEnumDescriptor *MatchaPointerPBPhase_EnumDescriptor(void) {
   if (!descriptor) {
     static const char *valueNames =
         "PhaseBegan\000PhaseMoved\000PhaseEnded\000PhaseCa"
-        "ncelled\000";
+        "ncelled\000PhaseNone\000";
     static const int32_t values[] = {
         MatchaPointerPBPhase_PhaseBegan,
         MatchaPointerPBPhase_PhaseMoved,
         MatchaPointerPBPhase_PhaseEnded,
         MatchaPointerPBPhase_PhaseCancelled,
+        MatchaPointerPBPhase_PhaseNone,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(MatchaPointerPBPhase)
@@ -126,6 +127,7 @@ BOOL MatchaPointerPBPhase_IsValidValue(int32_t value__) {
     case MatchaPointerPBPhase_PhaseMoved:
     case MatchaPointerPBPhase_PhaseEnded:
     case MatchaPointerPBPhase_PhaseCancelled:
+    case MatchaPointerPBPhase_PhaseNone:
       return YES;
     default:
       return NO;

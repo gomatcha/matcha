@@ -65,6 +65,7 @@ enum Phase {
     PHASE_MOVED = 1;
     PHASE_ENDED = 2;
     PHASE_CANCELLED = 3;
+    PHASE_NONE = 4;
 }
 
 message Event {

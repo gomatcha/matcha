@@ -71,6 +71,7 @@ typedef GPB_ENUM(MatchaPointerPBPhase) {
   MatchaPointerPBPhase_PhaseMoved = 1,
   MatchaPointerPBPhase_PhaseEnded = 2,
   MatchaPointerPBPhase_PhaseCancelled = 3,
+  MatchaPointerPBPhase_PhaseNone = 4,
 };
 
 GPBEnumDescriptor *MatchaPointerPBPhase_EnumDescriptor(void);
