@@ -247,6 +247,7 @@ func (g *ButtonGesture) setHighlight(h bool) {
 }
 
 func (g *ButtonGesture) recognized(e *event) {
+	g.setHighlight(false)
 	if g.OnRecognize != nil {
 		buttonEvent := &ButtonEvent{
 			Timestamp: e.Timestamp,
@@ -257,7 +258,7 @@ func (g *ButtonGesture) recognized(e *event) {
 }
 
 func (g *ButtonGesture) failed(e *event) {
-	// no-op
+	g.setHighlight(false)
 }
 
 type ButtonEvent struct {

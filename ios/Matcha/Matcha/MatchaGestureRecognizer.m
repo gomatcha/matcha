@@ -8,6 +8,17 @@ NSString *GestureStateToString(UIGestureRecognizerState s);
 
 @implementation MatchaGestureRecognizer
 
+- (instancetype)init {
+    if (self = [super init]) {
+        [self addTarget:self action:@selector(action)];
+    }
+    return self;
+}
+
+- (void)action {
+//    [self.viewNode call:@"gomatcha.io/matcha/pointer Action", nil];
+}
+
 - (void)reset {
     [self.viewNode call2:@"gomatcha.io/matcha/pointer Reset", nil];
 }

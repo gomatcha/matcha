@@ -21,13 +21,15 @@ func init() {
 
 type TouchView struct {
 	view.Embed
-	tapCounter         int
-	tap2Counter        int
-	tap11Counter       int
-	tap22Counter       int
-	pressCounter       int
-	buttonCounter      int
-	buttonChildCounter int
+	tapCounter              int
+	tap2Counter             int
+	tap11Counter            int
+	tap22Counter            int
+	pressCounter            int
+	buttonCounter           int
+	buttonChildCounter      int
+	scrollButtonCounter     int
+	scrollButtonHighlighted bool
 }
 
 func NewTouchView() *TouchView {
@@ -38,34 +40,6 @@ func NewTouchView() *TouchView {
 
 func (v *TouchView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
-
-	// scrollLayouter := &constraint.Layouter{}
-	// scrollLayouter.Solve(func(s *constraint.Solver) {
-	// 	s.Width(200)
-	// 	s.Height(500)
-	// })
-	// tap := NewTapChildView()
-	// tap.OnTouch = func() {
-	// 	v.tapCounter += 1
-	// 	go v.Signal() // TODO(KD): Why is this on separate thread?
-	// }
-	// scrollLayouter.Add(tap, func(s *constraint.Solver) {
-	// 	s.TopEqual(constraint.Const(0))
-	// 	s.LeftEqual(constraint.Const(0))
-	// 	s.Width(200)
-	// 	s.Height(100)
-	// })
-
-	// scrollview := view.NewScrollView()
-	// scrollview.ContentChildren = scrollLayouter.Views()
-	// scrollview.ContentPainter = &paint.Style{BackgroundColor: colornames.Yellow}
-	// scrollview.ContentLayouter = scrollLayouter
-	// g1 := l.Add(scrollview, func(s *constraint.Solver) {
-	// 	s.Top(0)
-	// 	s.Left(0)
-	// 	s.Width(200)
-	// 	s.Height(200)
-	// })
 
 	tap := NewTapChildView()
 	tap.Count = 1
@@ -150,27 +124,6 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 		s.LeftEqual(g.Left())
 	})
 
-	// chl3 := NewPressChildView()
-	// chl3.OnTouch = func() {
-	// 	fmt.Println("On Press")
-	// 	v.pressCounter += 1
-	// 	go v.Signal()
-	// }
-	// g3 := l.Add(chl3, func(s *constraint.Solver) {
-	// 	s.TopEqual(g2.Bottom())
-	// 	s.LeftEqual(g2.Left())
-	// 	s.Width(100)
-	// 	s.Height(100)
-	// })
-
-	// chl4 := view.NewTextView()
-	// chl4.String = fmt.Sprintf("Press: %v", v.pressCounter)
-	// chl4.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
-	// g4 := l.Add(chl4, func(s *constraint.Solver) {
-	// 	s.TopEqual(g3.Bottom())
-	// 	s.LeftEqual(g3.Left())
-	// })
-
 	button := NewButtonChildView()
 	button.OnTouch = func() {
 		fmt.Println("On Button")
@@ -210,6 +163,56 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 	buttonChild.String = fmt.Sprintf("button child: %v", v.buttonChildCounter)
 	buttonChild.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
 	g = l.Add(buttonChild, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	scrollButtonColor := colornames.Blue
+	if v.scrollButtonHighlighted {
+		scrollButtonColor = colornames.Red
+	}
+	scrollButton := view.NewBasicView()
+	scrollButton.Painter = &paint.Style{BackgroundColor: scrollButtonColor}
+	scrollButton.Options = []view.Option{
+		&pointer.ButtonGesture{
+			OnHighlight: func(highlighted bool) {
+				v.scrollButtonHighlighted = highlighted
+				v.Signal()
+			},
+			OnRecognize: func(e *pointer.ButtonEvent) {
+				v.scrollButtonHighlighted = false
+				v.scrollButtonCounter += 1
+			},
+		},
+	}
+
+	scrollLayouter := &constraint.Layouter{}
+	scrollLayouter.Solve(func(s *constraint.Solver) {
+		s.Width(100)
+		s.Height(500)
+	})
+	scrollLayouter.Add(scrollButton, func(s *constraint.Solver) {
+		s.Top(0)
+		s.Left(0)
+		s.Width(100)
+		s.Height(50)
+	})
+
+	scrollview := view.NewScrollView()
+	scrollview.ContentChildren = scrollLayouter.Views()
+	scrollview.ContentPainter = &paint.Style{BackgroundColor: colornames.Yellow}
+	scrollview.ContentLayouter = scrollLayouter
+	g = l.Add(scrollview, func(s *constraint.Solver) {
+		s.Top(100)
+		s.Left(200)
+		s.Width(100)
+		s.Height(100)
+	})
+
+	scrollButtonCount := view.NewTextView()
+	scrollButtonCount.String = fmt.Sprintf("button: %v", v.scrollButtonCounter)
+	scrollButtonCount.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
+	g = l.Add(scrollButtonCount, func(s *constraint.Solver) {
 		s.TopEqual(g.Bottom())
 		s.LeftEqual(g.Left())
 	})
@@ -318,7 +321,7 @@ func (v *ButtonChildView) Build(ctx view.Context) view.Model {
 	child.Painter = &paint.Style{BackgroundColor: childColor}
 	child.Options = []view.Option{
 		&pointer.ButtonGesture{
-			Exclusive: true,
+			// Exclusive: true,
 			OnHighlight: func(highlighted bool) {
 				v.childHighlighted = highlighted
 				v.Signal()

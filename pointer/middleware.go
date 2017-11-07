@@ -59,12 +59,12 @@ func (n *gestureNode) validate() bool {
 			return false
 		}
 	}
-	// There can be only one recognized gesture or changing gesture.
-	if changed == 1 && recognized == 1 {
+	// There can be only a changing gesture.
+	if changed == 1 && (recognized > 0 || possible > 0) {
 		return false
 	}
-	// If there is a recognized gesture or changing gesture, there can be no possible gestures.
-	if possible > 0 && (changed == 1 || recognized == 1) {
+	// There can be at most a single recognized gesture
+	if recognized > 1 {
 		return false
 	}
 	return true
@@ -90,15 +90,16 @@ func (n *gestureNode) state() gestureState {
 		}
 	}
 
-	if recognized == 1 {
+	if possible > 0 {
+		return gestureStatePossible
+	} else if recognized == 1 {
 		return gestureStateRecognized
 	} else if changed == 1 {
 		return gestureStateChanged
-	} else if possible > 0 {
-		return gestureStatePossible
 	} else if failed == len(n.gestures) {
 		return gestureStateFailed
 	} else {
+		fmt.Println(possible, recognized, changed, failed)
 		panic("Internal inconsistency")
 	}
 }
@@ -111,12 +112,20 @@ func (n *gestureNode) setPossible(idx int) {
 	g.state = gestureStatePossible
 }
 
-func (n *gestureNode) setChanged(idx int) {
-	g := n.gestures[idx]
+func (n *gestureNode) setChanged(ridx int) {
+	g := n.gestures[ridx]
 	if g.state != gestureStatePossible && g.state != gestureStateChanged {
 		panic("Internal inconsistency")
 	}
 	g.state = gestureStateChanged
+
+	// mark any possible or recognized gestures as failed
+	for idx, i := range n.gestures {
+		if idx != ridx && (i.state == gestureStatePossible || i.state == gestureStateRecognized) {
+			i.gesture.failed(&event{})
+			i.state = gestureStateFailed
+		}
+	}
 }
 
 func (n *gestureNode) setFailed(idx int) {
@@ -125,7 +134,7 @@ func (n *gestureNode) setFailed(idx int) {
 		fmt.Println("g.state", g.state)
 		panic("Internal inconsistency")
 	}
-	g.gesture.reset()
+	g.gesture.failed(&event{})
 	g.state = gestureStateFailed
 }
 
@@ -134,13 +143,12 @@ func (n *gestureNode) setRecognized(ridx int) {
 	if g.state != gestureStatePossible && g.state != gestureStateChanged {
 		panic("Internal inconsistency")
 	}
-	g.gesture.reset()
 	g.state = gestureStateRecognized
 
-	// mark any possible gestures as failed
+	// mark any other recognized gestures as failed
 	for idx, i := range n.gestures {
-		if idx != ridx && i.state == gestureStatePossible {
-			i.gesture.reset()
+		if idx != ridx && (i.state == gestureStateRecognized) {
+			i.gesture.failed(&event{})
 			i.state = gestureStateFailed
 		}
 	}
@@ -149,6 +157,7 @@ func (n *gestureNode) setRecognized(ridx int) {
 func (n *gestureNode) markComplete() {
 	for _, i := range n.gestures {
 		if i.state == gestureStateRecognized {
+			i.gesture.recognized(&event{})
 			i.state = gestureStateFailed
 		}
 	}
@@ -157,6 +166,7 @@ func (n *gestureNode) markComplete() {
 func (n *gestureNode) markPossible() {
 	for _, i := range n.gestures {
 		if i.state == gestureStateFailed {
+			i.gesture.reset()
 			i.state = gestureStatePossible
 		} else {
 			panic("Internal inconsistency")
@@ -186,12 +196,10 @@ func (n *gestureNode) onEvent(e *event) (bool, gestureState) {
 				n.setChanged(idx)
 				done = true
 			case gestureStateFailed:
-				i.gesture.failed(e)
 				n.setFailed(idx)
 			case gestureStateRecognized:
-				i.gesture.recognized(e)
 				n.setRecognized(idx)
-				done = true
+				// done = true
 			default:
 				panic("Internal inconsistency")
 			}
@@ -235,15 +243,9 @@ func (n *gestureNode) onEvent(e *event) (bool, gestureState) {
 
 func (n *gestureNode) reset() {
 	for _, i := range n.gestures {
-		switch i.state {
-		case gestureStatePossible, gestureStateChanged:
-			i.gesture.reset()
+		if i.state == gestureStatePossible || i.state == gestureStateChanged || i.state == gestureStateRecognized {
+			i.gesture.failed(&event{})
 			i.state = gestureStateFailed
-		case gestureStateRecognized:
-			i.state = gestureStateFailed
-		case gestureStateFailed:
-		default:
-			panic("Internal inconsistency")
 		}
 	}
 }
