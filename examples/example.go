@@ -10,6 +10,7 @@ import (
 	"gomatcha.io/matcha/examples/insta"
 	layoutex "gomatcha.io/matcha/examples/layout"
 	paintex "gomatcha.io/matcha/examples/paint"
+	"gomatcha.io/matcha/examples/pointer"
 	"gomatcha.io/matcha/examples/settings"
 	"gomatcha.io/matcha/examples/todo"
 	viewex "gomatcha.io/matcha/examples/view"
@@ -67,6 +68,7 @@ func NewExamplesView() *ExamplesView {
 				{"Table Layout", "", layoutex.NewTableView()},
 				{"Painters", "", paintex.NewPaintView()},
 				{"Adding/Removing Views", "", viewex.NewAddRemoveView()},
+				{"Gestures", "", pointer.NewTouchView()},
 			},
 		},
 		{

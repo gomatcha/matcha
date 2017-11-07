@@ -7,9 +7,10 @@ import (
 
 type BasicView struct {
 	Embed
-	Painter  paint.Painter
-	Layouter layout.Layouter
 	Children []View
+	Layouter layout.Layouter
+	Painter  paint.Painter
+	Options  []Option
 }
 
 // NewBasicView returns a new view.
@@ -21,7 +22,8 @@ func NewBasicView() *BasicView {
 func (v *BasicView) Build(ctx Context) Model {
 	return Model{
 		Children: v.Children,
-		Painter:  v.Painter,
 		Layouter: v.Layouter,
+		Painter:  v.Painter,
+		Options:  v.Options,
 	}
 }

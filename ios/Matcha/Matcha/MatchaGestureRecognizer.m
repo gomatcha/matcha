@@ -9,7 +9,6 @@ NSString *GestureStateToString(UIGestureRecognizerState s);
 @implementation MatchaGestureRecognizer
 
 - (void)reset {
-    NSLog(@"RESET");
     [self.viewNode call2:@"gomatcha.io/matcha/pointer Reset", nil];
 }
 

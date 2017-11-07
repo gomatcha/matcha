@@ -367,8 +367,8 @@ func (v *InfoButton) Build(ctx view.Context) view.Model {
 		Layouter: l,
 		Painter:  v.PaintStyle,
 		Options: []view.Option{
-			&pointer.ButtonGesture2{
-				OnRecognize: func(e *pointer.ButtonEvent2) {
+			&pointer.ButtonGesture{
+				OnRecognize: func(e *pointer.ButtonEvent) {
 					if v.OnPress != nil {
 						v.OnPress()
 					}

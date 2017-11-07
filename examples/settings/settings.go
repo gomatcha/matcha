@@ -461,12 +461,12 @@ func (v *BasicCell) Build(ctx view.Context) view.Model {
 
 	var options []view.Option
 	if v.OnTap != nil {
-		tap := &pointer.ButtonGesture2{
+		tap := &pointer.ButtonGesture{
 			OnHighlight: func(h bool) {
 				v.highlighted = h
 				v.Signal()
 			},
-			OnRecognize: func(e *pointer.ButtonEvent2) {
+			OnRecognize: func(e *pointer.ButtonEvent) {
 				v.highlighted = false
 				v.Signal()
 				v.OnTap()

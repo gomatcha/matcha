@@ -31,7 +31,7 @@ type key struct {
 }
 
 type gestureWrapper struct {
-	gesture gesture2
+	gesture Gesture
 	state   gestureState
 }
 
@@ -186,8 +186,10 @@ func (n *gestureNode) onEvent(e *event) (bool, gestureState) {
 				n.setChanged(idx)
 				done = true
 			case gestureStateFailed:
+				i.gesture.failed(e)
 				n.setFailed(idx)
 			case gestureStateRecognized:
+				i.gesture.recognized(e)
 				n.setRecognized(idx)
 				done = true
 			default:
@@ -263,7 +265,7 @@ func (r *touchMiddleware) Build(ctx view.Context, model *view.Model) {
 	curr := []*gestureWrapper{}
 	if model != nil {
 		for _, i := range model.Options {
-			g, _ := i.(gesture2)
+			g, _ := i.(Gesture)
 			if i.OptionKey() == "gomatcha.io/matcha/touch Gesture" && g != nil {
 				curr = append(curr, &gestureWrapper{gesture: g, state: gestureStateFailed})
 			}

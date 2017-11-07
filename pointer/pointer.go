@@ -35,27 +35,6 @@ import (
 	prototouch "gomatcha.io/matcha/proto/pointer"
 )
 
-// gestureState are the possible recognizer states
-//
-// Discrete gestures:
-//  gestureStatePossible -> gestureStateFailed
-//  gestureStatePossible -> gestureStateRecognized
-// Continuous gestures:
-//  gestureStatePossible -> gestureStateChanged(optionally) -> gestureStateFailed
-//  gestureStatePossible -> gestureStateChanged(optionally) -> gestureStateRecognized
-type gestureState int
-
-const (
-	// Finger is down, but before gesture has been recognized.
-	gestureStatePossible gestureState = iota
-	// After the continuous gesture has been recognized, while the finger is still down. Only for continuous recognizers.
-	gestureStateChanged
-	// Gesture recognition failed or cancelled.
-	gestureStateFailed
-	// Gesture recognition succeded.
-	gestureStateRecognized
-)
-
 type phase int
 
 const (
@@ -82,14 +61,37 @@ func (e *event) unmarshalProtobuf(ev *prototouch.Event) error {
 	return nil
 }
 
-type gesture2 interface {
+type Gesture interface {
 	onEvent(gestureState, *event) gestureState
 	reset()
 	gestureKey() interface{}
+	recognized(e *event)
+	failed(e *event)
 
 	// Future...
 	// priority() int
 }
+
+// gestureState are the possible recognizer states
+//
+// Discrete gestures:
+//  gestureStatePossible -> gestureStateFailed
+//  gestureStatePossible -> gestureStateRecognized
+// Continuous gestures:
+//  gestureStatePossible -> gestureStateChanged(optionally) -> gestureStateFailed
+//  gestureStatePossible -> gestureStateChanged(optionally) -> gestureStateRecognized
+type gestureState int
+
+const (
+	// Finger is down, but before gesture has been recognized.
+	gestureStatePossible gestureState = iota
+	// After the continuous gesture has been recognized, while the finger is still down. Only for continuous recognizers.
+	gestureStateChanged
+	// Gesture recognition failed or cancelled.
+	gestureStateFailed
+	// Gesture recognition succeded.
+	gestureStateRecognized
+)
 
 const tapMaxDuration = time.Duration(0.5 * float64(time.Second))
 const tapMaxDurationBetween = time.Duration(0.5 * float64(time.Second))
@@ -100,7 +102,6 @@ type TapGesture struct {
 	Count       int
 	OnRecognize func(e *TapEvent)
 
-	state          gestureState
 	count          int
 	startTimestamp []time.Time
 	startLocation  []layout.Point
@@ -115,83 +116,72 @@ func (g *TapGesture) gestureKey() interface{} {
 }
 
 func (g *TapGesture) onEvent(s gestureState, e *event) gestureState {
-	if s != g.state {
-		g.state = gestureStateFailed
-		return gestureStateFailed
-	}
-
 	switch e.Phase {
 	case phaseBegan:
 		if g.count > 0 {
 			timestamp := g.startTimestamp[len(g.startTimestamp)-1]
 			location := g.startLocation[len(g.startLocation)-1]
 			if e.Timestamp.Sub(timestamp) > tapMaxDurationBetween || e.Location.Sub(location).Norm() > tapMaxDistanceBetween {
-				g.state = gestureStateFailed
 				return gestureStateFailed
 			}
 		}
 
 		g.startTimestamp = append(g.startTimestamp, e.Timestamp)
 		g.startLocation = append(g.startLocation, e.Location)
-		g.state = gestureStatePossible
 		return gestureStatePossible
 	case phaseMoved:
 		timestamp := g.startTimestamp[len(g.startTimestamp)-1]
 		location := g.startLocation[len(g.startLocation)-1]
 		if e.Timestamp.Sub(timestamp) > tapMaxDuration || e.Location.Sub(location).Norm() > tapMaxDistance {
-			g.state = gestureStateFailed
 			return gestureStateFailed
 		}
 
-		g.state = gestureStatePossible
 		return gestureStatePossible
 	case phaseEnded:
 		timestamp := g.startTimestamp[len(g.startTimestamp)-1]
 		location := g.startLocation[len(g.startLocation)-1]
 		if e.Timestamp.Sub(timestamp) > tapMaxDuration || e.Location.Sub(location).Norm() > tapMaxDistance {
-			g.state = gestureStateFailed
 			return gestureStateFailed
 		}
 
 		if g.count == g.Count-1 {
-			if g.OnRecognize != nil {
-				tapEvent := &TapEvent{
-					Timestamp: e.Timestamp,
-					Location:  e.Location,
-				}
-				g.OnRecognize(tapEvent)
-			}
-			g.state = gestureStateRecognized
 			return gestureStateRecognized
 		} else if g.count < g.Count-1 {
 			g.count += 1
-			g.state = gestureStatePossible
 			return gestureStatePossible
 		}
-		g.state = gestureStateFailed
 		return gestureStateFailed
 	case phaseNone:
 		if g.count > 0 {
 			timestamp := g.startTimestamp[len(g.startTimestamp)-1]
 			if e.Timestamp.Sub(timestamp) > tapMaxDurationBetween {
-				g.state = gestureStateFailed
 				return gestureStateFailed
 			}
 		}
-
-		g.state = gestureStatePossible
 		return gestureStatePossible
 	default:
-		g.state = gestureStateFailed
 		return gestureStateFailed
 	}
 }
 
 func (g *TapGesture) reset() {
-	g.state = gestureStatePossible
 	g.startTimestamp = nil
 	g.startLocation = nil
 	g.count = 0
+}
+
+func (g *TapGesture) recognized(e *event) {
+	if g.OnRecognize != nil {
+		tapEvent := &TapEvent{
+			Timestamp: e.Timestamp,
+			Location:  e.Location,
+		}
+		g.OnRecognize(tapEvent)
+	}
+}
+
+func (g *TapGesture) failed(e *event) {
+	// no-op
 }
 
 type TapEvent struct {
@@ -199,72 +189,78 @@ type TapEvent struct {
 	Location  layout.Point
 }
 
-type ButtonGesture2 struct {
+type ButtonGesture struct {
 	OnHighlight func(highlighted bool)
-	OnRecognize func(e *ButtonEvent2)
+	OnRecognize func(e *ButtonEvent)
+	Exclusive   bool // TODO(KD): naming?
 	highlighted bool
 }
 
-func (g *ButtonGesture2) OptionKey() string {
+func (g *ButtonGesture) OptionKey() string {
 	return "gomatcha.io/matcha/touch Gesture"
 }
 
-func (g *ButtonGesture2) gestureKey() interface{} {
-	return nil
+func (g *ButtonGesture) gestureKey() interface{} {
+	return g.Exclusive
 }
 
-func (g *ButtonGesture2) onEvent(s gestureState, e *event) gestureState {
+func (g *ButtonGesture) onEvent(s gestureState, e *event) gestureState {
 	switch e.Phase {
 	case phaseBegan:
 		highlighted := e.Location.X >= 0 && e.Location.Y >= 0 && e.Location.X <= e.ViewSize.X && e.Location.Y <= e.ViewSize.Y
-		if g.OnHighlight != nil && g.highlighted != highlighted {
-			g.OnHighlight(highlighted)
+		g.setHighlight(highlighted)
+		if g.Exclusive {
+			return gestureStateChanged
 		}
-		g.highlighted = highlighted
-
 		return gestureStatePossible
 	case phaseMoved:
 		highlighted := e.Location.X >= 0 && e.Location.Y >= 0 && e.Location.X <= e.ViewSize.X && e.Location.Y <= e.ViewSize.Y
-		if g.OnHighlight != nil && g.highlighted != highlighted {
-			g.OnHighlight(highlighted)
-		}
-		g.highlighted = highlighted
+		g.setHighlight(highlighted)
 
+		if g.Exclusive {
+			return gestureStateChanged
+		}
 		return gestureStatePossible
 	case phaseEnded:
 		highlighted := e.Location.X >= 0 && e.Location.Y >= 0 && e.Location.X <= e.ViewSize.X && e.Location.Y <= e.ViewSize.Y
-		if g.OnHighlight != nil && g.highlighted != highlighted {
-			g.OnHighlight(highlighted)
-		}
-		g.highlighted = highlighted
+		g.setHighlight(highlighted)
 
 		if !highlighted {
 			return gestureStateFailed
 		}
-
-		if g.OnRecognize != nil {
-			buttonEvent := &ButtonEvent2{
-				Timestamp: e.Timestamp,
-				Location:  e.Location,
-			}
-			g.OnRecognize(buttonEvent)
-		}
 		return gestureStateRecognized
-	case phaseNone:
-		return gestureStateFailed
 	default:
+		g.setHighlight(false)
 		return gestureStateFailed
 	}
 }
 
-func (g *ButtonGesture2) reset() {
-	if g.OnHighlight != nil && g.highlighted {
-		g.OnHighlight(false)
-	}
-	g.highlighted = false
+func (g *ButtonGesture) reset() {
+	g.setHighlight(false)
 }
 
-type ButtonEvent2 struct {
+func (g *ButtonGesture) setHighlight(h bool) {
+	if g.OnHighlight != nil && g.highlighted != h {
+		g.OnHighlight(h)
+	}
+	g.highlighted = h
+}
+
+func (g *ButtonGesture) recognized(e *event) {
+	if g.OnRecognize != nil {
+		buttonEvent := &ButtonEvent{
+			Timestamp: e.Timestamp,
+			Location:  e.Location,
+		}
+		g.OnRecognize(buttonEvent)
+	}
+}
+
+func (g *ButtonGesture) failed(e *event) {
+	// no-op
+}
+
+type ButtonEvent struct {
 	Timestamp time.Time
 	Location  layout.Point
 }

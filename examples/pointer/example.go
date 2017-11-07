@@ -21,10 +21,13 @@ func init() {
 
 type TouchView struct {
 	view.Embed
-	tapCounter    int
-	tap2Counter   int
-	pressCounter  int
-	buttonCounter int
+	tapCounter         int
+	tap2Counter        int
+	tap11Counter       int
+	tap22Counter       int
+	pressCounter       int
+	buttonCounter      int
+	buttonChildCounter int
 }
 
 func NewTouchView() *TouchView {
@@ -106,6 +109,47 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 		s.LeftEqual(g.Left())
 	})
 
+	tap12 := view.NewBasicView()
+	tap12.Painter = &paint.Style{BackgroundColor: colornames.Blue}
+	tap12.Options = []view.Option{
+		&pointer.TapGesture{
+			Count: 1,
+			OnRecognize: func(e *pointer.TapEvent) {
+				v.tap11Counter += 1
+				v.Signal()
+			},
+		},
+		&pointer.TapGesture{
+			Count: 2,
+			OnRecognize: func(e *pointer.TapEvent) {
+				v.tap22Counter += 1
+				v.Signal()
+			},
+		},
+	}
+	g = l.Add(tap12, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(100)
+		s.Height(100)
+	})
+
+	count := view.NewTextView()
+	count.String = fmt.Sprintf("single tap: %v", v.tap11Counter)
+	count.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
+	g = l.Add(count, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	count = view.NewTextView()
+	count.String = fmt.Sprintf("double tap: %v", v.tap22Counter)
+	count.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
+	g = l.Add(count, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
 	// chl3 := NewPressChildView()
 	// chl3.OnTouch = func() {
 	// 	fmt.Println("On Press")
@@ -133,16 +177,39 @@ func (v *TouchView) Build(ctx view.Context) view.Model {
 		v.buttonCounter += 1
 		go v.Signal()
 	}
+	button.OnChildTouch = func() {
+		fmt.Println("On Child Button")
+		v.buttonChildCounter += 1
+		go v.Signal()
+	}
 	g = l.Add(button, func(s *constraint.Solver) {
 		s.TopEqual(g.Bottom())
 		s.LeftEqual(g.Left())
 		s.Width(100)
 		s.Height(100)
 	})
+
+	buttonOverlay := view.NewBasicView()
+	buttonOverlay.Painter = &paint.Style{BackgroundColor: colornames.Yellow}
+	l.Add(buttonOverlay, func(s *constraint.Solver) {
+		s.TopEqual(g.Top())
+		s.LeftEqual(g.Left())
+		s.Width(50)
+		s.Height(50)
+	})
+
 	buttonCount := view.NewTextView()
-	buttonCount.String = fmt.Sprintf("Button: %v", v.buttonCounter)
+	buttonCount.String = fmt.Sprintf("button: %v", v.buttonCounter)
 	buttonCount.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
 	g = l.Add(buttonCount, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	buttonChild := view.NewTextView()
+	buttonChild.String = fmt.Sprintf("button child: %v", v.buttonChildCounter)
+	buttonChild.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
+	g = l.Add(buttonChild, func(s *constraint.Solver) {
 		s.TopEqual(g.Bottom())
 		s.LeftEqual(g.Left())
 	})
@@ -224,8 +291,10 @@ func (v *TapChildView) Build(ctx view.Context) view.Model {
 
 type ButtonChildView struct {
 	view.Embed
-	OnTouch     func()
-	highlighted bool
+	OnTouch          func()
+	OnChildTouch     func()
+	highlighted      bool
+	childHighlighted bool
 }
 
 func NewButtonChildView() *ButtonChildView {
@@ -233,20 +302,51 @@ func NewButtonChildView() *ButtonChildView {
 }
 
 func (v *ButtonChildView) Build(ctx view.Context) view.Model {
+	l := &constraint.Layouter{}
+
 	color := colornames.Blue
 	if v.highlighted {
 		color = colornames.Red
 	}
 
+	childColor := colornames.Purple
+	if v.childHighlighted {
+		childColor = colornames.Pink
+	}
+
+	child := view.NewBasicView()
+	child.Painter = &paint.Style{BackgroundColor: childColor}
+	child.Options = []view.Option{
+		&pointer.ButtonGesture{
+			Exclusive: true,
+			OnHighlight: func(highlighted bool) {
+				v.childHighlighted = highlighted
+				v.Signal()
+			},
+			OnRecognize: func(e *pointer.ButtonEvent) {
+				v.childHighlighted = false
+				v.OnChildTouch()
+			},
+		},
+	}
+	l.Add(child, func(s *constraint.Solver) {
+		s.Top(0)
+		s.Left(50)
+		s.Width(50)
+		s.Height(50)
+	})
+
 	return view.Model{
-		Painter: &paint.Style{BackgroundColor: color},
+		Children: l.Views(),
+		Layouter: l,
+		Painter:  &paint.Style{BackgroundColor: color},
 		Options: []view.Option{
-			&pointer.ButtonGesture2{
+			&pointer.ButtonGesture{
 				OnHighlight: func(highlighted bool) {
 					v.highlighted = highlighted
 					v.Signal()
 				},
-				OnRecognize: func(e *pointer.ButtonEvent2) {
+				OnRecognize: func(e *pointer.ButtonEvent) {
 					v.highlighted = false
 					v.OnTouch()
 				},
