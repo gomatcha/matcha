@@ -59,11 +59,6 @@
     return [self initWithGoRef:ref];
 }
 
-- (id)initWithType:(NSString *)v {
-    CGoBuffer buf = MatchaNSStringToCGoBuffer(v);
-    return [self initWithGoRef:matchaGoType(buf)];
-}
-
 - (id)initWithFunc:(NSString *)v {
     CGoBuffer buf = MatchaNSStringToCGoBuffer(v);
     return [self initWithGoRef:matchaGoFunc(buf)];
@@ -101,16 +96,8 @@
     return MatchaCGoBufferToNSArray(matchaGoToArray(_ref));
 }
 
-- (BOOL)isEqual:(MatchaGoValue *)value {
-    return matchaGoEqual(_ref, value.ref);
-}
-
 - (BOOL)isNil {
     return matchaGoIsNil(_ref);
-}
-
-- (MatchaGoValue *)elem {
-    return [[MatchaGoValue alloc] initWithGoRef:matchaGoElem(_ref)];
 }
 
 - (NSArray<MatchaGoValue *> *)call:(NSString *)method, ... {
@@ -133,23 +120,6 @@
     CGoBuffer argsBuffer = MatchaNSArrayToCGoBuffer(array);
     CGoBuffer rlt = matchaGoCall(_ref, MatchaNSStringToCGoBuffer(method), argsBuffer);
     return MatchaCGoBufferToNSArray(rlt);
-}
-
-- (MatchaGoValue *)field:(NSString *)name {
-    GoRef rlt = matchaGoField(_ref, MatchaNSStringToCGoBuffer(name));
-    return [[MatchaGoValue alloc] initWithGoRef:rlt];
-}
-
-- (void)setField:(NSString *)name value:(MatchaGoValue *)value {
-    matchaGoFieldSet(_ref, MatchaNSStringToCGoBuffer(name), value.ref);
-}
-
-- (MatchaGoValue *)objectForKeyedSubscript:(NSString *)key {
-    return [self field:key];
-}
-
-- (void)setObject:(MatchaGoValue *)object forKeyedSubscript:(NSString *)key {
-    [self setField:key value:object];
 }
 
 - (void)dealloc {

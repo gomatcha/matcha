@@ -24,12 +24,10 @@ import (
 )
 
 var goRoot struct {
-	types map[string]reflect.Type
 	funcs map[string]reflect.Value
 }
 
 func init() {
-	goRoot.types = map[string]reflect.Type{}
 	goRoot.funcs = map[string]reflect.Value{}
 
 	RegisterFunc("gomatcha.io/matcha/bridge Panic", func() {
@@ -39,10 +37,6 @@ func init() {
 		var intptr *int
 		*intptr = 0
 	})
-}
-
-func RegisterType(str string, t reflect.Type) {
-	goRoot.types[str] = t
 }
 
 func RegisterFunc(str string, f interface{}) {
@@ -174,15 +168,6 @@ func matchaGoToForeign(v C.GoRef) C.FgnRef {
 	return val._ref()
 }
 
-//export matchaGoType
-func matchaGoType(v C.CGoBuffer) C.GoRef {
-	defer goRecover()
-	str := goString(v)
-	t := goRoot.types[str]
-	rv := reflect.New(t)
-	return matchaGoTrack(rv)
-}
-
 //export matchaGoFunc
 func matchaGoFunc(v C.CGoBuffer) C.GoRef {
 	defer goRecover()
@@ -200,19 +185,6 @@ func matchaGoIsNil(v C.GoRef) C.bool {
 	return C.bool(matchaGoGet(v).IsNil())
 }
 
-//export matchaGoEqual
-func matchaGoEqual(a C.GoRef, b C.GoRef) C.bool {
-	defer goRecover()
-	return C.bool(matchaGoGet(a).Interface() == matchaGoGet(b).Interface())
-}
-
-//export matchaGoElem
-func matchaGoElem(v C.GoRef) C.GoRef {
-	defer goRecover()
-	rv := matchaGoGet(v)
-	return matchaGoTrack(rv.Elem())
-}
-
 //export matchaGoCall
 func matchaGoCall(v C.GoRef, name C.CGoBuffer, args C.CGoBuffer) C.CGoBuffer {
 	defer goRecover()
@@ -228,39 +200,6 @@ func matchaGoCall(v C.GoRef, name C.CGoBuffer, args C.CGoBuffer) C.CGoBuffer {
 	argsRv := goArray(args)
 	rlt := function.Call(argsRv)
 	return cArray(rlt)
-}
-
-//export matchaGoField
-func matchaGoField(v C.GoRef, name C.CGoBuffer) C.GoRef {
-	defer goRecover()
-	rv := matchaGoGet(v)
-	str := goString(name)
-
-	// Always underlying value.
-	kind := rv.Kind()
-	for kind == reflect.Ptr || kind == reflect.Interface {
-		rv = rv.Elem()
-		kind = rv.Kind()
-	}
-
-	field := rv.FieldByName(str)
-	return matchaGoTrack(field)
-}
-
-//export matchaGoFieldSet
-func matchaGoFieldSet(v C.GoRef, name C.CGoBuffer, elem C.GoRef) {
-	defer goRecover()
-	rv := matchaGoGet(v)
-	str := goString(name)
-
-	// Always underlying value.
-	kind := rv.Kind()
-	for kind == reflect.Ptr || kind == reflect.Interface {
-		rv = rv.Elem()
-		kind = rv.Kind()
-	}
-
-	rv.FieldByName(str).Set(matchaGoGet(elem))
 }
 
 var tracker struct {

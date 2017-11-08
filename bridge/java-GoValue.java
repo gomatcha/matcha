@@ -68,9 +68,6 @@ public class GoValue {
    public static GoValue withFunc(String v) {
       return new GoValue(matchaGoFunc(v), false);
    }
-   public static GoValue withType(String v) {
-      return new GoValue(matchaGoType(v), false);
-   }
    private static long makeGoArray(GoValue[] v) {
       long[] array = new long[v.length];
       for (int i = 0; i < v.length; i++) {
@@ -88,7 +85,10 @@ public class GoValue {
    private static native long matchaGoByteArray(byte[] v);
    private static native long matchaGoArray(long[] v);
    private static native long matchaGoFunc(String a);
-   private static native long matchaGoType(String a);
+   
+   public boolean isNil() {
+      return matchaGoIsNil(this.goRef);
+   }
    
    public Object toObject() {
       long foreignRef = matchaGoToForeign(this.goRef);
@@ -119,6 +119,7 @@ public class GoValue {
       return array2;
    }
    
+   private static native boolean matchaGoIsNil(long a);
    private static native long matchaGoToForeign(long a);
    private static native boolean matchaGoToBool(long a);
    private static native long matchaGoToLong(long a);
@@ -126,18 +127,6 @@ public class GoValue {
    private static native String matchaGoToString(long a);
    private static native byte[] matchaGoToByteArray(long a);
    private static native long[] matchaGoToArray(long a);
-   
-   public GoValue elem() {
-      return new GoValue(matchaGoElem(this.goRef), false);
-   }
-   
-   public boolean isNil() {
-      return matchaGoIsNil(this.goRef);
-   }
-   
-   public boolean equals(GoValue v) {
-      return matchaGoEqual(this.goRef, v.goRef);
-   }
    
    public GoValue[] call(String v, GoValue...v2) {
       if (v2 == null) {
@@ -157,30 +146,16 @@ public class GoValue {
       return array2;
    }
    
-   public GoValue field(String v) {
-      return new GoValue(matchaGoField(this.goRef, v), false);
-   }
-   
-   public void setField(String a, GoValue v) {
-      matchaGoFieldSet(this.goRef, a, v.goRef);
-   }
-   
-   private static native long matchaGoElem(long a);
-   private static native boolean matchaGoIsNil(long a);
-   private static native boolean matchaGoEqual(long a, long b);
-   private static native long[] matchaGoCall(long a, String b, long[] c);
-   private static native long matchaGoField(long a, String b);
-   private static native void matchaGoFieldSet(long a, String b, long c);
-   private static native void matchaTestFunc();
-   
    public static void testFunc() {
       matchaTestFunc();
    }
-
-   private static native void matchaGoUntrack(long a);
    
    protected void finalize() throws Throwable {
       matchaGoUntrack(this.goRef);
       super.finalize();
    }
+   
+   private static native long[] matchaGoCall(long a, String b, long[] c);
+   private static native void matchaTestFunc();
+   private static native void matchaGoUntrack(long a);
 }

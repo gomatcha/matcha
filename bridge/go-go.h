@@ -6,6 +6,7 @@
 #include "go-foreign.h"
 #include <stdbool.h>
 
+bool matchaGoIsNil(GoRef);
 GoRef matchaGoBool(bool);
 bool matchaGoToBool(GoRef);
 GoRef matchaGoInt(int);
@@ -23,18 +24,10 @@ GoRef matchaGoArray(CGoBuffer);
 CGoBuffer matchaGoToArray(GoRef);
 GoRef matchaGoForeign(FgnRef);
 FgnRef matchaGoToForeign(GoRef);
-GoRef matchaGoType(CGoBuffer);
 GoRef matchaGoFunc(CGoBuffer);
 
-bool matchaGoIsNil(GoRef);
-bool matchaGoEqual(GoRef, GoRef);
-GoRef matchaGoElem(GoRef);
 CGoBuffer matchaGoCall(GoRef, CGoBuffer, CGoBuffer);
-GoRef matchaGoField(GoRef, CGoBuffer);
-void matchaGoFieldSet(GoRef, CGoBuffer, GoRef);
-
 void matchaGoUntrack(GoRef);
-
 void matchaTestFunc(void);
 
 #endif // GO_GO_H
