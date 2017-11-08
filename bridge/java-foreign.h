@@ -5,13 +5,8 @@
 
 #include <jni.h>
 
-extern JavaVM *sJavaVM;
-extern JNIEnv *sEnv;
-extern jint sJavaVersion;
-extern jobject sTracker;
-
-// Tracker
-FgnRef MatchaForeignTrack(jobject v);
+// Init
+void MatchaInit(JNIEnv *env, jobject tracker);
 
 // Utilities
 CGoBuffer MatchaStringToCGoBuffer(JNIEnv *env, jstring v); // return buffer needs to be released.

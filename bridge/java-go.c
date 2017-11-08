@@ -13,10 +13,7 @@
 #define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__);
 
 JNIEXPORT void JNICALL Java_io_gomatcha_bridge_GoValue_matchaInit(JNIEnv *env, jclass c, jobject tracker) {
-    (*env)->GetJavaVM(env, &sJavaVM);
-    sJavaVersion = (*env)->GetVersion(env);
-    sEnv = env;
-    sTracker = (*env)->NewGlobalRef(env, tracker);
+    MatchaInit(env, tracker);
 }
 
 JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoForeign(JNIEnv *env, jclass c, jlong v) {
