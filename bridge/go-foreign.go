@@ -87,6 +87,7 @@ func matchaTestFunc() {
 	}
 }
 
+var bridgeCache = map[string]*Value{}
 var untrackChan = make(chan int64, 20)
 
 func init() {
@@ -116,8 +117,13 @@ func (v *Value) _ref() C.FgnRef {
 }
 
 func Bridge(a string) *Value {
+	if b, ok := bridgeCache[a]; ok {
+		return b
+	}
 	cstr := cString(a)
-	return newValue(C.MatchaForeignBridge(cstr))
+	b := newValue(C.MatchaForeignBridge(cstr))
+	bridgeCache[a] = b
+	return b
 }
 
 func Nil() *Value {
