@@ -16,12 +16,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
 
-        //GoValue.testFunc();
+        GoValue.testFunc();
+        /*
         if (view == null) {
             GoValue rootView = GoValue.withFunc("gomatcha.io/matcha/examples NewExamplesView").call("")[0];
             view = new MatchaView(this, rootView);
         }
         setContentView(view);
+        */
     }
 
     static {

@@ -37,12 +37,13 @@ JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoDouble(JNIEnv *e
 }
 
 JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoString(JNIEnv *env, jclass c, jstring v) {
-    return matchaGoString(MatchaStringToCGoBuffer(env, v));
+    CGoBuffer buf = MatchaStringToCGoBuffer(env, v);
+    return matchaGoString(buf);
 }
 
 JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoByteArray(JNIEnv *env, jclass c, jbyteArray v) {
-    CGoBuffer cstr = MatchaByteArrayToCGoBuffer(env, v);
-    return matchaGoBytes(cstr);
+    CGoBuffer buf = MatchaByteArrayToCGoBuffer(env, v);
+    return matchaGoBytes(buf);
 }
 
 JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoArray(JNIEnv *env, jclass c, jlongArray v) {
@@ -81,8 +82,7 @@ JNIEXPORT jstring JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoToString(JNIEn
 
 JNIEXPORT jbyteArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoToByteArray(JNIEnv *env, jclass c, jlong v) {
     CGoBuffer buf = matchaGoToBytes(v);
-    jbyteArray a = MatchaCGoBufferToByteArray(env, buf);
-    return a;
+    return MatchaCGoBufferToByteArray(env, buf);
 }
 
 JNIEXPORT jlongArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoToArray(JNIEnv *env, jclass c, jlong v) {
@@ -104,7 +104,8 @@ JNIEXPORT jboolean JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoEqual(JNIEnv 
 
 JNIEXPORT jlongArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoCall(JNIEnv *env, jclass c, jlong v, jstring v2, jlongArray v3) {
     CGoBuffer args = MatchaJlongArrayToCGoBuffer(env, v3);
-    CGoBuffer rlt = matchaGoCall(v, MatchaStringToCGoBuffer(env, v2), args);
+    CGoBuffer name = MatchaStringToCGoBuffer(env, v2);
+    CGoBuffer rlt = matchaGoCall(v, name, args);
     return MatchaCGoBufferToJlongArray(env, rlt);
 }
 
