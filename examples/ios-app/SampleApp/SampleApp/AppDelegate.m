@@ -9,13 +9,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     MatchaGoValue *view = [[[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/examples NewExamplesView"] call:nil, nil][0];
-//    MatchaViewController *rootVC = [[MatchaViewController alloc] initWithGoValue:view];
-//    rootVC.printViewHierarchyOnUpdate = true;
-    matchaTestFunc();
+    MatchaViewController *rootVC = [[MatchaViewController alloc] initWithGoValue:view];
+    //rootVC.printViewHierarchyOnUpdate = true;
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    self.window.rootViewController = rootVC;
-    self.window.rootViewController = [[UIViewController alloc] init];
+    self.window.rootViewController = rootVC;
     [self.window makeKeyAndVisible];
     return YES;
 }
