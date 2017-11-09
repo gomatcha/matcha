@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 public class Tracker {
+    private static final Object testObject = new Object();
     private static final Tracker instance = new Tracker();
     private Map<Long, Object> mapTable = new HashMap<Long, Object>();
     private long maxKey = 0;
@@ -17,28 +18,22 @@ public class Tracker {
         return instance;
     }
     public synchronized long track(Object v) {
-        if (v == null) {
-            return 0;
-        }
         this.maxKey += 1;
         this.mapTable.put(this.maxKey, v);
         return this.maxKey;
     }
     public synchronized void untrack(long v) {
-        if (v == 0) {
-            return;
-        }
-        if (this.mapTable.remove(v) == null) {
+        if (!this.mapTable.containsKey(v)) {
             throw new IllegalArgumentException("Tracker doesn't contain key");
         }
+        this.mapTable.remove(v);
+    }
+    public synchronized long trackerCount() {
+        return this.mapTable.size();
     }
     public synchronized Object get(long v) {
-        if (v == 0) {
-            return null;
-        }
-        
-        Object a = this.mapTable.get(v);
-        if (a == null) {
+        Object a = this.mapTable.getOrDefault(v, Tracker.testObject);
+        if (a == Tracker.testObject) {
             throw new IllegalArgumentException("Tracker doesn't contain key");
         }
         return a;
@@ -74,6 +69,13 @@ public class Tracker {
             throw new RuntimeException(e);
         }
         return test;
+    }
+    public synchronized long foreignNil() {
+        return track(null);
+    }
+    public synchronized boolean foreignIsNil(long v) {
+        Object a = this.get(v);
+        return a == null;
     }
     public synchronized long foreignBool(boolean v) {
         return track(v);

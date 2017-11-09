@@ -8,164 +8,188 @@
 #include <stdint.h>
 #include <string.h>
 
-JavaVM *sJavaVM;
-JNIEnv *sEnv;
-jint sJavaVersion;
-jobject sTracker;
+JavaVM *g_JavaVM;
+jint g_JavaVersion;
+jobject g_Tracker;
+jclass g_TrackerClass;
+JNIEnv *g_Env;
+JNIEnv *g_UntrackEnv; // Untrack happens in a separate goroutine
+
+jmethodID g_foreignNil;
+jmethodID g_foreignIsNil;
+jmethodID g_foreignBool;
+jmethodID g_foreignToBool;
+jmethodID g_foreignInt64;
+jmethodID g_foreignToInt64;
+jmethodID g_foreignFloat64;
+jmethodID g_foreignToFloat64;
+jmethodID g_foreignGoRef;
+jmethodID g_foreignToGoRef;
+jmethodID g_foreignString;
+jmethodID g_foreignToString;
+jmethodID g_foreignBytes;
+jmethodID g_foreignToBytes;
+jmethodID g_foreignArray;
+jmethodID g_foreignToArray;
+jmethodID g_foreignBridge;
+jmethodID g_foreignCall;
+jmethodID g_foreignUntrack;
+jmethodID g_foreignTrackerCount;
+jmethodID g_foreignPanic;
 
 #define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__);
 
+void MatchaInit(JNIEnv *env, jobject tracker) {
+    (*env)->GetJavaVM(env, &g_JavaVM);
+    g_JavaVersion = (*env)->GetVersion(env);
+    g_Env = env;
+    g_Tracker = (*env)->NewGlobalRef(env, tracker);
+    
+    jclass trackerClass = (*env)->GetObjectClass(env, tracker);
+    g_TrackerClass = (*env)->NewGlobalRef(env, trackerClass);
+    (*env)->DeleteLocalRef(env, trackerClass);
+    
+    g_foreignNil = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignNil", "()J");
+    g_foreignIsNil = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignIsNil", "(J)Z");
+    g_foreignBool = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignBool", "(Z)J");
+    g_foreignToBool = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignToBool", "(J)Z");
+    g_foreignInt64 = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignInt64", "(J)J");
+    g_foreignToInt64 = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignToInt64", "(J)J");
+    g_foreignFloat64 = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignFloat64", "(D)J");
+    g_foreignToFloat64 = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignToFloat64", "(J)D");
+    g_foreignGoRef = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignGoRef", "(J)J");
+    g_foreignToGoRef = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignToGoRef", "(J)J");
+    g_foreignString = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignString", "(Ljava/lang/String;)J");
+    g_foreignToString = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignToString", "(J)Ljava/lang/String;");
+    g_foreignBytes = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignBytes", "([B)J");
+    g_foreignToBytes = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignToBytes", "(J)[B");
+    g_foreignArray = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignArray", "([J)J");
+    g_foreignToArray = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignToArray", "(J)[J");
+    g_foreignBridge = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignBridge", "(Ljava/lang/String;)J");
+    g_foreignCall = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignCall", "(JLjava/lang/String;[J)J");
+    g_foreignUntrack = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "untrack", "(J)V");
+    g_foreignTrackerCount = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "trackerCount", "()J");
+    g_foreignPanic = (*g_Env)->GetMethodID(g_Env, g_TrackerClass, "foreignPanic", "()V");
+}
+
+// Foreign functions
+
+FgnRef MatchaForeignNil() {
+    return (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignNil);
+}
+
+bool MatchaForeignIsNil(FgnRef v) {
+    return (*g_Env)->CallBooleanMethod(g_Env, g_Tracker, g_foreignIsNil, v);
+}
+
 FgnRef MatchaForeignBool(bool v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBool", "(Z)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
+    return (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignBool, v);
 }
 
 bool MatchaForeignToBool(FgnRef v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToBool", "(J)Z");
-    return (*sEnv)->CallBooleanMethod(sEnv, sTracker, mid, v);
+    return (*g_Env)->CallBooleanMethod(g_Env, g_Tracker, g_foreignToBool, v);
 }
 
 FgnRef MatchaForeignInt64(int64_t v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignInt64", "(J)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
+    return (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignInt64, v);
 }
 
 int64_t MatchaForeignToInt64(FgnRef v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToInt64", "(J)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
+    return (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignToInt64, v);
 }
 
 FgnRef MatchaForeignFloat64(double v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignFloat64", "(D)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
+    return (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignFloat64, v);
 }
 
 double MatchaForeignToFloat64(FgnRef v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToFloat64", "(J)D");
-    return (*sEnv)->CallDoubleMethod(sEnv, sTracker, mid, v);
+    return (*g_Env)->CallDoubleMethod(g_Env, g_Tracker, g_foreignToFloat64, v);
 }
 
 FgnRef MatchaForeignGoRef(GoRef v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignGoRef", "(J)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
+    return (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignGoRef, v);
 }
 
 GoRef MatchaForeignToGoRef(FgnRef v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToGoRef", "(J)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
+    return (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignToGoRef, v);
 }
 
 FgnRef MatchaForeignString(CGoBuffer buf) {
-    jstring jstrBuf = MatchaCGoBufferToString(sEnv, buf);
-    
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignString", "(Ljava/lang/String;)J");
-    long a = (*sEnv)->CallLongMethod(sEnv, sTracker, mid, jstrBuf);
-    
-    (*sEnv)->DeleteLocalRef(sEnv, jstrBuf);
+    jstring jstrBuf = MatchaCGoBufferToString(g_Env, buf);
+    long a = (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignString, jstrBuf);
+    (*g_Env)->DeleteLocalRef(g_Env, jstrBuf);
     return a;
 }
 
 CGoBuffer MatchaForeignToString(FgnRef v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToString", "(J)Ljava/lang/String;");
-    jstring str = (jstring)(*sEnv)->CallObjectMethod(sEnv, sTracker, mid, v);
-    
-    return MatchaStringToCGoBuffer(sEnv, str);
+    jstring str = (jstring)(*g_Env)->CallObjectMethod(g_Env, g_Tracker, g_foreignToString, v);
+    CGoBuffer a = MatchaStringToCGoBuffer(g_Env, str);
+    (*g_Env)->DeleteLocalRef(g_Env, str);
+    return a;
 }
 
 FgnRef MatchaForeignBytes(CGoBuffer bytes) {
-    jbyteArray array = MatchaCGoBufferToByteArray(sEnv, bytes);
-    
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBytes", "([B)J");
-    long a = (*sEnv)->CallLongMethod(sEnv, sTracker, mid, array);
-    
-    (*sEnv)->DeleteLocalRef(sEnv, array);
+    jbyteArray array = MatchaCGoBufferToByteArray(g_Env, bytes);
+    long a = (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignBytes, array);
+    (*g_Env)->DeleteLocalRef(g_Env, array);
     return a;
 }
 
 CGoBuffer MatchaForeignToBytes(FgnRef v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToBytes", "(J)[B");
-    jbyteArray str = (jbyteArray)(*sEnv)->CallObjectMethod(sEnv, sTracker, mid, v);
-    
-    return MatchaByteArrayToCGoBuffer(sEnv, str);
+    jbyteArray str = (jbyteArray)(*g_Env)->CallObjectMethod(g_Env, g_Tracker, g_foreignToBytes, v);
+    CGoBuffer a = MatchaByteArrayToCGoBuffer(g_Env, str);
+    (*g_Env)->DeleteLocalRef(g_Env, str);
+    return a;
 }
 
 FgnRef MatchaForeignArray(CGoBuffer buf) {
-    jbyteArray array = MatchaCGoBufferToJlongArray(sEnv, buf);
-    
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignArray", "([J)J");
-    long a = (*sEnv)->CallLongMethod(sEnv, sTracker, mid, array);
-    
-    (*sEnv)->DeleteLocalRef(sEnv, array);
+    jbyteArray array = MatchaCGoBufferToJlongArray(g_Env, buf);
+    long a = (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignArray, array);
+    (*g_Env)->DeleteLocalRef(g_Env, array);
     return a;
 }
 
 CGoBuffer MatchaForeignToArray(FgnRef v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignToArray", "(J)[J");
-    jlongArray str = (jbyteArray)(*sEnv)->CallObjectMethod(sEnv, sTracker, mid, v);
-    
-    return MatchaJlongArrayToCGoBuffer(sEnv, str);
+    jlongArray str = (jbyteArray)(*g_Env)->CallObjectMethod(g_Env, g_Tracker, g_foreignToArray, v);
+    CGoBuffer a = MatchaJlongArrayToCGoBuffer(g_Env, str);
+    (*g_Env)->DeleteLocalRef(g_Env, str);
+    return a;
 }
 
 FgnRef MatchaForeignBridge(CGoBuffer str) {
-    jstring *string = MatchaCGoBufferToString(sEnv, str);
-    
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignBridge", "(Ljava/lang/String;)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, string);
+    jstring string = MatchaCGoBufferToString(g_Env, str);
+    long a = (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignBridge, string);
+    (*g_Env)->DeleteLocalRef(g_Env, string);
+    return a;
 }
-
-// Call
 
 FgnRef MatchaForeignCall(FgnRef v, CGoBuffer str, CGoBuffer args) {
-    jstring method = MatchaCGoBufferToString(sEnv, str);
-    jbyteArray array = MatchaCGoBufferToJlongArray(sEnv, args);
-    
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignCall", "(JLjava/lang/String;[J)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v, method, array);
-}
-
-// Tracker
-
-FgnRef MatchaForeignTrack(jobject v) {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "track", "(Ljava/lang/Object;)J");
-    return (*sEnv)->CallLongMethod(sEnv, sTracker, mid, v);
+    jstring method = MatchaCGoBufferToString(g_Env, str);
+    jbyteArray array = MatchaCGoBufferToJlongArray(g_Env, args);
+    long a = (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignCall, v, method, array);
+    (*g_Env)->DeleteLocalRef(g_Env, method);
+    (*g_Env)->DeleteLocalRef(g_Env, array);
+    return a;
 }
 
 void MatchaForeignUntrack(FgnRef key) {
-    JNIEnv *env = NULL;
-    jint success = (*sJavaVM)->GetEnv(sJavaVM, (void **)&env, sJavaVersion);
-    if (success == JNI_EDETACHED) {
-        (*sJavaVM)->AttachCurrentThread(sJavaVM, &env, NULL);
+    // Garbage collection happens on a unknown background thread. We must get the correct JNIEnv.
+    if (g_UntrackEnv == NULL) {
+        jint success = (*g_JavaVM)->GetEnv(g_JavaVM, (void **)&g_UntrackEnv, g_JavaVersion);
+        if (success == JNI_EDETACHED) {
+            (*g_JavaVM)->AttachCurrentThread(g_JavaVM, &g_UntrackEnv, NULL);
+        }
     }
-
-    jclass cls = (*env)->GetObjectClass(env, sTracker);
-    jmethodID mid = (*env)->GetMethodID(env, cls, "untrack", "(J)V");
-    (*env)->CallVoidMethod(env, sTracker, mid, key);
-    (*env)->DeleteLocalRef(env, cls);
+    
+    (*g_UntrackEnv)->CallVoidMethod(g_UntrackEnv, g_Tracker, g_foreignUntrack, key);
 }
 
-// Other
+int64_t MatchaForeignTrackerCount() {
+    return (*g_Env)->CallLongMethod(g_Env, g_Tracker, g_foreignTrackerCount);
+}
 
 void MatchaForeignPanic() {
-    jclass cls = (*sEnv)->GetObjectClass(sEnv, sTracker);
-    jmethodID mid = (*sEnv)->GetMethodID(sEnv, cls, "foreignPanic", "()V");
-    return (*sEnv)->CallVoidMethod(sEnv, sTracker, mid);
+    return (*g_Env)->CallVoidMethod(g_Env, g_Tracker, g_foreignPanic);
 }
 
 // Utilities
@@ -190,7 +214,7 @@ jstring MatchaCGoBufferToString(JNIEnv *env, CGoBuffer buf) {
     strncpy(str, buf.ptr, buf.len);
     str[buf.len] = '\0';
     
-    jstring jstrBuf = (*sEnv)->NewStringUTF(sEnv, str);
+    jstring jstrBuf = (*g_Env)->NewStringUTF(g_Env, str);
     free(buf.ptr);
     free(str);
     return jstrBuf;
@@ -230,6 +254,7 @@ jlongArray MatchaCGoBufferToJlongArray(JNIEnv *env, CGoBuffer buf) {
     }
     
     (*env)->ReleaseLongArrayElements(env, array, arr, 0);
+    free(buf.ptr);
     return array;
 }
 

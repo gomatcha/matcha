@@ -58,7 +58,7 @@ CGColorRef MatchaCGColorCreateWithValues(bool exists, int red, int green, int bl
         NSInteger start = (NSInteger)stylesArray[i].index;
         NSInteger end = 0;
         if (i != stylesArray.count - 1) {
-            end = stylesArray[i+1].index - 1;
+            end = (NSInteger)stylesArray[i+1].index - 1;
         } else {
             end = string.length - 1;
         }

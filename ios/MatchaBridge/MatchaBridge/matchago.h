@@ -13,7 +13,6 @@ void matchaTestFunc(void);
 - (id)initWithString:(NSString *)v;
 - (id)initWithData:(NSData *)v;
 - (id)initWithArray:(NSArray<MatchaGoValue *> *)v;
-- (id)initWithType:(NSString *)typeName;
 - (id)initWithFunc:(NSString *)funcName;
 - (id)toObject;
 - (BOOL)toBool;
@@ -24,12 +23,6 @@ void matchaTestFunc(void);
 - (NSData *)toData;
 - (NSArray *)toArray;
 - (BOOL)isNil;
-- (BOOL)isEqual:(MatchaGoValue *)value;
-- (MatchaGoValue *)elem;
 - (NSArray<MatchaGoValue *> *)call:(NSString *)method, ... NS_REQUIRES_NIL_TERMINATION; // pass in nil for the method to call a closure. varargs should be of MatchaGoValue *.
 - (NSArray<MatchaGoValue *> *)call:(NSString *)method args:(va_list)args;
-- (MatchaGoValue *)field:(NSString *)name;
-- (void)setField:(NSString *)name value:(MatchaGoValue *)value;
-- (MatchaGoValue *)objectForKeyedSubscript:(NSString *)key;
-- (void)setObject:(MatchaGoValue *)object forKeyedSubscript:(NSString *)key;
 @end

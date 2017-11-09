@@ -9,6 +9,11 @@
 #include "go-go.h"
 #include "objc-go.h"
 
+@interface MatchaNilSentinel : NSObject
+@end
+@implementation MatchaNilSentinel
+@end
+
 @interface MatchaObjcBridge ()
 @property (nonatomic, strong) NSMutableDictionary<NSString *, id<NSObject>> *dictionary;
 @end
@@ -69,7 +74,7 @@
 
 - (FgnRef)track:(id)object {
     if (object == nil) {
-        return 0;
+        object = [[MatchaNilSentinel alloc] init];
     }
     @synchronized (self) {
         _maxKey += 1;
@@ -79,9 +84,6 @@
 }
 
 - (void)untrack:(FgnRef)key {
-    if (key == 0) {
-        return;
-    }
     @synchronized (self) {
         id keyObj = @(key);
         id object = [_mapTable objectForKey:keyObj];
@@ -106,7 +108,20 @@
     }
 }
 
+- (int64_t)count {
+    return _mapTable.count;
+}
+
 @end
+
+FgnRef MatchaForeignNil() {
+    return MatchaForeignTrack(nil);
+}
+
+bool MatchaForeignIsNil(FgnRef v) {
+    id object = MatchaForeignGet(v);
+    return [object isKindOfClass:[MatchaNilSentinel class]];
+}
 
 FgnRef MatchaForeignBool(bool v) {
     return MatchaForeignTrack(@(v));
@@ -178,11 +193,6 @@ FgnRef MatchaForeignBridge(CGoBuffer str) {
 }
 
 // Call
-
-@interface MatchaNilSentinel : NSObject
-@end
-@implementation MatchaNilSentinel
-@end
 
 FgnRef MatchaForeignCall(FgnRef v, CGoBuffer cstr, CGoBuffer arguments) {
     id obj = MatchaForeignGet(v);
@@ -398,6 +408,10 @@ id MatchaForeignGet(FgnRef key) {
 
 void MatchaForeignUntrack(FgnRef key) {
     [[MatchaTracker sharedTracker] untrack:key];
+}
+
+int64_t MatchaForeignTrackerCount() {
+    return [MatchaTracker sharedTracker].count;
 }
 
 // Other

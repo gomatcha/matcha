@@ -91,14 +91,6 @@ JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoFunc
 
 /*
  * Class:     io_gomatcha_bridge_GoValue
- * Method:    matchaGoType
- * Signature: (Ljava/lang/String;)J
- */
-JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoType
-  (JNIEnv *, jclass, jstring);
-
-/*
- * Class:     io_gomatcha_bridge_GoValue
  * Method:    matchaGoToForeign
  * Signature: (J)J
  */
@@ -155,14 +147,6 @@ JNIEXPORT jlongArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoToArray
 
 /*
  * Class:     io_gomatcha_bridge_GoValue
- * Method:    matchaGoElem
- * Signature: (J)J
- */
-JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoElem
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     io_gomatcha_bridge_GoValue
  * Method:    matchaGoIsNil
  * Signature: (J)Z
  */
@@ -171,35 +155,11 @@ JNIEXPORT jboolean JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoIsNil
 
 /*
  * Class:     io_gomatcha_bridge_GoValue
- * Method:    matchaGoEqual
- * Signature: (JJ)Z
- */
-JNIEXPORT jboolean JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoEqual
-  (JNIEnv *, jclass, jlong, jlong);
-
-/*
- * Class:     io_gomatcha_bridge_GoValue
  * Method:    matchaGoCallArray
  * Signature: (JLjava/lang/String;J)[J
  */
 JNIEXPORT jlongArray JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoCall
   (JNIEnv *, jclass, jlong, jstring, jlongArray);
-
-/*
- * Class:     io_gomatcha_bridge_GoValue
- * Method:    matchaGoField
- * Signature: (JLjava/lang/String;)J
- */
-JNIEXPORT jlong JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoField
-  (JNIEnv *, jclass, jlong, jstring);
-
-/*
- * Class:     io_gomatcha_bridge_GoValue
- * Method:    matchaGoFieldSet
- * Signature: (JLjava/lang/String;J)V
- */
-JNIEXPORT void JNICALL Java_io_gomatcha_bridge_GoValue_matchaGoFieldSet
-  (JNIEnv *, jclass, jlong, jstring, jlong);
 
 /*
  * Class:     io_gomatcha_bridge_GoValue

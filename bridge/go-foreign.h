@@ -12,6 +12,8 @@ typedef struct CGoBuffer {
     int64_t len; // length in bytes
 } CGoBuffer;
 
+FgnRef MatchaForeignNil();
+bool MatchaForeignIsNil(FgnRef v);
 FgnRef MatchaForeignBool(bool v);
 bool MatchaForeignToBool(FgnRef v);
 FgnRef MatchaForeignInt64(int64_t v);
@@ -33,6 +35,7 @@ FgnRef MatchaForeignCall(FgnRef v, CGoBuffer str, CGoBuffer args);
 
 // Tracker
 void MatchaForeignUntrack(FgnRef key);
+int64_t MatchaForeignTrackerCount();
 
 // Other
 void MatchaForeignPanic();

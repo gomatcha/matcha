@@ -2,29 +2,6 @@
 
 package bridge
 
-import "reflect"
-
-// RegisterType registers a go type that can be created from Objc.
-//
-// Go:
-//  type struct Point {
-//      X float64
-//      Y float64
-//  }
-//  func (p Point) Print {
-//      fmt.Printf("{%v, %v}", p.X, p.Y)
-//  }
-//  func init() {
-//      bridge.RegisterType("gomatcha.io/matcha/layout.Point", reflect.TypeOf(Point{}))
-//  }
-// Objective-C:
-//  MatchaGoValue *a = [[MatchaGoValue alloc] initWithType:@"gomatcha.io/matcha/layout.Point"];
-//  a[@"X"] = [[MatchaGoValue alloc] initWithDouble:x];
-//  a[@"Y"] = [[MatchaGoValue alloc] initWithDouble:y];
-//  [a call:@"Print" args:nil];
-func RegisterType(str string, t reflect.Type) {
-}
-
 // RegisterFunc registers a function that can be called from ObjC.
 //
 // Go:

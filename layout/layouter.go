@@ -3,17 +3,9 @@
 package layout
 
 import (
-	"reflect"
-
-	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
 	pblayout "gomatcha.io/matcha/proto/layout"
 )
-
-func init() {
-	bridge.RegisterType("layout.Point", reflect.TypeOf(Point{}))
-	bridge.RegisterType("layout.Rect", reflect.TypeOf(Rect{}))
-}
 
 // Layouter ... TODO(KD):...
 type Layouter interface {

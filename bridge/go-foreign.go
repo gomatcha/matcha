@@ -18,27 +18,86 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"math"
 	"reflect"
 	"runtime"
+	"runtime/debug"
+	"time"
 )
 
 //export matchaTestFunc
 func matchaTestFunc() {
-	a := Bool(true)
-	b := Int64(1234)
-	c := Float64(1.234)
-	d := String("abc")
-	e := Bytes([]byte("def123"))
+	count := C.MatchaForeignTrackerCount()
 
-	fmt.Println("matchaTestFunc() - Primitives:", a.ToBool(), b.ToInt64(), c.ToFloat64(), d.ToString(), string(e.ToBytes()), "~")
+	for i := 0; i < 1000; i++ {
+		z := Nil()
+		a := Bool(true)
+		b := Int64(1234)
+		c := Float64(1.234)
+		d := String("abc")
+		e := Bytes([]byte("def123"))
+		f := Interface(123 + 234i)
 
-	arr := Array(a, b, c, d, e)
-	arr2 := arr.ToArray()
+		if !z.IsNil() ||
+			a.ToBool() != true ||
+			b.ToInt64() != 1234 ||
+			c.ToFloat64() != 1.234 ||
+			d.ToString() != "abc" ||
+			!bytes.Equal(e.ToBytes(), []byte("def123")) ||
+			f.ToInterface() != 123+234i {
 
-	fmt.Println("matchaTestFunc() - Arrays:", arr2[0].ToBool(), arr2[1].ToInt64(), arr2[2].ToFloat64(), arr2[3].ToString(), string(arr2[4].ToBytes()), "~")
+			panic("Primitive mismatch")
+		}
 
-	bridge := Bridge("a")
-	fmt.Println("matchaTestFunc() - Bridge:", bridge)
+		arr := Array(z, a, b, c, d, e, f)
+		arr2 := arr.ToArray()
+
+		z = arr2[0]
+		a = arr2[1]
+		b = arr2[2]
+		c = arr2[3]
+		d = arr2[4]
+		e = arr2[5]
+		f = arr2[6]
+
+		if !z.IsNil() ||
+			a.ToBool() != true ||
+			b.ToInt64() != 1234 ||
+			c.ToFloat64() != 1.234 ||
+			d.ToString() != "abc" ||
+			!bytes.Equal(e.ToBytes(), []byte("def123")) ||
+			f.ToInterface() != 123+234i {
+
+			panic("Array mismatch")
+		}
+
+		runtime.GC()
+	}
+
+	// bridge := Bridge("a")
+	// fmt.Println("matchaTestFunc() - Bridge:", bridge)
+
+	debug.FreeOSMemory()
+	time.Sleep(time.Second)
+
+	newCount := C.MatchaForeignTrackerCount()
+	fmt.Println("count", count, newCount)
+	if math.Abs(float64(count-newCount)) > 1 { // Allow some leeway cause finalizer acts weirdly...
+		panic("Count mismatch")
+	}
+}
+
+var bridgeCache = map[string]*Value{}
+var untrackChan = make(chan int64, 20)
+
+func init() {
+	go func() {
+		runtime.LockOSThread()
+		for i := range untrackChan {
+			C.MatchaForeignUntrack(C.FgnRef(i))
+		}
+		runtime.UnlockOSThread()
+	}()
 }
 
 type Value struct {
@@ -47,11 +106,9 @@ type Value struct {
 
 func newValue(ref C.FgnRef) *Value {
 	v := &Value{ref: int64(ref)}
-	if ref != 0 {
-		runtime.SetFinalizer(v, func(a *Value) {
-			C.MatchaForeignUntrack(a._ref())
-		})
-	}
+	runtime.SetFinalizer(v, func(a *Value) {
+		untrackChan <- a.ref
+	})
 	return v
 }
 
@@ -60,17 +117,22 @@ func (v *Value) _ref() C.FgnRef {
 }
 
 func Bridge(a string) *Value {
+	if b, ok := bridgeCache[a]; ok {
+		return b
+	}
 	cstr := cString(a)
-	return newValue(C.MatchaForeignBridge(cstr))
+	b := newValue(C.MatchaForeignBridge(cstr))
+	bridgeCache[a] = b
+	return b
 }
 
 func Nil() *Value {
-	return newValue(C.FgnRef(0))
+	return newValue(C.MatchaForeignNil())
 }
 
 func (v *Value) IsNil() bool {
 	defer runtime.KeepAlive(v)
-	return v.ref == 0
+	return bool(C.MatchaForeignIsNil(v._ref()))
 }
 
 func Bool(v bool) *Value {

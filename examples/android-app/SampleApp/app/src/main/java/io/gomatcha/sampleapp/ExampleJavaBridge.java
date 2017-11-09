@@ -13,7 +13,6 @@ public class ExampleJavaBridge {
 
         GoValue func2 = GoValue.withFunc("gomatcha.io/matcha/examples/bridge callWithForeignValues");
         String str2 = (String)func2.call("", new GoValue(Long.valueOf(123)))[0].toObject();
-
     }
 
     public String callWithForeignValues(Long param) {
