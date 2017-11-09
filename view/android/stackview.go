@@ -98,6 +98,10 @@ func NewStackView() *StackView {
 	}
 }
 
+func (v *StackView) ViewKey() interface{} {
+	return v.Stack // TODO(KD): WHY IS THIS NECESSARY FOR ROOT EXAMPLE TO WORK?
+}
+
 // Lifecyle implements the view.View interface.
 func (v *StackView) Lifecycle(from, to view.Stage) {
 	if view.EntersStage(from, to, view.StageMounted) {

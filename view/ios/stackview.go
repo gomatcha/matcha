@@ -124,6 +124,10 @@ func NewStackView() *StackView {
 	}
 }
 
+func (v *StackView) ViewKey() interface{} {
+	return v.Stack
+}
+
 // Lifecyle implements the view.View interface.
 func (v *StackView) Lifecycle(from, to view.Stage) {
 	if view.EntersStage(from, to, view.StageMounted) {
