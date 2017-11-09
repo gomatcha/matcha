@@ -82,8 +82,10 @@
         if (flippedOrigin.x + width > maxX) {
             maxX = flippedOrigin.x + width;
         }
-        if (flippedOrigin.y + descent > maxHeight) {
-            maxHeight = flippedOrigin.y + descent;
+        
+        // Line height metrics taken from http://robnapier.net/laying-out-text-with-coretext
+        if (flippedOrigin.y + descent + leading + 1 > maxHeight) {
+            maxHeight = flippedOrigin.y + descent + leading + 1;
         }
     }
     
