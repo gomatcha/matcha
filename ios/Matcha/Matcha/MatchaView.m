@@ -1,10 +1,7 @@
 #import "MatchaView.h"
 #import "MatchaProtobuf.h"
-#import "MatchaTapGestureRecognizer.h"
-#import "MatchaPressGestureRecognizer.h"
 #import "MatchaViewController_Private.h"
 #import "MatchaSwitchView.h"
-#import "MatchaButtonGestureRecognizer.h"
 #import "MatchaScrollView.h"
 #import "MatchaUnknownView.h"
 #import "MatchaView_Private.h"
@@ -38,17 +35,6 @@ void MatchaRegisterViewController(NSString *string, MatchaViewControllerRegistra
     [sLock lock];
     sViewControllerDict[string] = block;
     [sLock unlock];
-}
-
-UIGestureRecognizer *MatchaGestureRecognizerWithPB(int64_t viewId, GPBAny *any, MatchaViewNode *viewNode) {
-    if ([any.typeURL isEqual:@"type.googleapis.com/matcha.pointer.TapRecognizer"]) {
-        return [[MatchaTapGestureRecognizer alloc] initWithMatchaVC:viewNode.rootVC viewId:viewId protobuf:any];
-    } else if ([any.typeURL isEqual:@"type.googleapis.com/matcha.pointer.PressRecognizer"]) {
-        return [[MatchaPressGestureRecognizer alloc] initWithMatchaVC:viewNode.rootVC viewId:viewId protobuf:any];
-    } else if ([any.typeURL isEqual:@"type.googleapis.com/matcha.pointer.ButtonRecognizer"]) {
-        return [[MatchaButtonGestureRecognizer alloc] initWithMatchaVC:viewNode.rootVC viewId:viewId protobuf:any];
-    }
-    return nil;
 }
 
 UIView<MatchaChildView> *MatchaViewWithNode(MatchaBuildNode *node, MatchaViewNode *viewNode) {
@@ -243,44 +229,6 @@ UIViewController<MatchaChildViewController> *MatchaViewControllerWithNode(Matcha
                 self.gestureRecognizer = nil;
             }
         }
-        
-//        if (self.view) {
-//            NSMutableArray *addedKeys = [NSMutableArray array];
-//            NSMutableArray *removedKeys = [NSMutableArray array];
-//            NSMutableArray *unmodifiedKeys = [NSMutableArray array];
-//            for (NSNumber *i in self.buildNode.touchRecognizers) {
-//                GPBAny *child = buildNode.touchRecognizers[i];
-//                if (child == nil) {
-//                    [removedKeys addObject:i];
-//                }
-//            }
-//            for (NSNumber *i in buildNode.touchRecognizers) {
-//                GPBAny *prevChild = self.buildNode.touchRecognizers[i];
-//                if (prevChild == nil) {
-//                    [addedKeys addObject:i];
-//                } else {
-//                    [unmodifiedKeys addObject:i];
-//                }
-//            }
-//
-//            NSMutableDictionary *touchRecognizers = [NSMutableDictionary dictionary];
-//            for (NSNumber *i in removedKeys) {
-//                UIGestureRecognizer *recognizer = self.touchRecognizers[i];
-//                [(id)recognizer disable];
-//                [self.view removeGestureRecognizer:recognizer];
-//            }
-//            for (NSNumber *i in addedKeys) {
-//                UIGestureRecognizer *recognizer = MatchaGestureRecognizerWithPB(buildNode.identifier.longLongValue, buildNode.touchRecognizers[i], self);
-//                [self.view addGestureRecognizer:recognizer];
-//                touchRecognizers[i] = recognizer;
-//            }
-//            for (NSNumber *i in unmodifiedKeys) {
-//                UIGestureRecognizer *recognizer = self.touchRecognizers[i];
-//                [(id)recognizer updateWithProtobuf:buildNode.touchRecognizers[i]];
-//                touchRecognizers[i] = recognizer;
-//            }
-//            self.touchRecognizers = touchRecognizers;
-//        }
     }
 
     // Layout subviews
