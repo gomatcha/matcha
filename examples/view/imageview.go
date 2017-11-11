@@ -2,6 +2,7 @@
 package view
 
 import (
+	"fmt"
 	_ "image/jpeg"
 	_ "image/png"
 
@@ -11,6 +12,7 @@ import (
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/pointer"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )
 
@@ -32,60 +34,152 @@ func NewImageView() *ImageView {
 func (v *ImageView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl := view.NewImageView()
-	if v.toggle {
-		chl.URL = "https://avatars0.githubusercontent.com/u/758035?v=4&s=460"
-	} else {
-		chl.URL = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
-	}
-	chl.ResizeMode = view.ImageResizeModeFit
-	chl.PaintStyle = &paint.Style{BackgroundColor: colornames.Pink}
-	g1 := l.Add(chl, func(s *constraint.Solver) {
+	label := view.NewTextView()
+	label.String = "Tint Image:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g := l.Add(label, func(s *constraint.Solver) {
 		s.Top(50)
-		s.Left(100)
-		s.Width(200)
-		s.Height(200)
-	})
-	_ = g1
-
-	chl2 := view.NewImageView()
-	chl2.Image = application.MustLoadImage("settings_airplane")
-	chl2.ResizeMode = view.ImageResizeModeCenter
-	g2 := l.Add(chl2, func(s *constraint.Solver) {
-		s.TopEqual(g1.Bottom())
-		s.LeftEqual(g1.Left())
-		s.WidthEqual(g1.Width())
-		s.HeightEqual(g1.Height())
+		s.Left(15)
 	})
 
-	chl3 := view.NewImageView()
-	chl3.Image = application.MustLoadImage("table_arrow")
-	chl3.ResizeMode = view.ImageResizeModeStretch
-	chl3.PaintStyle = &paint.Style{BackgroundColor: colornames.Lightgray}
-	chl3.ImageTint = colornames.Blue
-	l.Add(chl3, func(s *constraint.Solver) {
-		s.TopEqual(g2.Bottom())
-		s.LeftEqual(g2.Left())
-		s.WidthEqual(g2.Width())
-		s.HeightEqual(g2.Height())
+	imageview := view.NewImageView()
+	imageview.ImageTint = colornames.Red
+	imageview.Image = application.MustLoadImage("checkbox_checked")
+	g = l.Add(imageview, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(100)
+		s.Height(100)
 	})
+
+	label = view.NewTextView()
+	label.String = "Center Image:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	imageview = view.NewImageView()
+	imageview.Image = application.MustLoadImage("settings_airplane")
+	imageview.ResizeMode = view.ImageResizeModeCenter
+	g = l.Add(imageview, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(100)
+		s.Height(100)
+	})
+
+	label = view.NewTextView()
+	label.String = "Stretch Image:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	imageview = view.NewImageView()
+	imageview.Image = application.MustLoadImage("settings_airplane")
+	imageview.ResizeMode = view.ImageResizeModeStretch
+	g = l.Add(imageview, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(100)
+		s.Height(100)
+	})
+
+	label = view.NewTextView()
+	label.String = "Fill Image:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	imageview = view.NewImageView()
+	imageview.Image = application.MustLoadImage("settings_airplane")
+	imageview.ResizeMode = view.ImageResizeModeFill
+	g = l.Add(imageview, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(100)
+		s.Height(100)
+	})
+
+	label = view.NewTextView()
+	label.String = "Fit Image:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	imageview = view.NewImageView()
+	imageview.Image = application.MustLoadImage("settings_airplane")
+	imageview.ResizeMode = view.ImageResizeModeFit
+	g = l.Add(imageview, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(100)
+		s.Height(100)
+	})
+
+	label = view.NewTextView()
+	label.String = "Network Image:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.Top(50)
+		s.CenterXEqual(l.CenterX().Add(15))
+	})
+
+	imageview = view.NewImageView()
+	imageview.URL = "https://avatars0.githubusercontent.com/u/758035?v=4&s=460"
+	g = l.Add(imageview, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(100)
+		s.Height(100)
+	})
+
+	label = view.NewTextView()
+	label.String = "Toggle Image:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	imageview = view.NewImageView()
+	if v.toggle {
+		imageview.URL = "https://avatars1.githubusercontent.com/u/28016430?s=200&v=4"
+	} else {
+		imageview.URL = "https://avatars0.githubusercontent.com/u/758035?v=4&s=460"
+	}
+	imageview.ResizeMode = view.ImageResizeModeFill
 
 	tap := &pointer.TapGesture{
 		Count: 1,
 		OnEvent: func(e *pointer.TapEvent) {
+			fmt.Println("what")
 			if e.Kind == pointer.EventKindRecognized {
+				fmt.Println("recognize")
 				v.toggle = !v.toggle
 				v.Signal()
 			}
 		},
 	}
 
+	withOpts := view.WithOptions(imageview, pointer.GestureList{tap})
+	g = l.Add(withOpts, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(100)
+		s.Height(100)
+	})
+
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
-		Options: []view.Option{
-			pointer.GestureList{tap},
-		},
 	}
 }

@@ -3,6 +3,7 @@
 package view
 
 import (
+	"fmt"
 	"reflect"
 	"sync"
 
@@ -204,6 +205,7 @@ func (v *optionsView) Update(v2 View) {
 
 func (v *optionsView) Build(ctx Context) Model {
 	m := v.view.Build(ctx)
+	fmt.Println("build", m.Options, v.options, append(m.Options, v.options...))
 	m.Options = append(m.Options, v.options...)
 	return m
 }

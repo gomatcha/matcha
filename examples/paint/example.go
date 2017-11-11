@@ -35,8 +35,8 @@ func (v *PaintView) Build(ctx view.Context) view.Model {
 		CornerRadius:    20,
 	}
 	g1 := l.Add(chl1, func(s *constraint.Solver) {
-		s.TopEqual(constraint.Const(50))
-		s.LeftEqual(constraint.Const(100))
+		s.Top(50)
+		s.Left(50)
 		s.Width(100)
 		s.Height(100)
 	})

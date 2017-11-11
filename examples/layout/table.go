@@ -30,41 +30,53 @@ func NewTableView() *TableView {
 func (v *TableView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	childLayouter := &table.Layouter{
-		StartEdge: layout.EdgeLeft,
-	}
+	verticalLayouter := &table.Layouter{StartEdge: layout.EdgeBottom}
 	for i := 0; i < 20; i++ {
 		childView := NewTableCell()
 		childView.String = fmt.Sprintf("Cell %v", i)
-		childView.Painter = &paint.Style{BackgroundColor: colornames.Red}
-		childLayouter.Add(childView, nil)
+		verticalLayouter.Add(childView, nil)
 	}
-
-	sv := view.NewScrollView()
-	sv.ContentPainter = &paint.Style{BackgroundColor: colornames.White}
-	sv.ContentLayouter = childLayouter
-	sv.ContentChildren = childLayouter.Views()
-	sv.ScrollAxes = layout.AxisX
-	sv.PaintStyle = &paint.Style{BackgroundColor: colornames.Cyan}
-	_ = l.Add(sv, func(s *constraint.Solver) {
+	verticalSV := view.NewScrollView()
+	verticalSV.ContentPainter = &paint.Style{BackgroundColor: colornames.White}
+	verticalSV.ContentLayouter = verticalLayouter
+	verticalSV.ContentChildren = verticalLayouter.Views()
+	verticalSV.ScrollAxes = layout.AxisY
+	g := l.Add(verticalSV, func(s *constraint.Solver) {
 		s.Top(0)
 		s.Left(0)
 		s.WidthEqual(l.Width())
-		s.HeightEqual(l.Height())
+		s.Height(400)
+	})
+
+	horizontalLayouter := &table.Layouter{StartEdge: layout.EdgeLeft}
+	for i := 0; i < 20; i++ {
+		childView := NewTableCell()
+		childView.String = fmt.Sprintf("Cell %v", i)
+		horizontalLayouter.Add(childView, nil)
+	}
+	horizontalSV := view.NewScrollView()
+	horizontalSV.ContentPainter = &paint.Style{BackgroundColor: colornames.White}
+	horizontalSV.ContentLayouter = horizontalLayouter
+	horizontalSV.ContentChildren = horizontalLayouter.Views()
+	horizontalSV.ScrollAxes = layout.AxisX
+	_ = l.Add(horizontalSV, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.Left(0)
+		s.WidthEqual(l.Width())
+		s.BottomEqual(l.Bottom())
 	})
 
 	return view.Model{
 		Children: l.Views(),
+		Painter:  &paint.Style{BackgroundColor: colornames.White},
 		Layouter: l,
-		Painter:  &paint.Style{BackgroundColor: colornames.Green},
 	}
 
 }
 
 type TableCell struct {
 	view.Embed
-	String  string
-	Painter paint.Painter
+	String string
 }
 
 func NewTableCell() *TableCell {
@@ -74,13 +86,23 @@ func NewTableCell() *TableCell {
 func (v *TableCell) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 	l.Solve(func(s *constraint.Solver) {
-		s.Height(50)
-		s.Width(100)
+		s.HeightGreater(constraint.Const(100))
+		s.WidthGreater(constraint.Const(100))
+	})
+
+	border := view.NewBasicView()
+	border.Painter = &paint.Style{BackgroundColor: colornames.Green}
+	l.Add(border, func(s *constraint.Solver) {
+		s.LeftEqual(l.Left().Add(10))
+		s.RightEqual(l.Right().Add(-10))
+		s.TopEqual(l.Top().Add(10))
+		s.BottomEqual(l.Bottom().Add(-10))
 	})
 
 	textView := view.NewTextView()
 	textView.String = v.String
 	textView.Style.SetFont(text.FontWithName("HelveticaNeue", 20))
+	textView.Style.SetAlignment(text.AlignmentCenter)
 	l.Add(textView, func(s *constraint.Solver) {
 		s.LeftEqual(l.Left().Add(10))
 		s.RightEqual(l.Right().Add(-10))
@@ -90,6 +112,6 @@ func (v *TableCell) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
-		Painter:  v.Painter,
+		Painter:  &paint.Style{BackgroundColor: colornames.White},
 	}
 }

@@ -7,6 +7,7 @@ import (
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )
 
@@ -30,28 +31,43 @@ func NewSwitchView() *SwitchView {
 func (v *SwitchView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := view.NewSwitch()
-	chl1.Value = v.value
-	chl1.PaintStyle = &paint.Style{BackgroundColor: colornames.Green}
-	chl1.OnSubmit = func(value bool) {
-		v.value = value
-		v.Signal()
-		fmt.Println("onValueChange", value)
-	}
-	g1 := l.Add(chl1, func(s *constraint.Solver) {
-		s.Top(100)
-		s.Left(100)
+	label := view.NewTextView()
+	label.String = "Enabled Switch:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g := l.Add(label, func(s *constraint.Solver) {
+		s.Top(50)
+		s.Left(15)
 	})
 
-	chl2 := view.NewSwitch()
-	chl2.Value = v.value
-	chl2.Enabled = false
-	chl2.OnSubmit = func(value bool) {
-		fmt.Println("onValueChange2", value)
+	s := view.NewSwitch()
+	s.Value = v.value
+	s.OnSubmit = func(value bool) {
+		v.value = value
+		v.Signal()
+		fmt.Println("OnSubmit", value)
 	}
-	l.Add(chl2, func(s *constraint.Solver) {
-		s.TopEqual(g1.Bottom().Add(50))
-		s.LeftEqual(g1.Left())
+	g = l.Add(s, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	label = view.NewTextView()
+	label.String = "Disabled Switch:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	s = view.NewSwitch()
+	s.Value = v.value
+	s.Enabled = false
+	s.OnSubmit = func(value bool) {
+		fmt.Println("OnSubmit", value)
+	}
+	l.Add(s, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 	})
 
 	return view.Model{

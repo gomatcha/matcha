@@ -7,6 +7,7 @@ import (
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )
 
@@ -30,37 +31,52 @@ func NewSliderView() *SliderView {
 func (v *SliderView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := view.NewSlider()
-	chl1.MinValue = -5
-	chl1.MaxValue = 5
-	chl1.Value = v.value
-	chl1.PaintStyle = &paint.Style{BackgroundColor: colornames.Green}
-	chl1.OnChange = func(value float64) {
+	label := view.NewTextView()
+	label.String = "Enabled Slider:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g := l.Add(label, func(s *constraint.Solver) {
+		s.Top(50)
+		s.Left(15)
+	})
+
+	slider := view.NewSlider()
+	slider.MinValue = -5
+	slider.MaxValue = 5
+	slider.Value = v.value
+	slider.OnChange = func(value float64) {
 		v.value = value
 		v.Signal()
 		fmt.Println("onValueChange", value)
 	}
-	chl1.OnSubmit = func(value float64) {
+	slider.OnSubmit = func(value float64) {
 		fmt.Println("onSubmit", value)
 	}
-	g1 := l.Add(chl1, func(s *constraint.Solver) {
-		s.Top(100)
-		s.Left(100)
+	g = l.Add(slider, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 		s.Width(200)
 	})
 
-	chl2 := view.NewSlider()
-	chl2.Value = v.value
-	chl2.MinValue = -10
-	chl2.MaxValue = 10
-	chl2.Enabled = false
-	chl2.OnChange = func(value float64) {
+	label = view.NewTextView()
+	label.String = "Disabled Slider:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	slider = view.NewSlider()
+	slider.Value = v.value
+	slider.MinValue = 0
+	slider.MaxValue = 5
+	slider.Enabled = false
+	slider.OnChange = func(value float64) {
 		fmt.Println("onValueChange2", value)
 	}
-	l.Add(chl2, func(s *constraint.Solver) {
-		s.TopEqual(g1.Bottom().Add(50))
-		s.LeftEqual(g1.Left())
-		s.WidthEqual(g1.Width())
+	g = l.Add(slider, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(200)
 	})
 
 	return view.Model{

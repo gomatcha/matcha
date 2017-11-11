@@ -6,6 +6,7 @@ import (
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )
 
@@ -29,29 +30,42 @@ func NewButtonView() *ButtonView {
 func (v *ButtonView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := view.NewButton()
-	chl1.Enabled = true
-	chl1.String = "Press Me"
-	chl1.OnPress = func() {
+	label := view.NewTextView()
+	label.String = "Enabled Button:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g := l.Add(label, func(s *constraint.Solver) {
+		s.Top(50)
+		s.Left(15)
+	})
+
+	button := view.NewButton()
+	button.Enabled = true
+	button.String = "Button"
+	button.OnPress = func() {
 		view.Alert("Button Pressed", "")
 	}
-	g1 := l.Add(chl1, func(s *constraint.Solver) {
-		s.Top(100)
-		s.Left(100)
-		s.Width(200)
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	label = view.NewTextView()
+	label.String = "Disabled Button:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 	})
 
 	chl2 := view.NewButton()
-	chl2.String = "Press Me"
-	chl2.Color = colornames.Red
+	chl2.String = "Button"
 	chl2.Enabled = false
 	chl2.OnPress = func() {
-		view.Alert("Button2 Pressed", "")
+		view.Alert("Button Pressed", "")
 	}
 	l.Add(chl2, func(s *constraint.Solver) {
-		s.TopEqual(g1.Bottom().Add(50))
-		s.LeftEqual(g1.Left())
-		s.Width(200)
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 	})
 
 	return view.Model{

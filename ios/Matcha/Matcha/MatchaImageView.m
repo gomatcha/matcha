@@ -11,6 +11,7 @@
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
     if ((self = [super initWithFrame:CGRectZero])) {
+        self.userInteractionEnabled = YES;
         self.viewNode = viewNode;
     }
     return self;

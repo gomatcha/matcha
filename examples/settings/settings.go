@@ -368,6 +368,70 @@ func (v *SpacerDescription) Build(ctx view.Context) view.Model {
 	}
 }
 
+type LargeCell struct {
+	view.Embed
+	Title       string
+	OnTap       func()
+	highlighted bool
+}
+
+func NewLargeCell() *LargeCell {
+	return &LargeCell{}
+}
+
+func (v *LargeCell) Build(ctx view.Context) view.Model {
+	l := &constraint.Layouter{}
+	l.Solve(func(s *constraint.Solver) {
+		s.Height(60)
+		s.WidthEqual(l.MaxGuide().Width())
+	})
+
+	titleView := view.NewTextView()
+	titleView.String = v.Title
+	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 24))
+	titleView.Style.SetTextColor(colornames.Black)
+
+	titleGuide := l.Add(titleView, func(s *constraint.Solver) {
+		s.LeftEqual(l.Left().Add(15))
+		s.RightLess(l.Right().Add(-15))
+		s.CenterYEqual(l.CenterY())
+	})
+	_ = titleGuide
+
+	var options []view.Option
+	if v.OnTap != nil {
+		tap := &pointer.ButtonGesture{
+			OnEvent: func(e *pointer.ButtonEvent) {
+				switch e.Kind {
+				case pointer.EventKindPossible:
+					v.highlighted = e.Inside
+				case pointer.EventKindFailed:
+					v.highlighted = false
+				case pointer.EventKindRecognized:
+					v.highlighted = false
+					v.OnTap()
+				}
+				v.Signal()
+			},
+		}
+		options = append(options, pointer.GestureList{tap})
+	}
+
+	var color color.Color
+	if v.highlighted {
+		color = cellColorHighlighted
+	} else {
+		color = cellColor
+	}
+
+	return view.Model{
+		Children: l.Views(),
+		Layouter: l,
+		Painter:  &paint.Style{BackgroundColor: color},
+		Options:  options,
+	}
+}
+
 type BasicCell struct {
 	view.Embed
 	HasIcon       bool
