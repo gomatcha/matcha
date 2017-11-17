@@ -17,7 +17,7 @@
     return sMapTable;
 }
 
-+ (void)configure {
++ (void)load {
     static dispatch_once_t sOnce = 0;
     dispatch_once(&sOnce, ^{
         [MatchaDeadlockLogger sharedLogger]; // Initialize

@@ -30,7 +30,6 @@
         self.extendedLayoutIncludesOpaqueBars=NO;
         self.automaticallyAdjustsScrollViewInsets=NO;
         
-        [MatchaObjcBridge_X configure];
         [[MatchaObjcBridge_X viewControllers] setObject:self forKey:@(self.identifier)];
     }
     return self;

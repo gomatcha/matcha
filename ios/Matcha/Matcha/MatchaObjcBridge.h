@@ -3,7 +3,6 @@
 
 @interface MatchaObjcBridge_X : NSObject
 + (NSMapTable *)viewControllers;
-+ (void)configure;
 - (MatchaGoValue *)sizeForAttributedString:(NSData *)data maxLines:(int)maxLines;
 - (bool)updateId:(NSInteger)identifier withProtobuf:(NSData *)protobuf;
 - (NSString *)assetsDir;

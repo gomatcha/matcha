@@ -145,24 +145,24 @@ func NewExamplesView(app *App) *ExamplesView {
 			Examples: []*Example{
 				&Example{"Alerts", "Example of how to display alerts. \n\n\ngomatcha.io/matcha/examples/view NewAlertView", viewex.NewAlertView()},
 				&Example{"Button", "Example of an enabled button and a disabled button. \n\n\ngomatcha.io/matcha/examples/view NewButtonView", viewex.NewButtonView()},
+				&Example{"Image View", "Example of various image view properties. \n\n\ngomatcha.io/matcha/examples/view NewImageView", viewex.NewImageView()},
+				&Example{"Scroll View", "Example of a scroll view with a label that tracks the scroll position and a button that scrolls to a point. \n\n\ngomatcha.io/matcha/examples/view NewScrollView", viewex.NewScrollView()},
 				&Example{"Slider", "Example of an enabled sider and a disabled slider that tracks the enabled slider. \n\n\ngomatcha.io/matcha/examples/view NewSliderView", viewex.NewSliderView()},
 				&Example{"Switch", "Example of an enabled switch and a disabled switch that tracks the enabled switch. \n\n\ngomatcha.io/matcha/examples/view NewSwitchView", viewex.NewSwitchView()},
-				&Example{"Scroll View", "Example of a scroll view with a label that tracks the scroll position and a button that scrolls to a point. \n\n\ngomatcha.io/matcha/examples/view NewScrollView", viewex.NewScrollView()},
-				&Example{"Image View", "Example of an image view. \n\n\ngomatcha.io/matcha/examples/view NewImageView", viewex.NewImageView()},
-
-				&Example{"Text View", "\n\n\ngomatcha.io/matcha/examples/view NewTextView", viewex.NewTextView()},
+				&Example{"Text View", "Example of various text view properties. \n\n\ngomatcha.io/matcha/examples/view NewTextView", viewex.NewTextView()},
+				// Text input example
 			},
 		},
 		{
 			Title: "iOS",
 			Examples: []*Example{
 				&Example{"Activity Indicator", "Example of how to show/hide the activity indicator. \n\n\ngomatcha.io/matcha/examples/view/ios NewActivityIndicatorView", iosex.NewActivityIndicatorView()},
+				&Example{"Segment View", "Example of various segment view properties. \n\n\ngomatcha.io/matcha/examples/view/ios NewSegmentView", iosex.NewSegmentView()},
+				&Example{"Status Bar", "Example of how to toggle the status bar style and color. \n\n\ngomatcha.io/matcha/examples/view/ios NewStatusBarView", iosex.NewStatusBarView()},
+				&Example{"Stack View", "Example of various stack view properties. \n\n\ngomatcha.io/matcha/examples/view/ios NewStackView", iosex.NewStackAppView(iosex.NewStackApp())},
 
-				&Example{"Navigation", "\n\n\ngomatcha.io/matcha/examples/view/ios NewNavigationView", iosex.NewNavigationView()},
-				&Example{"Segment View", "\n\n\ngomatcha.io/matcha/examples/view/ios NewSegmentViwe", iosex.NewSegmentView()},
-				&Example{"Stack View", "\n\n\ngomatcha.io/matcha/examples/view/ios NewStackView", iosex.NewStackView()},
-				&Example{"Status Bar", "\n\n\ngomatcha.io/matcha/examples/view/ios NewStatusBarView", iosex.NewStatusBarView()},
-				&Example{"Tab View", "\n\n\ngomatcha.io/matcha/examples/view/ios NewTabView", iosex.NewTabView()},
+				// &Example{"Navigation", "\n\n\ngomatcha.io/matcha/examples/view/ios NewNavigationView", iosex.NewNavigationView()},
+				&Example{"Tab View", "\n\n\ngomatcha.io/matcha/examples/view/ios NewTabView", iosex.NewTabView(iosex.NewTabApp())},
 				&Example{"Progress View", "\n\n\ngomatcha.io/matcha/examples/view/ios NewProgressView", iosex.NewProgressView()},
 			},
 		},

@@ -5,6 +5,7 @@ import (
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
 )
@@ -30,9 +31,21 @@ func NewStatusBarView() *StatusBarView {
 func (v *StatusBarView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := view.NewButton()
-	chl1.String = "Toggle Style"
-	chl1.OnPress = func() {
+	label := view.NewTextView()
+	label.String = "Toggle Style:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g := l.Add(label, func(s *constraint.Solver) {
+		s.Top(50)
+		s.Left(15)
+	})
+
+	button := view.NewButton()
+	if v.style == ios.StatusBarStyleLight {
+		button.String = "Dark"
+	} else {
+		button.String = "Light"
+	}
+	button.OnPress = func() {
 		if v.style == ios.StatusBarStyleLight {
 			v.style = ios.StatusBarStyleDark
 		} else {
@@ -40,28 +53,38 @@ func (v *StatusBarView) Build(ctx view.Context) view.Model {
 		}
 		v.Signal()
 	}
-	l.Add(chl1, func(s *constraint.Solver) {
-		s.Top(100)
-		s.Left(100)
-		s.Width(200)
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 	})
 
-	chl2 := view.NewButton()
-	chl2.String = "Toggle Hidden"
-	chl2.OnPress = func() {
+	label = view.NewTextView()
+	label.String = "Toggle Hidden:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	button = view.NewButton()
+	if v.hidden {
+		button.String = "Show"
+	} else {
+		button.String = "Hide"
+	}
+	button.OnPress = func() {
 		v.hidden = !v.hidden
 		v.Signal()
 	}
-	l.Add(chl2, func(s *constraint.Solver) {
-		s.Top(200)
-		s.Left(100)
-		s.Width(200)
+	l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 	})
 
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
-		Painter:  &paint.Style{BackgroundColor: colornames.White},
+		Painter:  &paint.Style{BackgroundColor: colornames.Lightgray},
 		Options: []view.Option{
 			&ios.StatusBar{
 				Style:  v.style,

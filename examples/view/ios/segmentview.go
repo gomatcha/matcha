@@ -7,6 +7,7 @@ import (
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
 )
@@ -31,29 +32,67 @@ func NewSegmentView() *SegmentView {
 func (v *SegmentView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := ios.NewSegmentView()
-	chl1.Titles = []string{"title1", "title2", "title3"}
-	chl1.Value = v.value
-	chl1.Momentary = true
-	chl1.OnChange = func(value int) {
+	label := view.NewTextView()
+	label.String = "Segmented view:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g := l.Add(label, func(s *constraint.Solver) {
+		s.Top(50)
+		s.Left(15)
+	})
+
+	segmented := ios.NewSegmentView()
+	segmented.Titles = []string{"title1", "title2", "title3"}
+	segmented.Value = v.value
+	segmented.OnChange = func(value int) {
 		v.value = value
 		v.Signal()
 		fmt.Println("onChange", value)
 	}
-	g1 := l.Add(chl1, func(s *constraint.Solver) {
-		s.Top(100)
-		s.Left(100)
+	g = l.Add(segmented, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 		s.Width(200)
 	})
 
-	chl2 := ios.NewSegmentView()
-	chl2.Titles = []string{"title1", "title2", "title3"}
-	chl2.Value = v.value
-	chl2.Enabled = false
-	l.Add(chl2, func(s *constraint.Solver) {
-		s.TopEqual(g1.Bottom().Add(50))
-		s.LeftEqual(g1.Left())
-		s.WidthEqual(g1.Width())
+	label = view.NewTextView()
+	label.String = "Momentary segmented view:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	segmented = ios.NewSegmentView()
+	segmented.Titles = []string{"title1", "title2", "title3"}
+	segmented.Value = v.value
+	segmented.Momentary = true
+	segmented.OnChange = func(value int) {
+		v.value = value
+		v.Signal()
+		fmt.Println("onChange", value)
+	}
+	g = l.Add(segmented, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(200)
+	})
+
+	label = view.NewTextView()
+	label.String = "Disabled segmented view:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	segmented = ios.NewSegmentView()
+	segmented.Titles = []string{"title1", "title2", "title3"}
+	segmented.Value = v.value
+	segmented.Enabled = false
+	l.Add(segmented, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Width(200)
 	})
 
 	return view.Model{

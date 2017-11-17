@@ -14,6 +14,7 @@
 
 - (id)initWithViewNode:(MatchaViewNode *)viewNode {
     if ((self = [super init])) {
+        self.tabBar.translucent = NO;
         self.viewNode = viewNode;
         self.delegate = self;
         MatchaConfigureChildViewController(self);
@@ -25,7 +26,7 @@
     MatchaiOSPBTabView *pbTabNavigator = (id)[MatchaiOSPBTabView parseFromData:self.nativeState error:nil];
     
     self.tabBar.barTintColor = pbTabNavigator.hasBarColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.barColor] : nil;
-    self.tabBar.tintColor = pbTabNavigator.hasBarColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.selectedColor] : nil;
+    self.tabBar.tintColor = pbTabNavigator.hasSelectedColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.selectedColor] : nil;
     if ([self.tabBar respondsToSelector:@selector(unselectedItemTintColor)]) {
         self.tabBar.unselectedItemTintColor = pbTabNavigator.hasUnselectedColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.unselectedColor] : nil; // TODO(KD): iOS 10.10 only
     }
@@ -42,6 +43,11 @@
         MatchaiOSPBTabChildView *i = pbTabNavigator.screensArray[idx];
         UIViewController *vc = childVCs[idx];
         vc.tabBarItem.title = i.title;
+        if ([i.title isEqual:@""]) {
+            vc.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+        } else {
+            vc.tabBarItem.imageInsets = UIEdgeInsetsZero;
+        }
         vc.tabBarItem.badgeValue = i.badge.length == 0 ? nil : i.badge;
         vc.tabBarItem.image = [[UIImage alloc] initWithImageOrResourceProtobuf:i.icon];
         vc.tabBarItem.selectedImage = [[UIImage alloc] initWithImageOrResourceProtobuf:i.selectedIcon];

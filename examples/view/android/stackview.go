@@ -13,5 +13,5 @@ func init() {
 }
 
 func NewStackView() view.View {
-	return ios.NewStackView()
+	return ios.NewStackAppView(ios.NewStackApp())
 }

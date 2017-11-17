@@ -46,7 +46,7 @@ type ImageResource struct {
 	scale float64
 }
 
-// MustLoadImage loads the image at path.
+// LoadImage loads the image at path.
 func LoadImage(path string) (*ImageResource, error) {
 	var propData []byte
 	if runtime.GOOS == "android" {
