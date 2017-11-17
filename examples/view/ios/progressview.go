@@ -6,6 +6,7 @@ import (
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/ios"
 )
@@ -30,24 +31,40 @@ func NewProgressView() *ProgressView {
 func (v *ProgressView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	progressv := ios.NewProgressView()
-	progressv.ProgressNotifier = v.value
-	progressv.ProgressColor = colornames.Red
-	l.Add(progressv, func(s *constraint.Solver) {
-		s.Top(100)
-		s.Left(100)
+	label := view.NewTextView()
+	label.String = "Progress view:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g := l.Add(label, func(s *constraint.Solver) {
+		s.Top(50)
+		s.Left(15)
+	})
+
+	progress := ios.NewProgressView()
+	progress.ProgressNotifier = v.value
+	progress.ProgressColor = colornames.Red
+	g = l.Add(progress, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom().Add(10))
+		s.LeftEqual(g.Left())
 		s.Width(200)
 	})
 
-	sliderv := view.NewSlider()
-	sliderv.MaxValue = 1
-	sliderv.MinValue = 0
-	sliderv.OnChange = func(value float64) {
+	label = view.NewTextView()
+	label.String = "Progress value:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom().Add(10))
+		s.LeftEqual(g.Left())
+	})
+
+	slider := view.NewSlider()
+	slider.MaxValue = 1
+	slider.MinValue = 0
+	slider.OnChange = func(value float64) {
 		v.value.SetValue(value)
 	}
-	l.Add(sliderv, func(s *constraint.Solver) {
-		s.Top(200)
-		s.Left(100)
+	l.Add(slider, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 		s.Width(200)
 	})
 

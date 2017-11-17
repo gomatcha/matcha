@@ -134,10 +134,9 @@ func NewExamplesView(app *App) *ExamplesView {
 				&Example{"Painters", "Example of various paint options.\n\n\ngomatcha.io/matcha/examples/paint NewPaintView", paintex.NewPaintView()},
 				&Example{"Constraint Layout", "Example of a complex layout using constraints. \n\n\ngomatcha.io/matcha/examples/layout NewConstraintsView", layoutex.NewConstraintsView()},
 				&Example{"Table Layout", "Example of a vertical (bottom to top) table and a horizontal (left to right) table layout. \n\n\ngomatcha.io/matcha/examples/layout NewTableView", layoutex.NewTableView()},
+				&Example{"Native Bridge", "Example of how to call native functions from Go, and Go functions from native code. See gomatcha.io/guide/native-bridge/ for more details. \n\n\ngomatcha.io/matcha/examples/bridge NewBridgeView", bridgeex.NewBridgeView()},
 
-				&Example{"Native Bridge", "\n\n\ngomatcha.io/matcha/examples/bridge NewBridgeView", bridgeex.NewBridgeView()},
 				&Example{"Custom Views", "\n\n\ngomatcha.io/matcha/examples/customview NewView", customview.NewView()},
-				&Example{"Adding/Removing Views", "\n\n\ngomatcha.io/matcha/examples/view NewAddRemoveView", viewex.NewAddRemoveView()},
 			},
 		},
 		{
@@ -160,10 +159,9 @@ func NewExamplesView(app *App) *ExamplesView {
 				&Example{"Segment View", "Example of various segment view properties. \n\n\ngomatcha.io/matcha/examples/view/ios NewSegmentView", iosex.NewSegmentView()},
 				&Example{"Status Bar", "Example of how to toggle the status bar style and color. \n\n\ngomatcha.io/matcha/examples/view/ios NewStatusBarView", iosex.NewStatusBarView()},
 				&Example{"Stack View", "Example of various stack view properties. \n\n\ngomatcha.io/matcha/examples/view/ios NewStackView", iosex.NewStackAppView(iosex.NewStackApp())},
-
+				&Example{"Tab View", "Example of how to use and customize a tab view. \n\n\ngomatcha.io/matcha/examples/view/ios NewTabView", iosex.NewTabView(iosex.NewTabApp())},
+				&Example{"Progress View", "Example of how to use a progress view. \n\n\ngomatcha.io/matcha/examples/view/ios NewProgressView", iosex.NewProgressView()},
 				// &Example{"Navigation", "\n\n\ngomatcha.io/matcha/examples/view/ios NewNavigationView", iosex.NewNavigationView()},
-				&Example{"Tab View", "\n\n\ngomatcha.io/matcha/examples/view/ios NewTabView", iosex.NewTabView(iosex.NewTabApp())},
-				&Example{"Progress View", "\n\n\ngomatcha.io/matcha/examples/view/ios NewProgressView", iosex.NewProgressView()},
 			},
 		},
 		{
@@ -178,6 +176,7 @@ func NewExamplesView(app *App) *ExamplesView {
 			Title: "Miscellaneous",
 			Examples: []*Example{
 				&Example{"Device Orientation", "Example of how to get the current device orientation and listen to orientation changes.\n\n\ngomatcha.io/matcha/examples/application NewOrientationView", applicationex.NewOrientationView()},
+				&Example{"Adding/Removing Views", "\n\n\ngomatcha.io/matcha/examples/view NewAddRemoveView", viewex.NewAddRemoveView()},
 			},
 		},
 	}

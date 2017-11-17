@@ -8,6 +8,7 @@ import (
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )
 
@@ -18,11 +19,11 @@ func init() {
 }
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/bridge callWithGoValues", func(v int64) string {
-		return fmt.Sprintf("Call with Go values:%v", v)
+	bridge.RegisterFunc("gomatcha.io/matcha/examples/bridge callWithGoValues", func(v string) string {
+		return fmt.Sprintf("Goodbye %v!", v)
 	})
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/bridge callWithForeignValues", func(v *bridge.Value) *bridge.Value {
-		return bridge.String(fmt.Sprintf("Call with Foreign values:%v", v.ToInt64()))
+		return bridge.String(fmt.Sprintf("Goodbye %v!", v.ToString()))
 	})
 }
 
@@ -37,33 +38,109 @@ func NewBridgeView() *BridgeView {
 func (v *BridgeView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
+	// Get the corresponding native bridge object. See ExampleObjcBridge.m and ExampleJavaBridge.java.
+	brg := bridge.Bridge("gomatcha.io/matcha/example/bridge")
+
 	var str string
-	var str2 string
-	if runtime.GOOS == "android" {
-		str = bridge.Bridge("gomatcha.io/matcha/example").Call("callWithGoValues", bridge.Interface(123)).ToInterface().(string)
-		str2 = bridge.Bridge("gomatcha.io/matcha/example").Call("callWithForeignValues", bridge.Int64(456)).ToString()
+	// Call the method with a Go object as a parameter.
+	if runtime.GOOS == "android" { // Android and iOS have different method signatures.
+		str = brg.Call("callWithGoValues", bridge.Interface("Ame")).ToInterface().(string)
 	} else {
-		str = bridge.Bridge("gomatcha.io/matcha/example").Call("callWithGoValues:", bridge.Interface(123)).ToInterface().(string)
-		str2 = bridge.Bridge("gomatcha.io/matcha/example").Call("callWithForeignValues:", bridge.Int64(456)).ToString()
+		str = brg.Call("callWithGoValues:", bridge.Interface("Ame")).ToInterface().(string)
 	}
 
-	chl1 := view.NewTextView()
-	chl1.String = str
-	g1 := l.Add(chl1, func(s *constraint.Solver) {
-		s.TopEqual(l.Top().Add(50))
-		s.LeftEqual(l.Left())
+	label := view.NewTextView()
+	label.String = "Calling a objc/java method from Go, passing Go values:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g := l.Add(label, func(s *constraint.Solver) {
+		s.Top(50)
+		s.Left(15)
+		s.Right(-15)
 	})
 
-	chl2 := view.NewTextView()
-	chl2.String = str2
-	_ = l.Add(chl2, func(s *constraint.Solver) {
-		s.TopEqual(g1.Bottom())
-		s.LeftEqual(g1.Left())
+	label = view.NewTextView()
+	label.String = str
+	label.Style.SetFont(text.DefaultFont(15))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	// Call the method with a foreign(objc/java) object as a parameter.
+	if runtime.GOOS == "android" {
+		str = brg.Call("callWithForeignValues", bridge.String("Yuki")).ToString()
+	} else {
+		str = brg.Call("callWithForeignValues:", bridge.String("Yuki")).ToString()
+	}
+
+	label = view.NewTextView()
+	label.String = "Calling a objc/java method from Go, passing objc/java values:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Right(-15)
+	})
+
+	label = view.NewTextView()
+	label.String = str
+	label.Style.SetFont(text.DefaultFont(15))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	// Call foreign function, which in turn calls the `gomatcha.io/matcha/examples/bridge callWithForeignValues` function we registered in init().
+	if runtime.GOOS == "android" {
+		str = brg.Call("callGoFunctionWithForeignValues").ToString()
+	} else {
+		str = brg.Call("callGoFunctionWithForeignValues").ToString()
+	}
+
+	label = view.NewTextView()
+	label.String = "Calling a Go function from objc/java code, passing objc/java values:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Right(-15)
+	})
+
+	label = view.NewTextView()
+	label.String = str
+	label.Style.SetFont(text.DefaultFont(15))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	// Call foreign function, which in turn calls the `gomatcha.io/matcha/examples/bridge callWithGoValues` function we registered in init().
+	if runtime.GOOS == "android" {
+		str = brg.Call("callGoFunctionWithGoValues").ToString()
+	} else {
+		str = brg.Call("callGoFunctionWithGoValues").ToString()
+	}
+
+	label = view.NewTextView()
+	label.String = "Calling a Go function from objc/java code, passing Go values:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.Right(-15)
+	})
+
+	label = view.NewTextView()
+	label.String = str
+	label.Style.SetFont(text.DefaultFont(15))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 	})
 
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
-		Painter:  &paint.Style{BackgroundColor: colornames.Green},
+		Painter:  &paint.Style{BackgroundColor: colornames.White},
 	}
 }

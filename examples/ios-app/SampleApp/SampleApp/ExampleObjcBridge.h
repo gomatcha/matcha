@@ -2,8 +2,8 @@
 #import <MatchaBridge/MatchaBridge.h>
 #import <Matcha/Matcha.h>
 
-// Bridging with Go example
+// Bridging with Go example. See examples/bridge/bridgeexample.go
 @interface ObjcBridge : NSObject
 - (MatchaGoValue *)callWithGoValues:(MatchaGoValue *)param;
-- (NSString *)callWithForeignValues:(long long)param;
+- (NSString *)callWithForeignValues:(NSString *)param;
 @end

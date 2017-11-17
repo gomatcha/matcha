@@ -232,7 +232,10 @@ func (g *Guide) CenterY() *Anchor {
 
 // Solve immediately calls solveFunc to update the constraints for g.
 func (g *Guide) Solve(solveFunc func(*Solver)) {
-	s := &Solver{index: g.index}
+	s := &Solver{
+		index:  g.index,
+		system: g.system,
+	}
 	if solveFunc != nil {
 		solveFunc(s)
 	}
@@ -252,7 +255,10 @@ func (g *Guide) add(v view.View, solveFunc func(*Solver)) *Guide {
 		system:      g.system,
 		matchaGuide: nil,
 	}
-	s := &Solver{index: chl.index}
+	s := &Solver{
+		index:  chl.index,
+		system: g.system,
+	}
 	if solveFunc != nil {
 		solveFunc(s)
 	}
@@ -299,6 +305,7 @@ type Solver struct {
 	debug       bool
 	index       int
 	constraints []constraint
+	system      *Layouter
 }
 
 func (s *Solver) solve(sys *Layouter, ctx layout.Context) *solution {
@@ -449,7 +456,7 @@ func (s *Solver) Debug() {
 }
 
 func (s *Solver) Top(v float64) {
-	s.TopEqual(Const(v))
+	s.TopEqual(s.system.Top().Add(v))
 }
 
 func (s *Solver) TopEqual(a *Anchor) {
@@ -465,7 +472,7 @@ func (s *Solver) TopGreater(a *Anchor) {
 }
 
 func (s *Solver) Right(v float64) {
-	s.RightEqual(Const(v))
+	s.RightEqual(s.system.Right().Add(v))
 }
 
 func (s *Solver) RightEqual(a *Anchor) {
@@ -481,7 +488,7 @@ func (s *Solver) RightGreater(a *Anchor) {
 }
 
 func (s *Solver) Bottom(v float64) {
-	s.BottomEqual(Const(v))
+	s.BottomEqual(s.system.Bottom().Add(v))
 }
 
 func (s *Solver) BottomEqual(a *Anchor) {
@@ -497,7 +504,7 @@ func (s *Solver) BottomGreater(a *Anchor) {
 }
 
 func (s *Solver) Left(v float64) {
-	s.LeftEqual(Const(v))
+	s.LeftEqual(s.system.Left().Add(v))
 }
 
 func (s *Solver) LeftEqual(a *Anchor) {
@@ -545,7 +552,7 @@ func (s *Solver) HeightGreater(a *Anchor) {
 }
 
 func (s *Solver) CenterX(v float64) {
-	s.CenterXEqual(Const(v))
+	s.CenterXEqual(s.system.CenterX().Add(v))
 }
 
 func (s *Solver) CenterXEqual(a *Anchor) {
@@ -561,7 +568,7 @@ func (s *Solver) CenterXGreater(a *Anchor) {
 }
 
 func (s *Solver) CenterY(v float64) {
-	s.CenterYEqual(Const(v))
+	s.CenterYEqual(s.system.CenterY().Add(v))
 }
 
 func (s *Solver) CenterYEqual(a *Anchor) {

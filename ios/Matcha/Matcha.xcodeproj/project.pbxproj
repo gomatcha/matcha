@@ -391,6 +391,8 @@
 			children = (
 				67DFD47E1FBEA405002B1825 /* UIImage+Tint.h */,
 				67DFD47F1FBEA406002B1825 /* UIImage+Tint.m */,
+				673181A41F14667900E1839E /* UITextView+Placeholder.h */,
+				673181A51F14667900E1839E /* UITextView+Placeholder.m */,
 				67FEBAF11F09A18F005AFEDA /* MatchaDeadlockLogger.h */,
 				67FEBAF01F09A18F005AFEDA /* MatchaDeadlockLogger.m */,
 				67FEBAF71F09A18F005AFEDA /* MatchaBridge.h */,
@@ -557,8 +559,6 @@
 			children = (
 				67FEBAD91F09A18F005AFEDA /* MatchaTextInput.h */,
 				67FEBAD81F09A18F005AFEDA /* MatchaTextInput.m */,
-				673181A41F14667900E1839E /* UITextView+Placeholder.h */,
-				673181A51F14667900E1839E /* UITextView+Placeholder.m */,
 			);
 			name = TextInput;
 			sourceTree = "<group>";
