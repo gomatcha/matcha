@@ -61,7 +61,7 @@ func NewTabApp() *TabApp {
 	view4.SelectedIcon = application.MustLoadImage("tab_camera_filled")
 
 	app.tabs.SetViews(view1, view2, view3, view4)
-	app.tabs.SetSelectedIndex(1)
+	app.tabs.SetSelectedIndex(3)
 	return app
 }
 
