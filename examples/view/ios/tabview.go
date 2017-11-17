@@ -30,6 +30,8 @@ type TabApp struct {
 	unselectedTint     color.Color
 	titleStyle         *text.Style
 	selectedTitleStyle *text.Style
+	iconTint           color.Color
+	selectedIconTint   color.Color
 }
 
 func NewTabApp() *TabApp {
@@ -95,6 +97,8 @@ func (v *TabView) Build(ctx view.Context) view.Model {
 	tabview.Tabs = v.app.tabs
 	tabview.TitleStyle = v.app.titleStyle
 	tabview.SelectedTitleStyle = v.app.selectedTitleStyle
+	tabview.IconTint = v.app.iconTint
+	tabview.SelectedIconTint = v.app.selectedIconTint
 	return view.Model{
 		Children: []view.View{tabview},
 	}
@@ -333,9 +337,55 @@ func (v *TabChild) Build(ctx view.Context) view.Model {
 	button.OnPress = func() {
 		if v.app.selectedTitleStyle == nil {
 			v.app.selectedTitleStyle = &text.Style{}
-			v.app.selectedTitleStyle.SetTextColor(colornames.Pink)
+			v.app.selectedTitleStyle.SetTextColor(colornames.Orange)
 		} else {
 			v.app.selectedTitleStyle = nil
+		}
+		v.app.relay.Signal()
+	}
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	label = view.NewTextView()
+	label.String = "Icon tint:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	button = view.NewButton()
+	button.String = "Toggle"
+	button.OnPress = func() {
+		if v.app.iconTint == nil {
+			v.app.iconTint = colornames.Brown
+		} else {
+			v.app.iconTint = nil
+		}
+		v.app.relay.Signal()
+	}
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	label = view.NewTextView()
+	label.String = "Selected icon tint:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	button = view.NewButton()
+	button.String = "Toggle"
+	button.OnPress = func() {
+		if v.app.selectedIconTint == nil {
+			v.app.selectedIconTint = colornames.Orange
+		} else {
+			v.app.selectedIconTint = nil
 		}
 		v.app.relay.Signal()
 	}

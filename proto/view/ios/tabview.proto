@@ -23,6 +23,8 @@ message TabView {
     matcha.Color unselectedColor = 7;
     matcha.text.TextStyle selectedTextStyle = 8;
     matcha.text.TextStyle unselectedTextStyle = 9;
+    matcha.Color iconTint = 10;
+    matcha.Color selectedIconTint = 11;
 }
 
 message TabEvent {

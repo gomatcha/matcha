@@ -3,6 +3,7 @@
 #import "MatchaProtobuf.h"
 #import "MatchaViewController.h"
 #import "MatchaView_Private.h"
+#import "UIImage+Tint.h"
 
 @implementation MatchaTabView
 
@@ -43,7 +44,13 @@
         }
         vc.tabBarItem.badgeValue = i.badge.length == 0 ? nil : i.badge;
         vc.tabBarItem.image = [[UIImage alloc] initWithImageOrResourceProtobuf:i.icon];
+        if (pbTabNavigator.hasIconTint) {
+            vc.tabBarItem.image = [[vc.tabBarItem.image imageTintedWithColor:[[UIColor alloc] initWithProtobuf:pbTabNavigator.iconTint]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        }
         vc.tabBarItem.selectedImage = [[UIImage alloc] initWithImageOrResourceProtobuf:i.selectedIcon];
+        if (pbTabNavigator.hasSelectedIconTint) {
+            vc.tabBarItem.selectedImage = [[vc.tabBarItem.selectedImage imageTintedWithColor:[[UIColor alloc] initWithProtobuf:pbTabNavigator.selectedIconTint]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        }
         
         if (idx == (int)pbTabNavigator.selectedIndex) {
             NSDictionary *attributes = nil;

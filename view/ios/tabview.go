@@ -72,9 +72,9 @@ type TabView struct {
 	SelectedTint       color.Color
 	TitleStyle         *text.Style
 	SelectedTitleStyle *text.Style
-	// IconTint           color.Color
-	// SelectedIconTint   color.Color
-	views []view.View
+	IconTint           color.Color
+	SelectedIconTint   color.Color
+	views              []view.View
 }
 
 // NewTabView returns a new view.
@@ -182,6 +182,8 @@ func (v *TabView) Build(ctx view.Context) view.Model {
 			UnselectedColor:     pb.ColorEncode(v.Tint),
 			SelectedTextStyle:   selectedTitleStyle,
 			UnselectedTextStyle: unselectedTitleStyle,
+			IconTint:            pb.ColorEncode(v.IconTint),
+			SelectedIconTint:    pb.ColorEncode(v.SelectedIconTint),
 		}),
 		NativeFuncs: map[string]interface{}{
 			"OnSelect": func(data []byte) {

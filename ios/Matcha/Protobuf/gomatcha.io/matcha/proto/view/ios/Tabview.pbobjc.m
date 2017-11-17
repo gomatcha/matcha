@@ -137,6 +137,8 @@ typedef struct MatchaiOSPBTabChildView__storage_ {
 @dynamic hasUnselectedColor, unselectedColor;
 @dynamic hasSelectedTextStyle, selectedTextStyle;
 @dynamic hasUnselectedTextStyle, unselectedTextStyle;
+@dynamic hasIconTint, iconTint;
+@dynamic hasSelectedIconTint, selectedIconTint;
 
 typedef struct MatchaiOSPBTabView__storage_ {
   uint32_t _has_storage_[1];
@@ -146,6 +148,8 @@ typedef struct MatchaiOSPBTabView__storage_ {
   MatchaPBColor *unselectedColor;
   MatchaPBTextStyle *selectedTextStyle;
   MatchaPBTextStyle *unselectedTextStyle;
+  MatchaPBColor *iconTint;
+  MatchaPBColor *selectedIconTint;
   int64_t selectedIndex;
 } MatchaiOSPBTabView__storage_;
 
@@ -218,6 +222,24 @@ typedef struct MatchaiOSPBTabView__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "iconTint",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
+        .number = MatchaiOSPBTabView_FieldNumber_IconTint,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(MatchaiOSPBTabView__storage_, iconTint),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "selectedIconTint",
+        .dataTypeSpecific.className = GPBStringifySymbol(MatchaPBColor),
+        .number = MatchaiOSPBTabView_FieldNumber_SelectedIconTint,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(MatchaiOSPBTabView__storage_, selectedIconTint),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[MatchaiOSPBTabView class]
@@ -229,7 +251,7 @@ typedef struct MatchaiOSPBTabView__storage_ {
                                          flags:GPBDescriptorInitializationFlag_None];
 #if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     static const char *extraTextFormatInfo =
-        "\006\002\r\000\003\010\000\006\r\000\007\017\000\010\021\000\t\023\000";
+        "\010\002\r\000\003\010\000\006\r\000\007\017\000\010\021\000\t\023\000\n\010\000\013\020\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");

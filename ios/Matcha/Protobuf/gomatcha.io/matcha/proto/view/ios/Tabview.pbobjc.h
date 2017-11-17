@@ -84,6 +84,8 @@ typedef GPB_ENUM(MatchaiOSPBTabView_FieldNumber) {
   MatchaiOSPBTabView_FieldNumber_UnselectedColor = 7,
   MatchaiOSPBTabView_FieldNumber_SelectedTextStyle = 8,
   MatchaiOSPBTabView_FieldNumber_UnselectedTextStyle = 9,
+  MatchaiOSPBTabView_FieldNumber_IconTint = 10,
+  MatchaiOSPBTabView_FieldNumber_SelectedIconTint = 11,
 };
 
 @interface MatchaiOSPBTabView : GPBMessage
@@ -113,6 +115,14 @@ typedef GPB_ENUM(MatchaiOSPBTabView_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) MatchaPBTextStyle *unselectedTextStyle;
 /** Test to see if @c unselectedTextStyle has been set. */
 @property(nonatomic, readwrite) BOOL hasUnselectedTextStyle;
+
+@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *iconTint;
+/** Test to see if @c iconTint has been set. */
+@property(nonatomic, readwrite) BOOL hasIconTint;
+
+@property(nonatomic, readwrite, strong, null_resettable) MatchaPBColor *selectedIconTint;
+/** Test to see if @c selectedIconTint has been set. */
+@property(nonatomic, readwrite) BOOL hasSelectedIconTint;
 
 @end
 
