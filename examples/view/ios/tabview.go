@@ -24,10 +24,12 @@ func init() {
 type TabApp struct {
 	tabs *ios.Tabs
 
-	relay           *comm.Relay
-	barColor        color.Color
-	selectedColor   color.Color
-	unselectedColor color.Color
+	relay              *comm.Relay
+	barColor           color.Color
+	selectedTint       color.Color
+	unselectedTint     color.Color
+	titleStyle         *text.Style
+	selectedTitleStyle *text.Style
 }
 
 func NewTabApp() *TabApp {
@@ -61,7 +63,7 @@ func NewTabApp() *TabApp {
 	view4.SelectedIcon = application.MustLoadImage("tab_camera_filled")
 
 	app.tabs.SetViews(view1, view2, view3, view4)
-	app.tabs.SetSelectedIndex(3)
+	app.tabs.SetSelectedIndex(2)
 	return app
 }
 
@@ -88,9 +90,11 @@ func (v *TabView) Lifecycle(from, to view.Stage) {
 func (v *TabView) Build(ctx view.Context) view.Model {
 	tabview := ios.NewTabView()
 	tabview.BarColor = v.app.barColor
-	tabview.SelectedColor = v.app.selectedColor
-	tabview.UnselectedColor = v.app.unselectedColor
+	tabview.Tint = v.app.unselectedTint
+	tabview.SelectedTint = v.app.selectedTint
 	tabview.Tabs = v.app.tabs
+	tabview.TitleStyle = v.app.titleStyle
+	tabview.SelectedTitleStyle = v.app.selectedTitleStyle
 	return view.Model{
 		Children: []view.View{tabview},
 	}
@@ -247,7 +251,7 @@ func (v *TabChild) Build(ctx view.Context) view.Model {
 	})
 
 	label = view.NewTextView()
-	label.String = "Selected color:"
+	label.String = "Tint:"
 	label.Style.SetFont(text.DefaultFont(18))
 	g = l.Add(label, func(s *constraint.Solver) {
 		s.TopEqual(g.Bottom())
@@ -257,10 +261,10 @@ func (v *TabChild) Build(ctx view.Context) view.Model {
 	button = view.NewButton()
 	button.String = "Toggle"
 	button.OnPress = func() {
-		if v.app.selectedColor == nil {
-			v.app.selectedColor = colornames.Red
+		if v.app.unselectedTint == nil {
+			v.app.unselectedTint = colornames.Green
 		} else {
-			v.app.selectedColor = nil
+			v.app.unselectedTint = nil
 		}
 		v.app.relay.Signal()
 	}
@@ -270,7 +274,7 @@ func (v *TabChild) Build(ctx view.Context) view.Model {
 	})
 
 	label = view.NewTextView()
-	label.String = "Unselected color:"
+	label.String = "Selected tint:"
 	label.Style.SetFont(text.DefaultFont(18))
 	g = l.Add(label, func(s *constraint.Solver) {
 		s.TopEqual(g.Bottom())
@@ -280,10 +284,58 @@ func (v *TabChild) Build(ctx view.Context) view.Model {
 	button = view.NewButton()
 	button.String = "Toggle"
 	button.OnPress = func() {
-		if v.app.unselectedColor == nil {
-			v.app.unselectedColor = colornames.Green
+		if v.app.selectedTint == nil {
+			v.app.selectedTint = colornames.Red
 		} else {
-			v.app.unselectedColor = nil
+			v.app.selectedTint = nil
+		}
+		v.app.relay.Signal()
+	}
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	label = view.NewTextView()
+	label.String = "Title style:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.Top(50)
+		s.CenterXEqual(l.CenterX().Add(15))
+	})
+
+	button = view.NewButton()
+	button.String = "Toggle"
+	button.OnPress = func() {
+		if v.app.titleStyle == nil {
+			v.app.titleStyle = &text.Style{}
+			v.app.titleStyle.SetTextColor(colornames.Brown)
+		} else {
+			v.app.titleStyle = nil
+		}
+		v.app.relay.Signal()
+	}
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	label = view.NewTextView()
+	label.String = "Selected title style:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	button = view.NewButton()
+	button.String = "Toggle"
+	button.OnPress = func() {
+		if v.app.selectedTitleStyle == nil {
+			v.app.selectedTitleStyle = &text.Style{}
+			v.app.selectedTitleStyle.SetTextColor(colornames.Pink)
+		} else {
+			v.app.selectedTitleStyle = nil
 		}
 		v.app.relay.Signal()
 	}

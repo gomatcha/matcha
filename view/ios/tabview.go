@@ -66,13 +66,14 @@ func (s *Tabs) Unnotify(id comm.Id) {
 
 type TabView struct {
 	view.Embed
-	Tabs                *Tabs
-	BarColor            color.Color
-	SelectedTextStyle   *text.Style
-	UnselectedTextStyle *text.Style
-	SelectedColor       color.Color
-	UnselectedColor     color.Color
-
+	Tabs               *Tabs
+	BarColor           color.Color
+	Tint               color.Color
+	SelectedTint       color.Color
+	TitleStyle         *text.Style
+	SelectedTitleStyle *text.Style
+	// IconTint           color.Color
+	// SelectedIconTint   color.Color
 	views []view.View
 }
 
@@ -159,14 +160,14 @@ func (v *TabView) Build(ctx view.Context) view.Model {
 		})
 	}
 
-	var selectedTextStyle *pbtext.TextStyle
-	if v.SelectedTextStyle != nil {
-		selectedTextStyle = v.SelectedTextStyle.MarshalProtobuf()
+	var selectedTitleStyle *pbtext.TextStyle
+	if v.SelectedTitleStyle != nil {
+		selectedTitleStyle = v.SelectedTitleStyle.MarshalProtobuf()
 	}
 
-	var unselectedTextStyle *pbtext.TextStyle
-	if v.UnselectedTextStyle != nil {
-		unselectedTextStyle = v.UnselectedTextStyle.MarshalProtobuf()
+	var unselectedTitleStyle *pbtext.TextStyle
+	if v.TitleStyle != nil {
+		unselectedTitleStyle = v.TitleStyle.MarshalProtobuf()
 	}
 
 	return view.Model{
@@ -177,10 +178,10 @@ func (v *TabView) Build(ctx view.Context) view.Model {
 			Screens:             childrenPb,
 			SelectedIndex:       int64(v.Tabs.SelectedIndex()),
 			BarColor:            pb.ColorEncode(v.BarColor),
-			SelectedColor:       pb.ColorEncode(v.SelectedColor),
-			UnselectedColor:     pb.ColorEncode(v.UnselectedColor),
-			SelectedTextStyle:   selectedTextStyle,
-			UnselectedTextStyle: unselectedTextStyle,
+			SelectedColor:       pb.ColorEncode(v.SelectedTint),
+			UnselectedColor:     pb.ColorEncode(v.Tint),
+			SelectedTextStyle:   selectedTitleStyle,
+			UnselectedTextStyle: unselectedTitleStyle,
 		}),
 		NativeFuncs: map[string]interface{}{
 			"OnSelect": func(data []byte) {
@@ -203,6 +204,13 @@ type TabButton struct {
 	Icon         image.Image
 	SelectedIcon image.Image
 	Badge        string
+	// TitleStyle         *text.Style
+	// SelectedTitleStyle *text.Style
+	// IconTint           color.Color
+	// SelectedIconTint   color.Color
+	// TintsIcon          bool
+	// BadgeColor         color.Color
+	// BadgeStyle         *text.Style
 }
 
 func (t *TabButton) OptionKey() string {

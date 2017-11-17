@@ -30,13 +30,6 @@
     if ([self.tabBar respondsToSelector:@selector(unselectedItemTintColor)]) {
         self.tabBar.unselectedItemTintColor = pbTabNavigator.hasUnselectedColor ? [[UIColor alloc] initWithProtobuf:pbTabNavigator.unselectedColor] : nil; // TODO(KD): iOS 10.10 only
     }
-    if (pbTabNavigator.hasUnselectedTextStyle) {
-        [[UITabBarItem appearance] setTitleTextAttributes:[NSAttributedString attributesWithProtobuf:pbTabNavigator.unselectedTextStyle] forState:UIControlStateNormal];
-    }
-    if (pbTabNavigator.hasSelectedTextStyle) {
-        [[UITabBarItem appearance] setTitleTextAttributes:[NSAttributedString attributesWithProtobuf:pbTabNavigator.selectedTextStyle] forState:UIControlStateSelected];
-    }
-
     
     NSMutableArray *viewControllers = [NSMutableArray array];
     for (NSInteger idx = 0; idx < pbTabNavigator.screensArray.count; idx++) {
@@ -51,6 +44,21 @@
         vc.tabBarItem.badgeValue = i.badge.length == 0 ? nil : i.badge;
         vc.tabBarItem.image = [[UIImage alloc] initWithImageOrResourceProtobuf:i.icon];
         vc.tabBarItem.selectedImage = [[UIImage alloc] initWithImageOrResourceProtobuf:i.selectedIcon];
+        
+        if (idx == (int)pbTabNavigator.selectedIndex) {
+            NSDictionary *attributes = nil;
+            if (pbTabNavigator.hasSelectedTextStyle) {
+                attributes = [NSAttributedString attributesWithProtobuf:pbTabNavigator.selectedTextStyle];
+            }
+            [vc.tabBarItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
+        } else {
+            NSDictionary *attributes = nil;
+            if (pbTabNavigator.hasUnselectedTextStyle) {
+                attributes = [NSAttributedString attributesWithProtobuf:pbTabNavigator.unselectedTextStyle];
+            }
+            [vc.tabBarItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
+        }
+        
         [viewControllers addObject:vc];
     }
     
