@@ -91,11 +91,7 @@ func (v *BridgeView) Build(ctx view.Context) view.Model {
 	})
 
 	// Call foreign function, which in turn calls the `gomatcha.io/matcha/examples/bridge callWithForeignValues` function we registered in init().
-	if runtime.GOOS == "android" {
-		str = brg.Call("callGoFunctionWithForeignValues").ToString()
-	} else {
-		str = brg.Call("callGoFunctionWithForeignValues").ToString()
-	}
+	str = brg.Call("callGoFunctionWithForeignValues").ToString()
 
 	label = view.NewTextView()
 	label.String = "Calling a Go function from objc/java code, passing objc/java values:"
@@ -115,11 +111,7 @@ func (v *BridgeView) Build(ctx view.Context) view.Model {
 	})
 
 	// Call foreign function, which in turn calls the `gomatcha.io/matcha/examples/bridge callWithGoValues` function we registered in init().
-	if runtime.GOOS == "android" {
-		str = brg.Call("callGoFunctionWithGoValues").ToString()
-	} else {
-		str = brg.Call("callGoFunctionWithGoValues").ToString()
-	}
+	str = brg.Call("callGoFunctionWithGoValues").ToString()
 
 	label = view.NewTextView()
 	label.String = "Calling a Go function from objc/java code, passing Go values:"

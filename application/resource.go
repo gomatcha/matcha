@@ -2,6 +2,7 @@ package application
 
 import (
 	"bytes"
+	"fmt"
 	"image"
 	"image/color"
 	"runtime"
@@ -68,11 +69,11 @@ func LoadImage(path string) (*ImageResource, error) {
 	}, nil
 }
 
-// MustLoadImage loads the image at path, or panics on error.
+// MustLoadImage loads the image at path, or prints an error.
 func MustLoadImage(path string) *ImageResource {
 	res, err := LoadImage(path)
 	if err != nil {
-		panic(err.Error())
+		fmt.Println(err.Error())
 	}
 	return res
 }

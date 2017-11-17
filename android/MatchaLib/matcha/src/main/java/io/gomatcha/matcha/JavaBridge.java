@@ -48,7 +48,7 @@ class JavaBridge {
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
 
-    static synchronized void init(Context ctx) {
+    static synchronized void configure(Context ctx) {
         if (context != null) {
             return;
         }
@@ -138,6 +138,7 @@ class JavaBridge {
     }
 
     public GoValue getPropertiesForResource(String path) {
+        Log.v("x", path);
         Resources res = context.getResources();
         int id = res.getIdentifier(path, "drawable", context.getPackageName());
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import io.gomatcha.bridge.GoValue;
+import io.gomatcha.matcha.Matcha;
 import io.gomatcha.matcha.MatchaView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         if (view == null) {
+            Matcha.configure(this);
+
             GoValue rootView = GoValue.withFunc("gomatcha.io/matcha/examples NewExamplesView").call("")[0];
             view = new MatchaView(this, rootView);
         }

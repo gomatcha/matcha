@@ -6,20 +6,24 @@ import io.gomatcha.bridge.GoValue;
 public class ExampleJavaBridge {
     static {
         ExampleJavaBridge b = new ExampleJavaBridge();
-        Bridge.singleton().put("gomatcha.io/matcha/example", b);
-
-        GoValue func1 = GoValue.withFunc("gomatcha.io/matcha/examples/bridge callWithGoValues");
-        String str1 = func1.call("", new GoValue(123L))[0].toString();
-
-        GoValue func2 = GoValue.withFunc("gomatcha.io/matcha/examples/bridge callWithForeignValues");
-        String str2 = (String)func2.call("", new GoValue(Long.valueOf(123)))[0].toObject();
+        Bridge.singleton().put("gomatcha.io/matcha/example/bridge", b);
     }
 
-    public String callWithForeignValues(Long param) {
-        return String.format("Hello %d", param);
+    public String callWithForeignValues(String param) {
+        return String.format("Hello %s", param);
     }
 
     public GoValue callWithGoValues(GoValue param) {
-        return new GoValue(String.format("Hello %d", param.toLong()));
+        return new GoValue(String.format("Hello %s", param.toString()));
+    }
+
+    public String callGoFunctionWithForeignValues() {
+        GoValue func = GoValue.withFunc("gomatcha.io/matcha/examples/bridge callWithForeignValues");
+        return (String)func.call("", GoValue.WithObject("Ame"))[0].toObject();
+    }
+
+    public String callGoFunctionWithGoValues() {
+        GoValue func = GoValue.withFunc("gomatcha.io/matcha/examples/bridge callWithGoValues");
+        return func.call("", GoValue.WithString("Yuki"))[0].toString();
     }
 }

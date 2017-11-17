@@ -42,7 +42,7 @@ public class MatchaView extends RelativeLayout {
         setFocusableInTouchMode(true);
 
         // Initialize JavaBridge
-        JavaBridge.init(context);
+        JavaBridge.configure(context);
         JavaBridge.viewMap.put(identifier, new WeakReference<MatchaView>(this));
     }
 
