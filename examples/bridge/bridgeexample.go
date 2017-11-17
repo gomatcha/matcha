@@ -38,11 +38,11 @@ func NewBridgeView() *BridgeView {
 func (v *BridgeView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	// Get the corresponding native bridge object. See ExampleObjcBridge.m and ExampleJavaBridge.java.
+	// Get the corresponding bridge object. See ExampleObjcBridge.m and ExampleJavaBridge.java.
 	brg := bridge.Bridge("gomatcha.io/matcha/example/bridge")
 
 	var str string
-	// Call the method with a Go object as a parameter.
+	// Call the objc/java method with a Go object as a parameter.
 	if runtime.GOOS == "android" { // Android and iOS have different method signatures.
 		str = brg.Call("callWithGoValues", bridge.Interface("Ame")).ToInterface().(string)
 	} else {
@@ -66,7 +66,7 @@ func (v *BridgeView) Build(ctx view.Context) view.Model {
 		s.LeftEqual(g.Left())
 	})
 
-	// Call the method with a foreign(objc/java) object as a parameter.
+	// Call the objc/java method with a objc/java object as a parameter.
 	if runtime.GOOS == "android" {
 		str = brg.Call("callWithForeignValues", bridge.String("Yuki")).ToString()
 	} else {
@@ -90,7 +90,7 @@ func (v *BridgeView) Build(ctx view.Context) view.Model {
 		s.LeftEqual(g.Left())
 	})
 
-	// Call foreign function, which in turn calls the `gomatcha.io/matcha/examples/bridge callWithForeignValues` function we registered in init().
+	// Call objc/java function, which in turn calls the `gomatcha.io/matcha/examples/bridge callWithForeignValues` function we registered in init().
 	str = brg.Call("callGoFunctionWithForeignValues").ToString()
 
 	label = view.NewTextView()
@@ -110,7 +110,7 @@ func (v *BridgeView) Build(ctx view.Context) view.Model {
 		s.LeftEqual(g.Left())
 	})
 
-	// Call foreign function, which in turn calls the `gomatcha.io/matcha/examples/bridge callWithGoValues` function we registered in init().
+	// Call objc/java function, which in turn calls the `gomatcha.io/matcha/examples/bridge callWithGoValues` function we registered in init().
 	str = brg.Call("callGoFunctionWithGoValues").ToString()
 
 	label = view.NewTextView()
