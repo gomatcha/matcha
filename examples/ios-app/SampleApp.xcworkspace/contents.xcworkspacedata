@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:SampleApp/SampleApp.xcodeproj">
+      location = "group:/Users/Overcyn/Workspace/go/src/gomatcha.io/matcha/examples/ios-app/SampleApp/MatchaExample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:../../ios/Matcha/Matcha.xcodeproj">

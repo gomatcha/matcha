@@ -44,7 +44,7 @@
 		6732FA121F6B11CA002DC2EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6732FAA11F7972FE002DC2EF /* ExampleObjcBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleObjcBridge.h; sourceTree = "<group>"; };
 		6732FAA21F7972FE002DC2EF /* ExampleObjcBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleObjcBridge.m; sourceTree = "<group>"; };
-		67FEBB4B1F0A246C005AFEDA /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		67FEBB4B1F0A246C005AFEDA /* Matcha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matcha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67FEBB4F1F0A246C005AFEDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		67FEBB511F0A246C005AFEDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		67FEBB521F0A246C005AFEDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -73,7 +73,7 @@
 		67FEBB421F0A246C005AFEDA = {
 			isa = PBXGroup;
 			children = (
-				67FEBB4D1F0A246C005AFEDA /* SampleApp */,
+				67FEBB4D1F0A246C005AFEDA /* MatchaExample */,
 				67FEBB4C1F0A246C005AFEDA /* Products */,
 				67FEBB6B1F0A280D005AFEDA /* Frameworks */,
 			);
@@ -82,12 +82,12 @@
 		67FEBB4C1F0A246C005AFEDA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				67FEBB4B1F0A246C005AFEDA /* SampleApp.app */,
+				67FEBB4B1F0A246C005AFEDA /* Matcha.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		67FEBB4D1F0A246C005AFEDA /* SampleApp */ = {
+		67FEBB4D1F0A246C005AFEDA /* MatchaExample */ = {
 			isa = PBXGroup;
 			children = (
 				6732FA121F6B11CA002DC2EF /* Assets.xcassets */,
@@ -99,7 +99,7 @@
 				67FEBB5F1F0A246C005AFEDA /* Info.plist */,
 				67FEBB4E1F0A246C005AFEDA /* Supporting Files */,
 			);
-			path = SampleApp;
+			path = MatchaExample;
 			sourceTree = "<group>";
 		};
 		67FEBB4E1F0A246C005AFEDA /* Supporting Files */ = {
@@ -124,9 +124,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		67FEBB4A1F0A246C005AFEDA /* SampleApp */ = {
+		67FEBB4A1F0A246C005AFEDA /* MatchaExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 67FEBB621F0A246C005AFEDA /* Build configuration list for PBXNativeTarget "SampleApp" */;
+			buildConfigurationList = 67FEBB621F0A246C005AFEDA /* Build configuration list for PBXNativeTarget "MatchaExample" */;
 			buildPhases = (
 				67FEBB471F0A246C005AFEDA /* Sources */,
 				67FEBB481F0A246C005AFEDA /* Frameworks */,
@@ -137,9 +137,9 @@
 			);
 			dependencies = (
 			);
-			name = SampleApp;
+			name = MatchaExample;
 			productName = SampleApp;
-			productReference = 67FEBB4B1F0A246C005AFEDA /* SampleApp.app */;
+			productReference = 67FEBB4B1F0A246C005AFEDA /* Matcha.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -158,7 +158,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 67FEBB461F0A246C005AFEDA /* Build configuration list for PBXProject "SampleApp" */;
+			buildConfigurationList = 67FEBB461F0A246C005AFEDA /* Build configuration list for PBXProject "MatchaExample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -171,7 +171,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				67FEBB4A1F0A246C005AFEDA /* SampleApp */,
+				67FEBB4A1F0A246C005AFEDA /* MatchaExample */,
 			);
 		};
 /* End PBXProject section */
@@ -323,10 +323,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = SD456Y97K5;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = SampleApp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/MatchaExample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.gomatcha.SampleApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.gomatcha.MatchaExample;
+				PRODUCT_NAME = Matcha;
 			};
 			name = Debug;
 		};
@@ -336,17 +336,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = SD456Y97K5;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = SampleApp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/MatchaExample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.gomatcha.SampleApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.gomatcha.MatchaExample;
+				PRODUCT_NAME = Matcha;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		67FEBB461F0A246C005AFEDA /* Build configuration list for PBXProject "SampleApp" */ = {
+		67FEBB461F0A246C005AFEDA /* Build configuration list for PBXProject "MatchaExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				67FEBB601F0A246C005AFEDA /* Debug */,
@@ -355,7 +355,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		67FEBB621F0A246C005AFEDA /* Build configuration list for PBXNativeTarget "SampleApp" */ = {
+		67FEBB621F0A246C005AFEDA /* Build configuration list for PBXNativeTarget "MatchaExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				67FEBB631F0A246C005AFEDA /* Debug */,
