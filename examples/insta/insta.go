@@ -353,7 +353,7 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 	likeTextView.String = fmt.Sprintf("%v likes", v.LikeCount)
 	likeTextView.Style.SetFont(BoldFont())
 	l.Add(likeTextView, func(s *constraint.Solver) {
-		s.Top(50)
+		s.Top(15)
 		s.LeftEqual(l.Left().Add(13))
 		s.RightEqual(l.Right().Add(-13))
 	})

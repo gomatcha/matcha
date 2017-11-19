@@ -41,7 +41,7 @@ func NewTabApp() *TabApp {
 	}
 
 	view1 := NewTabChild(app)
-	view1.Color = colornames.White
+	view1.Color = colornames.Yellow
 	view1.Title = "Search"
 	view1.Icon = application.MustLoadImage("tab_search")
 	view1.SelectedIcon = application.MustLoadImage("tab_search_filled")
@@ -53,7 +53,7 @@ func NewTabApp() *TabApp {
 	view2.SelectedIcon = application.MustLoadImage("tab_settings_filled")
 
 	view3 := NewTabChild(app)
-	view3.Color = colornames.Yellow
+	view3.Color = colornames.White
 	view3.Title = "Map"
 	view3.Icon = application.MustLoadImage("tab_map")
 	view3.SelectedIcon = application.MustLoadImage("tab_map_filled")
@@ -130,7 +130,7 @@ func (v *TabChild) Build(ctx view.Context) view.Model {
 	label.String = "Current tab:"
 	label.Style.SetFont(text.DefaultFont(18))
 	g := l.Add(label, func(s *constraint.Solver) {
-		s.Top(50)
+		s.Top(15)
 		s.Left(15)
 	})
 
@@ -304,7 +304,7 @@ func (v *TabChild) Build(ctx view.Context) view.Model {
 	label.String = "Title style:"
 	label.Style.SetFont(text.DefaultFont(18))
 	g = l.Add(label, func(s *constraint.Solver) {
-		s.Top(50)
+		s.Top(15)
 		s.CenterXEqual(l.CenterX().Add(15))
 	})
 

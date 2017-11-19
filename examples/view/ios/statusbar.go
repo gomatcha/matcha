@@ -35,7 +35,7 @@ func (v *StatusBarView) Build(ctx view.Context) view.Model {
 	label.String = "Toggle Style:"
 	label.Style.SetFont(text.DefaultFont(18))
 	g := l.Add(label, func(s *constraint.Solver) {
-		s.Top(50)
+		s.Top(15)
 		s.Left(15)
 	})
 
@@ -84,7 +84,7 @@ func (v *StatusBarView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
-		Painter:  &paint.Style{BackgroundColor: colornames.Lightgray},
+		Painter:  &paint.Style{BackgroundColor: colornames.White},
 		Options: []view.Option{
 			&ios.StatusBar{
 				Style:  v.style,

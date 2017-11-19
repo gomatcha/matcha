@@ -8,6 +8,7 @@ import (
 	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/examples/internal"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
@@ -126,7 +127,7 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 	label.String = "Toggle Bar Color:"
 	label.Style.SetFont(text.DefaultFont(18))
 	g := l.Add(label, func(s *constraint.Solver) {
-		s.Top(50)
+		s.Top(15)
 		s.Left(15)
 	})
 
@@ -263,28 +264,34 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 		s.LeftEqual(g.Left())
 	})
 
-	leftIosItem := ios.NewStackBarItem()
-	leftIosItem.Title = "TEST"
-	leftIosItem.TitleStyle, _ = v.app.ItemTitleStyle.Value().(*text.Style)
-	leftIosItem.OnPress = func() {
+	textIosItem := ios.NewStackBarItem()
+	textIosItem.Title = "Back"
+	textIosItem.TitleStyle, _ = v.app.ItemTitleStyle.Value().(*text.Style)
+	textIosItem.OnPress = func() {
 		fmt.Println("Left Item on Press")
+		if internal.BackRelay != nil {
+			internal.BackRelay.Signal()
+		}
 	}
 
-	rightIosItem := ios.NewStackBarItem()
-	rightIosItem.Icon = application.MustLoadImage("checkbox_checked")
-	rightIosItem.IconTint = v.app.ItemIconTint.Value()
-	rightIosItem.OnPress = func() {
+	imageIosItem := ios.NewStackBarItem()
+	imageIosItem.Icon = application.MustLoadImage("checkbox_checked")
+	imageIosItem.IconTint = v.app.ItemIconTint.Value()
+	imageIosItem.OnPress = func() {
 		fmt.Println("Right Item on Press")
 	}
 
 	leftAndroidItem := android.NewStackBarItem()
 	if style, ok := v.app.ItemTitleStyle.Value().(*text.Style); ok {
-		leftAndroidItem.StyledTitle = text.NewStyledText("TEST", style)
+		leftAndroidItem.StyledTitle = text.NewStyledText("Back", style)
 	} else {
-		leftAndroidItem.Title = "TEST"
+		leftAndroidItem.Title = "Back"
 	}
 	leftAndroidItem.OnPress = func() {
 		fmt.Println("Left Item on Press")
+		if internal.BackRelay != nil {
+			internal.BackRelay.Signal()
+		}
 	}
 
 	rightAndroidItem := android.NewStackBarItem()
@@ -300,8 +307,8 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 		Options: []view.Option{
 			&ios.StackBar{
 				Title:      "Title",
-				LeftItems:  []*ios.StackBarItem{leftIosItem},
-				RightItems: []*ios.StackBarItem{rightIosItem},
+				LeftItems:  []*ios.StackBarItem{textIosItem},
+				RightItems: []*ios.StackBarItem{imageIosItem},
 			},
 			&android.StackBar{
 				Title: "Title",

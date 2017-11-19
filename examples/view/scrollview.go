@@ -46,7 +46,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 	label.String = "Position: " + strconv.Itoa(int(v.scrollPosition.X.Value())) + ", " + strconv.Itoa(int(v.scrollPosition.Y.Value()))
 	label.Style.SetFont(text.DefaultFont(18))
 	g := l.Add(label, func(s *constraint.Solver) {
-		s.Top(50)
+		s.Top(15)
 		s.Left(15)
 	})
 
@@ -86,7 +86,7 @@ func (v *ScrollView) Build(ctx view.Context) view.Model {
 	// textView := view.NewTextView()
 	// textView.String = fmt.Sprintln("Scroll Position:", int(v.scrollPosition.X.Value()), int(v.scrollPosition.Y.Value()))
 	// g3 := l.Add(textView, func(s *constraint.Solver) {
-	// 	s.Top(50)
+	// 	s.Top(15)
 	// 	s.LeftEqual(g1.Right())
 	// 	s.RightEqual(l.Right())
 	// })

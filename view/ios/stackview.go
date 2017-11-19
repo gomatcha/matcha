@@ -256,7 +256,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 	}
 	if bar == nil {
 		bar = &StackBar{
-			Title: "Title",
+			Title: "",
 		}
 	}
 

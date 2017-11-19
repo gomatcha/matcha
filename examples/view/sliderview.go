@@ -35,7 +35,7 @@ func (v *SliderView) Build(ctx view.Context) view.Model {
 	label.String = "Enabled Slider:"
 	label.Style.SetFont(text.DefaultFont(18))
 	g := l.Add(label, func(s *constraint.Solver) {
-		s.Top(50)
+		s.Top(15)
 		s.Left(15)
 	})
 

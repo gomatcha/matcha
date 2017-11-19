@@ -3,13 +3,13 @@ package examples
 import (
 	"runtime"
 
-	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/comm"
 	applicationex "gomatcha.io/matcha/examples/application"
 	bridgeex "gomatcha.io/matcha/examples/bridge"
 	"gomatcha.io/matcha/examples/customview"
 	"gomatcha.io/matcha/examples/insta"
+	"gomatcha.io/matcha/examples/internal"
 	layoutex "gomatcha.io/matcha/examples/layout"
 	paintex "gomatcha.io/matcha/examples/paint"
 	"gomatcha.io/matcha/examples/settings"
@@ -28,70 +28,75 @@ import (
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples NewExamplesView", func() view.View {
 		app := NewApp()
-		return NewRootView(app)
+		return NewAppView(app)
 	})
 }
 
-type Section struct {
-	Title    string
-	Examples []*Example
+// Wrapper for the ios.Stack and android.Stack
+type Stack interface {
+	SetViews(vs ...view.View)
+	Views() []view.View
+	Push(vs view.View)
+	Pop()
 }
 
 type Example struct {
 	Title       string
+	PushOnStack bool
 	Description string
 	View        view.View
 }
 
 type App struct {
-	IosStack     *ios.Stack
-	AndroidStack *android.Stack
-	Child        view.View
-	ChildRelay   *comm.Relay
+	Stack Stack
+
+	ChildRelay *comm.Relay
+	Child      view.View
 }
 
 func NewApp() *App {
 	app := &App{
-		AndroidStack: &android.Stack{},
-		IosStack:     &ios.Stack{},
-		ChildRelay:   &comm.Relay{},
+		ChildRelay: &comm.Relay{},
 	}
-	initialView := NewExamplesView(app)
-	app.AndroidStack.SetViews(initialView)
-	app.IosStack.SetViews(initialView)
+	if runtime.GOOS == "android" {
+		app.Stack = &android.Stack{}
+	} else {
+		app.Stack = &ios.Stack{}
+	}
+	v := NewExamplesView(app)
+	app.Stack.SetViews(v)
 	return app
 }
 
-type RootView struct {
+type AppView struct {
 	view.Embed
-	app      *App
-	shakeKey comm.Id
+	app     *App
+	backKey comm.Id
 }
 
-func NewRootView(app *App) *RootView {
-	return &RootView{
+func NewAppView(app *App) *AppView {
+	return &AppView{
 		Embed: view.NewEmbed(app),
 		app:   app,
 	}
 }
 
-func (v *RootView) Lifecycle(from, to view.Stage) {
+func (v *AppView) Lifecycle(from, to view.Stage) {
 	if view.EntersStage(from, to, view.StageMounted) {
-		v.shakeKey = application.ShakeNotifier.Notify(func() {
-			// Pop to root and clear the child, if user shakes the device.
-			v.app.AndroidStack.Pop()
-			v.app.IosStack.Pop()
+		v.backKey = internal.BackRelay.Notify(func() {
+			// Pop to root and clear the child
+			v.app.Stack.Pop()
 			v.app.Child = nil
 			v.app.ChildRelay.Signal()
 		})
 		v.Subscribe(v.app.ChildRelay)
 	} else if view.ExitsStage(from, to, view.StageMounted) {
-		application.ShakeNotifier.Unnotify(v.shakeKey)
+		internal.BackRelay.Unnotify(v.backKey)
 		v.Unsubscribe(v.app.ChildRelay)
 	}
 }
 
-func (v *RootView) Build(ctx view.Context) view.Model {
+func (v *AppView) Build(ctx view.Context) view.Model {
 	// If user has selected an example, display it.
 	if v.app.Child != nil {
 		return view.Model{Children: []view.View{v.app.Child}}
@@ -101,11 +106,11 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 	var stack view.View
 	if runtime.GOOS == "android" {
 		stackview := android.NewStackView()
-		stackview.Stack = v.app.AndroidStack
+		stackview.Stack = v.app.Stack.(*android.Stack)
 		stack = stackview
 	} else {
 		stackview := ios.NewStackView()
-		stackview.Stack = v.app.IosStack
+		stackview.Stack = v.app.Stack.(*ios.Stack)
 		stack = stackview
 	}
 	return view.Model{Children: []view.View{stack}}
@@ -113,104 +118,78 @@ func (v *RootView) Build(ctx view.Context) view.Model {
 
 type ExamplesView struct {
 	view.Embed
-	app      *App
-	sections []Section
+	app *App
 }
 
 func NewExamplesView(app *App) *ExamplesView {
-	sections := []Section{
-		{
-			Title: "Examples",
-			Examples: []*Example{
-				&Example{"Settings", "Example of a settings app.\n\n\ngomatcha.io/matcha/examples/settings", settings.NewRootView()},
-				&Example{"Instagram", "Example of an photo-sharing app.\n\n\ngomatcha.io/matcha/examples/insta", insta.NewRootView()},
-				&Example{"Todo App", "Example of a basic todo app.\n\n\ngomatcha.io/matcha/examples/todo", todo.NewRootView()},
-			},
-		},
-		{
-			Title: "General",
-			Examples: []*Example{
-				// {"animate.NewView", "", animate.NewView()},
-				&Example{"Painters", "Example of various paint options.\n\n\ngomatcha.io/matcha/examples/paint NewPaintView", paintex.NewPaintView()},
-				&Example{"Constraint Layout", "Example of a complex layout using constraints. \n\n\ngomatcha.io/matcha/examples/layout NewConstraintsView", layoutex.NewConstraintsView()},
-				&Example{"Table Layout", "Example of a vertical (bottom to top) table and a horizontal (left to right) table layout. \n\n\ngomatcha.io/matcha/examples/layout NewTableView", layoutex.NewTableView()},
-				&Example{"Native Bridge", "Example of how to call native functions from Go, and Go functions from native code. See gomatcha.io/guide/native-bridge/ for more details. \n\n\ngomatcha.io/matcha/examples/bridge NewBridgeView", bridgeex.NewBridgeView()},
-				&Example{"Custom Views", "Example of creating a custom view, that displays the user's camera. \n\n\ngomatcha.io/matcha/examples/customview NewView", customview.NewView()},
-			},
-		},
-		{
-			Title: "Views",
-			Examples: []*Example{
-				&Example{"Alerts", "Example of how to display alerts. \n\n\ngomatcha.io/matcha/examples/view NewAlertView", viewex.NewAlertView()},
-				&Example{"Button", "Example of an enabled button and a disabled button. \n\n\ngomatcha.io/matcha/examples/view NewButtonView", viewex.NewButtonView()},
-				&Example{"Image View", "Example of various image view properties. \n\n\ngomatcha.io/matcha/examples/view NewImageView", viewex.NewImageView()},
-				&Example{"Scroll View", "Example of a scroll view with a label that tracks the scroll position and a button that scrolls to a point. \n\n\ngomatcha.io/matcha/examples/view NewScrollView", viewex.NewScrollView()},
-				&Example{"Slider", "Example of an enabled sider and a disabled slider that tracks the enabled slider. \n\n\ngomatcha.io/matcha/examples/view NewSliderView", viewex.NewSliderView()},
-				&Example{"Switch", "Example of an enabled switch and a disabled switch that tracks the enabled switch. \n\n\ngomatcha.io/matcha/examples/view NewSwitchView", viewex.NewSwitchView()},
-				&Example{"Text View", "Example of various text view properties. \n\n\ngomatcha.io/matcha/examples/view NewTextView", viewex.NewTextView()},
-				// Text input example
-			},
-		},
-		{
-			Title: "iOS",
-			Examples: []*Example{
-				&Example{"Activity Indicator", "Example of how to show/hide the activity indicator. \n\n\ngomatcha.io/matcha/examples/view/ios NewActivityIndicatorView", iosex.NewActivityIndicatorView()},
-				&Example{"Segment View", "Example of various segment view properties. \n\n\ngomatcha.io/matcha/examples/view/ios NewSegmentView", iosex.NewSegmentView()},
-				&Example{"Status Bar", "Example of how to toggle the status bar style and color. \n\n\ngomatcha.io/matcha/examples/view/ios NewStatusBarView", iosex.NewStatusBarView()},
-				&Example{"Stack View", "Example of various stack view properties. \n\n\ngomatcha.io/matcha/examples/view/ios NewStackView", iosex.NewStackAppView(iosex.NewStackApp())},
-				&Example{"Tab View", "Example of how to use and customize a tab view. \n\n\ngomatcha.io/matcha/examples/view/ios NewTabView", iosex.NewTabView(iosex.NewTabApp())},
-				&Example{"Progress View", "Example of how to use a progress view. \n\n\ngomatcha.io/matcha/examples/view/ios NewProgressView", iosex.NewProgressView()},
-				// &Example{"Navigation", "\n\n\ngomatcha.io/matcha/examples/view/ios NewNavigationView", iosex.NewNavigationView()},
-			},
-		},
-		{
-			Title: "Android",
-			Examples: []*Example{
-				&Example{"Pager View", "\n\n\ngomatcha.io/matcha/examples/view/android NewPagerView", androidex.NewPagerView()},
-				&Example{"Stack View", "\n\n\ngomatcha.io/matcha/examples/view/android NewStackView", androidex.NewStackView()},
-				&Example{"Status Bar", "\n\n\ngomatcha.io/matcha/examples/view/android NewStatusBarView", androidex.NewStatusBarView()},
-			},
-		},
-		{
-			Title: "Miscellaneous",
-			Examples: []*Example{
-				&Example{"Device Orientation", "Example of how to get the current device orientation and listen to orientation changes.\n\n\ngomatcha.io/matcha/examples/application NewOrientationView", applicationex.NewOrientationView()},
-				&Example{"Adding/Removing Views", "\n\n\ngomatcha.io/matcha/examples/view NewAddRemoveView", viewex.NewAddRemoveView()},
-			},
-		},
-	}
-
 	return &ExamplesView{
-		Embed:    view.NewEmbed(app),
-		app:      app,
-		sections: sections,
+		Embed: view.NewEmbed(app),
+		app:   app,
 	}
 }
 
 func (v *ExamplesView) Build(ctx view.Context) view.Model {
 	childLayouter := &table.Layouter{StartEdge: layout.EdgeTop}
 
-	// Add header.
-	header := settings.NewSpacerDescription()
-	header.Description = "Shake the device to return back to this list."
-	childLayouter.Add(header, nil)
+	// Sections
+	sections := map[string][]*Example{
+		"Examples": {
+			{"Settings", false, "Example of a settings app.\n\n\ngomatcha.io/matcha/examples/settings", settings.NewRootView()},
+			{"Instagram", false, "Example of an photo-sharing app.\n\n\ngomatcha.io/matcha/examples/insta", insta.NewRootView()},
+			{"Todo App", false, "Example of a basic todo app.\n\n\ngomatcha.io/matcha/examples/todo", todo.NewRootView()},
+		},
+		"General": {
+			// {"animate.NewView", "", animate.NewView()},
+			{"Painters", true, "Example of various paint options.\n\n\ngomatcha.io/matcha/examples/paint NewPaintView", paintex.NewPaintView()},
+			{"Constraint Layout", true, "Example of a complex layout using constraints. \n\n\ngomatcha.io/matcha/examples/layout NewConstraintsView", layoutex.NewConstraintsView()},
+			{"Table Layout", true, "Example of a vertical (bottom to top) table and a horizontal (left to right) table layout. \n\n\ngomatcha.io/matcha/examples/layout NewTableView", layoutex.NewTableView()},
+			{"Native Bridge", true, "Example of how to call native functions from Go, and Go functions from native code. See gomatcha.io/guide/native-bridge/ for more details. \n\n\ngomatcha.io/matcha/examples/bridge NewBridgeView", bridgeex.NewBridgeView()},
+			{"Custom Views", true, "Example of creating a custom view, that displays the user's camera. \n\n\ngomatcha.io/matcha/examples/customview NewView", customview.NewView()},
+		},
+		"Views": {
+			{"Alerts", true, "Example of how to display alerts. \n\n\ngomatcha.io/matcha/examples/view NewAlertView", viewex.NewAlertView()},
+			{"Button", true, "Example of an enabled button and a disabled button. \n\n\ngomatcha.io/matcha/examples/view NewButtonView", viewex.NewButtonView()},
+			{"Image View", true, "Example of various image view properties. \n\n\ngomatcha.io/matcha/examples/view NewImageView", viewex.NewImageView()},
+			{"Scroll View", true, "Example of a scroll view with a label that tracks the scroll position and a button that scrolls to a point. \n\n\ngomatcha.io/matcha/examples/view NewScrollView", viewex.NewScrollView()},
+			{"Slider", true, "Example of an enabled sider and a disabled slider that tracks the enabled slider. \n\n\ngomatcha.io/matcha/examples/view NewSliderView", viewex.NewSliderView()},
+			{"Switch", true, "Example of an enabled switch and a disabled switch that tracks the enabled switch. \n\n\ngomatcha.io/matcha/examples/view NewSwitchView", viewex.NewSwitchView()},
+			{"Text View", true, "Example of various text view properties. \n\n\ngomatcha.io/matcha/examples/view NewTextView", viewex.NewTextView()},
+			// Text input example
+		},
+		"iOS": {
+			{"Activity Indicator", true, "Example of how to show/hide the activity indicator. \n\n\ngomatcha.io/matcha/examples/view/ios NewActivityIndicatorView", iosex.NewActivityIndicatorView()},
+			{"Segment View", true, "Example of various segment view properties. \n\n\ngomatcha.io/matcha/examples/view/ios NewSegmentView", iosex.NewSegmentView()},
+			{"Status Bar", true, "Example of how to toggle the status bar style and color. \n\n\ngomatcha.io/matcha/examples/view/ios NewStatusBarView", iosex.NewStatusBarView()},
+			{"Stack View", false, "Example of various stack view properties. \n\n\ngomatcha.io/matcha/examples/view/ios NewStackView", iosex.NewStackAppView(iosex.NewStackApp())},
+			{"Tab View", true, "Example of how to use and customize a tab view. \n\n\ngomatcha.io/matcha/examples/view/ios NewTabView", iosex.NewTabView(iosex.NewTabApp())},
+			{"Progress View", true, "Example of how to use a progress view. \n\n\ngomatcha.io/matcha/examples/view/ios NewProgressView", iosex.NewProgressView()},
+			// {"Navigation", "\n\n\ngomatcha.io/matcha/examples/view/ios NewNavigationView", iosex.NewNavigationView()},
+		},
+		"Android": {
+			{"Pager View", true, "\n\n\ngomatcha.io/matcha/examples/view/android NewPagerView", androidex.NewPagerView()},
+			{"Stack View", false, "\n\n\ngomatcha.io/matcha/examples/view/android NewStackView", androidex.NewStackView()},
+			{"Status Bar", true, "\n\n\ngomatcha.io/matcha/examples/view/android NewStatusBarView", androidex.NewStatusBarView()},
+		},
+		"Miscellaneous": {
+			{"Device Orientation", true, "Example of how to get the current device orientation and listen to orientation changes.\n\n\ngomatcha.io/matcha/examples/application NewOrientationView", applicationex.NewOrientationView()},
+			{"Adding/Removing Views", true, "\n\n\ngomatcha.io/matcha/examples/view NewAddRemoveView", viewex.NewAddRemoveView()},
+		},
+	}
 
-	for _, i := range v.sections {
+	for _, i := range []string{"Examples", "General", "Views", "iOS", "Android", "Miscellaneous"} {
 		// Create header for section.
 		header := settings.NewSpacerHeader()
-		header.Title = i.Title
+		header.Title = i
 		childLayouter.Add(header, nil)
 
 		// Create example items for section.
 		items := []view.View{}
-		for _, j := range i.Examples {
+		for _, j := range sections[i] {
 			example := j
 			item := settings.NewBasicCell()
 			item.Title = j.Title
 			item.OnTap = func() {
-				detailView := NewExamplesDetailView(v.app, example)
-				v.app.IosStack.Push(detailView)
-				v.app.AndroidStack.Push(detailView)
+				v.app.Stack.Push(NewExamplesDetailView(v.app, example))
 			}
 			item.Chevron = true
 			items = append(items, item)
@@ -264,8 +243,12 @@ func (v *ExamplesDetailView) Build(ctx view.Context) view.Model {
 	item := settings.NewLargeCell()
 	item.Title = v.example.Title
 	item.OnTap = func() {
-		v.app.Child = v.example.View
-		v.app.ChildRelay.Signal()
+		if v.example.PushOnStack {
+			v.app.Stack.Push(v.example.View)
+		} else {
+			v.app.Child = v.example.View
+			v.app.ChildRelay.Signal()
+		}
 	}
 	for _, j := range settings.AddSeparators([]view.View{item}, 30) {
 		childLayouter.Add(j, nil)
