@@ -7,8 +7,7 @@ option java_package = "io.gomatcha.customview.proto";
 option java_outer_classname = "CustomViewProto";
 
 message View {
-    bool value = 1;
-    bool enabled = 2;
+    bool frontCamera = 1;
 }
 
 message Event {

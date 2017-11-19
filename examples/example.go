@@ -135,8 +135,7 @@ func NewExamplesView(app *App) *ExamplesView {
 				&Example{"Constraint Layout", "Example of a complex layout using constraints. \n\n\ngomatcha.io/matcha/examples/layout NewConstraintsView", layoutex.NewConstraintsView()},
 				&Example{"Table Layout", "Example of a vertical (bottom to top) table and a horizontal (left to right) table layout. \n\n\ngomatcha.io/matcha/examples/layout NewTableView", layoutex.NewTableView()},
 				&Example{"Native Bridge", "Example of how to call native functions from Go, and Go functions from native code. See gomatcha.io/guide/native-bridge/ for more details. \n\n\ngomatcha.io/matcha/examples/bridge NewBridgeView", bridgeex.NewBridgeView()},
-
-				&Example{"Custom Views", "\n\n\ngomatcha.io/matcha/examples/customview NewView", customview.NewView()},
+				&Example{"Custom Views", "Example of creating a custom view, that displays the user's camera. \n\n\ngomatcha.io/matcha/examples/customview NewView", customview.NewView()},
 			},
 		},
 		{

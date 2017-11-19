@@ -308,10 +308,6 @@ CGColorRef MatchaCGColorCreateWithValues(bool exists, int red, int green, int bl
     }
 }
 
-- (MatchaPBImage *)protobuf {
-    return nil;
-}
-
 @end
 
 @implementation MatchaViewPBLayoutPaintNode (Matcha)

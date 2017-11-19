@@ -19,14 +19,9 @@ public final class CustomViewProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>bool value = 1;</code>
+     * <code>bool frontCamera = 1;</code>
      */
-    boolean getValue();
-
-    /**
-     * <code>bool enabled = 2;</code>
-     */
-    boolean getEnabled();
+    boolean getFrontCamera();
   }
   /**
    * Protobuf type {@code matcha.examples.customview.View}
@@ -40,8 +35,7 @@ public final class CustomViewProto {
       super(builder);
     }
     private View() {
-      value_ = false;
-      enabled_ = false;
+      frontCamera_ = false;
     }
 
     @java.lang.Override
@@ -71,12 +65,7 @@ public final class CustomViewProto {
             }
             case 8: {
 
-              value_ = input.readBool();
-              break;
-            }
-            case 16: {
-
-              enabled_ = input.readBool();
+              frontCamera_ = input.readBool();
               break;
             }
           }
@@ -102,22 +91,13 @@ public final class CustomViewProto {
               io.gomatcha.customview.proto.CustomViewProto.View.class, io.gomatcha.customview.proto.CustomViewProto.View.Builder.class);
     }
 
-    public static final int VALUE_FIELD_NUMBER = 1;
-    private boolean value_;
+    public static final int FRONTCAMERA_FIELD_NUMBER = 1;
+    private boolean frontCamera_;
     /**
-     * <code>bool value = 1;</code>
+     * <code>bool frontCamera = 1;</code>
      */
-    public boolean getValue() {
-      return value_;
-    }
-
-    public static final int ENABLED_FIELD_NUMBER = 2;
-    private boolean enabled_;
-    /**
-     * <code>bool enabled = 2;</code>
-     */
-    public boolean getEnabled() {
-      return enabled_;
+    public boolean getFrontCamera() {
+      return frontCamera_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -132,11 +112,8 @@ public final class CustomViewProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (value_ != false) {
-        output.writeBool(1, value_);
-      }
-      if (enabled_ != false) {
-        output.writeBool(2, enabled_);
+      if (frontCamera_ != false) {
+        output.writeBool(1, frontCamera_);
       }
     }
 
@@ -145,13 +122,9 @@ public final class CustomViewProto {
       if (size != -1) return size;
 
       size = 0;
-      if (value_ != false) {
+      if (frontCamera_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(1, value_);
-      }
-      if (enabled_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, enabled_);
+          .computeBoolSize(1, frontCamera_);
       }
       memoizedSize = size;
       return size;
@@ -169,10 +142,8 @@ public final class CustomViewProto {
       io.gomatcha.customview.proto.CustomViewProto.View other = (io.gomatcha.customview.proto.CustomViewProto.View) obj;
 
       boolean result = true;
-      result = result && (getValue()
-          == other.getValue());
-      result = result && (getEnabled()
-          == other.getEnabled());
+      result = result && (getFrontCamera()
+          == other.getFrontCamera());
       return result;
     }
 
@@ -183,12 +154,9 @@ public final class CustomViewProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + VALUE_FIELD_NUMBER;
+      hash = (37 * hash) + FRONTCAMERA_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getValue());
-      hash = (37 * hash) + ENABLED_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getEnabled());
+          getFrontCamera());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -318,9 +286,7 @@ public final class CustomViewProto {
       }
       public Builder clear() {
         super.clear();
-        value_ = false;
-
-        enabled_ = false;
+        frontCamera_ = false;
 
         return this;
       }
@@ -344,8 +310,7 @@ public final class CustomViewProto {
 
       public io.gomatcha.customview.proto.CustomViewProto.View buildPartial() {
         io.gomatcha.customview.proto.CustomViewProto.View result = new io.gomatcha.customview.proto.CustomViewProto.View(this);
-        result.value_ = value_;
-        result.enabled_ = enabled_;
+        result.frontCamera_ = frontCamera_;
         onBuilt();
         return result;
       }
@@ -387,11 +352,8 @@ public final class CustomViewProto {
 
       public Builder mergeFrom(io.gomatcha.customview.proto.CustomViewProto.View other) {
         if (other == io.gomatcha.customview.proto.CustomViewProto.View.getDefaultInstance()) return this;
-        if (other.getValue() != false) {
-          setValue(other.getValue());
-        }
-        if (other.getEnabled() != false) {
-          setEnabled(other.getEnabled());
+        if (other.getFrontCamera() != false) {
+          setFrontCamera(other.getFrontCamera());
         }
         onChanged();
         return this;
@@ -419,54 +381,28 @@ public final class CustomViewProto {
         return this;
       }
 
-      private boolean value_ ;
+      private boolean frontCamera_ ;
       /**
-       * <code>bool value = 1;</code>
+       * <code>bool frontCamera = 1;</code>
        */
-      public boolean getValue() {
-        return value_;
+      public boolean getFrontCamera() {
+        return frontCamera_;
       }
       /**
-       * <code>bool value = 1;</code>
+       * <code>bool frontCamera = 1;</code>
        */
-      public Builder setValue(boolean value) {
+      public Builder setFrontCamera(boolean value) {
         
-        value_ = value;
+        frontCamera_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool value = 1;</code>
+       * <code>bool frontCamera = 1;</code>
        */
-      public Builder clearValue() {
+      public Builder clearFrontCamera() {
         
-        value_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean enabled_ ;
-      /**
-       * <code>bool enabled = 2;</code>
-       */
-      public boolean getEnabled() {
-        return enabled_;
-      }
-      /**
-       * <code>bool enabled = 2;</code>
-       */
-      public Builder setEnabled(boolean value) {
-        
-        enabled_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool enabled = 2;</code>
-       */
-      public Builder clearEnabled() {
-        
-        enabled_ = false;
+        frontCamera_ = false;
         onChanged();
         return this;
       }
@@ -981,10 +917,10 @@ public final class CustomViewProto {
     java.lang.String[] descriptorData = {
       "\n=gomatcha.io/matcha/examples/customview" +
       "/proto/customview.proto\022\032matcha.examples" +
-      ".customview\"&\n\004View\022\r\n\005value\030\001 \001(\010\022\017\n\007en" +
-      "abled\030\002 \001(\010\"\026\n\005Event\022\r\n\005value\030\001 \001(\010BH\n\034i" +
-      "o.gomatcha.customview.protoB\017CustomViewP" +
-      "rotoZ\005proto\242\002\017CustomViewProtob\006proto3"
+      ".customview\"\033\n\004View\022\023\n\013frontCamera\030\001 \001(\010" +
+      "\"\026\n\005Event\022\r\n\005value\030\001 \001(\010BH\n\034io.gomatcha." +
+      "customview.protoB\017CustomViewProtoZ\005proto" +
+      "\242\002\017CustomViewProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1003,7 +939,7 @@ public final class CustomViewProto {
     internal_static_matcha_examples_customview_View_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_examples_customview_View_descriptor,
-        new java.lang.String[] { "Value", "Enabled", });
+        new java.lang.String[] { "FrontCamera", });
     internal_static_matcha_examples_customview_Event_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_matcha_examples_customview_Event_fieldAccessorTable = new

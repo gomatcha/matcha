@@ -7,6 +7,6 @@ FOUNDATION_EXPORT double CustomViewVersionNumber;
 //! Project version string for CustomView.
 FOUNDATION_EXPORT const unsigned char CustomViewVersionString[];
 
-@interface CustomView : UISwitch <MatchaChildView>
+@interface CustomView : UIView <MatchaChildView>
 @property (nonatomic, strong) MatchaViewNode *viewNode;
 @end

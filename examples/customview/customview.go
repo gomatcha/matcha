@@ -1,60 +1,47 @@
 package customview
 
 import (
+	"bytes"
 	"fmt"
-	"runtime"
+	"image"
 
-	"github.com/gogo/protobuf/proto"
-	protoview "gomatcha.io/matcha/examples/customview/proto"
+	"golang.org/x/image/colornames"
+	protocustomview "gomatcha.io/matcha/examples/customview/proto"
 	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout/constraint"
+	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
 )
 
-type CustomView struct {
+type CameraView struct {
 	view.Embed
-	Enabled  bool
-	Value    bool
-	OnSubmit func(value bool)
+	FrontCamera bool
+	OnCapture   func(img image.Image)
 }
 
-// NewCustomView returns an initialized CustomView instance.
-func NewCustomView() *CustomView {
-	return &CustomView{
-		Enabled: true,
-	}
+// NewCameraView returns an initialized CameraView instance.
+func NewCameraView() *CameraView {
+	return &CameraView{}
 }
 
 // Build implements view.View.
-func (v *CustomView) Build(ctx view.Context) view.Model {
-	l := &constraint.Layouter{}
-	l.Solve(func(s *constraint.Solver) {
-		if runtime.GOOS == "android" {
-			s.Width(61)
-			s.Height(40)
-		} else {
-			s.Width(51)
-			s.Height(31)
-		}
-	})
+func (v *CameraView) Build(ctx view.Context) view.Model {
 	return view.Model{
-		Layouter:       l,
-		NativeViewName: "gomatcha.io/matcha/view/switch",
-		NativeViewState: internal.MarshalProtobuf(&protoview.View{
-			Value:   v.Value,
-			Enabled: v.Enabled,
+		Painter:        &paint.Style{BackgroundColor: colornames.Black},
+		NativeViewName: "gomatcha.io/matcha/examples/customview CameraView",
+		NativeViewState: internal.MarshalProtobuf(&protocustomview.View{
+			FrontCamera: v.FrontCamera,
 		}),
 		NativeFuncs: map[string]interface{}{
-			"OnChange": func(data []byte) {
-				event := &protoview.Event{}
-				err := proto.Unmarshal(data, event)
+			"OnCapture": func(data []byte) {
+				buf := bytes.NewBuffer(data)
+				img, _, err := image.Decode(buf)
 				if err != nil {
-					fmt.Println("error", err)
+					fmt.Println("error decoding image", err)
 					return
 				}
-				v.Value = event.Value
-				if v.OnSubmit != nil {
-					v.OnSubmit(v.Value)
+
+				if v.OnCapture != nil {
+					v.OnCapture(img)
 				}
 			},
 		},

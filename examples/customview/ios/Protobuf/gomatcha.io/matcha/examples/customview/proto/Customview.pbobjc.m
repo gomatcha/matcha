@@ -47,8 +47,7 @@ static GPBFileDescriptor *CustomViewProtoCustomviewRoot_FileDescriptor(void) {
 
 @implementation CustomViewProtoView
 
-@dynamic value;
-@dynamic enabled;
+@dynamic frontCamera;
 
 typedef struct CustomViewProtoView__storage_ {
   uint32_t _has_storage_[1];
@@ -61,21 +60,12 @@ typedef struct CustomViewProtoView__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "value",
+        .name = "frontCamera",
         .dataTypeSpecific.className = NULL,
-        .number = CustomViewProtoView_FieldNumber_Value,
+        .number = CustomViewProtoView_FieldNumber_FrontCamera,
         .hasIndex = 0,
         .offset = 1,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeBool,
-      },
-      {
-        .name = "enabled",
-        .dataTypeSpecific.className = NULL,
-        .number = CustomViewProtoView_FieldNumber_Enabled,
-        .hasIndex = 2,
-        .offset = 3,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
         .dataType = GPBDataTypeBool,
       },
     };
@@ -87,6 +77,11 @@ typedef struct CustomViewProtoView__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(CustomViewProtoView__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\001\013\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

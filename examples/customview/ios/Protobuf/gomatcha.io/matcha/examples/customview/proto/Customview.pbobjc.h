@@ -47,15 +47,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - CustomViewProtoView
 
 typedef GPB_ENUM(CustomViewProtoView_FieldNumber) {
-  CustomViewProtoView_FieldNumber_Value = 1,
-  CustomViewProtoView_FieldNumber_Enabled = 2,
+  CustomViewProtoView_FieldNumber_FrontCamera = 1,
 };
 
 @interface CustomViewProtoView : GPBMessage
 
-@property(nonatomic, readwrite) BOOL value;
-
-@property(nonatomic, readwrite) BOOL enabled;
+@property(nonatomic, readwrite) BOOL frontCamera;
 
 @end
 
