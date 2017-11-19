@@ -265,13 +265,10 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 	})
 
 	textIosItem := ios.NewStackBarItem()
-	textIosItem.Title = "Back"
+	textIosItem.Title = "Test"
 	textIosItem.TitleStyle, _ = v.app.ItemTitleStyle.Value().(*text.Style)
 	textIosItem.OnPress = func() {
 		fmt.Println("Left Item on Press")
-		if internal.BackRelay != nil {
-			internal.BackRelay.Signal()
-		}
 	}
 
 	imageIosItem := ios.NewStackBarItem()
@@ -283,15 +280,12 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 
 	leftAndroidItem := android.NewStackBarItem()
 	if style, ok := v.app.ItemTitleStyle.Value().(*text.Style); ok {
-		leftAndroidItem.StyledTitle = text.NewStyledText("Back", style)
+		leftAndroidItem.StyledTitle = text.NewStyledText("Test", style)
 	} else {
-		leftAndroidItem.Title = "Back"
+		leftAndroidItem.Title = "Test"
 	}
 	leftAndroidItem.OnPress = func() {
 		fmt.Println("Left Item on Press")
-		if internal.BackRelay != nil {
-			internal.BackRelay.Signal()
-		}
 	}
 
 	rightAndroidItem := android.NewStackBarItem()
@@ -301,19 +295,21 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 		fmt.Println("Right Item on Press")
 	}
 
+	iosStackBar := &ios.StackBar{Title: "Title", RightItems: []*ios.StackBarItem{textIosItem, imageIosItem}}
+	androidStackBar := &android.StackBar{Title: "Title", Items: []*android.StackBarItem{leftAndroidItem, rightAndroidItem}}
+	if item := internal.IosBackItem(); item != nil { // Add button to example list
+		iosStackBar.LeftItems = []*ios.StackBarItem{item}
+	}
+	if item := internal.AndroidBackItem(); item != nil {
+		androidStackBar.Items = append(androidStackBar.Items, item)
+	}
+
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Options: []view.Option{
-			&ios.StackBar{
-				Title:      "Title",
-				LeftItems:  []*ios.StackBarItem{textIosItem},
-				RightItems: []*ios.StackBarItem{imageIosItem},
-			},
-			&android.StackBar{
-				Title: "Title",
-				Items: []*android.StackBarItem{leftAndroidItem, rightAndroidItem},
-			},
+			iosStackBar,
+			androidStackBar,
 		},
 	}
 }

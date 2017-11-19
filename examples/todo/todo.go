@@ -9,6 +9,7 @@ import (
 
 	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/bridge"
+	"gomatcha.io/matcha/examples/internal"
 	"gomatcha.io/matcha/keyboard"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
@@ -40,6 +41,8 @@ func NewRootView() view.View {
 		v.TitleStyle = &text.Style{}
 		v.TitleStyle.SetFont(text.DefaultFont(20))
 		v.TitleStyle.SetTextColor(colornames.White)
+		v.ItemTitleStyle = &text.Style{}
+		v.ItemTitleStyle.SetTextColor(colornames.White)
 		return v
 	} else {
 		v := ios.NewStackView()
@@ -48,6 +51,8 @@ func NewRootView() view.View {
 		v.TitleStyle = &text.Style{}
 		v.TitleStyle.SetFont(text.DefaultFont(20))
 		v.TitleStyle.SetTextColor(colornames.White)
+		v.ItemTitleStyle = &text.Style{}
+		v.ItemTitleStyle.SetTextColor(colornames.White)
 		return v
 	}
 }
@@ -94,13 +99,22 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 	scrollView := view.NewScrollView()
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
+
+	iosStackBar := &ios.StackBar{Title: "Todos"}
+	androidStackBar := &android.StackBar{Title: "Todos"}
+	if item := internal.IosBackItem(); item != nil { // Add button to example list
+		iosStackBar.LeftItems = []*ios.StackBarItem{item}
+	}
+	if item := internal.AndroidBackItem(); item != nil {
+		androidStackBar.Items = []*android.StackBarItem{item}
+	}
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
 		Options: []view.Option{
-			&ios.StackBar{Title: "Todos"},
 			&ios.StatusBar{Style: ios.StatusBarStyleLight},
-			&android.StackBar{Title: "Todos"},
+			iosStackBar,
+			androidStackBar,
 		},
 	}
 }

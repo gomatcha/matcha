@@ -9,6 +9,7 @@ import (
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/bridge"
+	"gomatcha.io/matcha/examples/internal"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
 	"gomatcha.io/matcha/paint"
@@ -208,12 +209,21 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
+	iosStackBar := &ios.StackBar{Title: "Settings"}
+	androidStackBar := &android.StackBar{Title: "Settings"}
+	if item := internal.IosBackItem(); item != nil { // Add button to example list
+		iosStackBar.LeftItems = []*ios.StackBarItem{item}
+	}
+	if item := internal.AndroidBackItem(); item != nil {
+		androidStackBar.Items = []*android.StackBarItem{item}
+	}
+
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: backgroundColor},
 		Options: []view.Option{
-			&ios.StackBar{Title: "Settings"},
-			&android.StackBar{Title: "Settings"},
+			iosStackBar,
+			androidStackBar,
 		},
 	}
 }

@@ -9,6 +9,7 @@ import (
 	"golang.org/x/image/colornames"
 	"gomatcha.io/matcha/application"
 	"gomatcha.io/matcha/bridge"
+	"gomatcha.io/matcha/examples/internal"
 	"gomatcha.io/matcha/layout"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/layout/table"
@@ -66,12 +67,20 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 	scrollView.ContentChildren = l.Views()
 	scrollView.ContentLayouter = l
 
+	iosStackBar := &ios.StackBar{Title: "Insta"}
+	androidStackBar := &android.StackBar{Title: "Insta"}
+	if item := internal.IosBackItem(); item != nil { // Add button to example list
+		iosStackBar.LeftItems = []*ios.StackBarItem{item}
+	}
+	if item := internal.AndroidBackItem(); item != nil {
+		androidStackBar.Items = []*android.StackBarItem{item}
+	}
 	return view.Model{
 		Children: []view.View{scrollView},
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
 		Options: []view.Option{
-			&ios.StackBar{Title: "Insta"},
-			&android.StackBar{Title: "Insta"},
+			iosStackBar,
+			androidStackBar,
 		},
 	}
 }
@@ -336,7 +345,6 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 	} else {
 		bookmarkButton.Image = application.MustLoadImage("insta_bookmark")
 	}
-
 	bookmarkButton.OnPress = func() {
 		if v.OnTouchBookmark != nil {
 			v.Bookmarked = !v.Bookmarked
@@ -346,16 +354,16 @@ func (v *PostButtonsView) Build(ctx view.Context) view.Model {
 	}
 	l.Add(bookmarkButton, func(s *constraint.Solver) {
 		s.Top(13)
-		s.RightEqual(l.Right().Add(-13))
+		s.Right(-13)
 	})
 
 	likeTextView := view.NewTextView()
 	likeTextView.String = fmt.Sprintf("%v likes", v.LikeCount)
 	likeTextView.Style.SetFont(BoldFont())
 	l.Add(likeTextView, func(s *constraint.Solver) {
-		s.Top(15)
-		s.LeftEqual(l.Left().Add(13))
-		s.RightEqual(l.Right().Add(-13))
+		s.TopEqual(likeGuide.Bottom().Add(5))
+		s.Left(13)
+		s.Right(-13)
 	})
 
 	return view.Model{
