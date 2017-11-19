@@ -7,6 +7,7 @@ import (
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/android"
 	"gomatcha.io/matcha/view/ios"
@@ -30,43 +31,48 @@ func NewAddRemoveView() *AddRemoveView {
 func (v *AddRemoveView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := view.NewButton()
-	chl1.Enabled = true
+	label := view.NewTextView()
+	label.String = "Toggle view:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g := l.Add(label, func(s *constraint.Solver) {
+		s.Top(15)
+		s.Left(15)
+	})
+
+	button := view.NewButton()
 	if !v.showView {
-		chl1.String = "Add"
+		button.String = "Add"
 	} else {
-		chl1.String = "Remove"
+		button.String = "Remove"
 	}
-	chl1.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
-	chl1.OnPress = func() {
+	button.OnPress = func() {
 		v.showView = !v.showView
 		v.Signal()
 	}
-	_ = l.Add(chl1, func(s *constraint.Solver) {
-		s.Top(100)
-		s.Left(0)
-		s.Width(200)
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 	})
 
 	if v.showView {
-		chl2 := view.NewBasicView()
-		chl2.Painter = &paint.Style{BackgroundColor: colornames.Green}
-		l.Add(chl2, func(s *constraint.Solver) {
-			s.Top(200)
-			s.Left(0)
+		chl1 := view.NewBasicView()
+		chl1.Painter = &paint.Style{BackgroundColor: colornames.Green}
+		g = l.Add(chl1, func(s *constraint.Solver) {
+			s.TopEqual(g.Bottom())
+			s.LeftEqual(g.Left())
 			s.Width(100)
 			s.Height(100)
 		})
 
-		var chl3 view.View
+		var chl2 view.View
 		if runtime.GOOS == "android" {
-			chl3 = android.NewPagerView()
+			chl2 = android.NewPagerView()
 		} else {
-			chl3 = ios.NewStackView()
+			chl2 = ios.NewStackView()
 		}
-		l.Add(chl3, func(s *constraint.Solver) {
-			s.Top(200)
-			s.Left(100)
+		g = l.Add(chl2, func(s *constraint.Solver) {
+			s.TopEqual(g.Bottom())
+			s.LeftEqual(g.Left())
 			s.Width(100)
 			s.Height(100)
 		})

@@ -110,8 +110,8 @@ func (v *ImageView) Build(ctx view.Context) view.Model {
 	label.String = "Fit Image:"
 	label.Style.SetFont(text.DefaultFont(18))
 	g = l.Add(label, func(s *constraint.Solver) {
-		s.TopEqual(g.Bottom())
-		s.LeftEqual(g.Left())
+		s.Top(15)
+		s.LeftEqual(l.CenterX().Add(15))
 	})
 
 	imageview = view.NewImageView()
@@ -128,8 +128,8 @@ func (v *ImageView) Build(ctx view.Context) view.Model {
 	label.String = "Network Image:"
 	label.Style.SetFont(text.DefaultFont(18))
 	g = l.Add(label, func(s *constraint.Solver) {
-		s.Top(15)
-		s.CenterXEqual(l.CenterX().Add(15))
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 	})
 
 	imageview = view.NewImageView()
