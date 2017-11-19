@@ -386,6 +386,16 @@ func (v *LargeCell) Build(ctx view.Context) view.Model {
 		s.WidthEqual(l.MaxGuide().Width())
 	})
 
+	chevronView := view.NewImageView()
+	chevronView.Image = application.MustLoadImage("table_arrow")
+	chevronView.ResizeMode = view.ImageResizeModeCenter
+	chevronView.ImageTint = chevronColor
+
+	chevronGuide := l.Add(chevronView, func(s *constraint.Solver) {
+		s.Right(-15)
+		s.CenterY(0)
+	})
+
 	titleView := view.NewTextView()
 	titleView.String = v.Title
 	titleView.Style.SetFont(text.FontWithName("HelveticaNeue", 24))
@@ -393,7 +403,7 @@ func (v *LargeCell) Build(ctx view.Context) view.Model {
 
 	titleGuide := l.Add(titleView, func(s *constraint.Solver) {
 		s.LeftEqual(l.Left().Add(15))
-		s.RightLess(l.Right().Add(-15))
+		s.RightLess(chevronGuide.Left().Add(-15))
 		s.CenterYEqual(l.CenterY())
 	})
 	_ = titleGuide
@@ -479,11 +489,8 @@ func (v *BasicCell) Build(ctx view.Context) view.Model {
 		chevronView.ImageTint = chevronColor
 
 		chevronGuide := l.Add(chevronView, func(s *constraint.Solver) {
-			s.RightEqual(rightAnchor.Add(-15))
-			s.LeftGreater(leftAnchor)
-			s.CenterYEqual(l.CenterY())
-			s.TopGreater(l.Top())
-			s.BottomLess(l.Bottom())
+			s.Right(-15)
+			s.CenterY(0)
 		})
 		rightAnchor = chevronGuide.Left()
 	}
@@ -492,7 +499,7 @@ func (v *BasicCell) Build(ctx view.Context) view.Model {
 		accessoryGuide := l.Add(v.AccessoryView, func(s *constraint.Solver) {
 			s.RightEqual(rightAnchor.Add(-10))
 			s.LeftGreater(leftAnchor)
-			s.CenterYEqual(l.CenterY())
+			s.CenterY(0)
 		})
 		rightAnchor = accessoryGuide.Left()
 	}
@@ -506,7 +513,7 @@ func (v *BasicCell) Build(ctx view.Context) view.Model {
 		subtitleGuide := l.Add(subtitleView, func(s *constraint.Solver) {
 			s.RightEqual(rightAnchor.Add(-10))
 			s.LeftGreater(leftAnchor)
-			s.CenterYEqual(l.CenterY())
+			s.CenterY(0)
 		})
 		rightAnchor = subtitleGuide.Left()
 	}

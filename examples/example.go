@@ -212,6 +212,7 @@ func (v *ExamplesView) Build(ctx view.Context) view.Model {
 				v.app.IosStack.Push(detailView)
 				v.app.AndroidStack.Push(detailView)
 			}
+			item.Chevron = true
 			items = append(items, item)
 		}
 
