@@ -174,6 +174,7 @@ func (v *ExamplesView) Build(ctx view.Context) view.Model {
 		},
 		"Miscellaneous": {
 			{"Device Orientation", true, "Example of how to get the current device orientation and listen to orientation changes.\n\n\ngomatcha.io/matcha/examples/application NewOrientationView", applicationex.NewOrientationView()},
+			// Shake device
 			{"Adding/Removing Views", true, "\n\n\ngomatcha.io/matcha/examples/view NewAddRemoveView", viewex.NewAddRemoveView()},
 		},
 	}
