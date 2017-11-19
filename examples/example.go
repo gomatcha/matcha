@@ -146,7 +146,7 @@ func (v *ExamplesView) Build(ctx view.Context) view.Model {
 			{"Constraint Layout", true, "Example of a complex layout using constraints. \n\n\ngomatcha.io/matcha/examples/layout NewConstraintsView", layoutex.NewConstraintsView()},
 			{"Table Layout", true, "Example of a vertical (bottom to top) table and a horizontal (left to right) table layout. \n\n\ngomatcha.io/matcha/examples/layout NewTableView", layoutex.NewTableView()},
 			{"Native Bridge", true, "Example of how to call native functions from Go, and Go functions from native code. See gomatcha.io/guide/native-bridge/ for more details. \n\n\ngomatcha.io/matcha/examples/bridge NewBridgeView", bridgeex.NewBridgeView()},
-			{"Custom Views", true, "Example of creating a custom view, that displays the user's camera. \n\n\ngomatcha.io/matcha/examples/customview NewView", customview.NewView()},
+			{"Custom Views", true, "Example of creating a custom view that displays the user's camera. \n\n\ngomatcha.io/matcha/examples/customview NewView", customview.NewView()},
 		},
 		"Views": {
 			{"Alerts", true, "Example of how to display alerts. \n\n\ngomatcha.io/matcha/examples/view NewAlertView", viewex.NewAlertView()},
@@ -175,7 +175,7 @@ func (v *ExamplesView) Build(ctx view.Context) view.Model {
 		"Miscellaneous": {
 			{"Device Orientation", true, "Example of how to get the current device orientation and listen to orientation changes.\n\n\ngomatcha.io/matcha/examples/application NewOrientationView", applicationex.NewOrientationView()},
 			// Shake device
-			{"Adding/Removing Views", true, "\n\n\ngomatcha.io/matcha/examples/view NewAddRemoveView", viewex.NewAddRemoveView()},
+			{"Adding/Removing Views", true, "Example of adding and removing views.\n\n\ngomatcha.io/matcha/examples/view NewAddRemoveView", viewex.NewAddRemoveView()},
 		},
 	}
 

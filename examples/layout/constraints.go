@@ -5,6 +5,7 @@ import (
 	"gomatcha.io/matcha/bridge"
 	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 )
 
@@ -25,69 +26,69 @@ func NewConstraintsView() *ConstraintsView {
 func (v *ConstraintsView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
-	chl1 := view.NewBasicView()
-	chl1.Painter = &paint.Style{BackgroundColor: colornames.Blue}
-	_ = l.Add(chl1, func(s *constraint.Solver) {
+	label := view.NewTextView()
+	label.String = "Top Left"
+	label.Style.SetFont(text.DefaultFont(18))
+	label.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
+	g := l.Add(label, func(s *constraint.Solver) {
 		s.Top(0)
 		s.Left(0)
+	})
+
+	label = view.NewTextView()
+	label.String = "Width Height"
+	label.Style.SetFont(text.DefaultFont(18))
+	label.PaintStyle = &paint.Style{BackgroundColor: colornames.Yellow}
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
 		s.Width(100)
 		s.Height(100)
 	})
 
-	chl2 := NewConstraintsChildView()
-	g2 := l.Add(chl2, func(s *constraint.Solver) {
-		// s.TopEqual(g1.Bottom())
-		// s.LeftEqual(g1.Left())
-		s.Width(300)
-		s.Height(300)
+	label = view.NewTextView()
+	label.String = "2x Width Height"
+	label.Style.SetFont(text.DefaultFont(18))
+	label.PaintStyle = &paint.Style{BackgroundColor: colornames.Pink}
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+		s.WidthEqual(g.Width().Mul(2))
+		s.HeightEqual(g.Height().Mul(2))
 	})
 
-	chl3 := view.NewBasicView()
-	chl3.Painter = &paint.Style{BackgroundColor: colornames.Blue}
-	g3 := l.Add(chl3, func(s *constraint.Solver) {
-		s.TopEqual(g2.Bottom())
-		s.LeftEqual(g2.Left())
-		s.Width(100)
-		s.Height(100)
+	label = view.NewTextView()
+	label.String = "Inset"
+	label.Style.SetFont(text.DefaultFont(18))
+	label.PaintStyle = &paint.Style{BackgroundColor: colornames.Purple}
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Top().Add(5))
+		s.RightEqual(g.Right().Add(-5))
+		s.WidthLess(constraint.Const(50))
+		s.HeightLess(constraint.Const(50))
 	})
 
-	chl4 := view.NewBasicView()
-	chl4.Painter = &paint.Style{BackgroundColor: colornames.Magenta}
-	_ = l.Add(chl4, func(s *constraint.Solver) {
-		s.TopEqual(g2.Bottom())
-		s.LeftEqual(g3.Right())
-		s.Width(50)
-		s.Height(50)
+	label = view.NewTextView()
+	label.String = "CenterX CenterY"
+	label.Style.SetFont(text.DefaultFont(18))
+	label.PaintStyle = &paint.Style{BackgroundColor: colornames.Green}
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.CenterX(0)
+		s.CenterY(0)
+	})
+
+	label = view.NewTextView()
+	label.String = "Bottom Right"
+	label.Style.SetFont(text.DefaultFont(18))
+	label.PaintStyle = &paint.Style{BackgroundColor: colornames.Blue}
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.Bottom(0)
+		s.Right(0)
 	})
 
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: colornames.White},
-	}
-}
-
-type ConstraintsChildView struct {
-	view.Embed
-}
-
-func NewConstraintsChildView() *ConstraintsChildView {
-	return &ConstraintsChildView{}
-}
-
-func (v *ConstraintsChildView) Build(ctx view.Context) view.Model {
-	l := &constraint.Layouter{}
-
-	chl1 := view.NewBasicView()
-	chl1.Painter = &paint.Style{BackgroundColor: colornames.Red}
-	_ = l.Add(chl1, func(s *constraint.Solver) {
-		s.Width(50)
-		s.Height(50)
-	})
-
-	return view.Model{
-		Children: l.Views(),
-		Layouter: l,
-		Painter:  &paint.Style{BackgroundColor: colornames.Green},
 	}
 }
