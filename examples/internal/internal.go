@@ -6,33 +6,33 @@ import (
 	"gomatcha.io/matcha/view/ios"
 )
 
-var BackRelay *comm.Relay = nil
+var ExamplesRelay *comm.Relay = nil
 
-func IosBackItem() *ios.StackBarItem {
-	if BackRelay == nil {
+func IosExamplesItem() *ios.StackBarItem {
+	if ExamplesRelay == nil {
 		return nil
 	}
 
 	iosItem := ios.NewStackBarItem()
 	iosItem.Title = "Examples"
 	iosItem.OnPress = func() {
-		if BackRelay != nil {
-			BackRelay.Signal()
+		if ExamplesRelay != nil {
+			ExamplesRelay.Signal()
 		}
 	}
 	return iosItem
 }
 
-func AndroidBackItem() *android.StackBarItem {
-	if BackRelay == nil {
+func AndroidExamplesItem() *android.StackBarItem {
+	if ExamplesRelay == nil {
 		return nil
 	}
 
 	androidItem := android.NewStackBarItem()
 	androidItem.Title = "Examples"
 	androidItem.OnPress = func() {
-		if BackRelay != nil {
-			BackRelay.Signal()
+		if ExamplesRelay != nil {
+			ExamplesRelay.Signal()
 		}
 	}
 	return androidItem

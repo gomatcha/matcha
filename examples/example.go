@@ -83,8 +83,8 @@ func NewAppView(app *App) *AppView {
 
 func (v *AppView) Lifecycle(from, to view.Stage) {
 	if view.EntersStage(from, to, view.StageMounted) {
-		internal.BackRelay = &comm.Relay{}
-		v.backKey = internal.BackRelay.Notify(func() {
+		internal.ExamplesRelay = &comm.Relay{}
+		v.backKey = internal.ExamplesRelay.Notify(func() {
 			// Pop to root and clear the child
 			v.app.Stack.Pop()
 			v.app.Child = nil
@@ -92,8 +92,8 @@ func (v *AppView) Lifecycle(from, to view.Stage) {
 		})
 		v.Subscribe(v.app.ChildRelay)
 	} else if view.ExitsStage(from, to, view.StageMounted) {
-		internal.BackRelay.Unnotify(v.backKey)
-		internal.BackRelay = nil
+		internal.ExamplesRelay.Unnotify(v.backKey)
+		internal.ExamplesRelay = nil
 		v.Unsubscribe(v.app.ChildRelay)
 	}
 }

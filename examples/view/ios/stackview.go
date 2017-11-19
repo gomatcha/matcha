@@ -297,10 +297,10 @@ func (v *StackConfigureView) Build(ctx view.Context) view.Model {
 
 	iosStackBar := &ios.StackBar{Title: "Title", RightItems: []*ios.StackBarItem{textIosItem, imageIosItem}}
 	androidStackBar := &android.StackBar{Title: "Title", Items: []*android.StackBarItem{leftAndroidItem, rightAndroidItem}}
-	if item := internal.IosBackItem(); item != nil { // Add button to example list
+	if item := internal.IosExamplesItem(); item != nil { // Add button to example list
 		iosStackBar.LeftItems = []*ios.StackBarItem{item}
 	}
-	if item := internal.AndroidBackItem(); item != nil {
+	if item := internal.AndroidExamplesItem(); item != nil {
 		androidStackBar.Items = append(androidStackBar.Items, item)
 	}
 

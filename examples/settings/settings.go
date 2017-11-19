@@ -211,10 +211,10 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 
 	iosStackBar := &ios.StackBar{Title: "Settings"}
 	androidStackBar := &android.StackBar{Title: "Settings"}
-	if item := internal.IosBackItem(); item != nil { // Add button to example list
+	if item := internal.IosExamplesItem(); item != nil { // Add button to example list
 		iosStackBar.LeftItems = []*ios.StackBarItem{item}
 	}
-	if item := internal.AndroidBackItem(); item != nil {
+	if item := internal.AndroidExamplesItem(); item != nil {
 		androidStackBar.Items = []*android.StackBarItem{item}
 	}
 
