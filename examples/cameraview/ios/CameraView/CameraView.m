@@ -1,11 +1,11 @@
-#import "CustomView.h"
+#import "CameraView.h"
 #import "Customview.pbobjc.h"
 #import <AVFoundation/AVFoundation.h>
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
-@interface CustomView ()
+@interface CameraView ()
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) AVCaptureDeviceInput *captureInput;
 @property (nonatomic, strong) AVCaptureStillImageOutput *captureOutput;
@@ -14,11 +14,11 @@
 @property (nonatomic, assign) BOOL frontCamera;
 @end
 
-@implementation CustomView
+@implementation CameraView
 
 + (void)load {
     [MatchaViewController registerView:@"gomatcha.io/matcha/examples/customview CameraView" block:^(MatchaViewNode *node){
-        return [[CustomView alloc] initWithViewNode:node];
+        return [[CameraView alloc] initWithViewNode:node];
     }];
 }
 

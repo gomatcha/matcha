@@ -9,23 +9,23 @@
 /* Begin PBXBuildFile section */
 		6732FA981F743B48002DC2EF /* Customview.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6732FA961F743B48002DC2EF /* Customview.pbobjc.h */; };
 		6732FA991F743B48002DC2EF /* Customview.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732FA971F743B48002DC2EF /* Customview.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		67783C771F1E8436001582F5 /* CustomView.h in Headers */ = {isa = PBXBuildFile; fileRef = 67783C751F1E8436001582F5 /* CustomView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67783C771F1E8436001582F5 /* CameraView.h in Headers */ = {isa = PBXBuildFile; fileRef = 67783C751F1E8436001582F5 /* CameraView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67783C811F1E847A001582F5 /* Matcha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67783C7E1F1E847A001582F5 /* Matcha.framework */; };
 		67783C821F1E847A001582F5 /* MatchaBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67783C7F1F1E847A001582F5 /* MatchaBridge.framework */; };
 		67783C831F1E847A001582F5 /* Protobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67783C801F1E847A001582F5 /* Protobuf.framework */; };
-		67783C851F1E84B6001582F5 /* CustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67783C841F1E84B6001582F5 /* CustomView.m */; };
+		67783C851F1E84B6001582F5 /* CameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67783C841F1E84B6001582F5 /* CameraView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6732FA961F743B48002DC2EF /* Customview.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customview.pbobjc.h; sourceTree = "<group>"; };
 		6732FA971F743B48002DC2EF /* Customview.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customview.pbobjc.m; sourceTree = "<group>"; };
-		67783C721F1E8436001582F5 /* CustomView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CustomView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		67783C751F1E8436001582F5 /* CustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomView.h; sourceTree = "<group>"; };
+		67783C721F1E8436001582F5 /* CameraView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CameraView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		67783C751F1E8436001582F5 /* CameraView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraView.h; sourceTree = "<group>"; };
 		67783C761F1E8436001582F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67783C7E1F1E847A001582F5 /* Matcha.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Matcha.framework; path = "../../../../../../../../Library/Developer/Xcode/DerivedData/SampleApp-cmxvdedpoyclchbbrqidjpuexeyk/Build/Products/Debug-iphoneos/Matcha.framework"; sourceTree = "<group>"; };
 		67783C7F1F1E847A001582F5 /* MatchaBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MatchaBridge.framework; path = "../../../../../../../../Library/Developer/Xcode/DerivedData/SampleApp-cmxvdedpoyclchbbrqidjpuexeyk/Build/Products/Debug-iphoneos/MatchaBridge.framework"; sourceTree = "<group>"; };
 		67783C801F1E847A001582F5 /* Protobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Protobuf.framework; path = "../../../../../../../../Library/Developer/Xcode/DerivedData/SampleApp-cmxvdedpoyclchbbrqidjpuexeyk/Build/Products/Debug-iphoneos/Protobuf.framework"; sourceTree = "<group>"; };
-		67783C841F1E84B6001582F5 /* CustomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomView.m; sourceTree = "<group>"; };
+		67783C841F1E84B6001582F5 /* CameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +94,7 @@
 		67783C681F1E8436001582F5 = {
 			isa = PBXGroup;
 			children = (
-				67783C741F1E8436001582F5 /* CustomView */,
+				67783C741F1E8436001582F5 /* CameraView */,
 				6732FA901F743B48002DC2EF /* Protobuf */,
 				67783C731F1E8436001582F5 /* Products */,
 				67783C7D1F1E847A001582F5 /* Frameworks */,
@@ -104,19 +104,19 @@
 		67783C731F1E8436001582F5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				67783C721F1E8436001582F5 /* CustomView.framework */,
+				67783C721F1E8436001582F5 /* CameraView.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		67783C741F1E8436001582F5 /* CustomView */ = {
+		67783C741F1E8436001582F5 /* CameraView */ = {
 			isa = PBXGroup;
 			children = (
-				67783C751F1E8436001582F5 /* CustomView.h */,
-				67783C841F1E84B6001582F5 /* CustomView.m */,
+				67783C751F1E8436001582F5 /* CameraView.h */,
+				67783C841F1E84B6001582F5 /* CameraView.m */,
 				67783C761F1E8436001582F5 /* Info.plist */,
 			);
-			path = CustomView;
+			path = CameraView;
 			sourceTree = "<group>";
 		};
 		67783C7D1F1E847A001582F5 /* Frameworks */ = {
@@ -136,7 +136,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67783C771F1E8436001582F5 /* CustomView.h in Headers */,
+				67783C771F1E8436001582F5 /* CameraView.h in Headers */,
 				6732FA981F743B48002DC2EF /* Customview.pbobjc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,9 +144,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		67783C711F1E8436001582F5 /* CustomView */ = {
+		67783C711F1E8436001582F5 /* CameraView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 67783C7A1F1E8436001582F5 /* Build configuration list for PBXNativeTarget "CustomView" */;
+			buildConfigurationList = 67783C7A1F1E8436001582F5 /* Build configuration list for PBXNativeTarget "CameraView" */;
 			buildPhases = (
 				67783C6D1F1E8436001582F5 /* Sources */,
 				67783C6E1F1E8436001582F5 /* Frameworks */,
@@ -157,9 +157,9 @@
 			);
 			dependencies = (
 			);
-			name = CustomView;
+			name = CameraView;
 			productName = CustomView;
-			productReference = 67783C721F1E8436001582F5 /* CustomView.framework */;
+			productReference = 67783C721F1E8436001582F5 /* CameraView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -177,7 +177,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 67783C6C1F1E8436001582F5 /* Build configuration list for PBXProject "CustomView" */;
+			buildConfigurationList = 67783C6C1F1E8436001582F5 /* Build configuration list for PBXProject "CameraView" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -189,7 +189,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				67783C711F1E8436001582F5 /* CustomView */,
+				67783C711F1E8436001582F5 /* CameraView */,
 			);
 		};
 /* End PBXProject section */
@@ -210,7 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6732FA991F743B48002DC2EF /* Customview.pbobjc.m in Sources */,
-				67783C851F1E84B6001582F5 /* CustomView.m in Sources */,
+				67783C851F1E84B6001582F5 /* CameraView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,7 +341,7 @@
 					"GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Protobuf";
-				INFOPLIST_FILE = CustomView/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/CameraView/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.gomatcha.CustomView;
@@ -361,7 +361,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = "GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Protobuf";
-				INFOPLIST_FILE = CustomView/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/CameraView/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.gomatcha.CustomView;
@@ -373,7 +373,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		67783C6C1F1E8436001582F5 /* Build configuration list for PBXProject "CustomView" */ = {
+		67783C6C1F1E8436001582F5 /* Build configuration list for PBXProject "CameraView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				67783C781F1E8436001582F5 /* Debug */,
@@ -382,7 +382,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		67783C7A1F1E8436001582F5 /* Build configuration list for PBXNativeTarget "CustomView" */ = {
+		67783C7A1F1E8436001582F5 /* Build configuration list for PBXNativeTarget "CameraView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				67783C7B1F1E8436001582F5 /* Debug */,
