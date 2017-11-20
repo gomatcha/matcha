@@ -16,7 +16,7 @@
 @implementation CameraView
 
 + (void)load {
-    [MatchaViewController registerView:@"gomatcha.io/matcha/examples/customview CameraView" block:^(MatchaViewNode *node){
+    [MatchaViewController registerView:@"gomatcha.io/matcha/examples/cameraview CameraView" block:^(MatchaViewNode *node){
         return [[CameraView alloc] initWithViewNode:node];
     }];
 }

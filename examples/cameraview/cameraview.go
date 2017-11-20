@@ -32,7 +32,7 @@ func (v *CameraView) Build(ctx view.Context) view.Model {
 
 	return view.Model{
 		Painter:         &paint.Style{BackgroundColor: colornames.Black},
-		NativeViewName:  "gomatcha.io/matcha/examples/customview CameraView",
+		NativeViewName:  "gomatcha.io/matcha/examples/cameraview CameraView",
 		NativeViewState: state,
 		NativeFuncs: map[string]interface{}{
 			"OnCapture": func(data []byte) {
