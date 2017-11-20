@@ -27,7 +27,7 @@ repositories {
 
 dependencies {
     compile project(':matcha')
-    compile project(':customview')
+    compile project(':cameraview')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

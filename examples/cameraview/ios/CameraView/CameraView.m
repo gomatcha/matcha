@@ -1,5 +1,4 @@
 #import "CameraView.h"
-#import "Customview.pbobjc.h"
 #import <AVFoundation/AVFoundation.h>
 
 #pragma GCC diagnostic push
@@ -84,11 +83,12 @@
 }
 
 - (void)setNativeState:(NSData *)nativeState {
-    CustomViewProtoView *view = [CustomViewProtoView parseFromData:nativeState error:nil];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:nativeState options:NSJSONReadingAllowFragments error:nil];
+    BOOL frontCamera = ((NSNumber *)dict[@"frontCamera"]).boolValue;
     
     // Set the camera input.
-    if (view.frontCamera != self.frontCamera || self.captureInput == nil) {
-        self.frontCamera = view.frontCamera;
+    if (frontCamera != self.frontCamera || self.captureInput == nil) {
+        self.frontCamera = frontCamera;
         
         [self.captureSession beginConfiguration];
         
@@ -98,7 +98,7 @@
         
         AVCaptureDevice *camera = nil;
         for (AVCaptureDevice *i in [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {
-            if ((view.frontCamera && i.position == AVCaptureDevicePositionFront) || (!view.frontCamera && i.position == AVCaptureDevicePositionBack)) {
+            if ((frontCamera && i.position == AVCaptureDevicePositionFront) || (!frontCamera && i.position == AVCaptureDevicePositionBack)) {
                 camera = i;
                 break;
             }

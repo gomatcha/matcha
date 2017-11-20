@@ -7,7 +7,7 @@ import (
 	"gomatcha.io/matcha/comm"
 	applicationex "gomatcha.io/matcha/examples/application"
 	bridgeex "gomatcha.io/matcha/examples/bridge"
-	"gomatcha.io/matcha/examples/customview"
+	"gomatcha.io/matcha/examples/cameraview"
 	"gomatcha.io/matcha/examples/insta"
 	"gomatcha.io/matcha/examples/internal"
 	layoutex "gomatcha.io/matcha/examples/layout"
@@ -146,7 +146,7 @@ func (v *ExamplesView) Build(ctx view.Context) view.Model {
 			{"Constraint Layout", true, "Example of a complex layout using constraints. \n\n\ngomatcha.io/matcha/examples/layout NewConstraintsView", layoutex.NewConstraintsView()},
 			{"Table Layout", true, "Example of a vertical (bottom to top) table and a horizontal (left to right) table layout. \n\n\ngomatcha.io/matcha/examples/layout NewTableView", layoutex.NewTableView()},
 			{"Native Bridge", true, "Example of how to call native functions from Go, and Go functions from native code. See gomatcha.io/guide/native-bridge/ for more details. \n\n\ngomatcha.io/matcha/examples/bridge NewBridgeView", bridgeex.NewBridgeView()},
-			{"Custom Views", true, "Example of creating a custom view that displays the user's camera. \n\n\ngomatcha.io/matcha/examples/customview NewView", customview.NewView()},
+			{"Custom Views", true, "Example of creating a custom view that displays the user's camera. \n\n\ngomatcha.io/matcha/examples/cameraview NewView", cameraview.NewView()},
 		},
 		"Views": {
 			{"Alerts", true, "Example of how to display alerts. \n\n\ngomatcha.io/matcha/examples/view NewAlertView", viewex.NewAlertView()},

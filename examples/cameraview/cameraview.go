@@ -1,16 +1,19 @@
-package customview
+package cameraview
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"image"
 
 	"golang.org/x/image/colornames"
-	protocustomview "gomatcha.io/matcha/examples/customview/proto"
-	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/paint"
 	"gomatcha.io/matcha/view"
 )
+
+type nativeState struct {
+	FrontCamera bool `json:"frontCamera"`
+}
 
 type CameraView struct {
 	view.Embed
@@ -25,12 +28,12 @@ func NewCameraView() *CameraView {
 
 // Build implements view.View.
 func (v *CameraView) Build(ctx view.Context) view.Model {
+	state, _ := json.Marshal(&nativeState{FrontCamera: v.FrontCamera})
+
 	return view.Model{
-		Painter:        &paint.Style{BackgroundColor: colornames.Black},
-		NativeViewName: "gomatcha.io/matcha/examples/customview CameraView",
-		NativeViewState: internal.MarshalProtobuf(&protocustomview.View{
-			FrontCamera: v.FrontCamera,
-		}),
+		Painter:         &paint.Style{BackgroundColor: colornames.Black},
+		NativeViewName:  "gomatcha.io/matcha/examples/customview CameraView",
+		NativeViewState: state,
 		NativeFuncs: map[string]interface{}{
 			"OnCapture": func(data []byte) {
 				buf := bytes.NewBuffer(data)

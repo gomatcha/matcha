@@ -1,3 +1,0 @@
-include ':customview'
-include ':matcha'
-project(':matcha').projectDir = new File("${System.env.GOPATH}/src/gomatcha.io/matcha/android/MatchaLib/matcha")
