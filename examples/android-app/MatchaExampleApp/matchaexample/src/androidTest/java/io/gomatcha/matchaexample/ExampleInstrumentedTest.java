@@ -1,4 +1,4 @@
-package io.gomatcha.sampleapp;
+package io.gomatcha.matchaexample;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

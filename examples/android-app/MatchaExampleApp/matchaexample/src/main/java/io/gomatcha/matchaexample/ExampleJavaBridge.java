@@ -1,4 +1,4 @@
-package io.gomatcha.sampleapp;
+package io.gomatcha.matchaexample;
 
 import io.gomatcha.bridge.Bridge;
 import io.gomatcha.bridge.GoValue;

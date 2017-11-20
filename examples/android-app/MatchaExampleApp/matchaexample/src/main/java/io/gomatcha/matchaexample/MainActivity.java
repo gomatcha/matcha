@@ -1,9 +1,7 @@
-package io.gomatcha.sampleapp;
+package io.gomatcha.matchaexample;
 
-import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.Matcha;

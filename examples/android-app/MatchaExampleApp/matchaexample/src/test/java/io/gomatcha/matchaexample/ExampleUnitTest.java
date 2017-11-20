@@ -1,4 +1,4 @@
-package io.gomatcha.sampleapp;
+package io.gomatcha.matchaexample;
 
 import org.junit.Test;
 
