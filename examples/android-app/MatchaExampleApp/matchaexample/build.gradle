@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "io.gomatcha.sampleapp"
+        applicationId "io.gomatcha.matchaexample"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1

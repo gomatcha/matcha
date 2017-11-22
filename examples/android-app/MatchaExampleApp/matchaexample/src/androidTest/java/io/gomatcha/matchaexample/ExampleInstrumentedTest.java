@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("io.gomatcha.sampleapp", appContext.getPackageName());
+        assertEquals("io.gomatcha.matchaexample", appContext.getPackageName());
     }
 }

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             // Load in example classes.
             Class.forName("io.gomatcha.cameraview.CameraView");
-            Class.forName("io.gomatcha.sampleapp.ExampleJavaBridge");
+            Class.forName("io.gomatcha.matchaexample.ExampleJavaBridge");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

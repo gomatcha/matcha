@@ -7,14 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6737514F1FC39F7F0058719D /* Matcha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 673751521FC39F7F0058719D /* Matcha.framework */; };
+		673751501FC39F7F0058719D /* MatchaBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 673751531FC39F7F0058719D /* MatchaBridge.framework */; };
+		673751511FC39F7F0058719D /* Protobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 673751541FC39F7F0058719D /* Protobuf.framework */; };
 		67783C771F1E8436001582F5 /* CameraView.h in Headers */ = {isa = PBXBuildFile; fileRef = 67783C751F1E8436001582F5 /* CameraView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		67783C811F1E847A001582F5 /* Matcha.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67783C7E1F1E847A001582F5 /* Matcha.framework */; };
-		67783C821F1E847A001582F5 /* MatchaBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67783C7F1F1E847A001582F5 /* MatchaBridge.framework */; };
-		67783C831F1E847A001582F5 /* Protobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67783C801F1E847A001582F5 /* Protobuf.framework */; };
 		67783C851F1E84B6001582F5 /* CameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67783C841F1E84B6001582F5 /* CameraView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		673751521FC39F7F0058719D /* Matcha.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Matcha.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		673751531FC39F7F0058719D /* MatchaBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MatchaBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		673751541FC39F7F0058719D /* Protobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Protobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67783C721F1E8436001582F5 /* CameraView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CameraView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67783C751F1E8436001582F5 /* CameraView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraView.h; sourceTree = "<group>"; };
 		67783C761F1E8436001582F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -29,9 +32,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67783C811F1E847A001582F5 /* Matcha.framework in Frameworks */,
-				67783C821F1E847A001582F5 /* MatchaBridge.framework in Frameworks */,
-				67783C831F1E847A001582F5 /* Protobuf.framework in Frameworks */,
+				6737514F1FC39F7F0058719D /* Matcha.framework in Frameworks */,
+				673751501FC39F7F0058719D /* MatchaBridge.framework in Frameworks */,
+				673751511FC39F7F0058719D /* Protobuf.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +71,9 @@
 		67783C7D1F1E847A001582F5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				673751521FC39F7F0058719D /* Matcha.framework */,
+				673751531FC39F7F0058719D /* MatchaBridge.framework */,
+				673751541FC39F7F0058719D /* Protobuf.framework */,
 				67783C7E1F1E847A001582F5 /* Matcha.framework */,
 				67783C7F1F1E847A001582F5 /* MatchaBridge.framework */,
 				67783C801F1E847A001582F5 /* Protobuf.framework */,
