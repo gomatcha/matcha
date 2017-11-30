@@ -1,0 +1,5 @@
+rootProject.name = 'CameraViewRoot'
+include ':CameraView'
+
+include ':Matcha'
+project(':Matcha').projectDir = new File("${System.env.GOPATH}/src/gomatcha.io/matcha/android/Matcha/Matcha")

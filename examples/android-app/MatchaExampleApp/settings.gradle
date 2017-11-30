@@ -1,5 +1,0 @@
-include ':matchaexample'
-include ':matcha'
-project(':matcha').projectDir = new File("${System.env.GOPATH}/src/gomatcha.io/matcha/android/MatchaLib/matcha")
-include ':cameraview'
-project(':cameraview').projectDir = new File("${System.env.GOPATH}/src/gomatcha.io/matcha/examples/cameraview/android/CameraViewLib/cameraview")

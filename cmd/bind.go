@@ -341,7 +341,7 @@ func Bind(flags *Flags, args []string) error {
 		outputDir := flags.BuildO
 
 		// Generate binding code and java source code only when processing the first package.
-		jniRootOutputPath := filepath.Join(outputDir, "android", "Matcha", "Matcha", "jniLibs")
+		jniRootOutputPath := filepath.Join(outputDir, "android", "Matcha", "Matcha", "src", "main", "jniLibs")
 		jniWorkPaths := []string{}
 		jniOutputPaths := []string{}
 		for _, arch := range androidArchs {
