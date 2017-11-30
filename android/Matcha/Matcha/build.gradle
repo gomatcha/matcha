@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 16
@@ -22,15 +22,12 @@ android {
 }
 
 repositories{
-    mavenCentral()
-    flatDir {
-        dirs '../../'
-    }
+    jcenter()
 }
 
 dependencies {
-    compile name:'protobuf-java', version:'3.3.0', ext:'jar'
-    compile name:'matchabridge', ext:'aar'
+    //compile fileTree(dir: "../../", include: 'protobuf-java-3.3.0.jar')
+    //compile fileTree(dir: "../../", include: 'matchabridge.aar')
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

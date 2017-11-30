@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "io.gomatcha.matchaexample"
         minSdkVersion 16
@@ -20,9 +20,6 @@ android {
 }
 
 repositories {
-    flatDir {
-        dirs "${System.env.GOPATH}/src/gomatcha.io/matcha/android"
-    }
 }
 
 dependencies {
