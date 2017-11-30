@@ -281,9 +281,9 @@ func Bind(flags *Flags, args []string) error {
 
 		// Create output dir
 		outputDir := flags.BuildO
-		if outputDir == "" {
-			outputDir = "Matcha-iOS"
-		}
+		// if outputDir == "" {
+		// 	outputDir = "Matcha-iOS"
+		// }
 
 		// if !flags.BuildBinary {
 		// 	if err := RemoveAll(flags, outputDir); err != nil {
@@ -354,20 +354,29 @@ func Bind(flags *Flags, args []string) error {
 			return err
 		}
 
-		// Make aar output file.
-		aarDirPath := filepath.Join(workOutputDir, "MatchaBridge")
-		aarPath := filepath.Join(workOutputDir, "MatchaBridge", "matchabridge.aar")
-		if err := Mkdir(flags, aarDirPath); err != nil {
-			return err
-		}
+		outputDir := flags.BuildO
+		// // Make aar output file.
+		// aarDirPath := filepath.Join(workOutputDir, "MatchaBridge")
+		// aarPath := filepath.Join(workOutputDir, "MatchaBridge", "matchabridge.aar")
+		// if err := Mkdir(flags, aarDirPath); err != nil {
+		// 	return err
+		// }
 
 		// Generate binding code and java source code only when processing the first package.
+		jniRootOutputPath := filepath.Join(outputDir, "android", "Matcha", "Matcha", "jniLibs")
+		jniWorkPaths := []string{}
+		jniOutputPaths := []string{}
 		for _, arch := range androidArchs {
 			env, err := AndroidEnv(flags, arch)
 			if err != nil {
 				return err
 			}
 			env = append(env, "GOPATH="+gopathDir+string(filepath.ListSeparator)+GoEnv(flags, "GOPATH"))
+
+			jniWorkPath := filepath.Join(androidDir, "src", "main", "jniLibs", GetAndroidABI(arch), "libgojni.so")
+			jniOutputPath := filepath.Join(jniRootOutputPath, GetAndroidABI(arch), "libgojni.so")
+			jniWorkPaths = append(jniWorkPaths, jniWorkPath)
+			jniOutputPaths = append(jniOutputPaths, jniOutputPath)
 
 			err = GoBuild(flags,
 				[]string{mainPath},
@@ -376,26 +385,39 @@ func Bind(flags *Flags, args []string) error {
 				matchaPkgPath,
 				tempdir,
 				"-buildmode=c-shared",
-				"-o="+filepath.Join(androidDir, "src/main/jniLibs/"+GetAndroidABI(arch)+"/libgojni.so"),
+				"-o="+jniWorkPath,
 			)
 			if err != nil {
 				return err
 			}
 		}
 
-		if err := BuildAAR(flags, androidDir, pkgs, androidArchs, tempdir, aarPath); err != nil {
+		// Create classes.jar
+		classesWorkPath := filepath.Join(workOutputDir, "classes.jar")
+		classesOutputPath := filepath.Join(outputDir, "android", "Matcha", "Matcha", "libs", "classes.jar")
+		classesBuf := &bytes.Buffer{}
+		if err := BuildJar(flags, classesBuf, filepath.Join(androidDir, "src", "main", "java"), tempdir); err != nil {
 			return err
 		}
 
-		// Create output dir
-		outputDir := flags.BuildO
-		if outputDir == "" {
-			outputDir = "Matcha-iOS"
+		if err := WriteFile(flags, classesWorkPath, classesBuf); err != nil {
+			return err
 		}
 
-		// Copy binary into place.
-		if err := CopyFile(flags, filepath.Join(outputDir, "android", "matchabridge.aar"), aarPath); err != nil {
+		// Copy files into place
+		if err := CopyFile(flags, classesOutputPath, classesWorkPath); err != nil {
 			return err
+		}
+
+		if err := RemoveAll(flags, jniRootOutputPath); err != nil {
+			return err
+		}
+
+		for idx, jniWorkPath := range jniWorkPaths {
+			jniOutputPath := jniOutputPaths[idx]
+			if err := CopyFile(flags, jniOutputPath, jniWorkPath); err != nil {
+				return err
+			}
 		}
 	}
 	return nil
