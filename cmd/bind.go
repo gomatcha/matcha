@@ -341,7 +341,7 @@ func Bind(flags *Flags, args []string) error {
 		outputDir := flags.BuildO
 
 		// Generate binding code and java source code only when processing the first package.
-		jniRootOutputPath := filepath.Join(outputDir, "android", "Matcha", "Matcha", "src", "main", "jniLibs")
+		jniRootOutputPath := filepath.Join(outputDir, "android", "Matcha", "MatchaBridge", "src", "main", "jniLibs")
 		jniWorkPaths := []string{}
 		jniOutputPaths := []string{}
 		for _, arch := range androidArchs {
@@ -372,7 +372,7 @@ func Bind(flags *Flags, args []string) error {
 
 		// Create classes.jar
 		classesWorkPath := filepath.Join(workOutputDir, "classes.jar")
-		classesOutputPath := filepath.Join(outputDir, "android", "Matcha", "Matcha", "libs", "classes.jar")
+		classesOutputPath := filepath.Join(outputDir, "android", "Matcha", "MatchaBridge", "libs", "classes.jar")
 		classesBuf := &bytes.Buffer{}
 		if err := BuildJar(flags, classesBuf, filepath.Join(androidDir, "src", "main", "java"), tempdir); err != nil {
 			return err

@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    buildToolsVersion "27.0.1"
 
     defaultConfig {
         minSdkVersion 16
@@ -20,15 +20,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
-    compile project(':MatchaBridge')
-    compile 'com.makeramen:roundedimageview:2.3.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:26.+'
+    testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
-    testCompile 'junit:junit:4.12'
 }
