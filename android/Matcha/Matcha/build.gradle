@@ -21,13 +21,7 @@ android {
     }
 }
 
-repositories{
-    jcenter()
-}
-
 dependencies {
-    //compile fileTree(dir: "../../", include: 'protobuf-java-3.3.0.jar')
-    //compile fileTree(dir: "../../", include: 'matchabridge.aar')
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
