@@ -232,6 +232,28 @@ func CopyFile(f *Flags, dst, src string) error {
 // 	return RunCmd(f, "", cmd)
 // }
 
+func Rename(f *Flags, src, dst string) error {
+	if f.ShouldPrint() {
+		f.Logger.Printf("mv %s %s\n", src, dst)
+	}
+
+	disablePrint := f.disablePrint
+	f.disablePrint = true
+	defer func() {
+		f.disablePrint = disablePrint
+	}()
+
+	if err := Mkdir(f, filepath.Dir(dst)); err != nil {
+		return err
+	}
+	if f.ShouldRun() {
+		if err := os.Rename(src, dst); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func Mkdir(f *Flags, dir string) error {
 	if f.ShouldPrint() {
 		f.Logger.Printf("mkdir -p %s\n", dir)

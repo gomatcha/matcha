@@ -281,27 +281,11 @@ func Bind(flags *Flags, args []string) error {
 
 		// Create output dir
 		outputDir := flags.BuildO
-		// if outputDir == "" {
-		// 	outputDir = "Matcha-iOS"
-		// }
-
-		// if !flags.BuildBinary {
-		// 	if err := RemoveAll(flags, outputDir); err != nil {
-		// 		return err
-		// 	}
-
-		// 	// Copy output directory into place.
-		// 	if err := CopyDir(flags, outputDir, workOutputDir); err != nil {
-		// 		return err
-		// 	}
-		// } else {
 
 		// Copy binary into place.
-		if err := CopyFile(flags, filepath.Join(outputDir, "ios", "MatchaBridge", "MatchaBridge", "MatchaBridge.a"), binaryPath); err != nil {
+		if err := Rename(flags, binaryPath, filepath.Join(outputDir, "ios", "MatchaBridge", "MatchaBridge", "MatchaBridge.a")); err != nil {
 			return err
 		}
-
-		// }
 	}
 	if _, ok := targets["android"]; ok {
 		// Validate Android installation
@@ -355,12 +339,6 @@ func Bind(flags *Flags, args []string) error {
 		}
 
 		outputDir := flags.BuildO
-		// // Make aar output file.
-		// aarDirPath := filepath.Join(workOutputDir, "MatchaBridge")
-		// aarPath := filepath.Join(workOutputDir, "MatchaBridge", "matchabridge.aar")
-		// if err := Mkdir(flags, aarDirPath); err != nil {
-		// 	return err
-		// }
 
 		// Generate binding code and java source code only when processing the first package.
 		jniRootOutputPath := filepath.Join(outputDir, "android", "Matcha", "Matcha", "jniLibs")
@@ -404,18 +382,17 @@ func Bind(flags *Flags, args []string) error {
 			return err
 		}
 
-		// Copy files into place
-		if err := CopyFile(flags, classesOutputPath, classesWorkPath); err != nil {
+		// Move files into place
+		if err := Rename(flags, classesWorkPath, classesOutputPath); err != nil {
 			return err
 		}
 
 		if err := RemoveAll(flags, jniRootOutputPath); err != nil {
 			return err
 		}
-
 		for idx, jniWorkPath := range jniWorkPaths {
 			jniOutputPath := jniOutputPaths[idx]
-			if err := CopyFile(flags, jniOutputPath, jniWorkPath); err != nil {
+			if err := Rename(flags, jniWorkPath, jniOutputPath); err != nil {
 				return err
 			}
 		}
