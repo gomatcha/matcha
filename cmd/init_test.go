@@ -171,11 +171,11 @@ ls $ANDROID_HOME/platforms
 test -f $ANDROID_HOME/platforms/android-21/android.jar
 PWD=$WORK/android/src/main/java javac -d $WORK/javac-output -source 1.7 -target 1.7 -bootclasspath $ANDROID_HOME/platforms/android-21/android.jar *.java
 write $WORK/matcha-android/classes.jar
-mv $WORK/matcha-android/classes.jar $GOPATH/src/gomatcha.io/matcha/android/Matcha/Matcha/libs/classes.jar
-rm -r -f $GOPATH/src/gomatcha.io/matcha/android/Matcha/Matcha/jniLibs
-mv $WORK/android/src/main/jniLibs/armeabi-v7a/libgojni.so $GOPATH/src/gomatcha.io/matcha/android/Matcha/Matcha/jniLibs/armeabi-v7a/libgojni.so
-mv $WORK/android/src/main/jniLibs/arm64-v8a/libgojni.so $GOPATH/src/gomatcha.io/matcha/android/Matcha/Matcha/jniLibs/arm64-v8a/libgojni.so
-mv $WORK/android/src/main/jniLibs/x86/libgojni.so $GOPATH/src/gomatcha.io/matcha/android/Matcha/Matcha/jniLibs/x86/libgojni.so
-mv $WORK/android/src/main/jniLibs/x86_64/libgojni.so $GOPATH/src/gomatcha.io/matcha/android/Matcha/Matcha/jniLibs/x86_64/libgojni.so
+mv $WORK/matcha-android/classes.jar $GOPATH/src/gomatcha.io/matcha/android/Matcha/MatchaBridge/libs/classes.jar
+rm -r -f $GOPATH/src/gomatcha.io/matcha/android/Matcha/MatchaBridge/src/main/jniLibs
+mv $WORK/android/src/main/jniLibs/armeabi-v7a/libgojni.so $GOPATH/src/gomatcha.io/matcha/android/Matcha/MatchaBridge/src/main/jniLibs/armeabi-v7a/libgojni.so
+mv $WORK/android/src/main/jniLibs/arm64-v8a/libgojni.so $GOPATH/src/gomatcha.io/matcha/android/Matcha/MatchaBridge/src/main/jniLibs/arm64-v8a/libgojni.so
+mv $WORK/android/src/main/jniLibs/x86/libgojni.so $GOPATH/src/gomatcha.io/matcha/android/Matcha/MatchaBridge/src/main/jniLibs/x86/libgojni.so
+mv $WORK/android/src/main/jniLibs/x86_64/libgojni.so $GOPATH/src/gomatcha.io/matcha/android/Matcha/MatchaBridge/src/main/jniLibs/x86_64/libgojni.so
 rm -r -f $WORK
 `
