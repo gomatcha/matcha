@@ -1,6 +1,8 @@
 package io.gomatcha.cameraview;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.util.Log;
@@ -11,6 +13,11 @@ import android.widget.Button;
 
 import com.google.gson.Gson;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+
+import io.gomatcha.bridge.GoValue;
 import io.gomatcha.matcha.MatchaChildView;
 import io.gomatcha.matcha.MatchaLayout;
 import io.gomatcha.matcha.MatchaView;
@@ -96,7 +103,23 @@ public class CameraView extends MatchaChildView implements View.OnClickListener 
     // OnClickListener
 
     public void onClick(View v) {
-        Log.v("Matcha", "OnClick");
+        camera.takePicture(null, null, new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+
+                // TODO(KD): Shouldn't copy over entire jpeg.
+                Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length);
+                int width = Math.round((float) 0.25 * b.getWidth());
+                int height = Math.round((float) 0.25 * b.getHeight());
+                b = Bitmap.createScaledBitmap(b, width, height, true);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                b.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+                byte[] byteArray = stream.toByteArray();
+
+                CameraView.this.viewNode.call("OnCapture", GoValue.WithByteArray(byteArray));
+            }
+        });
     }
 
     //
