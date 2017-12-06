@@ -33,7 +33,6 @@ func (v *View) Build(ctx view.Context) view.Model {
 
 	label := view.NewTextView()
 	label.String = "Camera view:"
-	label.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
 	label.Style.SetFont(text.DefaultFont(18))
 	g := l.Add(label, func(s *constraint.Solver) {
 		s.Top(15)
@@ -93,6 +92,6 @@ func (v *View) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
-		Painter:  &paint.Style{BackgroundColor: colornames.Green},
+		Painter:  &paint.Style{BackgroundColor: colornames.White},
 	}
 }

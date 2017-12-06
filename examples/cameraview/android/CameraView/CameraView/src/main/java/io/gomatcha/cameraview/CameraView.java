@@ -4,24 +4,33 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
+import android.view.Surface;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 
 import io.gomatcha.matcha.MatchaChildView;
+import io.gomatcha.matcha.MatchaLayout;
 import io.gomatcha.matcha.MatchaView;
 import io.gomatcha.matcha.MatchaViewNode;
 
+import static android.content.Context.WINDOW_SERVICE;
+
 public class CameraView extends MatchaChildView {
     Camera camera;
+    Camera.CameraInfo cameraInfo;
     CameraPreview preview;
     MatchaViewNode viewNode;
-    boolean visible;
     NativeState nativeState;
+    boolean visible;
+    boolean frontCamera;
 
     static {
         MatchaView.registerView("gomatcha.io/matcha/examples/cameraview CameraView", new MatchaView.ViewFactory() {
@@ -34,12 +43,13 @@ public class CameraView extends MatchaChildView {
 
     public CameraView(Context context, MatchaViewNode node) {
         super(context);
-        Log.v("x", "New camera");
         this.setClipChildren(true);
         viewNode = node;
 
         preview = new CameraPreview(context);
         addView(preview);
+
+        reloadCameraLayout();
     }
 
     class NativeState {
@@ -51,54 +61,100 @@ public class CameraView extends MatchaChildView {
     public void setNativeState(byte[] nativeState) {
         super.setNativeState(nativeState);
 
-        Log.v("x", "camera set native state");
         Gson gson = new Gson();
         this.nativeState = gson.fromJson(new String(nativeState), NativeState.class);
         reloadCamera();
-        Log.v("x", "camera did set native state");
     }
     
     @Override
     public void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
         reloadCamera();
-        Log.v("x", "OnVisibilityChanged" + visibility);
     }
-    
+
     @Override
-    public void onWindowVisibilityChanged(int visibility) {
-        super.onWindowVisibilityChanged(visibility);
-        reloadCamera();
-        Log.v("x", "OnWindowVisibilityChanged" + visibility);
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        // Delay a bit or the start preview fails.
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                reloadCamera();
+            }
+        }, 100);
     }
 
+    @Override
+    public void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        reloadCameraLayout();
+        super.onLayout(changed, left, top, right, bottom);
+    }
 
-    
+    void reloadCameraLayout() {
+        MatchaLayout.LayoutParams params = new MatchaLayout.LayoutParams();
+        if (camera != null) {
+            float width = getWidth();
+            float height = getHeight();
+            
+            Camera.Size cameraSize = camera.getParameters().getPreviewSize();
+            float cameraHeight = cameraSize.height;
+            float cameraWidth = cameraSize.width;
+            int cameraOrientation = CameraView.cameraDisplayOrientation(getContext(), cameraInfo);
+            if (cameraOrientation == 90 || cameraOrientation == 270) {
+                float temp = cameraWidth;
+                cameraWidth = cameraHeight;
+                cameraHeight = temp;
+            }
+            
+            if (cameraWidth/cameraHeight > width/height) {
+                float ratio = width / cameraWidth;
+                float previewHeight = height * ratio;
+
+                params.left = 0;
+                params.right = width;
+                params.top = (height - previewHeight) / 2;
+                params.bottom = params.top + previewHeight;
+            } else {
+                float ratio = height / cameraHeight;
+                float previewWidth = width * ratio;
+
+                params.top = 0;
+                params.bottom = height;
+                params.left = (width - previewWidth) / 2;
+                params.right = params.left + previewWidth;
+            }
+        }
+        preview.setLayoutParams(params);
+    }
+
     void reloadCamera() {
-        Log.v("x", "reloadCamera" + visible + this.visible);
-
         boolean visible = isShown() && hasWindowFocus();
-        // if (visible == this.visible) {
-        //     return;
-        // }
-        // this.visible = visible;
-        // Log.v("x", "camera!!!" + visible + nativeState.frontCamera);
-        
+        if (visible == this.visible && nativeState.frontCamera == frontCamera) {
+            return;
+        }
+        this.visible = visible;
+        this.frontCamera = nativeState.frontCamera;
+
         // Remove old camera
         if (camera != null) {
             preview.setCamera(null, null);
             camera.release();
             camera = null;
+            cameraInfo = null;
         }
 
         // Add new camera
         if (visible && nativeState != null) {
-            Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();;
-            camera = getCameraInstance(nativeState.frontCamera, info);
-            preview.setCamera(camera, info);
+            cameraInfo = new android.hardware.Camera.CameraInfo();;
+            camera = getCameraInstance(nativeState.frontCamera, cameraInfo);
+            preview.setCamera(camera, cameraInfo);
         }
+
+        reloadCameraLayout();
     }
-    
+
     public Camera getCameraInstance(boolean frontCamera, Camera.CameraInfo info) {
         //String[] permissions = {"android.permission.CAMERA"};
         //if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -128,5 +184,25 @@ public class CameraView extends MatchaChildView {
             // Camera is not available (in use or does not exist)
         }
         return c; // returns null if camera is unavailable
+    }
+
+    static int cameraDisplayOrientation(Context context, Camera.CameraInfo cameraInfo) {
+        WindowManager manager = (WindowManager)context.getSystemService(WINDOW_SERVICE);
+        int rotation = manager.getDefaultDisplay().getRotation();
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0: degrees = 0; break;
+            case Surface.ROTATION_90: degrees = 90; break;
+            case Surface.ROTATION_180: degrees = 180; break;
+            case Surface.ROTATION_270: degrees = 270; break;
+        }
+        int result;
+        if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (cameraInfo.orientation + degrees) % 360;
+            result = (360 - result) % 360;  // compensate the mirror
+        } else {  // back-facing
+            result = (cameraInfo.orientation - degrees + 360) % 360;
+        }
+        return result;
     }
 }

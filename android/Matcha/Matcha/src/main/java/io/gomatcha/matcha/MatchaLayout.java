@@ -62,12 +62,12 @@ public class MatchaLayout extends ViewGroup {
         return x;
     }
 
-    static class LayoutParams extends ViewGroup.LayoutParams {
-        double left;
-        double top;
-        double right;
-        double bottom;
-        boolean full;
+    public static class LayoutParams extends ViewGroup.LayoutParams {
+        public double left;
+        public double top;
+        public double right;
+        public double bottom;
+        public boolean full;
         public LayoutParams() {
             super(0, 0);
         }
