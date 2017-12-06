@@ -1,18 +1,13 @@
 package io.gomatcha.cameraview;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
+import android.widget.Button;
 
 import com.google.gson.Gson;
 
@@ -20,15 +15,17 @@ import io.gomatcha.matcha.MatchaChildView;
 import io.gomatcha.matcha.MatchaLayout;
 import io.gomatcha.matcha.MatchaView;
 import io.gomatcha.matcha.MatchaViewNode;
+import io.gomatcha.matcha.Util;
 
 import static android.content.Context.WINDOW_SERVICE;
 
-public class CameraView extends MatchaChildView {
+public class CameraView extends MatchaChildView implements View.OnClickListener {
     Camera camera;
     Camera.CameraInfo cameraInfo;
     CameraPreview preview;
     MatchaViewNode viewNode;
     NativeState nativeState;
+    CameraButton button;
     boolean visible;
     boolean frontCamera;
 
@@ -48,6 +45,10 @@ public class CameraView extends MatchaChildView {
 
         preview = new CameraPreview(context);
         addView(preview);
+
+        button = new CameraButton(context);
+        button.setOnClickListener(this);
+        addView(button);
 
         reloadCameraLayout();
     }
@@ -92,6 +93,14 @@ public class CameraView extends MatchaChildView {
         super.onLayout(changed, left, top, right, bottom);
     }
 
+    // OnClickListener
+
+    public void onClick(View v) {
+        Log.v("Matcha", "OnClick");
+    }
+
+    //
+
     void reloadCameraLayout() {
         MatchaLayout.LayoutParams params = new MatchaLayout.LayoutParams();
         if (camera != null) {
@@ -127,6 +136,13 @@ public class CameraView extends MatchaChildView {
             }
         }
         preview.setLayoutParams(params);
+
+        MatchaLayout.LayoutParams buttonParams = new MatchaLayout.LayoutParams();
+        buttonParams.top = getHeight() - Util.dipToPixels(getContext(),60);
+        buttonParams.left = (getWidth() - Util.dipToPixels(getContext(),50)) / 2;
+        buttonParams.bottom = buttonParams.top + Util.dipToPixels(getContext(),50);
+        buttonParams.right = buttonParams.left + Util.dipToPixels(getContext(),50);
+        button.setLayoutParams(buttonParams);
     }
 
     void reloadCamera() {

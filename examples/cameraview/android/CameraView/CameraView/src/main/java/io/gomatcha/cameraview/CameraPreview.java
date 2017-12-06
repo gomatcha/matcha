@@ -3,15 +3,8 @@ package io.gomatcha.cameraview;
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.Log;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.WindowManager;
-
-import java.io.IOException;
-import java.util.List;
-
-import static android.content.Context.WINDOW_SERVICE;
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder mHolder;
