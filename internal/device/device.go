@@ -1,7 +1,6 @@
 package device
 
 import (
-	"fmt"
 	"math"
 
 	"gomatcha.io/matcha/bridge"

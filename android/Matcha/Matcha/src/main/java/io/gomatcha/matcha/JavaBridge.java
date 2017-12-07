@@ -16,6 +16,7 @@ import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Choreographer;
+import android.view.Display;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
@@ -141,15 +142,17 @@ class JavaBridge {
     }
 
     public GoValue getPropertiesForResource(String path) {
-        Log.v("Matcha", path);
         Resources res = context.getResources();
         int id = res.getIdentifier(path, "drawable", context.getPackageName());
 
-        Drawable drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_MEDIUM);
+        Bitmap bitmap = BitmapFactory.decodeResource(res, id);
+        double scale = ((float)bitmap.getDensity())/DisplayMetrics.DENSITY_DEFAULT;
+        scale = 1;
+        Drawable drawable = res.getDrawableForDensity(id, DisplayMetrics.DENSITY_DEFAULT);
         Proto.ImageProperties.Builder builder = Proto.ImageProperties.newBuilder()
                 .setWidth(drawable.getMinimumWidth())
                 .setHeight(drawable.getMinimumHeight())
-                .setScale(1); // TODO(KD): Figure out which image density was selected. https://developer.android.com/guide/practices/screens_support.html
+                .setScale(scale);
 
         return new GoValue(builder.build().toByteArray());
     }
