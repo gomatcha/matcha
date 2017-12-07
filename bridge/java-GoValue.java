@@ -50,7 +50,7 @@ public class GoValue {
    public static GoValue WithLong(long v) {
       return new GoValue(matchaGoLong(v), false);
    }
-   public static GoValue WithDouble(long v) {
+   public static GoValue WithDouble(double v) {
       return new GoValue(matchaGoDouble(v), false);
    }
    public static GoValue WithString(String v) {

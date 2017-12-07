@@ -1,6 +1,9 @@
 package device
 
 import (
+	"fmt"
+	"math"
+
 	"gomatcha.io/matcha/bridge"
 )
 
@@ -11,3 +14,7 @@ func init() {
 }
 
 var ScreenScale = 1.0
+
+func RoundToScreenScale(v float64) float64 {
+	return math.Floor(v*ScreenScale+0.5) / ScreenScale
+}

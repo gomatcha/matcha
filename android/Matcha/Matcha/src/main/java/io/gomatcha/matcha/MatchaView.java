@@ -156,7 +156,7 @@ public class MatchaView extends RelativeLayout {
     synchronized static MatchaChildView createView(String name, Context context, MatchaViewNode node) {
         ViewFactory factory = viewRegistry.get(name);
         if (factory == null) {
-            Log.v("x", "Cannot find corresponding view for node: " + name);
+            Log.v("Matcha", "Cannot find corresponding view for node: " + name);
             return new MatchaUnknownView(context, node);
         }
         return factory.createView(context, node);

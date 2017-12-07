@@ -67,6 +67,9 @@ class JavaBridge {
         javaBridge.didChangeOrientation();
         Bridge.singleton().put("", javaBridge);
 
+        double displayDensity = (double)context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+        GoValue.withFunc("gomatcha.io/matcha/internal/device setScreenScale").call("", GoValue.WithDouble(displayDensity));
+
         // ShakeDetector initialization
         javaBridge.mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         javaBridge.mAccelerometer = javaBridge.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -120,7 +123,7 @@ class JavaBridge {
 
             return new GoValue(p.toByteArray());
         } catch (InvalidProtocolBufferException e) {
-            Log.v("x", "exception" + e);
+            Log.v("Matcha", "exception" + e);
             PbLayout.Point p = Protobuf.toProtobuf(new PointF(0, 0));
             return new GoValue(p.toByteArray());
         }
@@ -138,7 +141,7 @@ class JavaBridge {
     }
 
     public GoValue getPropertiesForResource(String path) {
-        Log.v("x", path);
+        Log.v("Matcha", path);
         Resources res = context.getResources();
         int id = res.getIdentifier(path, "drawable", context.getPackageName());
 

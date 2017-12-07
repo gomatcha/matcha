@@ -321,6 +321,7 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) *solution {
 
 		// Generate the range from constraint
 		val := i.anchor.value(sys)
+
 		var r _range
 		switch i.comparison {
 		case equal:
@@ -395,14 +396,10 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) *solution {
 		g = ctx.LayoutChild(s.index, layout.Pt(cr.width.min, cr.height.min), layout.Pt(cr.width.max, cr.height.max))
 		width = g.Width()
 		height = g.Height()
-
 		if s.debug {
 			fmt.Printf("constraint - Child size: %v\n", layout.Pt(width, height))
 		}
 
-		// Round width and height to screen scale. // TODO(KD): Is this necessary????
-		width = math.Floor(width*device.ScreenScale+0.5) / device.ScreenScale
-		height = math.Floor(height*device.ScreenScale+0.5) / device.ScreenScale
 		if width < cr.width.min {
 			width = cr.width.min
 		}
@@ -437,8 +434,9 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) *solution {
 	g.ZIndex = sys.zIndex
 	sys.zIndex += 1
 
-	// Update the guide and the system.
-	g.Frame = layout.Rt(centerX-width/2, centerY-height/2, centerX+width/2, centerY+height/2)
+	// Update the guide and the system, rounding to screen scale.
+	g.Frame = layout.Rt(device.RoundToScreenScale(centerX-width/2), device.RoundToScreenScale(centerY-height/2), device.RoundToScreenScale(centerX+width/2), device.RoundToScreenScale(centerY+height/2))
+
 	if s.index == rootId {
 		sys.Guide.matchaGuide = &g
 	} else {

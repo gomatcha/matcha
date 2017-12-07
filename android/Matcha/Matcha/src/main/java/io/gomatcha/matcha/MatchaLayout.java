@@ -49,8 +49,8 @@ public class MatchaLayout extends ViewGroup {
                 v.measure(MeasureSpec.makeMeasureSpec(right-left, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(bottom-top, MeasureSpec.AT_MOST));
                 v.layout(0, 0, right-left, bottom-top);
             } else {
-                v.measure(MeasureSpec.makeMeasureSpec((int)(matchaParams.right-matchaParams.left), MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec((int)(matchaParams.bottom-matchaParams.top), MeasureSpec.AT_MOST));
-                v.layout((int) matchaParams.left, (int) matchaParams.top, (int) matchaParams.right, (int) matchaParams.bottom);
+                v.measure(MeasureSpec.makeMeasureSpec((int)Math.round(matchaParams.right-matchaParams.left), MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec((int)Math.round(matchaParams.bottom-matchaParams.top), MeasureSpec.AT_MOST));
+                v.layout((int)Math.round(matchaParams.left), (int)Math.round(matchaParams.top), (int)Math.round(matchaParams.right), (int)Math.round(matchaParams.bottom));
             }
         }
     }

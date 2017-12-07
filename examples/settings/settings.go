@@ -263,6 +263,7 @@ func (v *Separator) Build(ctx view.Context) view.Model {
 	l.Solve(func(s *constraint.Solver) {
 		s.Height(0.5)
 		s.WidthEqual(l.MaxGuide().Width())
+		s.Debug()
 	})
 
 	chl := view.NewBasicView()

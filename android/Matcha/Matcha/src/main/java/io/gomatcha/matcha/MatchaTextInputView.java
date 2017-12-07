@@ -51,7 +51,6 @@ class MatchaTextInputView extends MatchaChildView {
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 boolean handled = false;
                 if (i == EditorInfo.IME_ACTION_DONE) {
-                    Log.v("x", "submit");
                     MatchaTextInputView.this.viewNode.call("OnSubmit");
                     handled = true;
                 }

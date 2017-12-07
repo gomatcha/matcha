@@ -80,7 +80,7 @@ class MatchaGestureRecognizer implements View.OnTouchListener {
                         buttonRecognizer.height = view.getHeight();
                     }
                 } catch (InvalidProtocolBufferException e) {
-                    Log.v("x", "Gesture Recognizer protobuf exception:" + e);
+                    Log.v("Matcha", "Gesture Recognizer protobuf exception:" + e);
                 }
             }
         case MotionEvent.ACTION_MOVE:

@@ -219,7 +219,7 @@ public class CameraView extends MatchaChildView implements View.OnClickListener 
             }
         }
         catch (Exception e){
-            Log.v("x", e.toString());
+            Log.v("Matcha", e.toString());
             // Camera is not available (in use or does not exist)
         }
         return c; // returns null if camera is unavailable
