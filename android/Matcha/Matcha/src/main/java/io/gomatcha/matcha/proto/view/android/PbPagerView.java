@@ -19,15 +19,15 @@ public final class PbPagerView {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     * matcha.ImageOrResource icon = 3;
-     * matcha.ImageOrResource selectedIcon = 4;
-     * string badge = 5;
-     * </pre>
-     *
      * <code>string title = 2;</code>
      */
     java.lang.String getTitle();
+    /**
+     * <code>string title = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getTitleBytes();
+
     /**
      * <pre>
      * matcha.ImageOrResource icon = 3;
@@ -35,10 +35,29 @@ public final class PbPagerView {
      * string badge = 5;
      * </pre>
      *
-     * <code>string title = 2;</code>
+     * <code>.matcha.Color indicatorColor = 3;</code>
      */
-    com.google.protobuf.ByteString
-        getTitleBytes();
+    boolean hasIndicatorColor();
+    /**
+     * <pre>
+     * matcha.ImageOrResource icon = 3;
+     * matcha.ImageOrResource selectedIcon = 4;
+     * string badge = 5;
+     * </pre>
+     *
+     * <code>.matcha.Color indicatorColor = 3;</code>
+     */
+    io.gomatcha.matcha.proto.Proto.Color getIndicatorColor();
+    /**
+     * <pre>
+     * matcha.ImageOrResource icon = 3;
+     * matcha.ImageOrResource selectedIcon = 4;
+     * string badge = 5;
+     * </pre>
+     *
+     * <code>.matcha.Color indicatorColor = 3;</code>
+     */
+    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getIndicatorColorOrBuilder();
   }
   /**
    * Protobuf type {@code matcha.view.android.PagerChildView}
@@ -86,6 +105,19 @@ public final class PbPagerView {
               title_ = s;
               break;
             }
+            case 26: {
+              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
+              if (indicatorColor_ != null) {
+                subBuilder = indicatorColor_.toBuilder();
+              }
+              indicatorColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(indicatorColor_);
+                indicatorColor_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -112,12 +144,6 @@ public final class PbPagerView {
     public static final int TITLE_FIELD_NUMBER = 2;
     private volatile java.lang.Object title_;
     /**
-     * <pre>
-     * matcha.ImageOrResource icon = 3;
-     * matcha.ImageOrResource selectedIcon = 4;
-     * string badge = 5;
-     * </pre>
-     *
      * <code>string title = 2;</code>
      */
     public java.lang.String getTitle() {
@@ -133,12 +159,6 @@ public final class PbPagerView {
       }
     }
     /**
-     * <pre>
-     * matcha.ImageOrResource icon = 3;
-     * matcha.ImageOrResource selectedIcon = 4;
-     * string badge = 5;
-     * </pre>
-     *
      * <code>string title = 2;</code>
      */
     public com.google.protobuf.ByteString
@@ -153,6 +173,45 @@ public final class PbPagerView {
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
+    }
+
+    public static final int INDICATORCOLOR_FIELD_NUMBER = 3;
+    private io.gomatcha.matcha.proto.Proto.Color indicatorColor_;
+    /**
+     * <pre>
+     * matcha.ImageOrResource icon = 3;
+     * matcha.ImageOrResource selectedIcon = 4;
+     * string badge = 5;
+     * </pre>
+     *
+     * <code>.matcha.Color indicatorColor = 3;</code>
+     */
+    public boolean hasIndicatorColor() {
+      return indicatorColor_ != null;
+    }
+    /**
+     * <pre>
+     * matcha.ImageOrResource icon = 3;
+     * matcha.ImageOrResource selectedIcon = 4;
+     * string badge = 5;
+     * </pre>
+     *
+     * <code>.matcha.Color indicatorColor = 3;</code>
+     */
+    public io.gomatcha.matcha.proto.Proto.Color getIndicatorColor() {
+      return indicatorColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : indicatorColor_;
+    }
+    /**
+     * <pre>
+     * matcha.ImageOrResource icon = 3;
+     * matcha.ImageOrResource selectedIcon = 4;
+     * string badge = 5;
+     * </pre>
+     *
+     * <code>.matcha.Color indicatorColor = 3;</code>
+     */
+    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getIndicatorColorOrBuilder() {
+      return getIndicatorColor();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -170,6 +229,9 @@ public final class PbPagerView {
       if (!getTitleBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, title_);
       }
+      if (indicatorColor_ != null) {
+        output.writeMessage(3, getIndicatorColor());
+      }
     }
 
     public int getSerializedSize() {
@@ -179,6 +241,10 @@ public final class PbPagerView {
       size = 0;
       if (!getTitleBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, title_);
+      }
+      if (indicatorColor_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getIndicatorColor());
       }
       memoizedSize = size;
       return size;
@@ -198,6 +264,11 @@ public final class PbPagerView {
       boolean result = true;
       result = result && getTitle()
           .equals(other.getTitle());
+      result = result && (hasIndicatorColor() == other.hasIndicatorColor());
+      if (hasIndicatorColor()) {
+        result = result && getIndicatorColor()
+            .equals(other.getIndicatorColor());
+      }
       return result;
     }
 
@@ -210,6 +281,10 @@ public final class PbPagerView {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TITLE_FIELD_NUMBER;
       hash = (53 * hash) + getTitle().hashCode();
+      if (hasIndicatorColor()) {
+        hash = (37 * hash) + INDICATORCOLOR_FIELD_NUMBER;
+        hash = (53 * hash) + getIndicatorColor().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -341,6 +416,12 @@ public final class PbPagerView {
         super.clear();
         title_ = "";
 
+        if (indicatorColorBuilder_ == null) {
+          indicatorColor_ = null;
+        } else {
+          indicatorColor_ = null;
+          indicatorColorBuilder_ = null;
+        }
         return this;
       }
 
@@ -364,6 +445,11 @@ public final class PbPagerView {
       public io.gomatcha.matcha.proto.view.android.PbPagerView.PagerChildView buildPartial() {
         io.gomatcha.matcha.proto.view.android.PbPagerView.PagerChildView result = new io.gomatcha.matcha.proto.view.android.PbPagerView.PagerChildView(this);
         result.title_ = title_;
+        if (indicatorColorBuilder_ == null) {
+          result.indicatorColor_ = indicatorColor_;
+        } else {
+          result.indicatorColor_ = indicatorColorBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -409,6 +495,9 @@ public final class PbPagerView {
           title_ = other.title_;
           onChanged();
         }
+        if (other.hasIndicatorColor()) {
+          mergeIndicatorColor(other.getIndicatorColor());
+        }
         onChanged();
         return this;
       }
@@ -437,12 +526,6 @@ public final class PbPagerView {
 
       private java.lang.Object title_ = "";
       /**
-       * <pre>
-       * matcha.ImageOrResource icon = 3;
-       * matcha.ImageOrResource selectedIcon = 4;
-       * string badge = 5;
-       * </pre>
-       *
        * <code>string title = 2;</code>
        */
       public java.lang.String getTitle() {
@@ -458,12 +541,6 @@ public final class PbPagerView {
         }
       }
       /**
-       * <pre>
-       * matcha.ImageOrResource icon = 3;
-       * matcha.ImageOrResource selectedIcon = 4;
-       * string badge = 5;
-       * </pre>
-       *
        * <code>string title = 2;</code>
        */
       public com.google.protobuf.ByteString
@@ -480,12 +557,6 @@ public final class PbPagerView {
         }
       }
       /**
-       * <pre>
-       * matcha.ImageOrResource icon = 3;
-       * matcha.ImageOrResource selectedIcon = 4;
-       * string badge = 5;
-       * </pre>
-       *
        * <code>string title = 2;</code>
        */
       public Builder setTitle(
@@ -499,12 +570,6 @@ public final class PbPagerView {
         return this;
       }
       /**
-       * <pre>
-       * matcha.ImageOrResource icon = 3;
-       * matcha.ImageOrResource selectedIcon = 4;
-       * string badge = 5;
-       * </pre>
-       *
        * <code>string title = 2;</code>
        */
       public Builder clearTitle() {
@@ -514,12 +579,6 @@ public final class PbPagerView {
         return this;
       }
       /**
-       * <pre>
-       * matcha.ImageOrResource icon = 3;
-       * matcha.ImageOrResource selectedIcon = 4;
-       * string badge = 5;
-       * </pre>
-       *
        * <code>string title = 2;</code>
        */
       public Builder setTitleBytes(
@@ -532,6 +591,177 @@ public final class PbPagerView {
         title_ = value;
         onChanged();
         return this;
+      }
+
+      private io.gomatcha.matcha.proto.Proto.Color indicatorColor_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> indicatorColorBuilder_;
+      /**
+       * <pre>
+       * matcha.ImageOrResource icon = 3;
+       * matcha.ImageOrResource selectedIcon = 4;
+       * string badge = 5;
+       * </pre>
+       *
+       * <code>.matcha.Color indicatorColor = 3;</code>
+       */
+      public boolean hasIndicatorColor() {
+        return indicatorColorBuilder_ != null || indicatorColor_ != null;
+      }
+      /**
+       * <pre>
+       * matcha.ImageOrResource icon = 3;
+       * matcha.ImageOrResource selectedIcon = 4;
+       * string badge = 5;
+       * </pre>
+       *
+       * <code>.matcha.Color indicatorColor = 3;</code>
+       */
+      public io.gomatcha.matcha.proto.Proto.Color getIndicatorColor() {
+        if (indicatorColorBuilder_ == null) {
+          return indicatorColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : indicatorColor_;
+        } else {
+          return indicatorColorBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * matcha.ImageOrResource icon = 3;
+       * matcha.ImageOrResource selectedIcon = 4;
+       * string badge = 5;
+       * </pre>
+       *
+       * <code>.matcha.Color indicatorColor = 3;</code>
+       */
+      public Builder setIndicatorColor(io.gomatcha.matcha.proto.Proto.Color value) {
+        if (indicatorColorBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          indicatorColor_ = value;
+          onChanged();
+        } else {
+          indicatorColorBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * matcha.ImageOrResource icon = 3;
+       * matcha.ImageOrResource selectedIcon = 4;
+       * string badge = 5;
+       * </pre>
+       *
+       * <code>.matcha.Color indicatorColor = 3;</code>
+       */
+      public Builder setIndicatorColor(
+          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
+        if (indicatorColorBuilder_ == null) {
+          indicatorColor_ = builderForValue.build();
+          onChanged();
+        } else {
+          indicatorColorBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * matcha.ImageOrResource icon = 3;
+       * matcha.ImageOrResource selectedIcon = 4;
+       * string badge = 5;
+       * </pre>
+       *
+       * <code>.matcha.Color indicatorColor = 3;</code>
+       */
+      public Builder mergeIndicatorColor(io.gomatcha.matcha.proto.Proto.Color value) {
+        if (indicatorColorBuilder_ == null) {
+          if (indicatorColor_ != null) {
+            indicatorColor_ =
+              io.gomatcha.matcha.proto.Proto.Color.newBuilder(indicatorColor_).mergeFrom(value).buildPartial();
+          } else {
+            indicatorColor_ = value;
+          }
+          onChanged();
+        } else {
+          indicatorColorBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * matcha.ImageOrResource icon = 3;
+       * matcha.ImageOrResource selectedIcon = 4;
+       * string badge = 5;
+       * </pre>
+       *
+       * <code>.matcha.Color indicatorColor = 3;</code>
+       */
+      public Builder clearIndicatorColor() {
+        if (indicatorColorBuilder_ == null) {
+          indicatorColor_ = null;
+          onChanged();
+        } else {
+          indicatorColor_ = null;
+          indicatorColorBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * matcha.ImageOrResource icon = 3;
+       * matcha.ImageOrResource selectedIcon = 4;
+       * string badge = 5;
+       * </pre>
+       *
+       * <code>.matcha.Color indicatorColor = 3;</code>
+       */
+      public io.gomatcha.matcha.proto.Proto.Color.Builder getIndicatorColorBuilder() {
+        
+        onChanged();
+        return getIndicatorColorFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * matcha.ImageOrResource icon = 3;
+       * matcha.ImageOrResource selectedIcon = 4;
+       * string badge = 5;
+       * </pre>
+       *
+       * <code>.matcha.Color indicatorColor = 3;</code>
+       */
+      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getIndicatorColorOrBuilder() {
+        if (indicatorColorBuilder_ != null) {
+          return indicatorColorBuilder_.getMessageOrBuilder();
+        } else {
+          return indicatorColor_ == null ?
+              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : indicatorColor_;
+        }
+      }
+      /**
+       * <pre>
+       * matcha.ImageOrResource icon = 3;
+       * matcha.ImageOrResource selectedIcon = 4;
+       * string badge = 5;
+       * </pre>
+       *
+       * <code>.matcha.Color indicatorColor = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
+          getIndicatorColorFieldBuilder() {
+        if (indicatorColorBuilder_ == null) {
+          indicatorColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
+                  getIndicatorColor(),
+                  getParentForChildren(),
+                  isClean());
+          indicatorColor_ = null;
+        }
+        return indicatorColorBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -2161,14 +2391,15 @@ public final class PbPagerView {
     java.lang.String[] descriptorData = {
       "\n5gomatcha.io/matcha/proto/view/android/" +
       "pagerview.proto\022\023matcha.view.android\032$go" +
-      "matcha.io/matcha/proto/image.proto\"\037\n\016Pa" +
-      "gerChildView\022\r\n\005title\030\002 \001(\t\"|\n\tPagerView" +
-      "\0227\n\nchildViews\030\001 \003(\0132#.matcha.view.andro" +
-      "id.PagerChildView\022\025\n\rselectedIndex\030\002 \001(\003" +
-      "\022\037\n\010barColor\030\003 \001(\0132\r.matcha.Color\"#\n\nPag" +
-      "erEvent\022\025\n\rselectedIndex\030\001 \001(\003BO\n%io.gom" +
-      "atcha.matcha.proto.view.androidB\013PbPager" +
-      "ViewZ\007android\242\002\017MatchaAndroidPBb\006proto3"
+      "matcha.io/matcha/proto/image.proto\"F\n\016Pa" +
+      "gerChildView\022\r\n\005title\030\002 \001(\t\022%\n\016indicator" +
+      "Color\030\003 \001(\0132\r.matcha.Color\"|\n\tPagerView\022" +
+      "7\n\nchildViews\030\001 \003(\0132#.matcha.view.androi" +
+      "d.PagerChildView\022\025\n\rselectedIndex\030\002 \001(\003\022" +
+      "\037\n\010barColor\030\003 \001(\0132\r.matcha.Color\"#\n\nPage" +
+      "rEvent\022\025\n\rselectedIndex\030\001 \001(\003BO\n%io.goma" +
+      "tcha.matcha.proto.view.androidB\013PbPagerV",
+      "iewZ\007android\242\002\017MatchaAndroidPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2188,7 +2419,7 @@ public final class PbPagerView {
     internal_static_matcha_view_android_PagerChildView_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_PagerChildView_descriptor,
-        new java.lang.String[] { "Title", });
+        new java.lang.String[] { "Title", "IndicatorColor", });
     internal_static_matcha_view_android_PagerView_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_matcha_view_android_PagerView_fieldAccessorTable = new

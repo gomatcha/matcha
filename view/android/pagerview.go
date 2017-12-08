@@ -61,9 +61,10 @@ func (s *Pages) Unnotify(id comm.Id) {
 
 type PagerView struct {
 	view.Embed
-	Pages *Pages
-
-	BarColor color.Color
+	Pages          *Pages
+	BarColor       color.Color
+	IndicatorColor color.Color
+	views          []view.View
 }
 
 // NewPagerView returns a new view.
@@ -83,6 +84,9 @@ func (v *PagerView) Lifecycle(from, to view.Stage) {
 		v.Subscribe(v.Pages)
 	} else if view.ExitsStage(from, to, view.StageMounted) {
 		v.Unsubscribe(v.Pages)
+		for _, i := range v.views {
+			v.Unsubscribe(i)
+		}
 	}
 }
 
@@ -101,6 +105,16 @@ func (v *PagerView) Update(v2 view.View) {
 func (v *PagerView) Build(ctx view.Context) view.Model {
 	l := &constraint.Layouter{}
 
+	// Unsubscribe from previous
+	for _, i := range v.views {
+		v.Unsubscribe(i)
+	}
+	// Subscribe to new
+	v.views = v.Pages.Views()
+	for _, i := range v.views {
+		v.Subscribe(i)
+	}
+
 	childrenPb := []*pbandroid.PagerChildView{}
 	for _, chld := range v.Pages.Views() {
 		// Find the button
@@ -115,8 +129,16 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 
 		if button == nil {
 			button = &PagerButton{
-				Title: "Title",
+				Title: "",
 			}
+		}
+
+		indicatorColor := button.IndicatorColor
+		if indicatorColor == nil {
+			indicatorColor = v.IndicatorColor
+		}
+		if indicatorColor == nil {
+			indicatorColor = color.Gray{uint8(160)}
 		}
 
 		// Add the child.
@@ -129,10 +151,8 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 
 		// Add to protobuf.
 		childrenPb = append(childrenPb, &pbandroid.PagerChildView{
-			Title: button.Title,
-			// Icon:         app.ImageMarshalProtobuf(button.Icon),
-			// SelectedIcon: app.ImageMarshalProtobuf(button.SelectedIcon),
-			// Badge:        button.Badge,
+			Title:          button.Title,
+			IndicatorColor: pb.ColorEncode(indicatorColor),
 		})
 	}
 
@@ -168,7 +188,8 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 }
 
 type PagerButton struct {
-	Title string
+	Title          string
+	IndicatorColor color.Color
 }
 
 func (t *PagerButton) OptionKey() string {

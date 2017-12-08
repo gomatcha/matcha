@@ -22,9 +22,10 @@ func init() {
 }
 
 type PagerApp struct {
-	pages    *android.Pages
-	relay    *comm.Relay
-	barColor color.Color
+	pages          *android.Pages
+	relay          *comm.Relay
+	barColor       color.Color
+	indicatorColor color.Color
 }
 
 func NewPagerApp() *PagerApp {
@@ -80,14 +81,7 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 	pagerview := android.NewPagerView()
 	pagerview.Pages = v.app.pages
 	pagerview.BarColor = v.app.barColor
-
-	// pagerview.Tint = v.app.unselectedTint
-	// pagerview.SelectedTint = v.app.selectedTint
-	// pagerview.Tabs = v.app.tabs
-	// pagerview.TitleStyle = v.app.titleStyle
-	// pagerview.SelectedTitleStyle = v.app.selectedTitleStyle
-	// pagerview.IconTint = v.app.iconTint
-	// pagerview.SelectedIconTint = v.app.selectedIconTint
+	pagerview.IndicatorColor = v.app.indicatorColor
 	return view.Model{
 		Children: []view.View{pagerview},
 	}
@@ -95,9 +89,10 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 
 type PagerChild struct {
 	view.Embed
-	app   *PagerApp
-	Color color.Color
-	Title string
+	app            *PagerApp
+	Color          color.Color
+	Title          string
+	indicatorColor color.Color
 }
 
 func NewPagerChild(app *PagerApp) *PagerChild {
@@ -181,12 +176,58 @@ func (v *PagerChild) Build(ctx view.Context) view.Model {
 		s.LeftEqual(g.Left())
 	})
 
+	label = view.NewTextView()
+	label.String = "All Indicator Color:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	button = view.NewButton()
+	button.String = "Toggle"
+	button.OnPress = func() {
+		if v.app.indicatorColor == nil {
+			v.app.indicatorColor = colornames.Teal
+		} else {
+			v.app.indicatorColor = nil
+		}
+		v.app.relay.Signal()
+	}
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	label = view.NewTextView()
+	label.String = "Indicator Color:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	button = view.NewButton()
+	button.String = "Toggle"
+	button.OnPress = func() {
+		if v.indicatorColor == nil {
+			v.indicatorColor = colornames.Red
+		} else {
+			v.indicatorColor = nil
+		}
+		v.Signal()
+	}
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
 	return view.Model{
 		Children: l.Views(),
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: v.Color},
 		Options: []view.Option{
-			&android.PagerButton{Title: v.Title},
+			&android.PagerButton{Title: v.Title, IndicatorColor: v.indicatorColor},
 		},
 	}
 }

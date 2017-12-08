@@ -10,6 +10,7 @@ option java_outer_classname = "PbPagerView";
 
 message PagerChildView {
     string title = 2;
+    matcha.Color indicatorColor = 3;
     // matcha.ImageOrResource icon = 3;
     // matcha.ImageOrResource selectedIcon = 4;
     // string badge = 5;

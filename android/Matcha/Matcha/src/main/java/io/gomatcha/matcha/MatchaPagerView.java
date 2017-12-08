@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -90,6 +91,13 @@ class MatchaPagerView extends MatchaChildView {
                 pagerAdapter.notifyDataSetChanged();
                 tabStrip.setViewPager(viewPager);
             }
+
+            int[] colors = new int[proto.getChildViewsCount()];
+            for (int i = 0; i < proto.getChildViewsCount(); i++) {
+                colors[i] = Protobuf.newColor(proto.getChildViews(i).getIndicatorColor());
+            }
+            tabStrip.setSelectedIndicatorColors(colors);
+
             if (selectedIndex != (int)proto.getSelectedIndex()) {
                 selectedIndex = (int) proto.getSelectedIndex();
                 new Handler().post(new Runnable() {
