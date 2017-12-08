@@ -120,20 +120,11 @@ func (v *AppView) Build(ctx view.Context) view.Model {
 
 type ExamplesView struct {
 	view.Embed
-	app *App
+	sections map[string][]*Example
+	app      *App
 }
 
 func NewExamplesView(app *App) *ExamplesView {
-	return &ExamplesView{
-		Embed: view.NewEmbed(app),
-		app:   app,
-	}
-}
-
-func (v *ExamplesView) Build(ctx view.Context) view.Model {
-	childLayouter := &table.Layouter{StartEdge: layout.EdgeTop}
-
-	// Sections
 	sections := map[string][]*Example{
 		"Examples": {
 			{"Settings", false, "Example of a settings app.\n\n\ngomatcha.io/matcha/examples/settings", settings.NewRootView()},
@@ -168,9 +159,9 @@ func (v *ExamplesView) Build(ctx view.Context) view.Model {
 			// {"Navigation", "\n\n\ngomatcha.io/matcha/examples/view/ios NewNavigationView", iosex.NewNavigationView()},
 		},
 		"Android": {
-			{"Pager View", true, "\n\n\ngomatcha.io/matcha/examples/view/android NewPagerView", androidex.NewPagerView()},
-			{"Stack View", false, "\n\n\ngomatcha.io/matcha/examples/view/android NewStackView", androidex.NewStackView()},
-			{"Status Bar", true, "\n\n\ngomatcha.io/matcha/examples/view/android NewStatusBarView", androidex.NewStatusBarView()},
+			{"Pager View", true, "Example of how to set options on an Android pager view. \n\n\ngomatcha.io/matcha/examples/view/android NewPagerView", androidex.NewPagerView()},
+			{"Stack View", false, "Example of various stack view properties. \n\n\ngomatcha.io/matcha/examples/view/android NewStackView", androidex.NewStackView()},
+			{"Status Bar", true, "Example of how to toggle the status bar style and color. \n\n\ngomatcha.io/matcha/examples/view/android NewStatusBarView", androidex.NewStatusBarView()},
 		},
 		"Miscellaneous": {
 			{"Device Orientation", true, "Example of how to get the current device orientation and listen to orientation changes.\n\n\ngomatcha.io/matcha/examples/application NewOrientationView", applicationex.NewOrientationView()},
@@ -179,6 +170,17 @@ func (v *ExamplesView) Build(ctx view.Context) view.Model {
 		},
 	}
 
+	return &ExamplesView{
+		Embed:    view.NewEmbed(app),
+		sections: sections,
+		app:      app,
+	}
+}
+
+func (v *ExamplesView) Build(ctx view.Context) view.Model {
+	childLayouter := &table.Layouter{StartEdge: layout.EdgeTop}
+
+	// Sections
 	for _, i := range []string{"Examples", "General", "Views", "iOS", "Android", "Miscellaneous"} {
 		// Create header for section.
 		header := settings.NewSpacerHeader()
@@ -187,7 +189,7 @@ func (v *ExamplesView) Build(ctx view.Context) view.Model {
 
 		// Create example items for section.
 		items := []view.View{}
-		for _, j := range sections[i] {
+		for _, j := range v.sections[i] {
 			example := j
 			item := settings.NewBasicCell()
 			item.Title = j.Title

@@ -90,7 +90,6 @@ class MatchaPagerView extends MatchaChildView {
                 pagerAdapter.notifyDataSetChanged();
                 tabStrip.setViewPager(viewPager);
             }
-            Log.v("Matcha", "selectedIndex" + proto.getSelectedIndex());
             if (selectedIndex != (int)proto.getSelectedIndex()) {
                 selectedIndex = (int) proto.getSelectedIndex();
                 new Handler().post(new Runnable() {
