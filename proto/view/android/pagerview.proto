@@ -1,6 +1,6 @@
 syntax = "proto3";
 package matcha.view.android;
-// import "gomatcha.io/matcha/proto/image.proto";
+import "gomatcha.io/matcha/proto/image.proto";
 // import "gomatcha.io/matcha/proto/text/text.proto";
 
 option go_package = "android";
@@ -18,7 +18,7 @@ message PagerChildView {
 message PagerView {
     repeated PagerChildView childViews = 1;
     int64 selectedIndex = 2;
-    // matcha.Color barColor = 3;
+    matcha.Color barColor = 3;
     // matcha.Color selectedColor = 6;
     // matcha.Color unselectedColor = 7;
     // matcha.text.TextStyle selectedTextStyle = 8;

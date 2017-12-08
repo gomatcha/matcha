@@ -1,6 +1,7 @@
 package io.gomatcha.matcha;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -46,18 +47,17 @@ class MatchaPagerView extends MatchaChildView {
         RelativeLayout.LayoutParams tabParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         tabStrip = new SlidingTabLayout(context);
         tabStrip.setId(generateViewId());
-        tabStrip.setBackgroundColor(0xff00ffff);
         relativeLayout.addView(tabStrip, tabParams);
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             float ratio = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
-            tabStrip.setElevation(4 * ratio);
+            tabStrip.setElevation(8 * ratio);
         }
 
         RelativeLayout.LayoutParams contentParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         contentParams.addRule(RelativeLayout.BELOW, tabStrip.getId());
         viewPager = new ViewPager(context);
         viewPager.setId(generateViewId());
-        viewPager.setBackgroundColor(0xff0000ff);
+        viewPager.setBackgroundColor(0x000000ff);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -98,6 +98,11 @@ class MatchaPagerView extends MatchaChildView {
                         viewPager.setCurrentItem(selectedIndex);
                     }
                 });
+            }
+            if (proto.hasBarColor()) {
+                tabStrip.setBackgroundColor(Protobuf.newColor(proto.getBarColor()));
+            } else {
+                tabStrip.setBackgroundColor(Color.WHITE);
             }
         } catch (InvalidProtocolBufferException e) {
         }

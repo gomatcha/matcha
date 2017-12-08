@@ -611,17 +611,43 @@ public final class PbPagerView {
         int index);
 
     /**
+     * <code>int64 selectedIndex = 2;</code>
+     */
+    long getSelectedIndex();
+
+    /**
      * <pre>
-     * matcha.Color barColor = 3;
      * matcha.Color selectedColor = 6;
      * matcha.Color unselectedColor = 7;
      * matcha.text.TextStyle selectedTextStyle = 8;
      * matcha.text.TextStyle unselectedTextStyle = 9;
      * </pre>
      *
-     * <code>int64 selectedIndex = 2;</code>
+     * <code>.matcha.Color barColor = 3;</code>
      */
-    long getSelectedIndex();
+    boolean hasBarColor();
+    /**
+     * <pre>
+     * matcha.Color selectedColor = 6;
+     * matcha.Color unselectedColor = 7;
+     * matcha.text.TextStyle selectedTextStyle = 8;
+     * matcha.text.TextStyle unselectedTextStyle = 9;
+     * </pre>
+     *
+     * <code>.matcha.Color barColor = 3;</code>
+     */
+    io.gomatcha.matcha.proto.Proto.Color getBarColor();
+    /**
+     * <pre>
+     * matcha.Color selectedColor = 6;
+     * matcha.Color unselectedColor = 7;
+     * matcha.text.TextStyle selectedTextStyle = 8;
+     * matcha.text.TextStyle unselectedTextStyle = 9;
+     * </pre>
+     *
+     * <code>.matcha.Color barColor = 3;</code>
+     */
+    io.gomatcha.matcha.proto.Proto.ColorOrBuilder getBarColorOrBuilder();
   }
   /**
    * Protobuf type {@code matcha.view.android.PagerView}
@@ -676,6 +702,19 @@ public final class PbPagerView {
             case 16: {
 
               selectedIndex_ = input.readInt64();
+              break;
+            }
+            case 26: {
+              io.gomatcha.matcha.proto.Proto.Color.Builder subBuilder = null;
+              if (barColor_ != null) {
+                subBuilder = barColor_.toBuilder();
+              }
+              barColor_ = input.readMessage(io.gomatcha.matcha.proto.Proto.Color.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(barColor_);
+                barColor_ = subBuilder.buildPartial();
+              }
+
               break;
             }
           }
@@ -743,18 +782,52 @@ public final class PbPagerView {
     public static final int SELECTEDINDEX_FIELD_NUMBER = 2;
     private long selectedIndex_;
     /**
+     * <code>int64 selectedIndex = 2;</code>
+     */
+    public long getSelectedIndex() {
+      return selectedIndex_;
+    }
+
+    public static final int BARCOLOR_FIELD_NUMBER = 3;
+    private io.gomatcha.matcha.proto.Proto.Color barColor_;
+    /**
      * <pre>
-     * matcha.Color barColor = 3;
      * matcha.Color selectedColor = 6;
      * matcha.Color unselectedColor = 7;
      * matcha.text.TextStyle selectedTextStyle = 8;
      * matcha.text.TextStyle unselectedTextStyle = 9;
      * </pre>
      *
-     * <code>int64 selectedIndex = 2;</code>
+     * <code>.matcha.Color barColor = 3;</code>
      */
-    public long getSelectedIndex() {
-      return selectedIndex_;
+    public boolean hasBarColor() {
+      return barColor_ != null;
+    }
+    /**
+     * <pre>
+     * matcha.Color selectedColor = 6;
+     * matcha.Color unselectedColor = 7;
+     * matcha.text.TextStyle selectedTextStyle = 8;
+     * matcha.text.TextStyle unselectedTextStyle = 9;
+     * </pre>
+     *
+     * <code>.matcha.Color barColor = 3;</code>
+     */
+    public io.gomatcha.matcha.proto.Proto.Color getBarColor() {
+      return barColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : barColor_;
+    }
+    /**
+     * <pre>
+     * matcha.Color selectedColor = 6;
+     * matcha.Color unselectedColor = 7;
+     * matcha.text.TextStyle selectedTextStyle = 8;
+     * matcha.text.TextStyle unselectedTextStyle = 9;
+     * </pre>
+     *
+     * <code>.matcha.Color barColor = 3;</code>
+     */
+    public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getBarColorOrBuilder() {
+      return getBarColor();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -775,6 +848,9 @@ public final class PbPagerView {
       if (selectedIndex_ != 0L) {
         output.writeInt64(2, selectedIndex_);
       }
+      if (barColor_ != null) {
+        output.writeMessage(3, getBarColor());
+      }
     }
 
     public int getSerializedSize() {
@@ -789,6 +865,10 @@ public final class PbPagerView {
       if (selectedIndex_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, selectedIndex_);
+      }
+      if (barColor_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getBarColor());
       }
       memoizedSize = size;
       return size;
@@ -810,6 +890,11 @@ public final class PbPagerView {
           .equals(other.getChildViewsList());
       result = result && (getSelectedIndex()
           == other.getSelectedIndex());
+      result = result && (hasBarColor() == other.hasBarColor());
+      if (hasBarColor()) {
+        result = result && getBarColor()
+            .equals(other.getBarColor());
+      }
       return result;
     }
 
@@ -827,6 +912,10 @@ public final class PbPagerView {
       hash = (37 * hash) + SELECTEDINDEX_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getSelectedIndex());
+      if (hasBarColor()) {
+        hash = (37 * hash) + BARCOLOR_FIELD_NUMBER;
+        hash = (53 * hash) + getBarColor().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -965,6 +1054,12 @@ public final class PbPagerView {
         }
         selectedIndex_ = 0L;
 
+        if (barColorBuilder_ == null) {
+          barColor_ = null;
+        } else {
+          barColor_ = null;
+          barColorBuilder_ = null;
+        }
         return this;
       }
 
@@ -999,6 +1094,11 @@ public final class PbPagerView {
           result.childViews_ = childViewsBuilder_.build();
         }
         result.selectedIndex_ = selectedIndex_;
+        if (barColorBuilder_ == null) {
+          result.barColor_ = barColor_;
+        } else {
+          result.barColor_ = barColorBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1069,6 +1169,9 @@ public final class PbPagerView {
         }
         if (other.getSelectedIndex() != 0L) {
           setSelectedIndex(other.getSelectedIndex());
+        }
+        if (other.hasBarColor()) {
+          mergeBarColor(other.getBarColor());
         }
         onChanged();
         return this;
@@ -1339,28 +1442,12 @@ public final class PbPagerView {
 
       private long selectedIndex_ ;
       /**
-       * <pre>
-       * matcha.Color barColor = 3;
-       * matcha.Color selectedColor = 6;
-       * matcha.Color unselectedColor = 7;
-       * matcha.text.TextStyle selectedTextStyle = 8;
-       * matcha.text.TextStyle unselectedTextStyle = 9;
-       * </pre>
-       *
        * <code>int64 selectedIndex = 2;</code>
        */
       public long getSelectedIndex() {
         return selectedIndex_;
       }
       /**
-       * <pre>
-       * matcha.Color barColor = 3;
-       * matcha.Color selectedColor = 6;
-       * matcha.Color unselectedColor = 7;
-       * matcha.text.TextStyle selectedTextStyle = 8;
-       * matcha.text.TextStyle unselectedTextStyle = 9;
-       * </pre>
-       *
        * <code>int64 selectedIndex = 2;</code>
        */
       public Builder setSelectedIndex(long value) {
@@ -1370,14 +1457,6 @@ public final class PbPagerView {
         return this;
       }
       /**
-       * <pre>
-       * matcha.Color barColor = 3;
-       * matcha.Color selectedColor = 6;
-       * matcha.Color unselectedColor = 7;
-       * matcha.text.TextStyle selectedTextStyle = 8;
-       * matcha.text.TextStyle unselectedTextStyle = 9;
-       * </pre>
-       *
        * <code>int64 selectedIndex = 2;</code>
        */
       public Builder clearSelectedIndex() {
@@ -1385,6 +1464,186 @@ public final class PbPagerView {
         selectedIndex_ = 0L;
         onChanged();
         return this;
+      }
+
+      private io.gomatcha.matcha.proto.Proto.Color barColor_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> barColorBuilder_;
+      /**
+       * <pre>
+       * matcha.Color selectedColor = 6;
+       * matcha.Color unselectedColor = 7;
+       * matcha.text.TextStyle selectedTextStyle = 8;
+       * matcha.text.TextStyle unselectedTextStyle = 9;
+       * </pre>
+       *
+       * <code>.matcha.Color barColor = 3;</code>
+       */
+      public boolean hasBarColor() {
+        return barColorBuilder_ != null || barColor_ != null;
+      }
+      /**
+       * <pre>
+       * matcha.Color selectedColor = 6;
+       * matcha.Color unselectedColor = 7;
+       * matcha.text.TextStyle selectedTextStyle = 8;
+       * matcha.text.TextStyle unselectedTextStyle = 9;
+       * </pre>
+       *
+       * <code>.matcha.Color barColor = 3;</code>
+       */
+      public io.gomatcha.matcha.proto.Proto.Color getBarColor() {
+        if (barColorBuilder_ == null) {
+          return barColor_ == null ? io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : barColor_;
+        } else {
+          return barColorBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * matcha.Color selectedColor = 6;
+       * matcha.Color unselectedColor = 7;
+       * matcha.text.TextStyle selectedTextStyle = 8;
+       * matcha.text.TextStyle unselectedTextStyle = 9;
+       * </pre>
+       *
+       * <code>.matcha.Color barColor = 3;</code>
+       */
+      public Builder setBarColor(io.gomatcha.matcha.proto.Proto.Color value) {
+        if (barColorBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          barColor_ = value;
+          onChanged();
+        } else {
+          barColorBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * matcha.Color selectedColor = 6;
+       * matcha.Color unselectedColor = 7;
+       * matcha.text.TextStyle selectedTextStyle = 8;
+       * matcha.text.TextStyle unselectedTextStyle = 9;
+       * </pre>
+       *
+       * <code>.matcha.Color barColor = 3;</code>
+       */
+      public Builder setBarColor(
+          io.gomatcha.matcha.proto.Proto.Color.Builder builderForValue) {
+        if (barColorBuilder_ == null) {
+          barColor_ = builderForValue.build();
+          onChanged();
+        } else {
+          barColorBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * matcha.Color selectedColor = 6;
+       * matcha.Color unselectedColor = 7;
+       * matcha.text.TextStyle selectedTextStyle = 8;
+       * matcha.text.TextStyle unselectedTextStyle = 9;
+       * </pre>
+       *
+       * <code>.matcha.Color barColor = 3;</code>
+       */
+      public Builder mergeBarColor(io.gomatcha.matcha.proto.Proto.Color value) {
+        if (barColorBuilder_ == null) {
+          if (barColor_ != null) {
+            barColor_ =
+              io.gomatcha.matcha.proto.Proto.Color.newBuilder(barColor_).mergeFrom(value).buildPartial();
+          } else {
+            barColor_ = value;
+          }
+          onChanged();
+        } else {
+          barColorBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * matcha.Color selectedColor = 6;
+       * matcha.Color unselectedColor = 7;
+       * matcha.text.TextStyle selectedTextStyle = 8;
+       * matcha.text.TextStyle unselectedTextStyle = 9;
+       * </pre>
+       *
+       * <code>.matcha.Color barColor = 3;</code>
+       */
+      public Builder clearBarColor() {
+        if (barColorBuilder_ == null) {
+          barColor_ = null;
+          onChanged();
+        } else {
+          barColor_ = null;
+          barColorBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * matcha.Color selectedColor = 6;
+       * matcha.Color unselectedColor = 7;
+       * matcha.text.TextStyle selectedTextStyle = 8;
+       * matcha.text.TextStyle unselectedTextStyle = 9;
+       * </pre>
+       *
+       * <code>.matcha.Color barColor = 3;</code>
+       */
+      public io.gomatcha.matcha.proto.Proto.Color.Builder getBarColorBuilder() {
+        
+        onChanged();
+        return getBarColorFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * matcha.Color selectedColor = 6;
+       * matcha.Color unselectedColor = 7;
+       * matcha.text.TextStyle selectedTextStyle = 8;
+       * matcha.text.TextStyle unselectedTextStyle = 9;
+       * </pre>
+       *
+       * <code>.matcha.Color barColor = 3;</code>
+       */
+      public io.gomatcha.matcha.proto.Proto.ColorOrBuilder getBarColorOrBuilder() {
+        if (barColorBuilder_ != null) {
+          return barColorBuilder_.getMessageOrBuilder();
+        } else {
+          return barColor_ == null ?
+              io.gomatcha.matcha.proto.Proto.Color.getDefaultInstance() : barColor_;
+        }
+      }
+      /**
+       * <pre>
+       * matcha.Color selectedColor = 6;
+       * matcha.Color unselectedColor = 7;
+       * matcha.text.TextStyle selectedTextStyle = 8;
+       * matcha.text.TextStyle unselectedTextStyle = 9;
+       * </pre>
+       *
+       * <code>.matcha.Color barColor = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder> 
+          getBarColorFieldBuilder() {
+        if (barColorBuilder_ == null) {
+          barColorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              io.gomatcha.matcha.proto.Proto.Color, io.gomatcha.matcha.proto.Proto.Color.Builder, io.gomatcha.matcha.proto.Proto.ColorOrBuilder>(
+                  getBarColor(),
+                  getParentForChildren(),
+                  isClean());
+          barColor_ = null;
+        }
+        return barColorBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1901,14 +2160,15 @@ public final class PbPagerView {
   static {
     java.lang.String[] descriptorData = {
       "\n5gomatcha.io/matcha/proto/view/android/" +
-      "pagerview.proto\022\023matcha.view.android\"\037\n\016" +
-      "PagerChildView\022\r\n\005title\030\002 \001(\t\"[\n\tPagerVi" +
-      "ew\0227\n\nchildViews\030\001 \003(\0132#.matcha.view.and" +
-      "roid.PagerChildView\022\025\n\rselectedIndex\030\002 \001" +
-      "(\003\"#\n\nPagerEvent\022\025\n\rselectedIndex\030\001 \001(\003B" +
-      "O\n%io.gomatcha.matcha.proto.view.android" +
-      "B\013PbPagerViewZ\007android\242\002\017MatchaAndroidPB" +
-      "b\006proto3"
+      "pagerview.proto\022\023matcha.view.android\032$go" +
+      "matcha.io/matcha/proto/image.proto\"\037\n\016Pa" +
+      "gerChildView\022\r\n\005title\030\002 \001(\t\"|\n\tPagerView" +
+      "\0227\n\nchildViews\030\001 \003(\0132#.matcha.view.andro" +
+      "id.PagerChildView\022\025\n\rselectedIndex\030\002 \001(\003" +
+      "\022\037\n\010barColor\030\003 \001(\0132\r.matcha.Color\"#\n\nPag" +
+      "erEvent\022\025\n\rselectedIndex\030\001 \001(\003BO\n%io.gom" +
+      "atcha.matcha.proto.view.androidB\013PbPager" +
+      "ViewZ\007android\242\002\017MatchaAndroidPBb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1921,6 +2181,7 @@ public final class PbPagerView {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          io.gomatcha.matcha.proto.Proto.getDescriptor(),
         }, assigner);
     internal_static_matcha_view_android_PagerChildView_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -1933,13 +2194,14 @@ public final class PbPagerView {
     internal_static_matcha_view_android_PagerView_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_PagerView_descriptor,
-        new java.lang.String[] { "ChildViews", "SelectedIndex", });
+        new java.lang.String[] { "ChildViews", "SelectedIndex", "BarColor", });
     internal_static_matcha_view_android_PagerEvent_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_matcha_view_android_PagerEvent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_matcha_view_android_PagerEvent_descriptor,
         new java.lang.String[] { "SelectedIndex", });
+    io.gomatcha.matcha.proto.Proto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

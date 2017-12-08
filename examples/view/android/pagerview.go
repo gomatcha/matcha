@@ -2,70 +2,191 @@ package android
 
 import (
 	"fmt"
+	"image/color"
 
 	"golang.org/x/image/colornames"
+
 	"gomatcha.io/matcha/bridge"
+	"gomatcha.io/matcha/comm"
+	"gomatcha.io/matcha/layout/constraint"
 	"gomatcha.io/matcha/paint"
+	"gomatcha.io/matcha/text"
 	"gomatcha.io/matcha/view"
 	"gomatcha.io/matcha/view/android"
 )
 
 func init() {
 	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/android NewPagerView", func() view.View {
-		return NewPagerView()
+		return NewPagerView(NewPagerApp())
 	})
-}
-
-func NewPagerView() view.View {
-	v := android.NewPagerView()
-
-	app := &PagerApp{}
-	app.Pages = v.Pages
-	app.Pages.Notify(func() {
-		fmt.Println("CurrentPage", v.Pages.SelectedIndex())
-	})
-
-	v1 := NewPagerChildView()
-	v1.PaintStyle = &paint.Style{BackgroundColor: colornames.Red}
-	v1.PagerButton = &android.PagerButton{Title: "Title 1"}
-
-	v2 := NewPagerChildView()
-	v2.PaintStyle = &paint.Style{BackgroundColor: colornames.White}
-	v2.PagerButton = &android.PagerButton{Title: "Title 2"}
-
-	v3 := NewPagerChildView()
-	v3.PaintStyle = &paint.Style{BackgroundColor: colornames.Black}
-	v3.PagerButton = &android.PagerButton{Title: "Title 3"}
-
-	app.Pages.SetViews(v1, v2, v3)
-	app.Pages.SetSelectedIndex(2)
-
-	return v
 }
 
 type PagerApp struct {
-	Pages *android.Pages
+	pages    *android.Pages
+	relay    *comm.Relay
+	barColor color.Color
 }
 
-type PagerChildView struct {
+func NewPagerApp() *PagerApp {
+	app := &PagerApp{}
+	app.pages = &android.Pages{}
+	app.pages.Notify(func() {
+		fmt.Println("CurrentPage", app.pages.SelectedIndex())
+	})
+
+	v1 := NewPagerChild(app)
+	v1.Color = colornames.Yellow
+	v1.Title = "Search"
+
+	v2 := NewPagerChild(app)
+	v2.Color = colornames.Red
+	v2.Title = "Settings"
+
+	v3 := NewPagerChild(app)
+	v3.Color = colornames.White
+	v3.Title = "Map"
+
+	v4 := NewPagerChild(app)
+	v4.Color = colornames.Green
+	v4.Title = "Camera"
+
+	app.pages.SetViews(v1, v2, v3, v4)
+	app.pages.SetSelectedIndex(2)
+	app.relay = &comm.Relay{}
+	return app
+}
+
+type PagerView struct {
 	view.Embed
-	PaintStyle  *paint.Style
-	PagerButton *android.PagerButton
+	app *PagerApp
 }
 
-func NewPagerChildView() *PagerChildView {
-	return &PagerChildView{}
-}
-
-func (v *PagerChildView) Build(ctx view.Context) view.Model {
-	var p paint.Painter
-	if v.PaintStyle != nil {
-		p = v.PaintStyle
+func NewPagerView(app *PagerApp) view.View {
+	return &PagerView{
+		Embed: view.NewEmbed(app),
+		app:   app,
 	}
+}
+
+func (v *PagerView) Lifecycle(from, to view.Stage) {
+	if view.EntersStage(from, to, view.StageMounted) {
+		v.Subscribe(v.app.relay)
+	} else if view.ExitsStage(from, to, view.StageMounted) {
+		v.Unsubscribe(v.app.relay)
+	}
+}
+
+func (v *PagerView) Build(ctx view.Context) view.Model {
+	pagerview := android.NewPagerView()
+	pagerview.Pages = v.app.pages
+	pagerview.BarColor = v.app.barColor
+
+	// pagerview.Tint = v.app.unselectedTint
+	// pagerview.SelectedTint = v.app.selectedTint
+	// pagerview.Tabs = v.app.tabs
+	// pagerview.TitleStyle = v.app.titleStyle
+	// pagerview.SelectedTitleStyle = v.app.selectedTitleStyle
+	// pagerview.IconTint = v.app.iconTint
+	// pagerview.SelectedIconTint = v.app.selectedIconTint
 	return view.Model{
-		Painter: p,
+		Children: []view.View{pagerview},
+	}
+}
+
+type PagerChild struct {
+	view.Embed
+	app   *PagerApp
+	Color color.Color
+	Title string
+}
+
+func NewPagerChild(app *PagerApp) *PagerChild {
+	return &PagerChild{
+		Embed: view.NewEmbed(app),
+		app:   app,
+	}
+}
+
+func (v *PagerChild) Build(ctx view.Context) view.Model {
+	l := &constraint.Layouter{}
+
+	label := view.NewTextView()
+	label.String = "Current page:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g := l.Add(label, func(s *constraint.Solver) {
+		s.Top(15)
+		s.Left(15)
+	})
+
+	button := view.NewButton()
+	button.String = "0"
+	button.OnPress = func() {
+		v.app.pages.SetSelectedIndex(0)
+	}
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	button = view.NewButton()
+	button.String = "1"
+	button.OnPress = func() {
+		v.app.pages.SetSelectedIndex(1)
+	}
+	buttonG := l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Top())
+		s.LeftEqual(g.Right())
+	})
+
+	button = view.NewButton()
+	button.String = "2"
+	button.OnPress = func() {
+		v.app.pages.SetSelectedIndex(2)
+	}
+	buttonG = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(buttonG.Top())
+		s.LeftEqual(buttonG.Right())
+	})
+
+	button = view.NewButton()
+	button.String = "3"
+	button.OnPress = func() {
+		v.app.pages.SetSelectedIndex(3)
+	}
+	buttonG = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(buttonG.Top())
+		s.LeftEqual(buttonG.Right())
+	})
+
+	label = view.NewTextView()
+	label.String = "Bar Color:"
+	label.Style.SetFont(text.DefaultFont(18))
+	g = l.Add(label, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	button = view.NewButton()
+	button.String = "Toggle"
+	button.OnPress = func() {
+		if v.app.barColor == nil {
+			v.app.barColor = colornames.Yellow
+		} else {
+			v.app.barColor = nil
+		}
+		v.app.relay.Signal()
+	}
+	g = l.Add(button, func(s *constraint.Solver) {
+		s.TopEqual(g.Bottom())
+		s.LeftEqual(g.Left())
+	})
+
+	return view.Model{
+		Children: l.Views(),
+		Layouter: l,
+		Painter:  &paint.Style{BackgroundColor: v.Color},
 		Options: []view.Option{
-			v.PagerButton,
+			&android.PagerButton{Title: v.Title},
 		},
 	}
 }

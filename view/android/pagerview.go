@@ -1,9 +1,12 @@
 package android
 
 import (
+	"image/color"
+
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout/constraint"
+	pb "gomatcha.io/matcha/proto"
 	pbandroid "gomatcha.io/matcha/proto/view/android"
 	"gomatcha.io/matcha/view"
 )
@@ -59,6 +62,8 @@ func (s *Pages) Unnotify(id comm.Id) {
 type PagerView struct {
 	view.Embed
 	Pages *Pages
+
+	BarColor color.Color
 }
 
 // NewPagerView returns a new view.
@@ -148,7 +153,7 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 		NativeViewState: internal.MarshalProtobuf(&pbandroid.PagerView{
 			ChildViews:    childrenPb,
 			SelectedIndex: int64(v.Pages.SelectedIndex()),
-			// BarColor:            pb.ColorEncode(v.BarColor),
+			BarColor:      pb.ColorEncode(v.BarColor),
 			// SelectedColor:       pb.ColorEncode(v.SelectedColor),
 			// UnselectedColor:     pb.ColorEncode(v.UnselectedColor),
 			// SelectedTextStyle:   selectedTextStyle,

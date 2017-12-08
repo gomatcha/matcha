@@ -159,7 +159,7 @@ func NewExamplesView(app *App) *ExamplesView {
 			// {"Navigation", "\n\n\ngomatcha.io/matcha/examples/view/ios NewNavigationView", iosex.NewNavigationView()},
 		},
 		"Android": {
-			{"Pager View", true, "Example of how to set options on an Android pager view. \n\n\ngomatcha.io/matcha/examples/view/android NewPagerView", androidex.NewPagerView()},
+			{"Pager View", true, "Example of how to set options on an Android pager view. \n\n\ngomatcha.io/matcha/examples/view/android NewPagerView", androidex.NewPagerView(androidex.NewPagerApp())},
 			{"Stack View", false, "Example of various stack view properties. \n\n\ngomatcha.io/matcha/examples/view/android NewStackView", androidex.NewStackView()},
 			{"Status Bar", true, "Example of how to toggle the status bar style and color. \n\n\ngomatcha.io/matcha/examples/view/android NewStatusBarView", androidex.NewStatusBarView()},
 		},
