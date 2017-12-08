@@ -369,21 +369,13 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) *solution {
 		cr = copy
 	}
 
-	// Get parent guide.
-	var parent layout.Guide
-	if s.index == rootId {
-		parent = *sys.min.matchaGuide
-	} else {
-		parent = *sys.Guide.matchaGuide
-	}
-
 	// Solve for width & height.
 	var width, height float64
 	var g layout.Guide
 	if s.index == rootId {
 		g = layout.Guide{}
-		width, _ = cr.solveWidth(parent.Width())
-		height, _ = cr.solveHeight(parent.Height())
+		width, _ = cr.solveWidth(sys.min.matchaGuide.Width())
+		height, _ = cr.solveHeight(sys.min.matchaGuide.Height())
 	} else {
 		// Update the width and height ranges based on other constraints.
 		_, cr = cr.solveWidth(0)
@@ -418,16 +410,16 @@ func (s *Solver) solve(sys *Layouter, ctx layout.Context) *solution {
 	cr.width = cr.width.intersect(_range{min: width, max: width})
 	cr.height = cr.height.intersect(_range{min: height, max: height})
 	if !cr.isValid() {
-		fmt.Println("cr", cr)
-		panic("constraint - system inconsistency")
+		fmt.Println("constraint - system inconsistency", cr)
 	}
+
 	var centerX, centerY float64
 	if s.index == rootId {
 		centerX = width / 2
 		centerY = height / 2
 	} else {
-		centerX, _ = cr.solveCenterX(parent.CenterX())
-		centerY, _ = cr.solveCenterY(parent.CenterY())
+		centerX, _ = cr.solveCenterX(sys.Guide.matchaGuide.CenterX())
+		centerY, _ = cr.solveCenterY(sys.Guide.matchaGuide.CenterY())
 	}
 
 	// Set zIndex
@@ -745,10 +737,7 @@ func (r _range) intersect(r2 _range) _range {
 }
 
 func (r _range) isValid() bool {
-	if r.max < r.min {
-		fmt.Println("constraints invalid", r.max, r.min)
-	}
-	return r.max >= r.min
+	return r.max >= r.min-0.05 // Allow a little leeway in floating point math...
 }
 
 func (r _range) nearest(v float64) float64 {
@@ -781,13 +770,30 @@ func newConstrainedRect() constrainedRect {
 }
 
 func (cr constrainedRect) isValid() bool {
-	_, r1 := cr.solveWidth(0)
-	_, r2 := cr.solveHeight(0)
-	_, r3 := cr.solveCenterX(0)
-	_, r4 := cr.solveCenterY(0)
-	return r1.width.isValid() && r2.height.isValid() && r3.centerX.isValid() && r4.centerY.isValid()
+	_, r := cr.solveWidth(0)
+	if !r.width.isValid() {
+		// fmt.Println("width invalid", cr, r)
+		return false
+	}
+	_, r = cr.solveHeight(0)
+	if !r.height.isValid() {
+		// fmt.Println("height invalid", cr, r)
+		return false
+	}
+	_, r = cr.solveCenterX(0)
+	if !r.centerX.isValid() {
+		// fmt.Println("centerX invalid", cr, r)
+		return false
+	}
+	_, r = cr.solveCenterY(0)
+	if !r.centerY.isValid() {
+		// fmt.Println("centerY invalid", cr, r)
+		return false
+	}
+	return true
 }
 
+// returns the closest valid width to b, as well as solving the constrained rect for the width.
 func (r constrainedRect) solveWidth(b float64) (float64, constrainedRect) {
 	centerXMax, centerXMin := r.centerX.max, r.centerX.min
 	rightMax, rightMin := r.right.max, r.right.min
