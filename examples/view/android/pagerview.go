@@ -80,8 +80,8 @@ func (v *PagerView) Lifecycle(from, to view.Stage) {
 func (v *PagerView) Build(ctx view.Context) view.Model {
 	pagerview := android.NewPagerView()
 	pagerview.Pages = v.app.pages
-	pagerview.BarColor = v.app.barColor
-	pagerview.IndicatorColor = v.app.indicatorColor
+	// pagerview.BarColor = v.app.barColor
+	// pagerview.IndicatorColor = v.app.indicatorColor
 	return view.Model{
 		Children: []view.View{pagerview},
 	}

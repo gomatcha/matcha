@@ -1,12 +1,12 @@
 package android
 
 import (
+	"image"
 	"image/color"
 
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"
 	"gomatcha.io/matcha/layout/constraint"
-	pb "gomatcha.io/matcha/proto"
 	pbandroid "gomatcha.io/matcha/proto/view/android"
 	"gomatcha.io/matcha/view"
 )
@@ -61,10 +61,14 @@ func (s *Pages) Unnotify(id comm.Id) {
 
 type PagerView struct {
 	view.Embed
-	Pages          *Pages
-	BarColor       color.Color
-	IndicatorColor color.Color
-	views          []view.View
+	Pages *Pages
+	// BarColor           color.Color
+	// IndicatorColor     color.Color
+	// TitleStyle         *text.Style
+	// SelectedTitleStyle *text.Style
+	// IconTint           color.Color
+	// SelectedIconTint   color.Color
+	views []view.View
 }
 
 // NewPagerView returns a new view.
@@ -133,13 +137,13 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 			}
 		}
 
-		indicatorColor := button.IndicatorColor
-		if indicatorColor == nil {
-			indicatorColor = v.IndicatorColor
-		}
-		if indicatorColor == nil {
-			indicatorColor = color.Gray{uint8(160)}
-		}
+		// indicatorColor := button.IndicatorColor
+		// if indicatorColor == nil {
+		// 	indicatorColor = v.IndicatorColor
+		// }
+		// if indicatorColor == nil {
+		// 	indicatorColor = color.Gray{uint8(160)}
+		// }
 
 		// Add the child.
 		l.Add(chld, func(s *constraint.Solver) {
@@ -151,8 +155,8 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 
 		// Add to protobuf.
 		childrenPb = append(childrenPb, &pbandroid.PagerChildView{
-			Title:          button.Title,
-			IndicatorColor: pb.ColorEncode(indicatorColor),
+			Title: button.Title,
+			// IndicatorColor: pb.ColorEncode(indicatorColor),
 		})
 	}
 
@@ -173,7 +177,7 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 		NativeViewState: internal.MarshalProtobuf(&pbandroid.PagerView{
 			ChildViews:    childrenPb,
 			SelectedIndex: int64(v.Pages.SelectedIndex()),
-			BarColor:      pb.ColorEncode(v.BarColor),
+			// BarColor:      pb.ColorEncode(v.BarColor),
 			// SelectedColor:       pb.ColorEncode(v.SelectedColor),
 			// UnselectedColor:     pb.ColorEncode(v.UnselectedColor),
 			// SelectedTextStyle:   selectedTextStyle,
@@ -188,8 +192,9 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 }
 
 type PagerButton struct {
-	Title          string
-	IndicatorColor color.Color
+	Title string
+	Icon  image.Image // TODO(KD):
+	// IndicatorColor color.Color
 }
 
 func (t *PagerButton) OptionKey() string {
