@@ -2,7 +2,6 @@ package android
 
 import (
 	"image"
-	"image/color"
 
 	"gomatcha.io/matcha/comm"
 	"gomatcha.io/matcha/internal"

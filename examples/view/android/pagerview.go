@@ -227,7 +227,10 @@ func (v *PagerChild) Build(ctx view.Context) view.Model {
 		Layouter: l,
 		Painter:  &paint.Style{BackgroundColor: v.Color},
 		Options: []view.Option{
-			&android.PagerButton{Title: v.Title, IndicatorColor: v.indicatorColor},
+			&android.PagerButton{
+				Title: v.Title,
+				// IndicatorColor: v.indicatorColor,
+			},
 		},
 	}
 }
