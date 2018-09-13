@@ -3,7 +3,7 @@ package store
 import (
 	"sync"
 
-	"gomatcha.io/matcha/comm"
+	"github.com/gomatcha/matcha/comm"
 )
 
 type Storer interface {

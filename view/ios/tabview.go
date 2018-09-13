@@ -6,14 +6,14 @@ import (
 	"image/color"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout/constraint"
-	pb "gomatcha.io/matcha/proto"
-	pbtext "gomatcha.io/matcha/proto/text"
-	pbios "gomatcha.io/matcha/proto/view/ios"
-	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout/constraint"
+	pb "github.com/gomatcha/matcha/proto"
+	pbtext "github.com/gomatcha/matcha/proto/text"
+	pbios "github.com/gomatcha/matcha/proto/view/ios"
+	"github.com/gomatcha/matcha/text"
+	"github.com/gomatcha/matcha/view"
 )
 
 // Tabs represents a list of views to be shown in the TabView. It can be manipulated outside of a Build() call.
@@ -157,7 +157,7 @@ func (v *TabView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children:       l.Views(),
 		Layouter:       l,
-		NativeViewName: "gomatcha.io/matcha/view/tabscreen",
+		NativeViewName: "github.com/gomatcha/matcha/view/tabscreen",
 		NativeViewState: internal.MarshalProtobuf(&pbios.TabView{
 			Screens:             childrenPb,
 			SelectedIndex:       int64(v.Tabs.SelectedIndex()),
@@ -191,5 +191,5 @@ type TabButton struct {
 }
 
 func (t *TabButton) OptionKey() string {
-	return "gomatcha.io/view/ios TabButton"
+	return "github.com/gomatcha/view/ios TabButton"
 }

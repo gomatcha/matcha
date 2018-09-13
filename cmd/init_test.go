@@ -33,7 +33,7 @@ func TestBuild(t *testing.T) {
 		BuildN:   true,
 	}
 
-	if err := Build(f, []string{"gomatcha.io/matcha/examples"}); err != nil {
+	if err := Build(f, []string{"github.com/gomatcha/matcha/examples"}); err != nil {
 		t.Fatal(err)
 	}
 
@@ -84,7 +84,7 @@ Matcha initialized.
 rm -r -f $WORK
 `
 
-const expectedBuild = `go findpackage gomatcha.io/matcha
+const expectedBuild = `go findpackage github.com/gomatcha/matcha
 which go
 go version
 WORK=$WORK
@@ -93,8 +93,8 @@ test -d $GOPATH/pkg/matcha
 read $GOPATH/pkg/matcha/version
 go version
 pwd
-go importall $CWD gomatcha.io/matcha/examples
-go findpackage gomatcha.io/matcha/bridge
+go importall $CWD github.com/gomatcha/matcha/examples
+go findpackage github.com/gomatcha/matcha/bridge
 which xcrun
 mkdir -p $WORK/matcha-ios
 mkdir -p $WORK/matcha-ios/MatchaBridge/MatchaBridge
@@ -115,7 +115,7 @@ printenv GOPATH
 test -d $GOPATH/pkg/matcha/pkg_darwin_amd64
 GOOS=darwin GOARCH=amd64 CC=$CLANG_IPHONESIMULATOR CXX=$CLANG_IPHONESIMULATOR CGO_CFLAGS=-isysroot $SDK_IPHONESIMULATOR -mios-simulator-version-min=6.1 -arch x86_64 CGO_LDFLAGS=-isysroot $SDK_IPHONESIMULATOR -mios-simulator-version-min=6.1 -arch x86_64 CGO_ENABLED=1 GOPATH=$WORK/IOS-GOPATH:$GOPATH go build -pkgdir=$GOPATH/pkg/matcha/pkg_darwin_amd64 -tags matcha -buildmode=c-archive -o $WORK/matcha-amd64.a $WORK/src/iosbin/main.go
 xcrun lipo -create -arch armv7 $WORK/matcha-arm.a -arch arm64 $WORK/matcha-arm64.a -arch x86_64 $WORK/matcha-amd64.a -o $WORK/matcha-ios/MatchaBridge/MatchaBridge/MatchaBridge.a
-cp $WORK/matcha-ios/MatchaBridge/MatchaBridge/MatchaBridge.a $GOPATH/src/gomatcha.io/matcha/ios/MatchaBridge/MatchaBridge/MatchaBridge.a
+cp $WORK/matcha-ios/MatchaBridge/MatchaBridge/MatchaBridge.a $GOPATH/src/github.com/gomatcha/matcha/ios/MatchaBridge/MatchaBridge/MatchaBridge.a
 printenv ANDROID_HOME
 test -d $ANDROID_HOME
 test -d $ANDROID_HOME/platforms
@@ -127,9 +127,9 @@ test -d $ANDROID_HOME/ndk-bundle
 which javac
 write $WORK/androidlib/main.go
 mkdir -p $WORK/android/src/main/java/io/gomatcha/bridge
-cp $GOPATH/src/gomatcha.io/matcha/bridge/java-GoValue.java $WORK/android/src/main/java/io/gomatcha/bridge/GoValue.java
-cp $GOPATH/src/gomatcha.io/matcha/bridge/java-Bridge.java $WORK/android/src/main/java/io/gomatcha/bridge/Bridge.java
-cp $GOPATH/src/gomatcha.io/matcha/bridge/java-Tracker.java $WORK/android/src/main/java/io/gomatcha/bridge/Tracker.java
+cp $GOPATH/src/github.com/gomatcha/matcha/bridge/java-GoValue.java $WORK/android/src/main/java/io/gomatcha/bridge/GoValue.java
+cp $GOPATH/src/github.com/gomatcha/matcha/bridge/java-Bridge.java $WORK/android/src/main/java/io/gomatcha/bridge/Bridge.java
+cp $GOPATH/src/github.com/gomatcha/matcha/bridge/java-Tracker.java $WORK/android/src/main/java/io/gomatcha/bridge/Tracker.java
 mkdir -p $WORK/matcha-android
 mkdir -p $WORK/matcha-android/MatchaBridge
 printenv ANDROID_HOME
@@ -144,6 +144,6 @@ test -d $ANDROID_HOME/ndk-bundle
 printenv GOPATH
 test -d $GOPATH/pkg/matcha/pkg_android_arm64
 GOOS=android GOARCH=arm64 CC=$ANDROID_HOME/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang CXX=$ANDROID_HOME/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ CGO_CFLAGS=-target aarch64-none-linux-android -gcc-toolchain $ANDROID_HOME/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64 --sysroot $ANDROID_HOME/ndk-bundle/sysroot -isystem $ANDROID_HOME/ndk-bundle/sysroot/usr/include/aarch64-linux-android -D__ANDROID_API__=21 CGO_CPPFLAGS=-target aarch64-none-linux-android -gcc-toolchain $ANDROID_HOME/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64 --sysroot $ANDROID_HOME/ndk-bundle/sysroot -isystem $ANDROID_HOME/ndk-bundle/sysroot/usr/include/aarch64-linux-android -D__ANDROID_API__=21 CGO_LDFLAGS=-target aarch64-none-linux-android -gcc-toolchain $ANDROID_HOME/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64 --sysroot $ANDROID_HOME/ndk-bundle/platforms/android-21/arch-arm64 CGO_ENABLED=1 GOPATH=$WORK/ANDROID-GOPATH:$GOPATH go build -pkgdir=$GOPATH/pkg/matcha/pkg_android_arm64 -tags matcha -buildmode=c-shared -o=$WORK/android/src/main/jniLibs/arm64-v8a/libgojni.so $WORK/androidlib/main.go
-cp $WORK/matcha-android/MatchaBridge/matchabridge.aar $GOPATH/src/gomatcha.io/matcha/android/matchabridge.aar
+cp $WORK/matcha-android/MatchaBridge/matchabridge.aar $GOPATH/src/github.com/gomatcha/matcha/android/matchabridge.aar
 rm -r -f $WORK
 `

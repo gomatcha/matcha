@@ -7,12 +7,12 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	"gomatcha.io/matcha/animate"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/paint"
-	pbview "gomatcha.io/matcha/proto/view"
+	"github.com/gomatcha/matcha/animate"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/paint"
+	pbview "github.com/gomatcha/matcha/proto/view"
 )
 
 type ScrollView struct {
@@ -68,9 +68,9 @@ func (v *ScrollView) Build(ctx Context) Model {
 	child.Layouter = v.ContentLayouter
 	child.Painter = v.ContentPainter
 
-	nativeName := "gomatcha.io/matcha/view/scrollview"
+	nativeName := "github.com/gomatcha/matcha/view/scrollview"
 	if runtime.GOOS == "android" && v.ScrollAxes == layout.AxisX {
-		nativeName = "gomatcha.io/matcha/view/hscrollview"
+		nativeName = "github.com/gomatcha/matcha/view/hscrollview"
 	}
 
 	var painter paint.Painter

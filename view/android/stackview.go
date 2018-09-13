@@ -9,16 +9,16 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/internal/radix"
-	"gomatcha.io/matcha/layout/constraint"
-	"gomatcha.io/matcha/paint"
-	pb "gomatcha.io/matcha/proto"
-	"gomatcha.io/matcha/proto/view/android"
-	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/internal/radix"
+	"github.com/gomatcha/matcha/layout/constraint"
+	"github.com/gomatcha/matcha/paint"
+	pb "github.com/gomatcha/matcha/proto"
+	"github.com/gomatcha/matcha/proto/view/android"
+	"github.com/gomatcha/matcha/text"
+	"github.com/gomatcha/matcha/view"
 )
 
 // Stack represents a list of views to be shown in the StackView. It can be manipulated outside of a Build() call.
@@ -165,7 +165,7 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children:       l.Views(),
 		Layouter:       l,
-		NativeViewName: "gomatcha.io/matcha/view/android StackView",
+		NativeViewName: "github.com/gomatcha/matcha/view/android StackView",
 		NativeViewState: internal.MarshalProtobuf(&android.StackView{
 			Children: childrenPb,
 		}),
@@ -256,7 +256,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 
 	return view.Model{
 		Painter:        &paint.Style{BackgroundColor: col},
-		NativeViewName: "gomatcha.io/matcha/view/android stackBarView",
+		NativeViewName: "github.com/gomatcha/matcha/view/android stackBarView",
 		NativeViewState: internal.MarshalProtobuf(&android.StackBar{
 			Title:            bar.Title,
 			StyledTitle:      styledTitle.MarshalProtobuf(),
@@ -279,7 +279,7 @@ type StackBar struct {
 }
 
 func (t *StackBar) OptionKey() string {
-	return "gomatcha.io/view/android StackBar"
+	return "github.com/gomatcha/view/android StackBar"
 }
 
 type StackBarItem struct {
@@ -316,7 +316,7 @@ func init() {
 		}
 		return stackMiddlewareVar
 	})
-	bridge.RegisterFunc("gomatcha.io/view/android StackBarOnBack", func() {
+	bridge.RegisterFunc("github.com/gomatcha/view/android StackBarOnBack", func() {
 		didBack := false
 		stackMiddlewareVar.radix.Range(func(path []int64, node *radix.Node) {
 			if !didBack {
@@ -325,7 +325,7 @@ func init() {
 			}
 		})
 	})
-	bridge.RegisterFunc("gomatcha.io/view/android StackBarCanBack", func() bool {
+	bridge.RegisterFunc("github.com/gomatcha/view/android StackBarCanBack", func() bool {
 		canBack := false
 		stackMiddlewareVar.radix.Range(func(path []int64, node *radix.Node) {
 			canBack = node.Value.(map[string]interface{})["CanBack"].(func() bool)()
@@ -343,7 +343,7 @@ func (m *stackMiddleware) Build(ctx view.Context, model *view.Model) {
 
 	var nativeFuncs map[string]interface{}
 	if model != nil {
-		if model.NativeViewName == "gomatcha.io/matcha/view/android StackView" {
+		if model.NativeViewName == "github.com/gomatcha/matcha/view/android StackView" {
 			nativeFuncs = model.NativeFuncs
 		}
 	}
@@ -361,7 +361,7 @@ func (m *stackMiddleware) MarshalProtobuf() proto.Message {
 }
 
 func (m *stackMiddleware) Key() string {
-	return "gomatcha.io/matcha/view/android stackMiddleware"
+	return "github.com/gomatcha/matcha/view/android stackMiddleware"
 }
 
 func idSliceToIntSlice(ids []view.Id) []int64 {

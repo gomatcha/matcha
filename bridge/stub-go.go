@@ -6,12 +6,12 @@ package bridge
 //
 // Go:
 //  func init() {
-//      bridge.RegisterFunc("gomatcha.io/matcha/examples/simple Add", func(a, b int) int {
+//      bridge.RegisterFunc("github.com/gomatcha/matcha/examples/simple Add", func(a, b int) int {
 //          return a + b
 //      })
 //  }
 // Objective-C:
-//  MatchaGoValue *func = [[MatchaGoValue alloc] initWithFunc:@"gomatcha.io/matcha/examples/simple Add"];
+//  MatchaGoValue *func = [[MatchaGoValue alloc] initWithFunc:@"github.com/gomatcha/matcha/examples/simple Add"];
 //  MatchaGoValue *a = [[MatchaGoValue alloc] initWithInt:1];
 //  MatchaGoValue *b = [[MatchaGoValue alloc] initWithInt:3];
 //  MatchaGoValue *c = [func call:nil args:@[a, b]];

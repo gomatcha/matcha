@@ -2,6 +2,7 @@
 
 // Package bridge implements the interface between Go and Objective-C. See
 // https://gomatcha.io/guide/native-bridge/ for more details.
+// NOTE: gomatcha.io is no longer available. This is being worked on.
 package bridge
 
 // Value wraps an ObjectiveC object.

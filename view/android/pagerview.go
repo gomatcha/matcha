@@ -1,11 +1,11 @@
 package android
 
 import (
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout/constraint"
-	pbandroid "gomatcha.io/matcha/proto/view/android"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout/constraint"
+	pbandroid "github.com/gomatcha/matcha/proto/view/android"
+	"github.com/gomatcha/matcha/view"
 )
 
 // Pages represents a list of views to be shown in the PagerView. It can be manipulated outside of a Build() call.
@@ -144,7 +144,7 @@ func (v *PagerView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children:       l.Views(),
 		Layouter:       l,
-		NativeViewName: "gomatcha.io/matcha/view/android PagerView",
+		NativeViewName: "github.com/gomatcha/matcha/view/android PagerView",
 		NativeViewState: internal.MarshalProtobuf(&pbandroid.PagerView{
 			ChildViews:    childrenPb,
 			SelectedIndex: int64(v.Pages.SelectedIndex()),
@@ -167,5 +167,5 @@ type PagerButton struct {
 }
 
 func (t *PagerButton) OptionKey() string {
-	return "gomatcha.io/view/android PagerButton"
+	return "github.com/gomatcha/view/android PagerButton"
 }

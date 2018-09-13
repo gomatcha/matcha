@@ -3,7 +3,7 @@ package matcha.view;
 
 option go_package = "view";
 option objc_class_prefix = "MatchaViewPb";
-option java_package = "io.gomatcha.matcha.proto.view";
+option java_package = "com.github.gomatcha.matcha.proto.view";
 option java_outer_classname = "PbSwitchView";
 
 message SwitchView {

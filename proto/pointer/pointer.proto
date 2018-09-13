@@ -3,11 +3,11 @@ package matcha.pointer;
 import "google/protobuf/any.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
-import "gomatcha.io/matcha/proto/layout/layout.proto";
+import "github.com/gomatcha/matcha/proto/layout/layout.proto";
 
 option go_package = "pointer";
 option objc_class_prefix = "MatchaPointerPB";
-option java_package = "io.gomatcha.matcha.proto.pointer";
+option java_package = "com.github.gomatcha.matcha.proto.pointer";
 option java_outer_classname = "PbPointer";
 
 enum EventKind {

@@ -1,11 +1,11 @@
 syntax = "proto3";
 package matcha.view;
-import "gomatcha.io/matcha/proto/text/text.proto";
-import "gomatcha.io/matcha/proto/keyboard/keyboard.proto";
+import "github.com/gomatcha/matcha/proto/text/text.proto";
+import "github.com/gomatcha/matcha/proto/keyboard/keyboard.proto";
 
 option go_package = "view";
 option objc_class_prefix = "MatchaViewPB";
-option java_package = "io.gomatcha.matcha.proto.view";
+option java_package = "com.github.gomatcha.matcha.proto.view";
 option java_outer_classname = "PbTextInput";
 
 message TextInput {

@@ -4,8 +4,8 @@ package text
 import (
 	"bytes"
 
-	"gomatcha.io/matcha/comm"
-	pb "gomatcha.io/matcha/proto/text"
+	"github.com/gomatcha/matcha/comm"
+	pb "github.com/gomatcha/matcha/proto/text"
 )
 
 // type Position struct {

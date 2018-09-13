@@ -1,8 +1,8 @@
 package view
 
 import (
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/layout"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/layout"
 )
 
 type absoluteLayouter struct {

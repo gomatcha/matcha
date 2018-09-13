@@ -1,7 +1,5 @@
 # Matcha - iOS and Android apps in Go
 
-[gomatcha.io](https://gomatcha.io)
-
 Matcha is in early development! There are many rough edges and APIs may still
 change. Please file issues for any bugs you find.
 
@@ -40,15 +38,15 @@ Open Android Studio's SDK Manager and under the SDK Platforms tab, install
 the Android 8 Platform (API 26). And in the SDK Tools tab, install NDK and the
 Android Support Repository.
 
-Configure the ANDROID_HOME enviromental variable to point to the Android SDK by 
-adding the following to your ~/.bash_profile. The Android SDK is 
+Configure the ANDROID_HOME enviromental variable to point to the Android SDK by
+adding the following to your ~/.bash_profile. The Android SDK is
 often located at `~/Library/Android/sdk` depending on your install.
 
     export ANDROID_HOME=<SDK location>
 
 Fetch the project and install the matcha command.
 
-    go get gomatcha.io/matcha/...
+    go get github.com/gomatcha/matcha/...
 
 Next we build the Go standard library for iOS and Android with the following command.
 The output is installed at `$GOPATH/pkg/matcha`. If your
@@ -57,20 +55,20 @@ path doesn't contain `$GOPATH/bin`, you may need to replace these calls with
 
     matcha init
 
-Now build the example project. The output is installed at `$GOPATH/src/gomatcha.io/matcha/ios/MatchaBridge/MatchaBridge/MatchaBridge.a` and `$GOPATH/src/gomatcha.io/matcha/android/matchabridge.aar`.
+Now build the example project. The output is installed at `$GOPATH/src/github.com/gomatcha/matcha/ios/MatchaBridge/MatchaBridge/MatchaBridge.a` and `$GOPATH/src/github.com/gomatcha/matcha/android/matchabridge.aar`.
 
-    matcha build gomatcha.io/matcha/examples
+    matcha build github.com/gomatcha/matcha/examples
 
 We can now open the sample iOS project.
 
-    open $GOPATH/src/gomatcha.io/matcha/examples/ios-app/SampleApp.xcworkspace
-    
+    open $GOPATH/src/github.com/gomatcha/matcha/examples/ios-app/SampleApp.xcworkspace
+
 Set the Development Team in Xcode under General > Signing and select `SampleApp` in
 the target dropdown in the upper right. Then run the App!
 
 For Android, simply open the sample Android Studio project and hit run!
 
-    open -a /Applications/Android\ Studio.app $GOPATH/src/gomatcha.io/matcha/examples/android-app/SampleApp
+    open -a /Applications/Android\ Studio.app $GOPATH/src/github.com/gomatcha/matcha/examples/android-app/SampleApp
 
 ### Installation - Linux
 
@@ -81,27 +79,27 @@ supported on Linux.
 * Android Studio 2.3+ (with SDK 26, NDK and Android Support Library)
 
 Start by installing Android Studio. Instructions can be found at
-https://developer.android.com/studio/install.html. 
+https://developer.android.com/studio/install.html.
 
 Open Android Studio's SDK Manager and under the SDK Platforms tab, install
 the Android 8 Platform (API 26). And in the SDK Tools tab, install NDK and the
 Android Support Repository.
 
-Configure the ANDROID_HOME enviromental variable to point to the Android SDK by 
-adding the following to your ~/.bash_profile. The Android SDK is often located 
+Configure the ANDROID_HOME enviromental variable to point to the Android SDK by
+adding the following to your ~/.bash_profile. The Android SDK is often located
 at ~/Android/Sdk depending on your install.
 
     export ANDROID_HOME=<SDK location>
 
 Additionally add the following to your ~/.bash_profile to modify your PATH to
-include the Java compiler if it does not already. javac can often be found at 
+include the Java compiler if it does not already. javac can often be found at
 `/usr/local/android-studio/jre/bin`.
 
     export PATH=${PATH}:<Java Compiler location>
 
 Fetch the project and install the matcha command.
 
-    go get gomatcha.io/matcha/...
+    go get github.com/gomatcha/matcha/...
 
 Next we build the Go standard library for Android with the following command.
 The output is installed at `$GOPATH/pkg/matcha`. If your
@@ -110,13 +108,13 @@ path doesn't contain `$GOPATH/bin`, you may need to replace these calls with
 
     matcha init
 
-Now build the example project. The output is installed at `$GOPATH/src/gomatcha.io/matcha/android/matchabridge.aar`.
+Now build the example project. The output is installed at `$GOPATH/src/github.com/gomatcha/matcha/android/matchabridge.aar`.
 
-    matcha build gomatcha.io/matcha/examples
+    matcha build github.com/gomatcha/matcha/examples
 
 Now open the sample Android Studio project and hit run!
 
-    <Android Studio location>/bin/studio.sh $GOPATH/src/gomatcha.io/matcha/examples/android-app/SampleApp
+    <Android Studio location>/bin/studio.sh $GOPATH/src/github.com/gomatcha/matcha/examples/android-app/SampleApp
 
 ### Installation - Windows
 
@@ -127,15 +125,15 @@ supported on Windows.
 * Android Studio 2.3+ (with SDK 26, NDK and Android Support Library)
 
 Start by installing Android Studio. Instructions can be found at
-https://developer.android.com/studio/install.html. 
+https://developer.android.com/studio/install.html.
 
 Open Android Studio's SDK Manager and under the SDK Platforms tab, install
 the Android 8 Platform (API 26). And in the SDK Tools tab, install NDK and the
 Android Support Repository.
 
 Configure the ANDROID_HOME enviromental variable to point to the Android SDK.
-The Android SDK is often located at `%USERPROFILE%\AppData\Local\Android\Sdk` 
-depending on your install. 
+The Android SDK is often located at `%USERPROFILE%\AppData\Local\Android\Sdk`
+depending on your install.
 
     setx ANDROID_HOME <SDK location>
 
@@ -146,7 +144,7 @@ often be found at C:\Program Files\Android\Android Studio\jre\bin.
 
 Fetch the project and install the matcha command.
 
-    go get gomatcha.io/matcha/...
+    go get github.com/gomatcha/matcha/...
 
 Next we build the Go standard library for Android with the following command.
 The output is installed at `$GOPATH/pkg/matcha`. If your path doesn't contain
@@ -154,20 +152,12 @@ The output is installed at `$GOPATH/pkg/matcha`. If your path doesn't contain
 
     matcha init
 
-Now build the example project. The output is installed at `$GOPATH/src/gomatcha.io/matcha/android/matchabridge.aar`.
+Now build the example project. The output is installed at `$GOPATH/src/github.com/gomatcha/matcha/android/matchabridge.aar`.
 
-    matcha build gomatcha.io/matcha/examples
+    matcha build github.com/gomatcha/matcha/examples
 
 Now open the sample Android Studio project and hit run!
 
-
-<h3>Try it out!</h3>
-<ul>
-    <li><a href="https://gomatcha.io/guide/installation/">Install</a> the project</li>
-    <li>Read the <a href="https://gomatcha.io/guide/getting-started/">Getting Started</a> guide</li>
-    <li>Go through some <a href="https://github.com/gomatcha/matcha/tree/master/examples">examples</a></li>
-    <li>Learn the <a href="https://gomatcha.io/guide/concepts/">basic concepts</a></li>
-</ul>
 <h3>Contact us</h3>
 <ul>
     <li>Join the Gophers <a href="https://gophers.slack.com/messages/matcha">Slack</a> channel</li>

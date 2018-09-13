@@ -6,14 +6,14 @@ import (
 	"runtime"
 	"strings"
 
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pointer"
-	pb "gomatcha.io/matcha/proto"
-	pbview "gomatcha.io/matcha/proto/view"
-	"gomatcha.io/matcha/text"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/paint"
+	"github.com/gomatcha/matcha/pointer"
+	pb "github.com/gomatcha/matcha/proto"
+	pbview "github.com/gomatcha/matcha/proto/view"
+	"github.com/gomatcha/matcha/text"
 )
 
 // Button implements a native button view.
@@ -42,7 +42,7 @@ func (v *Button) Build(ctx Context) Model {
 	return Model{
 		Painter:        painter,
 		Layouter:       &buttonLayouter{str: v.String},
-		NativeViewName: "gomatcha.io/matcha/view/button",
+		NativeViewName: "github.com/gomatcha/matcha/view/button",
 		NativeViewState: internal.MarshalProtobuf(&pbview.Button{
 			Str:     v.String,
 			Enabled: v.Enabled,

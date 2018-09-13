@@ -5,10 +5,10 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/internal/radix"
-	"gomatcha.io/matcha/pointer"
-	pbtouch "gomatcha.io/matcha/proto/pointer"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/internal/radix"
+	"github.com/gomatcha/matcha/pointer"
+	pbtouch "github.com/gomatcha/matcha/proto/pointer"
 )
 
 func init() {
@@ -109,7 +109,7 @@ func (r *touchMiddleware) Build(ctx Context, next *Model) {
 	if next.NativeOptions == nil {
 		next.NativeOptions = map[string][]byte{}
 	}
-	next.NativeOptions["gomatcha.io/matcha/touch"] = pbBytes
+	next.NativeOptions["github.com/gomatcha/matcha/touch"] = pbBytes
 
 	if next.NativeFuncs == nil {
 		next.NativeFuncs = map[string]interface{}{}
@@ -120,7 +120,7 @@ func (r *touchMiddleware) Build(ctx Context, next *Model) {
 }
 
 func (r *touchMiddleware) Key() string {
-	return "gomatcha.io/matcha/touch"
+	return "github.com/gomatcha/matcha/touch"
 }
 
 func idSliceToIntSlice(ids []Id) []int64 {

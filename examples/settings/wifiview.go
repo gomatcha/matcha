@@ -1,15 +1,15 @@
 package settings
 
 import (
+	"github.com/gomatcha/matcha/application"
+	"github.com/gomatcha/matcha/layout/constraint"
+	"github.com/gomatcha/matcha/layout/table"
+	"github.com/gomatcha/matcha/paint"
+	"github.com/gomatcha/matcha/pointer"
+	"github.com/gomatcha/matcha/view"
+	"github.com/gomatcha/matcha/view/android"
+	"github.com/gomatcha/matcha/view/ios"
 	"golang.org/x/image/colornames"
-	"gomatcha.io/matcha/application"
-	"gomatcha.io/matcha/layout/constraint"
-	"gomatcha.io/matcha/layout/table"
-	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/pointer"
-	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/android"
-	"gomatcha.io/matcha/view/ios"
 )
 
 type WifiView struct {

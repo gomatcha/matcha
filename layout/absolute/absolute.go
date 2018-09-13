@@ -16,9 +16,9 @@ Package absolute implements a fixed layout system similar to HTML absolute posit
 package absolute
 
 import (
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/view"
 )
 
 type Layouter struct {

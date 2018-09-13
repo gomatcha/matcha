@@ -11,8 +11,8 @@
 package keyboard
 
 import (
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/proto/keyboard"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/proto/keyboard"
 )
 
 // Type defines the kind of keyboard.

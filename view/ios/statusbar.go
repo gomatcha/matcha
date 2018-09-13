@@ -2,10 +2,10 @@ package ios
 
 import (
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/internal/radix"
-	pbapp "gomatcha.io/matcha/proto/app"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/internal/radix"
+	pbapp "github.com/gomatcha/matcha/proto/app"
+	"github.com/gomatcha/matcha/view"
 )
 
 type StatusBarStyle int
@@ -31,7 +31,7 @@ type StatusBar struct {
 }
 
 func (s *StatusBar) OptionKey() string {
-	return "gomatcha.io/matcha/app statusbar"
+	return "github.com/gomatcha/matcha/app statusbar"
 }
 
 func init() {
@@ -81,5 +81,5 @@ func (m *statusBarMiddleware) MarshalProtobuf() proto.Message {
 }
 
 func (m *statusBarMiddleware) Key() string {
-	return "gomatcha.io/matcha/app statusbar"
+	return "github.com/gomatcha/matcha/app statusbar"
 }

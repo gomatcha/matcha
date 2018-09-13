@@ -1,28 +1,28 @@
 package examples
 
 import (
-	"gomatcha.io/matcha/application"
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/comm"
-	applicationex "gomatcha.io/matcha/examples/application"
-	bridgeex "gomatcha.io/matcha/examples/bridge"
-	"gomatcha.io/matcha/examples/customview"
-	"gomatcha.io/matcha/examples/insta"
-	layoutex "gomatcha.io/matcha/examples/layout"
-	paintex "gomatcha.io/matcha/examples/paint"
-	"gomatcha.io/matcha/examples/settings"
-	"gomatcha.io/matcha/examples/todo"
-	viewex "gomatcha.io/matcha/examples/view"
-	"gomatcha.io/matcha/examples/view/android"
-	"gomatcha.io/matcha/examples/view/ios"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/layout/table"
-	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/application"
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/comm"
+	applicationex "github.com/gomatcha/matcha/examples/application"
+	bridgeex "github.com/gomatcha/matcha/examples/bridge"
+	"github.com/gomatcha/matcha/examples/customview"
+	"github.com/gomatcha/matcha/examples/insta"
+	layoutex "github.com/gomatcha/matcha/examples/layout"
+	paintex "github.com/gomatcha/matcha/examples/paint"
+	"github.com/gomatcha/matcha/examples/settings"
+	"github.com/gomatcha/matcha/examples/todo"
+	viewex "github.com/gomatcha/matcha/examples/view"
+	"github.com/gomatcha/matcha/examples/view/android"
+	"github.com/gomatcha/matcha/examples/view/ios"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/layout/table"
+	"github.com/gomatcha/matcha/paint"
+	"github.com/gomatcha/matcha/view"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples NewExamplesView", func() view.View {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/examples NewExamplesView", func() view.View {
 		return NewExamplesView()
 	})
 }

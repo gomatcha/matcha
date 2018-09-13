@@ -1,5 +1,5 @@
 // Package constraint implements a constraint-based layout system. See
-// http://gomatcha.io/guide/layout/ for more details.
+// README.md or documentation / examples for more details.
 package constraint
 
 import (
@@ -7,10 +7,10 @@ import (
 	"math"
 	"strings"
 
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal/device"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal/device"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/view"
 )
 
 type comparison int

@@ -3,15 +3,15 @@ package view
 import (
 	"fmt"
 
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/layout/constraint"
+	"github.com/gomatcha/matcha/paint"
+	"github.com/gomatcha/matcha/view"
 	"golang.org/x/image/colornames"
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/layout/constraint"
-	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/view"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view NewSliderView", func() view.View {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/examples/view NewSliderView", func() view.View {
 		return NewSliderView()
 	})
 }

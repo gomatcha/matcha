@@ -8,13 +8,13 @@ import (
 	"image"
 
 	gogoproto "github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/application"
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/proto"
+	"github.com/gomatcha/matcha/application"
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/proto"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/internal printStack", printStack)
+	bridge.RegisterFunc("github.com/gomatcha/matcha/internal printStack", printStack)
 }
 
 func printStack() {

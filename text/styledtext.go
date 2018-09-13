@@ -6,10 +6,10 @@ import (
 	"runtime"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/layout"
-	pb "gomatcha.io/matcha/proto/layout"
-	pbtext "gomatcha.io/matcha/proto/text"
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/layout"
+	pb "github.com/gomatcha/matcha/proto/layout"
+	pbtext "github.com/gomatcha/matcha/proto/text"
 )
 
 type styleRange struct {

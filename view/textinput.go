@@ -7,13 +7,13 @@ import (
 	"golang.org/x/image/colornames"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/keyboard"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/paint"
-	pbview "gomatcha.io/matcha/proto/view"
-	"gomatcha.io/matcha/text"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/keyboard"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/paint"
+	pbview "github.com/gomatcha/matcha/proto/view"
+	"github.com/gomatcha/matcha/text"
 )
 
 // TextInput represents a text input view. TextInput mutates the Text and
@@ -110,7 +110,7 @@ func (v *TextInput) Build(ctx Context) Model {
 	return Model{
 		Layouter:       &textInputLayouter{style: style, styledText: st, maxLines: v.MaxLines},
 		Painter:        painter,
-		NativeViewName: "gomatcha.io/matcha/view/textinput",
+		NativeViewName: "github.com/gomatcha/matcha/view/textinput",
 		NativeViewState: internal.MarshalProtobuf(&pbview.TextInput{
 			Font:            style.Font().MarshalProtobuf(),
 			StyledText:      st.MarshalProtobuf(),

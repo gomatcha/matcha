@@ -17,9 +17,9 @@ import (
 	"fmt"
 	"math"
 
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/view"
 )
 
 // TODO(KD): Behavior does nothing at the moment.

@@ -4,24 +4,24 @@ import (
 	"fmt"
 	"runtime"
 
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/layout/constraint"
+	"github.com/gomatcha/matcha/paint"
+	"github.com/gomatcha/matcha/view"
 	"golang.org/x/image/colornames"
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/layout/constraint"
-	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/view"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/bridge NewBridgeView", func() view.View {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/examples/bridge NewBridgeView", func() view.View {
 		return NewBridgeView()
 	})
 }
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/bridge callWithGoValues", func(v int64) string {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/examples/bridge callWithGoValues", func(v int64) string {
 		return fmt.Sprintf("Call with Go values:%v", v)
 	})
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/bridge callWithForeignValues", func(v *bridge.Value) *bridge.Value {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/examples/bridge callWithForeignValues", func(v *bridge.Value) *bridge.Value {
 		return bridge.String(fmt.Sprintf("Call with Foreign values:%v", v.ToInt64()))
 	})
 }
@@ -40,11 +40,11 @@ func (v *BridgeView) Build(ctx view.Context) view.Model {
 	var str string
 	var str2 string
 	if runtime.GOOS == "android" {
-		str = bridge.Bridge("gomatcha.io/matcha/example").Call("callWithGoValues", bridge.Interface(123)).ToInterface().(string)
-		str2 = bridge.Bridge("gomatcha.io/matcha/example").Call("callWithForeignValues", bridge.Int64(456)).ToString()
+		str = bridge.Bridge("github.com/gomatcha/matcha/example").Call("callWithGoValues", bridge.Interface(123)).ToInterface().(string)
+		str2 = bridge.Bridge("github.com/gomatcha/matcha/example").Call("callWithForeignValues", bridge.Int64(456)).ToString()
 	} else {
-		str = bridge.Bridge("gomatcha.io/matcha/example").Call("callWithGoValues:", bridge.Interface(123)).ToInterface().(string)
-		str2 = bridge.Bridge("gomatcha.io/matcha/example").Call("callWithForeignValues:", bridge.Int64(456)).ToString()
+		str = bridge.Bridge("github.com/gomatcha/matcha/example").Call("callWithGoValues:", bridge.Interface(123)).ToInterface().(string)
+		str2 = bridge.Bridge("github.com/gomatcha/matcha/example").Call("callWithForeignValues:", bridge.Int64(456)).ToString()
 	}
 
 	chl1 := view.NewTextView()

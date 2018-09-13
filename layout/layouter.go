@@ -1,10 +1,10 @@
 // Package layout provides geometric primitives and interfaces for view layout.
-// See https://gomatcha.io/guide/layout/ for more details.
+// See README.md or documentation for more details.
 package layout
 
 import (
-	"gomatcha.io/matcha/comm"
-	pblayout "gomatcha.io/matcha/proto/layout"
+	"github.com/gomatcha/matcha/comm"
+	pblayout "github.com/gomatcha/matcha/proto/layout"
 )
 
 // Layouter ... TODO(KD):...

@@ -5,10 +5,10 @@ import (
 	"runtime"
 
 	"github.com/gogo/protobuf/proto"
-	protoview "gomatcha.io/matcha/examples/customview/proto"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout/constraint"
-	"gomatcha.io/matcha/view"
+	protoview "github.com/gomatcha/matcha/examples/customview/proto"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout/constraint"
+	"github.com/gomatcha/matcha/view"
 )
 
 type CustomView struct {
@@ -39,7 +39,7 @@ func (v *CustomView) Build(ctx view.Context) view.Model {
 	})
 	return view.Model{
 		Layouter:       l,
-		NativeViewName: "gomatcha.io/matcha/view/switch",
+		NativeViewName: "github.com/gomatcha/matcha/view/switch",
 		NativeViewState: internal.MarshalProtobuf(&protoview.View{
 			Value:   v.Value,
 			Enabled: v.Enabled,

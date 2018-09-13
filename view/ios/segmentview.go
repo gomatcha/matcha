@@ -4,11 +4,11 @@ import (
 	"fmt"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout/constraint"
-	"gomatcha.io/matcha/paint"
-	pbios "gomatcha.io/matcha/proto/view/ios"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout/constraint"
+	"github.com/gomatcha/matcha/paint"
+	pbios "github.com/gomatcha/matcha/proto/view/ios"
+	"github.com/gomatcha/matcha/view"
 )
 
 type SegmentView struct {
@@ -45,7 +45,7 @@ func (v *SegmentView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Painter:        painter,
 		Layouter:       l,
-		NativeViewName: "gomatcha.io/matcha/view/segmentview",
+		NativeViewName: "github.com/gomatcha/matcha/view/segmentview",
 		NativeViewState: internal.MarshalProtobuf(&pbios.SegmentView{
 			Value:     int64(v.Value),
 			Titles:    v.Titles,

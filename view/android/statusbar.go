@@ -4,12 +4,12 @@ import (
 	"image/color"
 
 	"github.com/gogo/protobuf/proto"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/internal/radix"
+	pb "github.com/gomatcha/matcha/proto"
+	pbapp "github.com/gomatcha/matcha/proto/view/android"
+	"github.com/gomatcha/matcha/view"
 	"golang.org/x/image/colornames"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/internal/radix"
-	pb "gomatcha.io/matcha/proto"
-	pbapp "gomatcha.io/matcha/proto/view/android"
-	"gomatcha.io/matcha/view"
 )
 
 type StatusBarStyle int
@@ -33,7 +33,7 @@ type StatusBar struct {
 }
 
 func (s *StatusBar) OptionKey() string {
-	return "gomatcha.io/matcha/view/android statusbar"
+	return "github.com/gomatcha/matcha/view/android statusbar"
 }
 
 func init() {
@@ -83,5 +83,5 @@ func (m *statusBarMiddleware) MarshalProtobuf() proto.Message {
 }
 
 func (m *statusBarMiddleware) Key() string {
-	return "gomatcha.io/matcha/view/android statusbar"
+	return "github.com/gomatcha/matcha/view/android statusbar"
 }

@@ -1,9 +1,9 @@
-package matcha // import "gomatcha.io/matcha"
+package matcha
 
 import (
 	"sync"
 
-	_ "gomatcha.io/matcha/bridge"
+	_ "github.com/gomatcha/matcha/bridge"
 )
 
 var MainLocker sync.Locker

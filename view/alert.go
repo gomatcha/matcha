@@ -4,8 +4,8 @@ import (
 	"runtime"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/bridge"
-	pbview "gomatcha.io/matcha/proto/view"
+	"github.com/gomatcha/matcha/bridge"
+	pbview "github.com/gomatcha/matcha/proto/view"
 )
 
 var alertMaxId int64
@@ -13,7 +13,7 @@ var alerts map[int64]*_alert
 
 func init() {
 	alerts = map[int64]*_alert{}
-	bridge.RegisterFunc("gomatcha.io/matcha/view/alert onPress", func(id, idx int64) {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/view/alert onPress", func(id, idx int64) {
 		alert, ok := alerts[id]
 		if !ok {
 			return

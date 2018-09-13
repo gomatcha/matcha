@@ -52,7 +52,7 @@ func ParseTargets(a string) map[string]struct{} {
 }
 
 func Build(flags *Flags, args []string) error {
-	iosDir, err := PackageDir(flags, "gomatcha.io/matcha")
+	iosDir, err := PackageDir(flags, "github.com/gomatcha/matcha")
 	if err != nil {
 		return err
 	}
@@ -139,7 +139,7 @@ func Bind(flags *Flags, args []string) error {
 	}
 
 	// Get the supporting files
-	bridgePath, err := PackageDir(flags, "gomatcha.io/matcha/bridge")
+	bridgePath, err := PackageDir(flags, "github.com/gomatcha/matcha/bridge")
 	if err != nil {
 		return err
 	}
@@ -174,11 +174,11 @@ func Bind(flags *Flags, args []string) error {
 		}
 
 		// if !flags.BuildBinary {
-		// 	// Copy package's ios directory if it imports gomatcha.io/bridge.
+		// 	// Copy package's ios directory if it imports github.com/gomatcha/bridge.
 		// 	for _, pkg := range pkgs {
 		// 		importsBridge := false
 		// 		for _, i := range pkg.Imports {
-		// 			if i == "gomatcha.io/bridge" {
+		// 			if i == "github.com/gomatcha/bridge" {
 		// 				importsBridge = true
 		// 				break
 		// 			}
@@ -405,7 +405,7 @@ var BindFile = `
 package main
 
 import (
-    _ "gomatcha.io/matcha/bridge"
+    _ "github.com/gomatcha/matcha/bridge"
     _ "%s"
 )
 

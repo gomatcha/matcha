@@ -4,9 +4,9 @@ package animate
 import (
 	"time"
 
-	"gomatcha.io/matcha"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
+	"github.com/gomatcha/matcha"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
 )
 
 // Value is an struct that runs Animations and emits float64s.

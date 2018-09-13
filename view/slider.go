@@ -4,11 +4,11 @@ import (
 	"fmt"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/paint"
-	pbview "gomatcha.io/matcha/proto/view"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/paint"
+	pbview "github.com/gomatcha/matcha/proto/view"
 )
 
 type sliderLayouter struct {
@@ -86,7 +86,7 @@ func (v *Slider) Build(ctx Context) Model {
 	return Model{
 		Painter:        painter,
 		Layouter:       &sliderLayouter{},
-		NativeViewName: "gomatcha.io/matcha/view/slider",
+		NativeViewName: "github.com/gomatcha/matcha/view/slider",
 		NativeViewState: internal.MarshalProtobuf(&pbview.Slider{
 			Value:    val,
 			MaxValue: v.MaxValue,

@@ -1,15 +1,15 @@
 // Package view provides the component library. See
-// https://gomatcha.io/guide/view/ for more details.
+// https://github.com/gomatcha/guide/view/ for more details.
 package view
 
 import (
 	"reflect"
 	"sync"
 
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/paint"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/paint"
 )
 
 type Id int64
