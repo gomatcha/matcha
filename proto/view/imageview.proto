@@ -1,10 +1,10 @@
 syntax = "proto3";
 package matcha.view;
-import "gomatcha.io/matcha/proto/image.proto";
+import "github.com/gomatcha/matcha/proto/image.proto";
 
 option go_package = "view";
 option objc_class_prefix = "MatchaViewPB";
-option java_package = "io.gomatcha.matcha.proto.view";
+option java_package = "com.github.gomatcha.matcha.proto.view";
 option java_outer_classname = "PbImageView";
 
 enum ImageResizeMode {

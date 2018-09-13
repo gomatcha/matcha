@@ -2,5 +2,5 @@ syntax = "proto3";
 package matcha.paint;
 option go_package = "paint";
 option objc_class_prefix = "MatchaPaintPB";
-option java_package = "io.gomatcha.matcha.proto.paint";
+option java_package = "com.github.gomatcha.matcha.proto.paint";
 option java_outer_classname = "PbPaint";

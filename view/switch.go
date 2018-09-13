@@ -5,10 +5,10 @@ import (
 	"runtime"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/paint"
-	protoview "gomatcha.io/matcha/proto/view"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/paint"
+	protoview "github.com/gomatcha/matcha/proto/view"
 )
 
 type Switch struct {
@@ -44,7 +44,7 @@ func (v *Switch) Build(ctx Context) Model {
 	return Model{
 		Painter:        painter,
 		Layouter:       l,
-		NativeViewName: "gomatcha.io/matcha/view/switch",
+		NativeViewName: "github.com/gomatcha/matcha/view/switch",
 		NativeViewState: internal.MarshalProtobuf(&protoview.SwitchView{
 			Value:   v.Value,
 			Enabled: v.Enabled,

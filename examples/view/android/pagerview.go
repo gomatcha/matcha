@@ -3,15 +3,15 @@ package android
 import (
 	"fmt"
 
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/paint"
+	"github.com/gomatcha/matcha/view"
+	"github.com/gomatcha/matcha/view/android"
 	"golang.org/x/image/colornames"
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/android"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/android NewPagerView", func() view.View {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/examples/view/android NewPagerView", func() view.View {
 		return NewPagerView()
 	})
 }

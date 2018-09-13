@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"runtime"
 
-	pbtext "gomatcha.io/matcha/proto/text"
+	pbtext "github.com/gomatcha/matcha/proto/text"
 )
 
 // Alignment represents a text alignment.

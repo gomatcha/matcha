@@ -14,8 +14,8 @@ Package full implements a layout system where the view and all direct children a
 package full
 
 import (
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/layout"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/layout"
 )
 
 type Layouter struct {

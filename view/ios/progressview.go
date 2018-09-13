@@ -4,13 +4,13 @@ package ios
 import (
 	"image/color"
 
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout/constraint"
-	"gomatcha.io/matcha/paint"
-	pb "gomatcha.io/matcha/proto"
-	pbios "gomatcha.io/matcha/proto/view/ios"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout/constraint"
+	"github.com/gomatcha/matcha/paint"
+	pb "github.com/gomatcha/matcha/proto"
+	pbios "github.com/gomatcha/matcha/proto/view/ios"
+	"github.com/gomatcha/matcha/view"
 )
 
 // ProgressView implements a progess view.
@@ -69,7 +69,7 @@ func (v *ProgressView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Painter:        painter,
 		Layouter:       l,
-		NativeViewName: "gomatcha.io/matcha/view/progressview",
+		NativeViewName: "github.com/gomatcha/matcha/view/progressview",
 		NativeViewState: internal.MarshalProtobuf(&pbios.ProgressView{
 			Progress:      val,
 			ProgressColor: pb.ColorEncode(v.ProgressColor),

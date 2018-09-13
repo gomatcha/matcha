@@ -7,14 +7,14 @@ import (
 	"strconv"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout/constraint"
-	pb "gomatcha.io/matcha/proto"
-	pbtext "gomatcha.io/matcha/proto/text"
-	pbios "gomatcha.io/matcha/proto/view/ios"
-	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout/constraint"
+	pb "github.com/gomatcha/matcha/proto"
+	pbtext "github.com/gomatcha/matcha/proto/text"
+	pbios "github.com/gomatcha/matcha/proto/view/ios"
+	"github.com/gomatcha/matcha/text"
+	"github.com/gomatcha/matcha/view"
 )
 
 // Stack represents a list of views to be shown in the StackView. It can be manipulated outside of a Build() call.
@@ -196,7 +196,7 @@ func (v *StackView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Children:       l.Views(),
 		Layouter:       l,
-		NativeViewName: "gomatcha.io/matcha/view/stacknav",
+		NativeViewName: "github.com/gomatcha/matcha/view/stacknav",
 		NativeViewState: internal.MarshalProtobuf(&pbios.StackView{
 			Children:       childrenPb,
 			TitleTextStyle: titleTextStyle,
@@ -333,7 +333,7 @@ func (v *stackBarView) Build(ctx view.Context) view.Model {
 	return view.Model{
 		Layouter:       l,
 		Children:       l.Views(),
-		NativeViewName: "gomatcha.io/matcha/view/stacknav Bar",
+		NativeViewName: "github.com/gomatcha/matcha/view/stacknav Bar",
 		NativeViewState: internal.MarshalProtobuf(&pbios.StackBar{
 			Title: bar.Title,
 			CustomBackButtonTitle: len(bar.BackButtonTitle) > 0,
@@ -363,7 +363,7 @@ type StackBar struct {
 }
 
 func (t *StackBar) OptionKey() string {
-	return "gomatcha.io/view/ios StackBar"
+	return "github.com/gomatcha/view/ios StackBar"
 }
 
 func NewStackBarItem() *StackBarItem {

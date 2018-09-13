@@ -1,10 +1,10 @@
 syntax = "proto3";
 package matcha.text;
-import "gomatcha.io/matcha/proto/layout/layout.proto";
+import "github.com/gomatcha/matcha/proto/layout/layout.proto";
 
 option go_package = "text";
 option objc_class_prefix = "MatchaPB";
-option java_package = "io.gomatcha.matcha.proto.text";
+option java_package = "com.github.gomatcha.matcha.proto.text";
 option java_outer_classname = "PbText";
 
 message SizeFunc {
@@ -43,7 +43,7 @@ enum StrikethroughStyle {
     STRIKETHROUGH_STYLE_DOTTED = 4;
     STRIKETHROUGH_STYLE_DASHED = 5;
 }
-    
+
 enum UnderlineStyle {
     UNDRELINE_STYLE_NONE = 0;
     UNDRELINE_STYLE_SINGLE = 1;
@@ -92,7 +92,7 @@ message TextStyle {
     TextWrap wrap = 22;
     Truncation truncation = 24;
     string truncationString = 26;
-    
+
     string fontName = 27;
     double fontSize = 29;
 }

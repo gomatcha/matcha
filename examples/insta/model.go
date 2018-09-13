@@ -3,7 +3,7 @@ package insta
 import (
 	"math/rand"
 
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/view"
 
 	golorem "github.com/drhodes/golorem"
 )

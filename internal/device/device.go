@@ -1,11 +1,11 @@
 package device
 
 import (
-	"gomatcha.io/matcha/bridge"
+	"github.com/gomatcha/matcha/bridge"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/internal/device setScreenScale", func(v float64) {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/internal/device setScreenScale", func(v float64) {
 		ScreenScale = v
 	})
 }

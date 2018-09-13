@@ -4,7 +4,7 @@ import "google/protobuf/any.proto";
 
 option go_package = "view";
 option objc_class_prefix = "MatchaViewPB";
-option java_package = "io.gomatcha.matcha.proto.view";
+option java_package = "com.github.gomatcha.matcha.proto.view";
 option java_outer_classname = "PbView";
 
 message BuildNode {
@@ -20,7 +20,7 @@ message LayoutPaintNode {
   int64 id = 1;
   int64 layoutId = 2;
   int64 paintId = 3;
-  
+
   // Guide
   double minx = 4;
   double miny = 5;
@@ -28,28 +28,28 @@ message LayoutPaintNode {
   double maxy = 7;
   int64 zIndex = 8;
   repeated int64 childOrder = 9;
-  
+
   // Paint
   double transparency = 10;
-  
+
   bool hasBackgroundColor = 11;
   uint32 backgroundColorRed = 12;
   uint32 backgroundColorGreen = 13;
   uint32 backgroundColorBlue = 14;
   uint32 backgroundColorAlpha = 15;
-  
+
   bool hasBorderColor = 16;
   uint32 borderColorRed = 17;
   uint32 borderColorGreen = 18;
   uint32 borderColorBlue = 19;
   uint32 borderColorAlpha = 20;
-  
+
   double borderWidth = 21;
   double cornerRadius = 22;
   double shadowRadius = 23;
   double shadowOffsetX = 24;
   double shadowOffsetY = 25;
-  
+
   bool hasShadowColor = 26;
   uint32 shadowColorRed = 27;
   uint32 shadowColorBlue = 28;

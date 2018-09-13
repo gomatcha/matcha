@@ -1,9 +1,9 @@
 package settings
 
 import (
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/ios"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/view"
+	"github.com/gomatcha/matcha/view/ios"
 )
 
 type Stack interface {

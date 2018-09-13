@@ -34,8 +34,8 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
-	"gomatcha.io/matcha/layout"
-	pbtouch "gomatcha.io/matcha/proto/pointer"
+	"github.com/gomatcha/matcha/layout"
+	pbtouch "github.com/gomatcha/matcha/proto/pointer"
 )
 
 var maxFuncId int64 = 0
@@ -48,7 +48,7 @@ func newFuncId() int64 {
 type GestureList []Gesture
 
 func (r GestureList) OptionKey() string {
-	return "gomatcha.io/matcha/touch"
+	return "github.com/gomatcha/matcha/touch"
 }
 
 type Gesture interface {
@@ -139,7 +139,7 @@ func (r *TapGesture) Build() Model {
 			OnEvent: funcId,
 		},
 		NativeFuncs: map[string]interface{}{
-			fmt.Sprintf("gomatcha.io/matcha/touch %v", funcId): f,
+			fmt.Sprintf("github.com/gomatcha/matcha/touch %v", funcId): f,
 		},
 	}
 }
@@ -206,7 +206,7 @@ func (r *PressGesture) Build() Model {
 			OnEvent:     funcId,
 		},
 		NativeFuncs: map[string]interface{}{
-			fmt.Sprintf("gomatcha.io/matcha/touch %v", funcId): f,
+			fmt.Sprintf("github.com/gomatcha/matcha/touch %v", funcId): f,
 		},
 	}
 }
@@ -268,7 +268,7 @@ func (r *ButtonGesture) Build() Model {
 			IgnoresScroll: r.IgnoresScroll,
 		},
 		NativeFuncs: map[string]interface{}{
-			fmt.Sprintf("gomatcha.io/matcha/touch %v", funcId): f,
+			fmt.Sprintf("github.com/gomatcha/matcha/touch %v", funcId): f,
 		},
 	}
 }

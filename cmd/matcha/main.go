@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/gomatcha/matcha/cmd"
 	"github.com/spf13/cobra"
-	"gomatcha.io/matcha/cmd"
 )
 
 func main() {
@@ -20,8 +20,7 @@ func main() {
 var RootCmd = &cobra.Command{
 	Use:   "matcha",
 	Short: "Matcha is a tool for building Android & iOS apps in Go",
-	Long: `Matcha is a tool for building Android & iOS apps in Go. 
-Complete documentation is available at https://gomatcha.io`,
+	Long:  "Matcha is a tool for building Android & iOS apps in Go",
 }
 
 var (

@@ -10,14 +10,14 @@ import (
 	_ "image/png"
 	"net/http"
 
-	"gomatcha.io/matcha"
-	"gomatcha.io/matcha/application"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/paint"
-	pb "gomatcha.io/matcha/proto"
-	pbview "gomatcha.io/matcha/proto/view"
+	"github.com/gomatcha/matcha"
+	"github.com/gomatcha/matcha/application"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/paint"
+	pb "github.com/gomatcha/matcha/proto"
+	pbview "github.com/gomatcha/matcha/proto/view"
 )
 
 type ImageResizeMode int
@@ -99,7 +99,7 @@ func (v *ImageView) Build(ctx Context) Model {
 	return Model{
 		Painter:        painter,
 		Layouter:       &imageViewLayouter{bounds: bounds, resizeMode: resizeMode, scale: scale},
-		NativeViewName: "gomatcha.io/matcha/view/imageview",
+		NativeViewName: "github.com/gomatcha/matcha/view/imageview",
 		NativeViewState: internal.MarshalProtobuf(&pbview.ImageView{
 			Image:      v.image,
 			Scale:      scale,

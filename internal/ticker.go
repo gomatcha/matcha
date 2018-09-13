@@ -3,7 +3,7 @@ package internal
 import (
 	"sync"
 
-	"gomatcha.io/matcha/bridge"
+	"github.com/gomatcha/matcha/bridge"
 )
 
 var tickers = struct {
@@ -17,7 +17,7 @@ var tickers = struct {
 }
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/animate screenUpdate", screenUpdate)
+	bridge.RegisterFunc("github.com/gomatcha/matcha/animate screenUpdate", screenUpdate)
 }
 
 func screenUpdate() {

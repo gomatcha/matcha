@@ -3,7 +3,7 @@ package animate
 import (
 	"math"
 
-	"gomatcha.io/matcha/comm"
+	"github.com/gomatcha/matcha/comm"
 )
 
 // ColorInterpolater represents an object that interpolates between floats given a float64 between 0-1.

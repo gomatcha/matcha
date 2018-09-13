@@ -20,9 +20,9 @@ import (
 	"errors"
 	"runtime"
 
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/layout"
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/layout"
 )
 
 // // AssetsDir returns the path to the app's assets directory. `NSBundle.mainBundle.resourcePath`
@@ -77,7 +77,7 @@ var orientationNotifier comm.IntValue
 
 func init() {
 	OrientationNotifier = &orientationNotifier
-	bridge.RegisterFunc("gomatcha.io/matcha/application SetOrientation", func(v int) {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/application SetOrientation", func(v int) {
 		orientationNotifier.SetValue(int(orientation(v)))
 	})
 }
@@ -87,7 +87,7 @@ var shakeNotifier comm.Relay
 
 func init() {
 	ShakeNotifier = &shakeNotifier
-	bridge.RegisterFunc("gomatcha.io/matcha/application OnShake", func() {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/application OnShake", func() {
 		shakeNotifier.Signal()
 	})
 }

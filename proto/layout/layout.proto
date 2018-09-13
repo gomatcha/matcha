@@ -3,7 +3,7 @@ package matcha.layout;
 
 option go_package = "layout";
 option objc_class_prefix = "MatchaLayoutPB";
-option java_package = "io.gomatcha.matcha.proto.layout";
+option java_package = "com.github.gomatcha.matcha.proto.layout";
 option java_outer_classname = "PbLayout";
 
 message Point {

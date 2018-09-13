@@ -2,10 +2,10 @@ package ios
 
 import (
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/internal/radix"
-	pbapp "gomatcha.io/matcha/proto/app"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/internal/radix"
+	pbapp "github.com/gomatcha/matcha/proto/app"
+	"github.com/gomatcha/matcha/view"
 )
 
 // If any view has an ActivityIndicator option, the spinner will be visible.
@@ -17,7 +17,7 @@ type ActivityIndicator struct {
 }
 
 func (a *ActivityIndicator) OptionKey() string {
-	return "gomatcha.io/matcha/app activity"
+	return "github.com/gomatcha/matcha/app activity"
 }
 
 func init() {
@@ -61,7 +61,7 @@ func (m *activityIndicatorMiddleware) MarshalProtobuf() proto.Message {
 }
 
 func (m *activityIndicatorMiddleware) Key() string {
-	return "gomatcha.io/matcha/app activity"
+	return "github.com/gomatcha/matcha/app activity"
 }
 
 func idSliceToIntSlice(ids []view.Id) []int64 {

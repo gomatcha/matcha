@@ -9,9 +9,9 @@ import (
 	"golang.org/x/image/colornames"
 
 	"github.com/gogo/protobuf/proto"
-	"gomatcha.io/matcha/bridge"
-	pb "gomatcha.io/matcha/proto"
-	"gomatcha.io/matcha/proto/env"
+	"github.com/gomatcha/matcha/bridge"
+	pb "github.com/gomatcha/matcha/proto"
+	"github.com/gomatcha/matcha/proto/env"
 )
 
 // type Resource struct {

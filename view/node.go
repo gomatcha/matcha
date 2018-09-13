@@ -14,14 +14,14 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/any"
-	"gomatcha.io/matcha"
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/layout/full"
-	"gomatcha.io/matcha/paint"
-	pb "gomatcha.io/matcha/proto/view"
+	"github.com/gomatcha/matcha"
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/layout/full"
+	"github.com/gomatcha/matcha/paint"
+	pb "github.com/gomatcha/matcha/proto/view"
 )
 
 var maxId int64
@@ -43,7 +43,7 @@ type root struct {
 }
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/view NewRoot", func(v View) *root {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/view NewRoot", func(v View) *root {
 		return _newRoot(v)
 	})
 }

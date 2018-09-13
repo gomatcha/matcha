@@ -4,7 +4,7 @@ import (
 	"image"
 	"image/color"
 
-	_ "gomatcha.io/matcha/internal/device"
+	_ "github.com/gomatcha/matcha/internal/device"
 )
 
 func TintColor(img image.Image, color color.Color) image.Image {

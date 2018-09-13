@@ -1,11 +1,11 @@
 package view
 
 import (
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/internal"
-	"gomatcha.io/matcha/layout"
-	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/text"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/internal"
+	"github.com/gomatcha/matcha/layout"
+	"github.com/gomatcha/matcha/paint"
+	"github.com/gomatcha/matcha/text"
 )
 
 // TextView displays a multiline text region within it bounds.
@@ -48,7 +48,7 @@ func (v *TextView) Build(ctx Context) Model {
 	return Model{
 		Painter:         painter,
 		Layouter:        &v.layouter,
-		NativeViewName:  "gomatcha.io/matcha/view/textview",
+		NativeViewName:  "github.com/gomatcha/matcha/view/textview",
 		NativeViewState: internal.MarshalProtobuf(st.MarshalProtobuf()),
 	}
 }

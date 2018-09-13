@@ -1,11 +1,11 @@
 syntax = "proto3";
 package matcha.view.android;
-// import "gomatcha.io/matcha/proto/image.proto";
-// import "gomatcha.io/matcha/proto/text/text.proto";
+// import "github.com/gomatcha/matcha/proto/image.proto";
+// import "github.com/gomatcha/matcha/proto/text/text.proto";
 
 option go_package = "android";
 option objc_class_prefix = "MatchaAndroidPB";
-option java_package = "io.gomatcha.matcha.proto.view.android";
+option java_package = "com.github.gomatcha.matcha.proto.view.android";
 option java_outer_classname = "PbPagerView";
 
 message PagerChildView {

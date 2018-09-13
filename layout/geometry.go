@@ -3,8 +3,8 @@ package layout
 import (
 	"fmt"
 
-	"gomatcha.io/matcha/comm"
-	pblayout "gomatcha.io/matcha/proto/layout"
+	"github.com/gomatcha/matcha/comm"
+	pblayout "github.com/gomatcha/matcha/proto/layout"
 )
 
 // Axis represents a direction along the coordinate plane.

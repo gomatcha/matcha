@@ -1,10 +1,10 @@
 package settings
 
 import (
-	"gomatcha.io/matcha/layout/table"
-	"gomatcha.io/matcha/paint"
-	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/ios"
+	"github.com/gomatcha/matcha/layout/table"
+	"github.com/gomatcha/matcha/paint"
+	"github.com/gomatcha/matcha/view"
+	"github.com/gomatcha/matcha/view/ios"
 )
 
 type BluetoothView struct {

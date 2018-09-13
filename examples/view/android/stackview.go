@@ -1,13 +1,13 @@
 package android
 
 import (
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/examples/view/ios"
-	"gomatcha.io/matcha/view"
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/examples/view/ios"
+	"github.com/gomatcha/matcha/view"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/android NewStackView", func() view.View {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/examples/view/android NewStackView", func() view.View {
 		return NewStackView()
 	})
 }

@@ -4,19 +4,19 @@ import (
 	"fmt"
 	"runtime"
 
+	"github.com/gomatcha/matcha/application"
+	"github.com/gomatcha/matcha/bridge"
+	"github.com/gomatcha/matcha/comm"
+	"github.com/gomatcha/matcha/layout/constraint"
+	"github.com/gomatcha/matcha/text"
+	"github.com/gomatcha/matcha/view"
+	"github.com/gomatcha/matcha/view/android"
+	"github.com/gomatcha/matcha/view/ios"
 	"golang.org/x/image/colornames"
-	"gomatcha.io/matcha/application"
-	"gomatcha.io/matcha/bridge"
-	"gomatcha.io/matcha/comm"
-	"gomatcha.io/matcha/layout/constraint"
-	"gomatcha.io/matcha/text"
-	"gomatcha.io/matcha/view"
-	"gomatcha.io/matcha/view/android"
-	"gomatcha.io/matcha/view/ios"
 )
 
 func init() {
-	bridge.RegisterFunc("gomatcha.io/matcha/examples/view/ios NewStackView", func() view.View {
+	bridge.RegisterFunc("github.com/gomatcha/matcha/examples/view/ios NewStackView", func() view.View {
 		return NewStackView()
 	})
 }
